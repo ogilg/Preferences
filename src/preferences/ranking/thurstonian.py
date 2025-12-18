@@ -114,6 +114,20 @@ class ThurstonianResult:
         order = np.argsort(-self.mu)
         return [self.tasks[i] for i in order]
 
+    def normalized_utility(self, task: "Task") -> float:
+        """Get normalized utility in [0, 1] for a task.
+
+        Computed as the average probability of being preferred over all other tasks.
+        A value of 0.5 means the task is equally preferred to the average task.
+        """
+        idx = self._id_to_idx[task.id]
+        probs = [
+            self.preference_probability(task, other)
+            for other in self.tasks
+            if other.id != task.id
+        ]
+        return sum(probs) / len(probs) if probs else 0.5
+
 
 def _preference_prob(mu_i: float, mu_j: float, sigma_i: float, sigma_j: float) -> float:
     """Compute P(i ≻ j) using the difference distribution."""

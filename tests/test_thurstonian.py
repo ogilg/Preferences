@@ -232,3 +232,50 @@ class TestFitThurstonian:
 
         with pytest.raises(ValueError, match="at least 2 tasks"):
             fit_thurstonian(data)
+
+    def test_normalized_utility_bounds(self):
+        """Normalized utility should be in [0, 1]."""
+        tasks = [make_task("a"), make_task("b"), make_task("c")]
+        wins = np.array([
+            [0, 10, 10],
+            [0, 0, 10],
+            [0, 0, 0],
+        ])
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data)
+
+        for task in tasks:
+            nu = result.normalized_utility(task)
+            assert 0.0 <= nu <= 1.0
+
+    def test_normalized_utility_ordering(self):
+        """Normalized utility should preserve ranking order."""
+        tasks = [make_task("a"), make_task("b"), make_task("c")]
+        wins = np.array([
+            [0, 10, 10],
+            [0, 0, 10],
+            [0, 0, 0],
+        ])
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data)
+
+        nu_a = result.normalized_utility(tasks[0])
+        nu_b = result.normalized_utility(tasks[1])
+        nu_c = result.normalized_utility(tasks[2])
+
+        # Should preserve order and be well-separated
+        assert nu_a > nu_b + 0.1
+        assert nu_b > nu_c + 0.1
+
+    def test_normalized_utility_symmetric_data(self):
+        """Symmetric data should give normalized utility ≈ 0.5."""
+        tasks = [make_task("a"), make_task("b")]
+        wins = np.array([[0, 50], [50, 0]])
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data)
+
+        assert result.normalized_utility(tasks[0]) == pytest.approx(0.5, abs=0.05)
+        assert result.normalized_utility(tasks[1]) == pytest.approx(0.5, abs=0.05)
