@@ -7,6 +7,7 @@ from .types import (
     TaskScore,
     TaskCompletion,
 )
+from .measurement_recorder import MeasurementRecorder
 
 __all__ = [
     "Message",
@@ -16,4 +17,5 @@ __all__ = [
     "BinaryPreferenceMeasurement",
     "TaskScore",
     "TaskCompletion",
+    "MeasurementRecorder",
 ]

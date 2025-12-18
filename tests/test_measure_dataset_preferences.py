@@ -214,6 +214,8 @@ class TestSampleMeasurement:
             builder=mock_rating_builder,
             config=config,
             args=(Mock(),),
+            measurement_type="rating",
+            recorder=None,
         )
 
         assert len(samples) == 3
@@ -228,6 +230,8 @@ class TestSampleMeasurement:
             builder=mock_rating_builder,
             config=config,
             args=(Mock(),),
+            measurement_type="rating",
+            recorder=None,
         )
 
         indices = [s["sample_index"] for s in samples]
@@ -243,6 +247,8 @@ class TestSampleMeasurement:
             builder=mock_rating_builder,
             config=config,
             args=(Mock(),),
+            measurement_type="rating",
+            recorder=None,
         )
 
         assert model.last_temperature == 0.7
@@ -256,6 +262,8 @@ class TestSampleMeasurement:
             builder=mock_rating_builder,
             config=config,
             args=(task_a, task_b),
+            measurement_type="binary",
+            recorder=None,
         )
 
         mock_rating_builder.build.assert_called_once_with(task_a, task_b)

@@ -5,6 +5,8 @@ description = "A library for measuring AI model preferences"
 requires-python = ">=3.10"
 dependencies = [
     "python-dotenv>=1.0.0",
+    "openai>=1.0.0",
+    "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
@@ -19,3 +21,6 @@ build-backend = "hatchling.build"
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+markers = [
+    "api: tests that make real API calls (requires API key)",
+]

@@ -7,12 +7,13 @@ import random
 from typing import TYPE_CHECKING, Any
 
 from ..models import Model
-from ..types import MeasurementResponse
+from ..types import MeasurementResponse, BinaryPreferenceMeasurement, TaskScore
 from .config import DatasetMeasurementConfig, PairingStrategy
 
 if TYPE_CHECKING:
     from ..task_data import Task
     from .prompt_builders import PromptBuilder
+    from ..measurement_recorder import MeasurementRecorder
 
 
 def measure_dataset_preferences(
@@ -21,6 +22,7 @@ def measure_dataset_preferences(
     rating_builder: PromptBuilder | None = None,
     binary_builder: PromptBuilder | None = None,
     config: DatasetMeasurementConfig | None = None,
+    recorder: MeasurementRecorder | None = None,
 ) -> dict[str, Any]:
     """Measure preferences across an entire dataset.
 
@@ -32,6 +34,7 @@ def measure_dataset_preferences(
         binary_builder: Builder for binary comparison measurements.
             Required if "binary" in config.measurement_types.
         config: Measurement configuration. Uses defaults if None.
+        recorder: Optional recorder to save measurements to YAML.
 
     Returns:
         Dictionary containing:
@@ -58,6 +61,7 @@ def measure_dataset_preferences(
             tasks=tasks,
             builder=rating_builder,
             config=config,
+            recorder=recorder,
         )
 
     # Run binary comparison measurements
@@ -68,6 +72,7 @@ def measure_dataset_preferences(
             pairs=pairs,
             builder=binary_builder,
             config=config,
+            recorder=recorder,
         )
 
     return result
@@ -90,6 +95,7 @@ def _measure_all_ratings(
     tasks: list[Task],
     builder: PromptBuilder,
     config: DatasetMeasurementConfig,
+    recorder: MeasurementRecorder | None,
 ) -> list[dict[str, Any]]:
     """Measure ratings for all tasks with multiple samples each."""
     results = []
@@ -99,6 +105,8 @@ def _measure_all_ratings(
             builder=builder,
             config=config,
             args=(task,),
+            measurement_type="rating",
+            recorder=recorder,
         )
         results.append({
             "task": task,
@@ -112,6 +120,7 @@ def _measure_all_comparisons(
     pairs: list[tuple[Task, Task]],
     builder: PromptBuilder,
     config: DatasetMeasurementConfig,
+    recorder: MeasurementRecorder | None,
 ) -> list[dict[str, Any]]:
     """Measure binary comparisons for all task pairs with multiple samples."""
     results = []
@@ -121,6 +130,8 @@ def _measure_all_comparisons(
             builder=builder,
             config=config,
             args=(task_a, task_b),
+            measurement_type="binary",
+            recorder=recorder,
         )
         results.append({
             "task_a": task_a,
@@ -135,8 +146,12 @@ def _sample_measurement(
     builder: PromptBuilder,
     config: DatasetMeasurementConfig,
     args: tuple[Task] | tuple[Task, Task],
+    measurement_type: str,
+    recorder: MeasurementRecorder | None,
 ) -> list[dict[str, Any]]:
     """Run a measurement N times and collect all samples."""
+    from ..measurement_recorder import MeasurementRecord
+
     samples = []
     for i in range(config.num_samples):
         prompt = builder.build(*args)
@@ -147,6 +162,35 @@ def _sample_measurement(
             "response": response,
             "temperature": config.temperature,
         })
+
+        # Record if recorder provided
+        if recorder is not None:
+            result_obj = response.result
+            if isinstance(result_obj, BinaryPreferenceMeasurement):
+                result_dict = {"choice": result_obj.choice}
+            elif isinstance(result_obj, TaskScore):
+                result_dict = {"score": result_obj.score}
+            else:
+                result_dict = {}
+
+            prompt_text = "\n\n".join(
+                f"[{m['role']}]\n{m['content']}" for m in prompt.messages
+            )
+
+            record = MeasurementRecord(
+                model=model.model_name,
+                measurement_type=measurement_type,
+                tasks=[{"id": t.id, "prompt": t.prompt} for t in args],
+                response_format=prompt.response_format.__class__.__name__,
+                template=builder.template.name,
+                temperature=config.temperature,
+                sample_index=i,
+                prompt=prompt_text,
+                response=text,
+                result=result_dict,
+            )
+            recorder.record(record)
+
     return samples
 
 
