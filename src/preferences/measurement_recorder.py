@@ -12,7 +12,7 @@ class MeasurementRecord:
     """A single measurement record."""
 
     model: str
-    measurement_type: str  # "binary" or "rating"
+    measurement_type: str  # PreferenceType value (e.g., "PRE_TASK_STATED")
     tasks: list[dict[str, str]]  # [{"id": ..., "prompt": ...}]
     response_format: str
     template: str

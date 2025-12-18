@@ -1,6 +1,5 @@
 from .config import DatasetMeasurementConfig, PairingStrategy
-from .measure_dataset_preferences import measure_dataset_preferences
-from .measure import measure_binary_preferences, measure_ratings
+from .measure_preferences import measure_binary_preferences, measure_ratings
 from .prompt_builders import (
     PromptBuilder,
     BinaryPromptBuilder,
@@ -48,8 +47,9 @@ __all__ = [
     # Configuration
     "DatasetMeasurementConfig",
     "PairingStrategy",
-    # Dataset Measurement
-    "measure_dataset_preferences",
+    # Measurement
+    "measure_binary_preferences",
+    "measure_ratings",
     # Prompt Builders
     "PromptBuilder",
     "BinaryPromptBuilder",

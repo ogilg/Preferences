@@ -1,9 +1,10 @@
 """Configuration for dataset-wide preference measurement."""
 
 from enum import Enum
-from typing import Literal
 
 from pydantic import BaseModel, Field
+
+from ..types import PreferenceType
 
 
 class PairingStrategy(str, Enum):
@@ -27,9 +28,9 @@ class DatasetMeasurementConfig(BaseModel, frozen=True):
         ge=1,
         description="Number of times to repeat each measurement",
     )
-    measurement_types: frozenset[Literal["rating", "binary"]] = Field(
-        default_factory=lambda: frozenset({"rating", "binary"}),
-        description="Which measurement types to run",
+    measurement_types: frozenset[PreferenceType] = Field(
+        default_factory=lambda: frozenset(PreferenceType),
+        description="Which preference types to measure",
     )
     pairing_strategy: PairingStrategy = Field(
         default=PairingStrategy.ALL_PAIRS,
