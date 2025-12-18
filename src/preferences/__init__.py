@@ -1,3 +1,5 @@
+from .config import DatasetMeasurementConfig, PairingStrategy
+from .measure_dataset_preferences import measure_dataset_preferences
 from .prompt_builders import (
     PromptBuilder,
     BinaryPromptBuilder,
@@ -28,7 +30,6 @@ from .response_format import (
     RegexRatingFormat,
     XMLRatingFormat,
 )
-from .run import run_measurement, run_with_prompt
 from ..types import (
     PreferenceType,
     PreferencePrompt,
@@ -39,6 +40,11 @@ from ..types import (
 )
 
 __all__ = [
+    # Configuration
+    "DatasetMeasurementConfig",
+    "PairingStrategy",
+    # Dataset Measurement
+    "measure_dataset_preferences",
     # Prompt Builders
     "PromptBuilder",
     "BinaryPromptBuilder",
@@ -65,9 +71,6 @@ __all__ = [
     "XMLChoiceFormat",
     "RegexRatingFormat",
     "XMLRatingFormat",
-    # Orchestration
-    "run_measurement",
-    "run_with_prompt",
     # Types
     "PreferenceType",
     "PreferencePrompt",
