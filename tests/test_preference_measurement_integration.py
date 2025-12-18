@@ -37,10 +37,10 @@ from src.preferences import (
     TaskScore,
     TaskCompletion,
     PreferenceType,
-    measure_dataset_preferences,
-    DatasetMeasurementConfig,
-    PairingStrategy,
+    measure_binary_preferences,
+    measure_ratings,
 )
+from src.preferences.config import DatasetMeasurementConfig, PairingStrategy
 
 
 pytestmark = pytest.mark.api
@@ -378,6 +378,61 @@ class TestPostTaskRatingXMLFormat:
         assert isinstance(result.result.score, float)
 
 
+class TestPostTaskRatingToolUseFormat:
+    """Test post-task rating measurement with ToolUseRatingFormat."""
+
+    def test_tool_call_returns_valid_rating(self, model, math_task):
+        """Tool call should return valid JSON rating after task completion."""
+        response_format = ToolUseRatingFormat()
+        builder = PostTaskRatingPromptBuilder(
+            measurer=TaskScoreMeasurer(),
+            response_format=response_format,
+            template=POST_TASK_RATING_TEMPLATE,
+        )
+
+        completion = TaskCompletion(task=math_task, text="The answer is 4.")
+        prompt = builder.build(math_task, completion)
+        assert prompt.kind == PreferenceType.POST_TASK_STATED
+        assert len(prompt.messages) == 3  # user, assistant, user
+
+        response_text = model.generate(
+            prompt.messages,
+            temperature=0.0,
+            tools=response_format.tools,
+        )
+
+        result = prompt.measurer.parse(response_text, prompt)
+        assert isinstance(result.result, TaskScore)
+        assert isinstance(result.result.score, float)
+
+    def test_tool_call_response_is_valid_json(self, model, creative_task):
+        """Tool call response should be parseable JSON with 'rating' key."""
+        import json
+
+        response_format = ToolUseRatingFormat()
+        builder = PostTaskRatingPromptBuilder(
+            measurer=TaskScoreMeasurer(),
+            response_format=response_format,
+            template=POST_TASK_RATING_TEMPLATE,
+        )
+
+        completion = TaskCompletion(
+            task=creative_task,
+            text="Waves crash on shore\nSalt spray kisses the warm wind\nPeace beneath the blue",
+        )
+        prompt = builder.build(creative_task, completion)
+
+        response_text = model.generate(
+            prompt.messages,
+            temperature=0.0,
+            tools=response_format.tools,
+        )
+
+        parsed = json.loads(response_text)
+        assert "rating" in parsed
+        assert isinstance(parsed["rating"], (int, float))
+
+
 class TestRatingToolUseFormat:
     """Test rating measurement with ToolUseRatingFormat."""
 
@@ -434,8 +489,8 @@ class TestRatingToolUseFormat:
 # =============================================================================
 
 
-class TestMeasureDatasetPreferences:
-    """Test the full measure_dataset_preferences pipeline."""
+class TestMeasurePreferences:
+    """Test the measure_binary_preferences and measure_ratings functions."""
 
     def test_binary_measurement_pipeline(self, model, math_task, creative_task):
         """Should run binary measurements and return valid results."""
@@ -446,26 +501,17 @@ class TestMeasureDatasetPreferences:
             template=BINARY_CHOICE_TEMPLATE,
         )
 
-        config = DatasetMeasurementConfig(
-            measurement_types=frozenset({"binary"}),
-            pairing_strategy=PairingStrategy.ALL_PAIRS,
-            num_samples=1,
+        pairs = [(math_task, creative_task)]
+        results = measure_binary_preferences(
+            model=model,
+            pairs=pairs,
+            builder=binary_builder,
             temperature=0.0,
         )
 
-        result = measure_dataset_preferences(
-            model=model,
-            tasks=[math_task, creative_task],
-            binary_builder=binary_builder,
-            config=config,
-        )
-
-        assert len(result["binary_comparisons"]) == 1
-        comparison = result["binary_comparisons"][0]
-        assert len(comparison["samples"]) == 1
-        sample = comparison["samples"][0]
-        assert isinstance(sample["response"].result, BinaryPreferenceMeasurement)
-        assert sample["response"].result.choice in ("a", "b")
+        assert len(results) == 1
+        assert isinstance(results[0], BinaryPreferenceMeasurement)
+        assert results[0].choice in ("a", "b")
 
     def test_rating_measurement_pipeline(self, model, math_task, creative_task):
         """Should run rating measurements and return valid results."""
@@ -476,30 +522,24 @@ class TestMeasureDatasetPreferences:
             template=PRE_TASK_RATING_TEMPLATE,
         )
 
-        config = DatasetMeasurementConfig(
-            measurement_types=frozenset({"rating"}),
-            num_samples=1,
+        tasks = [math_task, creative_task]
+        results = measure_ratings(
+            model=model,
+            tasks=tasks,
+            builder=rating_builder,
             temperature=0.0,
         )
 
-        result = measure_dataset_preferences(
-            model=model,
-            tasks=[math_task, creative_task],
-            rating_builder=rating_builder,
-            config=config,
-        )
-
-        assert len(result["task_ratings"]) == 2
-        for task_result in result["task_ratings"]:
-            assert len(task_result["samples"]) == 1
-            sample = task_result["samples"][0]
-            assert isinstance(sample["response"].result, TaskScore)
-            assert isinstance(sample["response"].result.score, float)
+        assert len(results) == 2
+        for score in results:
+            assert isinstance(score, TaskScore)
+            assert isinstance(score.score, float)
 
     def test_measurement_with_recorder(self, model, math_task, creative_task):
         """Should record measurements with different formats to YAML file."""
         from pathlib import Path
         from src import MeasurementRecorder
+        from src.preferences.measurement_recorder import MeasurementRecord
 
         output_path = Path(__file__).parent / "measurement_results.yaml"
 
@@ -507,104 +547,135 @@ class TestMeasureDatasetPreferences:
         if output_path.exists():
             output_path.unlink()
 
-        tasks = [math_task, creative_task]
         measurer = TaskScoreMeasurer()
 
-        config = DatasetMeasurementConfig(
-            measurement_types=frozenset({"binary", "rating"}),
-            pairing_strategy=PairingStrategy.ALL_PAIRS,
-            num_samples=1,
-            temperature=0.0,
-        )
+        def record_measurement(recorder, builder, tasks_for_record, measurement_type, response_format_name):
+            """Helper to run a measurement and record it."""
+            prompt = builder.build(*tasks_for_record)
+            tools = getattr(prompt.response_format, "tools", None)
+            response_text = model.generate(prompt.messages, temperature=0.0, tools=tools)
+
+            try:
+                response = prompt.measurer.parse(response_text, prompt)
+                if hasattr(response.result, "choice"):
+                    result_dict = {"choice": response.result.choice}
+                else:
+                    result_dict = {"score": response.result.score}
+            except Exception as e:
+                result_dict = {"error": str(e)}
+
+            prompt_text = "\n\n".join(
+                f"[{m['role']}]\n{m['content']}" for m in prompt.messages
+            )
+            record = MeasurementRecord(
+                model=model.model_name,
+                measurement_type=measurement_type,
+                tasks=[{"id": t.id, "prompt": t.prompt} for t in tasks_for_record],
+                response_format=response_format_name,
+                template=builder.template.name,
+                temperature=0.0,
+                sample_index=0,
+                prompt=prompt_text,
+                response=response_text,
+                result=result_dict,
+            )
+            recorder.record(record)
 
         with MeasurementRecorder(output_path) as recorder:
-            # 1. Regex formats
-            measure_dataset_preferences(
-                model=model,
-                tasks=tasks,
-                binary_builder=BinaryPromptBuilder(
+            # Binary choice formats
+            for fmt, fmt_name in [
+                (RegexChoiceFormat(), "RegexChoiceFormat"),
+                (XMLChoiceFormat(), "XMLChoiceFormat"),
+                (ToolUseChoiceFormat(), "ToolUseChoiceFormat"),
+            ]:
+                builder = BinaryPromptBuilder(
                     measurer=BinaryPreferenceMeasurer(),
                     preference_type=PreferenceType.PRE_TASK_STATED,
-                    response_format=RegexChoiceFormat(),
+                    response_format=fmt,
                     template=BINARY_CHOICE_TEMPLATE,
-                ),
-                rating_builder=PreTaskRatingPromptBuilder(
-                    measurer=measurer,
-                    response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
-                    template=PRE_TASK_RATING_TEMPLATE,
-                ),
-                config=config,
-                recorder=recorder,
-            )
+                )
+                record_measurement(recorder, builder, (math_task, creative_task), PreferenceType.PRE_TASK_STATED.name, fmt_name)
 
-            # 2. XML formats
-            measure_dataset_preferences(
-                model=model,
-                tasks=tasks,
-                binary_builder=BinaryPromptBuilder(
-                    measurer=BinaryPreferenceMeasurer(),
-                    preference_type=PreferenceType.PRE_TASK_STATED,
-                    response_format=XMLChoiceFormat(),
-                    template=BINARY_CHOICE_TEMPLATE,
-                ),
-                rating_builder=PreTaskRatingPromptBuilder(
-                    measurer=measurer,
-                    response_format=XMLRatingFormat(measurer.scale_min, measurer.scale_max),
-                    template=PRE_TASK_RATING_TEMPLATE,
-                ),
-                config=config,
-                recorder=recorder,
-            )
-
-            # 3. Tool use formats
-            measure_dataset_preferences(
-                model=model,
-                tasks=tasks,
-                binary_builder=BinaryPromptBuilder(
-                    measurer=BinaryPreferenceMeasurer(),
-                    preference_type=PreferenceType.PRE_TASK_STATED,
-                    response_format=ToolUseChoiceFormat(),
-                    template=BINARY_CHOICE_TEMPLATE,
-                ),
-                rating_builder=PreTaskRatingPromptBuilder(
-                    measurer=measurer,
-                    response_format=ToolUseRatingFormat(measurer.scale_min, measurer.scale_max),
-                    template=PRE_TASK_RATING_TEMPLATE,
-                ),
-                config=config,
-                recorder=recorder,
-            )
-
-            # 4. Completion format (revealed preference - binary only)
+            # Completion format (revealed preference)
             completion_model = HyperbolicModel(
                 model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
                 max_new_tokens=128,
             )
-            completion_config = DatasetMeasurementConfig(
-                measurement_types=frozenset({"binary"}),
-                pairing_strategy=PairingStrategy.ALL_PAIRS,
-                num_samples=1,
+            completion_builder = BinaryPromptBuilder(
+                measurer=BinaryPreferenceMeasurer(),
+                preference_type=PreferenceType.PRE_TASK_REVEALED,
+                response_format=CompletionChoiceFormat(),
+                template=BINARY_COMPLETION_TEMPLATE,
+            )
+            prompt = completion_builder.build(math_task, creative_task)
+            response_text = completion_model.generate(prompt.messages, temperature=0.0)
+            try:
+                response = prompt.measurer.parse(response_text, prompt)
+                result_dict = {"choice": response.result.choice}
+            except Exception as e:
+                result_dict = {"error": str(e)}
+            prompt_text = "\n\n".join(f"[{m['role']}]\n{m['content']}" for m in prompt.messages)
+            recorder.record(MeasurementRecord(
+                model=completion_model.model_name,
+                measurement_type=PreferenceType.PRE_TASK_REVEALED.name,
+                tasks=[{"id": math_task.id, "prompt": math_task.prompt}, {"id": creative_task.id, "prompt": creative_task.prompt}],
+                response_format="CompletionChoiceFormat",
+                template=completion_builder.template.name,
                 temperature=0.0,
+                sample_index=0,
+                prompt=prompt_text,
+                response=response_text,
+                result=result_dict,
+            ))
+
+            # Rating formats (pre-task)
+            for fmt, fmt_name in [
+                (RegexRatingFormat(measurer.scale_min, measurer.scale_max), "RegexRatingFormat"),
+                (XMLRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max), "XMLRatingFormat"),
+                (ToolUseRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max), "ToolUseRatingFormat"),
+            ]:
+                builder = PreTaskRatingPromptBuilder(
+                    measurer=measurer,
+                    response_format=fmt,
+                    template=PRE_TASK_RATING_TEMPLATE,
+                )
+                record_measurement(recorder, builder, (math_task,), PreferenceType.PRE_TASK_STATED.name, fmt_name)
+
+            # Post-task rating
+            post_task_builder = PostTaskRatingPromptBuilder(
+                measurer=measurer,
+                response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+                template=POST_TASK_RATING_TEMPLATE,
             )
-            measure_dataset_preferences(
-                model=completion_model,
-                tasks=tasks,
-                binary_builder=BinaryPromptBuilder(
-                    measurer=BinaryPreferenceMeasurer(),
-                    preference_type=PreferenceType.PRE_TASK_REVEALED,
-                    response_format=CompletionChoiceFormat(),
-                    template=BINARY_COMPLETION_TEMPLATE,
-                ),
-                config=completion_config,
-                recorder=recorder,
-            )
+            completion = TaskCompletion(task=math_task, text="The answer is 4.")
+            prompt = post_task_builder.build(math_task, completion)
+            response_text = model.generate(prompt.messages, temperature=0.0)
+            try:
+                response = prompt.measurer.parse(response_text, prompt)
+                result_dict = {"score": response.result.score}
+            except Exception as e:
+                result_dict = {"error": str(e)}
+            prompt_text = "\n\n".join(f"[{m['role']}]\n{m['content']}" for m in prompt.messages)
+            recorder.record(MeasurementRecord(
+                model=model.model_name,
+                measurement_type=PreferenceType.POST_TASK_STATED.name,
+                tasks=[{"id": math_task.id, "prompt": math_task.prompt}],
+                response_format="RegexRatingFormat",
+                template=post_task_builder.template.name,
+                temperature=0.0,
+                sample_index=0,
+                prompt=prompt_text,
+                response=response_text,
+                result=result_dict,
+            ))
 
         assert output_path.exists()
         content = output_path.read_text()
 
-        # Verify all measurement types recorded
-        assert "binary" in content
-        assert "rating" in content
+        # Verify all preference types recorded
+        assert PreferenceType.PRE_TASK_STATED.name in content
+        assert PreferenceType.PRE_TASK_REVEALED.name in content
+        assert PreferenceType.POST_TASK_STATED.name in content
 
         # Verify all format types recorded (including any that had errors)
         assert "RegexChoiceFormat" in content
