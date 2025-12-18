@@ -1,0 +1,21 @@
+[project]
+name = "preferences"
+version = "0.1.0"
+description = "A library for measuring AI model preferences"
+requires-python = ">=3.10"
+dependencies = [
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
