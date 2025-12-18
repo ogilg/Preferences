@@ -24,11 +24,13 @@ from src.preferences import (
     TaskScoreMeasurer,
     RegexChoiceFormat,
     XMLChoiceFormat,
+    CompletionChoiceFormat,
     RegexRatingFormat,
     XMLRatingFormat,
     ToolUseChoiceFormat,
     ToolUseRatingFormat,
     BINARY_CHOICE_TEMPLATE,
+    BINARY_COMPLETION_TEMPLATE,
     PRE_TASK_RATING_TEMPLATE,
     POST_TASK_RATING_TEMPLATE,
     BinaryPreferenceMeasurement,
@@ -55,6 +57,15 @@ def model():
     return HyperbolicModel(
         model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
         max_new_tokens=32,
+    )
+
+
+@pytest.fixture(scope="module")
+def completion_model():
+    """Model with higher token limit for task completion tests."""
+    return HyperbolicModel(
+        model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+        max_new_tokens=128,
     )
 
 
@@ -90,7 +101,7 @@ class TestBinaryChoiceRegexFormat:
         """Should parse A or B from model response."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=RegexChoiceFormat(),
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -111,7 +122,7 @@ class TestBinaryChoiceXMLFormat:
         """Should parse choice from XML tags."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=XMLChoiceFormat(),
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -172,7 +183,7 @@ class TestBinaryChoiceToolUseFormat:
         response_format = ToolUseChoiceFormat()
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=response_format,
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -198,7 +209,7 @@ class TestBinaryChoiceToolUseFormat:
         response_format = ToolUseChoiceFormat()
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=response_format,
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -215,6 +226,45 @@ class TestBinaryChoiceToolUseFormat:
         parsed = json.loads(response_text)
         assert "choice" in parsed
         assert parsed["choice"].upper() in ("A", "B")
+
+
+class TestBinaryChoiceCompletionFormat:
+    """Test binary preference measurement with CompletionChoiceFormat (revealed preference)."""
+
+    def test_parses_choice_from_task_completion(self, completion_model, math_task, creative_task):
+        """Model completes a task and we parse which one it chose."""
+        builder = BinaryPromptBuilder(
+            measurer=BinaryPreferenceMeasurer(),
+            preference_type=PreferenceType.PRE_TASK_REVEALED,
+            response_format=CompletionChoiceFormat(),
+            template=BINARY_COMPLETION_TEMPLATE,
+        )
+
+        prompt = builder.build(math_task, creative_task)
+        assert prompt.kind == PreferenceType.PRE_TASK_REVEALED
+
+        response_text = completion_model.generate(prompt.messages, temperature=0.0)
+        result = prompt.measurer.parse(response_text, prompt)
+
+        assert isinstance(result.result, BinaryPreferenceMeasurement)
+        assert result.result.choice in ("a", "b")
+        # Response should contain actual task completion content
+        assert len(response_text) > 10  # Not just "Task A:" but actual content
+
+    def test_response_contains_task_indicator(self, completion_model, math_task, creative_task):
+        """Response should start with Task A: or Task B: indicator."""
+        builder = BinaryPromptBuilder(
+            measurer=BinaryPreferenceMeasurer(),
+            preference_type=PreferenceType.PRE_TASK_REVEALED,
+            response_format=CompletionChoiceFormat(),
+            template=BINARY_COMPLETION_TEMPLATE,
+        )
+
+        prompt = builder.build(math_task, creative_task)
+        response_text = completion_model.generate(prompt.messages, temperature=0.0)
+
+        response_lower = response_text.lower()
+        assert "task a" in response_lower or "task b" in response_lower
 
 
 # =============================================================================
@@ -391,7 +441,7 @@ class TestMeasureDatasetPreferences:
         """Should run binary measurements and return valid results."""
         binary_builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=RegexChoiceFormat(),
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -474,7 +524,7 @@ class TestMeasureDatasetPreferences:
                 tasks=tasks,
                 binary_builder=BinaryPromptBuilder(
                     measurer=BinaryPreferenceMeasurer(),
-                    preference_type=PreferenceType.DISPOSITIONAL,
+                    preference_type=PreferenceType.PRE_TASK_STATED,
                     response_format=RegexChoiceFormat(),
                     template=BINARY_CHOICE_TEMPLATE,
                 ),
@@ -493,7 +543,7 @@ class TestMeasureDatasetPreferences:
                 tasks=tasks,
                 binary_builder=BinaryPromptBuilder(
                     measurer=BinaryPreferenceMeasurer(),
-                    preference_type=PreferenceType.DISPOSITIONAL,
+                    preference_type=PreferenceType.PRE_TASK_STATED,
                     response_format=XMLChoiceFormat(),
                     template=BINARY_CHOICE_TEMPLATE,
                 ),
@@ -512,7 +562,7 @@ class TestMeasureDatasetPreferences:
                 tasks=tasks,
                 binary_builder=BinaryPromptBuilder(
                     measurer=BinaryPreferenceMeasurer(),
-                    preference_type=PreferenceType.DISPOSITIONAL,
+                    preference_type=PreferenceType.PRE_TASK_STATED,
                     response_format=ToolUseChoiceFormat(),
                     template=BINARY_CHOICE_TEMPLATE,
                 ),
@@ -522,6 +572,30 @@ class TestMeasureDatasetPreferences:
                     template=PRE_TASK_RATING_TEMPLATE,
                 ),
                 config=config,
+                recorder=recorder,
+            )
+
+            # 4. Completion format (revealed preference - binary only)
+            completion_model = HyperbolicModel(
+                model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+                max_new_tokens=128,
+            )
+            completion_config = DatasetMeasurementConfig(
+                measurement_types=frozenset({"binary"}),
+                pairing_strategy=PairingStrategy.ALL_PAIRS,
+                num_samples=1,
+                temperature=0.0,
+            )
+            measure_dataset_preferences(
+                model=completion_model,
+                tasks=tasks,
+                binary_builder=BinaryPromptBuilder(
+                    measurer=BinaryPreferenceMeasurer(),
+                    preference_type=PreferenceType.PRE_TASK_REVEALED,
+                    response_format=CompletionChoiceFormat(),
+                    template=BINARY_COMPLETION_TEMPLATE,
+                ),
+                config=completion_config,
                 recorder=recorder,
             )
 
@@ -536,6 +610,7 @@ class TestMeasureDatasetPreferences:
         assert "RegexChoiceFormat" in content
         assert "XMLChoiceFormat" in content
         assert "ToolUseChoiceFormat" in content
+        assert "CompletionChoiceFormat" in content
         assert "RegexRatingFormat" in content
         assert "XMLRatingFormat" in content
         assert "ToolUseRatingFormat" in content

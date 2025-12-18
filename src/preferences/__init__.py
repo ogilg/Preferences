@@ -1,5 +1,6 @@
 from .config import DatasetMeasurementConfig, PairingStrategy
 from .measure_dataset_preferences import measure_dataset_preferences
+from .measure import measure_binary_preferences, measure_ratings
 from .prompt_builders import (
     PromptBuilder,
     BinaryPromptBuilder,
@@ -15,6 +16,7 @@ from .templates import (
     pre_task_rating_template,
     post_task_rating_template,
     BINARY_CHOICE_TEMPLATE,
+    BINARY_COMPLETION_TEMPLATE,
     PRE_TASK_RATING_TEMPLATE,
     POST_TASK_RATING_TEMPLATE,
 )
@@ -27,8 +29,11 @@ from .response_format import (
     ResponseFormat,
     RegexChoiceFormat,
     XMLChoiceFormat,
+    CompletionChoiceFormat,
     RegexRatingFormat,
     XMLRatingFormat,
+    ToolUseChoiceFormat,
+    ToolUseRatingFormat,
 )
 from ..types import (
     PreferenceType,
@@ -59,6 +64,7 @@ __all__ = [
     "pre_task_rating_template",
     "post_task_rating_template",
     "BINARY_CHOICE_TEMPLATE",
+    "BINARY_COMPLETION_TEMPLATE",
     "PRE_TASK_RATING_TEMPLATE",
     "POST_TASK_RATING_TEMPLATE",
     # Measurers
@@ -69,8 +75,11 @@ __all__ = [
     "ResponseFormat",
     "RegexChoiceFormat",
     "XMLChoiceFormat",
+    "CompletionChoiceFormat",
     "RegexRatingFormat",
     "XMLRatingFormat",
+    "ToolUseChoiceFormat",
+    "ToolUseRatingFormat",
     # Types
     "PreferenceType",
     "PreferencePrompt",

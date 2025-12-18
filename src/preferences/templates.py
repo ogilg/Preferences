@@ -122,6 +122,17 @@ BINARY_CHOICE_TEMPLATE = binary_template(
     description="Default binary choice with neutral framing",
 )
 
+BINARY_COMPLETION_TEMPLATE = binary_template(
+    name="binary_completion_v1",
+    template=(
+        "You will be given two tasks. Choose one and complete it.\n"
+        "{format_instruction}\n\n"
+        "Task A:\n{task_a}\n\n"
+        "Task B:\n{task_b}"
+    ),
+    description="Binary choice through task completion (revealed preference)",
+)
+
 PRE_TASK_RATING_TEMPLATE = pre_task_rating_template(
     name="pre_task_rating_v1",
     template=(

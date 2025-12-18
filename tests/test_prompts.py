@@ -135,7 +135,7 @@ class TestBinaryPromptBuilder:
         response_format = RegexChoiceFormat()
         builder = BinaryPromptBuilder(
             measurer=measurer,
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=response_format,
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -149,7 +149,7 @@ class TestBinaryPromptBuilder:
         assert sample_task_a in prompt.tasks
         assert sample_task_b in prompt.tasks
         # Components carried through
-        assert prompt.kind == PreferenceType.DISPOSITIONAL
+        assert prompt.kind == PreferenceType.PRE_TASK_STATED
         assert prompt.measurer is measurer
         assert prompt.response_format is response_format
 
@@ -315,7 +315,7 @@ class TestXMLResponseFormats:
         """Builders should work with custom XML response format."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=XMLChoiceFormat(),
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -408,7 +408,7 @@ class TestToolUseChoiceFormat:
         fmt = ToolUseChoiceFormat()
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
-            preference_type=PreferenceType.DISPOSITIONAL,
+            preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=fmt,
             template=BINARY_CHOICE_TEMPLATE,
         )
@@ -520,3 +520,83 @@ class TestToolUseRatingFormat:
         # Test parsing JSON response
         response = prompt.measurer.parse('{"rating": 8}', prompt)
         assert response.result.score == 8.0
+
+
+class TestCompletionChoiceFormat:
+    """Tests for completion choice format (revealed preference through task completion)."""
+
+    def test_format_instruction(self):
+        """Format instruction should ask model to prefix with Task A/B."""
+        from src.preferences import CompletionChoiceFormat
+
+        fmt = CompletionChoiceFormat()
+        instruction = fmt.format_instruction()
+
+        assert "Task A:" in instruction
+        assert "Task B:" in instruction
+
+    def test_parse_task_a_prefix(self):
+        """Should parse Task A prefix at start of response."""
+        from src.preferences import CompletionChoiceFormat
+
+        fmt = CompletionChoiceFormat()
+
+        assert fmt.parse("Task A: Here is my haiku...") == "a"
+        assert fmt.parse("task a: lowercase also works") == "a"
+        assert fmt.parse("  Task A: with leading whitespace") == "a"
+
+    def test_parse_task_b_prefix(self):
+        """Should parse Task B prefix at start of response."""
+        from src.preferences import CompletionChoiceFormat
+
+        fmt = CompletionChoiceFormat()
+
+        assert fmt.parse("Task B: Solving the integral...") == "b"
+        assert fmt.parse("task b: lowercase also works") == "b"
+        assert fmt.parse("  Task B: with leading whitespace") == "b"
+
+    def test_parse_first_occurrence_wins(self):
+        """When both Task A and Task B appear, first one wins."""
+        from src.preferences import CompletionChoiceFormat
+
+        fmt = CompletionChoiceFormat()
+
+        # Task A comes first
+        assert fmt.parse("Task A: I'll do this because Task B seemed harder") == "a"
+        # Task B comes first
+        assert fmt.parse("Task B: I chose this over Task A") == "b"
+
+    def test_raises_on_missing_task_indicator(self):
+        """Should raise ValueError when no Task A/B indicator found."""
+        from src.preferences import CompletionChoiceFormat
+
+        fmt = CompletionChoiceFormat()
+
+        with pytest.raises(ValueError):
+            fmt.parse("Here is my response without a task indicator")
+
+        with pytest.raises(ValueError):
+            fmt.parse("I chose option A")  # "option A" not "Task A"
+
+    def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
+        """BinaryPromptBuilder should work with CompletionChoiceFormat."""
+        from src.preferences import CompletionChoiceFormat, BINARY_COMPLETION_TEMPLATE
+
+        fmt = CompletionChoiceFormat()
+        builder = BinaryPromptBuilder(
+            measurer=BinaryPreferenceMeasurer(),
+            preference_type=PreferenceType.PRE_TASK_REVEALED,
+            response_format=fmt,
+            template=BINARY_COMPLETION_TEMPLATE,
+        )
+
+        prompt = builder.build(sample_task_a, sample_task_b)
+        prompt_content = get_all_content(prompt)
+
+        # Template should ask model to complete a task
+        assert "complete" in prompt_content.lower()
+        assert "Task A:" in prompt_content or "task a:" in prompt_content.lower()
+
+        # Test parsing completion response
+        response = prompt.measurer.parse("Task A: Cherry blossoms bloom...", prompt)
+        assert response.result.choice == "a"

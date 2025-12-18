@@ -11,7 +11,6 @@ class PairingStrategy(str, Enum):
 
     ALL_PAIRS = "all_pairs"  # n(n-1)/2 unique pairs
     RANDOM_PAIRS = "random_pairs"  # Random sample of pairs
-    ADJACENT_PAIRS = "adjacent"  # Only adjacent tasks in the list
 
 
 class DatasetMeasurementConfig(BaseModel, frozen=True):

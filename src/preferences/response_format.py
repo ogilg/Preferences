@@ -149,6 +149,35 @@ class XMLChoiceFormat(BaseChoiceFormat):
         return None
 
 
+class CompletionChoiceFormat(BaseChoiceFormat):
+    """Parse choice from task completion - model completes one of two tasks.
+
+    The model is asked to complete one of two tasks and indicate which one
+    by prefixing with "Task A:" or "Task B:". This measures revealed preference
+    through behavior rather than stated preference.
+    """
+
+    def format_instruction(self) -> str:
+        return "Begin with 'Task A:' or 'Task B:' to indicate your choice, then complete that task."
+
+    def _extract_choice(self, response: str) -> str | None:
+        response_stripped = response.strip().lower()
+
+        # Look for task indicators at or near the start
+        a_pos = response_stripped.find("task a")
+        b_pos = response_stripped.find("task b")
+
+        if a_pos == -1 and b_pos == -1:
+            return None
+        elif a_pos == -1:
+            return "b"
+        elif b_pos == -1:
+            return "a"
+        else:
+            # Both found - return whichever comes first
+            return "a" if a_pos < b_pos else "b"
+
+
 # --- Rating Formats (for numerical scores) ---
 
 

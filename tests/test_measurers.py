@@ -46,7 +46,7 @@ class TestBinaryPreferenceMeasurer:
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Choose A or B"}],
             tasks=[sample_task_a, sample_task_b],
-            kind=PreferenceType.DISPOSITIONAL,
+            kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexChoiceFormat(),
         )
@@ -57,7 +57,7 @@ class TestBinaryPreferenceMeasurer:
         assert response.result.choice == "a"
         assert response.result.task_a == sample_task_a
         assert response.result.task_b == sample_task_b
-        assert response.result.preference_type == PreferenceType.DISPOSITIONAL
+        assert response.result.preference_type == PreferenceType.PRE_TASK_STATED
 
     def test_parse_choice_b(self, sample_task_a, sample_task_b):
         """Should correctly parse choice B."""
@@ -65,7 +65,7 @@ class TestBinaryPreferenceMeasurer:
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Choose A or B"}],
             tasks=[sample_task_a, sample_task_b],
-            kind=PreferenceType.DISPOSITIONAL,
+            kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexChoiceFormat(),
         )
@@ -80,7 +80,7 @@ class TestBinaryPreferenceMeasurer:
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Choose A or B"}],
             tasks=[sample_task_a, sample_task_b],
-            kind=PreferenceType.DISPOSITIONAL,
+            kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexChoiceFormat(),
         )

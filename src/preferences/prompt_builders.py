@@ -51,7 +51,10 @@ class BinaryPromptBuilder(PromptBuilder):
         response_format: ResponseFormat[Literal["a", "b"]],
         template: PromptTemplate,
     ):
-        assert preference_type in {PreferenceType.DISPOSITIONAL, PreferenceType.PRE_TASK_STATED}
+        assert preference_type in {
+            PreferenceType.PRE_TASK_STATED,
+            PreferenceType.PRE_TASK_REVEALED,
+        }
         self.measurer = measurer
         self.preference_type = preference_type
         self.response_format = response_format

@@ -19,8 +19,8 @@ class Message(TypedDict):
 
 
 class PreferenceType(Enum):
-    DISPOSITIONAL = auto()
     PRE_TASK_STATED = auto()
+    PRE_TASK_REVEALED = auto()  
     POST_TASK_STATED = auto()
 
 

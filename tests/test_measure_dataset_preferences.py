@@ -121,17 +121,6 @@ class TestGeneratePairs:
         for task in tasks:
             assert task in all_tasks_in_pairs
 
-    def test_adjacent_pairs_strategy(self, tasks):
-        """ADJACENT_PAIRS should generate n-1 pairs of consecutive tasks."""
-        config = DatasetMeasurementConfig(pairing_strategy=PairingStrategy.ADJACENT_PAIRS)
-
-        pairs = _generate_pairs(tasks, config)
-
-        # 3 tasks -> 2 pairs: (a,b), (b,c)
-        assert len(pairs) == 2
-        assert pairs[0] == (tasks[0], tasks[1])
-        assert pairs[1] == (tasks[1], tasks[2])
-
     def test_random_pairs_strategy_samples_subset(self, tasks):
         """RANDOM_PAIRS with max_pairs should sample at most max_pairs pairs."""
         config = DatasetMeasurementConfig(
@@ -400,10 +389,6 @@ class TestMeasureDatasetPreferences:
             measurement_types=frozenset({"binary"}),
             pairing_strategy=PairingStrategy.ALL_PAIRS,
         )
-        config_adjacent = DatasetMeasurementConfig(
-            measurement_types=frozenset({"binary"}),
-            pairing_strategy=PairingStrategy.ADJACENT_PAIRS,
-        )
 
         result_all = measure_dataset_preferences(
             model=mock_model,
@@ -411,15 +396,9 @@ class TestMeasureDatasetPreferences:
             binary_builder=mock_binary_builder,
             config=config_all,
         )
-        result_adjacent = measure_dataset_preferences(
-            model=mock_model,
-            tasks=tasks,
-            binary_builder=mock_binary_builder,
-            config=config_adjacent,
-        )
+
 
         assert len(result_all["binary_comparisons"]) == 3  # n(n-1)/2
-        assert len(result_adjacent["binary_comparisons"]) == 2  # n-1
 
     def test_empty_measurement_types_returns_empty_results(self, mock_model, tasks):
         """Empty measurement_types should return empty result lists."""
