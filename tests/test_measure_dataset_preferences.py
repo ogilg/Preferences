@@ -76,6 +76,9 @@ def mock_prompt():
     """Create a mock PreferencePrompt."""
     prompt = Mock(spec=PreferencePrompt)
     prompt.messages = [{"role": "user", "content": "test"}]
+    # Mock response_format with no tools (for non-tool-use tests)
+    prompt.response_format = Mock()
+    prompt.response_format.tools = None
     return prompt
 
 

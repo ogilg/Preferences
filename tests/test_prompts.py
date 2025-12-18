@@ -339,3 +339,184 @@ class TestXMLResponseFormats:
 
         response = prompt.measurer.parse("<rating>7</rating>", prompt)
         assert response.result.score == 7.0
+
+
+class TestToolUseChoiceFormat:
+    """Tests for tool use choice format."""
+
+    def test_tools_property_returns_valid_definition(self):
+        """ToolUseChoiceFormat should return valid tool definitions."""
+        from src.preferences import ToolUseChoiceFormat
+
+        fmt = ToolUseChoiceFormat()
+
+        assert fmt.tools is not None
+        assert len(fmt.tools) == 1
+        assert fmt.tools[0]["type"] == "function"
+        assert fmt.tools[0]["function"]["name"] == "submit_choice"
+        assert "choice" in fmt.tools[0]["function"]["parameters"]["properties"]
+
+    def test_format_instruction_mentions_tool(self):
+        """Format instruction should reference tool use."""
+        from src.preferences import ToolUseChoiceFormat
+
+        fmt = ToolUseChoiceFormat()
+        instruction = fmt.format_instruction()
+
+        assert "submit_choice" in instruction
+
+    def test_parse_json_choice_a(self):
+        """Should parse JSON with choice A."""
+        from src.preferences import ToolUseChoiceFormat
+
+        fmt = ToolUseChoiceFormat()
+
+        assert fmt.parse('{"choice": "A"}') == "a"
+        assert fmt.parse('{"choice": "a"}') == "a"
+
+    def test_parse_json_choice_b(self):
+        """Should parse JSON with choice B."""
+        from src.preferences import ToolUseChoiceFormat
+
+        fmt = ToolUseChoiceFormat()
+
+        assert fmt.parse('{"choice": "B"}') == "b"
+        assert fmt.parse('{"choice": "b"}') == "b"
+
+    def test_raises_on_invalid_json(self):
+        """Should raise ValueError when JSON parsing fails."""
+        from src.preferences import ToolUseChoiceFormat
+
+        fmt = ToolUseChoiceFormat()
+
+        with pytest.raises(ValueError):
+            fmt.parse("I choose A")  # Not valid JSON
+
+    def test_raises_on_invalid_choice_value(self):
+        """Should raise ValueError when choice is not A or B."""
+        from src.preferences import ToolUseChoiceFormat
+
+        fmt = ToolUseChoiceFormat()
+
+        with pytest.raises(ValueError):
+            fmt.parse('{"choice": "C"}')
+
+    def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
+        """BinaryPromptBuilder should work with ToolUseChoiceFormat."""
+        from src.preferences import ToolUseChoiceFormat
+
+        fmt = ToolUseChoiceFormat()
+        builder = BinaryPromptBuilder(
+            measurer=BinaryPreferenceMeasurer(),
+            preference_type=PreferenceType.DISPOSITIONAL,
+            response_format=fmt,
+            template=BINARY_CHOICE_TEMPLATE,
+        )
+
+        prompt = builder.build(sample_task_a, sample_task_b)
+        assert "submit_choice" in get_all_content(prompt)
+
+        # Test parsing JSON response
+        response = prompt.measurer.parse('{"choice": "A"}', prompt)
+        assert response.result.choice == "a"
+
+
+class TestToolUseRatingFormat:
+    """Tests for tool use rating format."""
+
+    def test_tools_property_returns_valid_definition(self):
+        """ToolUseRatingFormat should return valid tool definitions."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat()
+
+        assert fmt.tools is not None
+        assert len(fmt.tools) == 1
+        assert fmt.tools[0]["type"] == "function"
+        assert fmt.tools[0]["function"]["name"] == "submit_rating"
+        assert "rating" in fmt.tools[0]["function"]["parameters"]["properties"]
+
+    def test_tools_include_scale_in_description(self):
+        """Tool description should include scale bounds."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat(scale_min=0, scale_max=100)
+        desc = fmt.tools[0]["function"]["parameters"]["properties"]["rating"]["description"]
+
+        assert "0" in desc
+        assert "100" in desc
+
+    def test_format_instruction_mentions_tool_and_scale(self):
+        """Format instruction should reference tool and scale."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat(scale_min=1, scale_max=10)
+        instruction = fmt.format_instruction()
+
+        assert "submit_rating" in instruction
+        assert "1" in instruction
+        assert "10" in instruction
+
+    def test_parse_json_integer_rating(self):
+        """Should parse JSON with integer rating."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat()
+
+        assert fmt.parse('{"rating": 7}') == 7.0
+        assert fmt.parse('{"rating": 1}') == 1.0
+        assert fmt.parse('{"rating": 10}') == 10.0
+
+    def test_parse_json_float_rating(self):
+        """Should parse JSON with float rating."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat()
+
+        assert fmt.parse('{"rating": 7.5}') == 7.5
+        assert fmt.parse('{"rating": 3.14}') == 3.14
+
+    def test_raises_on_invalid_json(self):
+        """Should raise ValueError when JSON parsing fails."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat()
+
+        with pytest.raises(ValueError):
+            fmt.parse("My rating is 7")  # Not valid JSON
+
+    def test_raises_on_missing_rating_key(self):
+        """Should raise ValueError when rating key is missing."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat()
+
+        with pytest.raises(ValueError):
+            fmt.parse('{"score": 7}')  # Wrong key
+
+    def test_raises_on_non_numeric_rating(self):
+        """Should raise ValueError when rating is not a number."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat()
+
+        with pytest.raises(ValueError):
+            fmt.parse('{"rating": "seven"}')
+
+    def test_builder_with_tool_use_format(self, sample_task_a):
+        """PreTaskRatingPromptBuilder should work with ToolUseRatingFormat."""
+        from src.preferences import ToolUseRatingFormat
+
+        fmt = ToolUseRatingFormat()
+        builder = PreTaskRatingPromptBuilder(
+            measurer=TaskScoreMeasurer(),
+            response_format=fmt,
+            template=PRE_TASK_RATING_TEMPLATE,
+        )
+
+        prompt = builder.build(sample_task_a)
+        assert "submit_rating" in get_all_content(prompt)
+
+        # Test parsing JSON response
+        response = prompt.measurer.parse('{"rating": 8}', prompt)
+        assert response.result.score == 8.0

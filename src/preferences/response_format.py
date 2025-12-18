@@ -1,6 +1,7 @@
+import json
 import re
 from abc import ABC, abstractmethod
-from typing import Protocol, Literal, TypeVar
+from typing import Protocol, Literal, TypeVar, Any
 
 from ..constants import (
     DEFAULT_SCALE_MIN,
@@ -10,6 +11,39 @@ from ..constants import (
 )
 
 T = TypeVar("T")
+
+
+# --- Tool Definition Helpers ---
+
+
+def _make_tool(
+    name: str,
+    description: str,
+    properties: dict[str, Any],
+    required: list[str],
+) -> dict[str, Any]:
+    """Create an OpenAI-compatible tool definition."""
+    return {
+        "type": "function",
+        "function": {
+            "name": name,
+            "description": description,
+            "parameters": {
+                "type": "object",
+                "properties": properties,
+                "required": required,
+            },
+        },
+    }
+
+
+def _parse_tool_json(response: str) -> dict[str, Any] | None:
+    """Parse JSON from tool call response. Returns None on failure."""
+    try:
+        result = json.loads(response)
+        return result if isinstance(result, dict) else None
+    except (json.JSONDecodeError, TypeError):
+        return None
 
 
 class ResponseFormat(Protocol[T]):
@@ -144,11 +178,89 @@ class XMLRatingFormat(BaseRatingFormat):
         self.tag = tag
 
     def format_instruction(self) -> str:
-        return f"Respond with your rating in XML tags: <{self.tag}>NUMBER</{self.tag}> where NUMBER is from {self.scale_min} to {self.scale_max}."
+        # Use concrete example to avoid model using number as tag name
+        mid = (self.scale_min + self.scale_max) // 2
+        return f"Respond with your rating in <{self.tag}> tags. Example: <{self.tag}>{mid}</{self.tag}>"
 
     def _extract_number(self, response: str) -> float | None:
         pattern = rf"<{self.tag}>\s*(-?\d+\.?\d*)\s*</{self.tag}>"
         match = re.search(pattern, response)
         if match:
             return float(match.group(1))
+        return None
+
+
+# --- Tool Use Formats ---
+
+
+class ToolUseChoiceFormat(BaseChoiceFormat):
+    """Parse choice from tool use / function calling response.
+
+    Uses the model's native tool calling for structured output.
+    Parse failures raise ValueError to be recorded.
+    """
+
+    @property
+    def tools(self) -> list[dict[str, Any]]:
+        """Return the tool definitions for the API call."""
+        return [
+            _make_tool(
+                name="submit_choice",
+                description="Submit your choice of which task you prefer.",
+                properties={
+                    "choice": {
+                        "type": "string",
+                        "enum": ["A", "B"],
+                        "description": "Your choice: 'A' for Task A, 'B' for Task B.",
+                    }
+                },
+                required=["choice"],
+            )
+        ]
+
+    def format_instruction(self) -> str:
+        return "Use the submit_choice tool to indicate your preference."
+
+    def _extract_choice(self, response: str) -> str | None:
+        args = _parse_tool_json(response)
+        if args and "choice" in args:
+            choice = args["choice"]
+            if isinstance(choice, str) and choice.upper() in ("A", "B"):
+                return choice.lower()
+        return None
+
+
+class ToolUseRatingFormat(BaseRatingFormat):
+    """Parse rating from tool use / function calling response.
+
+    Uses the model's native tool calling for structured output.
+    Parse failures raise ValueError to be recorded.
+    """
+
+    @property
+    def tools(self) -> list[dict[str, Any]]:
+        """Return the tool definitions for the API call."""
+        return [
+            _make_tool(
+                name="submit_rating",
+                description="Submit your rating for the task.",
+                properties={
+                    "rating": {
+                        "type": "number",
+                        "description": f"Your rating from {self.scale_min} to {self.scale_max}.",
+                    }
+                },
+                required=["rating"],
+            )
+        ]
+
+    def format_instruction(self) -> str:
+        return f"Use the submit_rating tool with a number from {self.scale_min} to {self.scale_max}."
+
+    def _extract_number(self, response: str) -> float | None:
+        args = _parse_tool_json(response)
+        if args and "rating" in args:
+            rating = args["rating"]
+            if isinstance(rating, (int, float)):
+                return float(rating)
         return None

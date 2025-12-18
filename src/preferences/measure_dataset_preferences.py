@@ -149,33 +149,70 @@ def _sample_measurement(
     measurement_type: str,
     recorder: MeasurementRecorder | None,
 ) -> list[dict[str, Any]]:
-    """Run a measurement N times and collect all samples."""
+    """Run a measurement N times and collect all samples.
+
+    Errors during generation or parsing are caught and recorded rather than
+    raised, allowing the pipeline to continue with remaining measurements.
+    """
+    from ..models import ToolCallError
     from .measurement_recorder import MeasurementRecord
 
     samples = []
     for i in range(config.num_samples):
         prompt = builder.build(*args)
-        text = model.generate(prompt.messages, temperature=config.temperature)
-        response: MeasurementResponse = prompt.measurer.parse(text, prompt)
-        samples.append({
+        tools = getattr(prompt.response_format, "tools", None)
+
+        prompt_text = "\n\n".join(
+            f"[{m['role']}]\n{m['content']}" for m in prompt.messages
+        )
+
+        # Try to generate and parse, catching any errors
+        text: str | None = None
+        response: MeasurementResponse | None = None
+        error: str | None = None
+
+        try:
+            text = model.generate(
+                prompt.messages,
+                temperature=config.temperature,
+                tools=tools,
+            )
+            response = prompt.measurer.parse(text, prompt)
+        except ToolCallError as e:
+            error = f"ToolCallError: {e}"
+            text = text or ""
+        except ValueError as e:
+            error = f"ParseError: {e}"
+            text = text or ""
+        except Exception as e:
+            error = f"{type(e).__name__}: {e}"
+            text = text or ""
+
+        # Build sample record
+        sample: dict[str, Any] = {
             "sample_index": i,
-            "response": response,
             "temperature": config.temperature,
-        })
+        }
+        if response is not None:
+            sample["response"] = response
+        if error is not None:
+            sample["error"] = error
+            sample["raw_response"] = text
+
+        samples.append(sample)
 
         # Record if recorder provided
         if recorder is not None:
-            result_obj = response.result
-            if isinstance(result_obj, BinaryPreferenceMeasurement):
-                result_dict = {"choice": result_obj.choice}
-            elif isinstance(result_obj, TaskScore):
-                result_dict = {"score": result_obj.score}
+            if response is not None:
+                result_obj = response.result
+                if isinstance(result_obj, BinaryPreferenceMeasurement):
+                    result_dict: dict[str, Any] = {"choice": result_obj.choice}
+                elif isinstance(result_obj, TaskScore):
+                    result_dict = {"score": result_obj.score}
+                else:
+                    result_dict = {}
             else:
-                result_dict = {}
-
-            prompt_text = "\n\n".join(
-                f"[{m['role']}]\n{m['content']}" for m in prompt.messages
-            )
+                result_dict = {"error": error}
 
             record = MeasurementRecord(
                 model=model.model_name,
