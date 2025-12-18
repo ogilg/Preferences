@@ -13,7 +13,7 @@ from .config import DatasetMeasurementConfig, PairingStrategy
 if TYPE_CHECKING:
     from ..task_data import Task
     from .prompt_builders import PromptBuilder
-    from ..measurement_recorder import MeasurementRecorder
+    from .measurement_recorder import MeasurementRecorder
 
 
 def measure_dataset_preferences(
@@ -150,7 +150,7 @@ def _sample_measurement(
     recorder: MeasurementRecorder | None,
 ) -> list[dict[str, Any]]:
     """Run a measurement N times and collect all samples."""
-    from ..measurement_recorder import MeasurementRecord
+    from .measurement_recorder import MeasurementRecord
 
     samples = []
     for i in range(config.num_samples):

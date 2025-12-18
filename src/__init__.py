@@ -7,7 +7,7 @@ from .types import (
     TaskScore,
     TaskCompletion,
 )
-from .measurement_recorder import MeasurementRecorder
+from .preferences.measurement_recorder import MeasurementRecorder
 
 __all__ = [
     "Message",

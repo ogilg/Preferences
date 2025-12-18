@@ -6,8 +6,6 @@ from typing import Any
 
 import yaml
 
-from .types import Message
-
 
 @dataclass
 class MeasurementRecord:
