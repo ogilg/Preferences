@@ -4,6 +4,9 @@ from nnsight import LanguageModel
 
 from src.types import Message
 
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class NDIFModel:
     """Model via NDIF using nnsight."""
