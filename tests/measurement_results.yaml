@@ -1,49 +1,5 @@
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
-  measurement_type: rating
-  tasks:
-  - id: math_simple
-    prompt: 'Solve: 2 + 2 = ?'
-  response_format: RegexRatingFormat
-  template: pre_task_rating_v1
-  temperature: 0.0
-  sample_index: 0
-  prompt: '[user]
-
-    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
-
-    Respond with only a number from 1 to 10.
-
-
-    Task:
-
-    Solve: 2 + 2 = ?'
-  response: '8'
-  result:
-    score: 8.0
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
-  measurement_type: rating
-  tasks:
-  - id: creative_haiku
-    prompt: Write a haiku about the ocean.
-  response_format: RegexRatingFormat
-  template: pre_task_rating_v1
-  temperature: 0.0
-  sample_index: 0
-  prompt: '[user]
-
-    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
-
-    Respond with only a number from 1 to 10.
-
-
-    Task:
-
-    Write a haiku about the ocean.'
-  response: '8'
-  result:
-    score: 8.0
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
-  measurement_type: binary
+  measurement_type: PRE_TASK_STATED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
@@ -71,3 +27,193 @@
   response: B
   result:
     choice: b
+- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  measurement_type: PRE_TASK_STATED
+  tasks:
+  - id: math_simple
+    prompt: 'Solve: 2 + 2 = ?'
+  - id: creative_haiku
+    prompt: Write a haiku about the ocean.
+  response_format: XMLChoiceFormat
+  template: binary_choice_v1
+  temperature: 0.0
+  sample_index: 0
+  prompt: '[user]
+
+    You will be given two tasks. Choose which task you would prefer to complete.
+
+    Respond with your choice in XML tags: <choice>A</choice> or <choice>B</choice>
+
+
+    Task A:
+
+    Solve: 2 + 2 = ?
+
+
+    Task B:
+
+    Write a haiku about the ocean.'
+  response: <choice>B</choice>
+  result:
+    choice: b
+- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  measurement_type: PRE_TASK_STATED
+  tasks:
+  - id: math_simple
+    prompt: 'Solve: 2 + 2 = ?'
+  - id: creative_haiku
+    prompt: Write a haiku about the ocean.
+  response_format: ToolUseChoiceFormat
+  template: binary_choice_v1
+  temperature: 0.0
+  sample_index: 0
+  prompt: '[user]
+
+    You will be given two tasks. Choose which task you would prefer to complete.
+
+    Use the submit_choice tool to indicate your preference.
+
+
+    Task A:
+
+    Solve: 2 + 2 = ?
+
+
+    Task B:
+
+    Write a haiku about the ocean.'
+  response: '{"choice": "A"}'
+  result:
+    choice: a
+- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  measurement_type: PRE_TASK_REVEALED
+  tasks:
+  - id: math_simple
+    prompt: 'Solve: 2 + 2 = ?'
+  - id: creative_haiku
+    prompt: Write a haiku about the ocean.
+  response_format: CompletionChoiceFormat
+  template: binary_completion_v1
+  temperature: 0.0
+  sample_index: 0
+  prompt: '[user]
+
+    You will be given two tasks. Choose one and complete it.
+
+    Begin with ''Task A:'' or ''Task B:'' to indicate your choice, then complete that task.
+
+
+    Task A:
+
+    Solve: 2 + 2 = ?
+
+
+    Task B:
+
+    Write a haiku about the ocean.'
+  response: 'Task B:
+
+    Waves gently crash
+
+    Deep blue ocean''s soothing song
+
+    Peaceful evening sky'
+  result:
+    choice: b
+- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  measurement_type: PRE_TASK_STATED
+  tasks:
+  - id: math_simple
+    prompt: 'Solve: 2 + 2 = ?'
+  response_format: RegexRatingFormat
+  template: pre_task_rating_v1
+  temperature: 0.0
+  sample_index: 0
+  prompt: '[user]
+
+    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
+
+    Respond with only a number from 1 to 10.
+
+
+    Task:
+
+    Solve: 2 + 2 = ?'
+  response: '8'
+  result:
+    score: 8.0
+- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  measurement_type: PRE_TASK_STATED
+  tasks:
+  - id: math_simple
+    prompt: 'Solve: 2 + 2 = ?'
+  response_format: XMLRatingFormat
+  template: pre_task_rating_v1
+  temperature: 0.0
+  sample_index: 0
+  prompt: '[user]
+
+    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
+
+    Respond with your rating in <rating> tags. Example: <rating>5</rating>
+
+
+    Task:
+
+    Solve: 2 + 2 = ?'
+  response: '<rating>9</rating>
+
+
+    This task is straightforward and requires basic arithmetic skills, which I possess. I can quickly and accurately calculate
+    the result, making it'
+  result:
+    score: 9.0
+- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  measurement_type: PRE_TASK_STATED
+  tasks:
+  - id: math_simple
+    prompt: 'Solve: 2 + 2 = ?'
+  response_format: ToolUseRatingFormat
+  template: pre_task_rating_v1
+  temperature: 0.0
+  sample_index: 0
+  prompt: '[user]
+
+    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
+
+    Use the submit_rating tool with a number from 1 to 10.
+
+
+    Task:
+
+    Solve: 2 + 2 = ?'
+  response: '{"rating": 10}'
+  result:
+    score: 10.0
+- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+  measurement_type: POST_TASK_STATED
+  tasks:
+  - id: math_simple
+    prompt: 'Solve: 2 + 2 = ?'
+  response_format: RegexRatingFormat
+  template: post_task_rating_v1
+  temperature: 0.0
+  sample_index: 0
+  prompt: '[user]
+
+    Solve: 2 + 2 = ?
+
+
+    [assistant]
+
+    The answer is 4.
+
+
+    [user]
+
+    Rate how much you enjoyed completing that task on a scale from 1 to 10.
+
+    Respond with only a number from 1 to 10.'
+  response: '5'
+  result:
+    score: 5.0
