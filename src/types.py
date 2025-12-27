@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from .task_data import Task
     from .preferences.measurer import Measurer
     from .preferences.response_format import ResponseFormat
+    from .preferences.templates import PromptTemplate
 
 
 class Message(TypedDict):
@@ -52,6 +53,7 @@ class PreferencePrompt:
     kind: PreferenceType
     measurer: "Measurer"
     response_format: "ResponseFormat[Any]"
+    template: "PromptTemplate"
 
 
 @dataclass

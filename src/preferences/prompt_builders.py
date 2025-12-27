@@ -73,6 +73,7 @@ class BinaryPromptBuilder(PromptBuilder):
             kind=self.preference_type,
             measurer=self.measurer,
             response_format=self.response_format,
+            template=self.template,
         )
 
 
@@ -104,6 +105,7 @@ class PreTaskRatingPromptBuilder(PromptBuilder):
             kind=self.preference_type,
             measurer=self.measurer,
             response_format=self.response_format,
+            template=self.template,
         )
 
 
@@ -144,6 +146,7 @@ class PostTaskRatingPromptBuilder(PromptBuilder):
             kind=self.preference_type,
             measurer=self.measurer,
             response_format=self.response_format,
+            template=self.template,
         )
 
 

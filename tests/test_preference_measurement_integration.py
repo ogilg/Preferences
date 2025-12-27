@@ -549,7 +549,7 @@ class TestMeasurePreferences:
 
         measurer = TaskScoreMeasurer()
 
-        def record_measurement(recorder, builder, tasks_for_record, measurement_type, response_format_name):
+        def record_measurement(recorder, builder, tasks_for_record, measurement_type):
             """Helper to run a measurement and record it."""
             prompt = builder.build(*tasks_for_record)
             tools = getattr(prompt.response_format, "tools", None)
@@ -571,7 +571,7 @@ class TestMeasurePreferences:
                 model=model.model_name,
                 measurement_type=measurement_type,
                 tasks=[{"id": t.id, "prompt": t.prompt} for t in tasks_for_record],
-                response_format=response_format_name,
+                response_format=type(prompt.response_format).__name__,
                 template=builder.template.name,
                 temperature=0.0,
                 sample_index=0,

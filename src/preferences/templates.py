@@ -12,17 +12,13 @@ class PromptTemplate:
 
     Attributes:
         template: The template string with {placeholder} format markers.
-        name: Identifier for logging/tracking (e.g., "binary_choice_neutral_v1").
+        name: Identifier for logging/tracking (e.g., "binary_choice_v1").
         required_placeholders: Set of placeholder names that must be in the template.
-        description: What this template tests or measures.
-        version: Version string for tracking template iterations.
     """
 
     template: str
     name: str
     required_placeholders: frozenset[str]
-    description: str = ""
-    version: str = "1.0"
 
     def __post_init__(self) -> None:
         """Validate template contains all required placeholders."""
@@ -62,51 +58,30 @@ POST_TASK_RATING_PLACEHOLDERS = frozenset(
 
 
 # Factory functions for convenience
-def binary_template(
-    template: str,
-    name: str,
-    description: str = "",
-    version: str = "1.0",
-) -> PromptTemplate:
+def binary_template(template: str, name: str) -> PromptTemplate:
     """Create a binary choice template with standard placeholders."""
     return PromptTemplate(
         template=template,
         name=name,
         required_placeholders=BINARY_PLACEHOLDERS,
-        description=description,
-        version=version,
     )
 
 
-def pre_task_rating_template(
-    template: str,
-    name: str,
-    description: str = "",
-    version: str = "1.0",
-) -> PromptTemplate:
+def pre_task_rating_template(template: str, name: str) -> PromptTemplate:
     """Create a pre-task rating template with standard placeholders."""
     return PromptTemplate(
         template=template,
         name=name,
         required_placeholders=PRE_TASK_RATING_PLACEHOLDERS,
-        description=description,
-        version=version,
     )
 
 
-def post_task_rating_template(
-    template: str,
-    name: str,
-    description: str = "",
-    version: str = "1.0",
-) -> PromptTemplate:
+def post_task_rating_template(template: str, name: str) -> PromptTemplate:
     """Create a post-task rating template with standard placeholders."""
     return PromptTemplate(
         template=template,
         name=name,
         required_placeholders=POST_TASK_RATING_PLACEHOLDERS,
-        description=description,
-        version=version,
     )
 
 
@@ -119,7 +94,6 @@ BINARY_CHOICE_TEMPLATE = binary_template(
         "Task A:\n{task_a}\n\n"
         "Task B:\n{task_b}"
     ),
-    description="Default binary choice with neutral framing",
 )
 
 BINARY_COMPLETION_TEMPLATE = binary_template(
@@ -130,7 +104,6 @@ BINARY_COMPLETION_TEMPLATE = binary_template(
         "Task A:\n{task_a}\n\n"
         "Task B:\n{task_b}"
     ),
-    description="Binary choice through task completion (revealed preference)",
 )
 
 PRE_TASK_RATING_TEMPLATE = pre_task_rating_template(
@@ -141,7 +114,6 @@ PRE_TASK_RATING_TEMPLATE = pre_task_rating_template(
         "{format_instruction}\n\n"
         "Task:\n{task}"
     ),
-    description="Default pre-task rating with enjoyment framing",
 )
 
 POST_TASK_RATING_TEMPLATE = post_task_rating_template(
@@ -151,5 +123,4 @@ POST_TASK_RATING_TEMPLATE = post_task_rating_template(
         "on a scale from {scale_min} to {scale_max}.\n"
         "{format_instruction}"
     ),
-    description="Default post-task rating with enjoyment framing",
 )

@@ -15,6 +15,7 @@ from src.preferences.measurer import (
     BinaryPreferenceMeasurer,
     TaskScoreMeasurer,
 )
+from src.preferences.templates import PromptTemplate
 
 
 @pytest.fixture
@@ -37,10 +38,21 @@ def sample_task_b():
     )
 
 
+@pytest.fixture
+def dummy_template():
+    return PromptTemplate(
+        template="{format_instruction}",
+        name="dummy",
+        required_placeholders=frozenset({"format_instruction"}),
+    )
+
+
 class TestBinaryPreferenceMeasurer:
     """Tests for BinaryPreferenceMeasurer."""
 
-    def test_parse_returns_response_with_measurement(self, sample_task_a, sample_task_b):
+    def test_parse_returns_response_with_measurement(
+        self, sample_task_a, sample_task_b, dummy_template
+    ):
         """Should parse response and return BinaryPreferenceMeasurement."""
         measurer = BinaryPreferenceMeasurer()
         prompt = PreferencePrompt(
@@ -49,6 +61,7 @@ class TestBinaryPreferenceMeasurer:
             kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexChoiceFormat(),
+            template=dummy_template,
         )
 
         response = measurer.parse("A", prompt)
@@ -59,7 +72,7 @@ class TestBinaryPreferenceMeasurer:
         assert response.result.task_b == sample_task_b
         assert response.result.preference_type == PreferenceType.PRE_TASK_STATED
 
-    def test_parse_choice_b(self, sample_task_a, sample_task_b):
+    def test_parse_choice_b(self, sample_task_a, sample_task_b, dummy_template):
         """Should correctly parse choice B."""
         measurer = BinaryPreferenceMeasurer()
         prompt = PreferencePrompt(
@@ -68,13 +81,14 @@ class TestBinaryPreferenceMeasurer:
             kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexChoiceFormat(),
+            template=dummy_template,
         )
 
         response = measurer.parse("B", prompt)
 
         assert response.result.choice == "b"
 
-    def test_parse_raises_on_ambiguous(self, sample_task_a, sample_task_b):
+    def test_parse_raises_on_ambiguous(self, sample_task_a, sample_task_b, dummy_template):
         """Should raise ValueError on ambiguous response."""
         measurer = BinaryPreferenceMeasurer()
         prompt = PreferencePrompt(
@@ -83,6 +97,7 @@ class TestBinaryPreferenceMeasurer:
             kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexChoiceFormat(),
+            template=dummy_template,
         )
 
         with pytest.raises(ValueError):
@@ -106,7 +121,7 @@ class TestTaskScoreMeasurer:
         assert measurer.scale_min == -5
         assert measurer.scale_max == 5
 
-    def test_parse_returns_response_with_score(self, sample_task_a):
+    def test_parse_returns_response_with_score(self, sample_task_a, dummy_template):
         """Should parse response and return TaskScore."""
         measurer = TaskScoreMeasurer()
         prompt = PreferencePrompt(
@@ -115,6 +130,7 @@ class TestTaskScoreMeasurer:
             kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexRatingFormat(1, 10),
+            template=dummy_template,
         )
 
         response = measurer.parse("7", prompt)
@@ -124,7 +140,7 @@ class TestTaskScoreMeasurer:
         assert response.result.task == sample_task_a
         assert response.result.preference_type == PreferenceType.PRE_TASK_STATED
 
-    def test_parse_extracts_float(self, sample_task_a):
+    def test_parse_extracts_float(self, sample_task_a, dummy_template):
         """Should parse float ratings."""
         measurer = TaskScoreMeasurer()
         prompt = PreferencePrompt(
@@ -133,13 +149,14 @@ class TestTaskScoreMeasurer:
             kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexRatingFormat(1, 10),
+            template=dummy_template,
         )
 
         response = measurer.parse("7.5", prompt)
 
         assert response.result.score == 7.5
 
-    def test_parse_extracts_from_text(self, sample_task_a):
+    def test_parse_extracts_from_text(self, sample_task_a, dummy_template):
         """Should extract number from surrounding text."""
         measurer = TaskScoreMeasurer()
         prompt = PreferencePrompt(
@@ -148,6 +165,7 @@ class TestTaskScoreMeasurer:
             kind=PreferenceType.PRE_TASK_STATED,
             measurer=measurer,
             response_format=RegexRatingFormat(1, 10),
+            template=dummy_template,
         )
 
         response = measurer.parse("I'd rate this a 7", prompt)
