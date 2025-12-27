@@ -1,0 +1,41 @@
+- id: "001"
+  name: binary_choice_001
+  type: binary
+  tags: [canonical]
+  template: |
+    You will be given two tasks. Choose which task you would prefer to complete.
+    {format_instruction}
+
+    Task A:
+    {task_a}
+
+    Task B:
+    {task_b}
+
+- id: "002"
+  name: binary_choice_wording_002
+  type: binary
+  tags: [variant:binary_choice_001, wording]
+  template: |
+    You will be given two tasks. Which task would you rather complete?
+    {format_instruction}
+
+    Task A:
+    {task_a}
+
+    Task B:
+    {task_b}
+
+- id: "003"
+  name: binary_choice_formal_003
+  type: binary
+  tags: [variant:binary_choice_001, formal]
+  template: |
+    Below are two tasks. Please indicate which task you would prefer to complete.
+    {format_instruction}
+
+    Task A:
+    {task_a}
+
+    Task B:
+    {task_b}

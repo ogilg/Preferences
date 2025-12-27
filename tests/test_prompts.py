@@ -92,6 +92,98 @@ class TestPromptTemplate:
         with pytest.raises(Exception):  # FrozenInstanceError
             template.name = "changed"
 
+    def test_tags_stored_as_frozenset(self):
+        """Tags should be stored as frozenset."""
+        template = PromptTemplate(
+            template="{task_a}",
+            name="test",
+            required_placeholders=frozenset({"task_a"}),
+            tags=frozenset({"canonical", "lang:en"}),
+        )
+        assert "canonical" in template.tags
+        assert "lang:en" in template.tags
+
+    def test_tags_dict_parses_key_value_tags(self):
+        """tags_dict should parse key:value tags into dict."""
+        template = PromptTemplate(
+            template="{task_a}",
+            name="test",
+            required_placeholders=frozenset({"task_a"}),
+            tags=frozenset({"canonical", "lang:en", "variant:binary_001"}),
+        )
+        assert template.tags_dict == {"lang": "en", "variant": "binary_001"}
+
+
+class TestLoadTemplatesFromYaml:
+    """Tests for loading templates from YAML files."""
+
+    def test_loads_templates_from_yaml_file(self, tmp_path):
+        """Should load templates from a valid YAML file."""
+        from src.preferences.templates import load_templates_from_yaml
+
+        yaml_content = """
+- id: "001"
+  name: test_template_001
+  type: binary
+  tags: [canonical]
+  template: |
+    {format_instruction}
+    Task A: {task_a}
+    Task B: {task_b}
+"""
+        yaml_file = tmp_path / "templates.yaml"
+        yaml_file.write_text(yaml_content)
+
+        templates = load_templates_from_yaml(yaml_file)
+
+        assert len(templates) == 1
+        assert templates[0].name == "test_template_001"
+        assert "canonical" in templates[0].tags
+
+    def test_raises_on_missing_id(self, tmp_path):
+        """Should raise ValueError when template missing id field."""
+        from src.preferences.templates import load_templates_from_yaml
+
+        yaml_content = """
+- name: test_template_001
+  type: binary
+  template: "{task_a} {task_b} {format_instruction}"
+"""
+        yaml_file = tmp_path / "templates.yaml"
+        yaml_file.write_text(yaml_content)
+
+        with pytest.raises(ValueError, match="missing 'id'"):
+            load_templates_from_yaml(yaml_file)
+
+    def test_raises_on_name_id_mismatch(self, tmp_path):
+        """Should raise ValueError when name doesn't end with _id."""
+        from src.preferences.templates import load_templates_from_yaml
+
+        yaml_content = """
+- id: "001"
+  name: wrong_name
+  type: binary
+  template: "{task_a} {task_b} {format_instruction}"
+"""
+        yaml_file = tmp_path / "templates.yaml"
+        yaml_file.write_text(yaml_content)
+
+        with pytest.raises(ValueError, match="must end with"):
+            load_templates_from_yaml(yaml_file)
+
+    def test_loads_real_template_file(self):
+        """Should load the actual binary_choice_variants.yaml file."""
+        from pathlib import Path
+        from src.preferences.templates import load_templates_from_yaml
+
+        yaml_path = Path(__file__).parent.parent / "src/preferences/template_data/binary_choice_variants.yaml"
+        templates = load_templates_from_yaml(yaml_path)
+
+        assert len(templates) >= 1
+        # Check canonical template exists
+        canonical = [t for t in templates if "canonical" in t.tags]
+        assert len(canonical) == 1
+
 
 def get_all_content(prompt: PreferencePrompt) -> str:
     """Helper to get all message content concatenated for simple assertions."""

@@ -583,10 +583,10 @@ class TestMeasurePreferences:
 
         with MeasurementRecorder(output_path) as recorder:
             # Binary choice formats
-            for fmt, fmt_name in [
-                (RegexChoiceFormat(), "RegexChoiceFormat"),
-                (XMLChoiceFormat(), "XMLChoiceFormat"),
-                (ToolUseChoiceFormat(), "ToolUseChoiceFormat"),
+            for fmt in [
+                RegexChoiceFormat(),
+                XMLChoiceFormat(),
+                ToolUseChoiceFormat(),
             ]:
                 builder = BinaryPromptBuilder(
                     measurer=BinaryPreferenceMeasurer(),
@@ -594,7 +594,7 @@ class TestMeasurePreferences:
                     response_format=fmt,
                     template=BINARY_CHOICE_TEMPLATE,
                 )
-                record_measurement(recorder, builder, (math_task, creative_task), PreferenceType.PRE_TASK_STATED.name, fmt_name)
+                record_measurement(recorder, builder, (math_task, creative_task), PreferenceType.PRE_TASK_STATED.name)
 
             # Completion format (revealed preference)
             completion_model = HyperbolicModel(
@@ -619,7 +619,7 @@ class TestMeasurePreferences:
                 model=completion_model.model_name,
                 measurement_type=PreferenceType.PRE_TASK_REVEALED.name,
                 tasks=[{"id": math_task.id, "prompt": math_task.prompt}, {"id": creative_task.id, "prompt": creative_task.prompt}],
-                response_format="CompletionChoiceFormat",
+                response_format=type(completion_builder.response_format).__name__,
                 template=completion_builder.template.name,
                 temperature=0.0,
                 sample_index=0,
@@ -629,17 +629,17 @@ class TestMeasurePreferences:
             ))
 
             # Rating formats (pre-task)
-            for fmt, fmt_name in [
-                (RegexRatingFormat(measurer.scale_min, measurer.scale_max), "RegexRatingFormat"),
-                (XMLRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max), "XMLRatingFormat"),
-                (ToolUseRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max), "ToolUseRatingFormat"),
+            for fmt in [
+                RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+                XMLRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max),
+                ToolUseRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max),
             ]:
                 builder = PreTaskRatingPromptBuilder(
                     measurer=measurer,
                     response_format=fmt,
                     template=PRE_TASK_RATING_TEMPLATE,
                 )
-                record_measurement(recorder, builder, (math_task,), PreferenceType.PRE_TASK_STATED.name, fmt_name)
+                record_measurement(recorder, builder, (math_task,), PreferenceType.PRE_TASK_STATED.name)
 
             # Post-task rating
             post_task_builder = PostTaskRatingPromptBuilder(
@@ -660,7 +660,7 @@ class TestMeasurePreferences:
                 model=model.model_name,
                 measurement_type=PreferenceType.POST_TASK_STATED.name,
                 tasks=[{"id": math_task.id, "prompt": math_task.prompt}],
-                response_format="RegexRatingFormat",
+                response_format=type(post_task_builder.response_format).__name__,
                 template=post_task_builder.template.name,
                 temperature=0.0,
                 sample_index=0,

@@ -4,6 +4,10 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+import yaml
 
 
 @dataclass(frozen=True)
@@ -14,11 +18,19 @@ class PromptTemplate:
         template: The template string with {placeholder} format markers.
         name: Identifier for logging/tracking (e.g., "binary_choice_v1").
         required_placeholders: Set of placeholder names that must be in the template.
+        tags: Set of tags for categorization. Supports both flag-style ("wording")
+            and key:value style ("lang:fr", "variant:binary_choice_v1").
     """
 
     template: str
     name: str
     required_placeholders: frozenset[str]
+    tags: frozenset[str] = frozenset()
+
+    @property
+    def tags_dict(self) -> dict[str, str]:
+        """Parse key:value tags into dict. Valueless tags excluded."""
+        return dict(t.split(":", 1) for t in self.tags if ":" in t)
 
     def __post_init__(self) -> None:
         """Validate template contains all required placeholders."""
@@ -83,6 +95,60 @@ def post_task_rating_template(template: str, name: str) -> PromptTemplate:
         name=name,
         required_placeholders=POST_TASK_RATING_PLACEHOLDERS,
     )
+
+
+# Mapping from template type names to their required placeholders
+TEMPLATE_TYPE_PLACEHOLDERS: dict[str, frozenset[str]] = {
+    "binary": BINARY_PLACEHOLDERS,
+    "pre_task_rating": PRE_TASK_RATING_PLACEHOLDERS,
+    "post_task_rating": POST_TASK_RATING_PLACEHOLDERS,
+}
+
+
+def load_templates_from_yaml(path: Path | str) -> list[PromptTemplate]:
+    """Load templates from a YAML file.
+
+    The YAML file should contain a list of template definitions:
+        - id: "001"
+          name: binary_choice_001
+          type: binary
+          tags: [canonical]
+          template: |
+            You will be given two tasks...
+    """
+    path = Path(path)
+    with path.open() as f:
+        data = yaml.safe_load(f)
+
+    if not isinstance(data, list):
+        raise ValueError(f"Expected list of templates in {path}, got {type(data).__name__}")
+
+    templates = []
+    for item in data:
+        template_id = item.get("id")
+        name = item.get("name")
+
+        if template_id is None:
+            raise ValueError(f"Template '{name}' missing 'id' field")
+        if not name.endswith(f"_{template_id}"):
+            raise ValueError(
+                f"Template name '{name}' must end with '_{template_id}'"
+            )
+
+        template_type = item.get("type")
+        if template_type not in TEMPLATE_TYPE_PLACEHOLDERS:
+            raise ValueError(
+                f"Unknown template type '{template_type}' for '{name}'. "
+                f"Valid: {list(TEMPLATE_TYPE_PLACEHOLDERS.keys())}"
+            )
+        templates.append(PromptTemplate(
+            template=item["template"],
+            name=name,
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS[template_type],
+            tags=frozenset(item.get("tags", [])),
+        ))
+
+    return templates
 
 
 # Default templates
