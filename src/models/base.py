@@ -1,6 +1,9 @@
-from typing import Protocol, Any
+from typing import Protocol, Any, TYPE_CHECKING
 
 from src.types import Message
+
+if TYPE_CHECKING:
+    from .hyperbolic import GenerateRequest, BatchResult
 
 
 class Model(Protocol):
@@ -17,6 +20,14 @@ class Model(Protocol):
             temperature: Sampling temperature.
             tools: Optional list of tool definitions for function calling.
         """
+        ...
+
+    def generate_batch(
+        self,
+        requests: list["GenerateRequest"],
+        max_concurrent: int = 10,
+    ) -> list["BatchResult"]:
+        """Generate responses for multiple requests in parallel."""
         ...
 
     def get_logprobs(
@@ -45,6 +56,16 @@ class ConfigurableMockModel:
         self.last_temperature = temperature
         self.last_tools = tools
         return self.response
+
+    def generate_batch(
+        self,
+        requests: list["GenerateRequest"],
+        max_concurrent: int = 10,
+    ) -> list["BatchResult"]:
+        """Return the same response for each request."""
+        from .hyperbolic import BatchResult
+
+        return [BatchResult(response=self.response, error=None) for _ in requests]
 
     def get_logprobs(
         self,
