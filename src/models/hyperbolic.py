@@ -8,6 +8,7 @@ import os
 from dataclasses import dataclass
 from typing import Any
 
+import openai
 from openai import AsyncOpenAI, OpenAI
 
 from src.types import Message
@@ -192,13 +193,24 @@ class HyperbolicModel:
                 kwargs["tools"] = request.tools
                 kwargs["tool_choice"] = "auto"
 
-            async with semaphore:
-                try:
-                    response = await async_client.chat.completions.create(**kwargs)
-                    text = self._parse_response(response.choices[0].message, request.tools)
-                    return BatchResult(response=text, error=None)
-                except Exception as e:
-                    return BatchResult(response=None, error=e)
+            max_retries = 3
+            for attempt in range(max_retries):
+                async with semaphore:
+                    try:
+                        response = await async_client.chat.completions.create(**kwargs)
+                        text = self._parse_response(
+                            response.choices[0].message, request.tools
+                        )
+                        return BatchResult(response=text, error=None)
+                    except openai.RateLimitError as e:
+                        if attempt < max_retries - 1:
+                            await asyncio.sleep(2**attempt)
+                            continue
+                        return BatchResult(response=None, error=e)
+                    except Exception as e:
+                        return BatchResult(response=None, error=e)
+            # Should never reach here, but satisfy type checker
+            return BatchResult(response=None, error=RuntimeError("Retry loop exited unexpectedly"))
 
         return await asyncio.gather(*[process_one(r) for r in requests])
 
