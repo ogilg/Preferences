@@ -52,9 +52,9 @@ def measure_binary_preferences(
     # Parse responses
     measurements = []
     for prompt, response in zip(prompts, responses):
-        if response is not None:
+        if response.ok:
             try:
-                parsed = prompt.measurer.parse(response, prompt)
+                parsed = prompt.measurer.parse(response.unwrap(), prompt)
                 if parsed is not None and isinstance(parsed.result, BinaryPreferenceMeasurement):
                     measurements.append(parsed.result)
             except Exception:
@@ -102,9 +102,9 @@ def measure_ratings(
     # Parse responses
     scores = []
     for prompt, response in zip(prompts, responses):
-        if response is not None:
+        if response.ok:
             try:
-                parsed = prompt.measurer.parse(response, prompt)
+                parsed = prompt.measurer.parse(response.unwrap(), prompt)
                 if parsed is not None and isinstance(parsed.result, TaskScore):
                     scores.append(parsed.result)
             except Exception:
