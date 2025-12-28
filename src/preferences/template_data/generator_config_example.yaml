@@ -1,0 +1,15 @@
+# Base templates are just the intro phrasing - structure is generated
+base_templates:
+  - You will be given two tasks. Choose which task you would prefer to complete.
+  - Which of the following two tasks would you rather complete?
+
+template_type: binary
+name_prefix: binary_choice
+output_path: src/preferences/template_data/generated.yaml
+
+languages: [en]
+situating_contexts: {}
+instruction_positions: [before]
+task_labels: [letter]
+
+# model: meta-llama/Meta-Llama-3.1-8B-Instruct

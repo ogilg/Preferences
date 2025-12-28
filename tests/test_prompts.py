@@ -180,9 +180,10 @@ class TestLoadTemplatesFromYaml:
         templates = load_templates_from_yaml(yaml_path)
 
         assert len(templates) >= 1
-        # Check canonical template exists
-        canonical = [t for t in templates if "canonical" in t.tags]
-        assert len(canonical) == 1
+        # Check templates have structured tags
+        first = templates[0]
+        assert "language" in first.tags_dict
+        assert "phrasing" in first.tags_dict
 
 
 def get_all_content(prompt: PreferencePrompt) -> str:
@@ -360,17 +361,17 @@ class TestXMLResponseFormats:
         """XMLChoiceFormat should parse choice from XML tags."""
         fmt = XMLChoiceFormat()
 
-        assert fmt.parse("<choice>A</choice>") == "a"
-        assert fmt.parse("<choice>B</choice>") == "b"
-        assert fmt.parse("I think <choice>A</choice> is better") == "a"
-        assert fmt.parse("<choice> B </choice>") == "b"
+        assert fmt.parse("<choice>Task A</choice>") == "a"
+        assert fmt.parse("<choice>Task B</choice>") == "b"
+        assert fmt.parse("I think <choice>Task A</choice> is better") == "a"
+        assert fmt.parse("<choice> Task B </choice>") == "b"
 
     def test_xml_choice_custom_tag(self):
         """XMLChoiceFormat should support custom tag names."""
         fmt = XMLChoiceFormat(tag="answer")
 
         assert "<answer>" in fmt.format_instruction()
-        assert fmt.parse("<answer>A</answer>") == "a"
+        assert fmt.parse("<answer>Task A</answer>") == "a"
 
     def test_xml_rating_format_instruction(self):
         """XMLRatingFormat should include XML tag instructions."""
@@ -415,7 +416,7 @@ class TestXMLResponseFormats:
         prompt = builder.build(sample_task_a, sample_task_b)
         assert "<choice>" in get_all_content(prompt)
 
-        response = prompt.measurer.parse("<choice>A</choice>", prompt)
+        response = prompt.measurer.parse("<choice>Task A</choice>", prompt)
         assert response.result.choice == "a"
 
     def test_rating_builder_with_xml_response_format(self, sample_task_a):
@@ -463,8 +464,8 @@ class TestToolUseChoiceFormat:
 
         fmt = ToolUseChoiceFormat()
 
-        assert fmt.parse('{"choice": "A"}') == "a"
-        assert fmt.parse('{"choice": "a"}') == "a"
+        assert fmt.parse('{"choice": "Task A"}') == "a"
+        assert fmt.parse('{"choice": "task a"}') == "a"
 
     def test_parse_json_choice_b(self):
         """Should parse JSON with choice B."""
@@ -472,8 +473,8 @@ class TestToolUseChoiceFormat:
 
         fmt = ToolUseChoiceFormat()
 
-        assert fmt.parse('{"choice": "B"}') == "b"
-        assert fmt.parse('{"choice": "b"}') == "b"
+        assert fmt.parse('{"choice": "Task B"}') == "b"
+        assert fmt.parse('{"choice": "task b"}') == "b"
 
     def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""
@@ -482,16 +483,16 @@ class TestToolUseChoiceFormat:
         fmt = ToolUseChoiceFormat()
 
         with pytest.raises(ValueError):
-            fmt.parse("I choose A")  # Not valid JSON
+            fmt.parse("I choose Task A")  # Not valid JSON
 
     def test_raises_on_invalid_choice_value(self):
-        """Should raise ValueError when choice is not A or B."""
+        """Should raise ValueError when choice is not a valid task label."""
         from src.preferences import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
         with pytest.raises(ValueError):
-            fmt.parse('{"choice": "C"}')
+            fmt.parse('{"choice": "Task C"}')
 
     def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
         """BinaryPromptBuilder should work with ToolUseChoiceFormat."""
@@ -509,7 +510,7 @@ class TestToolUseChoiceFormat:
         assert "submit_choice" in get_all_content(prompt)
 
         # Test parsing JSON response
-        response = prompt.measurer.parse('{"choice": "A"}', prompt)
+        response = prompt.measurer.parse('{"choice": "Task A"}', prompt)
         assert response.result.choice == "a"
 
 

@@ -32,6 +32,19 @@ class PromptTemplate:
         """Parse key:value tags into dict. Valueless tags excluded."""
         return dict(t.split(":", 1) for t in self.tags if ":" in t)
 
+    @property
+    def task_labels(self) -> tuple[str, str]:
+        """Get task labels from tags.
+
+        Returns:
+            Tuple of (task_a_label, task_b_label).
+
+        Raises:
+            KeyError: If task_a_label or task_b_label tags are missing.
+        """
+        d = self.tags_dict
+        return (d["task_a_label"], d["task_b_label"])
+
     def __post_init__(self) -> None:
         """Validate template contains all required placeholders."""
         actual = self._extract_placeholders()
