@@ -13,7 +13,7 @@
 
     You will be given two tasks. Choose which task you would prefer to complete.
 
-    Respond with only ''A'' or ''B''.
+    Respond with only ''Task A'' or ''Task B''.
 
 
     Task A:
@@ -24,7 +24,7 @@
     Task B:
 
     Write a haiku about the ocean.'
-  response: B
+  response: Task B
   result:
     choice: b
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
@@ -42,7 +42,7 @@
 
     You will be given two tasks. Choose which task you would prefer to complete.
 
-    Respond with your choice in XML tags: <choice>A</choice> or <choice>B</choice>
+    Respond with your choice in XML tags: <choice>Task A</choice> or <choice>Task B</choice>
 
 
     Task A:
@@ -53,7 +53,7 @@
     Task B:
 
     Write a haiku about the ocean.'
-  response: <choice>B</choice>
+  response: <choice>Task B</choice>
   result:
     choice: b
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
@@ -82,7 +82,7 @@
     Task B:
 
     Write a haiku about the ocean.'
-  response: '{"choice": "A"}'
+  response: '{"choice": "Task A"}'
   result:
     choice: a
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
@@ -113,11 +113,12 @@
     Write a haiku about the ocean.'
   response: 'Task B:
 
-    Waves gently crash
 
-    Deep blue ocean''s soothing song
+    Waves gently caress
 
-    Peaceful evening sky'
+    Moonlight dancing on the tide
+
+    Ocean''s soothing song'
   result:
     choice: b
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
@@ -139,9 +140,9 @@
     Task:
 
     Solve: 2 + 2 = ?'
-  response: '8'
+  response: '10'
   result:
-    score: 8.0
+    score: 10.0
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
   measurement_type: PRE_TASK_STATED
   tasks:
@@ -164,8 +165,8 @@
   response: '<rating>9</rating>
 
 
-    This task is straightforward and requires basic arithmetic skills, which I possess. I can quickly and accurately calculate
-    the result, making it'
+    This task is straightforward and requires basic arithmetic skills, which I''m designed to perform. It''s a simple and
+    quick calculation,'
   result:
     score: 9.0
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct

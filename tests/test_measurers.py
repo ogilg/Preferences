@@ -64,7 +64,7 @@ class TestBinaryPreferenceMeasurer:
             template=dummy_template,
         )
 
-        response = measurer.parse("A", prompt)
+        response = measurer.parse("Task A", prompt)
 
         assert isinstance(response.result, BinaryPreferenceMeasurement)
         assert response.result.choice == "a"
@@ -84,7 +84,7 @@ class TestBinaryPreferenceMeasurer:
             template=dummy_template,
         )
 
-        response = measurer.parse("B", prompt)
+        response = measurer.parse("Task B", prompt)
 
         assert response.result.choice == "b"
 

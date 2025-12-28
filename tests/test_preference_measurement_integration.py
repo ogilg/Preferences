@@ -225,7 +225,7 @@ class TestBinaryChoiceToolUseFormat:
         # Verify response structure
         parsed = json.loads(response_text)
         assert "choice" in parsed
-        assert parsed["choice"].upper() in ("A", "B")
+        assert parsed["choice"].lower() in ("task a", "task b")
 
 
 class TestBinaryChoiceCompletionFormat:

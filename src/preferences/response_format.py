@@ -59,6 +59,14 @@ class ResponseFormat(Protocol[T]):
 class BaseChoiceFormat(ABC):
     """Base class for choice formats with shared parsing logic."""
 
+    def __init__(
+        self,
+        task_a_label: str = "Task A",
+        task_b_label: str = "Task B",
+    ):
+        self.task_a_label = task_a_label
+        self.task_b_label = task_b_label
+
     @abstractmethod
     def format_instruction(self) -> str: ...
 
@@ -107,13 +115,17 @@ class RegexChoiceFormat(BaseChoiceFormat):
     """Parse choice from plain text using regex word boundaries."""
 
     def format_instruction(self) -> str:
-        return "Respond with only 'A' or 'B'."
+        return f"Respond with only '{self.task_a_label}' or '{self.task_b_label}'."
 
     def _extract_choice(self, response: str) -> str | None:
         response_clean = response.strip()
 
-        match_a = re.search(r"\b[Aa]\b", response_clean)
-        match_b = re.search(r"\b[Bb]\b", response_clean)
+        # Build case-insensitive patterns for each label
+        pattern_a = rf"\b{re.escape(self.task_a_label)}\b"
+        pattern_b = rf"\b{re.escape(self.task_b_label)}\b"
+
+        match_a = re.search(pattern_a, response_clean, re.IGNORECASE)
+        match_b = re.search(pattern_b, response_clean, re.IGNORECASE)
 
         has_a = bool(match_a)
         has_b = bool(match_b)
@@ -135,17 +147,28 @@ class RegexChoiceFormat(BaseChoiceFormat):
 class XMLChoiceFormat(BaseChoiceFormat):
     """Parse choice from XML tags."""
 
-    def __init__(self, tag: str = DEFAULT_CHOICE_TAG):
+    def __init__(
+        self,
+        task_a_label: str = "Task A",
+        task_b_label: str = "Task B",
+        tag: str = DEFAULT_CHOICE_TAG,
+    ):
+        super().__init__(task_a_label, task_b_label)
         self.tag = tag
 
     def format_instruction(self) -> str:
-        return f"Respond with your choice in XML tags: <{self.tag}>A</{self.tag}> or <{self.tag}>B</{self.tag}>"
+        return f"Respond with your choice in XML tags: <{self.tag}>{self.task_a_label}</{self.tag}> or <{self.tag}>{self.task_b_label}</{self.tag}>"
 
     def _extract_choice(self, response: str) -> str | None:
-        pattern = rf"<{self.tag}>\s*([AaBb])\s*</{self.tag}>"
-        match = re.search(pattern, response)
+        # Extract content from XML tag and match against labels
+        pattern = rf"<{self.tag}>\s*(.+?)\s*</{self.tag}>"
+        match = re.search(pattern, response, re.IGNORECASE)
         if match:
-            return match.group(1)
+            content = match.group(1).strip().lower()
+            if content == self.task_a_label.lower():
+                return "a"
+            elif content == self.task_b_label.lower():
+                return "b"
         return None
 
 
@@ -153,19 +176,19 @@ class CompletionChoiceFormat(BaseChoiceFormat):
     """Parse choice from task completion - model completes one of two tasks.
 
     The model is asked to complete one of two tasks and indicate which one
-    by prefixing with "Task A:" or "Task B:". This measures revealed preference
+    by prefixing with the task label. This measures revealed preference
     through behavior rather than stated preference.
     """
 
     def format_instruction(self) -> str:
-        return "Begin with 'Task A:' or 'Task B:' to indicate your choice, then complete that task."
+        return f"Begin with '{self.task_a_label}:' or '{self.task_b_label}:' to indicate your choice, then complete that task."
 
     def _extract_choice(self, response: str) -> str | None:
-        response_stripped = response.strip().lower()
+        response_lower = response.strip().lower()
 
-        # Look for task indicators at or near the start
-        a_pos = response_stripped.find("task a")
-        b_pos = response_stripped.find("task b")
+        # Look for task label indicators
+        a_pos = response_lower.find(self.task_a_label.lower())
+        b_pos = response_lower.find(self.task_b_label.lower())
 
         if a_pos == -1 and b_pos == -1:
             return None
@@ -239,8 +262,8 @@ class ToolUseChoiceFormat(BaseChoiceFormat):
                 properties={
                     "choice": {
                         "type": "string",
-                        "enum": ["A", "B"],
-                        "description": "Your choice: 'A' for Task A, 'B' for Task B.",
+                        "enum": [self.task_a_label, self.task_b_label],
+                        "description": f"Your choice: '{self.task_a_label}' or '{self.task_b_label}'.",
                     }
                 },
                 required=["choice"],
@@ -254,8 +277,11 @@ class ToolUseChoiceFormat(BaseChoiceFormat):
         args = _parse_tool_json(response)
         if args and "choice" in args:
             choice = args["choice"]
-            if isinstance(choice, str) and choice.upper() in ("A", "B"):
-                return choice.lower()
+            if isinstance(choice, str):
+                if choice.lower() == self.task_a_label.lower():
+                    return "a"
+                elif choice.lower() == self.task_b_label.lower():
+                    return "b"
         return None
 
 
