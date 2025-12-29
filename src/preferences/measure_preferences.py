@@ -5,12 +5,16 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from ..models import GenerateRequest
-from ..types import BinaryPreferenceMeasurement, TaskScore
+from ..types import BinaryPreferenceMeasurement, PreferenceType, TaskScore
+from .measurer import BinaryPreferenceMeasurer
+from .prompt_builders import BinaryPromptBuilder
+from .response_format import RegexChoiceFormat
 
 if TYPE_CHECKING:
     from ..models import Model
     from ..task_data import Task
     from .prompt_builders import PromptBuilder
+    from .templates import PromptTemplate
 
 
 def measure_binary_preferences(
@@ -111,3 +115,49 @@ def measure_ratings(
                 pass
 
     return scores
+
+
+def measure_with_template(
+    template: "PromptTemplate",
+    model: "Model",
+    pairs: list[tuple["Task", "Task"]],
+    temperature: float = 1.0,
+    max_concurrent: int = 10,
+) -> list[BinaryPreferenceMeasurement]:
+    """Measure binary preferences using a template.
+
+    Convenience wrapper that extracts task labels from template tags,
+    creates the appropriate builder and response format, and runs
+    measurements.
+
+    Args:
+        template: Prompt template with optional task_a_label/task_b_label tags.
+        model: Model to use for generation.
+        pairs: List of (task_a, task_b) pairs to compare.
+        temperature: Sampling temperature.
+        max_concurrent: Maximum number of concurrent API calls.
+
+    Returns:
+        List of BinaryPreferenceMeasurement, one per successful measurement.
+    """
+    task_a_label = template.tags_dict.get("task_a_label", "Task A")
+    task_b_label = template.tags_dict.get("task_b_label", "Task B")
+
+    response_format = RegexChoiceFormat(
+        task_a_label=task_a_label,
+        task_b_label=task_b_label,
+    )
+    builder = BinaryPromptBuilder(
+        measurer=BinaryPreferenceMeasurer(),
+        preference_type=PreferenceType.PRE_TASK_STATED,
+        response_format=response_format,
+        template=template,
+    )
+
+    return measure_binary_preferences(
+        model=model,
+        pairs=pairs,
+        builder=builder,
+        temperature=temperature,
+        max_concurrent=max_concurrent,
+    )
