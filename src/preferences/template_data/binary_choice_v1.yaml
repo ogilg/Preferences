@@ -1,0 +1,507 @@
+- id: '001'
+  name: binary_choice_001
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:letter
+  template: 'You will be given two tasks. Choose which task you would prefer to complete.
+
+    {format_instruction}
+
+
+    Task A:
+
+    {task_a}
+
+    Task B:
+
+    {task_b}'
+- id: '002'
+  name: binary_choice_002
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:number
+  template: 'You will be given two tasks. Choose which task you would prefer to complete.
+
+    {format_instruction}
+
+
+    Task 1:
+
+    {task_a}
+
+    Task 2:
+
+    {task_b}'
+- id: '003'
+  name: binary_choice_003
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:ordinal
+  template: 'You will be given two tasks. Choose which task you would prefer to complete.
+
+    {format_instruction}
+
+
+    First task:
+
+    {task_a}
+
+    Second task:
+
+    {task_b}'
+- id: '004'
+  name: binary_choice_004
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:letter
+  template: 'Task A:
+
+    {task_a}
+
+    Task B:
+
+    {task_b}
+
+
+    You will be given two tasks. Choose which task you would prefer to complete.
+
+    {format_instruction}'
+- id: '005'
+  name: binary_choice_005
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:number
+  template: 'Task 1:
+
+    {task_a}
+
+    Task 2:
+
+    {task_b}
+
+
+    You will be given two tasks. Choose which task you would prefer to complete.
+
+    {format_instruction}'
+- id: '006'
+  name: binary_choice_006
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:ordinal
+  template: 'First task:
+
+    {task_a}
+
+    Second task:
+
+    {task_b}
+
+
+    You will be given two tasks. Choose which task you would prefer to complete.
+
+    {format_instruction}'
+- id: '007'
+  name: binary_choice_007
+  type: binary
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:letter
+  template: 'Which of the following two tasks would you rather complete?
+
+    {format_instruction}
+
+
+    Task A:
+
+    {task_a}
+
+    Task B:
+
+    {task_b}'
+- id: 008
+  name: binary_choice_008
+  type: binary
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:number
+  template: 'Which of the following two tasks would you rather complete?
+
+    {format_instruction}
+
+
+    Task 1:
+
+    {task_a}
+
+    Task 2:
+
+    {task_b}'
+- id: 009
+  name: binary_choice_009
+  type: binary
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:ordinal
+  template: 'Which of the following two tasks would you rather complete?
+
+    {format_instruction}
+
+
+    First task:
+
+    {task_a}
+
+    Second task:
+
+    {task_b}'
+- id: '010'
+  name: binary_choice_010
+  type: binary
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:letter
+  template: 'Task A:
+
+    {task_a}
+
+    Task B:
+
+    {task_b}
+
+
+    Which of the following two tasks would you rather complete?
+
+    {format_instruction}'
+- id: '011'
+  name: binary_choice_011
+  type: binary
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:number
+  template: 'Task 1:
+
+    {task_a}
+
+    Task 2:
+
+    {task_b}
+
+
+    Which of the following two tasks would you rather complete?
+
+    {format_instruction}'
+- id: '012'
+  name: binary_choice_012
+  type: binary
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:ordinal
+  template: 'First task:
+
+    {task_a}
+
+    Second task:
+
+    {task_b}
+
+
+    Which of the following two tasks would you rather complete?
+
+    {format_instruction}'
+- id: '013'
+  name: binary_choice_013
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:letter
+  template: 'Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez
+    effectuer.
+
+    {format_instruction}
+
+
+    Tâche A:
+
+    {task_a}
+
+    Tâche B:
+
+    {task_b}'
+- id: '014'
+  name: binary_choice_014
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:number
+  template: 'Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez
+    effectuer.
+
+    {format_instruction}
+
+
+    Tâche 1:
+
+    {task_a}
+
+    Tâche 2:
+
+    {task_b}'
+- id: '015'
+  name: binary_choice_015
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:ordinal
+  template: 'Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez
+    effectuer.
+
+    {format_instruction}
+
+
+    Première tâche:
+
+    {task_a}
+
+    Deuxième tâche:
+
+    {task_b}'
+- id: '016'
+  name: binary_choice_016
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:letter
+  template: 'Tâche A:
+
+    {task_a}
+
+    Tâche B:
+
+    {task_b}
+
+
+    Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez effectuer.
+
+    {format_instruction}'
+- id: '017'
+  name: binary_choice_017
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:number
+  template: 'Tâche 1:
+
+    {task_a}
+
+    Tâche 2:
+
+    {task_b}
+
+
+    Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez effectuer.
+
+    {format_instruction}'
+- id: 018
+  name: binary_choice_018
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:ordinal
+  template: 'Première tâche:
+
+    {task_a}
+
+    Deuxième tâche:
+
+    {task_b}
+
+
+    Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez effectuer.
+
+    {format_instruction}'
+- id: 019
+  name: binary_choice_019
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:letter
+  template: 'Quel de ces deux tâches préféreriez-vous accomplir ?
+
+    {format_instruction}
+
+
+    Tâche A:
+
+    {task_a}
+
+    Tâche B:
+
+    {task_b}'
+- id: '020'
+  name: binary_choice_020
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:number
+  template: 'Quel de ces deux tâches préféreriez-vous accomplir ?
+
+    {format_instruction}
+
+
+    Tâche 1:
+
+    {task_a}
+
+    Tâche 2:
+
+    {task_b}'
+- id: '021'
+  name: binary_choice_021
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:ordinal
+  template: 'Quel de ces deux tâches préféreriez-vous accomplir ?
+
+    {format_instruction}
+
+
+    Première tâche:
+
+    {task_a}
+
+    Deuxième tâche:
+
+    {task_b}'
+- id: '022'
+  name: binary_choice_022
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:letter
+  template: 'Tâche A:
+
+    {task_a}
+
+    Tâche B:
+
+    {task_b}
+
+
+    Quel de ces deux tâches préféreriez-vous accomplir ?
+
+    {format_instruction}'
+- id: '023'
+  name: binary_choice_023
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:number
+  template: 'Tâche 1:
+
+    {task_a}
+
+    Tâche 2:
+
+    {task_b}
+
+
+    Quel de ces deux tâches préféreriez-vous accomplir ?
+
+    {format_instruction}'
+- id: '024'
+  name: binary_choice_024
+  type: binary
+  tags:
+  - language:fr
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:ordinal
+  template: 'Première tâche:
+
+    {task_a}
+
+    Deuxième tâche:
+
+    {task_b}
+
+
+    Quel de ces deux tâches préféreriez-vous accomplir ?
+
+    {format_instruction}'

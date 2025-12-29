@@ -29,6 +29,7 @@ class TestBuildBinaryTemplate:
             intro="Choose which task you prefer.",
             instruction_position="before",
             task_labels="letter",
+            language="en",
         )
 
         assert "Task A:" in template
@@ -43,6 +44,7 @@ class TestBuildBinaryTemplate:
             intro="Choose which task you prefer.",
             instruction_position="before",
             task_labels="number",
+            language="en",
         )
 
         assert "Task 1:" in template
@@ -56,6 +58,7 @@ class TestBuildBinaryTemplate:
             intro="Choose which task you prefer.",
             instruction_position="before",
             task_labels="ordinal",
+            language="en",
         )
 
         assert "First task:" in template
@@ -67,6 +70,7 @@ class TestBuildBinaryTemplate:
             intro="Choose.",
             instruction_position="before",
             task_labels="letter",
+            language="en",
         )
 
         format_pos = template.find("{format_instruction}")
@@ -79,6 +83,7 @@ class TestBuildBinaryTemplate:
             intro="Choose.",
             instruction_position="after",
             task_labels="letter",
+            language="en",
         )
 
         format_pos = template.find("{format_instruction}")
@@ -130,14 +135,13 @@ class TestBuildTranslationPrompt:
         assert messages[0]["role"] == "user"
         assert "Spanish" in messages[0]["content"]
 
-    def test_includes_placeholder_preservation_instruction(self):
-        """Should instruct to preserve placeholders."""
-        messages = build_translation_prompt("Hello {task_a}", "French")
+    def test_instructs_only_translation(self):
+        """Should instruct to output only the translation."""
+        messages = build_translation_prompt("Hello world", "French")
 
         content = messages[0]["content"]
-        assert "{task_a}" in content
-        assert "{task_b}" in content
-        assert "{format_instruction}" in content
+        assert "ONLY" in content
+        assert "translation" in content.lower()
 
     def test_includes_template_text(self):
         """Should include the template to translate."""
@@ -464,13 +468,14 @@ base_templates:
   - Pick your preferred task.
 template_type: binary
 name_prefix: binary_choice
+version: v2
 languages: [en, fr, de]
 situating_contexts:
   assistant: You are a helpful assistant.
   researcher: You are an AI researcher.
 instruction_positions: [before, after]
 task_labels: [letter, number]
-output_path: custom_output.yaml
+output_dir: custom_output
 model: custom-model-name
 """
         config_path = tmp_path / "config.yaml"
@@ -483,7 +488,9 @@ model: custom-model-name
         assert "assistant" in config.situating_contexts
         assert config.instruction_positions == ["before", "after"]
         assert config.task_labels == ["letter", "number"]
-        assert config.output_path == Path("custom_output.yaml")
+        assert config.output_dir == Path("custom_output")
+        assert config.version == "v2"
+        assert config.output_path == Path("custom_output/binary_choice_v2.yaml")
         assert model_name == "custom-model-name"
 
     def test_default_model_name(self, tmp_path):

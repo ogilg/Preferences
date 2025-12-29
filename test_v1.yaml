@@ -1,0 +1,45 @@
+- id: '001'
+  name: test_001
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:letter
+  template: 'Choose.
+
+    {format_instruction}
+
+
+    Task A:
+
+    {task_a}
+
+    Task B:
+
+    {task_b}'
+- id: '002'
+  name: test_002
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:helpful
+  - instruction_position:before
+  - task_labels:letter
+  template: 'You are a helpful, harmless, and honest AI assistant.
+
+
+    Choose.
+
+    {format_instruction}
+
+
+    Task A:
+
+    {task_a}
+
+    Task B:
+
+    {task_b}'

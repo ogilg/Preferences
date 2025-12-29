@@ -1,0 +1,21 @@
+- id: '001'
+  name: binary_test_001
+  type: binary
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:letter
+  template: 'Choose which task you prefer.
+
+    {format_instruction}
+
+
+    Task A:
+
+    {task_a}
+
+    Task B:
+
+    {task_b}'

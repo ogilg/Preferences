@@ -5,11 +5,12 @@ base_templates:
 
 template_type: binary
 name_prefix: binary_choice
-output_path: src/preferences/template_data/generated.yaml
+version: v1
+output_dir: src/preferences/template_data
 
-languages: [en]
+languages: [en, fr]
 situating_contexts: {}
-instruction_positions: [before]
-task_labels: [letter]
+instruction_positions: [before, after]
+task_labels: [letter, number, ordinal]
 
 # model: meta-llama/Meta-Llama-3.1-8B-Instruct
