@@ -12,9 +12,11 @@ where Φ is the standard normal CDF.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
+import yaml
 from scipy.optimize import minimize
 from scipy.stats import norm
 
@@ -212,4 +214,62 @@ def fit_thurstonian(
         sigma=sigma,
         converged=result.success,
         neg_log_likelihood=result.fun,
+    )
+
+
+def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
+    """Save Thurstonian result to YAML.
+
+    Args:
+        result: The fitted Thurstonian result to save.
+        path: Path to save the YAML file.
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    data = {
+        "task_ids": [t.id for t in result.tasks],
+        "mu": result.mu.tolist(),
+        "sigma": result.sigma.tolist(),
+        "converged": result.converged,
+        "neg_log_likelihood": float(result.neg_log_likelihood),
+    }
+
+    with open(path, "w") as f:
+        yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+
+
+def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult:
+    """Load Thurstonian result from YAML.
+
+    Args:
+        path: Path to the saved YAML file.
+        tasks: List of Task objects (must match the saved task_ids).
+
+    Returns:
+        Reconstructed ThurstonianResult.
+
+    Raises:
+        ValueError: If task_ids don't match the provided tasks.
+    """
+    with open(path) as f:
+        data = yaml.safe_load(f)
+
+    saved_ids = data["task_ids"]
+    task_dict = {t.id: t for t in tasks}
+
+    # Verify all saved task IDs are present
+    missing = set(saved_ids) - set(task_dict.keys())
+    if missing:
+        raise ValueError(f"Tasks not found for IDs: {missing}")
+
+    # Reconstruct task list in saved order
+    ordered_tasks = [task_dict[tid] for tid in saved_ids]
+
+    return ThurstonianResult(
+        tasks=ordered_tasks,
+        mu=np.array(data["mu"]),
+        sigma=np.array(data["sigma"]),
+        converged=data["converged"],
+        neg_log_likelihood=data["neg_log_likelihood"],
     )
