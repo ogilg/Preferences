@@ -169,8 +169,8 @@ def compute_pairwise_correlations(
         meas_b, thurs_b = data_b
 
         correlations.append({
-            "phrasing_a": id_a,
-            "phrasing_b": id_b,
+            "template_a": id_a,
+            "template_b": id_b,
             "win_rate_correlation": float(win_rate_correlation(meas_a, meas_b, tasks)),
             "utility_correlation": float(utility_correlation(thurs_a, thurs_b)),
         })
@@ -230,8 +230,8 @@ def save_experiment_config(
         "n_tasks": n_tasks,
         "templates": [
             {
-                "phrasing_id": t.tags_dict["phrasing"],
                 "name": t.name,
+                "tags": list(t.tags),
                 "prompt": t.template,
             }
             for t in templates
