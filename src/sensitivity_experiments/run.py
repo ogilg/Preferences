@@ -22,6 +22,7 @@ from src.preferences.storage import save_run
 from src.sensitivity_experiments.correlation import (
     compute_pairwise_correlations,
     save_correlations,
+    save_experiment_config,
 )
 
 
@@ -71,6 +72,15 @@ def main():
         print(f"  Saved to {run_path}")
 
         results[phrasing_id] = (measurements, thurstonian)
+
+    # Save experiment config (templates used)
+    save_experiment_config(
+        templates=templates,
+        model_name=args.model,
+        temperature=args.temperature,
+        n_tasks=args.n_tasks,
+        path=args.output_dir / "config.yaml",
+    )
 
     # Compute and save correlations
     correlations = compute_pairwise_correlations(results, tasks)

@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from src.task_data import Task
     from src.types import BinaryPreferenceMeasurement
     from src.preferences.ranking import ThurstonianResult
+    from src.preferences.templates import PromptTemplate
 
 
 def _build_win_rate_vector(
@@ -187,5 +188,55 @@ def save_correlations(correlations: list[dict], path: Path | str) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
+    # Compute summary statistics
+    win_rates = [c["win_rate_correlation"] for c in correlations]
+    utilities = [c["utility_correlation"] for c in correlations]
+
+    output = {
+        "summary": {
+            "mean_win_rate_correlation": float(np.mean(win_rates)),
+            "mean_utility_correlation": float(np.mean(utilities)),
+            "n_pairs": len(correlations),
+        },
+        "pairwise": correlations,
+    }
+
     with open(path, "w") as f:
-        yaml.dump(correlations, f, default_flow_style=False, sort_keys=False)
+        yaml.dump(output, f, default_flow_style=False, sort_keys=False)
+
+
+def save_experiment_config(
+    templates: list["PromptTemplate"],
+    model_name: str,
+    temperature: float,
+    n_tasks: int,
+    path: Path | str,
+) -> None:
+    """Save experiment configuration including template prompts.
+
+    Args:
+        templates: List of templates used in the experiment.
+        model_name: Name of the model used.
+        temperature: Temperature setting used.
+        n_tasks: Number of tasks used.
+        path: Path to save the config file.
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    config = {
+        "model": model_name,
+        "temperature": temperature,
+        "n_tasks": n_tasks,
+        "templates": [
+            {
+                "phrasing_id": t.tags_dict["phrasing"],
+                "name": t.name,
+                "prompt": t.template,
+            }
+            for t in templates
+        ],
+    }
+
+    with open(path, "w") as f:
+        yaml.dump(config, f, default_flow_style=False, sort_keys=False)

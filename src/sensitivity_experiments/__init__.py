@@ -9,6 +9,7 @@ from src.sensitivity_experiments.correlation import (
     utility_correlation,
     compute_pairwise_correlations,
     save_correlations,
+    save_experiment_config,
 )
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "utility_correlation",
     "compute_pairwise_correlations",
     "save_correlations",
+    "save_experiment_config",
 ]

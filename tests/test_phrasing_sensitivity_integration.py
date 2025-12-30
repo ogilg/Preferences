@@ -337,7 +337,10 @@ class TestSaveFunctions:
         with open(path) as f:
             data = yaml.safe_load(f)
 
-        assert data == correlations
+        assert data["pairwise"] == correlations
+        assert "summary" in data
+        assert data["summary"]["mean_win_rate_correlation"] == pytest.approx(0.8)
+        assert data["summary"]["mean_utility_correlation"] == pytest.approx(0.9)
 
     def test_compute_pairwise_correlations(
         self,
