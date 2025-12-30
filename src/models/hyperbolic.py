@@ -6,7 +6,7 @@ import asyncio
 import json
 import os
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Callable
 
 import openai
 from openai import AsyncOpenAI, OpenAI
@@ -176,6 +176,8 @@ class HyperbolicModel:
         self,
         requests: list[GenerateRequest],
         max_concurrent: int,
+        on_complete: Callable[[], None] | None = None,
+        timeout: float = 10.0,
     ) -> list[BatchResult]:
         """Run all requests concurrently with limited parallelism."""
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -197,17 +199,30 @@ class HyperbolicModel:
             for attempt in range(max_retries):
                 async with semaphore:
                     try:
-                        response = await async_client.chat.completions.create(**kwargs)
+                        response = await asyncio.wait_for(
+                            async_client.chat.completions.create(**kwargs),
+                            timeout=timeout,
+                        )
                         text = self._parse_response(
                             response.choices[0].message, request.tools
                         )
+                        if on_complete:
+                            on_complete()
                         return BatchResult(response=text, error=None)
+                    except asyncio.TimeoutError as e:
+                        if on_complete:
+                            on_complete()
+                        return BatchResult(response=None, error=TimeoutError(f"Request timed out after {timeout}s"))
                     except openai.RateLimitError as e:
                         if attempt < max_retries - 1:
                             await asyncio.sleep(2**attempt)
                             continue
+                        if on_complete:
+                            on_complete()
                         return BatchResult(response=None, error=e)
                     except Exception as e:
+                        if on_complete:
+                            on_complete()
                         return BatchResult(response=None, error=e)
             # Should never reach here, but satisfy type checker
             return BatchResult(response=None, error=RuntimeError("Retry loop exited unexpectedly"))
@@ -221,16 +236,20 @@ class HyperbolicModel:
         self,
         requests: list[GenerateRequest],
         max_concurrent: int = 10,
+        on_complete: Callable[[], None] | None = None,
+        timeout: float = 60.0,
     ) -> list[BatchResult]:
         """Generate responses for multiple requests in parallel.
 
         Args:
             requests: List of GenerateRequest objects.
             max_concurrent: Maximum number of concurrent API calls.
+            on_complete: Optional callback invoked after each request completes.
+            timeout: Per-request timeout in seconds (default 60s).
 
         Returns:
             List of BatchResult objects. Use .ok to check success,
             .unwrap() to get response or raise the error.
             Order matches input requests.
         """
-        return asyncio.run(self._generate_batch_async(requests, max_concurrent))
+        return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete, timeout))
