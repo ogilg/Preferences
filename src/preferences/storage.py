@@ -8,18 +8,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 import numpy as np
 import yaml
 
+from src.models import HyperbolicModel
 from src.preferences.ranking import ThurstonianResult, save_thurstonian, load_thurstonian
-
-if TYPE_CHECKING:
-    from src.task_data import Task
-    from src.types import BinaryPreferenceMeasurement
-    from src.preferences.templates import PromptTemplate
-    from src.models import HyperbolicModel
+from src.preferences.templates import PromptTemplate, load_templates_from_yaml
+from src.task_data import Task
+from src.types import BinaryPreferenceMeasurement
 
 
 RESULTS_DIR = Path("results")
@@ -38,7 +35,7 @@ def _model_short_name(model_name: str) -> str:
 
 
 def save_measurements(
-    measurements: list["BinaryPreferenceMeasurement"],
+    measurements: list[BinaryPreferenceMeasurement],
     path: Path | str,
 ) -> None:
     """Save binary preference measurements to YAML.
@@ -73,6 +70,19 @@ class MeasurementRunConfig:
     task_origin: str
     n_tasks: int
     task_ids: list[str]
+    task_prompts: dict[str, str] = None  # type: ignore[assignment]
+
+    def __post_init__(self) -> None:
+        if self.task_prompts is None:
+            self.task_prompts = {}
+
+    def load_template(self) -> PromptTemplate:
+        """Load the template from template_file."""
+        templates = load_templates_from_yaml(self.template_file)
+        for t in templates:
+            if t.name == self.template_name:
+                return t
+        raise ValueError(f"Template '{self.template_name}' not found in {self.template_file}")
 
     def to_dict(self) -> dict:
         return {
@@ -86,10 +96,11 @@ class MeasurementRunConfig:
             "task_origin": self.task_origin,
             "n_tasks": self.n_tasks,
             "task_ids": self.task_ids,
+            "task_prompts": self.task_prompts,
         }
 
     @classmethod
-    def from_dict(cls, data: dict) -> "MeasurementRunConfig":
+    def from_dict(cls, data: dict) -> MeasurementRunConfig:
         return cls(
             template_id=data["template_id"],
             template_name=data["template_name"],
@@ -101,6 +112,7 @@ class MeasurementRunConfig:
             task_origin=data["task_origin"],
             n_tasks=data["n_tasks"],
             task_ids=data["task_ids"],
+            task_prompts=data.get("task_prompts", {}),
         )
 
 
@@ -130,12 +142,12 @@ class ThurstonianData:
 
 
 def save_run(
-    template: "PromptTemplate",
+    template: PromptTemplate,
     template_file: str,
-    model: "HyperbolicModel",
+    model: HyperbolicModel,
     temperature: float,
-    tasks: list["Task"],
-    measurements: list["BinaryPreferenceMeasurement"],
+    tasks: list[Task],
+    measurements: list[BinaryPreferenceMeasurement],
     thurstonian: ThurstonianResult,
     results_dir: Path | str = RESULTS_DIR,
 ) -> Path:
@@ -168,6 +180,7 @@ def save_run(
         task_origin=tasks[0].origin.name.lower(),
         n_tasks=len(tasks),
         task_ids=[t.id for t in tasks],
+        task_prompts={t.id: t.prompt for t in tasks},
     )
 
     with open(run_dir / "config.yaml", "w") as f:
@@ -182,7 +195,7 @@ def save_run(
 
 def load_run(
     run_dir: Path | str,
-    tasks: list["Task"] | None = None,
+    tasks: list[Task] | None = None,
 ) -> MeasurementRun:
     """Load a measurement run from disk.
 
@@ -257,6 +270,10 @@ def update_index(results_dir: Path | str = RESULTS_DIR) -> None:
 
         with open(config_path) as f:
             config = yaml.safe_load(f)
+
+        # Skip directories that don't have the expected run config format
+        if "template_id" not in config or "model_short" not in config:
+            continue
 
         entry = {
             "dir": run_dir.name,
