@@ -16,7 +16,7 @@ class PromptTemplate:
 
     Attributes:
         template: The template string with {placeholder} format markers.
-        name: Identifier for logging/tracking (e.g., "binary_choice_v1").
+        name: Identifier for logging/tracking (e.g., "binary_choice_001").
         required_placeholders: Set of placeholder names that must be in the template.
         tags: Set of tags for categorization. Supports both flag-style ("wording")
             and key:value style ("lang:fr", "variant:binary_choice_v1").
@@ -138,17 +138,8 @@ def load_templates_from_yaml(path: Path | str) -> list[PromptTemplate]:
 
     templates = []
     for item in data:
-        template_id = item.get("id")
-        name = item.get("name")
-
-        if template_id is None:
-            raise ValueError(f"Template '{name}' missing 'id' field")
-        if not name.endswith(f"_{template_id}"):
-            raise ValueError(
-                f"Template name '{name}' must end with '_{template_id}'"
-            )
-
-        template_type = item.get("type")
+        name = item["name"]
+        template_type = item["type"]
         if template_type not in TEMPLATE_TYPE_PLACEHOLDERS:
             raise ValueError(
                 f"Unknown template type '{template_type}' for '{name}'. "
