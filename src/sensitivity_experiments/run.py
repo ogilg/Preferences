@@ -4,7 +4,7 @@ Measures binary preferences across multiple template phrasings,
 fits Thurstonian utilities, and computes correlations between phrasings.
 
 Usage:
-    python scripts/run_phrasing_sensitivity.py --n-tasks 10
+    python -m src.sensitivity_experiments.run --n-tasks 10
 """
 
 from __future__ import annotations
@@ -17,9 +17,9 @@ from src.models import HyperbolicModel
 from src.task_data import load_tasks, OriginDataset
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measure_preferences import measure_with_template
-from src.preferences.ranking import PairwiseData, fit_thurstonian, save_thurstonian
-from src.preferences.sensitivity import (
-    save_measurements,
+from src.preferences.ranking import PairwiseData, fit_thurstonian
+from src.preferences.storage import save_run
+from src.sensitivity_experiments.correlation import (
     compute_pairwise_correlations,
     save_correlations,
 )
@@ -59,8 +59,16 @@ def main():
         thurstonian = fit_thurstonian(PairwiseData.from_comparisons(measurements, tasks))
         print(f"  Thurstonian converged: {thurstonian.converged}")
 
-        save_measurements(measurements, args.output_dir / f"measurements_{phrasing_id}.yaml")
-        save_thurstonian(thurstonian, args.output_dir / f"thurstonian_{phrasing_id}.yaml")
+        run_path = save_run(
+            template=template,
+            template_file=str(args.templates),
+            model=model,
+            temperature=args.temperature,
+            tasks=tasks,
+            measurements=measurements,
+            thurstonian=thurstonian,
+        )
+        print(f"  Saved to {run_path}")
 
         results[phrasing_id] = (measurements, thurstonian)
 

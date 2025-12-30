@@ -15,9 +15,9 @@ import yaml
 from scipy.stats import pearsonr
 
 if TYPE_CHECKING:
-    from ..task_data import Task
-    from ..types import BinaryPreferenceMeasurement
-    from .ranking import ThurstonianResult
+    from src.task_data import Task
+    from src.types import BinaryPreferenceMeasurement
+    from src.preferences.ranking import ThurstonianResult
 
 
 def _build_win_rate_vector(
@@ -142,31 +142,6 @@ def utility_correlation(
 
     r, _ = pearsonr(mu_a, mu_b)
     return float(r) if not np.isnan(r) else 0.0
-
-
-def save_measurements(
-    measurements: list["BinaryPreferenceMeasurement"],
-    path: Path | str,
-) -> None:
-    """Save binary preference measurements to YAML.
-
-    Saves a simplified format with just task IDs and choices,
-    suitable for reproducibility and reloading.
-
-    Args:
-        measurements: List of binary preference measurements.
-        path: Path to save the YAML file.
-    """
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-
-    data = [
-        {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
-        for m in measurements
-    ]
-
-    with open(path, "w") as f:
-        yaml.dump(data, f, default_flow_style=False, sort_keys=False)
 
 
 def compute_pairwise_correlations(

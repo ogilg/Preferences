@@ -3,7 +3,7 @@
 Reads correlations.yaml and creates visualizations of the sensitivity analysis.
 
 Usage:
-    python scripts/plot_phrasing_sensitivity.py results/phrasing_sensitivity
+    python -m src.sensitivity_experiments.plot results/phrasing_sensitivity
 """
 
 from __future__ import annotations
