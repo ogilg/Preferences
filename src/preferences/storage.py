@@ -22,6 +22,15 @@ from src.types import BinaryPreferenceMeasurement
 RESULTS_DIR = Path("results")
 
 
+def _find_project_root() -> Path:
+    """Find project root by looking for pyproject.toml."""
+    current = Path(__file__).resolve().parent
+    for parent in [current, *current.parents]:
+        if (parent / "pyproject.toml").exists():
+            return parent
+    raise FileNotFoundError("Could not find project root (no pyproject.toml found)")
+
+
 def _extract_template_id(template_name: str) -> str:
     """Extract template ID from name (e.g., 'binary_choice_001' -> '001')."""
     return template_name.rsplit("_", 1)[-1]
@@ -78,7 +87,11 @@ class MeasurementRunConfig:
 
     def load_template(self) -> PromptTemplate:
         """Load the template from template_file."""
-        templates = load_templates_from_yaml(self.template_file)
+        template_path = Path(self.template_file)
+        if not template_path.is_absolute():
+            template_path = _find_project_root() / self.template_file
+
+        templates = load_templates_from_yaml(template_path)
         for t in templates:
             if t.name == self.template_name:
                 return t
@@ -139,6 +152,19 @@ class ThurstonianData:
     def ranking_order(self) -> list[int]:
         """Indices sorted by utility (highest first)."""
         return list(np.argsort(-self.mu))
+
+
+def run_exists(
+    template: PromptTemplate,
+    model: HyperbolicModel,
+    results_dir: Path | str = RESULTS_DIR,
+) -> bool:
+    """Check if a measurement run already exists for this template/model combo."""
+    results_dir = Path(results_dir)
+    template_id = _extract_template_id(template.name)
+    model_short = _model_short_name(model.model_name)
+    run_dir = results_dir / f"{template_id}_{model_short}"
+    return (run_dir / "measurements.yaml").exists()
 
 
 def save_run(
