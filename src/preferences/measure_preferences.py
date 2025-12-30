@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from tqdm import tqdm
+
 from ..models import GenerateRequest
 from ..types import BinaryPreferenceMeasurement, PreferenceType, TaskScore
 from .measurer import BinaryPreferenceMeasurer
@@ -50,8 +52,10 @@ def measure_binary_preferences(
         for prompt in prompts
     ]
 
-    # Run in parallel
-    responses = model.generate_batch(requests, max_concurrent)
+    # Run in parallel with progress
+    pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
+    responses = model.generate_batch(requests, max_concurrent, on_complete=pbar.update)
+    pbar.close()
 
     # Parse responses
     measurements = []
@@ -100,8 +104,10 @@ def measure_ratings(
         for prompt in prompts
     ]
 
-    # Run in parallel
-    responses = model.generate_batch(requests, max_concurrent)
+    # Run in parallel with progress
+    pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
+    responses = model.generate_batch(requests, max_concurrent, on_complete=pbar.update)
+    pbar.close()
 
     # Parse responses
     scores = []
