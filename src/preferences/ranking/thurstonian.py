@@ -85,6 +85,8 @@ class ThurstonianResult:
         sigma: Utility standard deviations for each task.
         converged: Whether the optimization converged.
         neg_log_likelihood: Final negative log-likelihood value.
+        n_iterations: Number of optimizer iterations performed.
+        termination_message: Message from optimizer explaining why it stopped.
     """
 
     tasks: list["Task"]
@@ -92,6 +94,8 @@ class ThurstonianResult:
     sigma: np.ndarray
     converged: bool
     neg_log_likelihood: float
+    n_iterations: int
+    termination_message: str
     _id_to_idx: dict[str, int] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -214,6 +218,8 @@ def fit_thurstonian(
         sigma=sigma,
         converged=result.success,
         neg_log_likelihood=result.fun,
+        n_iterations=result.nit,
+        termination_message=result.message,
     )
 
 
@@ -233,6 +239,8 @@ def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
         "sigma": result.sigma.tolist(),
         "converged": result.converged,
         "neg_log_likelihood": float(result.neg_log_likelihood),
+        "n_iterations": result.n_iterations,
+        "termination_message": result.termination_message,
     }
 
     with open(path, "w") as f:
@@ -272,4 +280,6 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
         sigma=np.array(data["sigma"]),
         converged=data["converged"],
         neg_log_likelihood=data["neg_log_likelihood"],
+        n_iterations=data.get("n_iterations", -1),
+        termination_message=data.get("termination_message", "unknown (loaded from old format)"),
     )
