@@ -3,7 +3,7 @@
 Reads correlations.yaml and creates visualizations of the sensitivity analysis.
 
 Usage:
-    python -m src.sensitivity_experiments.plot results/phrasing_sensitivity
+    python -m src.sensitivity_experiments.plot results/sensitivity_experiments
 """
 
 from __future__ import annotations
@@ -161,7 +161,7 @@ def main():
     parser.add_argument(
         "--output-prefix",
         type=str,
-        default="phrasing_sensitivity",
+        default="sensitivity_experiments",
         help="Prefix for output plot files",
     )
 

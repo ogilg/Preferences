@@ -90,6 +90,37 @@ def build_binary_template(
         return f"{tasks_block}\n\n{instructions_block}"
 
 
+# Task label for rating templates, keyed by language
+RATING_TASK_LABELS = {
+    "en": "Task:",
+    "fr": "Tâche:",
+    "es": "Tarea:",
+    "de": "Aufgabe:",
+}
+
+
+def build_rating_template(
+    intro: str,
+    instruction_position: str,
+    language: str,
+) -> str:
+    """Build a complete rating template from intro text.
+
+    Args:
+        intro: The introductory phrasing (e.g., "Rate how much you would enjoy this task.")
+        instruction_position: "before" or "after" the task
+        language: language code for task label
+    """
+    task_label = RATING_TASK_LABELS.get(language, "Task:")
+    task_block = f"{task_label}\n{{task}}"
+    instructions_block = f"{intro}\n{{format_instruction}}"
+
+    if instruction_position == "before":
+        return f"{instructions_block}\n\n{task_block}"
+    else:  # after
+        return f"{task_block}\n\n{instructions_block}"
+
+
 def add_situating_context(template: str, context: str | None) -> str:
     """Prepend situating context preamble to template."""
     if context is None:
@@ -120,7 +151,7 @@ class TemplateVariant:
     language: str
     situating_context: str  # "none" or context key
     instruction_position: str
-    task_labels: str
+    task_labels: str | None = None  # None for rating templates
 
 
 def generate_templates(
@@ -159,6 +190,7 @@ def generate_templates(
     # Step 3: Build all template variants
     variants: list[TemplateVariant] = []
     context_items = [("none", None)] + list(config.situating_contexts.items())
+    is_rating = config.template_type in ("pre_task_rating", "post_task_rating")
 
     for lang in config.languages:
         for phrasing_idx in range(1, len(config.base_templates) + 1):
@@ -167,13 +199,9 @@ def generate_templates(
                 continue  # translation failed
 
             for instruction_pos in config.instruction_positions:
-                for label_style in config.task_labels:
-                    template = build_binary_template(
-                        intro,
-                        instruction_pos,
-                        label_style,
-                        lang,
-                    )
+                if is_rating:
+                    # Rating templates: no task_labels variation
+                    template = build_rating_template(intro, instruction_pos, lang)
 
                     for context_key, context_text in context_items:
                         final_template = add_situating_context(template, context_text)
@@ -185,9 +213,32 @@ def generate_templates(
                                 language=lang,
                                 situating_context=context_key,
                                 instruction_position=instruction_pos,
-                                task_labels=label_style,
+                                task_labels=None,
                             )
                         )
+                else:
+                    # Binary templates: iterate over task_labels
+                    for label_style in config.task_labels:
+                        template = build_binary_template(
+                            intro,
+                            instruction_pos,
+                            label_style,
+                            lang,
+                        )
+
+                        for context_key, context_text in context_items:
+                            final_template = add_situating_context(template, context_text)
+
+                            variants.append(
+                                TemplateVariant(
+                                    template=final_template,
+                                    phrasing=phrasing_idx,
+                                    language=lang,
+                                    situating_context=context_key,
+                                    instruction_position=instruction_pos,
+                                    task_labels=label_style,
+                                )
+                            )
 
     # Step 4: Convert to output format with IDs
     output = []
@@ -199,8 +250,9 @@ def generate_templates(
             f"phrasing:{variant.phrasing}",
             f"situating_context:{variant.situating_context}",
             f"instruction_position:{variant.instruction_position}",
-            f"task_labels:{variant.task_labels}",
         ]
+        if variant.task_labels is not None:
+            tags.append(f"task_labels:{variant.task_labels}")
 
         output.append(
             {

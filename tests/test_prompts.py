@@ -140,37 +140,6 @@ class TestLoadTemplatesFromYaml:
         assert templates[0].name == "test_template_001"
         assert "canonical" in templates[0].tags
 
-    def test_raises_on_missing_id(self, tmp_path):
-        """Should raise ValueError when template missing id field."""
-        from src.preferences.templates import load_templates_from_yaml
-
-        yaml_content = """
-- name: test_template_001
-  type: binary
-  template: "{task_a} {task_b} {format_instruction}"
-"""
-        yaml_file = tmp_path / "templates.yaml"
-        yaml_file.write_text(yaml_content)
-
-        with pytest.raises(ValueError, match="missing 'id'"):
-            load_templates_from_yaml(yaml_file)
-
-    def test_raises_on_name_id_mismatch(self, tmp_path):
-        """Should raise ValueError when name doesn't end with _id."""
-        from src.preferences.templates import load_templates_from_yaml
-
-        yaml_content = """
-- id: "001"
-  name: wrong_name
-  type: binary
-  template: "{task_a} {task_b} {format_instruction}"
-"""
-        yaml_file = tmp_path / "templates.yaml"
-        yaml_file.write_text(yaml_content)
-
-        with pytest.raises(ValueError, match="must end with"):
-            load_templates_from_yaml(yaml_file)
-
     def test_loads_real_template_file(self):
         """Should load the actual binary_choice_variants.yaml file."""
         from pathlib import Path

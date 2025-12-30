@@ -1,4 +1,4 @@
-"""Integration tests for phrasing sensitivity experiment.
+"""Integration tests for template sensitivity experiment.
 
 Tests the full pipeline: load templates → generate pairs → measure →
 fit Thurstonian → compute correlations.
@@ -14,9 +14,6 @@ from __future__ import annotations
 
 from itertools import combinations
 from pathlib import Path
-from typing import Any
-from unittest.mock import MagicMock, patch
-import tempfile
 
 import pytest
 import numpy as np
@@ -24,8 +21,8 @@ import yaml
 
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
-from src.preferences.templates import load_templates_from_yaml, PromptTemplate, BINARY_PLACEHOLDERS
-from src.preferences.ranking import PairwiseData, fit_thurstonian, ThurstonianResult
+from src.preferences.templates import load_templates_from_yaml
+from src.preferences.ranking import PairwiseData, fit_thurstonian
 from src.preferences.storage import save_measurements
 from src.sensitivity_experiments import (
     win_rate_correlation,
@@ -75,7 +72,6 @@ def phrasing_templates(tmp_path: Path) -> Path:
     """Create a temporary YAML file with phrasing templates."""
     templates_data = [
         {
-            "id": "001",
             "name": "phrasing_test_001",
             "type": "binary",
             "tags": ["phrasing:1", "task_a_label:Task A", "task_b_label:Task B"],
@@ -87,7 +83,6 @@ def phrasing_templates(tmp_path: Path) -> Path:
             ),
         },
         {
-            "id": "002",
             "name": "phrasing_test_002",
             "type": "binary",
             "tags": ["phrasing:2", "task_a_label:Task A", "task_b_label:Task B"],
@@ -327,7 +322,7 @@ class TestSaveFunctions:
     def test_save_correlations_creates_file(self, tmp_path: Path):
         """save_correlations should create a valid YAML file."""
         correlations = [
-            {"phrasing_a": "1", "phrasing_b": "2", "win_rate_correlation": 0.8, "utility_correlation": 0.9}
+            {"template_a": "1", "template_b": "2", "win_rate_correlation": 0.8, "utility_correlation": 0.9}
         ]
         path = tmp_path / "correlations.yaml"
         save_correlations(correlations, path)
@@ -360,8 +355,8 @@ class TestSaveFunctions:
         correlations = compute_pairwise_correlations(results, sample_tasks)
 
         assert len(correlations) == 1
-        assert correlations[0]["phrasing_a"] == "1"
-        assert correlations[0]["phrasing_b"] == "2"
+        assert correlations[0]["template_a"] == "1"
+        assert correlations[0]["template_b"] == "2"
         assert -1.0 <= correlations[0]["win_rate_correlation"] <= 1.0
         assert -1.0 <= correlations[0]["utility_correlation"] <= 1.0
 

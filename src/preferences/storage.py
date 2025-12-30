@@ -22,7 +22,7 @@ from src.types import BinaryPreferenceMeasurement
 RESULTS_DIR = Path("results")
 
 
-def _find_project_root() -> Path:
+def find_project_root() -> Path:
     """Find project root by looking for pyproject.toml."""
     current = Path(__file__).resolve().parent
     for parent in [current, *current.parents]:
@@ -31,12 +31,12 @@ def _find_project_root() -> Path:
     raise FileNotFoundError("Could not find project root (no pyproject.toml found)")
 
 
-def _extract_template_id(template_name: str) -> str:
+def extract_template_id(template_name: str) -> str:
     """Extract template ID from name (e.g., 'binary_choice_001' -> '001')."""
     return template_name.rsplit("_", 1)[-1]
 
 
-def _model_short_name(model_name: str) -> str:
+def model_short_name(model_name: str) -> str:
     """Extract short model name."""
     name = model_name.split("/")[-1]
     name = name.replace("-Instruct", "").replace("Meta-", "")
@@ -89,7 +89,7 @@ class MeasurementRunConfig:
         """Load the template from template_file."""
         template_path = Path(self.template_file)
         if not template_path.is_absolute():
-            template_path = _find_project_root() / self.template_file
+            template_path = find_project_root() / self.template_file
 
         templates = load_templates_from_yaml(template_path)
         for t in templates:
@@ -157,14 +157,23 @@ class ThurstonianData:
 def run_exists(
     template: PromptTemplate,
     model: HyperbolicModel,
+    n_tasks: int,
     results_dir: Path | str = RESULTS_DIR,
 ) -> bool:
-    """Check if a measurement run already exists for this template/model combo."""
+    """Check if a measurement run already exists for this template/model/n_tasks combo."""
     results_dir = Path(results_dir)
-    template_id = _extract_template_id(template.name)
-    model_short = _model_short_name(model.model_name)
+    template_id = extract_template_id(template.name)
+    model_short = model_short_name(model.model_name)
     run_dir = results_dir / f"{template_id}_{model_short}"
-    return (run_dir / "measurements.yaml").exists()
+
+    config_path = run_dir / "config.yaml"
+    if not config_path.exists():
+        return False
+
+    with open(config_path) as f:
+        config = yaml.safe_load(f)
+
+    return config["n_tasks"] == n_tasks
 
 
 def save_run(
@@ -189,8 +198,8 @@ def save_run(
         Path to the created run directory.
     """
     results_dir = Path(results_dir)
-    template_id = _extract_template_id(template.name)
-    model_short = _model_short_name(model.model_name)
+    template_id = extract_template_id(template.name)
+    model_short = model_short_name(model.model_name)
 
     run_dir = results_dir / f"{template_id}_{model_short}"
     run_dir.mkdir(parents=True, exist_ok=True)
