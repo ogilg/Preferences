@@ -26,10 +26,10 @@ from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 from src.preferences.templates import load_templates_from_yaml, PromptTemplate, BINARY_PLACEHOLDERS
 from src.preferences.ranking import PairwiseData, fit_thurstonian, ThurstonianResult
-from src.preferences.sensitivity import (
+from src.preferences.storage import save_measurements
+from src.sensitivity_experiments import (
     win_rate_correlation,
     utility_correlation,
-    save_measurements,
     compute_pairwise_correlations,
     save_correlations,
 )
