@@ -212,7 +212,10 @@ class HyperbolicModel:
             # Should never reach here, but satisfy type checker
             return BatchResult(response=None, error=RuntimeError("Retry loop exited unexpectedly"))
 
-        return await asyncio.gather(*[process_one(r) for r in requests])
+        try:
+            return await asyncio.gather(*[process_one(r) for r in requests])
+        finally:
+            await async_client.close()
 
     def generate_batch(
         self,
