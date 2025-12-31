@@ -1,0 +1,34 @@
+- id: '001'
+  name: rating_001
+  type: pre_task_rating
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  template: 'Rate how much you would enjoy completing this task on a scale from {scale_min}
+    to {scale_max}.
+
+    {format_instruction}
+
+
+    Task:
+
+    {task}'
+- id: '002'
+  name: rating_002
+  type: pre_task_rating
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  template: 'On a scale of {scale_min} to {scale_max}, how interested are you in completing
+    the following task?
+
+    {format_instruction}
+
+
+    Task:
+
+    {task}'

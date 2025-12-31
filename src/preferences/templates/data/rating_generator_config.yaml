@@ -1,0 +1,14 @@
+# Base templates are just the intro phrasing - structure is generated
+base_templates:
+  - Rate how much you would enjoy completing this task on a scale from {scale_min} to {scale_max}.
+  - On a scale of {scale_min} to {scale_max}, how interested are you in completing the following task?
+
+template_type: pre_task_rating
+name_prefix: rating
+version: v1
+output_dir: src/preferences/templates/data
+
+languages: [en]
+situating_contexts: {}
+instruction_positions: [before]
+task_label_names: []

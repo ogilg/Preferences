@@ -6,11 +6,11 @@ base_templates:
 template_type: binary
 name_prefix: binary_choice
 version: v1
-output_dir: src/preferences/template_data
+output_dir: src/preferences/templates/data
 
 languages: [en, fr]
 situating_contexts: {}
 instruction_positions: [before, after]
-task_labels: [letter, number, ordinal]
+task_label_names: [letter, number, ordinal]
 
 # model: meta-llama/Meta-Llama-3.1-8B-Instruct
