@@ -14,6 +14,7 @@ from src.experiments.correlation import save_experiment_config
 from src.experiments.sensitivity_experiments.rating_correlation import (
     compute_rating_pairwise_correlations,
     save_rating_correlations,
+    compute_mean_std_across_tasks,
 )
 
 
@@ -64,7 +65,7 @@ def main():
     parser.add_argument(
         "--samples-per-task",
         type=int,
-        default=1,
+        default=10,
         help="Number of times to sample each task rating",
     )
     args = parser.parse_args()
@@ -100,6 +101,9 @@ def main():
         )
         print(f"  Got {len(batch.successes)} scores ({len(batch.failures)} failures)")
 
+        mean_std = compute_mean_std_across_tasks(batch.successes)
+        print(f"  Mean std across tasks: {mean_std:.3f}")
+
         run_path = save_rating_run(
             template=template,
             template_file=str(args.templates),
@@ -109,6 +113,7 @@ def main():
             scores=batch.successes,
             scale_min=args.scale_min,
             scale_max=args.scale_max,
+            mean_rating_std=mean_std,
         )
         print(f"  Saved to {run_path}")
 

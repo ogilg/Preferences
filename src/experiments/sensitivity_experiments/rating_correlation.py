@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
 from typing import Literal
@@ -11,12 +12,26 @@ from src.task_data import Task
 from src.types import TaskScore
 
 
-def _build_score_vector(
-    scores: list[TaskScore],
-    tasks: list[Task],
-) -> np.ndarray:
-    id_to_score = {s.task.id: s.score for s in scores}
-    return np.array([id_to_score[t.id] for t in tasks])
+def _build_score_map(scores: list[TaskScore]) -> dict[str, float]:
+    """Build task_id -> mean score map, averaging repeated samples."""
+    id_to_scores: dict[str, list[float]] = defaultdict(list)
+    for s in scores:
+        id_to_scores[s.task.id].append(s.score)
+    return {tid: float(np.mean(vals)) for tid, vals in id_to_scores.items()}
+
+
+def compute_per_task_std(scores: list[TaskScore]) -> dict[str, float]:
+    """Compute std of scores across repeated samples for each task."""
+    id_to_scores: dict[str, list[float]] = defaultdict(list)
+    for s in scores:
+        id_to_scores[s.task.id].append(s.score)
+    return {tid: float(np.std(vals)) for tid, vals in id_to_scores.items()}
+
+
+def compute_mean_std_across_tasks(scores: list[TaskScore]) -> float:
+    """Average std across all tasks (summary metric for sample consistency)."""
+    per_task = compute_per_task_std(scores)
+    return float(np.mean(list(per_task.values())))
 
 
 def score_correlation(
@@ -25,8 +40,11 @@ def score_correlation(
     tasks: list[Task],
     method: Literal["pearson", "spearman"] = "pearson",
 ) -> float:
-    vec_a = _build_score_vector(scores_a, tasks)
-    vec_b = _build_score_vector(scores_b, tasks)
+    map_a = _build_score_map(scores_a)
+    map_b = _build_score_map(scores_b)
+    common_ids = [t.id for t in tasks if t.id in map_a and t.id in map_b]
+    vec_a = np.array([map_a[tid] for tid in common_ids])
+    vec_b = np.array([map_b[tid] for tid in common_ids])
     return safe_correlation(vec_a, vec_b, method)
 
 

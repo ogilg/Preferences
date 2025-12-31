@@ -24,6 +24,7 @@ RATING_RESULTS_DIR = Path("results/rating")
 class RatingRunConfig(BaseRunConfig):
     scale_min: int = DEFAULT_SCALE_MIN
     scale_max: int = DEFAULT_SCALE_MAX
+    mean_rating_std: float | None = None
 
 
 @dataclass
@@ -51,6 +52,7 @@ def save_rating_run(
     scores: list[TaskScore],
     scale_min: int,
     scale_max: int,
+    mean_rating_std: float | None = None,
     results_dir: Path | str = RATING_RESULTS_DIR,
 ) -> Path:
     """Returns path to created run directory."""
@@ -61,6 +63,7 @@ def save_rating_run(
         **make_base_config_dict(template, template_file, model, temperature, tasks),
         scale_min=scale_min,
         scale_max=scale_max,
+        mean_rating_std=mean_rating_std,
     )
 
     data = [{"task_id": s.task.id, "score": s.score} for s in scores]

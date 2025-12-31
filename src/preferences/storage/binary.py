@@ -25,7 +25,7 @@ from src.types import BinaryPreferenceMeasurement
 
 
 class BinaryRunConfig(BaseRunConfig):
-    pass
+    pair_agreement: float | None = None
 
 
 @dataclass
@@ -82,14 +82,16 @@ def save_run(
     measurements: list[BinaryPreferenceMeasurement],
     thurstonian: ThurstonianResult,
     results_dir: Path | str = RESULTS_DIR,
+    pair_agreement: float | None = None,
 ) -> Path:
     """Returns path to created run directory."""
     results_dir = Path(results_dir)
     run_dir = get_run_dir(template, model, results_dir)
 
-    config = BinaryRunConfig(**make_base_config_dict(
-        template, template_file, model, temperature, tasks
-    ))
+    config = BinaryRunConfig(
+        **make_base_config_dict(template, template_file, model, temperature, tasks),
+        pair_agreement=pair_agreement,
+    )
 
     run_dir.mkdir(parents=True, exist_ok=True)
     save_yaml(config.model_dump(), run_dir / "config.yaml")

@@ -10,7 +10,7 @@ from src.models import HyperbolicModel
 from src.task_data import load_tasks, OriginDataset
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
-from src.preferences.ranking import PairwiseData, fit_thurstonian
+from src.preferences.ranking import PairwiseData, fit_thurstonian, compute_pair_agreement
 from src.preferences.storage import save_run, run_exists
 
 
@@ -53,6 +53,9 @@ def main():
         batch = measure_with_template(template, model, pairs, args.temperature, args.max_concurrent)
         print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
 
+        agreement = compute_pair_agreement(batch.successes)
+        print(f"  Pair agreement rate: {agreement:.3f}")
+
         thurstonian = fit_thurstonian(PairwiseData.from_comparisons(batch.successes, tasks), max_iter=max_iter)
         print(f"  Thurstonian converged: {thurstonian.converged}")
         if not thurstonian.converged:
@@ -70,6 +73,7 @@ def main():
             tasks=tasks,
             measurements=batch.successes,
             thurstonian=thurstonian,
+            pair_agreement=agreement,
         )
         print(f"  Saved to {run_path}")
         measured += 1
