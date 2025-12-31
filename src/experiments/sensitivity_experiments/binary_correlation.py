@@ -1,9 +1,3 @@
-"""Sensitivity analysis for preference measurements.
-
-Functions for computing correlations between preference measurements
-across different experimental conditions (e.g., phrasing variations).
-"""
-
 from __future__ import annotations
 
 from itertools import combinations
@@ -25,11 +19,7 @@ def _build_win_rate_vector(
     measurements: list["BinaryPreferenceMeasurement"],
     tasks: list["Task"],
 ) -> np.ndarray:
-    """Build a vector of win rates for upper-triangle pairs.
-
-    Returns a flattened vector where each element is the win rate
-    of task i over task j for all pairs i < j.
-    """
+    """Win rate of task i over task j for all pairs i < j, flattened."""
     n = len(tasks)
     id_to_idx = {t.id: i for i, t in enumerate(tasks)}
 
@@ -68,21 +58,7 @@ def win_rate_correlation(
     measurements_b: list["BinaryPreferenceMeasurement"],
     tasks: list["Task"],
 ) -> float:
-    """Compute Pearson correlation of win rates between two measurement sets.
-
-    For each unique task pair, computes the win rate (probability that the
-    first task beats the second) from each measurement set, then computes
-    the Pearson correlation between these win rate vectors.
-
-    Args:
-        measurements_a: First set of binary preference measurements.
-        measurements_b: Second set of binary preference measurements.
-        tasks: List of all tasks (defines the ordering).
-
-    Returns:
-        Pearson correlation coefficient. Returns 0.0 if correlation
-        cannot be computed (e.g., not enough variance).
-    """
+    """Pearson correlation of win rates. Returns 0.0 if insufficient variance."""
     rates_a = _build_win_rate_vector(measurements_a, tasks)
     rates_b = _build_win_rate_vector(measurements_b, tasks)
 
@@ -101,22 +77,7 @@ def utility_correlation(
     result_a: "ThurstonianResult",
     result_b: "ThurstonianResult",
 ) -> float:
-    """Compute Pearson correlation of fitted utilities between two Thurstonian fits.
-
-    Correlates the mu (utility mean) values across tasks. Both results must
-    have tasks in the same order or with matching IDs.
-
-    Args:
-        result_a: First Thurstonian fit result.
-        result_b: Second Thurstonian fit result.
-
-    Returns:
-        Pearson correlation coefficient. Returns 0.0 if correlation
-        cannot be computed.
-
-    Raises:
-        ValueError: If the results have different tasks.
-    """
+    """Pearson correlation of fitted utilities. Raises ValueError if task IDs differ."""
     # Verify task IDs match
     ids_a = [t.id for t in result_a.tasks]
     ids_b = [t.id for t in result_b.tasks]
@@ -149,19 +110,6 @@ def compute_pairwise_correlations(
     results: dict[str, tuple[list["BinaryPreferenceMeasurement"], "ThurstonianResult"]],
     tasks: list["Task"],
 ) -> list[dict]:
-    """Compute correlations for all pairs of templates.
-
-    Args:
-        results: Dict mapping template/phrasing ID to (measurements, thurstonian_result).
-        tasks: List of all tasks (for computing win rates).
-
-    Returns:
-        List of dicts, each with keys:
-        - phrasing_a: First template ID
-        - phrasing_b: Second template ID
-        - win_rate_correlation: Pearson r of win rates
-        - utility_correlation: Pearson r of Thurstonian utilities
-    """
     correlations = []
 
     for (id_a, data_a), (id_b, data_b) in combinations(results.items(), 2):
@@ -179,12 +127,6 @@ def compute_pairwise_correlations(
 
 
 def save_correlations(correlations: list[dict], path: Path | str) -> None:
-    """Save correlations to YAML.
-
-    Args:
-        correlations: List of correlation dicts from compute_pairwise_correlations.
-        path: Path to save the YAML file.
-    """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -212,15 +154,6 @@ def save_experiment_config(
     n_tasks: int,
     path: Path | str,
 ) -> None:
-    """Save experiment configuration including template prompts.
-
-    Args:
-        templates: List of templates used in the experiment.
-        model_name: Name of the model used.
-        temperature: Temperature setting used.
-        n_tasks: Number of tasks used.
-        path: Path to save the config file.
-    """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 

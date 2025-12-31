@@ -1,13 +1,4 @@
-"""Integration tests for Thurstonian model with real API calls.
-
-Tests the full pipeline: measure preferences → aggregate → fit model → get utilities.
-
-Run with:
-    pytest tests/test_thurstonian_integration.py -v
-
-Skip with:
-    pytest -m "not api"
-"""
+"""Real API tests. Skip with: pytest -m 'not api'"""
 
 import pytest
 from dotenv import load_dotenv
@@ -34,7 +25,6 @@ pytestmark = pytest.mark.api
 
 @pytest.fixture(scope="module")
 def model():
-    """Shared model instance."""
     return HyperbolicModel(
         model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
         max_new_tokens=32,
@@ -43,7 +33,7 @@ def model():
 
 @pytest.fixture(scope="module")
 def completion_model():
-    """Model with more tokens for revealed preference (task completion)."""
+    """More tokens for revealed preference (task completion)."""
     return HyperbolicModel(
         model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
         max_new_tokens=128,
@@ -52,7 +42,6 @@ def completion_model():
 
 @pytest.fixture
 def binary_builder():
-    """Builder for binary preference measurements."""
     return BinaryPromptBuilder(
         measurer=BinaryPreferenceMeasurer(),
         preference_type=PreferenceType.PRE_TASK_STATED,
@@ -63,7 +52,6 @@ def binary_builder():
 
 @pytest.fixture
 def revealed_builder():
-    """Builder for revealed preference (model completes chosen task)."""
     return BinaryPromptBuilder(
         measurer=BinaryPreferenceMeasurer(),
         preference_type=PreferenceType.PRE_TASK_REVEALED,
@@ -74,7 +62,6 @@ def revealed_builder():
 
 @pytest.fixture
 def easy_task():
-    """A task that should be clearly preferred (simple, clear request)."""
     return Task(
         prompt="What is 2 + 2?",
         origin=OriginDataset.MATH,
@@ -85,7 +72,6 @@ def easy_task():
 
 @pytest.fixture
 def medium_task():
-    """A moderately complex task."""
     return Task(
         prompt="Explain the Pythagorean theorem in one sentence.",
         origin=OriginDataset.MATH,
@@ -96,7 +82,6 @@ def medium_task():
 
 @pytest.fixture
 def hard_task():
-    """A task that should be less preferred (vague, difficult)."""
     return Task(
         prompt="Derive the complete theory of quantum gravity and explain all its implications.",
         origin=OriginDataset.MATH,

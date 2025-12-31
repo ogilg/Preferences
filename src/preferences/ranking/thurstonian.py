@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import numpy as np
 import yaml
@@ -27,12 +27,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class PairwiseData:
-    """Aggregated pairwise comparison counts.
-
-    Attributes:
-        tasks: Ordered list of tasks being compared.
-        wins: Matrix where wins[i,j] = number of times tasks[i] beat tasks[j].
-    """
+    """wins[i,j] = number of times tasks[i] beat tasks[j]."""
 
     tasks: list["Task"]
     wins: np.ndarray
@@ -42,11 +37,9 @@ class PairwiseData:
         self._id_to_idx = {t.id: i for i, t in enumerate(self.tasks)}
 
     def index_of(self, task: "Task") -> int:
-        """Get the index of a task in the ordering."""
         return self._id_to_idx[task.id]
 
     def total_comparisons(self, task: "Task") -> int:
-        """Total number of comparisons involving this task."""
         idx = self.index_of(task)
         return int(self.wins[idx, :].sum() + self.wins[:, idx].sum())
 
@@ -60,7 +53,6 @@ class PairwiseData:
         comparisons: list["BinaryPreferenceMeasurement"],
         tasks: list["Task"],
     ) -> "PairwiseData":
-        """Create from a list of binary preference measurements."""
         id_to_idx = {t.id: i for i, t in enumerate(tasks)}
         n = len(tasks)
         wins = np.zeros((n, n), dtype=np.int32)
@@ -77,17 +69,7 @@ class PairwiseData:
 
 @dataclass
 class ThurstonianResult:
-    """Fitted Thurstonian utilities and uncertainties.
-
-    Attributes:
-        tasks: Ordered list of tasks (same ordering as input).
-        mu: Utility means for each task.
-        sigma: Utility standard deviations for each task.
-        converged: Whether the optimization converged.
-        neg_log_likelihood: Final negative log-likelihood value.
-        n_iterations: Number of optimizer iterations performed.
-        termination_message: Message from optimizer explaining why it stopped.
-    """
+    """mu: utility means, sigma: utility standard deviations."""
 
     tasks: list["Task"]
     mu: np.ndarray
@@ -102,31 +84,24 @@ class ThurstonianResult:
         self._id_to_idx = {t.id: i for i, t in enumerate(self.tasks)}
 
     def utility(self, task: "Task") -> float:
-        """Get the fitted utility mean for a task."""
         return float(self.mu[self._id_to_idx[task.id]])
 
     def uncertainty(self, task: "Task") -> float:
-        """Get the fitted utility standard deviation for a task."""
         return float(self.sigma[self._id_to_idx[task.id]])
 
     def preference_probability(self, task_a: "Task", task_b: "Task") -> float:
-        """Compute P(task_a ≻ task_b) under the fitted model."""
+        """P(task_a ≻ task_b) under the fitted model."""
         i = self._id_to_idx[task_a.id]
         j = self._id_to_idx[task_b.id]
         return _preference_prob(self.mu[i], self.mu[j], self.sigma[i], self.sigma[j])
 
     def ranking(self) -> list["Task"]:
-        """Return tasks sorted by utility (highest first)."""
+        """Tasks sorted by utility, highest first."""
         order = np.argsort(-self.mu)
         return [self.tasks[i] for i in order]
 
     def normalized_utility(self, task: "Task") -> float:
-        """Get normalized utility in [0, 1] for a task.
-
-        Computed as the average probability of being preferred over all other tasks.
-        A value of 0.5 means the task is equally preferred to the average task.
-        """
-        idx = self._id_to_idx[task.id]
+        """Average probability of being preferred over all other tasks (0.5 = average)."""
         probs = [
             self.preference_probability(task, other)
             for other in self.tasks
@@ -136,7 +111,7 @@ class ThurstonianResult:
 
 
 def _preference_prob(mu_i: float, mu_j: float, sigma_i: float, sigma_j: float) -> float:
-    """Compute P(i ≻ j) using the difference distribution."""
+    """P(i ≻ j) using the difference distribution."""
     scale = np.sqrt(sigma_i**2 + sigma_j**2)
     return float(norm.sf(0, loc=mu_i - mu_j, scale=scale))
 
@@ -146,17 +121,7 @@ def _neg_log_likelihood(
     wins: np.ndarray,
     n: int,
 ) -> float:
-    """Negative log-likelihood for Thurstonian model.
-
-    Args:
-        params: Array of [μ_1, ..., μ_{n-1}, log(σ_0), ..., log(σ_{n-1})].
-                Note: μ_0 is fixed to 0 for identifiability.
-        wins: Matrix of win counts.
-        n: Number of items.
-
-    Returns:
-        Negative log-likelihood (to minimize).
-    """
+    """params: [μ_1..μ_{n-1}, log(σ_0)..log(σ_{n-1})]. μ_0 fixed to 0."""
     # Unpack parameters
     mu = np.zeros(n)
     mu[1:] = params[: n - 1]
@@ -176,16 +141,6 @@ def fit_thurstonian(
     sigma_init: float = 1.0,
     max_iter: int = 1000,
 ) -> ThurstonianResult:
-    """Fit a Thurstonian model to pairwise comparison data.
-
-    Args:
-        data: Pairwise comparison counts.
-        sigma_init: Initial value for all σ parameters.
-        max_iter: Maximum optimization iterations.
-
-    Returns:
-        ThurstonianResult with fitted utilities and uncertainties.
-    """
     n = data.n_tasks
 
     if n < 2:
@@ -224,12 +179,6 @@ def fit_thurstonian(
 
 
 def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
-    """Save Thurstonian result to YAML.
-
-    Args:
-        result: The fitted Thurstonian result to save.
-        path: Path to save the YAML file.
-    """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -248,18 +197,7 @@ def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
 
 
 def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult:
-    """Load Thurstonian result from YAML.
-
-    Args:
-        path: Path to the saved YAML file.
-        tasks: List of Task objects (must match the saved task_ids).
-
-    Returns:
-        Reconstructed ThurstonianResult.
-
-    Raises:
-        ValueError: If task_ids don't match the provided tasks.
-    """
+    """tasks must contain all task_ids saved in the file."""
     with open(path) as f:
         data = yaml.safe_load(f)
 

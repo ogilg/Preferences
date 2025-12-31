@@ -1,5 +1,3 @@
-"""Configuration for template generation."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -34,8 +32,6 @@ RATING_TASK_LABELS = {
 
 
 class GeneratorConfig(BaseModel):
-    """Configuration for template generation."""
-
     base_templates: list[str]
     template_type: Literal["binary", "pre_task_rating", "post_task_rating"] = "binary"
     name_prefix: str = "template"
@@ -50,7 +46,6 @@ class GeneratorConfig(BaseModel):
 
     @property
     def output_path(self) -> Path:
-        """Generate output path from name_prefix and version."""
         return self.output_dir / f"{self.name_prefix}_{self.version}.yaml"
 
     @model_validator(mode="after")
@@ -67,10 +62,7 @@ class GeneratorConfig(BaseModel):
 
 
 def load_config_from_yaml(path: Path) -> tuple[GeneratorConfig, str]:
-    """Load GeneratorConfig from a YAML file.
-
-    Returns (config, model_name).
-    """
+    """Returns (config, model_name)."""
     with path.open() as f:
         data = yaml.safe_load(f)
 

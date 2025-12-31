@@ -1,5 +1,3 @@
-"""Plotting functions for Thurstonian model results."""
-
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -19,20 +17,7 @@ def plot_utility_ranking(
     color: str = "steelblue",
     picker: bool = False,
 ) -> tuple[plt.Figure, "BarContainer"]:
-    """Bar chart of utilities (mu) with uncertainty (sigma) error bars.
-
-    Tasks are sorted by utility (highest first).
-
-    Args:
-        data: ThurstonianData with mu, sigma, task_ids.
-        config: Optional BinaryRunConfig for title metadata.
-        figsize: Figure size in inches.
-        color: Bar color.
-        picker: Enable click picking on bars.
-
-    Returns:
-        Tuple of (Figure, BarContainer).
-    """
+    """Bar chart of utilities with sigma error bars, sorted highest first."""
     # Sort by utility (highest first)
     order = data.ranking_order()
     sorted_ids = [data.task_ids[i] for i in order]

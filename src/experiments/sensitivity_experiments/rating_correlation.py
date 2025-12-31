@@ -1,9 +1,3 @@
-"""Sensitivity analysis for rating measurements.
-
-Functions for computing correlations between rating measurements
-across different experimental conditions (e.g., phrasing variations).
-"""
-
 from __future__ import annotations
 
 from itertools import combinations
@@ -25,10 +19,6 @@ def _build_score_vector(
     scores: list["TaskScore"],
     tasks: list["Task"],
 ) -> np.ndarray:
-    """Build a score vector aligned to task order.
-
-    Returns a vector where each element is the score for the corresponding task.
-    """
     id_to_score = {s.task.id: s.score for s in scores}
     return np.array([id_to_score[t.id] for t in tasks])
 
@@ -39,18 +29,7 @@ def score_correlation(
     tasks: list["Task"],
     method: Literal["pearson", "spearman"] = "pearson",
 ) -> float:
-    """Compute correlation between two score sets.
-
-    Args:
-        scores_a: First set of task scores.
-        scores_b: Second set of task scores.
-        tasks: List of all tasks (defines the ordering).
-        method: Correlation method ('pearson' or 'spearman').
-
-    Returns:
-        Correlation coefficient. Returns 0.0 if correlation
-        cannot be computed (e.g., not enough variance).
-    """
+    """Returns 0.0 if insufficient variance."""
     vec_a = _build_score_vector(scores_a, tasks)
     vec_b = _build_score_vector(scores_b, tasks)
 
@@ -69,16 +48,6 @@ def compute_rating_pairwise_correlations(
     results: dict[str, list["TaskScore"]],
     tasks: list["Task"],
 ) -> list[dict]:
-    """Compute correlations for all pairs of templates.
-
-    Args:
-        results: Dict mapping template name to list of TaskScores.
-        tasks: List of all tasks (for ordering).
-
-    Returns:
-        List of dicts with keys: template_a, template_b,
-        pearson_correlation, spearman_correlation.
-    """
     correlations = []
 
     for (id_a, scores_a), (id_b, scores_b) in combinations(results.items(), 2):
@@ -93,7 +62,6 @@ def compute_rating_pairwise_correlations(
 
 
 def save_rating_correlations(correlations: list[dict], path: Path | str) -> None:
-    """Save rating correlations to YAML with summary stats."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 

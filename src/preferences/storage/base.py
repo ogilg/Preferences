@@ -1,8 +1,3 @@
-"""Shared storage utilities and base classes.
-
-Common infrastructure for binary and rating measurement storage.
-"""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -34,7 +29,6 @@ def extract_template_id(template_name: str) -> str:
 
 
 def model_short_name(model_name: str) -> str:
-    """Extract short model name."""
     name = model_name.split("/")[-1]
     name = name.replace("-Instruct", "").replace("Meta-", "")
     return name.lower()
@@ -48,7 +42,6 @@ def save_yaml(data: dict | list, path: Path) -> None:
 
 
 def load_yaml(path: Path) -> dict | list:
-    """Load YAML data from file."""
     with open(path) as f:
         return yaml.safe_load(f)
 
@@ -59,7 +52,6 @@ def run_exists(
     n_tasks: int,
     results_dir: Path,
 ) -> bool:
-    """Check if a measurement run already exists for this template/model/n_tasks combo."""
     template_id = extract_template_id(template.name)
     short_name = model_short_name(model.model_name)
     config_path = results_dir / f"{template_id}_{short_name}" / "config.yaml"
@@ -69,8 +61,6 @@ def run_exists(
 
 
 class BaseRunConfig(BaseModel):
-    """Common configuration for measurement runs."""
-
     template_id: str
     template_name: str
     template_file: str
@@ -84,7 +74,6 @@ class BaseRunConfig(BaseModel):
     task_prompts: dict[str, str] = {}
 
     def load_template(self) -> PromptTemplate:
-        """Load the template from template_file."""
         from src.preferences.templates.template import load_templates_from_yaml
 
         template_path = Path(self.template_file)

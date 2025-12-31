@@ -1,8 +1,3 @@
-"""Storage layer for rating measurement runs.
-
-Each run stores scores for a single (template, model, config) combination.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -28,16 +23,12 @@ RATING_RESULTS_DIR = Path("results/rating_sensitivity")
 
 
 class RatingRunConfig(BaseRunConfig):
-    """Configuration for a rating measurement run."""
-
     scale_min: int = DEFAULT_SCALE_MIN
     scale_max: int = DEFAULT_SCALE_MAX
 
 
 @dataclass
 class RatingMeasurementRun:
-    """A loaded rating measurement run."""
-
     config: RatingRunConfig
     scores: list[dict]
     path: Path | None = None
@@ -49,7 +40,6 @@ def rating_run_exists(
     n_tasks: int,
     results_dir: Path | str = RATING_RESULTS_DIR,
 ) -> bool:
-    """Check if a rating run already exists for this template/model/n_tasks combo."""
     return run_exists(template, model, n_tasks, Path(results_dir))
 
 
@@ -57,7 +47,6 @@ def save_scores(
     scores: list[TaskScore],
     path: Path | str,
 ) -> None:
-    """Save task scores to YAML."""
     data = [{"task_id": s.task.id, "score": s.score} for s in scores]
     save_yaml(data, Path(path))
 
@@ -73,16 +62,7 @@ def save_rating_run(
     scale_max: int,
     results_dir: Path | str = RATING_RESULTS_DIR,
 ) -> Path:
-    """Save a rating run to disk.
-
-    Creates:
-        results/rating_sensitivity/{template_id}_{model_short}/
-            config.yaml
-            scores.yaml
-
-    Returns:
-        Path to the created run directory.
-    """
+    """Returns path to created run directory."""
     results_dir = Path(results_dir)
     template_id = extract_template_id(template.name)
     short_name = model_short_name(model.model_name)
@@ -113,7 +93,6 @@ def save_rating_run(
 
 
 def load_rating_run(run_dir: Path | str) -> RatingMeasurementRun:
-    """Load a rating run from disk."""
     run_dir = Path(run_dir)
 
     config = RatingRunConfig.model_validate(load_yaml(run_dir / "config.yaml"))

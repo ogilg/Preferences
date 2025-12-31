@@ -1,8 +1,4 @@
-"""Compute transitivity for all measurement runs and plot results.
-
-Usage:
-    python -m src.experiments.transitivity.run [--results-dir results/]
-"""
+"""Usage: python -m src.experiments.transitivity.run [--results-dir results/]"""
 
 from __future__ import annotations
 
@@ -17,15 +13,7 @@ from src.experiments.transitivity import measure_transitivity
 
 
 def load_wins_matrix(measurements: list[dict], task_ids: list[str]) -> np.ndarray:
-    """Build wins matrix from measurements.
-
-    Args:
-        measurements: List of {task_a, task_b, choice} dicts.
-        task_ids: Ordered list of task IDs.
-
-    Returns:
-        wins[i,j] = number of times task i beat task j.
-    """
+    """wins[i,j] = number of times task i beat task j."""
     id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
     n = len(task_ids)
     wins = np.zeros((n, n), dtype=np.int32)
@@ -42,7 +30,6 @@ def load_wins_matrix(measurements: list[dict], task_ids: list[str]) -> np.ndarra
 
 
 def analyze_run(run_dir: Path) -> dict:
-    """Analyze a single measurement run."""
     with open(run_dir / "config.yaml") as f:
         config = yaml.safe_load(f)
 

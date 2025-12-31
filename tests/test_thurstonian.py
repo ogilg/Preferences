@@ -1,5 +1,3 @@
-"""Tests for Thurstonian model fitting."""
-
 import numpy as np
 import pytest
 
@@ -15,7 +13,6 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
 def make_task(id: str) -> Task:
-    """Create a minimal task for testing."""
     return Task(prompt=f"Task {id}", origin=OriginDataset.ALPACA, id=id, metadata={})
 
 

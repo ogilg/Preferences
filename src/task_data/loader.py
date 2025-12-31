@@ -20,8 +20,6 @@ FILE_MAPPING = {
 
 @dataclass
 class ParserConfig:
-    """Configuration for parsing a dataset row into a Task."""
-
     origin: OriginDataset
     prompt_key: str
     id_key: str
@@ -29,7 +27,6 @@ class ParserConfig:
     metadata_defaults: dict | None = None
 
     def parse(self, row: dict) -> Task:
-        """Parse a row using this configuration."""
         metadata = {}
         for key in self.metadata_keys:
             default = (self.metadata_defaults or {}).get(key)
@@ -87,16 +84,6 @@ def load_tasks(
     origin: OriginDataset | None = None,
     filter_fn: Callable[[Task], bool] | None = None,
 ) -> list[Task]:
-    """Load tasks from datasets.
-
-    Args:
-        n: Maximum number of tasks to return.
-        origin: Filter to a specific dataset.
-        filter_fn: Custom filter function.
-
-    Returns:
-        List of Task objects.
-    """
     if origin is not None:
         tasks = _load_origin(origin)
     else:

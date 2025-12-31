@@ -1,15 +1,3 @@
-"""Integration tests for template sensitivity experiment.
-
-Tests the full pipeline: load templates → generate pairs → measure →
-fit Thurstonian → compute correlations.
-
-Run with:
-    pytest tests/test_phrasing_sensitivity_integration.py -v
-
-Skip API tests with:
-    pytest -m "not api"
-"""
-
 from __future__ import annotations
 
 from itertools import combinations
@@ -33,7 +21,6 @@ from src.experiments.sensitivity_experiments.binary_correlation import (
 
 
 def generate_pairs(tasks: list[Task]) -> list[tuple[Task, Task]]:
-    """Generate all unique task pairs."""
     return list(combinations(tasks, 2))
 
 
@@ -44,7 +31,6 @@ def generate_pairs(tasks: list[Task]) -> list[tuple[Task, Task]]:
 
 @pytest.fixture
 def sample_tasks() -> list[Task]:
-    """Create a small set of test tasks."""
     return [
         Task(
             prompt="What is 2 + 2?",
@@ -69,7 +55,6 @@ def sample_tasks() -> list[Task]:
 
 @pytest.fixture
 def phrasing_templates(tmp_path: Path) -> Path:
-    """Create a temporary YAML file with phrasing templates."""
     templates_data = [
         {
             "name": "phrasing_test_001",
@@ -104,7 +89,7 @@ def phrasing_templates(tmp_path: Path) -> Path:
 
 @pytest.fixture
 def mock_measurements_consistent(sample_tasks: list[Task]) -> list[BinaryPreferenceMeasurement]:
-    """Create measurements with consistent preferences (task_1 > task_2 > task_3)."""
+    """task_1 > task_2 > task_3"""
     measurements = []
     pairs = generate_pairs(sample_tasks)
     for task_a, task_b in pairs:
@@ -123,7 +108,6 @@ def mock_measurements_consistent(sample_tasks: list[Task]) -> list[BinaryPrefere
 
 @pytest.fixture
 def mock_measurements_random(sample_tasks: list[Task]) -> list[BinaryPreferenceMeasurement]:
-    """Create measurements with random-ish preferences."""
     np.random.seed(42)
     measurements = []
     pairs = generate_pairs(sample_tasks)

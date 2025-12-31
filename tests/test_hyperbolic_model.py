@@ -1,11 +1,4 @@
-"""Tests for HyperbolicModel - Hyperbolic API model implementation.
-
-These tests make real API calls to Hyperbolic. Run with:
-    pytest tests/test_hyperbolic_model.py -v
-
-Skip with:
-    pytest -m "not api"
-"""
+"""Real API tests. Skip with: pytest -m 'not api'"""
 
 import pytest
 from dotenv import load_dotenv
@@ -21,7 +14,6 @@ pytestmark = pytest.mark.api
 
 @pytest.fixture(scope="module")
 def llama_model():
-    """Create a shared HyperbolicModel instance for all tests."""
     return HyperbolicModel(
         model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
         max_new_tokens=64,

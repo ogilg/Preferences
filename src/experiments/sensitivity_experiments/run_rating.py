@@ -1,10 +1,4 @@
-"""Run rating template sensitivity experiment.
-
-Measures task ratings across multiple templates and computes score correlations.
-
-Usage:
-    python -m src.sensitivity_experiments.run_rating --templates path/to/rating_templates.yaml --n-tasks 10
-"""
+"""Usage: python -m src.sensitivity_experiments.run_rating --templates <yaml> --n-tasks N"""
 
 from __future__ import annotations
 
@@ -32,7 +26,6 @@ def measure_ratings_with_template(
     scale_min: int = 1,
     scale_max: int = 10,
 ):
-    """Measure ratings using a template."""
     response_format = RegexRatingFormat(scale_min=scale_min, scale_max=scale_max)
     measurer = TaskScoreMeasurer(scale_min=scale_min, scale_max=scale_max)
     builder = PreTaskRatingPromptBuilder(

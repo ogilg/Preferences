@@ -1,15 +1,11 @@
-"""Storage layer for binary preference measurement runs.
-
-Each run stores measurements + Thurstonian results for a single
-(template, model, config) combination.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import numpy as np
+from pydantic import BaseModel, field_validator
 
 from src.models import HyperbolicModel
 from src.preferences.ranking import ThurstonianResult, save_thurstonian, load_thurstonian
@@ -28,23 +24,21 @@ from src.types import BinaryPreferenceMeasurement
 
 
 class BinaryRunConfig(BaseRunConfig):
-    """Configuration for a binary preference measurement run."""
     pass
 
 
 @dataclass
 class BinaryMeasurementRun:
-    """A loaded binary measurement run."""
-
     config: BinaryRunConfig
     measurements: list[dict]
     thurstonian: ThurstonianResult | None = None
     path: Path | None = None
 
 
-@dataclass
-class ThurstonianData:
-    """Lightweight Thurstonian result for visualization (no Task objects)."""
+class ThurstonianData(BaseModel):
+    """Lightweight version without Task objects, for visualization."""
+
+    model_config = {"arbitrary_types_allowed": True}
 
     task_ids: list[str]
     mu: np.ndarray
@@ -52,8 +46,14 @@ class ThurstonianData:
     converged: bool
     neg_log_likelihood: float
 
+    @field_validator("mu", "sigma", mode="before")
+    @classmethod
+    def convert_to_array(cls, v: Any) -> np.ndarray:
+        if isinstance(v, np.ndarray):
+            return v
+        return np.array(v)
+
     def ranking_order(self) -> list[int]:
-        """Indices sorted by utility (highest first)."""
         return list(np.argsort(-self.mu))
 
 
@@ -63,7 +63,6 @@ def binary_run_exists(
     n_tasks: int,
     results_dir: Path | str = RESULTS_DIR,
 ) -> bool:
-    """Check if a binary run already exists for this template/model/n_tasks combo."""
     return run_exists(template, model, n_tasks, Path(results_dir))
 
 
@@ -71,7 +70,6 @@ def save_measurements(
     measurements: list[BinaryPreferenceMeasurement],
     path: Path | str,
 ) -> None:
-    """Save binary preference measurements to YAML."""
     data = [
         {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
         for m in measurements
@@ -89,17 +87,7 @@ def save_run(
     thurstonian: ThurstonianResult,
     results_dir: Path | str = RESULTS_DIR,
 ) -> Path:
-    """Save a binary measurement run to disk.
-
-    Creates:
-        results/{template_id}_{model_short}/
-            config.yaml
-            measurements.yaml
-            thurstonian.yaml
-
-    Returns:
-        Path to the created run directory.
-    """
+    """Returns path to created run directory."""
     results_dir = Path(results_dir)
     template_id = extract_template_id(template.name)
     short_name = model_short_name(model.model_name)
@@ -133,15 +121,7 @@ def load_run(
     run_dir: Path | str,
     tasks: list[Task] | None = None,
 ) -> BinaryMeasurementRun:
-    """Load a measurement run from disk.
-
-    Args:
-        run_dir: Path to the run directory.
-        tasks: Optional tasks for reconstructing ThurstonianResult.
-
-    Returns:
-        BinaryMeasurementRun with config, measurements, and optionally thurstonian.
-    """
+    """Pass tasks to reconstruct ThurstonianResult."""
     run_dir = Path(run_dir)
 
     config = BinaryRunConfig.model_validate(load_yaml(run_dir / "config.yaml"))
@@ -163,16 +143,7 @@ def list_runs(
     results_dir: Path | str = RESULTS_DIR,
     **filters: str,
 ) -> list[BinaryRunConfig]:
-    """List measurement runs, optionally filtered.
-
-    Args:
-        results_dir: Base results directory.
-        **filters: Filter by config fields or template tags.
-            E.g., model_short="llama-3.1-8b", phrasing="1"
-
-    Returns:
-        List of matching BinaryRunConfig.
-    """
+    """Filter by config fields or template tags, e.g., model_short="llama-3.1-8b"."""
     results_dir = Path(results_dir)
     index_path = results_dir / "index.yaml"
 
@@ -190,7 +161,6 @@ def list_runs(
 
 
 def update_index(results_dir: Path | str = RESULTS_DIR) -> None:
-    """Regenerate index.yaml from existing run directories."""
     results_dir = Path(results_dir)
 
     runs = []
@@ -217,14 +187,6 @@ def update_index(results_dir: Path | str = RESULTS_DIR) -> None:
 
 
 def load_thurstonian_data(run_dir: Path | str) -> ThurstonianData:
-    """Load thurstonian.yaml as ThurstonianData (no Task objects required).
-
-    Args:
-        run_dir: Path to the run directory containing thurstonian.yaml.
-
-    Returns:
-        ThurstonianData with task_ids, mu, sigma arrays.
-    """
     run_dir = Path(run_dir)
     data = load_yaml(run_dir / "thurstonian.yaml")
 

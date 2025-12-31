@@ -1,5 +1,3 @@
-"""Interactive Jupyter widgets for exploring Thurstonian results."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -19,12 +17,7 @@ from .plots import plot_utility_ranking
 
 
 class RunBrowser:
-    """Interactive browser for measurement run results.
-
-    Usage in Jupyter:
-        browser = RunBrowser("results/")
-        browser.display()
-    """
+    """Usage: RunBrowser("results/").display()"""
 
     def __init__(self, results_dir: str | Path = RESULTS_DIR):
         self.results_dir = Path(results_dir)
@@ -33,7 +26,6 @@ class RunBrowser:
         self._setup_widgets()
 
     def _discover_runs(self) -> list[str]:
-        """Find run directories (those with config.yaml)."""
         runs = []
         if not self.results_dir.exists():
             return runs
@@ -44,7 +36,6 @@ class RunBrowser:
         return runs
 
     def _setup_widgets(self) -> None:
-        """Initialize widget components."""
         run_options = self._discover_runs()
         if not run_options:
             run_options = ["(no runs found)"]
@@ -84,11 +75,9 @@ class RunBrowser:
         self.task_dropdown.observe(self._on_task_change, names="value")
 
     def _on_run_change(self, change: dict) -> None:
-        """Handle run selection change."""
         self._render()
 
     def _on_task_change(self, change: dict) -> None:
-        """Handle task selection change."""
         if self._current_run is None:
             return
 
@@ -100,7 +89,6 @@ class RunBrowser:
         self.task_prompt.value = prompt
 
     def _render(self) -> None:
-        """Render the current selection."""
         self.plot_output.clear_output(wait=True)
 
         run_name = self.run_dropdown.value
@@ -142,7 +130,6 @@ class RunBrowser:
                 print(f"Error loading run: {e}")
 
     def display(self) -> None:
-        """Display the browser widget."""
         task_box = widgets.VBox([self.task_dropdown, self.task_prompt])
 
         container = widgets.VBox([

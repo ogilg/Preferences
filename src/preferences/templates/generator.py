@@ -1,5 +1,3 @@
-"""Generate prompt template variations for sensitivity analysis."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -28,7 +26,6 @@ def build_binary_template(
     task_label_names: str,
     language: str,
 ) -> str:
-    """Build a complete binary template from instruction text."""
     label_a, label_b = TASK_LABELS[(task_label_names, language)]
 
     tasks_block = f"{label_a}\n{{task_a}}\n{label_b}\n{{task_b}}"
@@ -45,7 +42,6 @@ def build_rating_template(
     instruction_position: str,
     language: str,
 ) -> str:
-    """Build a complete rating template from instruction text."""
     task_label = RATING_TASK_LABELS[language]
     task_block = f"{task_label}\n{{task}}"
     instructions_block = f"{instruction}\n{{format_instruction}}"
@@ -57,14 +53,12 @@ def build_rating_template(
 
 
 def add_situating_context(template: str, context: str | None) -> str:
-    """Prepend situating context preamble to template."""
     if context is None:
         return template
     return f"{context}\n\n{template}"
 
 
 def build_translation_prompt(text: str, language: str) -> list[Message]:
-    """Build messages for translation request."""
     return [
         {
             "role": "user",
@@ -79,8 +73,6 @@ def build_translation_prompt(text: str, language: str) -> list[Message]:
 
 @dataclass
 class TemplateVariant:
-    """A single template variant with its tags."""
-
     template: str
     phrasing: int
     language: str
@@ -90,7 +82,6 @@ class TemplateVariant:
 
 
 def _build_instructions(config: GeneratorConfig) -> dict[tuple[int, str], str]:
-    """Build initial instructions dict with English base templates."""
     instructions: dict[tuple[int, str], str] = {}
     for phrasing_idx, instruction in enumerate(config.base_templates, start=1):
         instructions[(phrasing_idx, "en")] = instruction.strip()
@@ -103,7 +94,6 @@ def _translate_instructions(
     model: "HyperbolicModel",
     max_concurrent: int,
 ) -> dict[tuple[int, str], str]:
-    """Translate instructions to non-English languages."""
     non_english_languages = [lang for lang in config.languages if lang != "en"]
 
     if not non_english_languages:
@@ -131,7 +121,6 @@ def _build_variants(
     instructions: dict[tuple[int, str], str],
     config: GeneratorConfig,
 ) -> list[TemplateVariant]:
-    """Build all template variants from instructions."""
     variants: list[TemplateVariant] = []
     context_items = [("none", None), *config.situating_contexts.items()]
     is_rating = config.template_type in ("pre_task_rating", "post_task_rating")
@@ -164,7 +153,6 @@ def _add_rating_variants(
     phrasing_idx: int,
     context_items: list[tuple[str, str | None]],
 ) -> None:
-    """Add rating template variants."""
     template = build_rating_template(instruction, instruction_pos, lang)
 
     for context_key, context_text in context_items:
@@ -190,7 +178,6 @@ def _add_binary_variants(
     context_items: list[tuple[str, str | None]],
     config: GeneratorConfig,
 ) -> None:
-    """Add binary template variants."""
     for label_style in config.task_label_names:
         template = build_binary_template(instruction, instruction_pos, label_style, lang)
 
@@ -212,7 +199,6 @@ def _to_output_format(
     variants: list[TemplateVariant],
     config: GeneratorConfig,
 ) -> list[dict]:
-    """Convert variants to output format with IDs."""
     output = []
     for idx, variant in enumerate(variants, start=1):
         template_id = f"{idx:03d}"
@@ -244,10 +230,6 @@ def generate_templates(
     model: "HyperbolicModel",
     max_concurrent: int = 10,
 ) -> list[dict]:
-    """Generate all template variants according to config.
-
-    Returns list of dicts ready to write as YAML.
-    """
     instructions = _build_instructions(config)
     instructions = _translate_instructions(instructions, config, model, max_concurrent)
     variants = _build_variants(instructions, config)
@@ -255,7 +237,6 @@ def generate_templates(
 
 
 def write_templates_yaml(templates: list[dict], path: Path) -> None:
-    """Write templates to YAML file."""
     with path.open("w") as f:
         yaml.dump(templates, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
 
@@ -265,10 +246,6 @@ def generate_and_write(
     model: "HyperbolicModel",
     max_concurrent: int = 10,
 ) -> list[dict]:
-    """Generate templates and write to YAML file.
-
-    Returns the generated templates.
-    """
     templates = generate_templates(config, model, max_concurrent)
     write_templates_yaml(templates, config.output_path)
     return templates

@@ -1,5 +1,3 @@
-"""Tests for measurers - classes that own parsing logic and measurement-specific properties."""
-
 import pytest
 from src.task_data import Task, OriginDataset
 from src.preferences import (

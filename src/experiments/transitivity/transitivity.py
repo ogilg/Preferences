@@ -1,9 +1,3 @@
-"""Transitivity measurement for pairwise preference data.
-
-Measures how often preferences violate transitivity (form cycles).
-A cycle: A ≻ B, B ≻ C, but C ≻ A.
-"""
-
 from __future__ import annotations
 
 import itertools
@@ -14,29 +8,19 @@ import numpy as np
 
 @dataclass
 class TransitivityResult:
-    """Results from transitivity analysis."""
-
     cycle_probability: float  # P(cycle) across all triads
     n_triads: int
     n_cycles: int
 
     @property
     def log_cycle_prob(self) -> float:
-        """Log10 of cycle probability (as in the paper's Figure 7)."""
         if self.cycle_probability <= 0:
             return float("-inf")
         return float(np.log10(self.cycle_probability))
 
 
 def measure_transitivity(wins: np.ndarray) -> TransitivityResult:
-    """Measure transitivity violations in pairwise preference data.
-
-    Args:
-        wins: Matrix where wins[i,j] = number of times i beat j.
-
-    Returns:
-        TransitivityResult with cycle probability and counts.
-    """
+    """wins[i,j] = number of times i beat j."""
     n = wins.shape[0]
 
     if n < 3:

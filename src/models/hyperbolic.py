@@ -1,5 +1,3 @@
-"""Hyperbolic API model implementation."""
-
 from __future__ import annotations
 
 import asyncio
@@ -15,8 +13,6 @@ from src.types import Message
 
 
 class ToolCallError(Exception):
-    """Raised when tool call parsing fails."""
-
     pass
 
 

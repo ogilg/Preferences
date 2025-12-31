@@ -1,9 +1,3 @@
-"""Tests for generate_batch functionality.
-
-Unit tests use ConfigurableMockModel.
-Integration tests make real API calls to verify parallel execution.
-"""
-
 import pytest
 from dotenv import load_dotenv
 

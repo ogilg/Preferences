@@ -1,5 +1,3 @@
-"""Storage module for measurement runs."""
-
 from src.preferences.storage.base import (
     RESULTS_DIR,
     BaseRunConfig,

@@ -1,11 +1,4 @@
-"""Analyze and plot sensitivity of preferences to template variations.
-
-Loads all measurement runs from storage, groups by template tags,
-and computes correlations to measure sensitivity to each field.
-
-Usage:
-    python -m src.experiments.sensitivity_experiments.plot results/
-"""
+"""Usage: python -m src.experiments.sensitivity_experiments.plot results/"""
 
 from __future__ import annotations
 
@@ -28,7 +21,6 @@ from src.preferences.storage import (
 
 
 def load_all_runs(results_dir: Path) -> list[tuple[BinaryRunConfig, ThurstonianData]]:
-    """Load all measurement runs with their Thurstonian data."""
     runs = list_runs(results_dir)
     loaded = []
     for config in runs:
@@ -42,7 +34,6 @@ def load_all_runs(results_dir: Path) -> list[tuple[BinaryRunConfig, ThurstonianD
 
 
 def utility_correlation(thurs_a: ThurstonianData, thurs_b: ThurstonianData) -> float:
-    """Compute Pearson correlation of utilities between two runs."""
     if len(thurs_a.mu) != len(thurs_b.mu):
         return np.nan
 
@@ -66,7 +57,6 @@ def utility_correlation(thurs_a: ThurstonianData, thurs_b: ThurstonianData) -> f
 
 
 def get_tag_fields(runs: list[tuple[BinaryRunConfig, ThurstonianData]]) -> set[str]:
-    """Get all unique tag field names across runs."""
     fields = set()
     for config, _ in runs:
         for key in config.template_tags:
@@ -78,11 +68,7 @@ def compute_field_sensitivity(
     runs: list[tuple[BinaryRunConfig, ThurstonianData]],
     field: str,
 ) -> dict:
-    """Compute sensitivity when varying a single field.
-
-    Groups runs by all tags EXCEPT the given field, then computes
-    pairwise correlations within each group (where only that field varies).
-    """
+    """Groups by all tags EXCEPT field, computes correlations within each group."""
     groups: dict[tuple, list[tuple[BinaryRunConfig, ThurstonianData]]] = defaultdict(list)
 
     for config, thurs in runs:
@@ -121,7 +107,6 @@ def compute_field_sensitivity(
 def compute_all_field_sensitivities(
     runs: list[tuple[BinaryRunConfig, ThurstonianData]],
 ) -> list[dict]:
-    """Compute sensitivity for each tag field."""
     fields = get_tag_fields(runs)
     results = []
     for field in sorted(fields):
@@ -135,7 +120,6 @@ def print_sensitivity_report(
     sensitivities: list[dict],
     runs: list[tuple[BinaryRunConfig, ThurstonianData]],
 ) -> None:
-    """Print sensitivity analysis report."""
     print("\n" + "=" * 60)
     print("PREFERENCE SENSITIVITY ANALYSIS")
     print("=" * 60)
@@ -185,7 +169,6 @@ def plot_sensitivity_bars(
     sensitivities: list[dict],
     output_path: Path,
 ) -> None:
-    """Plot bar chart of mean correlations by field."""
     if not sensitivities:
         return
 

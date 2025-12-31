@@ -1,5 +1,3 @@
-"""NDIF (National Deep Inference Fabric) model implementation using nnsight."""
-
 from nnsight import LanguageModel
 
 from src.types import Message

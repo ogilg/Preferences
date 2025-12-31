@@ -1,11 +1,4 @@
-"""Run binary preference measurements across templates.
-
-Measures binary preferences for each template, fits Thurstonian utilities,
-and stores results. Correlation analysis is done separately via plot.py.
-
-Usage:
-    python -m src.sensitivity_experiments.run_binary --templates path/to/templates.yaml --n-tasks 10
-"""
+"""Usage: python -m src.sensitivity_experiments.run_binary --templates <yaml> --n-tasks N"""
 
 from __future__ import annotations
 

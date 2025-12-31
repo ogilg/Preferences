@@ -1,5 +1,3 @@
-"""Tests for the storage module."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -21,8 +19,6 @@ from src.preferences.storage import (
 
 
 class MockModel:
-    """Mock model for testing."""
-
     def __init__(self, model_name: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"):
         self.model_name = model_name
 

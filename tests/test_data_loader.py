@@ -1,5 +1,3 @@
-"""Tests for the data loader."""
-
 import pytest
 
 from src.task_data import Task, OriginDataset, load_tasks
