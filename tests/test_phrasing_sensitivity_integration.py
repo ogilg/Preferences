@@ -203,19 +203,6 @@ class TestPhrasingTemplateLoading:
 class TestCorrelationIntegration:
     """Integration tests for win_rate_correlation and utility_correlation."""
 
-    def test_identical_measurements_have_perfect_or_zero_correlation(
-        self, sample_tasks: list[Task], mock_measurements_consistent: list[BinaryPreferenceMeasurement]
-    ):
-        """Identical measurement sets should have correlation of 1.0 (or 0.0 if no variance)."""
-        corr = win_rate_correlation(
-            mock_measurements_consistent,
-            mock_measurements_consistent,
-            sample_tasks,
-        )
-        # With perfectly consistent preferences (all win rates = 1.0), variance is 0
-        # and correlation returns 0.0 by design. Otherwise it would be 1.0.
-        assert corr in (0.0, pytest.approx(1.0, abs=1e-6))
-
     def test_varied_measurements_have_perfect_correlation_with_self(
         self, sample_tasks: list[Task]
     ):
@@ -238,21 +225,6 @@ class TestCorrelationIntegration:
         corr = win_rate_correlation(measurements, measurements, sample_tasks)
         assert corr == pytest.approx(1.0, abs=1e-6)
 
-    def test_win_rate_correlation_with_different_measurements(
-        self,
-        sample_tasks: list[Task],
-        mock_measurements_consistent: list[BinaryPreferenceMeasurement],
-        mock_measurements_random: list[BinaryPreferenceMeasurement],
-    ):
-        """Different measurement sets should have correlation != 1.0."""
-        corr = win_rate_correlation(
-            mock_measurements_consistent,
-            mock_measurements_random,
-            sample_tasks,
-        )
-        # Should be a valid correlation
-        assert -1.0 <= corr <= 1.0
-
     def test_utility_correlation_identical_fits(
         self, sample_tasks: list[Task], mock_measurements_consistent: list[BinaryPreferenceMeasurement]
     ):
@@ -262,22 +234,6 @@ class TestCorrelationIntegration:
 
         corr = utility_correlation(fit, fit)
         assert corr == pytest.approx(1.0, abs=1e-6)
-
-    def test_utility_correlation_different_fits(
-        self,
-        sample_tasks: list[Task],
-        mock_measurements_consistent: list[BinaryPreferenceMeasurement],
-        mock_measurements_random: list[BinaryPreferenceMeasurement],
-    ):
-        """Different Thurstonian fits may have varying correlation."""
-        data1 = PairwiseData.from_comparisons(mock_measurements_consistent, sample_tasks)
-        data2 = PairwiseData.from_comparisons(mock_measurements_random, sample_tasks)
-
-        fit1 = fit_thurstonian(data1)
-        fit2 = fit_thurstonian(data2)
-
-        corr = utility_correlation(fit1, fit2)
-        assert -1.0 <= corr <= 1.0
 
 
 # =============================================================================

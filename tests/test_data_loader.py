@@ -6,10 +6,6 @@ from src.task_data import Task, OriginDataset, load_tasks
 class TestTask:
     """Tests for the Task dataclass."""
 
-    def test_task_exists(self):
-        """Task should exist."""
-        assert Task is not None
-
     def test_task_has_prompt(self):
         """Task should have a prompt field."""
         task = Task(prompt="Hello", origin=OriginDataset.WILDCHAT, id="1", metadata={})
@@ -34,27 +30,13 @@ class TestTask:
 class TestLoadTasks:
     """Tests for the load_tasks function."""
 
-    def test_load_tasks_exists(self):
-        """load_tasks function should exist."""
-        assert callable(load_tasks)
-
-    def test_load_tasks_returns_list(self):
-        """load_tasks should return a list."""
-        result = load_tasks(n=10)
-        assert isinstance(result, list)
-
     def test_load_tasks_returns_task_objects(self):
         """load_tasks should return a list of Task objects."""
         result = load_tasks(n=10)
-        assert len(result) > 0
+        assert len(result) == 10
         assert all(isinstance(t, Task) for t in result)
 
-    def test_load_tasks_n_limits_count(self):
-        """load_tasks(n=k) should return at most k tasks."""
-        result = load_tasks(n=5)
-        assert len(result) <= 5
-
-    def test_load_tasks_n_returns_exact_if_available(self):
+    def test_load_tasks_n_returns_exact_count(self):
         """load_tasks(n=k) should return exactly k tasks if enough exist."""
         result = load_tasks(n=3)
         assert len(result) == 3

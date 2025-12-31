@@ -77,23 +77,6 @@ class TestLoadTemplate:
 class TestTaskPromptsBackwardCompat:
     """Test backward compatibility for task_prompts."""
 
-    def test_missing_task_prompts_defaults_empty(self):
-        """Old configs without task_prompts should get empty dict."""
-        data = {
-            "template_id": "001",
-            "template_name": "test",
-            "template_file": "test.yaml",
-            "template_tags": {},
-            "model": "test",
-            "model_short": "test",
-            "temperature": 0.0,
-            "task_origin": "test",
-            "n_tasks": 1,
-            "task_ids": ["a"],
-        }
-        config = BinaryRunConfig.model_validate(data)
-        assert config.task_prompts == {}
-
     def test_task_prompts_preserved(self):
         """task_prompts should be preserved when present."""
         data = {

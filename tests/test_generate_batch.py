@@ -146,14 +146,6 @@ class TestBatchResult:
 class TestGenerateRequest:
     """Tests for GenerateRequest dataclass."""
 
-    def test_create_with_messages_only(self):
-        """Should create request with just messages."""
-        req = GenerateRequest(messages=[{"role": "user", "content": "hi"}])
-
-        assert req.messages == [{"role": "user", "content": "hi"}]
-        assert req.temperature == 1.0  # default
-        assert req.tools is None  # default
-
     def test_create_with_all_params(self):
         """Should create request with all parameters."""
         tools = [{"type": "function", "function": {"name": "test"}}]

@@ -140,11 +140,11 @@ class TestLoadTemplatesFromYaml:
         assert "canonical" in templates[0].tags
 
     def test_loads_real_template_file(self):
-        """Should load the actual binary_choice_variants.yaml file."""
+        """Should load the actual binary_choice_v1.yaml file."""
         from pathlib import Path
         from src.preferences.templates import load_templates_from_yaml
 
-        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/binary_choice_variants.yaml"
+        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/binary_choice_v1.yaml"
         templates = load_templates_from_yaml(yaml_path)
 
         assert len(templates) >= 1

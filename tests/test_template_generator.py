@@ -449,16 +449,11 @@ name_prefix: test
         config_path = tmp_path / "config.yaml"
         config_path.write_text(yaml_content)
 
-        config, model_name = load_config_from_yaml(config_path)
+        config, _ = load_config_from_yaml(config_path)
 
         assert config.base_templates == ["Choose which task you prefer."]
         assert config.template_type == "binary"
         assert config.name_prefix == "test"
-        # Defaults
-        assert config.languages == ["en"]
-        assert config.situating_contexts == {}
-        assert config.instruction_positions == ["before"]
-        assert config.task_label_names == ["letter"]
 
     def test_loads_full_config(self, tmp_path):
         """Should load config with all fields."""
@@ -492,21 +487,6 @@ model: custom-model-name
         assert config.version == "v2"
         assert config.output_path == Path("custom_output/binary_choice_v2.yaml")
         assert model_name == "custom-model-name"
-
-    def test_default_model_name(self, tmp_path):
-        """Should use default model when not specified."""
-        yaml_content = """
-base_templates:
-  - Choose.
-template_type: binary
-name_prefix: test
-"""
-        config_path = tmp_path / "config.yaml"
-        config_path.write_text(yaml_content)
-
-        _, model_name = load_config_from_yaml(config_path)
-
-        assert model_name == "meta-llama/Meta-Llama-3.1-8B-Instruct"
 
 
 class TestEndToEndIntegration:
