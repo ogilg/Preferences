@@ -539,7 +539,7 @@ class TestMeasurePreferences:
         """Should record measurements with different formats to YAML file."""
         from pathlib import Path
         from src import MeasurementRecorder
-        from src.preferences.measurement_recorder import MeasurementRecord
+        from src.preferences.measurement import MeasurementRecord
 
         output_path = Path(__file__).parent / "measurement_results.yaml"
 

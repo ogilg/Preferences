@@ -2,15 +2,15 @@
 
 import pytest
 
-from src.preferences.storage import MeasurementRunConfig
+from src.preferences.storage import BinaryRunConfig
 
 
 class TestLoadTemplate:
-    """Test MeasurementRunConfig.load_template()."""
+    """Test BinaryRunConfig.load_template()."""
 
     def test_load_template_file_not_found(self, tmp_path):
         """Template file doesn't exist."""
-        config = MeasurementRunConfig(
+        config = BinaryRunConfig(
             template_id="001",
             template_name="test_template_001",
             template_file=str(tmp_path / "nonexistent.yaml"),
@@ -34,7 +34,7 @@ class TestLoadTemplate:
   type: "binary"
   template: "{task_a} {task_b} {format_instruction}"
 """)
-        config = MeasurementRunConfig(
+        config = BinaryRunConfig(
             template_id="001",
             template_name="test_template_001",
             template_file=str(template_file),
@@ -58,7 +58,7 @@ class TestLoadTemplate:
   type: "binary"
   template: "Choose {task_a} or {task_b}. {format_instruction}"
 """)
-        config = MeasurementRunConfig(
+        config = BinaryRunConfig(
             template_id="001",
             template_name="test_template_001",
             template_file=str(template_file),
@@ -91,7 +91,7 @@ class TestTaskPromptsBackwardCompat:
             "n_tasks": 1,
             "task_ids": ["a"],
         }
-        config = MeasurementRunConfig.from_dict(data)
+        config = BinaryRunConfig.model_validate(data)
         assert config.task_prompts == {}
 
     def test_task_prompts_preserved(self):
@@ -109,5 +109,5 @@ class TestTaskPromptsBackwardCompat:
             "task_ids": ["a"],
             "task_prompts": {"a": "Do task A"},
         }
-        config = MeasurementRunConfig.from_dict(data)
+        config = BinaryRunConfig.model_validate(data)
         assert config.task_prompts == {"a": "Do task A"}

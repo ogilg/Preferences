@@ -27,7 +27,7 @@ from src.preferences import (
     TaskCompletion,
     PreferenceType,
 )
-from src.preferences.measurer import (
+from src.preferences.measurement import (
     BinaryPreferenceMeasurer,
     TaskScoreMeasurer,
 )
@@ -145,7 +145,7 @@ class TestLoadTemplatesFromYaml:
         from pathlib import Path
         from src.preferences.templates import load_templates_from_yaml
 
-        yaml_path = Path(__file__).parent.parent / "src/preferences/template_data/binary_choice_variants.yaml"
+        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/binary_choice_variants.yaml"
         templates = load_templates_from_yaml(yaml_path)
 
         assert len(templates) >= 1

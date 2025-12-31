@@ -8,7 +8,7 @@ import pytest
 from pathlib import Path
 from unittest.mock import MagicMock
 
-from src.preferences.template_generator import (
+from src.preferences.templates.generator import (
     GeneratorConfig,
     build_binary_template,
     add_situating_context,
@@ -21,12 +21,12 @@ from src.models.hyperbolic import BatchResult
 
 
 class TestBuildBinaryTemplate:
-    """Tests for building binary templates from intro text."""
+    """Tests for building binary templates from instruction text."""
 
     def test_builds_template_with_letter_labels(self):
         """Should build template with Task A: and Task B: labels."""
         template = build_binary_template(
-            intro="Choose which task you prefer.",
+            instruction="Choose which task you prefer.",
             instruction_position="before",
             task_label_names="letter",
             language="en",
@@ -41,9 +41,9 @@ class TestBuildBinaryTemplate:
     def test_builds_template_with_number_labels(self):
         """Should build template with Task 1: and Task 2: labels."""
         template = build_binary_template(
-            intro="Choose which task you prefer.",
+            instruction="Choose which task you prefer.",
             instruction_position="before",
-            task_labels="number",
+            task_label_names="number",
             language="en",
         )
 
@@ -55,9 +55,9 @@ class TestBuildBinaryTemplate:
     def test_builds_template_with_ordinal_labels(self):
         """Should build template with First task: and Second task: labels."""
         template = build_binary_template(
-            intro="Choose which task you prefer.",
+            instruction="Choose which task you prefer.",
             instruction_position="before",
-            task_labels="ordinal",
+            task_label_names="ordinal",
             language="en",
         )
 
@@ -67,7 +67,7 @@ class TestBuildBinaryTemplate:
     def test_instruction_before_tasks(self):
         """When instruction_position='before', format_instruction comes before tasks."""
         template = build_binary_template(
-            intro="Choose.",
+            instruction="Choose.",
             instruction_position="before",
             task_label_names="letter",
             language="en",
@@ -80,7 +80,7 @@ class TestBuildBinaryTemplate:
     def test_instruction_after_tasks(self):
         """When instruction_position='after', format_instruction comes after tasks."""
         template = build_binary_template(
-            intro="Choose.",
+            instruction="Choose.",
             instruction_position="after",
             task_label_names="letter",
             language="en",
@@ -196,7 +196,7 @@ class TestGenerateTemplates:
         assert "phrasing:1" in tags
         assert "situating_context:none" in tags
         assert "instruction_position:before" in tags
-        assert "task_labels:letter" in tags
+        assert "task_label_names:letter" in tags
 
     def test_multiple_base_templates_increment_phrasing(self, mock_model):
         """Multiple base templates should have incrementing phrasing tags."""
@@ -234,26 +234,26 @@ class TestGenerateTemplates:
         positions = [t for t in templates if "instruction_position:after" in t["tags"]]
         assert len(positions) == 1
 
-    def test_multiple_task_labels(self, mock_model):
+    def test_multiple_task_label_names(self, mock_model):
         """Should generate variants for each task label style."""
         config = GeneratorConfig(
             base_templates=["Choose."],
             template_type="binary",
             name_prefix="test",
-            task_labels=["letter", "number", "ordinal"],
+            task_label_names=["letter", "number", "ordinal"],
         )
 
         templates = generate_templates(config, mock_model)
 
         assert len(templates) == 3
         # Check actual label text in templates
-        letter_template = [t for t in templates if "task_labels:letter" in t["tags"]][0]
+        letter_template = [t for t in templates if "task_label_names:letter" in t["tags"]][0]
         assert "Task A:" in letter_template["template"]
 
-        number_template = [t for t in templates if "task_labels:number" in t["tags"]][0]
+        number_template = [t for t in templates if "task_label_names:number" in t["tags"]][0]
         assert "Task 1:" in number_template["template"]
 
-        ordinal_template = [t for t in templates if "task_labels:ordinal" in t["tags"]][0]
+        ordinal_template = [t for t in templates if "task_label_names:ordinal" in t["tags"]][0]
         assert "First task:" in ordinal_template["template"]
 
     def test_situating_contexts(self, mock_model):
@@ -293,7 +293,7 @@ class TestGenerateTemplates:
             template_type="binary",
             name_prefix="test",
             instruction_positions=["before", "after"],  # 2 positions
-            task_labels=["letter", "number"],  # 2 label styles
+            task_label_names=["letter", "number"],  # 2 label styles
             situating_contexts={"ctx": "Context text."},  # 2 contexts (none + ctx)
         )
 
@@ -458,7 +458,7 @@ name_prefix: test
         assert config.languages == ["en"]
         assert config.situating_contexts == {}
         assert config.instruction_positions == ["before"]
-        assert config.task_labels == ["letter"]
+        assert config.task_label_names == ["letter"]
 
     def test_loads_full_config(self, tmp_path):
         """Should load config with all fields."""
@@ -474,7 +474,7 @@ situating_contexts:
   assistant: You are a helpful assistant.
   researcher: You are an AI researcher.
 instruction_positions: [before, after]
-task_labels: [letter, number]
+task_label_names: [letter, number]
 output_dir: custom_output
 model: custom-model-name
 """
@@ -487,7 +487,7 @@ model: custom-model-name
         assert config.languages == ["en", "fr", "de"]
         assert "assistant" in config.situating_contexts
         assert config.instruction_positions == ["before", "after"]
-        assert config.task_labels == ["letter", "number"]
+        assert config.task_label_names == ["letter", "number"]
         assert config.output_dir == Path("custom_output")
         assert config.version == "v2"
         assert config.output_path == Path("custom_output/binary_choice_v2.yaml")
@@ -541,7 +541,7 @@ class TestEndToEndIntegration:
         """Generated templates should work with BinaryPromptBuilder."""
         from src.preferences.templates import load_templates_from_yaml
         from src.preferences import BinaryPromptBuilder, RegexChoiceFormat, PreferenceType
-        from src.preferences.measurer import BinaryPreferenceMeasurer
+        from src.preferences.measurement import BinaryPreferenceMeasurer
         from src.task_data import Task, OriginDataset
 
         mock_model = MagicMock()
@@ -596,7 +596,7 @@ class TestEndToEndIntegration:
             base_templates=["Choose."],
             template_type="binary",
             name_prefix="test",
-            task_labels=["letter", "number", "ordinal"],
+            task_label_names=["letter", "number", "ordinal"],
             output_path=tmp_path / "generated.yaml",
         )
 

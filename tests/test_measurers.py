@@ -10,7 +10,7 @@ from src.preferences import (
     RegexChoiceFormat,
     RegexRatingFormat,
 )
-from src.preferences.measurer import (
+from src.preferences.measurement import (
     Measurer,
     BinaryPreferenceMeasurer,
     TaskScoreMeasurer,
