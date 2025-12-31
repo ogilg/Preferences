@@ -1,4 +1,4 @@
-"""Usage: python -m src.sensitivity_experiments.run_binary --templates <yaml> --n-tasks N"""
+"""Usage: python -m src.experiments.run_binary_measurement --templates <yaml> --n-tasks N"""
 
 from __future__ import annotations
 
@@ -75,7 +75,7 @@ def main():
         measured += 1
 
     print(f"\nDone. Measured: {measured}, Skipped: {skipped}")
-    print("Run 'python -m src.sensitivity_experiments.plot results/' to analyze correlations.")
+    print("Run 'python -m src.experiments.sensitivity_experiments.plot results/' to analyze correlations.")
 
 
 if __name__ == "__main__":

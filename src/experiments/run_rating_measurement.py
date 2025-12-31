@@ -1,4 +1,4 @@
-"""Usage: python -m src.sensitivity_experiments.run_rating --templates <yaml> --n-tasks N"""
+"""Usage: python -m src.experiments.run_rating_measurement --templates <yaml> --n-tasks N"""
 
 from __future__ import annotations
 
@@ -10,10 +10,10 @@ from src.task_data import load_tasks, OriginDataset
 from src.preferences.templates import load_templates_from_yaml, PreTaskRatingPromptBuilder
 from src.preferences.measurement import measure_ratings, TaskScoreMeasurer, RegexRatingFormat
 from src.preferences.storage import save_rating_run, rating_run_exists
+from src.experiments.correlation import save_experiment_config
 from src.experiments.sensitivity_experiments.rating_correlation import (
     compute_rating_pairwise_correlations,
     save_rating_correlations,
-    save_experiment_config,
 )
 
 
@@ -53,7 +53,7 @@ def main():
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("results/rating_sensitivity"),
+        default=Path("results/rating"),
     )
     parser.add_argument("--n-tasks", type=int, default=10)
     parser.add_argument("--model", default="meta-llama/Meta-Llama-3.1-8B-Instruct")
