@@ -4,6 +4,7 @@ from .thurstonian import (
     fit_thurstonian,
     save_thurstonian,
     load_thurstonian,
+    compute_pair_agreement,
 )
 
 __all__ = [
@@ -12,4 +13,5 @@ __all__ = [
     "fit_thurstonian",
     "save_thurstonian",
     "load_thurstonian",
+    "compute_pair_agreement",
 ]

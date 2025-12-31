@@ -219,3 +219,30 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
         n_iterations=data.get("n_iterations", -1),
         termination_message=data.get("termination_message", "unknown (loaded from old format)"),
     )
+
+
+def compute_pair_agreement(
+    comparisons: list["BinaryPreferenceMeasurement"],
+) -> float:
+    """Compute mean agreement rate across pairs with multiple samples.
+
+    For each pair (A, B), agreement = max(n_a_wins, n_b_wins) / total.
+    Returns mean agreement across all pairs (1.0 = perfect consistency).
+    """
+    from collections import Counter, defaultdict
+
+    pair_outcomes: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for c in comparisons:
+        key = tuple(sorted([c.task_a.id, c.task_b.id]))
+        winner = c.task_a.id if c.choice == "a" else c.task_b.id
+        pair_outcomes[key].append(winner)
+
+    agreements = []
+    for outcomes in pair_outcomes.values():
+        if len(outcomes) < 2:
+            continue
+        counts = Counter(outcomes)
+        majority = max(counts.values())
+        agreements.append(majority / len(outcomes))
+
+    return float(np.mean(agreements)) if agreements else 1.0
