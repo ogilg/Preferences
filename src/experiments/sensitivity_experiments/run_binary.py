@@ -16,7 +16,7 @@ from pathlib import Path
 from src.models import HyperbolicModel
 from src.task_data import load_tasks, OriginDataset
 from src.preferences.templates import load_templates_from_yaml
-from src.preferences.measure_preferences import measure_with_template
+from src.preferences.measurement import measure_with_template
 from src.preferences.ranking import PairwiseData, fit_thurstonian
 from src.preferences.storage import save_run, run_exists
 
@@ -24,7 +24,7 @@ from src.preferences.storage import save_run, run_exists
 def main():
     parser = argparse.ArgumentParser(description="Run binary preference measurements")
     parser.add_argument("--templates", type=Path,
-                        default=Path("src/preferences/template_data/binary_choice_variants.yaml"))
+                        default=Path("src/preferences/templates/data/binary_choice_variants.yaml"))
     parser.add_argument("--n-tasks", type=int, default=10)
     parser.add_argument("--model", default="meta-llama/Meta-Llama-3.1-8B-Instruct")
     parser.add_argument("--temperature", type=float, default=1.0)

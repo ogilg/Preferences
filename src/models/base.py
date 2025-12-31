@@ -12,23 +12,13 @@ class Model(Protocol):
         messages: list[Message],
         temperature: float = 1.0,
         tools: list[dict[str, Any]] | None = None,
-    ) -> str:
-        """Generate a response for the given messages.
-
-        Args:
-            messages: The conversation messages.
-            temperature: Sampling temperature.
-            tools: Optional list of tool definitions for function calling.
-        """
-        ...
+    ) -> str: ...
 
     def generate_batch(
         self,
         requests: list["GenerateRequest"],
         max_concurrent: int = 10,
-    ) -> list["BatchResult"]:
-        """Generate responses for multiple requests in parallel."""
-        ...
+    ) -> list["BatchResult"]: ...
 
     def get_logprobs(
         self,
@@ -62,7 +52,6 @@ class ConfigurableMockModel:
         requests: list["GenerateRequest"],
         max_concurrent: int = 10,
     ) -> list["BatchResult"]:
-        """Return the same response for each request."""
         from .hyperbolic import BatchResult
 
         return [BatchResult(response=self.response, error=None) for _ in requests]

@@ -1,11 +1,26 @@
 from .config import DatasetMeasurementConfig, PairingStrategy
-from .measure_preferences import measure_binary_preferences, measure_ratings
-from .prompt_builders import (
-    PromptBuilder,
-    BinaryPromptBuilder,
-    PreTaskRatingPromptBuilder,
-    PostTaskRatingPromptBuilder,
+
+# Re-export from measurement submodule
+from .measurement import (
+    measure_binary_preferences,
+    measure_ratings,
+    measure_with_template,
+    Measurer,
+    BinaryPreferenceMeasurer,
+    TaskScoreMeasurer,
+    MeasurementRecord,
+    MeasurementRecorder,
+    ResponseFormat,
+    RegexChoiceFormat,
+    XMLChoiceFormat,
+    CompletionChoiceFormat,
+    RegexRatingFormat,
+    XMLRatingFormat,
+    ToolUseChoiceFormat,
+    ToolUseRatingFormat,
 )
+
+# Re-export from templates submodule
 from .templates import (
     PromptTemplate,
     BINARY_PLACEHOLDERS,
@@ -18,23 +33,15 @@ from .templates import (
     BINARY_COMPLETION_TEMPLATE,
     PRE_TASK_RATING_TEMPLATE,
     POST_TASK_RATING_TEMPLATE,
+    load_templates_from_yaml,
+    PromptBuilder,
+    BinaryPromptBuilder,
+    PreTaskRatingPromptBuilder,
+    PostTaskRatingPromptBuilder,
 )
-from .measurer import (
-    Measurer,
-    BinaryPreferenceMeasurer,
-    TaskScoreMeasurer,
-)
-from .response_format import (
-    ResponseFormat,
-    RegexChoiceFormat,
-    XMLChoiceFormat,
-    CompletionChoiceFormat,
-    RegexRatingFormat,
-    XMLRatingFormat,
-    ToolUseChoiceFormat,
-    ToolUseRatingFormat,
-)
-from ..types import (
+
+# Re-export from types
+from src.types import (
     PreferenceType,
     PreferencePrompt,
     MeasurementResponse,
@@ -50,11 +57,23 @@ __all__ = [
     # Measurement
     "measure_binary_preferences",
     "measure_ratings",
-    # Prompt Builders
-    "PromptBuilder",
-    "BinaryPromptBuilder",
-    "PreTaskRatingPromptBuilder",
-    "PostTaskRatingPromptBuilder",
+    "measure_with_template",
+    # Measurers
+    "Measurer",
+    "BinaryPreferenceMeasurer",
+    "TaskScoreMeasurer",
+    # Recorder
+    "MeasurementRecord",
+    "MeasurementRecorder",
+    # Response Formats
+    "ResponseFormat",
+    "RegexChoiceFormat",
+    "XMLChoiceFormat",
+    "CompletionChoiceFormat",
+    "RegexRatingFormat",
+    "XMLRatingFormat",
+    "ToolUseChoiceFormat",
+    "ToolUseRatingFormat",
     # Templates
     "PromptTemplate",
     "BINARY_PLACEHOLDERS",
@@ -67,19 +86,12 @@ __all__ = [
     "BINARY_COMPLETION_TEMPLATE",
     "PRE_TASK_RATING_TEMPLATE",
     "POST_TASK_RATING_TEMPLATE",
-    # Measurers
-    "Measurer",
-    "BinaryPreferenceMeasurer",
-    "TaskScoreMeasurer",
-    # Response Formats
-    "ResponseFormat",
-    "RegexChoiceFormat",
-    "XMLChoiceFormat",
-    "CompletionChoiceFormat",
-    "RegexRatingFormat",
-    "XMLRatingFormat",
-    "ToolUseChoiceFormat",
-    "ToolUseRatingFormat",
+    "load_templates_from_yaml",
+    # Prompt Builders
+    "PromptBuilder",
+    "BinaryPromptBuilder",
+    "PreTaskRatingPromptBuilder",
+    "PostTaskRatingPromptBuilder",
     # Types
     "PreferenceType",
     "PreferencePrompt",

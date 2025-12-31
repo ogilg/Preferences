@@ -9,12 +9,12 @@ import numpy as np
 
 if TYPE_CHECKING:
     from matplotlib.container import BarContainer
-    from src.preferences.storage import ThurstonianData, MeasurementRunConfig
+    from src.preferences.storage import ThurstonianData, BinaryRunConfig
 
 
 def plot_utility_ranking(
     data: "ThurstonianData",
-    config: "MeasurementRunConfig | None" = None,
+    config: "BinaryRunConfig | None" = None,
     figsize: tuple[float, float] = (10, 6),
     color: str = "steelblue",
     picker: bool = False,
@@ -25,7 +25,7 @@ def plot_utility_ranking(
 
     Args:
         data: ThurstonianData with mu, sigma, task_ids.
-        config: Optional MeasurementRunConfig for title metadata.
+        config: Optional BinaryRunConfig for title metadata.
         figsize: Figure size in inches.
         color: Bar color.
         picker: Enable click picking on bars.

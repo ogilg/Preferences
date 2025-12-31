@@ -21,13 +21,13 @@ from scipy.stats import pearsonr
 from src.preferences.storage import (
     list_runs,
     load_thurstonian_data,
-    MeasurementRunConfig,
+    BinaryRunConfig,
     ThurstonianData,
     RESULTS_DIR,
 )
 
 
-def load_all_runs(results_dir: Path) -> list[tuple[MeasurementRunConfig, ThurstonianData]]:
+def load_all_runs(results_dir: Path) -> list[tuple[BinaryRunConfig, ThurstonianData]]:
     """Load all measurement runs with their Thurstonian data."""
     runs = list_runs(results_dir)
     loaded = []
@@ -65,7 +65,7 @@ def utility_correlation(thurs_a: ThurstonianData, thurs_b: ThurstonianData) -> f
     return float(r) if not np.isnan(r) else np.nan
 
 
-def get_tag_fields(runs: list[tuple[MeasurementRunConfig, ThurstonianData]]) -> set[str]:
+def get_tag_fields(runs: list[tuple[BinaryRunConfig, ThurstonianData]]) -> set[str]:
     """Get all unique tag field names across runs."""
     fields = set()
     for config, _ in runs:
@@ -75,7 +75,7 @@ def get_tag_fields(runs: list[tuple[MeasurementRunConfig, ThurstonianData]]) -> 
 
 
 def compute_field_sensitivity(
-    runs: list[tuple[MeasurementRunConfig, ThurstonianData]],
+    runs: list[tuple[BinaryRunConfig, ThurstonianData]],
     field: str,
 ) -> dict:
     """Compute sensitivity when varying a single field.
@@ -83,7 +83,7 @@ def compute_field_sensitivity(
     Groups runs by all tags EXCEPT the given field, then computes
     pairwise correlations within each group (where only that field varies).
     """
-    groups: dict[tuple, list[tuple[MeasurementRunConfig, ThurstonianData]]] = defaultdict(list)
+    groups: dict[tuple, list[tuple[BinaryRunConfig, ThurstonianData]]] = defaultdict(list)
 
     for config, thurs in runs:
         tags = config.template_tags
@@ -119,7 +119,7 @@ def compute_field_sensitivity(
 
 
 def compute_all_field_sensitivities(
-    runs: list[tuple[MeasurementRunConfig, ThurstonianData]],
+    runs: list[tuple[BinaryRunConfig, ThurstonianData]],
 ) -> list[dict]:
     """Compute sensitivity for each tag field."""
     fields = get_tag_fields(runs)
@@ -133,7 +133,7 @@ def compute_all_field_sensitivities(
 
 def print_sensitivity_report(
     sensitivities: list[dict],
-    runs: list[tuple[MeasurementRunConfig, ThurstonianData]],
+    runs: list[tuple[BinaryRunConfig, ThurstonianData]],
 ) -> None:
     """Print sensitivity analysis report."""
     print("\n" + "=" * 60)

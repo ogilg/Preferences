@@ -9,8 +9,6 @@ load_dotenv()
 
 
 class NDIFModel:
-    """Model via NDIF using nnsight."""
-
     def __init__(
         self,
         model_name: str,
@@ -22,7 +20,6 @@ class NDIFModel:
         self.model = LanguageModel(model_name, device_map="auto")
 
     def _format_messages(self, messages: list[Message]) -> str:
-        """Format messages using the tokenizer's chat template."""
         chat_messages = [
             {"role": msg["role"], "content": msg["content"]} for msg in messages
         ]
@@ -37,7 +34,6 @@ class NDIFModel:
         messages: list[Message],
         temperature: float = 1.0,
     ) -> str:
-        """Generate a response for the given messages."""
         prompt = self._format_messages(messages)
 
         with self.model.generate(
@@ -59,7 +55,6 @@ class NDIFModel:
         messages: list[Message],
         max_tokens: int = 1,
     ) -> dict[str, float]:
-        """Get log probabilities for next tokens."""
         import torch
 
         prompt = self._format_messages(messages)

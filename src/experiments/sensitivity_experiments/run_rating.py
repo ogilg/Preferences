@@ -13,16 +13,10 @@ from pathlib import Path
 
 from src.models import HyperbolicModel
 from src.task_data import load_tasks, OriginDataset
-from src.preferences.templates import load_templates_from_yaml
-from src.preferences.measure_preferences import measure_ratings
-from src.preferences.prompt_builders import PreTaskRatingPromptBuilder
-from src.preferences.measurer import TaskScoreMeasurer
-from src.preferences.response_format import RegexRatingFormat
-from src.sensitivity_experiments.rating_storage import (
-    save_rating_run,
-    rating_run_exists,
-)
-from src.sensitivity_experiments.rating_correlation import (
+from src.preferences.templates import load_templates_from_yaml, PreTaskRatingPromptBuilder
+from src.preferences.measurement import measure_ratings, TaskScoreMeasurer, RegexRatingFormat
+from src.preferences.storage import save_rating_run, rating_run_exists
+from src.experiments.sensitivity_experiments.rating_correlation import (
     compute_rating_pairwise_correlations,
     save_rating_correlations,
     save_experiment_config,
@@ -60,7 +54,7 @@ def main():
     parser.add_argument(
         "--templates",
         type=Path,
-        default=Path("src/preferences/template_data/rating_v1.yaml"),
+        default=Path("src/preferences/templates/data/rating_v1.yaml"),
     )
     parser.add_argument(
         "--output-dir",

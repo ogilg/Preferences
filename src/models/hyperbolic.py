@@ -22,8 +22,6 @@ class ToolCallError(Exception):
 
 @dataclass
 class GenerateRequest:
-    """A single generation request for batch processing."""
-
     messages: list[Message]
     temperature: float = 1.0
     tools: list[dict[str, Any]] | None = None
@@ -31,8 +29,6 @@ class GenerateRequest:
 
 @dataclass
 class BatchResult:
-    """Result of a single request in a batch operation."""
-
     response: str | None
     error: Exception | None
 
@@ -41,14 +37,12 @@ class BatchResult:
         return self.error is None
 
     def unwrap(self) -> str:
-        """Return response or raise the error."""
         if self.error is not None:
             raise self.error
         assert self.response is not None
         return self.response
 
     def error_details(self) -> str | None:
-        """Return detailed error information for debugging API issues."""
         if self.error is None:
             return None
 
@@ -89,7 +83,6 @@ class HyperbolicModel:
         )
 
     def _create_async_client(self) -> AsyncOpenAI:
-        """Create a fresh async client for batch operations."""
         return AsyncOpenAI(
             api_key=self._api_key,
             base_url=self._base_url,
@@ -100,7 +93,6 @@ class HyperbolicModel:
         message: Any,
         tools: list[dict[str, Any]] | None,
     ) -> str:
-        """Parse API response message into string result."""
         if tools is not None:
             if not message.tool_calls:
                 raise ToolCallError(
@@ -122,21 +114,7 @@ class HyperbolicModel:
         temperature: float = 1.0,
         tools: list[dict[str, Any]] | None = None,
     ) -> str:
-        """Generate a response for the given messages.
-
-        Args:
-            messages: The conversation messages.
-            temperature: Sampling temperature.
-            tools: Optional list of tool definitions for function calling.
-                When provided, tool_choice is set to "required".
-
-        Returns:
-            If tools are provided: JSON string of the tool call arguments.
-            Otherwise: The model's text response.
-
-        Raises:
-            ToolCallError: If tool use was requested but failed.
-        """
+        """If tools provided, returns JSON of tool call args; raises ToolCallError on failure."""
         kwargs: dict[str, Any] = {
             "model": self.model_name,
             "messages": messages,
@@ -160,7 +138,6 @@ class HyperbolicModel:
         messages: list[Message],
         max_tokens: int = 1,
     ) -> dict[str, float]:
-        """Get log probabilities for next tokens."""
         response = self.client.chat.completions.create(
             model=self.model_name,
             messages=messages,
@@ -179,7 +156,6 @@ class HyperbolicModel:
         on_complete: Callable[[], None] | None = None,
         timeout: float = 10.0,
     ) -> list[BatchResult]:
-        """Run all requests concurrently with limited parallelism."""
         semaphore = asyncio.Semaphore(max_concurrent)
         # Create a fresh async client for this event loop
         async_client = self._create_async_client()
@@ -239,17 +215,5 @@ class HyperbolicModel:
         on_complete: Callable[[], None] | None = None,
         timeout: float = 60.0,
     ) -> list[BatchResult]:
-        """Generate responses for multiple requests in parallel.
-
-        Args:
-            requests: List of GenerateRequest objects.
-            max_concurrent: Maximum number of concurrent API calls.
-            on_complete: Optional callback invoked after each request completes.
-            timeout: Per-request timeout in seconds (default 60s).
-
-        Returns:
-            List of BatchResult objects. Use .ok to check success,
-            .unwrap() to get response or raise the error.
-            Order matches input requests.
-        """
+        """on_complete is called after each request; results match input order."""
         return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete, timeout))

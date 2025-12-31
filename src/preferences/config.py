@@ -1,5 +1,3 @@
-"""Configuration for dataset-wide preference measurement."""
-
 from enum import Enum
 
 from pydantic import BaseModel, Field
@@ -8,15 +6,11 @@ from ..types import PreferenceType
 
 
 class PairingStrategy(str, Enum):
-    """Strategy for generating task pairs for binary comparisons."""
-
     ALL_PAIRS = "all_pairs"  # n(n-1)/2 unique pairs
     RANDOM_PAIRS = "random_pairs"  # Random sample of pairs
 
 
 class DatasetMeasurementConfig(BaseModel, frozen=True):
-    """Configuration for dataset-wide preference measurement."""
-
     temperature: float = Field(
         default=1.0,
         ge=0.0,
