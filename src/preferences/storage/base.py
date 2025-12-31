@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 import yaml
 from pydantic import BaseModel
 
-if TYPE_CHECKING:
-    from src.models import HyperbolicModel
-    from src.preferences.templates.template import PromptTemplate
+from src.models import HyperbolicModel
+from src.preferences.templates.template import PromptTemplate
 
 
 RESULTS_DIR = Path("results")

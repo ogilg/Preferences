@@ -1,9 +1,9 @@
-from typing import Protocol, Any, TYPE_CHECKING
+from __future__ import annotations
+
+from typing import Protocol, Any
 
 from src.types import Message
-
-if TYPE_CHECKING:
-    from .hyperbolic import GenerateRequest, BatchResult
+from .hyperbolic import GenerateRequest, BatchResult
 
 
 class Model(Protocol):

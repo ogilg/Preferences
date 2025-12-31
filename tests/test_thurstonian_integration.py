@@ -100,7 +100,7 @@ class TestFullPipeline:
         # Measure multiple times to get a distribution
         pairs = [(easy_task, hard_task)] * 3 + [(hard_task, easy_task)] * 3
 
-        comparisons = measure_binary_preferences(
+        batch = measure_binary_preferences(
             model=model,
             pairs=pairs,
             builder=binary_builder,
@@ -108,10 +108,10 @@ class TestFullPipeline:
         )
 
         # Should get results for most comparisons
-        assert len(comparisons) >= 4
+        assert len(batch.successes) >= 4
 
         # Aggregate and fit
-        data = PairwiseData.from_comparisons(comparisons, tasks)
+        data = PairwiseData.from_comparisons(batch.successes, tasks)
         result = fit_thurstonian(data)
 
         # Basic sanity checks
@@ -135,16 +135,16 @@ class TestFullPipeline:
             for t2 in tasks[i + 1:]:
                 pairs.extend([(t1, t2), (t2, t1)])
 
-        comparisons = measure_binary_preferences(
+        batch = measure_binary_preferences(
             model=model,
             pairs=pairs,
             builder=binary_builder,
             temperature=1.0,
         )
 
-        assert len(comparisons) >= 4
+        assert len(batch.successes) >= 4
 
-        data = PairwiseData.from_comparisons(comparisons, tasks)
+        data = PairwiseData.from_comparisons(batch.successes, tasks)
         result = fit_thurstonian(data)
 
         assert result.converged
@@ -164,20 +164,20 @@ class TestFullPipeline:
         # More samples for better estimate
         pairs = [(easy_task, hard_task)] * 5
 
-        comparisons = measure_binary_preferences(
+        batch = measure_binary_preferences(
             model=model,
             pairs=pairs,
             builder=binary_builder,
             temperature=0.5,
         )
 
-        assert len(comparisons) >= 3
+        assert len(batch.successes) >= 3
 
         # Calculate empirical win rate
-        easy_wins = sum(1 for c in comparisons if c.choice == "a")
-        empirical_rate = easy_wins / len(comparisons)
+        easy_wins = sum(1 for c in batch.successes if c.choice == "a")
+        empirical_rate = easy_wins / len(batch.successes)
 
-        data = PairwiseData.from_comparisons(comparisons, tasks)
+        data = PairwiseData.from_comparisons(batch.successes, tasks)
         result = fit_thurstonian(data)
 
         # Fitted probability should be in same direction as empirical
@@ -200,22 +200,22 @@ class TestPairwiseDataFromRealMeasurements:
         tasks = [easy_task, hard_task]
         pairs = [(easy_task, hard_task)] * 4
 
-        comparisons = measure_binary_preferences(
+        batch = measure_binary_preferences(
             model=model,
             pairs=pairs,
             builder=binary_builder,
             temperature=0.0,  # Deterministic
         )
 
-        data = PairwiseData.from_comparisons(comparisons, tasks)
+        data = PairwiseData.from_comparisons(batch.successes, tasks)
 
         # Total comparisons should equal number of valid responses
         total = data.wins.sum()
-        assert total == len(comparisons)
+        assert total == len(batch.successes)
 
         # With temperature=0, all responses should be the same
         # So one cell should have all the wins
-        assert data.wins[0, 1] == len(comparisons) or data.wins[1, 0] == len(comparisons)
+        assert data.wins[0, 1] == len(batch.successes) or data.wins[1, 0] == len(batch.successes)
 
     def test_both_directions_counted(
         self, model, binary_builder, easy_task, hard_task
@@ -224,16 +224,16 @@ class TestPairwiseDataFromRealMeasurements:
         tasks = [easy_task, hard_task]
         pairs = [(easy_task, hard_task), (hard_task, easy_task)]
 
-        comparisons = measure_binary_preferences(
+        batch = measure_binary_preferences(
             model=model,
             pairs=pairs,
             builder=binary_builder,
             temperature=0.0,
         )
 
-        assert len(comparisons) == 2
+        assert len(batch.successes) == 2
 
-        data = PairwiseData.from_comparisons(comparisons, tasks)
+        data = PairwiseData.from_comparisons(batch.successes, tasks)
 
         # Should have exactly 2 comparisons total
         assert data.wins.sum() == 2

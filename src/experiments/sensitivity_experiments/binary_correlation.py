@@ -2,17 +2,15 @@ from __future__ import annotations
 
 from itertools import combinations
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 import numpy as np
 import yaml
 from scipy.stats import pearsonr
 
-if TYPE_CHECKING:
-    from src.task_data import Task
-    from src.types import BinaryPreferenceMeasurement
-    from src.preferences.ranking import ThurstonianResult
-    from src.preferences.templates import PromptTemplate
+from src.task_data import Task
+from src.types import BinaryPreferenceMeasurement
+from src.preferences.ranking import ThurstonianResult
+from src.preferences.templates import PromptTemplate
 
 
 def _build_win_rate_vector(

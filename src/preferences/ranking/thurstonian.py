@@ -13,16 +13,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 import numpy as np
 import yaml
 from scipy.optimize import minimize
 from scipy.stats import norm
 
-if TYPE_CHECKING:
-    from ...task_data import Task
-    from ...types import BinaryPreferenceMeasurement
+from ...task_data import Task
+from ...types import BinaryPreferenceMeasurement
 
 
 @dataclass

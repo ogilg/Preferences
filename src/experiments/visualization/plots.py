@@ -1,13 +1,10 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.container import BarContainer
 
-if TYPE_CHECKING:
-    from matplotlib.container import BarContainer
-    from src.preferences.storage import ThurstonianData, BinaryRunConfig
+from src.preferences.storage import ThurstonianData, BinaryRunConfig
 
 
 def plot_utility_ranking(

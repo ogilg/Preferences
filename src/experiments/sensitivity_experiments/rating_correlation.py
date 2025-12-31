@@ -2,17 +2,15 @@ from __future__ import annotations
 
 from itertools import combinations
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal
+from typing import Literal
 
 import numpy as np
 import yaml
 from scipy.stats import pearsonr, spearmanr
 
 from src.sensitivity_experiments.binary_correlation import save_experiment_config
-
-if TYPE_CHECKING:
-    from src.task_data import Task
-    from src.types import TaskScore
+from src.task_data import Task
+from src.types import TaskScore
 
 
 def _build_score_vector(
