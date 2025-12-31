@@ -5,7 +5,6 @@ from .types import (
     MeasurementResponse,
     BinaryPreferenceMeasurement,
     TaskScore,
-    TaskCompletion,
 )
 from .preferences.measurement import MeasurementRecorder
 
@@ -16,6 +15,5 @@ __all__ = [
     "MeasurementResponse",
     "BinaryPreferenceMeasurement",
     "TaskScore",
-    "TaskCompletion",
     "MeasurementRecorder",
 ]

@@ -189,11 +189,4 @@ def update_index(results_dir: Path | str = RESULTS_DIR) -> None:
 def load_thurstonian_data(run_dir: Path | str) -> ThurstonianData:
     run_dir = Path(run_dir)
     data = load_yaml(run_dir / "thurstonian.yaml")
-
-    return ThurstonianData(
-        task_ids=data["task_ids"],
-        mu=np.array(data["mu"]),
-        sigma=np.array(data["sigma"]),
-        converged=data["converged"],
-        neg_log_likelihood=data["neg_log_likelihood"],
-    )
+    return ThurstonianData.model_validate(data)

@@ -27,19 +27,20 @@ def measure_ratings_with_template(
     scale_max: int = 10,
 ):
     response_format = RegexRatingFormat(scale_min=scale_min, scale_max=scale_max)
-    measurer = TaskScoreMeasurer(scale_min=scale_min, scale_max=scale_max)
+    measurer = TaskScoreMeasurer()
     builder = PreTaskRatingPromptBuilder(
         measurer=measurer,
         response_format=response_format,
         template=template,
     )
-    return measure_ratings(
+    batch = measure_ratings(
         model=model,
         tasks=tasks,
         builder=builder,
         temperature=temperature,
         max_concurrent=max_concurrent,
     )
+    return batch
 
 
 def main():
@@ -88,7 +89,7 @@ def main():
 
         print(f"\nMeasuring template {template.name}...")
 
-        scores = measure_ratings_with_template(
+        batch = measure_ratings_with_template(
             template,
             model,
             task_list,
@@ -97,7 +98,7 @@ def main():
             args.scale_min,
             args.scale_max,
         )
-        print(f"  Got {len(scores)} scores")
+        print(f"  Got {len(batch.successes)} scores ({len(batch.failures)} failures)")
 
         run_path = save_rating_run(
             template=template,
@@ -105,13 +106,13 @@ def main():
             model=model,
             temperature=args.temperature,
             tasks=tasks,
-            scores=scores,
+            scores=batch.successes,
             scale_min=args.scale_min,
             scale_max=args.scale_max,
         )
         print(f"  Saved to {run_path}")
 
-        results[template.name] = scores
+        results[template.name] = batch.successes
 
     print(f"\nMeasured: {len(results)}, Skipped: {skipped}")
 

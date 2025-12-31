@@ -50,10 +50,10 @@ def main():
 
         print(f"\nMeasuring template {template.name}...")
 
-        measurements = measure_with_template(template, model, pairs, args.temperature, args.max_concurrent)
-        print(f"  Got {len(measurements)} measurements")
+        batch = measure_with_template(template, model, pairs, args.temperature, args.max_concurrent)
+        print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
 
-        thurstonian = fit_thurstonian(PairwiseData.from_comparisons(measurements, tasks), max_iter=max_iter)
+        thurstonian = fit_thurstonian(PairwiseData.from_comparisons(batch.successes, tasks), max_iter=max_iter)
         print(f"  Thurstonian converged: {thurstonian.converged}")
         if not thurstonian.converged:
             print(f"    Iterations: {thurstonian.n_iterations}/{max_iter}")
@@ -68,7 +68,7 @@ def main():
             model=model,
             temperature=args.temperature,
             tasks=tasks,
-            measurements=measurements,
+            measurements=batch.successes,
             thurstonian=thurstonian,
         )
         print(f"  Saved to {run_path}")

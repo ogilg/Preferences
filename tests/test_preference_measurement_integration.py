@@ -35,7 +35,6 @@ from src.preferences import (
     POST_TASK_RATING_TEMPLATE,
     BinaryPreferenceMeasurement,
     TaskScore,
-    TaskCompletion,
     PreferenceType,
     measure_binary_preferences,
     measure_ratings,
@@ -280,7 +279,7 @@ class TestRatingRegexFormat:
         measurer = TaskScoreMeasurer()
         builder = PreTaskRatingPromptBuilder(
             measurer=measurer,
-            response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+            response_format=RegexRatingFormat(),
             template=PRE_TASK_RATING_TEMPLATE,
         )
 
@@ -300,10 +299,7 @@ class TestRatingXMLFormat:
         measurer = TaskScoreMeasurer()
         builder = PreTaskRatingPromptBuilder(
             measurer=measurer,
-            response_format=XMLRatingFormat(
-                scale_min=measurer.scale_min,
-                scale_max=measurer.scale_max,
-            ),
+            response_format=XMLRatingFormat(),
             template=PRE_TASK_RATING_TEMPLATE,
         )
 
@@ -328,14 +324,13 @@ class TestPostTaskRatingRegexFormat:
         measurer = TaskScoreMeasurer()
         builder = PostTaskRatingPromptBuilder(
             measurer=measurer,
-            response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+            response_format=RegexRatingFormat(),
             template=POST_TASK_RATING_TEMPLATE,
         )
 
-        # Simulate a task completion
-        completion = TaskCompletion(task=math_task, text="The answer is 4.")
+        completion_text = "The answer is 4."
 
-        prompt = builder.build(math_task, completion)
+        prompt = builder.build(math_task, completion_text)
         assert prompt.kind == PreferenceType.POST_TASK_STATED
         assert len(prompt.messages) == 3  # user, assistant, user
 
@@ -354,20 +349,13 @@ class TestPostTaskRatingXMLFormat:
         measurer = TaskScoreMeasurer()
         builder = PostTaskRatingPromptBuilder(
             measurer=measurer,
-            response_format=XMLRatingFormat(
-                scale_min=measurer.scale_min,
-                scale_max=measurer.scale_max,
-            ),
+            response_format=XMLRatingFormat(),
             template=POST_TASK_RATING_TEMPLATE,
         )
 
-        # Simulate a task completion
-        completion = TaskCompletion(
-            task=creative_task,
-            text="Waves crash on shore\nSalt spray kisses the warm wind\nPeace beneath the blue",
-        )
+        completion_text = "Waves crash on shore\nSalt spray kisses the warm wind\nPeace beneath the blue"
 
-        prompt = builder.build(creative_task, completion)
+        prompt = builder.build(creative_task, completion_text)
         assert prompt.kind == PreferenceType.POST_TASK_STATED
         assert len(prompt.messages) == 3  # user, assistant, user
 
@@ -390,8 +378,8 @@ class TestPostTaskRatingToolUseFormat:
             template=POST_TASK_RATING_TEMPLATE,
         )
 
-        completion = TaskCompletion(task=math_task, text="The answer is 4.")
-        prompt = builder.build(math_task, completion)
+        completion_text = "The answer is 4."
+        prompt = builder.build(math_task, completion_text)
         assert prompt.kind == PreferenceType.POST_TASK_STATED
         assert len(prompt.messages) == 3  # user, assistant, user
 
@@ -416,11 +404,8 @@ class TestPostTaskRatingToolUseFormat:
             template=POST_TASK_RATING_TEMPLATE,
         )
 
-        completion = TaskCompletion(
-            task=creative_task,
-            text="Waves crash on shore\nSalt spray kisses the warm wind\nPeace beneath the blue",
-        )
-        prompt = builder.build(creative_task, completion)
+        completion_text = "Waves crash on shore\nSalt spray kisses the warm wind\nPeace beneath the blue"
+        prompt = builder.build(creative_task, completion_text)
 
         response_text = model.generate(
             prompt.messages,
@@ -502,36 +487,36 @@ class TestMeasurePreferences:
         )
 
         pairs = [(math_task, creative_task)]
-        results = measure_binary_preferences(
+        batch = measure_binary_preferences(
             model=model,
             pairs=pairs,
             builder=binary_builder,
             temperature=0.0,
         )
 
-        assert len(results) == 1
-        assert isinstance(results[0], BinaryPreferenceMeasurement)
-        assert results[0].choice in ("a", "b")
+        assert len(batch.successes) == 1
+        assert isinstance(batch.successes[0], BinaryPreferenceMeasurement)
+        assert batch.successes[0].choice in ("a", "b")
 
     def test_rating_measurement_pipeline(self, model, math_task, creative_task):
         """Should run rating measurements and return valid results."""
         measurer = TaskScoreMeasurer()
         rating_builder = PreTaskRatingPromptBuilder(
             measurer=measurer,
-            response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+            response_format=RegexRatingFormat(),
             template=PRE_TASK_RATING_TEMPLATE,
         )
 
         tasks = [math_task, creative_task]
-        results = measure_ratings(
+        batch = measure_ratings(
             model=model,
             tasks=tasks,
             builder=rating_builder,
             temperature=0.0,
         )
 
-        assert len(results) == 2
-        for score in results:
+        assert len(batch.successes) == 2
+        for score in batch.successes:
             assert isinstance(score, TaskScore)
             assert isinstance(score.score, float)
 
@@ -552,8 +537,7 @@ class TestMeasurePreferences:
         def record_measurement(recorder, builder, tasks_for_record, measurement_type):
             """Helper to run a measurement and record it."""
             prompt = builder.build(*tasks_for_record)
-            tools = getattr(prompt.response_format, "tools", None)
-            response_text = model.generate(prompt.messages, temperature=0.0, tools=tools)
+            response_text = model.generate(prompt.messages, temperature=0.0, tools=prompt.response_format.tools)
 
             try:
                 response = prompt.measurer.parse(response_text, prompt)
@@ -630,9 +614,9 @@ class TestMeasurePreferences:
 
             # Rating formats (pre-task)
             for fmt in [
-                RegexRatingFormat(measurer.scale_min, measurer.scale_max),
-                XMLRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max),
-                ToolUseRatingFormat(scale_min=measurer.scale_min, scale_max=measurer.scale_max),
+                RegexRatingFormat(),
+                XMLRatingFormat(),
+                ToolUseRatingFormat(),
             ]:
                 builder = PreTaskRatingPromptBuilder(
                     measurer=measurer,
@@ -644,11 +628,11 @@ class TestMeasurePreferences:
             # Post-task rating
             post_task_builder = PostTaskRatingPromptBuilder(
                 measurer=measurer,
-                response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+                response_format=RegexRatingFormat(),
                 template=POST_TASK_RATING_TEMPLATE,
             )
-            completion = TaskCompletion(task=math_task, text="The answer is 4.")
-            prompt = post_task_builder.build(math_task, completion)
+            completion_text = "The answer is 4."
+            prompt = post_task_builder.build(math_task, completion_text)
             response_text = model.generate(prompt.messages, temperature=0.0)
             try:
                 response = prompt.measurer.parse(response_text, prompt)

@@ -1,16 +1,12 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from itertools import product
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TypedDict
 
 import yaml
 
-if TYPE_CHECKING:
-    from src.models.hyperbolic import HyperbolicModel
-
-from src.models.hyperbolic import GenerateRequest
+from src.models.hyperbolic import GenerateRequest, HyperbolicModel
 from src.preferences.templates.generator_config import (
     RATING_TASK_LABELS,
     TASK_LABELS,
@@ -18,6 +14,15 @@ from src.preferences.templates.generator_config import (
     load_config_from_yaml,
 )
 from src.types import Message
+
+
+class TemplateVariant(TypedDict):
+    template: str
+    phrasing: int
+    language: str
+    situating_context: str  # "none" or context key
+    instruction_position: str
+    task_label_names: str | None  # None for rating templates
 
 
 def build_binary_template(
@@ -69,16 +74,6 @@ def build_translation_prompt(text: str, language: str) -> list[Message]:
             ),
         }
     ]
-
-
-@dataclass
-class TemplateVariant:
-    template: str
-    phrasing: int
-    language: str
-    situating_context: str  # "none" or context key
-    instruction_position: str
-    task_label_names: str | None = None  # None for rating templates
 
 
 def _build_instructions(config: GeneratorConfig) -> dict[tuple[int, str], str]:
@@ -157,16 +152,14 @@ def _add_rating_variants(
 
     for context_key, context_text in context_items:
         final_template = add_situating_context(template, context_text)
-        variants.append(
-            TemplateVariant(
-                template=final_template,
-                phrasing=phrasing_idx,
-                language=lang,
-                situating_context=context_key,
-                instruction_position=instruction_pos,
-                task_label_names=None,
-            )
-        )
+        variants.append({
+            "template": final_template,
+            "phrasing": phrasing_idx,
+            "language": lang,
+            "situating_context": context_key,
+            "instruction_position": instruction_pos,
+            "task_label_names": None,
+        })
 
 
 def _add_binary_variants(
@@ -183,16 +176,14 @@ def _add_binary_variants(
 
         for context_key, context_text in context_items:
             final_template = add_situating_context(template, context_text)
-            variants.append(
-                TemplateVariant(
-                    template=final_template,
-                    phrasing=phrasing_idx,
-                    language=lang,
-                    situating_context=context_key,
-                    instruction_position=instruction_pos,
-                    task_label_names=label_style,
-                )
-            )
+            variants.append({
+                "template": final_template,
+                "phrasing": phrasing_idx,
+                "language": lang,
+                "situating_context": context_key,
+                "instruction_position": instruction_pos,
+                "task_label_names": label_style,
+            })
 
 
 def _to_output_format(
@@ -204,13 +195,13 @@ def _to_output_format(
         template_id = f"{idx:03d}"
         name = f"{config.name_prefix}_{template_id}"
         tags = [
-            f"language:{variant.language}",
-            f"phrasing:{variant.phrasing}",
-            f"situating_context:{variant.situating_context}",
-            f"instruction_position:{variant.instruction_position}",
+            f"language:{variant['language']}",
+            f"phrasing:{variant['phrasing']}",
+            f"situating_context:{variant['situating_context']}",
+            f"instruction_position:{variant['instruction_position']}",
         ]
-        if variant.task_label_names is not None:
-            tags.append(f"task_label_names:{variant.task_label_names}")
+        if variant["task_label_names"] is not None:
+            tags.append(f"task_label_names:{variant['task_label_names']}")
 
         output.append(
             {
@@ -218,7 +209,7 @@ def _to_output_format(
                 "name": name,
                 "type": config.template_type,
                 "tags": tags,
-                "template": variant.template,
+                "template": variant["template"],
             }
         )
 

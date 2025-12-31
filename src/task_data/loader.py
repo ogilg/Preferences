@@ -1,7 +1,8 @@
 import json
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
+
+from pydantic import BaseModel
 
 from .task import OriginDataset, Task
 
@@ -18,8 +19,7 @@ FILE_MAPPING = {
 }
 
 
-@dataclass
-class ParserConfig:
+class ParserConfig(BaseModel):
     origin: OriginDataset
     prompt_key: str
     id_key: str
@@ -30,7 +30,7 @@ class ParserConfig:
         metadata = {}
         for key in self.metadata_keys:
             default = (self.metadata_defaults or {}).get(key)
-            metadata[key] = row.get(key, default) if default is not None else row.get(key)
+            metadata[key] = row.get(key, default) if default is not None else row[key]
         return Task(
             prompt=row[self.prompt_key],
             origin=self.origin,

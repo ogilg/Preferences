@@ -105,20 +105,6 @@ class TestBinaryPreferenceMeasurer:
 class TestTaskScoreMeasurer:
     """Tests for TaskScoreMeasurer."""
 
-    def test_default_scale(self):
-        """Should have default scale 1-10."""
-        measurer = TaskScoreMeasurer()
-
-        assert measurer.scale_min == 1
-        assert measurer.scale_max == 10
-
-    def test_custom_scale(self):
-        """Should accept custom scale bounds."""
-        measurer = TaskScoreMeasurer(scale_min=-5, scale_max=5)
-
-        assert measurer.scale_min == -5
-        assert measurer.scale_max == 5
-
     def test_parse_returns_response_with_score(self, sample_task_a, dummy_template):
         """Should parse response and return TaskScore."""
         measurer = TaskScoreMeasurer()

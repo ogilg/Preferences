@@ -2,13 +2,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum, auto
-from typing import TYPE_CHECKING, Literal, TypedDict
+from typing import TYPE_CHECKING, Any, Generic, Literal, TypedDict, TypeVar
 
 if TYPE_CHECKING:
-    from typing import Any
     from .task_data import Task
-    from .preferences.measurer import Measurer
-    from .preferences.response_format import ResponseFormat
+    from .preferences.measurement.measurer import Measurer
+    from .preferences.measurement.response_format import ResponseFormat
     from .preferences.templates import PromptTemplate
 
 
@@ -21,14 +20,8 @@ class Message(TypedDict):
 
 class PreferenceType(Enum):
     PRE_TASK_STATED = auto()
-    PRE_TASK_REVEALED = auto()  
+    PRE_TASK_REVEALED = auto()
     POST_TASK_STATED = auto()
-
-
-@dataclass
-class TaskCompletion:
-    task: "Task"
-    text: str
 
 
 @dataclass
@@ -61,3 +54,12 @@ class MeasurementResponse:
     text: str
     source_prompt: PreferencePrompt
     result: BinaryPreferenceMeasurement | TaskScore
+
+
+T = TypeVar("T", BinaryPreferenceMeasurement, TaskScore)
+
+
+@dataclass
+class MeasurementBatch(Generic[T]):
+    successes: list[T]
+    failures: list[tuple[PreferencePrompt, str]]

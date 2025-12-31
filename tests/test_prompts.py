@@ -24,7 +24,6 @@ from src.preferences import (
     RegexRatingFormat,
     XMLChoiceFormat,
     XMLRatingFormat,
-    TaskCompletion,
     PreferenceType,
 )
 from src.preferences.measurement import (
@@ -181,11 +180,8 @@ def sample_task_b():
 
 
 @pytest.fixture
-def sample_task_completion(sample_task_a):
-    return TaskCompletion(
-        task=sample_task_a,
-        text="Cherry blossoms fall\nGentle breeze carries petals\nNew life awakens",
-    )
+def sample_completion_text():
+    return "Cherry blossoms fall\nGentle breeze carries petals\nNew life awakens"
 
 
 class TestBinaryPromptBuilder:
@@ -240,7 +236,7 @@ class TestPreTaskRatingPromptBuilder:
     def test_build_creates_valid_prompt(self, sample_task_a):
         """Built prompt should have correct structure and carry all components."""
         measurer = TaskScoreMeasurer()
-        response_format = RegexRatingFormat(measurer.scale_min, measurer.scale_max)
+        response_format = RegexRatingFormat()
         builder = PreTaskRatingPromptBuilder(
             measurer=measurer,
             response_format=response_format,
@@ -259,12 +255,13 @@ class TestPreTaskRatingPromptBuilder:
         assert prompt.response_format is response_format
 
     def test_scale_placeholders_are_filled(self, sample_task_a):
-        """Scale placeholders in template should be filled from measurer."""
+        """Scale placeholders in template should be filled from response format."""
         template = "Rate from {scale_min} to {scale_max}.\nTask: {task}\n{format_instruction}"
-        measurer = TaskScoreMeasurer(scale_min=-5, scale_max=5)
+        measurer = TaskScoreMeasurer()
+        response_format = RegexRatingFormat(scale_min=-5, scale_max=5)
         builder = PreTaskRatingPromptBuilder(
             measurer=measurer,
-            response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+            response_format=response_format,
             template=template,
         )
         prompt = builder.build(sample_task_a)
@@ -277,21 +274,21 @@ class TestPreTaskRatingPromptBuilder:
 class TestPostTaskRatingPromptBuilder:
     """Tests for post-task rating prompt building."""
 
-    def test_build_creates_valid_prompt(self, sample_task_a, sample_task_completion):
+    def test_build_creates_valid_prompt(self, sample_task_a, sample_completion_text):
         """Built prompt should have correct structure and carry all components."""
         measurer = TaskScoreMeasurer()
-        response_format = RegexRatingFormat(measurer.scale_min, measurer.scale_max)
+        response_format = RegexRatingFormat()
         builder = PostTaskRatingPromptBuilder(
             measurer=measurer,
             response_format=response_format,
             template=POST_TASK_RATING_TEMPLATE,
         )
-        prompt = builder.build(sample_task_a, sample_task_completion)
+        prompt = builder.build(sample_task_a, sample_completion_text)
         prompt_content = get_all_content(prompt)
 
         # Content includes task and completion
         assert sample_task_a.prompt in prompt_content
-        assert sample_task_completion.text in prompt_content
+        assert sample_completion_text in prompt_content
         # Task in list
         assert sample_task_a in prompt.tasks
         # Components carried through
@@ -299,16 +296,17 @@ class TestPostTaskRatingPromptBuilder:
         assert prompt.measurer is measurer
         assert prompt.response_format is response_format
 
-    def test_scale_placeholders_are_filled(self, sample_task_a, sample_task_completion):
-        """Scale placeholders in template should be filled from measurer."""
+    def test_scale_placeholders_are_filled(self, sample_task_a, sample_completion_text):
+        """Scale placeholders in template should be filled from response format."""
         template = "Rate from {scale_min} to {scale_max}.\n{format_instruction}"
-        measurer = TaskScoreMeasurer(scale_min=0, scale_max=100)
+        measurer = TaskScoreMeasurer()
+        response_format = RegexRatingFormat(scale_min=0, scale_max=100)
         builder = PostTaskRatingPromptBuilder(
             measurer=measurer,
-            response_format=RegexRatingFormat(measurer.scale_min, measurer.scale_max),
+            response_format=response_format,
             template=template,
         )
-        prompt = builder.build(sample_task_a, sample_task_completion)
+        prompt = builder.build(sample_task_a, sample_completion_text)
         prompt_content = get_all_content(prompt)
 
         assert "0" in prompt_content

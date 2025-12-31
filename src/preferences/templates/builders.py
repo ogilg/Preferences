@@ -6,7 +6,6 @@ from src.types import (
     Message,
     PreferenceType,
     PreferencePrompt,
-    TaskCompletion,
 )
 from src.preferences.measurement.measurer import (
     Measurer,
@@ -81,8 +80,8 @@ class PreTaskRatingPromptBuilder(PromptBuilder):
         content = self.template.format(
             format_instruction=self.response_format.format_instruction(),
             task=task.prompt,
-            scale_min=str(self.measurer.scale_min),
-            scale_max=str(self.measurer.scale_max),
+            scale_min=str(self.response_format.scale_min),
+            scale_max=str(self.response_format.scale_max),
         )
         messages: list[Message] = [{"role": "user", "content": content}]
         return PreferencePrompt(
@@ -109,15 +108,15 @@ class PostTaskRatingPromptBuilder(PromptBuilder):
         self.preference_type = PreferenceType.POST_TASK_STATED
         self.template = template
 
-    def build(self, task: Task, completion: TaskCompletion) -> PreferencePrompt:
+    def build(self, task: Task, completion_text: str) -> PreferencePrompt:
         rating_content = self.template.format(
             format_instruction=self.response_format.format_instruction(),
-            scale_min=str(self.measurer.scale_min),
-            scale_max=str(self.measurer.scale_max),
+            scale_min=str(self.response_format.scale_min),
+            scale_max=str(self.response_format.scale_max),
         )
         messages: list[Message] = [
             {"role": "user", "content": task.prompt},
-            {"role": "assistant", "content": completion.text},
+            {"role": "assistant", "content": completion_text},
             {"role": "user", "content": rating_content},
         ]
         return PreferencePrompt(
