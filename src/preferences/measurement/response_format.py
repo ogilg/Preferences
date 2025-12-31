@@ -3,7 +3,7 @@ import re
 from abc import ABC, abstractmethod
 from typing import Protocol, Literal, TypeVar, Any
 
-from ..constants import (
+from src.constants import (
     DEFAULT_SCALE_MIN,
     DEFAULT_SCALE_MAX,
     DEFAULT_CHOICE_TAG,
@@ -22,7 +22,6 @@ def _make_tool(
     properties: dict[str, Any],
     required: list[str],
 ) -> dict[str, Any]:
-    """Create an OpenAI-compatible tool definition."""
     return {
         "type": "function",
         "function": {
@@ -38,7 +37,6 @@ def _make_tool(
 
 
 def _parse_tool_json(response: str) -> dict[str, Any] | None:
-    """Parse JSON from tool call response. Returns None on failure."""
     try:
         result = json.loads(response)
         return result if isinstance(result, dict) else None
@@ -47,8 +45,6 @@ def _parse_tool_json(response: str) -> dict[str, Any] | None:
 
 
 class ResponseFormat(Protocol[T]):
-    """Protocol for response format instruction + parsing."""
-
     def format_instruction(self) -> str: ...
     def parse(self, response: str) -> T: ...
 
@@ -57,8 +53,6 @@ class ResponseFormat(Protocol[T]):
 
 
 class BaseChoiceFormat(ABC):
-    """Base class for choice formats with shared parsing logic."""
-
     def __init__(
         self,
         task_a_label: str = "Task A",
@@ -71,9 +65,7 @@ class BaseChoiceFormat(ABC):
     def format_instruction(self) -> str: ...
 
     @abstractmethod
-    def _extract_choice(self, response: str) -> str | None:
-        """Extract choice character from response. Returns None if not found."""
-        ...
+    def _extract_choice(self, response: str) -> str | None: ...
 
     def parse(self, response: str) -> Literal["a", "b"]:
         choice = self._extract_choice(response)
@@ -83,8 +75,6 @@ class BaseChoiceFormat(ABC):
 
 
 class BaseRatingFormat(ABC):
-    """Base class for rating formats with shared scale configuration."""
-
     def __init__(
         self,
         scale_min: int = DEFAULT_SCALE_MIN,
@@ -97,9 +87,7 @@ class BaseRatingFormat(ABC):
     def format_instruction(self) -> str: ...
 
     @abstractmethod
-    def _extract_number(self, response: str) -> float | None:
-        """Extract number from response. Returns None if not found."""
-        ...
+    def _extract_number(self, response: str) -> float | None: ...
 
     def parse(self, response: str) -> float:
         number = self._extract_number(response)
@@ -112,8 +100,6 @@ class BaseRatingFormat(ABC):
 
 
 class RegexChoiceFormat(BaseChoiceFormat):
-    """Parse choice from plain text using regex word boundaries."""
-
     def format_instruction(self) -> str:
         return f"Respond with only '{self.task_a_label}' or '{self.task_b_label}'."
 
@@ -145,8 +131,6 @@ class RegexChoiceFormat(BaseChoiceFormat):
 
 
 class XMLChoiceFormat(BaseChoiceFormat):
-    """Parse choice from XML tags."""
-
     def __init__(
         self,
         task_a_label: str = "Task A",
@@ -173,12 +157,7 @@ class XMLChoiceFormat(BaseChoiceFormat):
 
 
 class CompletionChoiceFormat(BaseChoiceFormat):
-    """Parse choice from task completion - model completes one of two tasks.
-
-    The model is asked to complete one of two tasks and indicate which one
-    by prefixing with the task label. This measures revealed preference
-    through behavior rather than stated preference.
-    """
+    """Model completes one of two tasks, indicating choice by prefix. Measures revealed preference."""
 
     def format_instruction(self) -> str:
         return f"Begin with '{self.task_a_label}:' or '{self.task_b_label}:' to indicate your choice, then complete that task."
@@ -205,8 +184,6 @@ class CompletionChoiceFormat(BaseChoiceFormat):
 
 
 class RegexRatingFormat(BaseRatingFormat):
-    """Parse rating from plain text using regex."""
-
     def format_instruction(self) -> str:
         return f"Respond with only a number from {self.scale_min} to {self.scale_max}."
 
@@ -218,8 +195,6 @@ class RegexRatingFormat(BaseRatingFormat):
 
 
 class XMLRatingFormat(BaseRatingFormat):
-    """Parse rating from XML tags."""
-
     def __init__(
         self,
         tag: str = DEFAULT_RATING_TAG,
@@ -246,15 +221,10 @@ class XMLRatingFormat(BaseRatingFormat):
 
 
 class ToolUseChoiceFormat(BaseChoiceFormat):
-    """Parse choice from tool use / function calling response.
-
-    Uses the model's native tool calling for structured output.
-    Parse failures raise ValueError to be recorded.
-    """
+    """Uses native tool calling for structured output."""
 
     @property
     def tools(self) -> list[dict[str, Any]]:
-        """Return the tool definitions for the API call."""
         return [
             _make_tool(
                 name="submit_choice",
@@ -286,15 +256,10 @@ class ToolUseChoiceFormat(BaseChoiceFormat):
 
 
 class ToolUseRatingFormat(BaseRatingFormat):
-    """Parse rating from tool use / function calling response.
-
-    Uses the model's native tool calling for structured output.
-    Parse failures raise ValueError to be recorded.
-    """
+    """Uses native tool calling for structured output."""
 
     @property
     def tools(self) -> list[dict[str, Any]]:
-        """Return the tool definitions for the API call."""
         return [
             _make_tool(
                 name="submit_rating",

@@ -1,22 +1,20 @@
-"""Preference measurement functions."""
-
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
 from tqdm import tqdm
 
-from ..models import GenerateRequest
-from ..types import BinaryPreferenceMeasurement, PreferenceType, TaskScore
-from .measurer import BinaryPreferenceMeasurer
-from .prompt_builders import BinaryPromptBuilder
-from .response_format import RegexChoiceFormat
+from src.models import GenerateRequest
+from src.types import BinaryPreferenceMeasurement, PreferenceType, TaskScore
+from src.preferences.measurement.measurer import BinaryPreferenceMeasurer
+from src.preferences.measurement.response_format import RegexChoiceFormat
+from src.preferences.templates.builders import BinaryPromptBuilder
 
 if TYPE_CHECKING:
-    from ..models import Model
-    from ..task_data import Task
-    from .prompt_builders import PromptBuilder
-    from .templates import PromptTemplate
+    from src.models import Model
+    from src.task_data import Task
+    from src.preferences.templates.builders import PromptBuilder
+    from src.preferences.templates.template import PromptTemplate
 
 
 def measure_binary_preferences(
@@ -26,19 +24,7 @@ def measure_binary_preferences(
     temperature: float = 1.0,
     max_concurrent: int = 10,
 ) -> list[BinaryPreferenceMeasurement]:
-    """Measure binary preferences for a list of task pairs.
-
-    Args:
-        model: Model to use for generation.
-        pairs: List of (task_a, task_b) pairs to compare.
-        builder: Prompt builder for binary comparisons.
-        temperature: Sampling temperature.
-        max_concurrent: Maximum number of concurrent API calls.
-
-    Returns:
-        List of BinaryPreferenceMeasurement, one per successful measurement.
-        Pairs that fail to parse are omitted.
-    """
+    """Pairs that fail to parse are omitted from results."""
     # Build all prompts
     prompts = [builder.build(task_a, task_b) for task_a, task_b in pairs]
 
@@ -78,19 +64,7 @@ def measure_ratings(
     temperature: float = 1.0,
     max_concurrent: int = 10,
 ) -> list[TaskScore]:
-    """Measure ratings for a list of tasks.
-
-    Args:
-        model: Model to use for generation.
-        tasks: List of tasks to rate.
-        builder: Prompt builder for rating measurements.
-        temperature: Sampling temperature.
-        max_concurrent: Maximum number of concurrent API calls.
-
-    Returns:
-        List of TaskScore, one per successful measurement.
-        Tasks that fail to parse are omitted.
-    """
+    """Tasks that fail to parse are omitted from results."""
     # Build all prompts
     prompts = [builder.build(task) for task in tasks]
 
@@ -130,22 +104,7 @@ def measure_with_template(
     temperature: float = 1.0,
     max_concurrent: int = 10,
 ) -> list[BinaryPreferenceMeasurement]:
-    """Measure binary preferences using a template.
-
-    Convenience wrapper that extracts task labels from template tags,
-    creates the appropriate builder and response format, and runs
-    measurements.
-
-    Args:
-        template: Prompt template with optional task_a_label/task_b_label tags.
-        model: Model to use for generation.
-        pairs: List of (task_a, task_b) pairs to compare.
-        temperature: Sampling temperature.
-        max_concurrent: Maximum number of concurrent API calls.
-
-    Returns:
-        List of BinaryPreferenceMeasurement, one per successful measurement.
-    """
+    """Convenience wrapper that extracts task labels from template tags."""
     task_a_label = template.tags_dict.get("task_a_label", "Task A")
     task_b_label = template.tags_dict.get("task_b_label", "Task B")
 

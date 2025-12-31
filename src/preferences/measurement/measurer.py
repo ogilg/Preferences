@@ -1,29 +1,23 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-from ..constants import DEFAULT_SCALE_MIN, DEFAULT_SCALE_MAX
-from ..types import (
+from src.constants import DEFAULT_SCALE_MIN, DEFAULT_SCALE_MAX
+from src.types import (
     MeasurementResponse,
     BinaryPreferenceMeasurement,
     TaskScore,
 )
 
 if TYPE_CHECKING:
-    from ..types import PreferencePrompt
+    from src.types import PreferencePrompt
 
 
 class Measurer(ABC):
-    """Abstract base class for measurers that parse model responses."""
-
     @abstractmethod
-    def parse(self, response_text: str, prompt: "PreferencePrompt") -> MeasurementResponse:
-        """Parse model response text and return a Response."""
-        ...
+    def parse(self, response_text: str, prompt: "PreferencePrompt") -> MeasurementResponse: ...
 
 
 class BinaryPreferenceMeasurer(Measurer):
-    """Measurer for binary A/B choice responses."""
-
     def parse(self, response_text: str, prompt: "PreferencePrompt") -> MeasurementResponse:
         choice = prompt.response_format.parse(response_text)
         result = BinaryPreferenceMeasurement(
@@ -36,8 +30,6 @@ class BinaryPreferenceMeasurer(Measurer):
 
 
 class TaskScoreMeasurer(Measurer):
-    """Measurer for numerical score/rating responses."""
-
     def __init__(
         self,
         scale_min: int = DEFAULT_SCALE_MIN,
@@ -54,5 +46,3 @@ class TaskScoreMeasurer(Measurer):
             preference_type=prompt.kind,
         )
         return MeasurementResponse(text=response_text, source_prompt=prompt, result=result)
-
-
