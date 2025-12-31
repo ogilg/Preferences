@@ -28,7 +28,7 @@ class TestBuildBinaryTemplate:
         template = build_binary_template(
             intro="Choose which task you prefer.",
             instruction_position="before",
-            task_labels="letter",
+            task_label_names="letter",
             language="en",
         )
 
@@ -69,7 +69,7 @@ class TestBuildBinaryTemplate:
         template = build_binary_template(
             intro="Choose.",
             instruction_position="before",
-            task_labels="letter",
+            task_label_names="letter",
             language="en",
         )
 
@@ -82,7 +82,7 @@ class TestBuildBinaryTemplate:
         template = build_binary_template(
             intro="Choose.",
             instruction_position="after",
-            task_labels="letter",
+            task_label_names="letter",
             language="en",
         )
 

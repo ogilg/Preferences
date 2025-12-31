@@ -24,7 +24,7 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.ranking import PairwiseData, fit_thurstonian
 from src.preferences.storage import save_measurements
-from src.sensitivity_experiments import (
+from src.experiments.sensitivity_experiments.binary_correlation import (
     win_rate_correlation,
     utility_correlation,
     compute_pairwise_correlations,
