@@ -13,4 +13,4 @@ situating_contexts: {}
 instruction_positions: [before, after]
 task_label_names: [letter, number, ordinal]
 
-# model: meta-llama/Meta-Llama-3.1-8B-Instruct
+model: deepseek-ai/DeepSeek-V3

@@ -72,6 +72,6 @@ def load_config_from_yaml(path: Path) -> tuple[GeneratorConfig, str]:
     with path.open() as f:
         data = yaml.safe_load(f)
 
-    model_name = data.pop("model", "meta-llama/Meta-Llama-3.1-8B-Instruct")
+    model_name = data.pop("model", "deepseek-ai/DeepSeek-V3")
     config = GeneratorConfig.model_validate(data)
     return config, model_name
