@@ -110,9 +110,15 @@ class RegexChoiceFormat(BaseChoiceFormat):
     def _extract_choice(self, response: str) -> str | None:
         response_clean = response.strip()
 
-        # Build case-insensitive patterns for each label
-        pattern_a = rf"\b{re.escape(self.task_a_label)}\b"
-        pattern_b = rf"\b{re.escape(self.task_b_label)}\b"
+        def make_pattern(label: str) -> str:
+            escaped = re.escape(label)
+            # Only use word boundary if the label edge is a word character
+            prefix = r"\b" if label and label[0].isalnum() else ""
+            suffix = r"\b" if label and label[-1].isalnum() else ""
+            return prefix + escaped + suffix
+
+        pattern_a = make_pattern(self.task_a_label)
+        pattern_b = make_pattern(self.task_b_label)
 
         match_a = re.search(pattern_a, response_clean, re.IGNORECASE)
         match_b = re.search(pattern_b, response_clean, re.IGNORECASE)
@@ -192,7 +198,8 @@ class RegexRatingFormat(BaseRatingFormat):
         return f"Respond with only a number from {self.scale_min} to {self.scale_max}."
 
     def _extract_number(self, response: str) -> float | None:
-        numbers = re.findall(r"-?\d+\.?\d*", response)
+        # Match: integers, decimals with leading digits, or decimals like ".5"
+        numbers = re.findall(r"-?(?:\d+\.?\d*|\.\d+)", response)
         if numbers:
             return float(numbers[0])
         return None
