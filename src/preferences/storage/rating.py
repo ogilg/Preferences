@@ -18,7 +18,7 @@ from src.task_data import Task
 from src.types import TaskScore
 
 
-RATING_RESULTS_DIR = Path("results/rating_sensitivity")
+RATING_RESULTS_DIR = Path("results/rating")
 
 
 class RatingRunConfig(BaseRunConfig):

@@ -9,7 +9,7 @@ from src.models import HyperbolicModel
 from src.preferences.templates.template import PromptTemplate
 
 
-RESULTS_DIR = Path("results")
+RESULTS_DIR = Path("results/binary")
 
 
 def find_project_root() -> Path:
