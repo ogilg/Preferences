@@ -63,9 +63,7 @@ class NDIFModel:
         log_probs = torch.nn.functional.log_softmax(logits.value, dim=-1)
         top_values, top_indices = torch.topk(log_probs, k=max_tokens)
 
-        result = {}
-        for i in range(max_tokens):
-            token = self.model.tokenizer.decode([top_indices[i].item()])
-            result[token] = top_values[i].item()
-
-        return result
+        return {
+            self.model.tokenizer.decode([idx.item()]): val.item()
+            for idx, val in zip(top_indices, top_values)
+        }

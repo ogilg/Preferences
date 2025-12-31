@@ -1,7 +1,7 @@
 import json
 import re
 from abc import ABC, abstractmethod
-from typing import Protocol, Literal, TypeVar, Any
+from typing import Protocol, Literal, Any
 
 from src.constants import (
     DEFAULT_SCALE_MIN,
@@ -9,8 +9,6 @@ from src.constants import (
     DEFAULT_CHOICE_TAG,
     DEFAULT_RATING_TAG,
 )
-
-T = TypeVar("T")
 
 
 # --- Tool Definition Helpers ---
@@ -44,7 +42,7 @@ def _parse_tool_json(response: str) -> dict[str, Any] | None:
         return None
 
 
-class ResponseFormat(Protocol[T]):
+class ResponseFormat[T](Protocol):
     @property
     def tools(self) -> list[dict[str, Any]] | None: ...
     def format_instruction(self) -> str: ...

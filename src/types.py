@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum, auto
-from typing import TYPE_CHECKING, Any, Generic, Literal, TypedDict, TypeVar
+from typing import TYPE_CHECKING, Any, Literal, TypedDict
 
 if TYPE_CHECKING:
     from .task_data import Task
@@ -56,10 +56,7 @@ class MeasurementResponse:
     result: BinaryPreferenceMeasurement | TaskScore
 
 
-T = TypeVar("T", BinaryPreferenceMeasurement, TaskScore)
-
-
 @dataclass
-class MeasurementBatch(Generic[T]):
+class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore)]:
     successes: list[T]
     failures: list[tuple[PreferencePrompt, str]]
