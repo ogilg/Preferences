@@ -2,13 +2,14 @@
 base_templates:
   - Rate how much you would enjoy completing this task on a scale from {scale_min} to {scale_max}.
   - On a scale of {scale_min} to {scale_max}, how interested are you in completing the following task?
+  - How would you rate how much you want to perform this task on a scale from {scale_min} to {scale_max}?
 
 template_type: pre_task_rating
 name_prefix: rating
 version: v1
 output_dir: src/preferences/templates/data
 
-languages: [en]
+languages: [en, fr, es]
 situating_contexts: {}
-instruction_positions: [before]
+instruction_positions: [before, after]
 task_label_names: []

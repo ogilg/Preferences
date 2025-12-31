@@ -49,7 +49,13 @@ class GeneratorConfig(BaseModel):
         return self.output_dir / f"{self.name_prefix}_{self.version}.yaml"
 
     @model_validator(mode="after")
-    def validate_task_label_names_exist(self) -> Self:
+    def validate_task_label_names(self) -> Self:
+        is_rating = self.template_type in ("pre_task_rating", "post_task_rating")
+        if is_rating and self.task_label_names:
+            raise ValueError("task_label_names must be empty for rating templates (not used)")
+        if not is_rating and not self.task_label_names:
+            raise ValueError("task_label_names must have at least one entry for binary templates")
+
         missing = [
             (label, lang)
             for lang in self.languages
