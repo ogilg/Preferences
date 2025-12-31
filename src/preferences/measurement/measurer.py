@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-from src.constants import DEFAULT_SCALE_MIN, DEFAULT_SCALE_MAX
 from src.types import (
     MeasurementResponse,
     BinaryPreferenceMeasurement,
@@ -30,14 +31,6 @@ class BinaryPreferenceMeasurer(Measurer):
 
 
 class TaskScoreMeasurer(Measurer):
-    def __init__(
-        self,
-        scale_min: int = DEFAULT_SCALE_MIN,
-        scale_max: int = DEFAULT_SCALE_MAX,
-    ):
-        self.scale_min = scale_min
-        self.scale_max = scale_max
-
     def parse(self, response_text: str, prompt: "PreferencePrompt") -> MeasurementResponse:
         score = prompt.response_format.parse(response_text)
         result = TaskScore(

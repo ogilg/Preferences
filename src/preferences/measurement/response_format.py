@@ -45,6 +45,8 @@ def _parse_tool_json(response: str) -> dict[str, Any] | None:
 
 
 class ResponseFormat(Protocol[T]):
+    @property
+    def tools(self) -> list[dict[str, Any]] | None: ...
     def format_instruction(self) -> str: ...
     def parse(self, response: str) -> T: ...
 
@@ -53,6 +55,8 @@ class ResponseFormat(Protocol[T]):
 
 
 class BaseChoiceFormat(ABC):
+    tools: list[dict[str, Any]] | None = None
+
     def __init__(
         self,
         task_a_label: str = "Task A",
@@ -75,6 +79,8 @@ class BaseChoiceFormat(ABC):
 
 
 class BaseRatingFormat(ABC):
+    tools: list[dict[str, Any]] | None = None
+
     def __init__(
         self,
         scale_min: int = DEFAULT_SCALE_MIN,

@@ -1,12 +1,11 @@
-from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any
 
 import yaml
+from pydantic import BaseModel
 
 
-@dataclass
-class MeasurementRecord:
+class MeasurementRecord(BaseModel):
     model: str
     measurement_type: str  # PreferenceType value (e.g., "PRE_TASK_STATED")
     tasks: list[dict[str, str]]  # [{"id": ..., "prompt": ...}]
@@ -30,7 +29,7 @@ class MeasurementRecorder:
     def save(self) -> None:
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        data = [asdict(r) for r in self.records]
+        data = [r.model_dump() for r in self.records]
 
         with open(self.output_path, "w") as f:
             yaml.dump(

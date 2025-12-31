@@ -45,9 +45,9 @@ from src.types import (
     PreferenceType,
     PreferencePrompt,
     MeasurementResponse,
+    MeasurementBatch,
     BinaryPreferenceMeasurement,
     TaskScore,
-    TaskCompletion,
 )
 
 __all__ = [
@@ -96,7 +96,7 @@ __all__ = [
     "PreferenceType",
     "PreferencePrompt",
     "MeasurementResponse",
+    "MeasurementBatch",
     "BinaryPreferenceMeasurement",
     "TaskScore",
-    "TaskCompletion",
 ]
