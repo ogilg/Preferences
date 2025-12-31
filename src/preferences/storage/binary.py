@@ -12,8 +12,9 @@ from src.preferences.ranking import ThurstonianResult, save_thurstonian, load_th
 from src.preferences.storage.base import (
     RESULTS_DIR,
     BaseRunConfig,
-    extract_template_id,
-    model_short_name,
+    get_run_dir,
+    make_base_config_dict,
+    load_run_files,
     run_exists,
     save_yaml,
     load_yaml,
@@ -66,14 +67,9 @@ def binary_run_exists(
     return run_exists(template, model, n_tasks, Path(results_dir))
 
 
-def save_measurements(
-    measurements: list[BinaryPreferenceMeasurement],
-    path: Path | str,
-) -> None:
-    data = [
-        {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
-        for m in measurements
-    ]
+def save_measurements(measurements: list[BinaryPreferenceMeasurement], path: Path | str) -> None:
+    """Serialize measurements to YAML. Used by save_run internally."""
+    data = [{"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice} for m in measurements]
     save_yaml(data, Path(path))
 
 
@@ -89,26 +85,13 @@ def save_run(
 ) -> Path:
     """Returns path to created run directory."""
     results_dir = Path(results_dir)
-    template_id = extract_template_id(template.name)
-    short_name = model_short_name(model.model_name)
+    run_dir = get_run_dir(template, model, results_dir)
 
-    run_dir = results_dir / f"{template_id}_{short_name}"
+    config = BinaryRunConfig(**make_base_config_dict(
+        template, template_file, model, temperature, tasks
+    ))
+
     run_dir.mkdir(parents=True, exist_ok=True)
-
-    config = BinaryRunConfig(
-        template_id=template_id,
-        template_name=template.name,
-        template_file=template_file,
-        template_tags=template.tags_dict,
-        model=model.model_name,
-        model_short=short_name,
-        temperature=temperature,
-        task_origin=tasks[0].origin.name.lower(),
-        n_tasks=len(tasks),
-        task_ids=[t.id for t in tasks],
-        task_prompts={t.id: t.prompt for t in tasks},
-    )
-
     save_yaml(config.model_dump(), run_dir / "config.yaml")
     save_measurements(measurements, run_dir / "measurements.yaml")
     save_thurstonian(thurstonian, run_dir / "thurstonian.yaml")
@@ -123,9 +106,7 @@ def load_run(
 ) -> BinaryMeasurementRun:
     """Pass tasks to reconstruct ThurstonianResult."""
     run_dir = Path(run_dir)
-
-    config = BinaryRunConfig.model_validate(load_yaml(run_dir / "config.yaml"))
-    measurements = load_yaml(run_dir / "measurements.yaml")
+    config, measurements = load_run_files(run_dir, BinaryRunConfig, "measurements.yaml")
 
     thurstonian = None
     if tasks is not None:

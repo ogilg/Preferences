@@ -79,7 +79,65 @@ class BaseRunConfig(BaseModel):
             template_path = find_project_root() / self.template_file
 
         templates = load_templates_from_yaml(template_path)
-        for t in templates:
-            if t.name == self.template_name:
-                return t
-        raise ValueError(f"Template '{self.template_name}' not found in {self.template_file}")
+        try:
+            return next(t for t in templates if t.name == self.template_name)
+        except StopIteration:
+            raise ValueError(f"Template '{self.template_name}' not found in {self.template_file}") from None
+
+
+def get_run_dir(
+    template: PromptTemplate,
+    model: HyperbolicModel,
+    results_dir: Path,
+) -> Path:
+    template_id = extract_template_id(template.name)
+    short_name = model_short_name(model.model_name)
+    return results_dir / f"{template_id}_{short_name}"
+
+
+def make_base_config_dict(
+    template: PromptTemplate,
+    template_file: str,
+    model: HyperbolicModel,
+    temperature: float,
+    tasks: list,
+) -> dict:
+    """Build the common config fields. Caller adds type-specific fields."""
+    template_id = extract_template_id(template.name)
+    short_name = model_short_name(model.model_name)
+    return {
+        "template_id": template_id,
+        "template_name": template.name,
+        "template_file": template_file,
+        "template_tags": template.tags_dict,
+        "model": model.model_name,
+        "model_short": short_name,
+        "temperature": temperature,
+        "task_origin": tasks[0].origin.name.lower(),
+        "n_tasks": len(tasks),
+        "task_ids": [t.id for t in tasks],
+        "task_prompts": {t.id: t.prompt for t in tasks},
+    }
+
+
+def save_run_files(
+    run_dir: Path,
+    config: BaseRunConfig,
+    data: list[dict],
+    data_filename: str,
+) -> None:
+    """Save config and data files to run directory."""
+    run_dir.mkdir(parents=True, exist_ok=True)
+    save_yaml(config.model_dump(), run_dir / "config.yaml")
+    save_yaml(data, run_dir / data_filename)
+
+
+def load_run_files(
+    run_dir: Path,
+    config_class: type[BaseRunConfig],
+    data_filename: str,
+) -> tuple[BaseRunConfig, list[dict]]:
+    """Load config and data files from run directory."""
+    config = config_class.model_validate(load_yaml(run_dir / "config.yaml"))
+    data = load_yaml(run_dir / data_filename)
+    return config, data

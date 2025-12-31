@@ -27,7 +27,6 @@ from src.preferences.storage.rating import (
     load_rating_run,
     rating_run_exists,
     save_rating_run,
-    save_scores,
 )
 
 __all__ = [
@@ -58,5 +57,4 @@ __all__ = [
     "load_rating_run",
     "rating_run_exists",
     "save_rating_run",
-    "save_scores",
 ]
