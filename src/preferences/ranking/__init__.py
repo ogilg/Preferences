@@ -1,4 +1,5 @@
 from .thurstonian import (
+    OptimizationHistory,
     PairwiseData,
     ThurstonianResult,
     fit_thurstonian,
@@ -8,6 +9,7 @@ from .thurstonian import (
 )
 
 __all__ = [
+    "OptimizationHistory",
     "PairwiseData",
     "ThurstonianResult",
     "fit_thurstonian",

@@ -18,6 +18,7 @@ import numpy as np
 import yaml
 from scipy.optimize import minimize
 from scipy.stats import norm
+from collections import Counter, defaultdict
 
 from ...task_data import Task
 from ...types import BinaryPreferenceMeasurement
@@ -66,6 +67,14 @@ class PairwiseData:
 
 
 @dataclass
+class OptimizationHistory:
+    """Minimal optimization progress tracking."""
+
+    loss: list[float] = field(default_factory=list)
+    sigma_max: list[float] = field(default_factory=list)
+
+
+@dataclass
 class ThurstonianResult:
     """mu: utility means, sigma: utility standard deviations."""
 
@@ -76,6 +85,8 @@ class ThurstonianResult:
     neg_log_likelihood: float
     n_iterations: int
     termination_message: str
+    gradient_norm: float
+    history: OptimizationHistory
     _id_to_idx: dict[str, int] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -105,7 +116,9 @@ class ThurstonianResult:
             for other in self.tasks
             if other.id != task.id
         ]
-        return sum(probs) / len(probs) if probs else 0.5
+        if not probs:
+            raise ValueError("Cannot compute normalized utility with fewer than 2 tasks")
+        return sum(probs) / len(probs)
 
 
 def _preference_prob(mu_i: float, mu_j: float, sigma_i: float, sigma_j: float) -> float:
@@ -138,32 +151,42 @@ def fit_thurstonian(
     data: PairwiseData,
     sigma_init: float = 1.0,
     max_iter: int = 1000,
+    log_sigma_bounds: tuple[float, float] = (-3.0, 3.0),
+    mu_bounds: tuple[float, float] = (-10.0, 10.0),
 ) -> ThurstonianResult:
     n = data.n_tasks
 
     if n < 2:
         raise ValueError("Need at least 2 tasks to fit")
 
-    # Initial parameters
-    # μ_0 = 0 (fixed), initialize others to 0
     mu_init = np.zeros(n - 1)
     log_sigma_init = np.full(n, np.log(sigma_init))
-
     params_init = np.concatenate([mu_init, log_sigma_init])
 
-    # Optimize
+    bounds = [mu_bounds] * (n - 1) + [log_sigma_bounds] * n
+
+    history = OptimizationHistory()
+
+    def callback(params: np.ndarray) -> None:
+        loss = _neg_log_likelihood(params, data.wins, n)
+        sigma_max = float(np.exp(params[n - 1:]).max())
+        history.loss.append(loss)
+        history.sigma_max.append(sigma_max)
+
     result = minimize(
         _neg_log_likelihood,
         params_init,
         args=(data.wins, n),
         method="L-BFGS-B",
-        options={"maxiter": max_iter},
+        bounds=bounds,
+        callback=callback,
+        options={"maxiter": max_iter, "maxfun": max_iter * 20},
     )
 
-    # Unpack results
     mu = np.zeros(n)
     mu[1:] = result.x[: n - 1]
-    sigma = np.exp(result.x[n - 1 :])
+    sigma = np.exp(result.x[n - 1:])
+    gradient_norm = float(np.linalg.norm(result.jac)) if result.jac is not None else -1.0
 
     return ThurstonianResult(
         tasks=data.tasks,
@@ -173,6 +196,8 @@ def fit_thurstonian(
         neg_log_likelihood=result.fun,
         n_iterations=result.nit,
         termination_message=result.message,
+        gradient_norm=gradient_norm,
+        history=history,
     )
 
 
@@ -188,6 +213,11 @@ def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
         "neg_log_likelihood": float(result.neg_log_likelihood),
         "n_iterations": result.n_iterations,
         "termination_message": result.termination_message,
+        "gradient_norm": result.gradient_norm,
+        "history": {
+            "loss": result.history.loss,
+            "sigma_max": result.history.sigma_max,
+        },
     }
 
     with open(path, "w") as f:
@@ -210,6 +240,12 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
     # Reconstruct task list in saved order
     ordered_tasks = [task_dict[tid] for tid in saved_ids]
 
+    history_data = data.get("history", {"loss": [], "sigma_max": []})
+    history = OptimizationHistory(
+        loss=history_data.get("loss", []),
+        sigma_max=history_data.get("sigma_max", []),
+    )
+
     return ThurstonianResult(
         tasks=ordered_tasks,
         mu=np.array(data["mu"]),
@@ -218,6 +254,8 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
         neg_log_likelihood=data["neg_log_likelihood"],
         n_iterations=data.get("n_iterations", -1),
         termination_message=data.get("termination_message", "unknown (loaded from old format)"),
+        gradient_norm=data.get("gradient_norm", -1.0),
+        history=history,
     )
 
 
@@ -229,8 +267,6 @@ def compute_pair_agreement(
     For each pair (A, B), agreement = max(n_a_wins, n_b_wins) / total.
     Returns mean agreement across all pairs (1.0 = perfect consistency).
     """
-    from collections import Counter, defaultdict
-
     pair_outcomes: dict[tuple[str, str], list[str]] = defaultdict(list)
     for c in comparisons:
         key = tuple(sorted([c.task_a.id, c.task_b.id]))

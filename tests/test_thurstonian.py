@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import pytest
 
@@ -7,6 +9,7 @@ from src.preferences.ranking.thurstonian import (
     fit_thurstonian,
     _preference_prob,
     _neg_log_likelihood,
+    OptimizationHistory,
 )
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
@@ -276,3 +279,364 @@ class TestFitThurstonian:
 
         assert result.normalized_utility(tasks[0]) == pytest.approx(0.5, abs=0.05)
         assert result.normalized_utility(tasks[1]) == pytest.approx(0.5, abs=0.05)
+
+    def test_history_is_populated(self):
+        """History should track optimization progress."""
+        tasks = [make_task("a"), make_task("b")]
+        wins = np.array([[0, 10], [5, 0]])
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data)
+
+        assert len(result.history.loss) > 0
+        assert len(result.history.sigma_max) == len(result.history.loss)
+        # Loss should decrease
+        assert result.history.loss[-1] <= result.history.loss[0]
+
+
+class TestSyntheticParameterRecovery:
+    """Test that model recovers known parameters from synthetic data."""
+
+    def _simulate_comparisons(
+        self, mu: np.ndarray, sigma: np.ndarray, n_comparisons_per_pair: int, rng: np.random.Generator
+    ) -> np.ndarray:
+        """Simulate pairwise comparisons from known parameters."""
+        n = len(mu)
+        wins = np.zeros((n, n), dtype=np.int32)
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                p_i_beats_j = _preference_prob(mu[i], mu[j], sigma[i], sigma[j])
+                for _ in range(n_comparisons_per_pair):
+                    if rng.random() < p_i_beats_j:
+                        wins[i, j] += 1
+                    else:
+                        wins[j, i] += 1
+
+        return wins
+
+    def test_recovers_ranking_order(self):
+        """Fitted mu should preserve ranking order of true mu."""
+        rng = np.random.default_rng(42)
+        n_tasks = 5
+        true_mu = np.array([0.0, 1.0, 2.0, 3.0, 4.0])
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=20, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data)
+
+        # Ranking should be preserved
+        fitted_order = np.argsort(-result.mu)
+        true_order = np.argsort(-true_mu)
+        assert list(fitted_order) == list(true_order)
+
+    def test_mu_correlation_with_ground_truth(self):
+        """Fitted mu should correlate strongly with true mu."""
+        rng = np.random.default_rng(123)
+        n_tasks = 8
+        true_mu = rng.standard_normal(n_tasks)
+        true_mu[0] = 0.0  # Fix first for identifiability
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=30, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data)
+
+        correlation = np.corrcoef(true_mu, result.mu)[0, 1]
+        assert correlation > 0.8
+
+    def test_converges_with_many_tasks(self):
+        """Should converge even with 20+ tasks."""
+        rng = np.random.default_rng(456)
+        n_tasks = 20
+        true_mu = np.linspace(-2, 2, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=10, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data)
+
+        assert result.converged
+        assert result.gradient_norm < 1.0
+        # Correlation should be good even with many tasks
+        correlation = np.corrcoef(true_mu, result.mu)[0, 1]
+        assert correlation > 0.8
+
+
+class TestLargeScaleDiagnostics:
+    """Large scale tests with diagnostic plots saved to tests/plots/."""
+
+    PLOTS_DIR = Path(__file__).parent / "plots" / "thurstonian"
+
+    @pytest.fixture(autouse=True)
+    def setup_plots_dir(self):
+        self.PLOTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    def _simulate_comparisons(
+        self, mu: np.ndarray, sigma: np.ndarray, n_comparisons_per_pair: int, rng: np.random.Generator
+    ) -> np.ndarray:
+        n = len(mu)
+        wins = np.zeros((n, n), dtype=np.int32)
+        for i in range(n):
+            for j in range(i + 1, n):
+                p_i_beats_j = _preference_prob(mu[i], mu[j], sigma[i], sigma[j])
+                for _ in range(n_comparisons_per_pair):
+                    if rng.random() < p_i_beats_j:
+                        wins[i, j] += 1
+                    else:
+                        wins[j, i] += 1
+        return wins
+
+    def _plot_diagnostics(
+        self,
+        result: ThurstonianResult,
+        true_mu: np.ndarray,
+        true_sigma: np.ndarray,
+        name: str,
+    ) -> None:
+        import matplotlib.pyplot as plt
+
+        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+
+        # Loss curve
+        axes[0, 0].plot(result.history.loss)
+        axes[0, 0].set_xlabel("Iteration")
+        axes[0, 0].set_ylabel("NLL")
+        axes[0, 0].set_title(f"Loss curve (final={result.history.loss[-1]:.2f})")
+
+        # Sigma max over iterations
+        axes[0, 1].plot(result.history.sigma_max)
+        axes[0, 1].set_xlabel("Iteration")
+        axes[0, 1].set_ylabel("max(σ)")
+        axes[0, 1].set_title(f"σ_max trajectory (final={result.sigma.max():.2f})")
+
+        # Ranking comparison
+        true_rank = np.argsort(np.argsort(-true_mu))
+        fitted_rank = np.argsort(np.argsort(-result.mu))
+        axes[0, 2].scatter(true_rank, fitted_rank, alpha=0.6)
+        axes[0, 2].plot([0, len(true_mu)], [0, len(true_mu)], "k--", alpha=0.5)
+        axes[0, 2].set_xlabel("True rank")
+        axes[0, 2].set_ylabel("Fitted rank")
+        rank_corr = np.corrcoef(true_rank, fitted_rank)[0, 1]
+        axes[0, 2].set_title(f"Ranking recovery (r={rank_corr:.3f})")
+
+        # True vs fitted mu (normalized to same scale for fair comparison)
+        shifted_true = true_mu - true_mu[0]
+        true_range = shifted_true.max() - shifted_true.min()
+        fitted_range = result.mu.max() - result.mu.min()
+        scale = true_range / fitted_range if fitted_range > 0 else 1.0
+        scaled_fitted_mu = result.mu * scale
+
+        axes[1, 0].scatter(shifted_true, scaled_fitted_mu, alpha=0.6)
+        lims = [min(shifted_true.min(), scaled_fitted_mu.min()), max(shifted_true.max(), scaled_fitted_mu.max())]
+        axes[1, 0].plot(lims, lims, "k--", alpha=0.5)
+        axes[1, 0].set_xlabel("True μ (shifted)")
+        axes[1, 0].set_ylabel("Fitted μ (scaled)")
+        corr = np.corrcoef(true_mu, result.mu)[0, 1]
+        mae = np.abs(shifted_true - scaled_fitted_mu).mean()
+        axes[1, 0].set_title(f"μ recovery: r={corr:.3f}, MAE={mae:.3f}")
+
+        # True vs fitted sigma (also scaled)
+        scaled_fitted_sigma = result.sigma * scale
+        axes[1, 1].scatter(true_sigma, scaled_fitted_sigma, alpha=0.6)
+        sigma_lims = [0, max(true_sigma.max(), scaled_fitted_sigma.max()) * 1.1]
+        axes[1, 1].plot(sigma_lims, sigma_lims, "k--", alpha=0.5)
+        axes[1, 1].set_xlabel("True σ")
+        axes[1, 1].set_ylabel("Fitted σ (scaled)")
+        sigma_corr = np.corrcoef(true_sigma, result.sigma)[0, 1] if true_sigma.std() > 0 else float('nan')
+        axes[1, 1].set_title(f"σ recovery: r={sigma_corr:.3f}, range=[{scaled_fitted_sigma.min():.2f}, {scaled_fitted_sigma.max():.2f}]")
+
+        # Fitted sigma distribution
+        axes[1, 2].hist(scaled_fitted_sigma, bins=20, edgecolor='black', alpha=0.7)
+        axes[1, 2].axvline(true_sigma.mean(), color='r', linestyle='--', label=f'true mean={true_sigma.mean():.2f}')
+        axes[1, 2].axvline(scaled_fitted_sigma.mean(), color='b', linestyle='--', label=f'fitted mean={scaled_fitted_sigma.mean():.2f}')
+        axes[1, 2].set_xlabel("σ (scaled)")
+        axes[1, 2].set_ylabel("Count")
+        axes[1, 2].legend()
+        axes[1, 2].set_title("Fitted σ distribution")
+
+        fig.suptitle(
+            f"{name}\n"
+            f"converged={result.converged}, n_iter={result.n_iterations}, "
+            f"grad_norm={result.gradient_norm:.2e}, scale={1/scale:.2f}x"
+        )
+        plt.tight_layout()
+        plt.savefig(self.PLOTS_DIR / f"{name}.png", dpi=100)
+        plt.close()
+
+    def test_50_tasks_dense_data(self):
+        """50 tasks with 20 comparisons per pair - should work well."""
+        rng = np.random.default_rng(1001)
+        n_tasks = 50
+        true_mu = np.linspace(-3, 3, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=20, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_dense")
+
+        assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
+        assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.95
+
+    def test_50_tasks_sparse_data(self):
+        """50 tasks with only 5 comparisons per pair - harder case."""
+        rng = np.random.default_rng(1002)
+        n_tasks = 50
+        true_mu = np.linspace(-3, 3, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=5, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_sparse")
+
+        assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
+        assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.85
+
+    def test_50_tasks_varying_sigma(self):
+        """50 tasks where true sigma varies - tests heteroscedastic recovery."""
+        rng = np.random.default_rng(1003)
+        n_tasks = 50
+        true_mu = np.linspace(-3, 3, n_tasks)
+        true_sigma = 0.5 + rng.random(n_tasks) * 1.5  # sigma in [0.5, 2.0]
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=20, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_varying_sigma")
+
+        assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
+        assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.9
+
+    def test_100_tasks_dense(self):
+        """100 tasks - stress test."""
+        rng = np.random.default_rng(1004)
+        n_tasks = 100
+        true_mu = np.linspace(-4, 4, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=15, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=5000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "100_tasks_dense")
+
+        corr = np.corrcoef(true_mu, result.mu)[0, 1]
+        assert corr > 0.9, f"corr={corr}, grad={result.gradient_norm}"
+
+    def test_50_tasks_clustered_utilities(self):
+        """50 tasks with clustered utilities - some very similar items."""
+        rng = np.random.default_rng(1005)
+        n_tasks = 50
+        # 5 clusters of 10 items each
+        true_mu = np.repeat([-2, -1, 0, 1, 2], 10) + rng.normal(0, 0.1, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons(true_mu, true_sigma, n_comparisons_per_pair=20, rng=rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_clustered")
+
+        corr = np.corrcoef(true_mu, result.mu)[0, 1]
+        assert corr > 0.9, f"corr={corr}, grad={result.gradient_norm}"
+
+    def _simulate_comparisons_noisy(
+        self,
+        mu: np.ndarray,
+        sigma: np.ndarray,
+        n_comparisons_per_pair: int,
+        noise_rate: float,
+        rng: np.random.Generator,
+    ) -> np.ndarray:
+        """Simulate with random response flips (noise_rate = prob of random flip)."""
+        n = len(mu)
+        wins = np.zeros((n, n), dtype=np.int32)
+        for i in range(n):
+            for j in range(i + 1, n):
+                p_i_beats_j = _preference_prob(mu[i], mu[j], sigma[i], sigma[j])
+                for _ in range(n_comparisons_per_pair):
+                    # With noise_rate probability, flip a coin instead
+                    if rng.random() < noise_rate:
+                        i_wins = rng.random() < 0.5
+                    else:
+                        i_wins = rng.random() < p_i_beats_j
+
+                    if i_wins:
+                        wins[i, j] += 1
+                    else:
+                        wins[j, i] += 1
+        return wins
+
+    def test_50_tasks_10pct_noise(self):
+        """50 tasks with 10% random response noise."""
+        rng = np.random.default_rng(1006)
+        n_tasks = 50
+        true_mu = np.linspace(-3, 3, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons_noisy(
+            true_mu, true_sigma, n_comparisons_per_pair=20, noise_rate=0.1, rng=rng
+        )
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_10pct_noise")
+
+        assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
+        assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.9
+
+    def test_50_tasks_20pct_noise(self):
+        """50 tasks with 20% random response noise - realistic for LLMs."""
+        rng = np.random.default_rng(1007)
+        n_tasks = 50
+        true_mu = np.linspace(-3, 3, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons_noisy(
+            true_mu, true_sigma, n_comparisons_per_pair=20, noise_rate=0.2, rng=rng
+        )
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_20pct_noise")
+
+        assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
+        assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.85
+
+    def test_50_tasks_30pct_noise(self):
+        """50 tasks with 30% random response noise - very noisy."""
+        rng = np.random.default_rng(1008)
+        n_tasks = 50
+        true_mu = np.linspace(-3, 3, n_tasks)
+        true_sigma = np.ones(n_tasks)
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = self._simulate_comparisons_noisy(
+            true_mu, true_sigma, n_comparisons_per_pair=20, noise_rate=0.3, rng=rng
+        )
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_30pct_noise")
+
+        assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
+        assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.7
