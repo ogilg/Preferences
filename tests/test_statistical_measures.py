@@ -7,24 +7,26 @@ import numpy as np
 import pytest
 import yaml
 
-from src.experiments.correlation import safe_correlation, save_correlations_yaml
+from src.experiments.correlation import (
+    safe_correlation,
+    save_correlations_yaml,
+    utility_vector_correlation,
+    compute_pairwise_correlations,
+)
 from src.experiments.transitivity.transitivity import measure_transitivity, TransitivityResult
 from src.experiments.sensitivity_experiments.rating_correlation import (
     _build_score_map,
     compute_per_task_std,
     compute_mean_std_across_tasks,
-    score_correlation,
-    compute_rating_pairwise_correlations,
+    scores_to_vector,
 )
 from src.experiments.sensitivity_experiments.binary_correlation import (
     _build_win_rate_vector,
     win_rate_correlation,
-    utility_correlation,
-    compute_pairwise_correlations,
 )
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, TaskScore, PreferenceType
-from src.preferences.ranking import ThurstonianResult
+from src.preferences.ranking import ThurstonianResult, OptimizationHistory
 
 
 def make_task(id: str) -> Task:
@@ -273,30 +275,20 @@ class TestRatingCorrelation:
         expected = (np.std([5, 7]) + np.std([3, 9])) / 2
         assert mean_std == pytest.approx(expected)
 
-    def test_score_correlation_perfect(self, tasks):
-        # Same rankings = perfect correlation
-        scores_a = [make_score(t, i * 2) for i, t in enumerate(tasks)]
-        scores_b = [make_score(t, i * 2) for i, t in enumerate(tasks)]
-
-        r = score_correlation(scores_a, scores_b, tasks)
-        assert r == pytest.approx(1.0)
-
-    def test_score_correlation_inverse(self, tasks):
-        # Inverse rankings = negative correlation
-        scores_a = [make_score(t, i) for i, t in enumerate(tasks)]
-        scores_b = [make_score(t, len(tasks) - i) for i, t in enumerate(tasks)]
-
-        r = score_correlation(scores_a, scores_b, tasks)
-        assert r == pytest.approx(-1.0)
-
-    def test_compute_rating_pairwise_correlations(self, tasks):
-        results = {
+    def test_compute_pairwise_correlations_with_ratings(self, tasks):
+        scores_by_template = {
             "template_1": [make_score(t, i) for i, t in enumerate(tasks)],
             "template_2": [make_score(t, i) for i, t in enumerate(tasks)],
             "template_3": [make_score(t, len(tasks) - i) for i, t in enumerate(tasks)],
         }
 
-        correlations = compute_rating_pairwise_correlations(results, tasks)
+        # Convert to unified format using scores_to_vector
+        results = {
+            tid: scores_to_vector(scores, tasks)
+            for tid, scores in scores_by_template.items()
+        }
+
+        correlations = compute_pairwise_correlations(results)
 
         # 3 templates = C(3,2) = 3 pairs
         assert len(correlations) == 3
@@ -304,12 +296,12 @@ class TestRatingCorrelation:
         # Find t1 vs t2 (should be perfect)
         t1_t2 = next(c for c in correlations
                      if {c["template_a"], c["template_b"]} == {"template_1", "template_2"})
-        assert t1_t2["pearson_correlation"] == pytest.approx(1.0)
+        assert t1_t2["correlation"] == pytest.approx(1.0)
 
         # Find t1 vs t3 (should be negative)
         t1_t3 = next(c for c in correlations
                      if {c["template_a"], c["template_b"]} == {"template_1", "template_3"})
-        assert t1_t3["pearson_correlation"] == pytest.approx(-1.0)
+        assert t1_t3["correlation"] == pytest.approx(-1.0)
 
 
 class TestBinaryCorrelation:
@@ -398,125 +390,47 @@ class TestBinaryCorrelation:
         r = win_rate_correlation(measurements_a, measurements_b, tasks)
         assert r == pytest.approx(-1.0)
 
-    def test_utility_correlation_same_order(self, tasks):
+    def test_utility_vector_correlation_same_order(self, tasks):
         # Same utility ordering
-        result_a = ThurstonianResult(
-            tasks=tasks,
-            mu=np.array([1.0, 2.0, 3.0, 4.0]),
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
-        result_b = ThurstonianResult(
-            tasks=tasks,
-            mu=np.array([2.0, 4.0, 6.0, 8.0]),  # Same ordering, different scale
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
+        task_ids = [t.id for t in tasks]
+        mu_a = np.array([1.0, 2.0, 3.0, 4.0])
+        mu_b = np.array([2.0, 4.0, 6.0, 8.0])  # Same ordering, different scale
 
-        r = utility_correlation(result_a, result_b)
+        r = utility_vector_correlation(mu_a, task_ids, mu_b, task_ids)
         assert r == pytest.approx(1.0)
 
-    def test_utility_correlation_reorders_tasks(self, tasks):
+    def test_utility_vector_correlation_reorders_tasks(self, tasks):
         # Tasks in different order but same underlying utilities
-        reordered_tasks = [tasks[3], tasks[2], tasks[1], tasks[0]]
+        ids_a = [t.id for t in tasks]
+        ids_b = [tasks[3].id, tasks[2].id, tasks[1].id, tasks[0].id]
 
-        result_a = ThurstonianResult(
-            tasks=tasks,
-            mu=np.array([1.0, 2.0, 3.0, 4.0]),
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
-        result_b = ThurstonianResult(
-            tasks=reordered_tasks,
-            mu=np.array([4.0, 3.0, 2.0, 1.0]),  # Reversed order matches
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
+        mu_a = np.array([1.0, 2.0, 3.0, 4.0])
+        mu_b = np.array([4.0, 3.0, 2.0, 1.0])  # Reversed order matches
 
-        r = utility_correlation(result_a, result_b)
+        r = utility_vector_correlation(mu_a, ids_a, mu_b, ids_b)
         assert r == pytest.approx(1.0)
 
-    def test_utility_correlation_mismatched_tasks_raises(self, tasks):
-        different_tasks = [make_task(f"other_{i}") for i in range(4)]
+    def test_utility_vector_correlation_mismatched_tasks_returns_nan(self, tasks):
+        ids_a = [t.id for t in tasks]
+        ids_b = [f"other_{i}" for i in range(4)]
 
-        result_a = ThurstonianResult(
-            tasks=tasks,
-            mu=np.array([1.0, 2.0, 3.0, 4.0]),
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
-        result_b = ThurstonianResult(
-            tasks=different_tasks,
-            mu=np.array([1.0, 2.0, 3.0, 4.0]),
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
+        mu_a = np.array([1.0, 2.0, 3.0, 4.0])
+        mu_b = np.array([1.0, 2.0, 3.0, 4.0])
 
-        with pytest.raises(ValueError, match="task IDs don't match"):
-            utility_correlation(result_a, result_b)
+        r = utility_vector_correlation(mu_a, ids_a, mu_b, ids_b)
+        assert np.isnan(r)
 
-    def test_compute_pairwise_correlations_full_pipeline(self, tasks):
-        # Create measurements with varied win rates for meaningful correlation
-        all_pairs = [
-            make_measurement(tasks[0], tasks[1], "a"),
-            make_measurement(tasks[0], tasks[1], "a"),  # (0,1) = 100%
-            make_measurement(tasks[0], tasks[2], "a"),
-            make_measurement(tasks[0], tasks[2], "b"),  # (0,2) = 50%
-            make_measurement(tasks[0], tasks[3], "b"),
-            make_measurement(tasks[0], tasks[3], "b"),  # (0,3) = 0%
-            make_measurement(tasks[1], tasks[2], "a"),  # (1,2) = 100%
-            make_measurement(tasks[1], tasks[3], "a"),
-            make_measurement(tasks[1], tasks[3], "b"),  # (1,3) = 50%
-            make_measurement(tasks[2], tasks[3], "b"),  # (2,3) = 0%
-        ]
-
-        thurs_1 = ThurstonianResult(
-            tasks=tasks,
-            mu=np.array([1.0, 2.0, 3.0, 4.0]),
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
-        thurs_2 = ThurstonianResult(
-            tasks=tasks,
-            mu=np.array([1.0, 2.0, 3.0, 4.0]),
-            sigma=np.ones(4),
-            converged=True,
-            neg_log_likelihood=0.0,
-            n_iterations=10,
-            termination_message="converged",
-        )
-
+    def test_compute_pairwise_correlations_with_utilities(self, tasks):
+        # Test unified function with utility vectors
         results = {
-            "template_1": (all_pairs, thurs_1),
-            "template_2": (list(all_pairs), thurs_2),  # Same measurements
+            "template_1": (np.array([1.0, 2.0, 3.0, 4.0]), [t.id for t in tasks]),
+            "template_2": (np.array([1.0, 2.0, 3.0, 4.0]), [t.id for t in tasks]),
         }
 
-        correlations = compute_pairwise_correlations(results, tasks)
+        correlations = compute_pairwise_correlations(results)
 
         assert len(correlations) == 1
         assert correlations[0]["template_a"] == "template_1"
         assert correlations[0]["template_b"] == "template_2"
         # Identical data should give perfect correlation
-        assert correlations[0]["win_rate_correlation"] == pytest.approx(1.0)
-        assert correlations[0]["utility_correlation"] == pytest.approx(1.0)
+        assert correlations[0]["correlation"] == pytest.approx(1.0)

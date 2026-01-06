@@ -12,10 +12,9 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.ranking import PairwiseData, fit_thurstonian
 from src.preferences.storage import save_measurements
+from src.experiments.correlation import utility_vector_correlation, compute_pairwise_correlations
 from src.experiments.sensitivity_experiments.binary_correlation import (
     win_rate_correlation,
-    utility_correlation,
-    compute_pairwise_correlations,
     save_correlations,
 )
 
@@ -232,7 +231,8 @@ class TestCorrelationIntegration:
         data = PairwiseData.from_comparisons(mock_measurements_consistent, sample_tasks)
         fit = fit_thurstonian(data)
 
-        corr = utility_correlation(fit, fit)
+        task_ids = [t.id for t in fit.tasks]
+        corr = utility_vector_correlation(fit.mu, task_ids, fit.mu, task_ids)
         assert corr == pytest.approx(1.0, abs=1e-6)
 
 
@@ -287,18 +287,18 @@ class TestSaveFunctions:
         fit1 = fit_thurstonian(PairwiseData.from_comparisons(mock_measurements_consistent, sample_tasks))
         fit2 = fit_thurstonian(PairwiseData.from_comparisons(mock_measurements_random, sample_tasks))
 
+        # Prepare data in unified format
         results = {
-            "1": (mock_measurements_consistent, fit1),
-            "2": (mock_measurements_random, fit2),
+            "1": (fit1.mu, [t.id for t in fit1.tasks]),
+            "2": (fit2.mu, [t.id for t in fit2.tasks]),
         }
 
-        correlations = compute_pairwise_correlations(results, sample_tasks)
+        correlations = compute_pairwise_correlations(results)
 
         assert len(correlations) == 1
         assert correlations[0]["template_a"] == "1"
         assert correlations[0]["template_b"] == "2"
-        assert -1.0 <= correlations[0]["win_rate_correlation"] <= 1.0
-        assert -1.0 <= correlations[0]["utility_correlation"] <= 1.0
+        assert -1.0 <= correlations[0]["correlation"] <= 1.0
 
 
 # =============================================================================
@@ -377,13 +377,15 @@ class TestEndToEndPipeline:
             for pid, m in measurements_by_phrasing.items()
         }
 
-        # 5. Compute correlations
-        results = {pid: (measurements_by_phrasing[pid], fits[pid]) for pid in fits}
-        correlations = compute_pairwise_correlations(results, sample_tasks)
+        # 5. Compute correlations using unified function
+        results = {
+            pid: (fit.mu, [t.id for t in fit.tasks])
+            for pid, fit in fits.items()
+        }
+        correlations = compute_pairwise_correlations(results)
 
         assert len(correlations) == 1
-        assert "win_rate_correlation" in correlations[0]
-        assert "utility_correlation" in correlations[0]
+        assert "correlation" in correlations[0]
 
 
 # =============================================================================
@@ -473,7 +475,9 @@ class TestKnownGroundTruth:
         fit1 = fit_thurstonian(PairwiseData.from_comparisons(m1, sample_tasks))
         fit2 = fit_thurstonian(PairwiseData.from_comparisons(m2, sample_tasks))
 
-        corr = utility_correlation(fit1, fit2)
+        ids1 = [t.id for t in fit1.tasks]
+        ids2 = [t.id for t in fit2.tasks]
+        corr = utility_vector_correlation(fit1.mu, ids1, fit2.mu, ids2)
         assert corr == pytest.approx(1.0, abs=1e-6)
 
     def test_opposite_preferences_correlate_negatively(self, sample_tasks: list[Task]):
@@ -498,5 +502,7 @@ class TestKnownGroundTruth:
         fit1 = fit_thurstonian(PairwiseData.from_comparisons(m1, sample_tasks))
         fit2 = fit_thurstonian(PairwiseData.from_comparisons(m2, sample_tasks))
 
-        corr = utility_correlation(fit1, fit2)
+        ids1 = [t.id for t in fit1.tasks]
+        ids2 = [t.id for t in fit2.tasks]
+        corr = utility_vector_correlation(fit1.mu, ids1, fit2.mu, ids2)
         assert corr < 0

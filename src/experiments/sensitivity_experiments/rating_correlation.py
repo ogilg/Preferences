@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from itertools import combinations
 from pathlib import Path
-from typing import Literal
 
 import numpy as np
 
-from src.experiments.correlation import safe_correlation, save_correlations_yaml
+from src.experiments.correlation import save_correlations_yaml
 from src.task_data import Task
 from src.types import TaskScore
 
@@ -34,35 +32,12 @@ def compute_mean_std_across_tasks(scores: list[TaskScore]) -> float:
     return float(np.mean(list(per_task.values())))
 
 
-def score_correlation(
-    scores_a: list[TaskScore],
-    scores_b: list[TaskScore],
-    tasks: list[Task],
-    method: Literal["pearson", "spearman"] = "pearson",
-) -> float:
-    map_a = _build_score_map(scores_a)
-    map_b = _build_score_map(scores_b)
-    common_ids = [t.id for t in tasks if t.id in map_a and t.id in map_b]
-    vec_a = np.array([map_a[tid] for tid in common_ids])
-    vec_b = np.array([map_b[tid] for tid in common_ids])
-    return safe_correlation(vec_a, vec_b, method)
-
-
-def compute_rating_pairwise_correlations(
-    results: dict[str, list[TaskScore]],
-    tasks: list[Task],
-) -> list[dict]:
-    correlations = []
-
-    for (id_a, scores_a), (id_b, scores_b) in combinations(results.items(), 2):
-        correlations.append({
-            "template_a": id_a,
-            "template_b": id_b,
-            "pearson_correlation": score_correlation(scores_a, scores_b, tasks, "pearson"),
-            "spearman_correlation": score_correlation(scores_a, scores_b, tasks, "spearman"),
-        })
-
-    return correlations
+def scores_to_vector(scores: list[TaskScore], tasks: list[Task]) -> tuple[np.ndarray, list[str]]:
+    """Convert TaskScore list to (values, task_ids) for use with compute_pairwise_correlations."""
+    score_map = _build_score_map(scores)
+    task_ids = [t.id for t in tasks if t.id in score_map]
+    values = np.array([score_map[tid] for tid in task_ids])
+    return values, task_ids
 
 
 def save_rating_correlations(correlations: list[dict], path: Path | str) -> None:

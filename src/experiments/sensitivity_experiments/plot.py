@@ -3,14 +3,12 @@
 from __future__ import annotations
 
 import argparse
-from collections import defaultdict
-from itertools import combinations
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.stats import pearsonr
 
+from src.experiments.correlation import compute_pairwise_correlations
 from src.preferences.storage import (
     list_runs,
     load_thurstonian_data,
@@ -18,6 +16,7 @@ from src.preferences.storage import (
     ThurstonianData,
     RESULTS_DIR,
 )
+from src.experiments.sensitivity_experiments.sensitivity import compute_sensitivities
 
 
 def load_all_runs(results_dir: Path) -> list[tuple[BinaryRunConfig, ThurstonianData]]:
@@ -33,87 +32,33 @@ def load_all_runs(results_dir: Path) -> list[tuple[BinaryRunConfig, ThurstonianD
     return loaded
 
 
-def utility_correlation(thurs_a: ThurstonianData, thurs_b: ThurstonianData) -> float:
-    if len(thurs_a.mu) != len(thurs_b.mu):
-        return np.nan
-
-    if thurs_a.task_ids != thurs_b.task_ids:
-        id_to_idx_b = {tid: i for i, tid in enumerate(thurs_b.task_ids)}
-        try:
-            reorder = [id_to_idx_b[tid] for tid in thurs_a.task_ids]
-            mu_b = thurs_b.mu[reorder]
-        except KeyError:
-            return np.nan
-    else:
-        mu_b = thurs_b.mu
-
-    mu_a = thurs_a.mu
-
-    if len(mu_a) < 2 or np.std(mu_a) < 1e-10 or np.std(mu_b) < 1e-10:
-        return np.nan
-
-    r, _ = pearsonr(mu_a, mu_b)
-    return float(r) if not np.isnan(r) else np.nan
-
-
-def get_tag_fields(runs: list[tuple[BinaryRunConfig, ThurstonianData]]) -> set[str]:
-    fields = set()
-    for config, _ in runs:
-        for key in config.template_tags:
-            fields.add(key)
-    return fields
-
-
-def compute_field_sensitivity(
-    runs: list[tuple[BinaryRunConfig, ThurstonianData]],
-    field: str,
-) -> dict:
-    """Groups by all tags EXCEPT field, computes correlations within each group."""
-    groups: dict[tuple, list[tuple[BinaryRunConfig, ThurstonianData]]] = defaultdict(list)
-
-    for config, thurs in runs:
-        tags = config.template_tags
-        key_items = [(k, v) for k, v in sorted(tags.items()) if k != field]
-        key = tuple(key_items)
-        groups[key].append((config, thurs))
-
-    all_correlations = []
-    field_values = set()
-
-    for group_runs in groups.values():
-        if len(group_runs) < 2:
-            continue
-
-        for (config_a, thurs_a), (config_b, thurs_b) in combinations(group_runs, 2):
-            val_a = config_a.template_tags[field]
-            val_b = config_b.template_tags[field]
-            field_values.add(val_a)
-            field_values.add(val_b)
-
-            corr = utility_correlation(thurs_a, thurs_b)
-            if not np.isnan(corr):
-                all_correlations.append(corr)
-
-    return {
-        "field": field,
-        "values": sorted(field_values),
-        "correlations": all_correlations,
-        "mean": float(np.mean(all_correlations)) if all_correlations else np.nan,
-        "std": float(np.std(all_correlations)) if all_correlations else np.nan,
-        "n_pairs": len(all_correlations),
-    }
-
-
 def compute_all_field_sensitivities(
     runs: list[tuple[BinaryRunConfig, ThurstonianData]],
 ) -> list[dict]:
-    fields = get_tag_fields(runs)
-    results = []
-    for field in sorted(fields):
-        result = compute_field_sensitivity(runs, field)
-        if result["n_pairs"] > 0:
-            results.append(result)
-    return results
+    # Prepare data for unified correlation function
+    results = {
+        config.template_name: (thurs.mu, thurs.task_ids)
+        for config, thurs in runs
+    }
+    tags = {
+        config.template_name: config.template_tags
+        for config, thurs in runs
+    }
+
+    correlations = compute_pairwise_correlations(results, tags=tags)
+    sensitivities = compute_sensitivities(correlations, correlation_key="correlation")
+
+    # Convert to list format expected by print/plot functions
+    return [
+        {
+            "field": field,
+            "mean": stats["mean"],
+            "std": stats["std"],
+            "n_pairs": stats["n_pairs"],
+            "values": [],  # Not tracked in new implementation
+        }
+        for field, stats in sensitivities.items()
+    ]
 
 
 def print_sensitivity_report(
