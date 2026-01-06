@@ -33,7 +33,7 @@ def build_binary_template(
 ) -> str:
     label_a, label_b = TASK_LABELS[(task_label_names, language)]
 
-    tasks_block = f"{label_a}\n{{task_a}}\n{label_b}\n{{task_b}}"
+    tasks_block = f"{label_a}:\n{{task_a}}\n{label_b}:\n{{task_b}}"
     instructions_block = f"{instruction}\n{{format_instruction}}"
 
     if instruction_position == "before":

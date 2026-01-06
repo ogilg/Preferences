@@ -8,6 +8,7 @@ from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferenceP
 from src.preferences.measurement.measurer import BinaryPreferenceMeasurer
 from src.preferences.measurement.response_format import RegexChoiceFormat
 from src.preferences.templates.builders import BinaryPromptBuilder, PromptBuilder
+from src.preferences.templates.generator_config import TASK_LABELS
 from src.preferences.templates.template import PromptTemplate
 
 
@@ -100,8 +101,10 @@ def measure_with_template(
     temperature: float = 1.0,
     max_concurrent: int = 10,
 ) -> MeasurementBatch[BinaryPreferenceMeasurement]:
-    task_a_label = template.tags_dict["task_a_label"]
-    task_b_label = template.tags_dict["task_b_label"]
+    tags = template.tags_dict
+    task_label_names = tags["task_label_names"]
+    language = tags["language"]
+    task_a_label, task_b_label = TASK_LABELS[(task_label_names, language)]
 
     response_format = RegexChoiceFormat(
         task_a_label=task_a_label,

@@ -8,18 +8,18 @@ from pydantic import BaseModel, model_validator
 
 # Task label formats for binary templates, keyed by (label_style, language)
 TASK_LABELS = {
-    ("letter", "en"): ("Task A:", "Task B:"),
-    ("number", "en"): ("Task 1:", "Task 2:"),
-    ("ordinal", "en"): ("First task:", "Second task:"),
-    ("letter", "fr"): ("Tâche A:", "Tâche B:"),
-    ("number", "fr"): ("Tâche 1:", "Tâche 2:"),
-    ("ordinal", "fr"): ("Première tâche:", "Deuxième tâche:"),
-    ("letter", "es"): ("Tarea A:", "Tarea B:"),
-    ("number", "es"): ("Tarea 1:", "Tarea 2:"),
-    ("ordinal", "es"): ("Primera tarea:", "Segunda tarea:"),
-    ("letter", "de"): ("Aufgabe A:", "Aufgabe B:"),
-    ("number", "de"): ("Aufgabe 1:", "Aufgabe 2:"),
-    ("ordinal", "de"): ("Erste Aufgabe:", "Zweite Aufgabe:"),
+    ("letter", "en"): ("Task A", "Task B"),
+    ("number", "en"): ("Task 1", "Task 2"),
+    ("ordinal", "en"): ("First task", "Second task"),
+    ("letter", "fr"): ("Tâche A", "Tâche B"),
+    ("number", "fr"): ("Tâche 1", "Tâche 2"),
+    ("ordinal", "fr"): ("Première tâche", "Deuxième tâche"),
+    ("letter", "es"): ("Tarea A", "Tarea B"),
+    ("number", "es"): ("Tarea 1", "Tarea 2"),
+    ("ordinal", "es"): ("Primera tarea", "Segunda tarea"),
+    ("letter", "de"): ("Aufgabe A", "Aufgabe B"),
+    ("number", "de"): ("Aufgabe 1", "Aufgabe 2"),
+    ("ordinal", "de"): ("Erste Aufgabe", "Zweite Aufgabe"),
 }
 
 # Task label for rating templates, keyed by language
