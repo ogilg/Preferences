@@ -153,6 +153,8 @@ def fit_thurstonian(
     max_iter: int = 1000,
     log_sigma_bounds: tuple[float, float] = (-3.0, 3.0),
     mu_bounds: tuple[float, float] = (-10.0, 10.0),
+    gradient_tol: float = 1e-4,
+    loss_tol: float = 1e-8,
 ) -> ThurstonianResult:
     n = data.n_tasks
 
@@ -180,7 +182,12 @@ def fit_thurstonian(
         method="L-BFGS-B",
         bounds=bounds,
         callback=callback,
-        options={"maxiter": max_iter, "maxfun": max_iter * 20},
+        options={
+            "maxiter": max_iter,
+            "maxfun": max_iter * 20,
+            "gtol": gradient_tol,
+            "ftol": loss_tol,
+        },
     )
 
     mu = np.zeros(n)

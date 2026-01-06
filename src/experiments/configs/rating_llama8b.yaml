@@ -1,0 +1,14 @@
+preference_mode: rating
+
+model: meta-llama/Meta-Llama-3.1-8B-Instruct
+temperature: 0.0
+max_concurrent: 40
+
+n_tasks: 10
+task_origin: wildchat
+
+templates: src/preferences/templates/data/rating_v1.yaml
+
+samples_per_task: 10
+scale_min: 1
+scale_max: 10

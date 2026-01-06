@@ -1,62 +1,64 @@
-"""Usage: python -m src.experiments.run_binary_measurement --templates <yaml> --n-tasks N"""
+"""Usage: python -m src.experiments.run_binary_measurement <config.yaml>"""
 
 from __future__ import annotations
 
-import argparse
+import sys
 from itertools import combinations
 from pathlib import Path
 
 from src.models import HyperbolicModel
-from src.task_data import load_tasks, OriginDataset
+from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
 from src.preferences.ranking import PairwiseData, fit_thurstonian, compute_pair_agreement
 from src.preferences.storage import save_run, run_exists, RESULTS_DIR
+from src.experiments.config import load_experiment_config
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run binary preference measurements")
-    parser.add_argument("--templates", type=Path,
-                        default=Path("src/preferences/templates/data/binary_choice_variants.yaml"))
-    parser.add_argument("--n-tasks", type=int, default=10)
-    parser.add_argument("--model", default="meta-llama/Meta-Llama-3.1-8B-Instruct")
-    parser.add_argument("--temperature", type=float, default=1.0)
-    parser.add_argument("--max-concurrent", type=int, default=40)
-    parser.add_argument("--samples-per-pair", type=int, default=5,
-                        help="Number of times to sample each pair comparison")
-    parser.add_argument("--max-iter", type=int, default=None,
-                        help="Max iterations for Thurstonian fitting (default: auto)")
-    args = parser.parse_args()
+    if len(sys.argv) < 2:
+        print("Usage: python -m src.experiments.run_binary_measurement <config.yaml>")
+        sys.exit(1)
 
-    templates = load_templates_from_yaml(args.templates)
-    tasks = load_tasks(n=args.n_tasks, origin=OriginDataset.WILDCHAT)
+    config = load_experiment_config(Path(sys.argv[1]))
+
+    if config.preference_mode != "binary":
+        raise ValueError(f"Expected preference_mode='binary', got '{config.preference_mode}'")
+
+    templates = load_templates_from_yaml(config.templates)
+    tasks = load_tasks(n=config.n_tasks, origin=config.get_origin_dataset())
     unique_pairs = list(combinations(tasks, 2))
-    pairs = unique_pairs * args.samples_per_pair
-    model = HyperbolicModel(model_name=args.model)
+    pairs = unique_pairs * config.samples_per_pair
+    model = HyperbolicModel(model_name=config.model)
 
-    n_params = (args.n_tasks - 1) + args.n_tasks
-    max_iter = args.max_iter if args.max_iter else max(2000, n_params * 50)
+    n_params = (config.n_tasks - 1) + config.n_tasks
+    max_iter = config.fitting.max_iter if config.fitting.max_iter else max(2000, n_params * 50)
 
-    print(f"Templates: {len(templates)}, Tasks: {len(tasks)}, Pairs: {len(unique_pairs)} x {args.samples_per_pair} = {len(pairs)}")
-    print(f"Thurstonian max_iter: {max_iter}")
+    print(f"Templates: {len(templates)}, Tasks: {len(tasks)}, Pairs: {len(unique_pairs)} x {config.samples_per_pair} = {len(pairs)}")
+    print(f"Thurstonian max_iter: {max_iter}, gradient_tol: {config.fitting.gradient_tol}, loss_tol: {config.fitting.loss_tol}")
 
     measured = 0
     skipped = 0
     for template in templates:
-        if run_exists(template, model, args.n_tasks, RESULTS_DIR):
+        if run_exists(template, model, config.n_tasks, RESULTS_DIR):
             print(f"Skipping {template.name} (already measured)")
             skipped += 1
             continue
 
         print(f"\nMeasuring template {template.name}...")
 
-        batch = measure_with_template(template, model, pairs, args.temperature, args.max_concurrent)
+        batch = measure_with_template(template, model, pairs, config.temperature, config.max_concurrent)
         print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
 
         agreement = compute_pair_agreement(batch.successes)
         print(f"  Pair agreement rate: {agreement:.3f}")
 
-        thurstonian = fit_thurstonian(PairwiseData.from_comparisons(batch.successes, tasks), max_iter=max_iter)
+        thurstonian = fit_thurstonian(
+            PairwiseData.from_comparisons(batch.successes, tasks),
+            max_iter=max_iter,
+            gradient_tol=config.fitting.gradient_tol,
+            loss_tol=config.fitting.loss_tol,
+        )
         print(f"  Thurstonian converged: {thurstonian.converged}")
         if not thurstonian.converged:
             print(f"    Iterations: {thurstonian.n_iterations}/{max_iter}")
@@ -67,9 +69,9 @@ def main():
 
         run_path = save_run(
             template=template,
-            template_file=str(args.templates),
+            template_file=str(config.templates),
             model=model,
-            temperature=args.temperature,
+            temperature=config.temperature,
             tasks=tasks,
             measurements=batch.successes,
             thurstonian=thurstonian,

@@ -1,0 +1,17 @@
+preference_mode: binary
+
+model: meta-llama/Meta-Llama-3.1-8B-Instruct
+temperature: 1.0
+max_concurrent: 40
+
+n_tasks: 10
+task_origin: wildchat
+
+templates: src/preferences/templates/data/binary_choice_v1.yaml
+
+samples_per_pair: 5
+
+fitting:
+  max_iter: null  # auto: max(2000, n_params*50)
+  gradient_tol: 1e-4
+  loss_tol: 1e-8
