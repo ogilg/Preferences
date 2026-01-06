@@ -7,6 +7,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+import yaml
 
 from src.experiments.correlation import compute_pairwise_correlations
 from src.preferences.storage import (
@@ -34,7 +35,8 @@ def load_all_runs(results_dir: Path) -> list[tuple[BinaryRunConfig, ThurstonianD
 
 def compute_all_field_sensitivities(
     runs: list[tuple[BinaryRunConfig, ThurstonianData]],
-) -> list[dict]:
+) -> tuple[list[dict], list[dict]]:
+    """Returns (sensitivities, correlations)."""
     # Prepare data for unified correlation function
     results = {
         config.template_name: (thurs.mu, thurs.task_ids)
@@ -48,66 +50,44 @@ def compute_all_field_sensitivities(
     correlations = compute_pairwise_correlations(results, tags=tags)
     sensitivities = compute_sensitivities(correlations, correlation_key="correlation")
 
-    # Convert to list format expected by print/plot functions
-    return [
+    sensitivities_list = [
         {
             "field": field,
             "mean": stats["mean"],
             "std": stats["std"],
             "n_pairs": stats["n_pairs"],
-            "values": [],  # Not tracked in new implementation
         }
         for field, stats in sensitivities.items()
     ]
 
+    return sensitivities_list, correlations
 
-def print_sensitivity_report(
+
+def save_sensitivity_report(
     sensitivities: list[dict],
-    runs: list[tuple[BinaryRunConfig, ThurstonianData]],
+    correlations: list[dict],
+    n_runs: int,
+    output_path: Path,
 ) -> None:
-    print("\n" + "=" * 60)
-    print("PREFERENCE SENSITIVITY ANALYSIS")
-    print("=" * 60)
+    """Save sensitivity analysis results to YAML."""
+    valid = [s for s in sensitivities if not np.isnan(s["mean"])]
 
-    print(f"\nLoaded {len(runs)} measurement runs")
+    report = {
+        "n_runs": n_runs,
+        "by_field": {
+            s["field"]: {
+                "mean_correlation": float(s["mean"]),
+                "std": float(s["std"]),
+                "n_pairs": s["n_pairs"],
+            }
+            for s in valid
+        },
+        "pairwise_correlations": correlations,
+    }
 
-    if not sensitivities:
-        print("\nNo pairwise comparisons available.")
-        return
-
-    print("\n" + "-" * 60)
-    print("SENSITIVITY BY FIELD (varying one field at a time)")
-    print("-" * 60)
-    print(f"{'Field':<25} {'Mean Corr':<12} {'Std':<10} {'N pairs':<10} {'Values'}")
-    print("-" * 60)
-
-    for s in sorted(sensitivities, key=lambda x: x["mean"] if not np.isnan(x["mean"]) else -1, reverse=True):
-        values_str = ", ".join(str(v) for v in s["values"][:5])
-        if len(s["values"]) > 5:
-            values_str += "..."
-
-        mean_str = f"{s['mean']:.3f}" if not np.isnan(s["mean"]) else "N/A"
-        std_str = f"{s['std']:.3f}" if not np.isnan(s["std"]) else "N/A"
-
-        print(f"{s['field']:<25} {mean_str:<12} {std_str:<10} {s['n_pairs']:<10} {values_str}")
-
-    print("-" * 60)
-
-    valid_sensitivities = [s for s in sensitivities if not np.isnan(s["mean"])]
-    if valid_sensitivities:
-        min_sens = min(valid_sensitivities, key=lambda x: x["mean"])
-        max_sens = max(valid_sensitivities, key=lambda x: x["mean"])
-
-        print(f"\nMost sensitive to: {min_sens['field']} (mean r = {min_sens['mean']:.3f})")
-        print(f"Least sensitive to: {max_sens['field']} (mean r = {max_sens['mean']:.3f})")
-
-        overall_mean = np.mean([s["mean"] for s in valid_sensitivities])
-        if overall_mean > 0.9:
-            print(f"\nOverall: HIGH robustness (mean r = {overall_mean:.3f})")
-        elif overall_mean > 0.7:
-            print(f"\nOverall: MODERATE robustness (mean r = {overall_mean:.3f})")
-        else:
-            print(f"\nOverall: LOW robustness (mean r = {overall_mean:.3f})")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w") as f:
+        yaml.dump(report, f, default_flow_style=False, sort_keys=False)
 
 
 def plot_sensitivity_bars(
@@ -143,7 +123,6 @@ def plot_sensitivity_bars(
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
-    print(f"\nSaved plot to {output_path}")
     plt.close()
 
 
@@ -160,7 +139,7 @@ def main():
         "--output",
         type=Path,
         default=None,
-        help="Output path for plot (default: <results_dir>/sensitivity.png)",
+        help="Output directory (default: <results_dir>)",
     )
     args = parser.parse_args()
 
@@ -175,12 +154,19 @@ def main():
         print("No measurement runs found.")
         return
 
-    sensitivities = compute_all_field_sensitivities(runs)
-    print_sensitivity_report(sensitivities, runs)
+    print(f"Loaded {len(runs)} runs, computing correlations...")
+    sensitivities, correlations = compute_all_field_sensitivities(runs)
+
+    output_dir = args.output or args.results_dir
+
+    report_path = output_dir / "sensitivity.yaml"
+    save_sensitivity_report(sensitivities, correlations, len(runs), report_path)
+    print(f"Saved report to {report_path}")
 
     if sensitivities:
-        output_path = args.output or (args.results_dir / "sensitivity.png")
-        plot_sensitivity_bars(sensitivities, output_path)
+        plot_path = output_dir / "sensitivity.png"
+        plot_sensitivity_bars(sensitivities, plot_path)
+        print(f"Saved plot to {plot_path}")
 
 
 if __name__ == "__main__":
