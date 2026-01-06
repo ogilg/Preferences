@@ -215,8 +215,8 @@ def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
         "termination_message": result.termination_message,
         "gradient_norm": result.gradient_norm,
         "history": {
-            "loss": result.history.loss,
-            "sigma_max": result.history.sigma_max,
+            "loss": [float(x) for x in result.history.loss],
+            "sigma_max": [float(x) for x in result.history.sigma_max],
         },
     }
 
