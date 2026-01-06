@@ -11,7 +11,7 @@ from src.task_data import load_tasks, OriginDataset
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
 from src.preferences.ranking import PairwiseData, fit_thurstonian, compute_pair_agreement
-from src.preferences.storage import save_run, run_exists
+from src.preferences.storage import save_run, run_exists, RESULTS_DIR
 
 
 def main():
@@ -43,7 +43,7 @@ def main():
     measured = 0
     skipped = 0
     for template in templates:
-        if run_exists(template, model, args.n_tasks):
+        if run_exists(template, model, args.n_tasks, RESULTS_DIR):
             print(f"Skipping {template.name} (already measured)")
             skipped += 1
             continue
