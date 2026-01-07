@@ -189,6 +189,7 @@ class TestPhrasingTemplateLoading:
         """Should extract task labels from tags."""
         templates = load_templates_from_yaml(phrasing_templates)
 
+        assert len(templates) > 0, "No templates loaded - test would pass vacuously"
         for t in templates:
             assert t.tags_dict.get("task_a_label") == "Task A"
             assert t.tags_dict.get("task_b_label") == "Task B"
@@ -329,6 +330,7 @@ class TestRealTemplateIntegration:
         templates = load_templates_from_yaml(template_path)
         phrasing_templates = [t for t in templates if "phrasing" in t.tags_dict]
 
+        assert len(phrasing_templates) > 0, "No phrasing templates found - test would pass vacuously"
         for t in phrasing_templates:
             assert "task_a_label" in t.tags_dict, f"Template {t.name} missing task_a_label"
             assert "task_b_label" in t.tags_dict, f"Template {t.name} missing task_b_label"
