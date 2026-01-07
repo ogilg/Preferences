@@ -161,6 +161,7 @@ def fit_thurstonian(
     mu_bounds: tuple[float, float] = DEFAULT_MU_BOUNDS,
     gradient_tol: float = 1.0,
     loss_tol: float = 1e-8,
+    lambda_sigma: float = 0.0,
 ) -> ThurstonianResult:
     n = data.n_tasks
 
@@ -175,6 +176,13 @@ def fit_thurstonian(
 
     history = OptimizationHistory()
 
+    def objective(params: np.ndarray) -> float:
+        nll = _neg_log_likelihood(params, data.wins, n)
+        if lambda_sigma > 0:
+            sigma = np.exp(params[n - 1:])
+            nll += lambda_sigma * float(np.sum(sigma ** 2))
+        return nll
+
     def callback(params: np.ndarray) -> None:
         loss = _neg_log_likelihood(params, data.wins, n)
         sigma_max = float(np.exp(params[n - 1:]).max())
@@ -182,9 +190,8 @@ def fit_thurstonian(
         history.sigma_max.append(sigma_max)
 
     result = minimize(
-        _neg_log_likelihood,
+        objective,
         params_init,
-        args=(data.wins, n),
         method="L-BFGS-B",
         bounds=bounds,
         callback=callback,
