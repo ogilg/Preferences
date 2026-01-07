@@ -23,6 +23,11 @@ from collections import Counter, defaultdict
 from ...task_data import Task
 from ...types import BinaryPreferenceMeasurement
 
+# Tuned defaults (see data_analysis/tuning.md)
+DEFAULT_MU_BOUNDS = (-10.0, 10.0)
+DEFAULT_LOG_SIGMA_BOUNDS = (-2.0, 2.0)
+DEFAULT_SIGMA_INIT = 1.0
+
 
 @dataclass
 class PairwiseData:
@@ -84,6 +89,7 @@ class ThurstonianResult:
     converged: bool
     neg_log_likelihood: float
     n_iterations: int
+    n_function_evals: int
     termination_message: str
     gradient_norm: float
     history: OptimizationHistory
@@ -149,11 +155,11 @@ def _neg_log_likelihood(
 
 def fit_thurstonian(
     data: PairwiseData,
-    sigma_init: float = 1.0,
+    sigma_init: float = DEFAULT_SIGMA_INIT,
     max_iter: int = 1000,
-    log_sigma_bounds: tuple[float, float] = (-3.0, 3.0),
-    mu_bounds: tuple[float, float] = (-10.0, 10.0),
-    gradient_tol: float = 1e-4,
+    log_sigma_bounds: tuple[float, float] = DEFAULT_LOG_SIGMA_BOUNDS,
+    mu_bounds: tuple[float, float] = DEFAULT_MU_BOUNDS,
+    gradient_tol: float = 1.0,
     loss_tol: float = 1e-8,
 ) -> ThurstonianResult:
     n = data.n_tasks
@@ -202,6 +208,7 @@ def fit_thurstonian(
         converged=result.success,
         neg_log_likelihood=result.fun,
         n_iterations=result.nit,
+        n_function_evals=result.nfev,
         termination_message=result.message,
         gradient_norm=gradient_norm,
         history=history,
@@ -219,6 +226,7 @@ def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
         "converged": result.converged,
         "neg_log_likelihood": float(result.neg_log_likelihood),
         "n_iterations": result.n_iterations,
+        "n_function_evals": result.n_function_evals,
         "termination_message": result.termination_message,
         "gradient_norm": result.gradient_norm,
         "history": {
@@ -260,6 +268,7 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
         converged=data["converged"],
         neg_log_likelihood=data["neg_log_likelihood"],
         n_iterations=data.get("n_iterations", -1),
+        n_function_evals=data.get("n_function_evals", -1),
         termination_message=data.get("termination_message", "unknown (loaded from old format)"),
         gradient_norm=data.get("gradient_norm", -1.0),
         history=history,
