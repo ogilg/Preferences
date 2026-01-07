@@ -11,6 +11,7 @@ from src.preferences.ranking.thurstonian import (
     _neg_log_likelihood,
     OptimizationHistory,
 )
+from src.preferences.ranking.plotting import normalize_mu_for_comparison
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
@@ -428,11 +429,7 @@ class TestLargeScaleDiagnostics:
         axes[0, 2].set_title(f"Ranking recovery (r={rank_corr:.3f})")
 
         # True vs fitted mu (normalized to same scale for fair comparison)
-        shifted_true = true_mu - true_mu[0]
-        true_range = shifted_true.max() - shifted_true.min()
-        fitted_range = result.mu.max() - result.mu.min()
-        scale = true_range / fitted_range if fitted_range > 0 else 1.0
-        scaled_fitted_mu = result.mu * scale
+        shifted_true, scaled_fitted_mu, scale = normalize_mu_for_comparison(true_mu, result.mu)
 
         axes[1, 0].scatter(shifted_true, scaled_fitted_mu, alpha=0.6)
         lims = [min(shifted_true.min(), scaled_fitted_mu.min()), max(shifted_true.max(), scaled_fitted_mu.max())]
