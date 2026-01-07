@@ -6,7 +6,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:letter
+  - task_label_names:letter
   template: 'You will be given two tasks. Choose which task you would prefer to complete.
 
     {format_instruction}
@@ -27,7 +27,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:number
+  - task_label_names:number
   template: 'You will be given two tasks. Choose which task you would prefer to complete.
 
     {format_instruction}
@@ -48,7 +48,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'You will be given two tasks. Choose which task you would prefer to complete.
 
     {format_instruction}
@@ -69,7 +69,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:after
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Task A:
 
     {task_a}
@@ -90,7 +90,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:after
-  - task_labels:number
+  - task_label_names:number
   template: 'Task 1:
 
     {task_a}
@@ -111,7 +111,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:after
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'First task:
 
     {task_a}
@@ -132,7 +132,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:before
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Which of the following two tasks would you rather complete?
 
     {format_instruction}
@@ -153,7 +153,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:before
-  - task_labels:number
+  - task_label_names:number
   template: 'Which of the following two tasks would you rather complete?
 
     {format_instruction}
@@ -174,7 +174,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:before
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'Which of the following two tasks would you rather complete?
 
     {format_instruction}
@@ -195,7 +195,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:after
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Task A:
 
     {task_a}
@@ -216,7 +216,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:after
-  - task_labels:number
+  - task_label_names:number
   template: 'Task 1:
 
     {task_a}
@@ -237,7 +237,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:after
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'First task:
 
     {task_a}
@@ -258,7 +258,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez
     effectuer.
 
@@ -280,7 +280,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:number
+  - task_label_names:number
   template: 'Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez
     effectuer.
 
@@ -302,7 +302,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'Vous allez recevoir deux tâches. Choisissez quelle tâche vous préféreriez
     effectuer.
 
@@ -324,7 +324,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:after
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Tâche A:
 
     {task_a}
@@ -345,7 +345,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:after
-  - task_labels:number
+  - task_label_names:number
   template: 'Tâche 1:
 
     {task_a}
@@ -366,7 +366,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:after
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'Première tâche:
 
     {task_a}
@@ -387,7 +387,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:before
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Quel de ces deux tâches préféreriez-vous accomplir ?
 
     {format_instruction}
@@ -408,7 +408,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:before
-  - task_labels:number
+  - task_label_names:number
   template: 'Quel de ces deux tâches préféreriez-vous accomplir ?
 
     {format_instruction}
@@ -429,7 +429,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:before
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'Quel de ces deux tâches préféreriez-vous accomplir ?
 
     {format_instruction}
@@ -450,7 +450,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:after
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Tâche A:
 
     {task_a}
@@ -471,7 +471,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:after
-  - task_labels:number
+  - task_label_names:number
   template: 'Tâche 1:
 
     {task_a}
@@ -492,7 +492,7 @@
   - phrasing:2
   - situating_context:none
   - instruction_position:after
-  - task_labels:ordinal
+  - task_label_names:ordinal
   template: 'Première tâche:
 
     {task_a}

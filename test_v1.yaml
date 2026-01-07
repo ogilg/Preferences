@@ -6,7 +6,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Choose.
 
     {format_instruction}
@@ -27,7 +27,7 @@
   - phrasing:1
   - situating_context:helpful
   - instruction_position:before
-  - task_labels:letter
+  - task_label_names:letter
   template: 'You are a helpful, harmless, and honest AI assistant.
 
 

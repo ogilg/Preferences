@@ -6,7 +6,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - task_labels:letter
+  - task_label_names:letter
   template: 'Choose which task you prefer.
 
     {format_instruction}
