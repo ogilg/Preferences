@@ -58,7 +58,7 @@ def save_rating_run(
 ) -> Path:
     """Returns path to created run directory."""
     results_dir = Path(results_dir)
-    run_dir = get_run_dir(template, model, results_dir)
+    run_dir = get_run_dir(template, model, len(tasks), results_dir)
 
     config = RatingRunConfig(
         **make_base_config_dict(template, template_file, model, temperature, tasks),

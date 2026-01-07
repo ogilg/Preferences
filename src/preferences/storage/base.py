@@ -50,12 +50,8 @@ def run_exists(
     n_tasks: int,
     results_dir: Path,
 ) -> bool:
-    template_id = extract_template_id(template.name)
-    short_name = model_short_name(model.model_name)
-    config_path = results_dir / f"{template_id}_{short_name}" / "config.yaml"
-    if not config_path.exists():
-        return False
-    return load_yaml(config_path)["n_tasks"] == n_tasks
+    run_dir = get_run_dir(template, model, n_tasks, results_dir)
+    return (run_dir / "config.yaml").exists()
 
 
 class BaseRunConfig(BaseModel):
@@ -88,11 +84,12 @@ class BaseRunConfig(BaseModel):
 def get_run_dir(
     template: PromptTemplate,
     model: HyperbolicModel,
+    n_tasks: int,
     results_dir: Path,
 ) -> Path:
     template_id = extract_template_id(template.name)
     short_name = model_short_name(model.model_name)
-    return results_dir / f"{template_id}_{short_name}"
+    return results_dir / f"n{n_tasks}" / f"{template_id}_{short_name}"
 
 
 def make_base_config_dict(
