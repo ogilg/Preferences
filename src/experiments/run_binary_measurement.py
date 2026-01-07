@@ -35,7 +35,7 @@ def main():
     max_iter = config.fitting.max_iter if config.fitting.max_iter else max(2000, n_params * 50)
 
     print(f"Templates: {len(templates)}, Tasks: {len(tasks)}, Pairs: {len(unique_pairs)} x {config.samples_per_pair} = {len(pairs)}")
-    print(f"Thurstonian max_iter: {max_iter}, gradient_tol: {config.fitting.gradient_tol}, loss_tol: {config.fitting.loss_tol}")
+    print(f"Thurstonian max_iter: {max_iter}")
 
     measured = 0
     skipped = 0
@@ -53,11 +53,15 @@ def main():
         agreement = compute_pair_agreement(batch.successes)
         print(f"  Pair agreement rate: {agreement:.3f}")
 
+        fit_kwargs = {"max_iter": max_iter}
+        if config.fitting.gradient_tol is not None:
+            fit_kwargs["gradient_tol"] = config.fitting.gradient_tol
+        if config.fitting.loss_tol is not None:
+            fit_kwargs["loss_tol"] = config.fitting.loss_tol
+
         thurstonian = fit_thurstonian(
             PairwiseData.from_comparisons(batch.successes, tasks),
-            max_iter=max_iter,
-            gradient_tol=config.fitting.gradient_tol,
-            loss_tol=config.fitting.loss_tol,
+            **fit_kwargs,
         )
         print(f"  Thurstonian converged: {thurstonian.converged}")
         if not thurstonian.converged:

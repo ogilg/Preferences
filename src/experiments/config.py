@@ -11,8 +11,8 @@ from src.task_data import OriginDataset
 
 class FittingConfig(BaseModel):
     max_iter: int | None = None
-    gradient_tol: float = 1e-4
-    loss_tol: float = 1e-8
+    gradient_tol: float | None = None
+    loss_tol: float | None = None
 
 
 class ExperimentConfig(BaseModel):
