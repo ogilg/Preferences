@@ -415,7 +415,8 @@ class TestThurstonianSanity:
         ]
 
         data = PairwiseData.from_comparisons(measurements, sample_tasks)
-        fit = fit_thurstonian(data)
+        # Use tighter tolerance for this sparse 3-task test
+        fit = fit_thurstonian(data, gradient_tol=0.01)
 
         # Utilities should be ordered: task_1 > task_2 > task_3
         assert fit.utility(sample_tasks[0]) > fit.utility(sample_tasks[1])
@@ -440,7 +441,8 @@ class TestThurstonianSanity:
         ]
 
         data = PairwiseData.from_comparisons(measurements, sample_tasks)
-        fit = fit_thurstonian(data)
+        # Use tighter tolerance for this sparse 3-task test
+        fit = fit_thurstonian(data, gradient_tol=0.01)
 
         ranking = fit.ranking()
         assert ranking[0].id == "task_3"

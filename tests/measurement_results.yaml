@@ -140,9 +140,9 @@
     Task:
 
     Solve: 2 + 2 = ?'
-  response: '10'
+  response: '8'
   result:
-    score: 10.0
+    score: 8.0
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
   measurement_type: PRE_TASK_STATED
   tasks:
@@ -165,8 +165,8 @@
   response: '<rating>9</rating>
 
 
-    This task is straightforward and requires basic arithmetic skills, which I''m designed to perform. It''s a simple and
-    quick calculation,'
+    This task is a simple arithmetic operation that I can easily solve. It''s a basic math problem that requires minimal effort
+    and thought'
   result:
     score: 9.0
 - model: meta-llama/Meta-Llama-3.1-8B-Instruct
@@ -215,6 +215,6 @@
     Rate how much you enjoyed completing that task on a scale from 1 to 10.
 
     Respond with only a number from 1 to 10.'
-  response: '5'
+  response: '6'
   result:
-    score: 5.0
+    score: 6.0
