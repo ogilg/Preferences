@@ -1,7 +1,19 @@
+"""Thurstonian model analysis and tests.
+
+Tests (run with pytest):
+    pytest data_analysis/thurstonian_analysis.py
+
+Real data analysis:
+    python -m data_analysis.thurstonian_analysis          # analyze real data from results/binary/
+    python -m data_analysis.thurstonian_analysis --synthetic  # run synthetic diagnostics only
+"""
+
+import argparse
 from pathlib import Path
 
 import numpy as np
 import pytest
+import yaml
 
 from src.preferences.ranking.thurstonian import (
     PairwiseData,
@@ -16,9 +28,355 @@ from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
+OUTPUT_DIR = Path(__file__).parent / "plots" / "thurstonian"
+RESULTS_DIR = Path(__file__).parent.parent / "results" / "binary"
+
+
 def make_task(id: str) -> Task:
     return Task(prompt=f"Task {id}", origin=OriginDataset.ALPACA, id=id, metadata={})
 
+
+def load_all_datasets() -> list[tuple[str, PairwiseData]]:
+    """Load all measurement data from results/binary/ directory."""
+    datasets = []
+    if not RESULTS_DIR.exists():
+        return datasets
+
+    for result_dir in sorted(RESULTS_DIR.iterdir()):
+        if not result_dir.is_dir():
+            continue
+        measurements_path = result_dir / "measurements.yaml"
+        if not measurements_path.exists():
+            continue
+
+        with open(measurements_path) as f:
+            measurements = yaml.safe_load(f)
+        if not measurements:
+            continue
+
+        task_ids = set()
+        for m in measurements:
+            task_ids.add(m["task_a"])
+            task_ids.add(m["task_b"])
+
+        tasks = [make_task(tid) for tid in sorted(task_ids)]
+        id_to_idx = {t.id: i for i, t in enumerate(tasks)}
+        n = len(tasks)
+        wins = np.zeros((n, n), dtype=np.int32)
+
+        for m in measurements:
+            i, j = id_to_idx[m["task_a"]], id_to_idx[m["task_b"]]
+            if m["choice"] == "a":
+                wins[i, j] += 1
+            else:
+                wins[j, i] += 1
+
+        datasets.append((result_dir.name, PairwiseData(tasks=tasks, wins=wins)))
+
+    return datasets
+
+
+def plot_real_data_diagnostics(
+    result: ThurstonianResult,
+    data: PairwiseData,
+    name: str,
+    output_dir: Path,
+) -> None:
+    """Plot diagnostics for real data (no ground truth comparison)."""
+    import matplotlib.pyplot as plt
+
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+
+    # Panel 1: Loss curve
+    axes[0, 0].plot(result.history.loss)
+    axes[0, 0].set_xlabel("Iteration")
+    axes[0, 0].set_ylabel("NLL")
+    axes[0, 0].set_title(f"Loss curve (final={result.history.loss[-1]:.2f})")
+
+    # Panel 2: Sigma max trajectory
+    axes[0, 1].plot(result.history.sigma_max)
+    axes[0, 1].set_xlabel("Iteration")
+    axes[0, 1].set_ylabel("max(σ)")
+    axes[0, 1].set_title(f"σ_max trajectory (final={result.sigma.max():.2f})")
+
+    # Panel 3: Fitted μ distribution
+    axes[0, 2].hist(result.mu, bins=20, edgecolor='black', alpha=0.7, color='steelblue')
+    axes[0, 2].axvline(0, color='k', linestyle='--', alpha=0.5)
+    axes[0, 2].set_xlabel("μ (utility)")
+    axes[0, 2].set_ylabel("Count")
+    axes[0, 2].set_title(f"Fitted μ: range=[{result.mu.min():.2f}, {result.mu.max():.2f}]")
+
+    # Panel 4: Fitted σ distribution
+    axes[1, 0].hist(result.sigma, bins=20, edgecolor='black', alpha=0.7, color='coral')
+    axes[1, 0].axvline(1.0, color='k', linestyle='--', alpha=0.5, label='σ=1')
+    axes[1, 0].set_xlabel("σ (uncertainty)")
+    axes[1, 0].set_ylabel("Count")
+    axes[1, 0].legend()
+    axes[1, 0].set_title(f"Fitted σ: mean={result.sigma.mean():.2f}, std={result.sigma.std():.2f}")
+
+    # Panel 5: μ vs σ scatter
+    axes[1, 1].scatter(result.mu, result.sigma, alpha=0.6)
+    axes[1, 1].set_xlabel("μ (utility)")
+    axes[1, 1].set_ylabel("σ (uncertainty)")
+    corr = np.corrcoef(result.mu, result.sigma)[0, 1]
+    axes[1, 1].set_title(f"μ-σ correlation: r={corr:.3f}")
+
+    # Panel 6: Comparisons per task
+    comparisons_per_task = data.wins.sum(axis=1) + data.wins.sum(axis=0)
+    axes[1, 2].bar(range(len(comparisons_per_task)), sorted(comparisons_per_task, reverse=True), alpha=0.7)
+    axes[1, 2].set_xlabel("Task (sorted)")
+    axes[1, 2].set_ylabel("Total comparisons")
+    axes[1, 2].set_title(f"Comparisons/task: mean={comparisons_per_task.mean():.1f}")
+
+    n_comparisons = int(data.wins.sum())
+    fig.suptitle(
+        f"{name} (REAL DATA)\n"
+        f"n_tasks={data.n_tasks}, n_comparisons={n_comparisons}, "
+        f"converged={result.converged}, n_iter={result.n_iterations}, "
+        f"grad_norm={result.gradient_norm:.2e}"
+    )
+    plt.tight_layout()
+    plt.savefig(output_dir / f"real_{name}.png", dpi=100)
+    plt.close()
+
+
+def plot_real_data_summary(
+    all_results: list[tuple[str, ThurstonianResult, PairwiseData]],
+    output_dir: Path,
+) -> None:
+    """Plot summary across all real datasets."""
+    import matplotlib.pyplot as plt
+
+    if not all_results:
+        return
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+    names = [name for name, _, _ in all_results]
+
+    # Panel 1: Convergence status
+    converged = [r.converged for _, r, _ in all_results]
+    grad_norms = [r.gradient_norm for _, r, _ in all_results]
+    colors = ['green' if c else 'red' for c in converged]
+    axes[0, 0].barh(range(len(names)), grad_norms, color=colors, alpha=0.7)
+    axes[0, 0].set_yticks(range(len(names)))
+    axes[0, 0].set_yticklabels([n[:30] for n in names], fontsize=8)
+    axes[0, 0].set_xlabel("Gradient norm")
+    axes[0, 0].axvline(1.0, color='k', linestyle='--', alpha=0.5)
+    axes[0, 0].set_title(f"Convergence ({sum(converged)}/{len(converged)} converged)")
+
+    # Panel 2: σ statistics across datasets
+    sigma_means = [r.sigma.mean() for _, r, _ in all_results]
+    sigma_stds = [r.sigma.std() for _, r, _ in all_results]
+    x = range(len(names))
+    axes[0, 1].errorbar(x, sigma_means, yerr=sigma_stds, fmt='o', capsize=3, alpha=0.7)
+    axes[0, 1].axhline(1.0, color='k', linestyle='--', alpha=0.5, label='σ=1')
+    axes[0, 1].set_xticks(x)
+    axes[0, 1].set_xticklabels([n[:15] for n in names], rotation=45, ha='right', fontsize=7)
+    axes[0, 1].set_ylabel("σ (mean ± std)")
+    axes[0, 1].legend()
+    axes[0, 1].set_title("Uncertainty parameters across datasets")
+
+    # Panel 3: μ range across datasets
+    mu_mins = [r.mu.min() for _, r, _ in all_results]
+    mu_maxs = [r.mu.max() for _, r, _ in all_results]
+    mu_ranges = [max - min for min, max in zip(mu_mins, mu_maxs)]
+    axes[1, 0].bar(x, mu_ranges, alpha=0.7, color='steelblue')
+    axes[1, 0].set_xticks(x)
+    axes[1, 0].set_xticklabels([n[:15] for n in names], rotation=45, ha='right', fontsize=7)
+    axes[1, 0].set_ylabel("μ range (max - min)")
+    axes[1, 0].set_title("Utility spread across datasets")
+
+    # Panel 4: NLL per comparison
+    nll_per_comp = [r.neg_log_likelihood / d.wins.sum() for _, r, d in all_results]
+    axes[1, 1].bar(x, nll_per_comp, alpha=0.7, color='seagreen')
+    axes[1, 1].set_xticks(x)
+    axes[1, 1].set_xticklabels([n[:15] for n in names], rotation=45, ha='right', fontsize=7)
+    axes[1, 1].set_ylabel("NLL / comparison")
+    axes[1, 1].set_title("Model fit quality")
+
+    plt.suptitle(f"Thurstonian Analysis Summary (n={len(all_results)} datasets, REAL DATA)", fontweight='bold')
+    plt.tight_layout()
+    plt.savefig(output_dir / "real_summary.png", dpi=150)
+    plt.close()
+
+
+def run_real_data_analysis():
+    """Run Thurstonian analysis on all real datasets."""
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    datasets = load_all_datasets()
+    if not datasets:
+        print(f"No datasets found in {RESULTS_DIR}")
+        return
+
+    print(f"Found {len(datasets)} datasets in {RESULTS_DIR}\n")
+
+    all_results = []
+    for name, data in datasets:
+        if data.n_tasks < 3:
+            print(f"Skipping {name} (only {data.n_tasks} tasks)")
+            continue
+
+        n_comparisons = int(data.wins.sum())
+        print(f"Processing {name}...")
+        print(f"  Tasks: {data.n_tasks}, Comparisons: {n_comparisons}")
+
+        result = fit_thurstonian(data, max_iter=3000)
+        print(f"  Converged: {result.converged}, Iterations: {result.n_iterations}")
+        print(f"  Gradient norm: {result.gradient_norm:.2e}")
+        print(f"  μ range: [{result.mu.min():.2f}, {result.mu.max():.2f}]")
+        print(f"  σ range: [{result.sigma.min():.2f}, {result.sigma.max():.2f}]")
+
+        plot_real_data_diagnostics(result, data, name, OUTPUT_DIR)
+        print(f"  Saved: real_{name}.png")
+
+        all_results.append((name, result, data))
+        print()
+
+    if all_results:
+        plot_real_data_summary(all_results, OUTPUT_DIR)
+        print(f"Saved summary: real_summary.png")
+
+    print(f"\nAll plots saved to {OUTPUT_DIR}")
+
+
+def run_synthetic_diagnostics():
+    """Run synthetic data diagnostics (same as pytest but standalone)."""
+    import matplotlib.pyplot as plt
+
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    print("Running synthetic data diagnostics...\n")
+
+    configs = [
+        ("50_tasks_dense", 50, 20, np.ones(50), 0.0),
+        ("50_tasks_sparse", 50, 5, np.ones(50), 0.0),
+        ("50_tasks_varying_sigma", 50, 20, None, 0.0),  # None = random sigma
+        ("50_tasks_20pct_noise", 50, 20, np.ones(50), 0.2),
+    ]
+
+    for name, n_tasks, n_comp, true_sigma, noise_rate in configs:
+        print(f"Running {name}...")
+        rng = np.random.default_rng(hash(name) % (2**32))
+        true_mu = np.linspace(-3, 3, n_tasks)
+        if true_sigma is None:
+            true_sigma = 0.5 + rng.random(n_tasks) * 1.5
+
+        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+        wins = _simulate_comparisons_with_noise(true_mu, true_sigma, n_comp, noise_rate, rng)
+        data = PairwiseData(tasks=tasks, wins=wins)
+
+        result = fit_thurstonian(data, max_iter=3000)
+        _plot_synthetic_diagnostics(result, true_mu, true_sigma, name, OUTPUT_DIR)
+
+        corr = np.corrcoef(true_mu, result.mu)[0, 1]
+        print(f"  Converged: {result.converged}, μ correlation: {corr:.3f}")
+
+    print(f"\nAll plots saved to {OUTPUT_DIR}")
+
+
+def _simulate_comparisons_with_noise(
+    mu: np.ndarray,
+    sigma: np.ndarray,
+    n_comparisons_per_pair: int,
+    noise_rate: float,
+    rng: np.random.Generator,
+) -> np.ndarray:
+    """Simulate pairwise comparisons with optional noise."""
+    n = len(mu)
+    wins = np.zeros((n, n), dtype=np.int32)
+    for i in range(n):
+        for j in range(i + 1, n):
+            p_i_beats_j = _preference_prob(mu[i], mu[j], sigma[i], sigma[j])
+            for _ in range(n_comparisons_per_pair):
+                if noise_rate > 0 and rng.random() < noise_rate:
+                    i_wins = rng.random() < 0.5
+                else:
+                    i_wins = rng.random() < p_i_beats_j
+                if i_wins:
+                    wins[i, j] += 1
+                else:
+                    wins[j, i] += 1
+    return wins
+
+
+def _plot_synthetic_diagnostics(
+    result: ThurstonianResult,
+    true_mu: np.ndarray,
+    true_sigma: np.ndarray,
+    name: str,
+    output_dir: Path,
+) -> None:
+    """Plot diagnostics for synthetic data with ground truth comparison."""
+    import matplotlib.pyplot as plt
+
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+
+    # Loss curve
+    axes[0, 0].plot(result.history.loss)
+    axes[0, 0].set_xlabel("Iteration")
+    axes[0, 0].set_ylabel("NLL")
+    axes[0, 0].set_title(f"Loss curve (final={result.history.loss[-1]:.2f})")
+
+    # Sigma max over iterations
+    axes[0, 1].plot(result.history.sigma_max)
+    axes[0, 1].set_xlabel("Iteration")
+    axes[0, 1].set_ylabel("max(σ)")
+    axes[0, 1].set_title(f"σ_max trajectory (final={result.sigma.max():.2f})")
+
+    # Ranking comparison
+    true_rank = np.argsort(np.argsort(-true_mu))
+    fitted_rank = np.argsort(np.argsort(-result.mu))
+    axes[0, 2].scatter(true_rank, fitted_rank, alpha=0.6)
+    axes[0, 2].plot([0, len(true_mu)], [0, len(true_mu)], "k--", alpha=0.5)
+    axes[0, 2].set_xlabel("True rank")
+    axes[0, 2].set_ylabel("Fitted rank")
+    rank_corr = np.corrcoef(true_rank, fitted_rank)[0, 1]
+    axes[0, 2].set_title(f"Ranking recovery (r={rank_corr:.3f})")
+
+    # True vs fitted mu
+    shifted_true, scaled_fitted_mu, scale = normalize_mu_for_comparison(true_mu, result.mu)
+    axes[1, 0].scatter(shifted_true, scaled_fitted_mu, alpha=0.6)
+    lims = [min(shifted_true.min(), scaled_fitted_mu.min()), max(shifted_true.max(), scaled_fitted_mu.max())]
+    axes[1, 0].plot(lims, lims, "k--", alpha=0.5)
+    axes[1, 0].set_xlabel("True μ (shifted)")
+    axes[1, 0].set_ylabel("Fitted μ (scaled)")
+    corr = np.corrcoef(true_mu, result.mu)[0, 1]
+    mae = np.abs(shifted_true - scaled_fitted_mu).mean()
+    axes[1, 0].set_title(f"μ recovery: r={corr:.3f}, MAE={mae:.3f}")
+
+    # True vs fitted sigma
+    scaled_fitted_sigma = result.sigma * scale
+    axes[1, 1].scatter(true_sigma, scaled_fitted_sigma, alpha=0.6)
+    sigma_lims = [0, max(true_sigma.max(), scaled_fitted_sigma.max()) * 1.1]
+    axes[1, 1].plot(sigma_lims, sigma_lims, "k--", alpha=0.5)
+    axes[1, 1].set_xlabel("True σ")
+    axes[1, 1].set_ylabel("Fitted σ (scaled)")
+    sigma_corr = np.corrcoef(true_sigma, result.sigma)[0, 1] if true_sigma.std() > 0 else float('nan')
+    axes[1, 1].set_title(f"σ recovery: r={sigma_corr:.3f}")
+
+    # Fitted sigma distribution
+    axes[1, 2].hist(scaled_fitted_sigma, bins=20, edgecolor='black', alpha=0.7)
+    axes[1, 2].axvline(true_sigma.mean(), color='r', linestyle='--', label=f'true={true_sigma.mean():.2f}')
+    axes[1, 2].axvline(scaled_fitted_sigma.mean(), color='b', linestyle='--', label=f'fitted={scaled_fitted_sigma.mean():.2f}')
+    axes[1, 2].set_xlabel("σ (scaled)")
+    axes[1, 2].set_ylabel("Count")
+    axes[1, 2].legend()
+    axes[1, 2].set_title("σ distribution")
+
+    fig.suptitle(
+        f"{name} (SYNTHETIC)\n"
+        f"converged={result.converged}, n_iter={result.n_iterations}, "
+        f"grad_norm={result.gradient_norm:.2e}, scale={1/scale:.2f}x"
+    )
+    plt.tight_layout()
+    plt.savefig(output_dir / f"synthetic_{name}.png", dpi=100)
+    plt.close()
+
+
+# =============================================================================
+# PYTEST TESTS (unchanged)
+# =============================================================================
 
 class TestPairwiseDataFromComparisons:
     def test_counts_wins_correctly(self):
@@ -372,7 +730,7 @@ class TestSyntheticParameterRecovery:
 
 
 class TestLargeScaleDiagnostics:
-    """Large scale tests with diagnostic plots saved to tests/plots/."""
+    """Large scale tests with diagnostic plots saved to plots/thurstonian/."""
 
     PLOTS_DIR = Path(__file__).parent / "plots" / "thurstonian"
 
@@ -402,71 +760,7 @@ class TestLargeScaleDiagnostics:
         true_sigma: np.ndarray,
         name: str,
     ) -> None:
-        import matplotlib.pyplot as plt
-
-        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-
-        # Loss curve
-        axes[0, 0].plot(result.history.loss)
-        axes[0, 0].set_xlabel("Iteration")
-        axes[0, 0].set_ylabel("NLL")
-        axes[0, 0].set_title(f"Loss curve (final={result.history.loss[-1]:.2f})")
-
-        # Sigma max over iterations
-        axes[0, 1].plot(result.history.sigma_max)
-        axes[0, 1].set_xlabel("Iteration")
-        axes[0, 1].set_ylabel("max(σ)")
-        axes[0, 1].set_title(f"σ_max trajectory (final={result.sigma.max():.2f})")
-
-        # Ranking comparison
-        true_rank = np.argsort(np.argsort(-true_mu))
-        fitted_rank = np.argsort(np.argsort(-result.mu))
-        axes[0, 2].scatter(true_rank, fitted_rank, alpha=0.6)
-        axes[0, 2].plot([0, len(true_mu)], [0, len(true_mu)], "k--", alpha=0.5)
-        axes[0, 2].set_xlabel("True rank")
-        axes[0, 2].set_ylabel("Fitted rank")
-        rank_corr = np.corrcoef(true_rank, fitted_rank)[0, 1]
-        axes[0, 2].set_title(f"Ranking recovery (r={rank_corr:.3f})")
-
-        # True vs fitted mu (normalized to same scale for fair comparison)
-        shifted_true, scaled_fitted_mu, scale = normalize_mu_for_comparison(true_mu, result.mu)
-
-        axes[1, 0].scatter(shifted_true, scaled_fitted_mu, alpha=0.6)
-        lims = [min(shifted_true.min(), scaled_fitted_mu.min()), max(shifted_true.max(), scaled_fitted_mu.max())]
-        axes[1, 0].plot(lims, lims, "k--", alpha=0.5)
-        axes[1, 0].set_xlabel("True μ (shifted)")
-        axes[1, 0].set_ylabel("Fitted μ (scaled)")
-        corr = np.corrcoef(true_mu, result.mu)[0, 1]
-        mae = np.abs(shifted_true - scaled_fitted_mu).mean()
-        axes[1, 0].set_title(f"μ recovery: r={corr:.3f}, MAE={mae:.3f}")
-
-        # True vs fitted sigma (also scaled)
-        scaled_fitted_sigma = result.sigma * scale
-        axes[1, 1].scatter(true_sigma, scaled_fitted_sigma, alpha=0.6)
-        sigma_lims = [0, max(true_sigma.max(), scaled_fitted_sigma.max()) * 1.1]
-        axes[1, 1].plot(sigma_lims, sigma_lims, "k--", alpha=0.5)
-        axes[1, 1].set_xlabel("True σ")
-        axes[1, 1].set_ylabel("Fitted σ (scaled)")
-        sigma_corr = np.corrcoef(true_sigma, result.sigma)[0, 1] if true_sigma.std() > 0 else float('nan')
-        axes[1, 1].set_title(f"σ recovery: r={sigma_corr:.3f}, range=[{scaled_fitted_sigma.min():.2f}, {scaled_fitted_sigma.max():.2f}]")
-
-        # Fitted sigma distribution
-        axes[1, 2].hist(scaled_fitted_sigma, bins=20, edgecolor='black', alpha=0.7)
-        axes[1, 2].axvline(true_sigma.mean(), color='r', linestyle='--', label=f'true mean={true_sigma.mean():.2f}')
-        axes[1, 2].axvline(scaled_fitted_sigma.mean(), color='b', linestyle='--', label=f'fitted mean={scaled_fitted_sigma.mean():.2f}')
-        axes[1, 2].set_xlabel("σ (scaled)")
-        axes[1, 2].set_ylabel("Count")
-        axes[1, 2].legend()
-        axes[1, 2].set_title("Fitted σ distribution")
-
-        fig.suptitle(
-            f"{name}\n"
-            f"converged={result.converged}, n_iter={result.n_iterations}, "
-            f"grad_norm={result.gradient_norm:.2e}, scale={1/scale:.2f}x"
-        )
-        plt.tight_layout()
-        plt.savefig(self.PLOTS_DIR / f"{name}.png", dpi=100)
-        plt.close()
+        _plot_synthetic_diagnostics(result, true_mu, true_sigma, name, self.PLOTS_DIR)
 
     def test_50_tasks_dense_data(self):
         """50 tasks with 20 comparisons per pair - should work well."""
@@ -480,7 +774,7 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=3000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_dense")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_50_tasks_dense")
 
         assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
         assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.95
@@ -497,7 +791,7 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=3000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_sparse")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_50_tasks_sparse")
 
         assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
         assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.85
@@ -514,7 +808,7 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=3000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_varying_sigma")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_50_tasks_varying_sigma")
 
         assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
         assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.9
@@ -531,7 +825,7 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=5000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "100_tasks_dense")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_100_tasks_dense")
 
         corr = np.corrcoef(true_mu, result.mu)[0, 1]
         assert corr > 0.9, f"corr={corr}, grad={result.gradient_norm}"
@@ -549,7 +843,7 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=3000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_clustered")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_50_tasks_clustered")
 
         corr = np.corrcoef(true_mu, result.mu)[0, 1]
         assert corr > 0.9, f"corr={corr}, grad={result.gradient_norm}"
@@ -595,7 +889,7 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=3000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_10pct_noise")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_50_tasks_10pct_noise")
 
         assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
         assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.9
@@ -614,7 +908,7 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=3000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_20pct_noise")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_50_tasks_20pct_noise")
 
         assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
         assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.85
@@ -633,7 +927,32 @@ class TestLargeScaleDiagnostics:
         data = PairwiseData(tasks=tasks, wins=wins)
 
         result = fit_thurstonian(data, max_iter=3000)
-        self._plot_diagnostics(result, true_mu, true_sigma, "50_tasks_30pct_noise")
+        self._plot_diagnostics(result, true_mu, true_sigma, "synthetic_50_tasks_30pct_noise")
 
         assert result.gradient_norm < 1.0, f"grad={result.gradient_norm}"
         assert np.corrcoef(true_mu, result.mu)[0, 1] > 0.7
+
+
+# =============================================================================
+# CLI ENTRY POINT
+# =============================================================================
+
+def main():
+    parser = argparse.ArgumentParser(description="Thurstonian model analysis")
+    parser.add_argument("--synthetic", action="store_true", help="Run synthetic diagnostics only")
+    parser.add_argument("--both", action="store_true", help="Run both real and synthetic")
+    args = parser.parse_args()
+
+    if args.both:
+        run_real_data_analysis()
+        print("\n" + "=" * 60 + "\n")
+        run_synthetic_diagnostics()
+    elif args.synthetic:
+        run_synthetic_diagnostics()
+    else:
+        # Default: real data
+        run_real_data_analysis()
+
+
+if __name__ == "__main__":
+    main()
