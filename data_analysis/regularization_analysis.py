@@ -26,21 +26,30 @@ def split_wins(
     test_frac: float,
     rng: np.random.Generator,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Per-pair proportional split. Returns (train_wins, test_wins).
+    """Hold out entire pairs (edges) for test. Returns (train_wins, test_wins).
 
-    Each individual comparison is randomly assigned to test with probability test_frac.
+    Each pair (i,j) is randomly assigned to test with probability test_frac.
+    All comparisons for that pair go to either train or test, not split.
     """
     n = wins.shape[0]
-    train = np.zeros_like(wins)
+    train = wins.copy()
     test = np.zeros_like(wins)
-    for i in range(n):
-        for j in range(n):
-            total = wins[i, j]
-            if total > 0:
-                # Each comparison independently goes to test with prob test_frac
-                n_test = rng.binomial(total, test_frac)
-                test[i, j] = n_test
-                train[i, j] = total - n_test
+
+    # Get all pairs with comparisons
+    pairs = [(i, j) for i in range(n) for j in range(i + 1, n) if wins[i, j] + wins[j, i] > 0]
+
+    # Randomly select pairs for test
+    n_test_pairs = int(len(pairs) * test_frac)
+    test_pair_indices = rng.choice(len(pairs), size=n_test_pairs, replace=False)
+
+    for idx in test_pair_indices:
+        i, j = pairs[idx]
+        # Move all comparisons for this pair to test
+        test[i, j] = wins[i, j]
+        test[j, i] = wins[j, i]
+        train[i, j] = 0
+        train[j, i] = 0
+
     return train, test
 
 
@@ -57,46 +66,64 @@ def run_regularization_path(
     n_tasks: int = 30,
     n_comparisons_per_pair: int = 10,
     test_frac: float = 0.2,
-    seed: int = 42,
+    n_splits: int = 10,
 ):
-    """Run regularization path analysis on synthetic data."""
-    rng = np.random.default_rng(seed)
-
-    # Generate synthetic data
+    """Run regularization path analysis on synthetic data, averaged over multiple splits."""
+    # Generate synthetic data once
+    data_rng = np.random.default_rng(42)
     true_mu = np.linspace(-3, 3, n_tasks)
     true_sigma = np.ones(n_tasks)
     tasks = [make_task(f"t{i}") for i in range(n_tasks)]
-    wins = simulate_pairwise_comparisons(true_mu, true_sigma, n_comparisons_per_pair, rng)
-
-    # Split into train/test
-    train_wins, test_wins = split_wins(wins, test_frac, rng)
-    n_train = int(train_wins.sum())
-    n_test = int(test_wins.sum())
-    print(f"Train comparisons: {n_train}, Test comparisons: {n_test}")
+    wins = simulate_pairwise_comparisons(true_mu, true_sigma, n_comparisons_per_pair, data_rng)
 
     # Fit at different lambda values
-    lambdas = np.logspace(-2, 2, 10)
-    train_nlls, test_nlls, sigma_maxs, sigma_stds = [], [], [], []
+    lambdas = np.logspace(-2, np.log10(200), 12)
 
-    for lam in lambdas:
-        data = PairwiseData(tasks=tasks, wins=train_wins)
-        result = fit_thurstonian(data, lambda_sigma=lam)
-        # Normalize by number of comparisons for fair comparison
-        train_nll_per_comp = eval_nll(result.mu, result.sigma, train_wins) / n_train
-        test_nll_per_comp = eval_nll(result.mu, result.sigma, test_wins) / n_test
-        train_nlls.append(train_nll_per_comp)
-        test_nlls.append(test_nll_per_comp)
-        sigma_maxs.append(float(result.sigma.max()))
-        sigma_stds.append(float(result.sigma.std()))
-        print(f"λ={lam:.4f}: train_nll/comp={train_nll_per_comp:.4f}, test_nll/comp={test_nll_per_comp:.4f}, max(σ)={sigma_maxs[-1]:.3f}")
+    # Accumulate results across splits
+    all_train_nlls = {lam: [] for lam in lambdas}
+    all_test_nlls = {lam: [] for lam in lambdas}
+    all_sigma_maxs = {lam: [] for lam in lambdas}
+    all_sigma_stds = {lam: [] for lam in lambdas}
 
-    return lambdas, train_nlls, test_nlls, sigma_maxs, sigma_stds
+    for split_idx in range(n_splits):
+        split_rng = np.random.default_rng(split_idx * 1000 + 123)  # Different seed per split
+        train_wins, test_wins = split_wins(wins, test_frac, split_rng)
+        n_train = int(train_wins.sum())
+        n_test = int(test_wins.sum())
+
+        print(f"Split {split_idx + 1}/{n_splits}: train={n_train}, test={n_test}")
+
+        for lam in lambdas:
+            data = PairwiseData(tasks=tasks, wins=train_wins)
+            result = fit_thurstonian(data, lambda_sigma=lam, log_sigma_bounds=(-4, 4))
+            train_nll_per_comp = eval_nll(result.mu, result.sigma, train_wins) / n_train
+            test_nll_per_comp = eval_nll(result.mu, result.sigma, test_wins) / n_test
+            all_train_nlls[lam].append(train_nll_per_comp)
+            all_test_nlls[lam].append(test_nll_per_comp)
+            all_sigma_maxs[lam].append(float(result.sigma.max()))
+            all_sigma_stds[lam].append(float(result.sigma.std()))
+
+    # Average across splits
+    train_nlls = [np.mean(all_train_nlls[lam]) for lam in lambdas]
+    test_nlls = [np.mean(all_test_nlls[lam]) for lam in lambdas]
+    train_nlls_std = [np.std(all_train_nlls[lam]) for lam in lambdas]
+    test_nlls_std = [np.std(all_test_nlls[lam]) for lam in lambdas]
+    sigma_maxs = [np.mean(all_sigma_maxs[lam]) for lam in lambdas]
+    sigma_stds = [np.mean(all_sigma_stds[lam]) for lam in lambdas]
+
+    print("\nAveraged results:")
+    for i, lam in enumerate(lambdas):
+        print(f"λ={lam:.4f}: train={train_nlls[i]:.4f}±{train_nlls_std[i]:.4f}, test={test_nlls[i]:.4f}±{test_nlls_std[i]:.4f}, max(σ)={sigma_maxs[i]:.3f}")
+
+    return lambdas, train_nlls, test_nlls, train_nlls_std, test_nlls_std, sigma_maxs, sigma_stds
 
 
 def plot_regularization_path(
     lambdas: np.ndarray,
     train_nlls: list[float],
     test_nlls: list[float],
+    train_nlls_std: list[float],
+    test_nlls_std: list[float],
     sigma_maxs: list[float],
     sigma_stds: list[float],
     output_path: Path,
@@ -104,13 +131,14 @@ def plot_regularization_path(
     """Plot train/test NLL and sigma statistics vs lambda."""
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
 
-    # Panel 1: Train vs Test NLL (normalized per comparison)
-    axes[0].semilogx(lambdas, train_nlls, "o-", label="Train", markersize=6)
-    axes[0].semilogx(lambdas, test_nlls, "s-", label="Test", markersize=6)
+    # Panel 1: Train vs Test NLL with error bars
+    axes[0].errorbar(lambdas, train_nlls, yerr=train_nlls_std, fmt="o-", label="Train", markersize=5, capsize=3)
+    axes[0].errorbar(lambdas, test_nlls, yerr=test_nlls_std, fmt="s-", label="Test", markersize=5, capsize=3)
+    axes[0].set_xscale("log")
     axes[0].set_xlabel("λ (regularization strength)")
     axes[0].set_ylabel("NLL per comparison")
     axes[0].legend()
-    axes[0].set_title("Regularization Path")
+    axes[0].set_title("Regularization Path (mean ± std)")
 
     # Panel 2: Sigma max
     axes[1].semilogx(lambdas, sigma_maxs, "o-", color="coral", markersize=6)
@@ -137,16 +165,16 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     print("Running regularization path analysis...")
-    lambdas, train_nlls, test_nlls, sigma_maxs, sigma_stds = run_regularization_path()
+    lambdas, train_nlls, test_nlls, train_nlls_std, test_nlls_std, sigma_maxs, sigma_stds = run_regularization_path()
 
     plot_regularization_path(
-        lambdas, train_nlls, test_nlls, sigma_maxs, sigma_stds,
+        lambdas, train_nlls, test_nlls, train_nlls_std, test_nlls_std, sigma_maxs, sigma_stds,
         OUTPUT_DIR / "regularization_path.png",
     )
 
     # Find optimal lambda (lowest test NLL)
     best_idx = np.argmin(test_nlls)
-    print(f"\nBest λ = {lambdas[best_idx]:.4f} (test NLL = {test_nlls[best_idx]:.2f})")
+    print(f"\nBest λ = {lambdas[best_idx]:.4f} (test NLL = {test_nlls[best_idx]:.4f} ± {test_nlls_std[best_idx]:.4f})")
 
 
 if __name__ == "__main__":
