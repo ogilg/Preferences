@@ -1,9 +1,11 @@
 """Analyze L2 variance regularization effect on Thurstonian model.
 
 Run:
-    python -m data_analysis.regularization_analysis          # synthetic data
-    python -m data_analysis.regularization_analysis --real   # real data from results/measurements/
-    python -m data_analysis.regularization_analysis --both   # both
+    python -m thurstonian_analysis.regularization_analysis          # synthetic dense data
+    python -m thurstonian_analysis.regularization_analysis --real   # real data from results/measurements/
+    python -m thurstonian_analysis.regularization_analysis --sparse # synthetic sparse (active learning) data
+    python -m thurstonian_analysis.regularization_analysis --both   # both synthetic (dense + sparse)
+    python -m thurstonian_analysis.regularization_analysis --all    # all three modes
 """
 
 import argparse
@@ -15,8 +17,9 @@ import numpy as np
 import yaml
 from scipy.stats import norm
 
-from src.preferences.ranking.thurstonian import PairwiseData, fit_thurstonian
+from src.preferences.ranking.thurstonian import PairwiseData, fit_thurstonian, _preference_prob
 from src.preferences.ranking.utils import simulate_pairwise_comparisons
+from src.preferences.ranking.active_learning import generate_d_regular_pairs
 from src.task_data import Task, OriginDataset
 
 
@@ -190,6 +193,66 @@ def run_regularization_path_synthetic(
     )
 
 
+def simulate_sparse_pairwise_comparisons(
+    tasks: list[Task],
+    true_mu: np.ndarray,
+    true_sigma: np.ndarray,
+    d: int,
+    n_comparisons_per_pair: int,
+    rng: np.random.Generator,
+) -> np.ndarray:
+    """Simulate pairwise comparisons only for pairs in a d-regular graph (sparse)."""
+    n = len(tasks)
+    wins = np.zeros((n, n), dtype=np.int32)
+    id_to_idx = {t.id: i for i, t in enumerate(tasks)}
+
+    pairs = generate_d_regular_pairs(tasks, d=d, rng=rng)
+
+    for task_a, task_b in pairs:
+        i, j = id_to_idx[task_a.id], id_to_idx[task_b.id]
+        p_i_beats_j = _preference_prob(true_mu[i], true_mu[j], true_sigma[i], true_sigma[j])
+        for _ in range(n_comparisons_per_pair):
+            if rng.random() < p_i_beats_j:
+                wins[i, j] += 1
+            else:
+                wins[j, i] += 1
+
+    return wins
+
+
+def run_regularization_path_sparse(
+    n_tasks: int = N_TASKS,
+    d: int = 5,
+    n_comparisons_per_pair: int = 10,
+    test_frac: float = 0.2,
+    n_splits: int = 10,
+) -> RegularizationResults:
+    """Run regularization analysis on sparse (d-regular graph) synthetic data."""
+    data_rng = np.random.default_rng(42)
+    true_mu = np.linspace(-3, 3, n_tasks)
+    true_sigma = np.ones(n_tasks)
+    tasks = [make_task(f"t{i}") for i in range(n_tasks)]
+    wins = simulate_sparse_pairwise_comparisons(
+        tasks, true_mu, true_sigma, d, n_comparisons_per_pair, data_rng
+    )
+
+    results = run_regularization_on_wins(tasks, wins, test_frac, n_splits, LAMBDAS)
+
+    return RegularizationResults(
+        lambdas=LAMBDAS,
+        train_nlls=[np.mean(results["train_nlls"][lam]) for lam in LAMBDAS],
+        test_nlls=[np.mean(results["test_nlls"][lam]) for lam in LAMBDAS],
+        train_nlls_std=[np.std(results["train_nlls"][lam]) for lam in LAMBDAS],
+        test_nlls_std=[np.std(results["test_nlls"][lam]) for lam in LAMBDAS],
+        sigma_maxs=[np.mean(results["sigma_maxs"][lam]) for lam in LAMBDAS],
+        sigma_stds=[np.mean(results["sigma_stds"][lam]) for lam in LAMBDAS],
+        data_source="sparse",
+        n_datasets=1,
+        n_splits=n_splits,
+        n_tasks=n_tasks,
+    )
+
+
 def run_regularization_path_real(
     test_frac: float = 0.2,
     n_splits: int = 5,
@@ -259,7 +322,9 @@ def plot_regularization_path(results: RegularizationResults, output_path: Path):
     axes[2].set_title("Variance Parameter Spread")
 
     if results.data_source == "synthetic":
-        title = f"L2 Variance Regularization (SYNTHETIC, N_TASKS={results.n_tasks})"
+        title = f"L2 Variance Regularization (SYNTHETIC DENSE, N_TASKS={results.n_tasks})"
+    elif results.data_source == "sparse":
+        title = f"L2 Variance Regularization (SYNTHETIC SPARSE/AL, N_TASKS={results.n_tasks})"
     else:
         title = f"L2 Variance Regularization (REAL, n={results.n_datasets} datasets, N_TASKS>={results.n_tasks})"
 
@@ -272,21 +337,42 @@ def plot_regularization_path(results: RegularizationResults, output_path: Path):
 def main():
     parser = argparse.ArgumentParser(description="Regularization path analysis")
     parser.add_argument("--real", action="store_true", help="Use real data from results/measurements/")
-    parser.add_argument("--both", action="store_true", help="Run on both synthetic and real data")
+    parser.add_argument("--sparse", action="store_true", help="Use sparse (active learning) synthetic data")
+    parser.add_argument("--both", action="store_true", help="Run on both dense and sparse synthetic data")
+    parser.add_argument("--all", action="store_true", help="Run on dense, sparse, and real data")
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    if args.both:
+    if args.all:
+        print("Running dense synthetic...")
         synthetic_results = run_regularization_path_synthetic()
         plot_regularization_path(synthetic_results, OUTPUT_DIR / "regularization_path_synthetic.png")
 
+        print("Running sparse synthetic...")
+        sparse_results = run_regularization_path_sparse()
+        plot_regularization_path(sparse_results, OUTPUT_DIR / "regularization_path_sparse.png")
+
+        print("Running real data...")
         real_results = run_regularization_path_real()
         plot_regularization_path(real_results, OUTPUT_DIR / "regularization_path_real.png")
+
+    elif args.both:
+        print("Running dense synthetic...")
+        synthetic_results = run_regularization_path_synthetic()
+        plot_regularization_path(synthetic_results, OUTPUT_DIR / "regularization_path_synthetic.png")
+
+        print("Running sparse synthetic...")
+        sparse_results = run_regularization_path_sparse()
+        plot_regularization_path(sparse_results, OUTPUT_DIR / "regularization_path_sparse.png")
 
     elif args.real:
         real_results = run_regularization_path_real()
         plot_regularization_path(real_results, OUTPUT_DIR / "regularization_path_real.png")
+
+    elif args.sparse:
+        sparse_results = run_regularization_path_sparse()
+        plot_regularization_path(sparse_results, OUTPUT_DIR / "regularization_path_sparse.png")
 
     else:
         synthetic_results = run_regularization_path_synthetic()
