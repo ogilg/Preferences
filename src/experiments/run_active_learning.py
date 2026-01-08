@@ -24,7 +24,7 @@ from src.preferences.ranking.active_learning import (
     select_next_pairs,
     check_convergence,
 )
-from src.preferences.storage import MeasurementCache
+from src.preferences.storage import MeasurementCache, save_yaml
 from src.experiments.config import load_experiment_config
 
 
@@ -63,6 +63,7 @@ def run_active_learning(config_path: Path) -> None:
 
         cache = MeasurementCache(template, model)
         state = ActiveLearningState(tasks=tasks)
+        iteration_history = []
 
         # Generate initial pairs (d-regular graph)
         initial_pairs = generate_d_regular_pairs(tasks, al_config.initial_degree, rng)
@@ -110,6 +111,18 @@ def run_active_learning(config_path: Path) -> None:
             converged, correlation = check_convergence(state, al_config.convergence_threshold)
             print(f"  Rank correlation with previous: {correlation:.4f}")
 
+            # Record iteration
+            iteration_history.append({
+                "iteration": iteration + 1,
+                "pairs_queried": len(pairs_to_query),
+                "total_comparisons": len(state.comparisons),
+                "unique_pairs_sampled": len(state.sampled_pairs),
+                "rank_correlation": float(correlation),
+                "thurstonian_converged": state.current_fit.converged,
+                "mu_min": float(state.current_fit.mu.min()),
+                "mu_max": float(state.current_fit.mu.max()),
+            })
+
             if converged:
                 print(f"\n*** Converged at iteration {iteration + 1} ***")
                 break
@@ -123,8 +136,7 @@ def run_active_learning(config_path: Path) -> None:
                 rng=rng,
             )
 
-            unsampled_remaining = len(state.get_unsampled_pairs())
-            print(f"  Unsampled pairs remaining: {unsampled_remaining}")
+            print(f"  Selected {len(pairs_to_query)} pairs for next iteration")
 
         # Final summary
         final_converged, final_correlation = check_convergence(state, al_config.convergence_threshold)
@@ -140,6 +152,22 @@ def run_active_learning(config_path: Path) -> None:
         print(f"  Final rank correlation: {final_correlation:.4f}")
         print(f"  Converged: {final_converged}")
         print(f"  Measurements saved to: {cache.cache_dir}")
+
+        # Save active learning results (lightweight)
+        al_results = {
+            "config_file": str(config_path),
+            "n_tasks": config.n_tasks,
+            "seed": al_config.seed,
+            "converged": final_converged,
+            "n_iterations": state.iteration,
+            "unique_pairs_queried": len(state.sampled_pairs),
+            "total_comparisons": len(state.comparisons),
+            "pair_agreement": float(agreement),
+            "rank_correlations": [h["rank_correlation"] for h in iteration_history],
+        }
+        al_results_path = cache.cache_dir / "active_learning.yaml"
+        save_yaml(al_results, al_results_path)
+        print(f"  Active learning results saved to: {al_results_path}")
 
     print("\nDone.")
 
