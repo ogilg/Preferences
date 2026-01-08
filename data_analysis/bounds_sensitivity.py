@@ -18,13 +18,15 @@ from src.preferences.ranking.thurstonian import (
     fit_thurstonian,
     DEFAULT_MU_BOUNDS,
     DEFAULT_LOG_SIGMA_BOUNDS,
-    DEFAULT_SIGMA_INIT,
 )
 from src.task_data import Task, OriginDataset
 
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "bounds_sensitivity"
 RESULTS_DIR = Path(__file__).parent.parent / "results" / "binary"
+
+# Minimum number of tasks for a dataset to be included in analysis.
+N_TASKS = 30
 
 
 @dataclass
@@ -65,11 +67,10 @@ def make_task(id: str) -> Task:
 
 
 def fit_with_mu_bounds(data: PairwiseData, config: MuBoundsConfig):
-    """Fit model varying mu_bounds, with default log_sigma_bounds."""
     result = fit_thurstonian(
         data,
         mu_bounds=config.mu_bounds,
-        log_sigma_bounds=(-3.0, 3.0),  # default
+        log_sigma_bounds=(-3.0, 3.0),
         max_iter=3000,
     )
     return {
@@ -84,7 +85,6 @@ def fit_with_mu_bounds(data: PairwiseData, config: MuBoundsConfig):
 
 
 def fit_with_log_sigma_bounds(data: PairwiseData, config: LogSigmaBoundsConfig):
-    """Fit model varying log_sigma_bounds, with fixed mu_bounds."""
     result = fit_thurstonian(
         data,
         mu_bounds=DEFAULT_MU_BOUNDS,
@@ -103,7 +103,6 @@ def fit_with_log_sigma_bounds(data: PairwiseData, config: LogSigmaBoundsConfig):
 
 
 def fit_with_sigma_init(data: PairwiseData, sigma_init: float, log_sigma_bounds: tuple[float, float]):
-    """Fit model varying sigma_init, with fixed bounds."""
     result = fit_thurstonian(
         data,
         sigma_init=sigma_init,
@@ -123,7 +122,6 @@ def fit_with_sigma_init(data: PairwiseData, sigma_init: float, log_sigma_bounds:
 
 
 def load_all_datasets() -> list[tuple[str, PairwiseData]]:
-    """Load all measurement data from results directory."""
     datasets = []
     if not RESULTS_DIR.exists():
         return datasets
@@ -163,17 +161,14 @@ def load_all_datasets() -> list[tuple[str, PairwiseData]]:
 
 
 def analyze_mu_bounds(datasets: list[tuple[str, PairwiseData]]):
-    """Analyze sensitivity to mu_bounds (with default log_sigma_bounds)."""
     configs = MU_BOUNDS_CONFIGS
     n_configs = len(configs)
     all_rank_corrs = []
     all_iterations = {c.name: [] for c in configs}
     all_func_evals = {c.name: [] for c in configs}
 
-    print(f"Analyzing mu_bounds sensitivity ({len(datasets)} datasets)...")
-
     for name, data in datasets:
-        if data.n_tasks < 5:
+        if data.n_tasks < N_TASKS:
             continue
 
         results = [fit_with_mu_bounds(data, c) for c in configs]
@@ -198,17 +193,14 @@ def analyze_mu_bounds(datasets: list[tuple[str, PairwiseData]]):
 
 
 def analyze_log_sigma_bounds(datasets: list[tuple[str, PairwiseData]]):
-    """Analyze sensitivity to log_sigma_bounds (with fixed mu_bounds=±10)."""
     configs = LOG_SIGMA_BOUNDS_CONFIGS
     n_configs = len(configs)
     all_rank_corrs = []
     all_iterations = {c.name: [] for c in configs}
     all_func_evals = {c.name: [] for c in configs}
 
-    print(f"Analyzing log_sigma_bounds sensitivity ({len(datasets)} datasets)...")
-
     for name, data in datasets:
-        if data.n_tasks < 5:
+        if data.n_tasks < N_TASKS:
             continue
 
         results = [fit_with_log_sigma_bounds(data, c) for c in configs]
@@ -233,15 +225,12 @@ def analyze_log_sigma_bounds(datasets: list[tuple[str, PairwiseData]]):
 
 
 def analyze_sigma_init(datasets: list[tuple[str, PairwiseData]], log_sigma_bounds: tuple[float, float]):
-    """Analyze sensitivity to sigma_init (with fixed bounds)."""
     n_sigma = len(SIGMA_INIT_VALUES)
     all_rank_corrs = []
     all_iterations = {s: [] for s in SIGMA_INIT_VALUES}
 
-    print(f"Analyzing sigma_init sensitivity ({len(datasets)} datasets)...")
-
     for name, data in datasets:
-        if data.n_tasks < 5:
+        if data.n_tasks < N_TASKS:
             continue
 
         results = [fit_with_sigma_init(data, s, log_sigma_bounds) for s in SIGMA_INIT_VALUES]
@@ -263,7 +252,6 @@ def analyze_sigma_init(datasets: list[tuple[str, PairwiseData]], log_sigma_bound
 
 
 def plot_bounds_analysis(results: dict, param_name: str, output_dir: Path):
-    """Generate plots for bounds sensitivity analysis."""
     configs = results["configs"]
     n_configs = len(configs)
     labels = [c.short_name for c in configs]
@@ -274,7 +262,6 @@ def plot_bounds_analysis(results: dict, param_name: str, output_dir: Path):
 
     fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 
-    # Plot 1: Mean rank correlation matrix
     im0 = axes[0, 0].imshow(mean_corr, cmap='RdYlGn', vmin=0.85, vmax=1.0)
     axes[0, 0].set_xticks(range(n_configs))
     axes[0, 0].set_yticks(range(n_configs))
@@ -287,7 +274,6 @@ def plot_bounds_analysis(results: dict, param_name: str, output_dir: Path):
     axes[0, 0].set_title("Mean Rank Correlation")
     plt.colorbar(im0, ax=axes[0, 0], fraction=0.046)
 
-    # Plot 2: Min rank correlation (worst case)
     im1 = axes[0, 1].imshow(min_corr, cmap='RdYlGn', vmin=0.85, vmax=1.0)
     axes[0, 1].set_xticks(range(n_configs))
     axes[0, 1].set_yticks(range(n_configs))
@@ -300,7 +286,6 @@ def plot_bounds_analysis(results: dict, param_name: str, output_dir: Path):
     axes[0, 1].set_title("Minimum Rank Correlation (worst case)")
     plt.colorbar(im1, ax=axes[0, 1], fraction=0.046)
 
-    # Plot 3: Iterations box plot
     iter_data = [results["iterations"][c.name] for c in configs]
     bp = axes[1, 0].boxplot(iter_data, tick_labels=labels, patch_artist=True)
     for patch in bp['boxes']:
@@ -309,7 +294,6 @@ def plot_bounds_analysis(results: dict, param_name: str, output_dir: Path):
     axes[1, 0].set_ylabel("Iterations")
     axes[1, 0].set_title("Convergence Speed")
 
-    # Plot 4: Function evals per iteration
     evals_per_iter = []
     for c in configs:
         iters = results["iterations"][c.name]
@@ -326,17 +310,14 @@ def plot_bounds_analysis(results: dict, param_name: str, output_dir: Path):
     axes[1, 1].axhline(y=2, color='green', linestyle='--', alpha=0.7, label='Ideal (~2)')
     axes[1, 1].legend()
 
-    plt.suptitle(f"{param_name} Sensitivity (n={n_datasets} prompt templates)", fontsize=14, fontweight='bold')
+    plt.suptitle(f"{param_name} Sensitivity (n={n_datasets} prompt templates, N_TASKS>={N_TASKS})", fontsize=14, fontweight='bold')
     plt.tight_layout()
     filename = f"{param_name.lower().replace(' ', '_')}_sensitivity.png"
     plt.savefig(output_dir / filename, dpi=150, bbox_inches='tight')
     plt.close()
 
-    print(f"  Saved: {filename}")
-
 
 def plot_sigma_init_analysis(results: dict, output_dir: Path):
-    """Generate plots for sigma_init sensitivity analysis."""
     n_sigma = len(SIGMA_INIT_VALUES)
     labels = [f'{s}' for s in SIGMA_INIT_VALUES]
     n_datasets = results["n_datasets"]
@@ -345,7 +326,6 @@ def plot_sigma_init_analysis(results: dict, output_dir: Path):
 
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
 
-    # Plot 1: Mean rank correlation matrix
     im0 = axes[0].imshow(mean_corr, cmap='RdYlGn', vmin=0.95, vmax=1.0)
     axes[0].set_xticks(range(n_sigma))
     axes[0].set_yticks(range(n_sigma))
@@ -360,7 +340,6 @@ def plot_sigma_init_analysis(results: dict, output_dir: Path):
     axes[0].set_title("Mean Rank Correlation")
     plt.colorbar(im0, ax=axes[0], fraction=0.046)
 
-    # Plot 2: Iterations by sigma_init
     iter_data = [results["iterations"][s] for s in SIGMA_INIT_VALUES]
     bp = axes[1].boxplot(iter_data, tick_labels=labels, patch_artist=True)
     for patch in bp['boxes']:
@@ -370,7 +349,6 @@ def plot_sigma_init_analysis(results: dict, output_dir: Path):
     axes[1].set_ylabel("Iterations")
     axes[1].set_title("Convergence Speed")
 
-    # Plot 3: Summary - off-diagonal correlations
     off_diag_per_dataset = []
     for rc in results["rank_corrs"]:
         off_diag = rc[np.triu_indices(n_sigma, k=1)]
@@ -384,52 +362,10 @@ def plot_sigma_init_analysis(results: dict, output_dir: Path):
     axes[2].set_title("Worst-case Stability Distribution")
     axes[2].legend()
 
-    plt.suptitle(f"σ_init Sensitivity (n={n_datasets} templates, μ±10, logσ±2)", fontsize=14, fontweight='bold')
+    plt.suptitle(f"σ_init Sensitivity (n={n_datasets} templates, N_TASKS>={N_TASKS}, μ±10, logσ±2)", fontsize=14, fontweight='bold')
     plt.tight_layout()
     plt.savefig(output_dir / "sigma_init_sensitivity.png", dpi=150, bbox_inches='tight')
     plt.close()
-
-    print(f"  Saved: sigma_init_sensitivity.png")
-
-
-def print_summary(mu_results: dict, log_sigma_results: dict, sigma_init_results: dict):
-    """Print summary statistics."""
-    print("\n" + "=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
-
-    # mu_bounds summary
-    mean_corr = np.mean(mu_results["rank_corrs"], axis=0)
-    n_configs = len(mu_results["configs"])
-    off_diag = mean_corr[np.triu_indices(n_configs, k=1)]
-    print(f"\nmu_bounds Sensitivity (n={mu_results['n_datasets']} datasets):")
-    print(f"  Mean rank correlation (off-diag): {off_diag.mean():.4f}")
-    print(f"  Min mean rank correlation: {off_diag.min():.4f}")
-    min_corrs = np.min(mu_results["rank_corrs"], axis=0)
-    min_off_diag = min_corrs[np.triu_indices(n_configs, k=1)]
-    print(f"  Worst-case rank correlation: {min_off_diag.min():.4f}")
-
-    # log_sigma_bounds summary
-    mean_corr_ls = np.mean(log_sigma_results["rank_corrs"], axis=0)
-    n_configs_ls = len(log_sigma_results["configs"])
-    off_diag_ls = mean_corr_ls[np.triu_indices(n_configs_ls, k=1)]
-    print(f"\nlog_sigma_bounds Sensitivity (n={log_sigma_results['n_datasets']} datasets, μ±10 fixed):")
-    print(f"  Mean rank correlation (off-diag): {off_diag_ls.mean():.4f}")
-    print(f"  Min mean rank correlation: {off_diag_ls.min():.4f}")
-    min_corrs_ls = np.min(log_sigma_results["rank_corrs"], axis=0)
-    min_off_diag_ls = min_corrs_ls[np.triu_indices(n_configs_ls, k=1)]
-    print(f"  Worst-case rank correlation: {min_off_diag_ls.min():.4f}")
-
-    # sigma_init summary
-    mean_corr_s = np.mean(sigma_init_results["rank_corrs"], axis=0)
-    n_sigma = len(SIGMA_INIT_VALUES)
-    off_diag_s = mean_corr_s[np.triu_indices(n_sigma, k=1)]
-    print(f"\nσ_init Sensitivity (n={sigma_init_results['n_datasets']} datasets, μ±10, logσ±2 fixed):")
-    print(f"  Mean rank correlation (off-diag): {off_diag_s.mean():.4f}")
-    print(f"  Min mean rank correlation: {off_diag_s.min():.4f}")
-    min_corrs_s = np.min(sigma_init_results["rank_corrs"], axis=0)
-    min_off_diag_s = min_corrs_s[np.triu_indices(n_sigma, k=1)]
-    print(f"  Worst-case rank correlation: {min_off_diag_s.min():.4f}")
 
 
 def main():
@@ -437,27 +373,16 @@ def main():
 
     datasets = load_all_datasets()
     if len(datasets) < 2:
-        print("Error: Need at least 2 datasets in results/binary/")
         return
 
-    print(f"Loaded {len(datasets)} datasets from {RESULTS_DIR}\n")
-
-    # Step 1: Analyze mu_bounds (with default log_sigma_bounds)
     mu_results = analyze_mu_bounds(datasets)
     plot_bounds_analysis(mu_results, "mu_bounds", OUTPUT_DIR)
 
-    # Step 2: Analyze log_sigma_bounds (with fixed mu_bounds=±10)
     log_sigma_results = analyze_log_sigma_bounds(datasets)
     plot_bounds_analysis(log_sigma_results, "log_sigma_bounds", OUTPUT_DIR)
 
-    # Step 3: Analyze sigma_init (with fixed bounds)
     sigma_init_results = analyze_sigma_init(datasets, log_sigma_bounds=DEFAULT_LOG_SIGMA_BOUNDS)
     plot_sigma_init_analysis(sigma_init_results, OUTPUT_DIR)
-
-    # Print summary
-    print_summary(mu_results, log_sigma_results, sigma_init_results)
-
-    print(f"\nPlots saved to {OUTPUT_DIR}")
 
 
 if __name__ == "__main__":

@@ -31,6 +31,9 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 OUTPUT_DIR = Path(__file__).parent / "plots" / "thurstonian"
 RESULTS_DIR = Path(__file__).parent.parent / "results" / "binary"
 
+# Number of tasks. Synthetic uses exactly this; real data filters to >= this.
+N_TASKS = 50
+
 
 def make_task(id: str) -> Task:
     return Task(prompt=f"Task {id}", origin=OriginDataset.ALPACA, id=id, metadata={})
@@ -195,7 +198,7 @@ def plot_real_data_summary(
     axes[1, 1].set_ylabel("NLL / comparison")
     axes[1, 1].set_title("Model fit quality")
 
-    plt.suptitle(f"Thurstonian Analysis Summary (n={len(all_results)} datasets, REAL DATA)", fontweight='bold')
+    plt.suptitle(f"Thurstonian Analysis Summary (n={len(all_results)} datasets, REAL DATA, N_TASKS>={N_TASKS})", fontweight='bold')
     plt.tight_layout()
     plt.savefig(output_dir / "real_summary.png", dpi=150)
     plt.close()
@@ -207,56 +210,33 @@ def run_real_data_analysis():
 
     datasets = load_all_datasets()
     if not datasets:
-        print(f"No datasets found in {RESULTS_DIR}")
         return
-
-    print(f"Found {len(datasets)} datasets in {RESULTS_DIR}\n")
 
     all_results = []
     for name, data in datasets:
-        if data.n_tasks < 3:
-            print(f"Skipping {name} (only {data.n_tasks} tasks)")
+        if data.n_tasks < N_TASKS:
             continue
 
-        n_comparisons = int(data.wins.sum())
-        print(f"Processing {name}...")
-        print(f"  Tasks: {data.n_tasks}, Comparisons: {n_comparisons}")
-
         result = fit_thurstonian(data, max_iter=3000)
-        print(f"  Converged: {result.converged}, Iterations: {result.n_iterations}")
-        print(f"  Gradient norm: {result.gradient_norm:.2e}")
-        print(f"  μ range: [{result.mu.min():.2f}, {result.mu.max():.2f}]")
-        print(f"  σ range: [{result.sigma.min():.2f}, {result.sigma.max():.2f}]")
-
         plot_real_data_diagnostics(result, data, name, OUTPUT_DIR)
-        print(f"  Saved: real_{name}.png")
-
         all_results.append((name, result, data))
-        print()
 
     if all_results:
         plot_real_data_summary(all_results, OUTPUT_DIR)
-        print(f"Saved summary: real_summary.png")
-
-    print(f"\nAll plots saved to {OUTPUT_DIR}")
 
 
 def run_synthetic_diagnostics():
     """Run synthetic data diagnostics (same as pytest but standalone)."""
-    import matplotlib.pyplot as plt
-
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    print("Running synthetic data diagnostics...\n")
 
     configs = [
-        ("50_tasks_dense", 50, 20, np.ones(50), 0.0),
-        ("50_tasks_sparse", 50, 5, np.ones(50), 0.0),
-        ("50_tasks_varying_sigma", 50, 20, None, 0.0),  # None = random sigma
-        ("50_tasks_20pct_noise", 50, 20, np.ones(50), 0.2),
+        (f"{N_TASKS}_tasks_dense", N_TASKS, 20, np.ones(N_TASKS), 0.0),
+        (f"{N_TASKS}_tasks_sparse", N_TASKS, 5, np.ones(N_TASKS), 0.0),
+        (f"{N_TASKS}_tasks_varying_sigma", N_TASKS, 20, None, 0.0),  # None = random sigma
+        (f"{N_TASKS}_tasks_20pct_noise", N_TASKS, 20, np.ones(N_TASKS), 0.2),
     ]
 
     for name, n_tasks, n_comp, true_sigma, noise_rate in configs:
-        print(f"Running {name}...")
         rng = np.random.default_rng(hash(name) % (2**32))
         true_mu = np.linspace(-3, 3, n_tasks)
         if true_sigma is None:
@@ -268,11 +248,6 @@ def run_synthetic_diagnostics():
 
         result = fit_thurstonian(data, max_iter=3000)
         _plot_synthetic_diagnostics(result, true_mu, true_sigma, name, OUTPUT_DIR)
-
-        corr = np.corrcoef(true_mu, result.mu)[0, 1]
-        print(f"  Converged: {result.converged}, μ correlation: {corr:.3f}")
-
-    print(f"\nAll plots saved to {OUTPUT_DIR}")
 
 
 def _simulate_comparisons_with_noise(
@@ -945,12 +920,10 @@ def main():
 
     if args.both:
         run_real_data_analysis()
-        print("\n" + "=" * 60 + "\n")
         run_synthetic_diagnostics()
     elif args.synthetic:
         run_synthetic_diagnostics()
     else:
-        # Default: real data
         run_real_data_analysis()
 
 

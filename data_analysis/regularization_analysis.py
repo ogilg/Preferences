@@ -23,6 +23,9 @@ from src.task_data import Task, OriginDataset
 OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
 RESULTS_DIR = Path(__file__).parent.parent / "results" / "binary"
 
+# Number of tasks to use. Synthetic uses exactly this; real data filters to >= this.
+N_TASKS = 30
+
 LAMBDAS = np.logspace(-2, np.log10(200), 12)
 
 
@@ -31,7 +34,6 @@ def make_task(id: str) -> Task:
 
 
 def load_all_datasets() -> list[tuple[str, PairwiseData]]:
-    """Load all measurement data from results/binary/ directory."""
     datasets = []
     if not RESULTS_DIR.exists():
         return datasets
@@ -75,11 +77,7 @@ def split_wins(
     test_frac: float,
     rng: np.random.Generator,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Hold out entire pairs (edges) for test. Returns (train_wins, test_wins).
-
-    Each pair (i,j) is randomly assigned to test with probability test_frac.
-    All comparisons for that pair go to either train or test, not split.
-    """
+    """Hold out entire pairs (edges) for test. Returns (train_wins, test_wins)."""
     n = wins.shape[0]
     train = wins.copy()
     test = np.zeros_like(wins)
@@ -100,7 +98,6 @@ def split_wins(
 
 
 def eval_nll(mu: np.ndarray, sigma: np.ndarray, wins: np.ndarray) -> float:
-    """Compute NLL on wins matrix using given parameters."""
     mu_diff = mu[:, np.newaxis] - mu[np.newaxis, :]
     scale = np.sqrt(sigma[:, np.newaxis] ** 2 + sigma[np.newaxis, :] ** 2)
     p = norm.sf(0, loc=mu_diff, scale=scale)
@@ -120,6 +117,7 @@ class RegularizationResults:
     data_source: str
     n_datasets: int
     n_splits: int
+    n_tasks: int
 
 
 def run_regularization_on_wins(
@@ -129,7 +127,6 @@ def run_regularization_on_wins(
     n_splits: int,
     lambdas: np.ndarray,
 ) -> dict[str, list]:
-    """Run regularization path on a single wins matrix with multiple train/test splits."""
     all_train_nlls = {lam: [] for lam in lambdas}
     all_test_nlls = {lam: [] for lam in lambdas}
     all_sigma_maxs = {lam: [] for lam in lambdas}
@@ -163,46 +160,31 @@ def run_regularization_on_wins(
 
 
 def run_regularization_path_synthetic(
-    n_tasks: int = 30,
+    n_tasks: int = N_TASKS,
     n_comparisons_per_pair: int = 10,
     test_frac: float = 0.2,
     n_splits: int = 10,
 ) -> RegularizationResults:
-    """Run regularization path analysis on synthetic data."""
-    print("Running regularization path on SYNTHETIC data...")
-
     data_rng = np.random.default_rng(42)
     true_mu = np.linspace(-3, 3, n_tasks)
     true_sigma = np.ones(n_tasks)
     tasks = [make_task(f"t{i}") for i in range(n_tasks)]
     wins = simulate_pairwise_comparisons(true_mu, true_sigma, n_comparisons_per_pair, data_rng)
 
-    print(f"  Tasks: {n_tasks}, Comparisons/pair: {n_comparisons_per_pair}, Splits: {n_splits}")
-
     results = run_regularization_on_wins(tasks, wins, test_frac, n_splits, LAMBDAS)
-
-    train_nlls = [np.mean(results["train_nlls"][lam]) for lam in LAMBDAS]
-    test_nlls = [np.mean(results["test_nlls"][lam]) for lam in LAMBDAS]
-    train_nlls_std = [np.std(results["train_nlls"][lam]) for lam in LAMBDAS]
-    test_nlls_std = [np.std(results["test_nlls"][lam]) for lam in LAMBDAS]
-    sigma_maxs = [np.mean(results["sigma_maxs"][lam]) for lam in LAMBDAS]
-    sigma_stds = [np.mean(results["sigma_stds"][lam]) for lam in LAMBDAS]
-
-    print("\nResults:")
-    for i, lam in enumerate(LAMBDAS):
-        print(f"  λ={lam:.4f}: train={train_nlls[i]:.4f}±{train_nlls_std[i]:.4f}, test={test_nlls[i]:.4f}±{test_nlls_std[i]:.4f}, max(σ)={sigma_maxs[i]:.3f}")
 
     return RegularizationResults(
         lambdas=LAMBDAS,
-        train_nlls=train_nlls,
-        test_nlls=test_nlls,
-        train_nlls_std=train_nlls_std,
-        test_nlls_std=test_nlls_std,
-        sigma_maxs=sigma_maxs,
-        sigma_stds=sigma_stds,
+        train_nlls=[np.mean(results["train_nlls"][lam]) for lam in LAMBDAS],
+        test_nlls=[np.mean(results["test_nlls"][lam]) for lam in LAMBDAS],
+        train_nlls_std=[np.std(results["train_nlls"][lam]) for lam in LAMBDAS],
+        test_nlls_std=[np.std(results["test_nlls"][lam]) for lam in LAMBDAS],
+        sigma_maxs=[np.mean(results["sigma_maxs"][lam]) for lam in LAMBDAS],
+        sigma_stds=[np.mean(results["sigma_stds"][lam]) for lam in LAMBDAS],
         data_source="synthetic",
         n_datasets=1,
         n_splits=n_splits,
+        n_tasks=n_tasks,
     )
 
 
@@ -210,14 +192,9 @@ def run_regularization_path_real(
     test_frac: float = 0.2,
     n_splits: int = 5,
 ) -> RegularizationResults:
-    """Run regularization path analysis on real data from results/binary/."""
-    print("Running regularization path on REAL data...")
-
     datasets = load_all_datasets()
     if not datasets:
         raise ValueError(f"No datasets found in {RESULTS_DIR}")
-
-    print(f"  Found {len(datasets)} datasets, using {n_splits} splits per dataset")
 
     all_train_nlls = {lam: [] for lam in LAMBDAS}
     all_test_nlls = {lam: [] for lam in LAMBDAS}
@@ -225,11 +202,9 @@ def run_regularization_path_real(
     all_sigma_stds = {lam: [] for lam in LAMBDAS}
 
     for name, data in datasets:
-        if data.n_tasks < 5:
-            print(f"  Skipping {name} (only {data.n_tasks} tasks)")
+        if data.n_tasks < N_TASKS:
             continue
 
-        print(f"  Processing {name} ({data.n_tasks} tasks, {int(data.wins.sum())} comparisons)...")
         results = run_regularization_on_wins(data.tasks, data.wins, test_frac, n_splits, LAMBDAS)
 
         for lam in LAMBDAS:
@@ -239,37 +214,26 @@ def run_regularization_path_real(
             all_sigma_stds[lam].extend(results["sigma_stds"][lam])
 
     if not all_train_nlls[LAMBDAS[0]]:
-        raise ValueError("No valid datasets found (need at least 5 tasks)")
+        raise ValueError(f"No valid datasets found (need >= {N_TASKS} tasks)")
 
-    train_nlls = [np.mean(all_train_nlls[lam]) for lam in LAMBDAS]
-    test_nlls = [np.mean(all_test_nlls[lam]) for lam in LAMBDAS]
-    train_nlls_std = [np.std(all_train_nlls[lam]) for lam in LAMBDAS]
-    test_nlls_std = [np.std(all_test_nlls[lam]) for lam in LAMBDAS]
-    sigma_maxs = [np.mean(all_sigma_maxs[lam]) for lam in LAMBDAS]
-    sigma_stds = [np.mean(all_sigma_stds[lam]) for lam in LAMBDAS]
-
-    n_valid_datasets = len([d for _, d in datasets if d.n_tasks >= 5])
-
-    print("\nAggregated results:")
-    for i, lam in enumerate(LAMBDAS):
-        print(f"  λ={lam:.4f}: train={train_nlls[i]:.4f}±{train_nlls_std[i]:.4f}, test={test_nlls[i]:.4f}±{test_nlls_std[i]:.4f}, max(σ)={sigma_maxs[i]:.3f}")
+    n_valid_datasets = len([d for _, d in datasets if d.n_tasks >= N_TASKS])
 
     return RegularizationResults(
         lambdas=LAMBDAS,
-        train_nlls=train_nlls,
-        test_nlls=test_nlls,
-        train_nlls_std=train_nlls_std,
-        test_nlls_std=test_nlls_std,
-        sigma_maxs=sigma_maxs,
-        sigma_stds=sigma_stds,
+        train_nlls=[np.mean(all_train_nlls[lam]) for lam in LAMBDAS],
+        test_nlls=[np.mean(all_test_nlls[lam]) for lam in LAMBDAS],
+        train_nlls_std=[np.std(all_train_nlls[lam]) for lam in LAMBDAS],
+        test_nlls_std=[np.std(all_test_nlls[lam]) for lam in LAMBDAS],
+        sigma_maxs=[np.mean(all_sigma_maxs[lam]) for lam in LAMBDAS],
+        sigma_stds=[np.mean(all_sigma_stds[lam]) for lam in LAMBDAS],
         data_source="real",
         n_datasets=n_valid_datasets,
         n_splits=n_splits,
+        n_tasks=N_TASKS,
     )
 
 
 def plot_regularization_path(results: RegularizationResults, output_path: Path):
-    """Plot train/test NLL and sigma statistics vs lambda."""
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
 
     axes[0].errorbar(results.lambdas, results.train_nlls, yerr=results.train_nlls_std, fmt="o-", label="Train", markersize=5, capsize=3)
@@ -293,21 +257,14 @@ def plot_regularization_path(results: RegularizationResults, output_path: Path):
     axes[2].set_title("Variance Parameter Spread")
 
     if results.data_source == "synthetic":
-        title = "L2 Variance Regularization Analysis (SYNTHETIC)"
+        title = f"L2 Variance Regularization (SYNTHETIC, N_TASKS={results.n_tasks})"
     else:
-        title = f"L2 Variance Regularization Analysis (REAL, n={results.n_datasets} datasets)"
+        title = f"L2 Variance Regularization (REAL, n={results.n_datasets} datasets, N_TASKS>={results.n_tasks})"
 
     plt.suptitle(title, fontweight="bold")
     plt.tight_layout()
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"Saved: {output_path}")
-
-
-def print_best_lambda(results: RegularizationResults):
-    """Print the optimal lambda based on test NLL."""
-    best_idx = int(np.argmin(results.test_nlls))
-    print(f"\nBest λ = {results.lambdas[best_idx]:.4f} (test NLL = {results.test_nlls[best_idx]:.4f} ± {results.test_nlls_std[best_idx]:.4f})")
 
 
 def main():
@@ -319,27 +276,19 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     if args.both:
-        # Run both synthetic and real
         synthetic_results = run_regularization_path_synthetic()
         plot_regularization_path(synthetic_results, OUTPUT_DIR / "regularization_path_synthetic.png")
-        print_best_lambda(synthetic_results)
-
-        print("\n" + "=" * 60 + "\n")
 
         real_results = run_regularization_path_real()
         plot_regularization_path(real_results, OUTPUT_DIR / "regularization_path_real.png")
-        print_best_lambda(real_results)
 
     elif args.real:
         real_results = run_regularization_path_real()
         plot_regularization_path(real_results, OUTPUT_DIR / "regularization_path_real.png")
-        print_best_lambda(real_results)
 
     else:
-        # Default: synthetic
         synthetic_results = run_regularization_path_synthetic()
         plot_regularization_path(synthetic_results, OUTPUT_DIR / "regularization_path_synthetic.png")
-        print_best_lambda(synthetic_results)
 
 
 if __name__ == "__main__":
