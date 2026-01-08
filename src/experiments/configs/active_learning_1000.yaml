@@ -5,7 +5,6 @@ preference_mode: active_learning
 
 model: meta-llama/Meta-Llama-3.1-8B-Instruct
 temperature: 1.0
-max_concurrent: 50
 
 n_tasks: 1000
 task_origin: wildchat
@@ -16,7 +15,7 @@ samples_per_pair: 5
 
 active_learning:
   initial_degree: 5
-  batch_size: 200
+  batch_size: 1000
   max_iterations: 100
   p_threshold: 0.3
   q_threshold: 0.3

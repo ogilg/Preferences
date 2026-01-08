@@ -5,7 +5,6 @@ preference_mode: active_learning
 
 model: meta-llama/Meta-Llama-3.1-8B-Instruct
 temperature: 1.0
-max_concurrent: 40
 
 n_tasks: 50  # With 50 tasks, exhaustive = 1225 pairs; active learning should need far fewer
 task_origin: wildchat
@@ -18,7 +17,7 @@ samples_per_pair: 5
 # Active learning specific settings
 active_learning:
   initial_degree: 3       # Each task starts connected to 3 others
-  batch_size: 50          # Query 50 new pairs per iteration
+  batch_size: 1000        # Query 1000 new pairs per iteration
   max_iterations: 50      # Maximum iterations before stopping
   p_threshold: 0.3        # Select from bottom 30% of utility differences
   q_threshold: 0.3        # Select from bottom 30% of degree sums

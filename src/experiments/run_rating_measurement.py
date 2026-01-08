@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from src.models import get_client
+from src.models import get_client, get_default_max_concurrent
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml, PreTaskRatingPromptBuilder
 from src.preferences.measurement import measure_ratings, TaskScoreMeasurer, RegexRatingFormat
@@ -53,6 +53,7 @@ def main():
     templates = load_templates_from_yaml(config.templates)
     tasks = load_tasks(n=config.n_tasks, origin=config.get_origin_dataset())
     client = get_client(model_name=config.model)
+    max_concurrent = config.max_concurrent or get_default_max_concurrent()
 
     task_list = tasks * config.samples_per_task
 
@@ -73,7 +74,7 @@ def main():
             client,
             task_list,
             config.temperature,
-            config.max_concurrent,
+            max_concurrent,
             config.scale_min,
             config.scale_max,
         )

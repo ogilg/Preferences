@@ -12,4 +12,8 @@ def get_client(model_name: str | None = None, max_new_tokens: int = 256) -> Open
     return InferenceClient(model_name=model_name, max_new_tokens=max_new_tokens)
 
 
+def get_default_max_concurrent() -> int:
+    return InferenceClient.default_max_concurrent
+
+
 __all__ = ["Model", "ConfigurableMockModel", "NDIFModel", "OpenAICompatibleClient", "HyperbolicClient", "CerebrasClient", "ToolCallError", "GenerateRequest", "BatchResult", "InferenceClient", "get_client"]

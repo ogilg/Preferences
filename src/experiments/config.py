@@ -17,7 +17,7 @@ class FittingConfig(BaseModel):
 
 class ActiveLearningConfig(BaseModel):
     initial_degree: int = 3
-    batch_size: int = 50
+    batch_size: int = 1000
     max_iterations: int = 20
     p_threshold: float = 0.3
     q_threshold: float = 0.3
@@ -30,7 +30,7 @@ class ExperimentConfig(BaseModel):
 
     model: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"
     temperature: float = 1.0
-    max_concurrent: int = 40
+    max_concurrent: int | None = None
 
     n_tasks: int = 10
     task_origin: Literal["wildchat", "alpaca", "math"] = "wildchat"

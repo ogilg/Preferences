@@ -6,7 +6,7 @@ import sys
 from itertools import combinations
 from pathlib import Path
 
-from src.models import get_client
+from src.models import get_client, get_default_max_concurrent
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
@@ -31,6 +31,7 @@ def main():
     task_ids = set(task_lookup.keys())
     unique_pairs = list(combinations(tasks, 2))
     client = get_client(model_name=config.model)
+    max_concurrent = config.max_concurrent or get_default_max_concurrent()
 
     n_params = (config.n_tasks - 1) + config.n_tasks
     max_iter = config.fitting.max_iter if config.fitting.max_iter else max(2000, n_params * 50)
@@ -50,7 +51,7 @@ def main():
             print(f"\n{template.name}: {len(existing_pairs)} cached, {len(missing_pairs)} to query")
 
             pairs_to_query = missing_pairs * config.samples_per_pair
-            batch = measure_with_template(template, client, pairs_to_query, config.temperature, config.max_concurrent)
+            batch = measure_with_template(template, client, pairs_to_query, config.temperature, max_concurrent)
             print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
 
             cache.append(batch.successes)
