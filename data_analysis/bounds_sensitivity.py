@@ -1,6 +1,6 @@
 """Analysis of Thurstonian model sensitivity to optimization bounds and initial conditions.
 
-Uses only real measurement data from results/binary/, aggregated across all prompt templates.
+Uses only real measurement data from results/measurements/, aggregated across all prompt templates.
 
 Run: python -m data_analysis.bounds_sensitivity
 """
@@ -23,7 +23,7 @@ from src.task_data import Task, OriginDataset
 
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "bounds_sensitivity"
-RESULTS_DIR = Path(__file__).parent.parent / "results" / "binary"
+RESULTS_DIR = Path(__file__).parent.parent / "results" / "measurements"
 
 # Minimum number of tasks for a dataset to be included in analysis.
 N_TASKS = 30
@@ -128,6 +128,8 @@ def load_all_datasets() -> list[tuple[str, PairwiseData]]:
 
     for result_dir in sorted(RESULTS_DIR.iterdir()):
         if not result_dir.is_dir():
+            continue
+        if result_dir.name.startswith("rating_"):
             continue
         measurements_path = result_dir / "measurements.yaml"
         if not measurements_path.exists():

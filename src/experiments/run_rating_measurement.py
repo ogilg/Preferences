@@ -9,7 +9,7 @@ from src.models import HyperbolicModel
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml, PreTaskRatingPromptBuilder
 from src.preferences.measurement import measure_ratings, TaskScoreMeasurer, RegexRatingFormat
-from src.preferences.storage import save_rating_run, rating_run_exists
+from src.preferences.storage import save_ratings, ratings_exist
 from src.experiments.config import load_experiment_config
 from src.experiments.sensitivity_experiments.rating_correlation import compute_mean_std_across_tasks
 
@@ -61,7 +61,7 @@ def main():
     measured = 0
     skipped = 0
     for template in templates:
-        if rating_run_exists(template, model, config.n_tasks):
+        if ratings_exist(template, model):
             print(f"Skipping {template.name} (already measured)")
             skipped += 1
             continue
@@ -82,16 +82,11 @@ def main():
         mean_std = compute_mean_std_across_tasks(batch.successes)
         print(f"  Mean std across tasks: {mean_std:.3f}")
 
-        run_path = save_rating_run(
+        run_path = save_ratings(
             template=template,
-            template_file=str(config.templates),
             model=model,
-            temperature=config.temperature,
-            tasks=tasks,
             scores=batch.successes,
-            scale_min=config.scale_min,
-            scale_max=config.scale_max,
-            mean_rating_std=mean_std,
+            temperature=config.temperature,
         )
         print(f"  Saved to {run_path}")
         measured += 1

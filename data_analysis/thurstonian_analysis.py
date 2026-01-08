@@ -4,7 +4,7 @@ Tests (run with pytest):
     pytest data_analysis/thurstonian_analysis.py
 
 Real data analysis:
-    python -m data_analysis.thurstonian_analysis          # analyze real data from results/binary/
+    python -m data_analysis.thurstonian_analysis          # analyze real data from results/measurements/
     python -m data_analysis.thurstonian_analysis --synthetic  # run synthetic diagnostics only
 """
 
@@ -29,7 +29,7 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "thurstonian"
-RESULTS_DIR = Path(__file__).parent.parent / "results" / "binary"
+RESULTS_DIR = Path(__file__).parent.parent / "results" / "measurements"
 
 # Number of tasks. Synthetic uses exactly this; real data filters to >= this.
 N_TASKS = 50
@@ -40,13 +40,16 @@ def make_task(id: str) -> Task:
 
 
 def load_all_datasets() -> list[tuple[str, PairwiseData]]:
-    """Load all measurement data from results/binary/ directory."""
+    """Load all measurement data from results/measurements/ directory."""
     datasets = []
     if not RESULTS_DIR.exists():
         return datasets
 
     for result_dir in sorted(RESULTS_DIR.iterdir()):
         if not result_dir.is_dir():
+            continue
+        # Skip rating directories
+        if result_dir.name.startswith("rating_"):
             continue
         measurements_path = result_dir / "measurements.yaml"
         if not measurements_path.exists():

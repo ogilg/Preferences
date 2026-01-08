@@ -2,7 +2,7 @@
 
 Run:
     python -m data_analysis.regularization_analysis          # synthetic data
-    python -m data_analysis.regularization_analysis --real   # real data from results/binary/
+    python -m data_analysis.regularization_analysis --real   # real data from results/measurements/
     python -m data_analysis.regularization_analysis --both   # both
 """
 
@@ -21,7 +21,7 @@ from src.task_data import Task, OriginDataset
 
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
-RESULTS_DIR = Path(__file__).parent.parent / "results" / "binary"
+RESULTS_DIR = Path(__file__).parent.parent / "results" / "measurements"
 
 # Number of tasks to use. Synthetic uses exactly this; real data filters to >= this.
 N_TASKS = 30
@@ -40,6 +40,8 @@ def load_all_datasets() -> list[tuple[str, PairwiseData]]:
 
     for result_dir in sorted(RESULTS_DIR.iterdir()):
         if not result_dir.is_dir():
+            continue
+        if result_dir.name.startswith("rating_"):
             continue
         measurements_path = result_dir / "measurements.yaml"
         if not measurements_path.exists():

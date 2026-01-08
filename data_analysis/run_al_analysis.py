@@ -200,8 +200,8 @@ def main():
     # Synthetic data
     run_synthetic_analysis()
 
-    # Real data from n50 experiment
-    real_run_dir = Path("results/binary/n50/001_llama-3.1-8b")
+    # Real data from measurements
+    real_run_dir = Path("results/measurements/binary_choice_001_llama-3.1-8b")
     run_real_analysis(real_run_dir, label="real")
 
     plt.close("all")
