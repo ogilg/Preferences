@@ -1,0 +1,30 @@
+# Active Learning Configuration Example
+# Run with: python -m src.experiments.run_active_learning src/experiments/configs/active_learning_example.yaml
+
+preference_mode: active_learning
+
+model: meta-llama/Meta-Llama-3.1-8B-Instruct
+temperature: 1.0
+max_concurrent: 40
+
+n_tasks: 50  # With 50 tasks, exhaustive = 1225 pairs; active learning should need far fewer
+task_origin: wildchat
+
+templates: src/preferences/templates/data/binary_choice_v1.yaml
+
+# Replication per pair (same as binary mode)
+samples_per_pair: 5
+
+# Active learning specific settings
+active_learning:
+  initial_degree: 3       # Each task starts connected to 3 others
+  batch_size: 50          # Query 50 new pairs per iteration
+  max_iterations: 50      # Maximum iterations before stopping
+  p_threshold: 0.3        # Select from bottom 30% of utility differences
+  q_threshold: 0.3        # Select from bottom 30% of degree sums
+  convergence_threshold: 0.99  # Stop when rank correlation > 0.99
+  seed: 42                # For reproducibility
+
+# Thurstonian fitting settings
+fitting:
+  max_iter: 2000

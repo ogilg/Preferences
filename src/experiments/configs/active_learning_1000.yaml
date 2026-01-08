@@ -1,0 +1,27 @@
+# Active Learning - 1000 tasks x 24 templates
+# Run with: python -m src.experiments.run_active_learning src/experiments/configs/active_learning_1000.yaml
+
+preference_mode: active_learning
+
+model: meta-llama/Meta-Llama-3.1-8B-Instruct
+temperature: 1.0
+max_concurrent: 50
+
+n_tasks: 1000
+task_origin: wildchat
+
+templates: src/preferences/templates/data/binary_choice_v1.yaml
+
+samples_per_pair: 5
+
+active_learning:
+  initial_degree: 5
+  batch_size: 200
+  max_iterations: 100
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
+  seed: 42
+
+fitting:
+  max_iter: 5000
