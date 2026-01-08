@@ -1,10 +1,9 @@
 preference_mode: binary
 
-model: meta-llama/Meta-Llama-3.1-8B-Instruct
+model: llama-3.1-8b
 temperature: 1.0
-max_concurrent: 50
 
-n_tasks: 50
+n_tasks: 100
 task_origin: wildchat
 
 templates: src/preferences/templates/data/binary_choice_basic.yaml
@@ -12,6 +11,6 @@ templates: src/preferences/templates/data/binary_choice_basic.yaml
 samples_per_pair: 5
 
 fitting:
-  max_iter: null  # auto: max(2000, n_params*50)
+  max_iter: null  
   gradient_tol: 1.0
   loss_tol: 1e-8

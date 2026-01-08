@@ -77,12 +77,19 @@ class OpenAICompatibleClient(ABC):
     @abstractmethod
     def _default_model(self) -> str: ...
 
+    _model_aliases: dict[str, str] = {}
+
+    def _resolve_model_name(self, model_name: str | None) -> str:
+        if model_name is None:
+            return self._default_model
+        return self._model_aliases.get(model_name, model_name)
+
     def __init__(
         self,
         model_name: str | None = None,
         max_new_tokens: int = 256,
     ):
-        self.model_name = model_name or self._default_model
+        self.model_name = self._resolve_model_name(model_name)
         self.max_new_tokens = max_new_tokens
         self._api_key = os.environ[self._api_key_env_var]
         self.client = OpenAI(
@@ -218,3 +225,7 @@ class HyperbolicClient(OpenAICompatibleClient):
     _base_url = "https://api.hyperbolic.xyz/v1"
     _default_model = "meta-llama/Meta-Llama-3.1-8B-Instruct"
     default_max_concurrent = 75
+    _model_aliases = {
+        "llama-3.1-8b": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "llama-3.1-70b": "meta-llama/Meta-Llama-3.1-70B-Instruct",
+    }

@@ -3,10 +3,10 @@
 
 preference_mode: active_learning
 
-model: meta-llama/Meta-Llama-3.1-8B-Instruct
+model: llama-3.1-8b
 temperature: 1.0
 
-n_tasks: 1000
+n_tasks: 100
 task_origin: wildchat
 
 templates: src/preferences/templates/data/binary_choice_v1.yaml
