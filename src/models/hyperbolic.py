@@ -224,7 +224,7 @@ class HyperbolicClient(OpenAICompatibleClient):
     _api_key_env_var = "HYPERBOLIC_API_KEY"
     _base_url = "https://api.hyperbolic.xyz/v1"
     _default_model = "meta-llama/Meta-Llama-3.1-8B-Instruct"
-    default_max_concurrent = 75
+    default_max_concurrent = 50
     _model_aliases = {
         "llama-3.1-8b": "meta-llama/Meta-Llama-3.1-8B-Instruct",
         "llama-3.1-70b": "meta-llama/Meta-Llama-3.1-70B-Instruct",

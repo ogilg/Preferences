@@ -30,6 +30,7 @@ class BenchmarkResult:
     latencies: list[float]
     errors: int
     rate_limit_errors: int
+    invalid_outputs: int
 
     @property
     def throughput(self) -> float:
@@ -37,7 +38,7 @@ class BenchmarkResult:
 
     @property
     def success_rate(self) -> float:
-        return (self.num_requests - self.errors) / self.num_requests
+        return (self.num_requests - self.errors - self.invalid_outputs) / self.num_requests
 
     @property
     def latency_mean(self) -> float:
@@ -69,7 +70,32 @@ PROVIDERS = {
     },
 }
 
-TEST_PROMPT = [{"role": "user", "content": "Say 'hello' and nothing else."}]
+TEST_PROMPT = [
+    {
+        "role": "user",
+        "content": (
+            "You will be given two tasks. Choose which task you would prefer to complete.\n\n"
+            "Respond with only 'Task A' or 'Task B'.\n\n"
+            "Task A:\n"
+            "Write a short story about a robot learning to paint.\n\n"
+            "Task B:\n"
+            "Explain the difference between supervised and unsupervised machine learning."
+        ),
+    }
+]
+
+
+def validate_output(content: str) -> bool:
+    if not content:
+        return False
+    if len(content) < 3:
+        return False
+    if len(content) > 200:
+        return False
+    content_lower = content.lower()
+    if "task" not in content_lower and "a" not in content_lower and "b" not in content_lower:
+        return False
+    return True
 
 
 async def run_benchmark(
@@ -91,25 +117,33 @@ async def run_benchmark(
     latencies: list[float] = []
     errors = 0
     rate_limit_errors = 0
+    invalid_outputs = 0
     lock = asyncio.Lock()
 
     async def make_request() -> None:
-        nonlocal errors, rate_limit_errors
+        nonlocal errors, rate_limit_errors, invalid_outputs
         start = time.perf_counter()
         async with semaphore:
             try:
-                await asyncio.wait_for(
+                response = await asyncio.wait_for(
                     client.chat.completions.create(
                         model=config["model"],
                         messages=TEST_PROMPT,
                         temperature=0.0,
-                        max_tokens=8,
+                        max_tokens=50,
                     ),
                     timeout=timeout,
                 )
                 elapsed = time.perf_counter() - start
+
+                content = response.choices[0].message.content or ""
+                is_valid = validate_output(content)
+
                 async with lock:
-                    latencies.append(elapsed)
+                    if is_valid:
+                        latencies.append(elapsed)
+                    else:
+                        invalid_outputs += 1
             except asyncio.TimeoutError:
                 async with lock:
                     errors += 1
@@ -133,6 +167,7 @@ async def run_benchmark(
         latencies=latencies,
         errors=errors,
         rate_limit_errors=rate_limit_errors,
+        invalid_outputs=invalid_outputs,
     )
 
 
@@ -140,31 +175,34 @@ def print_result(result: BenchmarkResult) -> None:
     print(f"\n{'=' * 60}")
     print(f"Provider: {result.provider} | Concurrency: {result.max_concurrent}")
     print(f"{'=' * 60}")
-    print(f"Requests:      {result.num_requests}")
-    print(f"Total time:    {result.total_time:.2f}s")
-    print(f"Throughput:    {result.throughput:.2f} req/s")
-    print(f"Success rate:  {result.success_rate * 100:.1f}%")
-    print(f"Rate limits:   {result.rate_limit_errors}")
-    print(f"Latency mean:  {result.latency_mean * 1000:.0f}ms")
-    print(f"Latency p50:   {result.latency_p50 * 1000:.0f}ms")
-    print(f"Latency p95:   {result.latency_p95 * 1000:.0f}ms")
-    print(f"Latency p99:   {result.latency_p99 * 1000:.0f}ms")
+    print(f"Requests:       {result.num_requests}")
+    print(f"Total time:     {result.total_time:.2f}s")
+    print(f"Throughput:     {result.throughput:.2f} req/s")
+    print(f"Success rate:   {result.success_rate * 100:.1f}%")
+    print(f"Rate limits:    {result.rate_limit_errors}")
+    print(f"Invalid output: {result.invalid_outputs}")
+    print(f"Other errors:   {result.errors}")
+    print(f"Latency mean:   {result.latency_mean * 1000:.0f}ms")
+    print(f"Latency p50:    {result.latency_p50 * 1000:.0f}ms")
+    print(f"Latency p95:    {result.latency_p95 * 1000:.0f}ms")
+    print(f"Latency p99:    {result.latency_p99 * 1000:.0f}ms")
 
 
 def print_summary(results: list[BenchmarkResult]) -> None:
-    print(f"\n{'=' * 80}")
+    print(f"\n{'=' * 90}")
     print("SUMMARY")
-    print(f"{'=' * 80}")
+    print(f"{'=' * 90}")
     print(
         f"{'Provider':<12} {'Concur':>8} {'Throughput':>12} {'Success':>10} "
-        f"{'RateLim':>8} {'p50':>8} {'p95':>8}"
+        f"{'RateLim':>8} {'Invalid':>8} {'p50':>8} {'p95':>8}"
     )
-    print("-" * 80)
+    print("-" * 90)
 
     for r in results:
         print(
             f"{r.provider:<12} {r.max_concurrent:>8} {r.throughput:>10.2f}/s "
             f"{r.success_rate * 100:>9.1f}% {r.rate_limit_errors:>8} "
+            f"{r.invalid_outputs:>8} "
             f"{r.latency_p50 * 1000:>6.0f}ms {r.latency_p95 * 1000:>6.0f}ms"
         )
 
@@ -230,7 +268,10 @@ async def main() -> None:
                     timeout=args.timeout,
                 )
                 results.append(result)
-                print(f"{result.throughput:.1f} req/s, {result.errors} errors")
+                print(
+                    f"{result.throughput:.1f} req/s, "
+                    f"{result.errors} errors, {result.invalid_outputs} invalid"
+                )
 
                 # Early stop if we're hitting too many rate limits
                 if result.rate_limit_errors > args.requests * 0.2:

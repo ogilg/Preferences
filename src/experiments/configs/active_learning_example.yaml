@@ -17,7 +17,7 @@ samples_per_pair: 5
 # Active learning specific settings
 active_learning:
   initial_degree: 3       # Each task starts connected to 3 others
-  batch_size: 1000        # Query 1000 new pairs per iteration
+  batch_size: 300         # Query 300 new pairs per iteration
   max_iterations: 50      # Maximum iterations before stopping
   p_threshold: 0.3        # Select from bottom 30% of utility differences
   q_threshold: 0.3        # Select from bottom 30% of degree sums

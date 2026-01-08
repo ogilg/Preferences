@@ -17,7 +17,7 @@ class FittingConfig(BaseModel):
 
 class ActiveLearningConfig(BaseModel):
     initial_degree: int = 3
-    batch_size: int = 1000
+    batch_size: int = 300
     max_iterations: int = 20
     p_threshold: float = 0.3
     q_threshold: float = 0.3
