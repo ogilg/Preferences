@@ -13,7 +13,7 @@ from src.preferences.templates.template import PromptTemplate
 
 
 def measure_binary_preferences(
-    model: "Model",
+    client: "Model",
     pairs: list[tuple["Task", "Task"]],
     builder: "PromptBuilder",
     temperature: float = 1.0,
@@ -31,7 +31,7 @@ def measure_binary_preferences(
     ]
 
     pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
-    responses = model.generate_batch(requests, max_concurrent, on_complete=pbar.update)
+    responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)
     pbar.close()
 
     successes: list[BinaryPreferenceMeasurement] = []
@@ -54,7 +54,7 @@ def measure_binary_preferences(
 
 
 def measure_ratings(
-    model: "Model",
+    client: "Model",
     tasks: list["Task"],
     builder: "PromptBuilder",
     temperature: float = 1.0,
@@ -72,7 +72,7 @@ def measure_ratings(
     ]
 
     pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
-    responses = model.generate_batch(requests, max_concurrent, on_complete=pbar.update)
+    responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)
     pbar.close()
 
     successes: list[TaskScore] = []
@@ -96,7 +96,7 @@ def measure_ratings(
 
 def measure_with_template(
     template: "PromptTemplate",
-    model: "Model",
+    client: "Model",
     pairs: list[tuple["Task", "Task"]],
     temperature: float = 1.0,
     max_concurrent: int = 10,
@@ -118,7 +118,7 @@ def measure_with_template(
     )
 
     return measure_binary_preferences(
-        model=model,
+        client=client,
         pairs=pairs,
         builder=builder,
         temperature=temperature,

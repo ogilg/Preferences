@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src.models import HyperbolicModel
+from src.models import get_client
 from src.task_data import Task, OriginDataset
 from src.preferences import (
     BinaryPromptBuilder,
@@ -51,18 +51,18 @@ pytestmark = pytest.mark.api
 
 
 @pytest.fixture(scope="module")
-def model():
-    """Shared model instance to minimize setup overhead."""
-    return HyperbolicModel(
+def client():
+    """Shared client instance to minimize setup overhead."""
+    return get_client(
         model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
         max_new_tokens=32,
     )
 
 
 @pytest.fixture(scope="module")
-def completion_model():
-    """Model with higher token limit for task completion tests."""
-    return HyperbolicModel(
+def completion_client():
+    """Client with higher token limit for task completion tests."""
+    return get_client(
         model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
         max_new_tokens=128,
     )
@@ -96,7 +96,7 @@ def creative_task():
 class TestBinaryChoiceRegexFormat:
     """Test binary preference measurement with RegexChoiceFormat."""
 
-    def test_parses_choice_successfully(self, model, math_task, creative_task):
+    def test_parses_choice_successfully(self, client, math_task, creative_task):
         """Should parse A or B from model response."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
@@ -106,7 +106,7 @@ class TestBinaryChoiceRegexFormat:
         )
 
         prompt = builder.build(math_task, creative_task)
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, BinaryPreferenceMeasurement)
@@ -117,7 +117,7 @@ class TestBinaryChoiceRegexFormat:
 class TestBinaryChoiceXMLFormat:
     """Test binary preference measurement with XMLChoiceFormat."""
 
-    def test_parses_choice_from_xml(self, model, math_task, creative_task):
+    def test_parses_choice_from_xml(self, client, math_task, creative_task):
         """Should parse choice from XML tags."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
@@ -127,7 +127,7 @@ class TestBinaryChoiceXMLFormat:
         )
 
         prompt = builder.build(math_task, creative_task)
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, BinaryPreferenceMeasurement)
@@ -137,7 +137,7 @@ class TestBinaryChoiceXMLFormat:
 class TestBinaryChoicePreTaskStated:
     """Test binary preference measurement with PRE_TASK_STATED preference type."""
 
-    def test_pre_task_stated_regex_format(self, model, math_task, creative_task):
+    def test_pre_task_stated_regex_format(self, client, math_task, creative_task):
         """Should parse choice with PRE_TASK_STATED preference type using Regex."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
@@ -149,13 +149,13 @@ class TestBinaryChoicePreTaskStated:
         prompt = builder.build(math_task, creative_task)
         assert prompt.kind == PreferenceType.PRE_TASK_STATED
 
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, BinaryPreferenceMeasurement)
         assert result.result.choice in ("a", "b")
 
-    def test_pre_task_stated_xml_format(self, model, math_task, creative_task):
+    def test_pre_task_stated_xml_format(self, client, math_task, creative_task):
         """Should parse choice with PRE_TASK_STATED preference type using XML."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
@@ -167,7 +167,7 @@ class TestBinaryChoicePreTaskStated:
         prompt = builder.build(math_task, creative_task)
         assert prompt.kind == PreferenceType.PRE_TASK_STATED
 
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, BinaryPreferenceMeasurement)
@@ -177,7 +177,7 @@ class TestBinaryChoicePreTaskStated:
 class TestBinaryChoiceToolUseFormat:
     """Test binary preference measurement with ToolUseChoiceFormat."""
 
-    def test_tool_call_returns_valid_choice(self, model, math_task, creative_task):
+    def test_tool_call_returns_valid_choice(self, client, math_task, creative_task):
         """Tool call should return valid JSON that parses to a choice."""
         response_format = ToolUseChoiceFormat()
         builder = BinaryPromptBuilder(
@@ -190,7 +190,7 @@ class TestBinaryChoiceToolUseFormat:
         prompt = builder.build(math_task, creative_task)
 
         # Call API with tools
-        response_text = model.generate(
+        response_text = client.generate(
             prompt.messages,
             temperature=0.0,
             tools=response_format.tools,
@@ -201,7 +201,7 @@ class TestBinaryChoiceToolUseFormat:
         assert isinstance(result.result, BinaryPreferenceMeasurement)
         assert result.result.choice in ("a", "b")
 
-    def test_tool_call_response_is_valid_json(self, model, math_task, creative_task):
+    def test_tool_call_response_is_valid_json(self, client, math_task, creative_task):
         """Tool call response should be parseable JSON with 'choice' key."""
         import json
 
@@ -215,7 +215,7 @@ class TestBinaryChoiceToolUseFormat:
 
         prompt = builder.build(math_task, creative_task)
 
-        response_text = model.generate(
+        response_text = client.generate(
             prompt.messages,
             temperature=0.0,
             tools=response_format.tools,
@@ -230,7 +230,7 @@ class TestBinaryChoiceToolUseFormat:
 class TestBinaryChoiceCompletionFormat:
     """Test binary preference measurement with CompletionChoiceFormat (revealed preference)."""
 
-    def test_parses_choice_from_task_completion(self, completion_model, math_task, creative_task):
+    def test_parses_choice_from_task_completion(self, completion_client, math_task, creative_task):
         """Model completes a task and we parse which one it chose."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
@@ -242,7 +242,7 @@ class TestBinaryChoiceCompletionFormat:
         prompt = builder.build(math_task, creative_task)
         assert prompt.kind == PreferenceType.PRE_TASK_REVEALED
 
-        response_text = completion_model.generate(prompt.messages, temperature=0.0)
+        response_text = completion_client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, BinaryPreferenceMeasurement)
@@ -250,7 +250,7 @@ class TestBinaryChoiceCompletionFormat:
         # Response should contain actual task completion content
         assert len(response_text) > 10  # Not just "Task A:" but actual content
 
-    def test_response_contains_task_indicator(self, completion_model, math_task, creative_task):
+    def test_response_contains_task_indicator(self, completion_client, math_task, creative_task):
         """Response should start with Task A: or Task B: indicator."""
         builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
@@ -260,7 +260,7 @@ class TestBinaryChoiceCompletionFormat:
         )
 
         prompt = builder.build(math_task, creative_task)
-        response_text = completion_model.generate(prompt.messages, temperature=0.0)
+        response_text = completion_client.generate(prompt.messages, temperature=0.0)
 
         response_lower = response_text.lower()
         assert "task a" in response_lower or "task b" in response_lower
@@ -274,7 +274,7 @@ class TestBinaryChoiceCompletionFormat:
 class TestRatingRegexFormat:
     """Test rating measurement with RegexRatingFormat."""
 
-    def test_parses_rating_successfully(self, model, math_task):
+    def test_parses_rating_successfully(self, client, math_task):
         """Should parse numeric rating from model response."""
         measurer = TaskScoreMeasurer()
         builder = PreTaskRatingPromptBuilder(
@@ -284,7 +284,7 @@ class TestRatingRegexFormat:
         )
 
         prompt = builder.build(math_task)
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, TaskScore)
@@ -294,7 +294,7 @@ class TestRatingRegexFormat:
 class TestRatingXMLFormat:
     """Test rating measurement with XMLRatingFormat."""
 
-    def test_parses_rating_from_xml(self, model, creative_task):
+    def test_parses_rating_from_xml(self, client, creative_task):
         """Should parse rating from XML tags."""
         measurer = TaskScoreMeasurer()
         builder = PreTaskRatingPromptBuilder(
@@ -304,7 +304,7 @@ class TestRatingXMLFormat:
         )
 
         prompt = builder.build(creative_task)
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, TaskScore)
@@ -319,7 +319,7 @@ class TestRatingXMLFormat:
 class TestPostTaskRatingRegexFormat:
     """Test post-task rating measurement with RegexRatingFormat."""
 
-    def test_parses_post_task_rating_successfully(self, model, math_task):
+    def test_parses_post_task_rating_successfully(self, client, math_task):
         """Should parse rating after task completion."""
         measurer = TaskScoreMeasurer()
         builder = PostTaskRatingPromptBuilder(
@@ -334,7 +334,7 @@ class TestPostTaskRatingRegexFormat:
         assert prompt.kind == PreferenceType.POST_TASK_STATED
         assert len(prompt.messages) == 3  # user, assistant, user
 
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, TaskScore)
@@ -344,7 +344,7 @@ class TestPostTaskRatingRegexFormat:
 class TestPostTaskRatingXMLFormat:
     """Test post-task rating measurement with XMLRatingFormat."""
 
-    def test_parses_post_task_rating_from_xml(self, model, creative_task):
+    def test_parses_post_task_rating_from_xml(self, client, creative_task):
         """Should parse post-task rating from XML tags."""
         measurer = TaskScoreMeasurer()
         builder = PostTaskRatingPromptBuilder(
@@ -359,7 +359,7 @@ class TestPostTaskRatingXMLFormat:
         assert prompt.kind == PreferenceType.POST_TASK_STATED
         assert len(prompt.messages) == 3  # user, assistant, user
 
-        response_text = model.generate(prompt.messages, temperature=0.0)
+        response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
 
         assert isinstance(result.result, TaskScore)
@@ -369,7 +369,7 @@ class TestPostTaskRatingXMLFormat:
 class TestPostTaskRatingToolUseFormat:
     """Test post-task rating measurement with ToolUseRatingFormat."""
 
-    def test_tool_call_returns_valid_rating(self, model, math_task):
+    def test_tool_call_returns_valid_rating(self, client, math_task):
         """Tool call should return valid JSON rating after task completion."""
         response_format = ToolUseRatingFormat()
         builder = PostTaskRatingPromptBuilder(
@@ -383,7 +383,7 @@ class TestPostTaskRatingToolUseFormat:
         assert prompt.kind == PreferenceType.POST_TASK_STATED
         assert len(prompt.messages) == 3  # user, assistant, user
 
-        response_text = model.generate(
+        response_text = client.generate(
             prompt.messages,
             temperature=0.0,
             tools=response_format.tools,
@@ -393,7 +393,7 @@ class TestPostTaskRatingToolUseFormat:
         assert isinstance(result.result, TaskScore)
         assert isinstance(result.result.score, float)
 
-    def test_tool_call_response_is_valid_json(self, model, creative_task):
+    def test_tool_call_response_is_valid_json(self, client, creative_task):
         """Tool call response should be parseable JSON with 'rating' key."""
         import json
 
@@ -407,7 +407,7 @@ class TestPostTaskRatingToolUseFormat:
         completion_text = "Waves crash on shore\nSalt spray kisses the warm wind\nPeace beneath the blue"
         prompt = builder.build(creative_task, completion_text)
 
-        response_text = model.generate(
+        response_text = client.generate(
             prompt.messages,
             temperature=0.0,
             tools=response_format.tools,
@@ -421,7 +421,7 @@ class TestPostTaskRatingToolUseFormat:
 class TestRatingToolUseFormat:
     """Test rating measurement with ToolUseRatingFormat."""
 
-    def test_tool_call_returns_valid_rating(self, model, math_task):
+    def test_tool_call_returns_valid_rating(self, client, math_task):
         """Tool call should return valid JSON that parses to a rating."""
         response_format = ToolUseRatingFormat()
         builder = PreTaskRatingPromptBuilder(
@@ -433,7 +433,7 @@ class TestRatingToolUseFormat:
         prompt = builder.build(math_task)
 
         # Call API with tools
-        response_text = model.generate(
+        response_text = client.generate(
             prompt.messages,
             temperature=0.0,
             tools=response_format.tools,
@@ -444,7 +444,7 @@ class TestRatingToolUseFormat:
         assert isinstance(result.result, TaskScore)
         assert isinstance(result.result.score, float)
 
-    def test_tool_call_response_is_valid_json(self, model, creative_task):
+    def test_tool_call_response_is_valid_json(self, client, creative_task):
         """Tool call response should be parseable JSON with 'rating' key."""
         import json
 
@@ -457,7 +457,7 @@ class TestRatingToolUseFormat:
 
         prompt = builder.build(creative_task)
 
-        response_text = model.generate(
+        response_text = client.generate(
             prompt.messages,
             temperature=0.0,
             tools=response_format.tools,
@@ -477,7 +477,7 @@ class TestRatingToolUseFormat:
 class TestMeasurePreferences:
     """Test the measure_binary_preferences and measure_ratings functions."""
 
-    def test_binary_measurement_pipeline(self, model, math_task, creative_task):
+    def test_binary_measurement_pipeline(self, client, math_task, creative_task):
         """Should run binary measurements and return valid results."""
         binary_builder = BinaryPromptBuilder(
             measurer=BinaryPreferenceMeasurer(),
@@ -488,7 +488,7 @@ class TestMeasurePreferences:
 
         pairs = [(math_task, creative_task)]
         batch = measure_binary_preferences(
-            model=model,
+            client=client,
             pairs=pairs,
             builder=binary_builder,
             temperature=0.0,
@@ -498,7 +498,7 @@ class TestMeasurePreferences:
         assert isinstance(batch.successes[0], BinaryPreferenceMeasurement)
         assert batch.successes[0].choice in ("a", "b")
 
-    def test_rating_measurement_pipeline(self, model, math_task, creative_task):
+    def test_rating_measurement_pipeline(self, client, math_task, creative_task):
         """Should run rating measurements and return valid results."""
         measurer = TaskScoreMeasurer()
         rating_builder = PreTaskRatingPromptBuilder(
@@ -509,7 +509,7 @@ class TestMeasurePreferences:
 
         tasks = [math_task, creative_task]
         batch = measure_ratings(
-            model=model,
+            client=client,
             tasks=tasks,
             builder=rating_builder,
             temperature=0.0,
@@ -520,7 +520,7 @@ class TestMeasurePreferences:
             assert isinstance(score, TaskScore)
             assert isinstance(score.score, float)
 
-    def test_measurement_with_recorder(self, model, math_task, creative_task):
+    def test_measurement_with_recorder(self, client, math_task, creative_task):
         """Should record measurements with different formats to YAML file."""
         from pathlib import Path
         from src import MeasurementRecorder
@@ -537,7 +537,7 @@ class TestMeasurePreferences:
         def record_measurement(recorder, builder, tasks_for_record, measurement_type):
             """Helper to run a measurement and record it."""
             prompt = builder.build(*tasks_for_record)
-            response_text = model.generate(prompt.messages, temperature=0.0, tools=prompt.response_format.tools)
+            response_text = client.generate(prompt.messages, temperature=0.0, tools=prompt.response_format.tools)
 
             try:
                 response = prompt.measurer.parse(response_text, prompt)
@@ -552,7 +552,7 @@ class TestMeasurePreferences:
                 f"[{m['role']}]\n{m['content']}" for m in prompt.messages
             )
             record = MeasurementRecord(
-                model=model.model_name,
+                client=client.model_name,
                 measurement_type=measurement_type,
                 tasks=[{"id": t.id, "prompt": t.prompt} for t in tasks_for_record],
                 response_format=type(prompt.response_format).__name__,
@@ -581,7 +581,7 @@ class TestMeasurePreferences:
                 record_measurement(recorder, builder, (math_task, creative_task), PreferenceType.PRE_TASK_STATED.name)
 
             # Completion format (revealed preference)
-            completion_model = HyperbolicModel(
+            completion_client = get_client(
                 model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
                 max_new_tokens=128,
             )
@@ -592,7 +592,7 @@ class TestMeasurePreferences:
                 template=BINARY_COMPLETION_TEMPLATE,
             )
             prompt = completion_builder.build(math_task, creative_task)
-            response_text = completion_model.generate(prompt.messages, temperature=0.0)
+            response_text = completion_client.generate(prompt.messages, temperature=0.0)
             try:
                 response = prompt.measurer.parse(response_text, prompt)
                 result_dict = {"choice": response.result.choice}
@@ -600,7 +600,7 @@ class TestMeasurePreferences:
                 result_dict = {"error": str(e)}
             prompt_text = "\n\n".join(f"[{m['role']}]\n{m['content']}" for m in prompt.messages)
             recorder.record(MeasurementRecord(
-                model=completion_model.model_name,
+                model=completion_client.model_name,
                 measurement_type=PreferenceType.PRE_TASK_REVEALED.name,
                 tasks=[{"id": math_task.id, "prompt": math_task.prompt}, {"id": creative_task.id, "prompt": creative_task.prompt}],
                 response_format=type(completion_builder.response_format).__name__,
@@ -633,7 +633,7 @@ class TestMeasurePreferences:
             )
             completion_text = "The answer is 4."
             prompt = post_task_builder.build(math_task, completion_text)
-            response_text = model.generate(prompt.messages, temperature=0.0)
+            response_text = client.generate(prompt.messages, temperature=0.0)
             try:
                 response = prompt.measurer.parse(response_text, prompt)
                 result_dict = {"score": response.result.score}
@@ -641,7 +641,7 @@ class TestMeasurePreferences:
                 result_dict = {"error": str(e)}
             prompt_text = "\n\n".join(f"[{m['role']}]\n{m['content']}" for m in prompt.messages)
             recorder.record(MeasurementRecord(
-                model=model.model_name,
+                client=client.model_name,
                 measurement_type=PreferenceType.POST_TASK_STATED.name,
                 tasks=[{"id": math_task.id, "prompt": math_task.prompt}],
                 response_format=type(post_task_builder.response_format).__name__,

@@ -1,7 +1,7 @@
-from .hyperbolic import OpenAICompatibleModel
+from .hyperbolic import OpenAICompatibleClient
 
 
-class CerebrasModel(OpenAICompatibleModel):
+class CerebrasClient(OpenAICompatibleClient):
     _api_key_env_var = "CEREBRAS_API_KEY"
     _base_url = "https://api.cerebras.ai/v1"
     _default_model = "llama3.1-8b"

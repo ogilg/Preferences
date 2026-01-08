@@ -6,7 +6,7 @@ from typing import TypedDict
 
 import yaml
 
-from src.models.hyperbolic import GenerateRequest, HyperbolicModel
+from src.models import GenerateRequest, OpenAICompatibleClient
 from src.preferences.templates.generator_config import (
     RATING_TASK_LABELS,
     TASK_LABELS,
@@ -86,7 +86,7 @@ def _build_instructions(config: GeneratorConfig) -> dict[tuple[int, str], str]:
 def _translate_instructions(
     instructions: dict[tuple[int, str], str],
     config: GeneratorConfig,
-    model: "HyperbolicModel",
+    client: OpenAICompatibleClient,
     max_concurrent: int,
 ) -> dict[tuple[int, str], str]:
     non_english_languages = [lang for lang in config.languages if lang != "en"]
@@ -103,7 +103,7 @@ def _translate_instructions(
             translation_requests.append((phrasing_idx, lang, request))
 
     requests = [req for _, _, req in translation_requests]
-    results = model.generate_batch(requests, max_concurrent=max_concurrent)
+    results = client.generate_batch(requests, max_concurrent=max_concurrent)
 
     for (phrasing_idx, lang, _), result in zip(translation_requests, results):
         if result.ok:
@@ -218,11 +218,11 @@ def _to_output_format(
 
 def generate_templates(
     config: GeneratorConfig,
-    model: "HyperbolicModel",
+    client: OpenAICompatibleClient,
     max_concurrent: int = 10,
 ) -> list[dict]:
     instructions = _build_instructions(config)
-    instructions = _translate_instructions(instructions, config, model, max_concurrent)
+    instructions = _translate_instructions(instructions, config, client, max_concurrent)
     variants = _build_variants(instructions, config)
     return _to_output_format(variants, config)
 
@@ -234,16 +234,18 @@ def write_templates_yaml(templates: list[dict], path: Path) -> None:
 
 def generate_and_write(
     config: GeneratorConfig,
-    model: "HyperbolicModel",
+    client: OpenAICompatibleClient,
     max_concurrent: int = 10,
 ) -> list[dict]:
-    templates = generate_templates(config, model, max_concurrent)
+    templates = generate_templates(config, client, max_concurrent)
     write_templates_yaml(templates, config.output_path)
     return templates
 
 
 if __name__ == "__main__":
     import sys
+
+    from src.models import get_client
 
     if len(sys.argv) != 2:
         print("Usage: python -m src.preferences.templates.generator <config.yaml>")
@@ -252,10 +254,8 @@ if __name__ == "__main__":
     config_path = Path(sys.argv[1])
     config, model_name = load_config_from_yaml(config_path)
 
-    from src.models.hyperbolic import HyperbolicModel
-
-    model = HyperbolicModel(model_name=model_name)
+    client = get_client(model_name=model_name)
 
     print(f"Generating templates from {config_path}...")
-    templates = generate_and_write(config, model)
+    templates = generate_and_write(config, client)
     print(f"Generated {len(templates)} templates to {config.output_path}")

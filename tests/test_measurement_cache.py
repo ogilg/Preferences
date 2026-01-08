@@ -11,8 +11,8 @@ from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
-class MockHyperbolicModel:
-    """Mock that matches HyperbolicModel interface for testing."""
+class MockClient:
+    """Mock that matches inference client interface for testing."""
 
     def __init__(self, model_name: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"):
         self.model_name = model_name
@@ -62,7 +62,7 @@ class TestMeasurementCacheUnit:
         self, tmp_path: Path, sample_template
     ):
         """Test cache directory is named correctly and empty cache returns empty set."""
-        model = MockHyperbolicModel()
+        model = MockClient()
         cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
 
         # Directory naming uses template name and shortened model name
@@ -76,7 +76,7 @@ class TestMeasurementCacheUnit:
         self, tmp_path: Path, sample_template, sample_measurements
     ):
         """Test append creates both config and measurements files on first write."""
-        model = MockHyperbolicModel()
+        model = MockClient()
         cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
 
         cache.append(sample_measurements)
@@ -101,7 +101,7 @@ class TestMeasurementCacheUnit:
 
     def test_append_empty_list_does_nothing(self, tmp_path: Path, sample_template):
         """Appending empty list should not create any files."""
-        model = MockHyperbolicModel()
+        model = MockClient()
         cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
 
         cache.append([])
@@ -113,7 +113,7 @@ class TestMeasurementCacheUnit:
         self, tmp_path: Path, sample_template, sample_measurements
     ):
         """Test filtering measurements by task IDs."""
-        model = MockHyperbolicModel()
+        model = MockClient()
         cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
         cache.append(sample_measurements)
 
@@ -176,7 +176,7 @@ class TestMeasurementCacheIntegration:
 
         This tests the core use case: collecting measurements in batches over time.
         """
-        model = MockHyperbolicModel()
+        model = MockClient()
         cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
 
         # First batch
@@ -227,7 +227,7 @@ class TestMeasurementCacheIntegration:
 
         Simulates resuming a measurement session.
         """
-        model = MockHyperbolicModel()
+        model = MockClient()
 
         # First session - append some measurements
         cache1 = MeasurementCache(sample_template, model, results_dir=tmp_path)
@@ -260,7 +260,7 @@ class TestMeasurementCacheIntegration:
 
         Verifies that measurements can be fully reconstructed with Task objects.
         """
-        model = MockHyperbolicModel()
+        model = MockClient()
         cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
 
         original = [
@@ -305,8 +305,8 @@ class TestMeasurementCacheIntegration:
             name="template_two",
             required_placeholders=BINARY_PLACEHOLDERS,
         )
-        model1 = MockHyperbolicModel("meta-llama/Meta-Llama-3.1-8B-Instruct")
-        model2 = MockHyperbolicModel("meta-llama/Meta-Llama-3.1-70B-Instruct")
+        model1 = MockClient("meta-llama/Meta-Llama-3.1-8B-Instruct")
+        model2 = MockClient("meta-llama/Meta-Llama-3.1-70B-Instruct")
 
         cache1 = MeasurementCache(template1, model1, results_dir=tmp_path)
         cache2 = MeasurementCache(template2, model1, results_dir=tmp_path)

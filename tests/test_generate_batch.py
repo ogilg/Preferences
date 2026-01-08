@@ -171,9 +171,9 @@ class TestGenerateBatchIntegration:
     """Integration tests for generate_batch with real API calls."""
 
     @pytest.fixture(scope="class")
-    def model(self):
-        from src.models import HyperbolicModel
-        return HyperbolicModel(
+    def client(self):
+        from src.models import get_client
+        return get_client(
             model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
             max_new_tokens=16,
         )
@@ -185,7 +185,7 @@ class TestGenerateBatchIntegration:
         yield
         time.sleep(2)  # 2 second delay after each test
 
-    def test_batch_returns_valid_responses(self, model):
+    def test_batch_returns_valid_responses(self, client):
         """Batch should return BatchResult objects with valid responses."""
         requests = [
             GenerateRequest(
@@ -202,7 +202,7 @@ class TestGenerateBatchIntegration:
             ),
         ]
 
-        results = model.generate_batch(requests, max_concurrent=3)
+        results = client.generate_batch(requests, max_concurrent=3)
 
         assert len(results) == 3
         assert all(isinstance(r, BatchResult) for r in results)
@@ -210,7 +210,7 @@ class TestGenerateBatchIntegration:
             assert r.ok, f"Request failed: {r.error_details()}"
             assert len(r.unwrap()) > 0
 
-    def test_batch_completes_faster_than_serial_estimate(self, model):
+    def test_batch_completes_faster_than_serial_estimate(self, client):
         """Batch of N requests should complete in less than N * single_request_time."""
         import time
 
@@ -220,7 +220,7 @@ class TestGenerateBatchIntegration:
             temperature=0.0,
         )
         start = time.time()
-        model.generate(single_req.messages, single_req.temperature)
+        client.generate(single_req.messages, single_req.temperature)
         single_time = time.time() - start
 
         # Now run a batch of 10 requests
@@ -233,7 +233,7 @@ class TestGenerateBatchIntegration:
         ]
 
         start = time.time()
-        batch_results = model.generate_batch(requests, max_concurrent=10)
+        batch_results = client.generate_batch(requests, max_concurrent=10)
         batch_time = time.time() - start
 
         # Batch should be faster than 10 * single_time
@@ -253,7 +253,7 @@ class TestGenerateBatchIntegration:
         # Batch should be faster than serial (allowing for variance)
         assert speedup > 1.0, f"Expected speedup > 1.0, got {speedup:.2f}x"
 
-    def test_batch_preserves_order(self, model):
+    def test_batch_preserves_order(self, client):
         """Results should be in the same order as requests."""
         requests = [
             GenerateRequest(
@@ -270,7 +270,7 @@ class TestGenerateBatchIntegration:
             ),
         ]
 
-        results = model.generate_batch(requests, max_concurrent=3)
+        results = client.generate_batch(requests, max_concurrent=3)
 
         for r in results:
             assert r.ok, f"Request failed: {r.error_details()}"
@@ -280,7 +280,7 @@ class TestGenerateBatchIntegration:
         assert "4" in results[1].unwrap()
         assert "6" in results[2].unwrap()
 
-    def test_batch_with_tools(self, model):
+    def test_batch_with_tools(self, client):
         """Batch should work with tool use requests."""
         import json
 
@@ -317,7 +317,7 @@ class TestGenerateBatchIntegration:
             ),
         ]
 
-        results = model.generate_batch(requests, max_concurrent=2)
+        results = client.generate_batch(requests, max_concurrent=2)
 
         assert len(results) == 2
         for r in results:

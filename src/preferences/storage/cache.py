@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Literal
 
-from src.models import HyperbolicModel
+from src.models import OpenAICompatibleClient
 from src.preferences.storage.base import (
     load_yaml,
     model_short_name,
@@ -31,12 +31,12 @@ class MeasurementCache:
     def __init__(
         self,
         template: PromptTemplate,
-        model: HyperbolicModel,
+        client: OpenAICompatibleClient,
         results_dir: Path = MEASUREMENTS_DIR,
     ):
         self.template = template
-        self.model = model
-        self.model_short = model_short_name(model.model_name)
+        self.client = client
+        self.model_short = model_short_name(client.model_name)
         self.results_dir = Path(results_dir)
         self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}"
         self._measurements_path = self.cache_dir / "measurements.yaml"
@@ -97,7 +97,7 @@ class MeasurementCache:
         config = {
             "template_name": self.template.name,
             "template_tags": self.template.tags_dict,
-            "model": self.model.model_name,
+            "model": self.client.model_name,
             "model_short": self.model_short,
         }
         save_yaml(config, self._config_path)

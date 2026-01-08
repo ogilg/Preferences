@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.models import HyperbolicModel
+from src.models import get_client
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
@@ -39,7 +39,7 @@ def run_active_learning(config_path: Path) -> None:
 
     templates = load_templates_from_yaml(config.templates)
     tasks = load_tasks(n=config.n_tasks, origin=config.get_origin_dataset())
-    model = HyperbolicModel(model_name=config.model)
+    client = get_client(model_name=config.model)
 
     n_params = (config.n_tasks - 1) + config.n_tasks
     max_iter = config.fitting.max_iter if config.fitting.max_iter else max(2000, n_params * 50)
@@ -61,7 +61,7 @@ def run_active_learning(config_path: Path) -> None:
         print(f"Template: {template.name}")
         print(f"{'='*60}")
 
-        cache = MeasurementCache(template, model)
+        cache = MeasurementCache(template, client)
         state = ActiveLearningState(tasks=tasks)
         iteration_history = []
 
@@ -84,7 +84,7 @@ def run_active_learning(config_path: Path) -> None:
 
             # Run measurements
             batch = measure_with_template(
-                template, model, replicated_pairs, config.temperature, config.max_concurrent
+                template, client, replicated_pairs, config.temperature, config.max_concurrent
             )
             print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from src.models import HyperbolicModel
+from src.models import get_client
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml, PreTaskRatingPromptBuilder
 from src.preferences.measurement import measure_ratings, TaskScoreMeasurer, RegexRatingFormat
@@ -16,7 +16,7 @@ from src.experiments.sensitivity_experiments.rating_correlation import compute_m
 
 def measure_ratings_with_template(
     template,
-    model,
+    client,
     tasks,
     temperature: float,
     max_concurrent: int,
@@ -31,7 +31,7 @@ def measure_ratings_with_template(
         template=template,
     )
     batch = measure_ratings(
-        model=model,
+        client=client,
         tasks=tasks,
         builder=builder,
         temperature=temperature,
@@ -52,7 +52,7 @@ def main():
 
     templates = load_templates_from_yaml(config.templates)
     tasks = load_tasks(n=config.n_tasks, origin=config.get_origin_dataset())
-    model = HyperbolicModel(model_name=config.model)
+    client = get_client(model_name=config.model)
 
     task_list = tasks * config.samples_per_task
 
@@ -61,7 +61,7 @@ def main():
     measured = 0
     skipped = 0
     for template in templates:
-        if ratings_exist(template, model):
+        if ratings_exist(template, client):
             print(f"Skipping {template.name} (already measured)")
             skipped += 1
             continue
@@ -70,7 +70,7 @@ def main():
 
         batch = measure_ratings_with_template(
             template,
-            model,
+            client,
             task_list,
             config.temperature,
             config.max_concurrent,
@@ -84,7 +84,7 @@ def main():
 
         run_path = save_ratings(
             template=template,
-            model=model,
+            client=client,
             scores=batch.successes,
             temperature=config.temperature,
         )

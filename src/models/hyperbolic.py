@@ -61,7 +61,7 @@ class BatchResult:
         return "\n  ".join(details)
 
 
-class OpenAICompatibleModel(ABC):
+class OpenAICompatibleClient(ABC):
     """Base class for OpenAI-compatible API providers."""
 
     @property
@@ -222,7 +222,7 @@ class OpenAICompatibleModel(ABC):
         return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete, timeout))
 
 
-class HyperbolicModel(OpenAICompatibleModel):
+class HyperbolicClient(OpenAICompatibleClient):
     _api_key_env_var = "HYPERBOLIC_API_KEY"
     _base_url = "https://api.hyperbolic.xyz/v1"
     _default_model = "meta-llama/Meta-Llama-3.1-8B-Instruct"
