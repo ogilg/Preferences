@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, Callable
 
@@ -44,7 +45,6 @@ class BatchResult:
 
         details = [f"{type(self.error).__name__}: {self.error}"]
 
-        # Extract OpenAI/API-specific error attributes
         if hasattr(self.error, "status_code"):
             details.append(f"Status code: {self.error.status_code}")
         if hasattr(self.error, "body"):
@@ -61,18 +61,29 @@ class BatchResult:
         return "\n  ".join(details)
 
 
-class HyperbolicModel:
-    """Model via Hyperbolic API (OpenAI-compatible)."""
+class OpenAICompatibleModel(ABC):
+    """Base class for OpenAI-compatible API providers."""
+
+    @property
+    @abstractmethod
+    def _api_key_env_var(self) -> str: ...
+
+    @property
+    @abstractmethod
+    def _base_url(self) -> str: ...
+
+    @property
+    @abstractmethod
+    def _default_model(self) -> str: ...
 
     def __init__(
         self,
-        model_name: str = "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        model_name: str | None = None,
         max_new_tokens: int = 256,
     ):
-        self.model_name = model_name
+        self.model_name = model_name or self._default_model
         self.max_new_tokens = max_new_tokens
-        self._api_key = os.environ.get("HYPERBOLIC_API_KEY")
-        self._base_url = "https://api.hyperbolic.xyz/v1"
+        self._api_key = os.environ[self._api_key_env_var]
         self.client = OpenAI(
             api_key=self._api_key,
             base_url=self._base_url,
@@ -110,7 +121,6 @@ class HyperbolicModel:
         temperature: float = 1.0,
         tools: list[dict[str, Any]] | None = None,
     ) -> str:
-        """If tools provided, returns JSON of tool call args; raises ToolCallError on failure."""
         kwargs: dict[str, Any] = {
             "model": self.model_name,
             "messages": messages,
@@ -153,7 +163,6 @@ class HyperbolicModel:
         timeout: float = 10.0,
     ) -> list[BatchResult]:
         semaphore = asyncio.Semaphore(max_concurrent)
-        # Create a fresh async client for this event loop
         async_client = self._create_async_client()
 
         async def process_one(request: GenerateRequest) -> BatchResult:
@@ -181,7 +190,7 @@ class HyperbolicModel:
                         if on_complete:
                             on_complete()
                         return BatchResult(response=text, error=None)
-                    except asyncio.TimeoutError as e:
+                    except asyncio.TimeoutError:
                         if on_complete:
                             on_complete()
                         return BatchResult(response=None, error=TimeoutError(f"Request timed out after {timeout}s"))
@@ -196,7 +205,6 @@ class HyperbolicModel:
                         if on_complete:
                             on_complete()
                         return BatchResult(response=None, error=e)
-            # Should never reach here, but satisfy type checker
             return BatchResult(response=None, error=RuntimeError("Retry loop exited unexpectedly"))
 
         try:
@@ -211,5 +219,10 @@ class HyperbolicModel:
         on_complete: Callable[[], None] | None = None,
         timeout: float = 60.0,
     ) -> list[BatchResult]:
-        """on_complete is called after each request; results match input order."""
         return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete, timeout))
+
+
+class HyperbolicModel(OpenAICompatibleModel):
+    _api_key_env_var = "HYPERBOLIC_API_KEY"
+    _base_url = "https://api.hyperbolic.xyz/v1"
+    _default_model = "meta-llama/Meta-Llama-3.1-8B-Instruct"
