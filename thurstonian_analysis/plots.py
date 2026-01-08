@@ -6,7 +6,7 @@ from matplotlib.figure import Figure
 from scipy.stats import spearmanr
 
 from src.preferences.ranking.thurstonian import ThurstonianResult
-from data_analysis.al_comparison import ConvergenceTrajectory
+from thurstonian_analysis.al_comparison import ConvergenceTrajectory
 
 
 def plot_utility_scatter(

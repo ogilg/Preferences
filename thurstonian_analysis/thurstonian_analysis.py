@@ -1,11 +1,11 @@
 """Thurstonian model analysis and tests.
 
 Tests (run with pytest):
-    pytest data_analysis/thurstonian_analysis.py
+    pytest thurstonian_analysis/thurstonian_analysis.py
 
 Real data analysis:
-    python -m data_analysis.thurstonian_analysis          # analyze real data from results/measurements/
-    python -m data_analysis.thurstonian_analysis --synthetic  # run synthetic diagnostics only
+    python -m thurstonian_analysis.thurstonian_analysis          # analyze real data from results/measurements/
+    python -m thurstonian_analysis.thurstonian_analysis --synthetic  # run synthetic diagnostics only
 """
 
 import argparse
@@ -28,11 +28,9 @@ from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
-OUTPUT_DIR = Path(__file__).parent / "plots" / "thurstonian"
-RESULTS_DIR = Path(__file__).parent.parent / "results" / "measurements"
+from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
 
-# Number of tasks. Synthetic uses exactly this; real data filters to >= this.
-N_TASKS = 50
+OUTPUT_DIR = Path(__file__).parent / "plots" / "thurstonian"
 
 
 def make_task(id: str) -> Task:

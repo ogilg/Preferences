@@ -23,11 +23,9 @@ from src.preferences.ranking.active_learning import generate_d_regular_pairs
 from src.task_data import Task, OriginDataset
 
 
-OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
-RESULTS_DIR = Path(__file__).parent.parent / "results" / "measurements"
+from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
 
-# Number of tasks to use. Synthetic uses exactly this; real data filters to >= this.
-N_TASKS = 30
+OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
 
 LAMBDAS = np.logspace(-2, np.log10(200), 12)
 

@@ -2,7 +2,7 @@
 
 Uses only real measurement data from results/measurements/, aggregated across all prompt templates.
 
-Run: python -m data_analysis.bounds_sensitivity
+Run: python -m thurstonian_analysis.bounds_sensitivity
 """
 
 from dataclasses import dataclass
@@ -22,11 +22,9 @@ from src.preferences.ranking.thurstonian import (
 from src.task_data import Task, OriginDataset
 
 
-OUTPUT_DIR = Path(__file__).parent / "plots" / "bounds_sensitivity"
-RESULTS_DIR = Path(__file__).parent.parent / "results" / "measurements"
+from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
 
-# Minimum number of tasks for a dataset to be included in analysis.
-N_TASKS = 30
+OUTPUT_DIR = Path(__file__).parent / "plots" / "bounds_sensitivity"
 
 
 @dataclass

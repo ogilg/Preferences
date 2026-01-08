@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import yaml
 
-from data_analysis import (
+from thurstonian_analysis import (
     run_synthetic_comparison,
     run_real_data_comparison,
     plot_utility_scatter,
@@ -17,7 +17,7 @@ from data_analysis import (
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
-OUTPUT_DIR = Path("data_analysis/plots/active_learning")
+OUTPUT_DIR = Path("thurstonian_analysis/plots/active_learning")
 
 
 def load_real_data(run_dir: Path) -> tuple[list[BinaryPreferenceMeasurement], list[Task]]:
