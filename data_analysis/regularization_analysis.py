@@ -271,7 +271,7 @@ def plot_regularization_path(results: RegularizationResults, output_path: Path):
 
 def main():
     parser = argparse.ArgumentParser(description="Regularization path analysis")
-    parser.add_argument("--real", action="store_true", help="Use real data from results/binary/")
+    parser.add_argument("--real", action="store_true", help="Use real data from results/measurements/")
     parser.add_argument("--both", action="store_true", help="Run on both synthetic and real data")
     args = parser.parse_args()
 

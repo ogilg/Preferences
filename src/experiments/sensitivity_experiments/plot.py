@@ -1,8 +1,9 @@
-"""Usage: python -m src.experiments.sensitivity_experiments.plot results/"""
+"""Usage: python -m src.experiments.sensitivity_experiments.plot results/measurements/"""
 
 from __future__ import annotations
 
 import argparse
+from dataclasses import dataclass
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -10,41 +11,89 @@ import numpy as np
 import yaml
 
 from src.experiments.correlation import compute_pairwise_correlations
-from src.preferences.storage import (
-    list_runs,
-    load_thurstonian_data,
-    BinaryRunConfig,
-    ThurstonianData,
-    RESULTS_DIR,
-)
 from src.experiments.sensitivity_experiments.sensitivity import compute_sensitivities
+from src.preferences.ranking import PairwiseData, fit_thurstonian
+from src.preferences.storage import MEASUREMENTS_DIR, load_yaml
+from src.task_data import OriginDataset, Task
 
 
-def load_all_runs(results_dir: Path) -> list[tuple[BinaryRunConfig, ThurstonianData]]:
+@dataclass
+class RunConfig:
+    template_name: str
+    template_tags: dict
+    model_short: str
+    run_dir: Path
+
+
+def list_runs(results_dir: Path) -> list[RunConfig]:
+    runs = []
+    if not results_dir.exists():
+        return runs
+
+    for run_dir in sorted(results_dir.iterdir()):
+        config_path = run_dir / "config.yaml"
+        if config_path.exists():
+            config = load_yaml(config_path)
+            runs.append(RunConfig(
+                template_name=config["template_name"],
+                template_tags=config["template_tags"],
+                model_short=config["model_short"],
+                run_dir=run_dir,
+            ))
+    return runs
+
+
+def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
+    """Load measurements and fit thurstonian model, returning (mu, task_ids)."""
+    measurements_path = run_dir / "measurements.yaml"
+    if not measurements_path.exists():
+        raise FileNotFoundError(f"No measurements.yaml in {run_dir}")
+
+    raw = load_yaml(measurements_path)
+
+    task_ids = sorted({m["task_a"] for m in raw} | {m["task_b"] for m in raw})
+    tasks = [Task(prompt="", origin=OriginDataset.WILDCHAT, id=tid, metadata={}) for tid in task_ids]
+    id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
+
+    n = len(tasks)
+    wins = np.zeros((n, n), dtype=np.int32)
+    for m in raw:
+        i, j = id_to_idx[m["task_a"]], id_to_idx[m["task_b"]]
+        if m["choice"] == "a":
+            wins[i, j] += 1
+        else:
+            wins[j, i] += 1
+
+    data = PairwiseData(tasks=tasks, wins=wins)
+    result = fit_thurstonian(data)
+
+    return result.mu, task_ids
+
+
+def load_all_runs(results_dir: Path) -> list[tuple[RunConfig, np.ndarray, list[str]]]:
+    """Returns list of (config, mu, task_ids)."""
     runs = list_runs(results_dir)
     loaded = []
     for config in runs:
-        run_dir = results_dir / f"{config.template_id}_{config.model_short}"
         try:
-            thurstonian = load_thurstonian_data(run_dir)
-            loaded.append((config, thurstonian))
+            mu, task_ids = load_run_utilities(config.run_dir)
+            loaded.append((config, mu, task_ids))
         except FileNotFoundError:
-            print(f"Warning: Could not load thurstonian data for {config.template_name}")
+            print(f"Warning: Could not load data for {config.template_name}")
     return loaded
 
 
 def compute_all_field_sensitivities(
-    runs: list[tuple[BinaryRunConfig, ThurstonianData]],
+    runs: list[tuple[RunConfig, np.ndarray, list[str]]],
 ) -> tuple[list[dict], list[dict]]:
     """Returns (sensitivities, correlations)."""
-    # Prepare data for unified correlation function
     results = {
-        config.template_name: (thurs.mu, thurs.task_ids)
-        for config, thurs in runs
+        config.template_name: (mu, task_ids)
+        for config, mu, task_ids in runs
     }
     tags = {
         config.template_name: config.template_tags
-        for config, thurs in runs
+        for config, _, _ in runs
     }
 
     correlations = compute_pairwise_correlations(results, tags=tags)
@@ -132,8 +181,8 @@ def main():
         "results_dir",
         type=Path,
         nargs="?",
-        default=RESULTS_DIR,
-        help="Directory containing measurement runs (default: results/)",
+        default=MEASUREMENTS_DIR,
+        help="Directory containing measurement runs (default: results/measurements/)",
     )
     parser.add_argument(
         "--output",

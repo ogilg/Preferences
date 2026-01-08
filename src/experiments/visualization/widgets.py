@@ -1,28 +1,56 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 
 import ipywidgets as widgets
 import matplotlib.pyplot as plt
+import numpy as np
 from IPython.display import display
 
-from src.preferences.storage import (
-    load_thurstonian_data,
-    load_run,
-    MeasurementRun,
-    ThurstonianData,
-    RESULTS_DIR,
-)
-from .plots import plot_utility_ranking
+from src.preferences.ranking import PairwiseData, ThurstonianResult, fit_thurstonian
+from src.preferences.storage import MEASUREMENTS_DIR, load_yaml
+from src.preferences.templates.template import load_templates_from_yaml
+from src.task_data import OriginDataset, Task
+
+
+@dataclass
+class RunConfig:
+    template_name: str
+    template_tags: dict
+    model_short: str
+    run_dir: Path
+
+
+def load_thurstonian_from_measurements(run_dir: Path) -> ThurstonianResult:
+    """Fit thurstonian model from measurements in run directory."""
+    measurements_path = run_dir / "measurements.yaml"
+    raw = load_yaml(measurements_path)
+
+    task_ids = sorted({m["task_a"] for m in raw} | {m["task_b"] for m in raw})
+    tasks = [Task(prompt="", origin=OriginDataset.WILDCHAT, id=tid, metadata={}) for tid in task_ids]
+    id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
+
+    n = len(tasks)
+    wins = np.zeros((n, n), dtype=np.int32)
+    for m in raw:
+        i, j = id_to_idx[m["task_a"]], id_to_idx[m["task_b"]]
+        if m["choice"] == "a":
+            wins[i, j] += 1
+        else:
+            wins[j, i] += 1
+
+    data = PairwiseData(tasks=tasks, wins=wins)
+    return fit_thurstonian(data)
 
 
 class RunBrowser:
-    """Usage: RunBrowser("results/").display()"""
+    """Usage: RunBrowser("results/measurements/").display()"""
 
-    def __init__(self, results_dir: str | Path = RESULTS_DIR):
+    def __init__(self, results_dir: str | Path = MEASUREMENTS_DIR):
         self.results_dir = Path(results_dir)
-        self._current_run: MeasurementRun | None = None
-        self._current_data: ThurstonianData | None = None
+        self._current_config: RunConfig | None = None
+        self._current_result: ThurstonianResult | None = None
         self._setup_widgets()
 
     def _discover_runs(self) -> list[str]:
@@ -65,28 +93,11 @@ class RunBrowser:
             style={"description_width": "40px"},
             layout=widgets.Layout(width="300px"),
         )
-        self.task_prompt = widgets.Textarea(
-            value="Select a task to see its prompt",
-            layout=widgets.Layout(width="100%", height="100px"),
-            disabled=True,
-        )
 
         self.run_dropdown.observe(self._on_run_change, names="value")
-        self.task_dropdown.observe(self._on_task_change, names="value")
 
     def _on_run_change(self, change: dict) -> None:
         self._render()
-
-    def _on_task_change(self, change: dict) -> None:
-        if self._current_run is None:
-            return
-
-        task_id = self.task_dropdown.value
-        if not task_id:
-            return
-
-        prompt = self._current_run.config.task_prompts.get(task_id, "(prompt not stored)")
-        self.task_prompt.value = prompt
 
     def _render(self) -> None:
         self.plot_output.clear_output(wait=True)
@@ -101,42 +112,76 @@ class RunBrowser:
 
         with self.plot_output:
             try:
-                self._current_data = load_thurstonian_data(run_dir)
-                self._current_run = load_run(run_dir)
+                config_data = load_yaml(run_dir / "config.yaml")
+                self._current_config = RunConfig(
+                    template_name=config_data["template_name"],
+                    template_tags=config_data["template_tags"],
+                    model_short=config_data["model_short"],
+                    run_dir=run_dir,
+                )
+                self._current_result = load_thurstonian_from_measurements(run_dir)
 
-                # Update template display
+                # Try to load template for display
                 try:
-                    template = self._current_run.config.load_template()
-                    self.template_accordion.children[0].value = template.template
+                    template_file = Path("src/preferences/templates/generated_templates.yaml")
+                    templates = load_templates_from_yaml(template_file)
+                    template = next(
+                        (t for t in templates if t.name == self._current_config.template_name),
+                        None,
+                    )
+                    if template:
+                        self.template_accordion.children[0].value = template.template
+                    else:
+                        self.template_accordion.children[0].value = "(template not found)"
                 except Exception:
-                    self.template_accordion.children[0].value = "(template not found)"
+                    self.template_accordion.children[0].value = "(template file not found)"
 
                 # Update task dropdown (sorted by utility)
-                order = self._current_data.ranking_order()
-                sorted_ids = [self._current_data.task_ids[i] for i in order]
+                order = np.argsort(-self._current_result.mu)
+                sorted_ids = [self._current_result.tasks[i].id for i in order]
                 self.task_dropdown.options = sorted_ids
-                if sorted_ids:
-                    self.task_dropdown.value = sorted_ids[0]
-                    self._on_task_change(None)
 
                 # Create plot
-                fig, bars = plot_utility_ranking(
-                    self._current_data,
-                    config=self._current_run.config,
-                )
+                self._plot_utility_ranking()
                 plt.show()
 
             except Exception as e:
                 print(f"Error loading run: {e}")
 
-    def display(self) -> None:
-        task_box = widgets.VBox([self.task_dropdown, self.task_prompt])
+    def _plot_utility_ranking(self) -> None:
+        if self._current_result is None or self._current_config is None:
+            return
 
+        result = self._current_result
+        order = np.argsort(-result.mu)
+        sorted_ids = [result.tasks[i].id for i in order]
+        sorted_mu = result.mu[order]
+        sorted_sigma = result.sigma[order]
+
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        x = np.arange(len(sorted_ids))
+        ax.bar(x, sorted_mu, yerr=sorted_sigma, capsize=3, color="steelblue", alpha=0.8)
+
+        ax.set_xlabel("Task")
+        ax.set_ylabel("Utility (mu)")
+        ax.set_xticks(x)
+        ax.set_xticklabels(sorted_ids, rotation=45, ha="right")
+        ax.axhline(y=0, color="gray", linestyle="-", linewidth=0.5)
+
+        title = f"Utility Ranking: {self._current_config.template_name} / {self._current_config.model_short}"
+        if not result.converged:
+            title += " (not converged)"
+        ax.set_title(title)
+
+        fig.tight_layout()
+
+    def display(self) -> None:
         container = widgets.VBox([
             self.run_dropdown,
             self.template_accordion,
             self.plot_output,
-            task_box,
+            self.task_dropdown,
         ])
         display(container)
         self._render()

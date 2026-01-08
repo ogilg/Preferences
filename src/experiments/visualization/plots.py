@@ -1,27 +1,32 @@
 from __future__ import annotations
 
+from typing import Protocol
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.container import BarContainer
 
-from src.preferences.storage import ThurstonianData, BinaryRunConfig
+from src.preferences.ranking import ThurstonianResult
+
+
+class RunConfig(Protocol):
+    template_name: str
+    model_short: str
 
 
 def plot_utility_ranking(
-    data: "ThurstonianData",
-    config: "BinaryRunConfig | None" = None,
+    result: ThurstonianResult,
+    config: RunConfig | None = None,
     figsize: tuple[float, float] = (10, 6),
     color: str = "steelblue",
     picker: bool = False,
-) -> tuple[plt.Figure, "BarContainer"]:
+) -> tuple[plt.Figure, BarContainer]:
     """Bar chart of utilities with sigma error bars, sorted highest first."""
-    # Sort by utility (highest first)
-    order = data.ranking_order()
-    sorted_ids = [data.task_ids[i] for i in order]
-    sorted_mu = data.mu[order]
-    sorted_sigma = data.sigma[order]
+    order = np.argsort(-result.mu)
+    sorted_ids = [result.tasks[i].id for i in order]
+    sorted_mu = result.mu[order]
+    sorted_sigma = result.sigma[order]
 
-    # Create figure
     fig, ax = plt.subplots(figsize=figsize)
 
     x = np.arange(len(sorted_ids))
@@ -36,13 +41,12 @@ def plot_utility_ranking(
     ax.set_xticklabels(sorted_ids, rotation=45, ha="right")
     ax.axhline(y=0, color="gray", linestyle="-", linewidth=0.5)
 
-    # Build title
     if config is not None:
-        title = f"Utility Ranking: {config.template_id} / {config.model_short}"
+        title = f"Utility Ranking: {config.template_name} / {config.model_short}"
     else:
         title = "Utility Ranking"
 
-    if not data.converged:
+    if not result.converged:
         title += " (not converged)"
 
     ax.set_title(title)
