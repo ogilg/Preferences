@@ -10,6 +10,7 @@ from typing import Any, Callable
 import openai
 from openai import AsyncOpenAI, OpenAI
 
+from src.models.retry import with_retries, with_retries_async
 from src.types import Message
 
 
@@ -133,7 +134,7 @@ class OpenAICompatibleClient(ABC):
             kwargs["tool_choice"] = "auto"
 
         try:
-            response = self.client.chat.completions.create(**kwargs)
+            response = with_retries(lambda: self.client.chat.completions.create(**kwargs))
         except Exception as e:
             raise ToolCallError(f"API call failed: {e}") from e
 
@@ -144,13 +145,15 @@ class OpenAICompatibleClient(ABC):
         messages: list[Message],
         max_tokens: int = 1,
     ) -> dict[str, float]:
-        response = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=messages,
-            temperature=0.0,
-            max_tokens=1,
-            logprobs=True,
-            top_logprobs=max_tokens,
+        response = with_retries(
+            lambda: self.client.chat.completions.create(
+                model=self.model_name,
+                messages=messages,
+                temperature=0.0,
+                max_tokens=1,
+                logprobs=True,
+                top_logprobs=max_tokens,
+            )
         )
         top_logprobs = response.choices[0].logprobs.content[0].top_logprobs
         return {lp.token: lp.logprob for lp in top_logprobs}
@@ -176,36 +179,24 @@ class OpenAICompatibleClient(ABC):
                 kwargs["tools"] = request.tools
                 kwargs["tool_choice"] = "auto"
 
-            max_retries = 3
-            for attempt in range(max_retries):
-                async with semaphore:
-                    try:
-                        response = await asyncio.wait_for(
+            async with semaphore:
+                try:
+                    response = await with_retries_async(
+                        lambda: asyncio.wait_for(
                             async_client.chat.completions.create(**kwargs),
                             timeout=timeout,
                         )
-                        text = self._parse_response(
-                            response.choices[0].message, request.tools
-                        )
-                        if on_complete:
-                            on_complete()
-                        return BatchResult(response=text, error=None)
-                    except asyncio.TimeoutError:
-                        if on_complete:
-                            on_complete()
-                        return BatchResult(response=None, error=TimeoutError(f"Request timed out after {timeout}s"))
-                    except openai.RateLimitError as e:
-                        if attempt < max_retries - 1:
-                            await asyncio.sleep(2**attempt)
-                            continue
-                        if on_complete:
-                            on_complete()
-                        return BatchResult(response=None, error=e)
-                    except Exception as e:
-                        if on_complete:
-                            on_complete()
-                        return BatchResult(response=None, error=e)
-            return BatchResult(response=None, error=RuntimeError("Retry loop exited unexpectedly"))
+                    )
+                    text = self._parse_response(
+                        response.choices[0].message, request.tools
+                    )
+                    if on_complete:
+                        on_complete()
+                    return BatchResult(response=text, error=None)
+                except Exception as e:
+                    if on_complete:
+                        on_complete()
+                    return BatchResult(response=None, error=e)
 
         try:
             return await asyncio.gather(*[process_one(r) for r in requests])
