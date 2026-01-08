@@ -79,17 +79,20 @@ class OpenAICompatibleClient(ABC):
 
     _model_aliases: dict[str, str] = {}
 
-    def _resolve_model_name(self, model_name: str | None) -> str:
+    def _resolve_model_name(self, model_name: str | None) -> tuple[str, str]:
+        """Returns (canonical_name, provider_model_name)."""
         if model_name is None:
-            return self._default_model
-        return self._model_aliases.get(model_name, model_name)
+            return (self._default_model, self._default_model)
+        if model_name in self._model_aliases:
+            return (model_name, self._model_aliases[model_name])
+        return (model_name, model_name)
 
     def __init__(
         self,
         model_name: str | None = None,
         max_new_tokens: int = 256,
     ):
-        self.model_name = self._resolve_model_name(model_name)
+        self.canonical_model_name, self.model_name = self._resolve_model_name(model_name)
         self.max_new_tokens = max_new_tokens
         self._api_key = os.environ[self._api_key_env_var]
         self.client = OpenAI(
@@ -170,7 +173,6 @@ class OpenAICompatibleClient(ABC):
         requests: list[GenerateRequest],
         max_concurrent: int,
         on_complete: Callable[[], None] | None = None,
-        timeout: float = 10.0,
     ) -> list[BatchResult]:
         semaphore = asyncio.Semaphore(max_concurrent)
         async_client = self._create_async_client()
@@ -189,10 +191,7 @@ class OpenAICompatibleClient(ABC):
             async with semaphore:
                 try:
                     response = await with_retries_async(
-                        lambda: asyncio.wait_for(
-                            async_client.chat.completions.create(**kwargs),
-                            timeout=timeout,
-                        )
+                        lambda: async_client.chat.completions.create(**kwargs)
                     )
                     text = self._parse_response(
                         response.choices[0].message, request.tools
@@ -205,8 +204,18 @@ class OpenAICompatibleClient(ABC):
                         on_complete()
                     return BatchResult(response=None, error=e)
 
+        async def process_with_index(i: int, request: GenerateRequest) -> tuple[int, BatchResult]:
+            result = await process_one(request)
+            return (i, result)
+
+        tasks = [process_with_index(i, r) for i, r in enumerate(requests)]
+        results: list[BatchResult | None] = [None] * len(requests)
+
         try:
-            return await asyncio.gather(*[process_one(r) for r in requests])
+            for coro in asyncio.as_completed(tasks):
+                idx, result = await coro
+                results[idx] = result
+            return results  # type: ignore[return-value]
         finally:
             await async_client.close()
 
@@ -215,17 +224,27 @@ class OpenAICompatibleClient(ABC):
         requests: list[GenerateRequest],
         max_concurrent: int = 10,
         on_complete: Callable[[], None] | None = None,
-        timeout: float = 60.0,
     ) -> list[BatchResult]:
-        return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete, timeout))
+        return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete))
 
 
 class HyperbolicClient(OpenAICompatibleClient):
     _api_key_env_var = "HYPERBOLIC_API_KEY"
     _base_url = "https://api.hyperbolic.xyz/v1"
-    _default_model = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    _default_model = "llama-3.1-8b"
     default_max_concurrent = 50
     _model_aliases = {
         "llama-3.1-8b": "meta-llama/Meta-Llama-3.1-8B-Instruct",
         "llama-3.1-70b": "meta-llama/Meta-Llama-3.1-70B-Instruct",
+    }
+
+
+class CerebrasClient(OpenAICompatibleClient):
+    _api_key_env_var = "CEREBRAS_API_KEY"
+    _base_url = "https://api.cerebras.ai/v1"
+    _default_model = "llama-3.1-8b"
+    default_max_concurrent = 150
+    _model_aliases = {
+        "llama-3.1-8b": "llama3.1-8b",
+        "llama-3.1-70b": "llama3.1-70b",
     }

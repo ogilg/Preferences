@@ -12,7 +12,7 @@ RATING_DIR = Path("results/measurements")
 
 
 def _rating_dir(template: PromptTemplate, client: OpenAICompatibleClient) -> Path:
-    short = model_short_name(client.model_name)
+    short = model_short_name(client.canonical_model_name)
     return RATING_DIR / f"rating_{template.name}_{short}"
 
 
@@ -29,7 +29,7 @@ def save_ratings(
         "template_name": template.name,
         "template_tags": template.tags_dict,
         "model": client.model_name,
-        "model_short": model_short_name(client.model_name),
+        "model_short": model_short_name(client.canonical_model_name),
         "temperature": temperature,
     }
     save_yaml(config, run_dir / "config.yaml")

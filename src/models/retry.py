@@ -7,7 +7,7 @@ from collections.abc import Awaitable, Callable
 import openai
 
 RETRYABLE_ERRORS = (openai.RateLimitError, openai.APIConnectionError)
-MAX_RETRIES = 3
+MAX_RETRIES = 2
 
 
 def with_retries[T](fn: Callable[[], T]) -> T:
@@ -29,7 +29,7 @@ async def with_retries_async[T](fn: Callable[[], Awaitable[T]]) -> T:
     for attempt in range(MAX_RETRIES):
         try:
             return await fn()
-        except (*RETRYABLE_ERRORS, asyncio.TimeoutError) as e:
+        except RETRYABLE_ERRORS as e:
             last_error = e
             if attempt < MAX_RETRIES - 1:
                 await asyncio.sleep(2**attempt)

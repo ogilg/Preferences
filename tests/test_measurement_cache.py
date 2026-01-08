@@ -16,6 +16,7 @@ class MockClient:
 
     def __init__(self, model_name: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"):
         self.model_name = model_name
+        self.canonical_model_name = model_name
 
 
 @pytest.fixture

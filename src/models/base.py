@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Protocol, Any
 
 from src.types import Message
-from .hyperbolic import GenerateRequest, BatchResult
+from .openai_compatible import GenerateRequest, BatchResult
 
 
 class Model(Protocol):
@@ -52,7 +52,7 @@ class ConfigurableMockModel:
         requests: list["GenerateRequest"],
         max_concurrent: int = 10,
     ) -> list["BatchResult"]:
-        from .hyperbolic import BatchResult
+        from .openai_compatible import BatchResult
 
         return [BatchResult(response=self.response, error=None) for _ in requests]
 

@@ -1,7 +1,6 @@
 from .base import Model, ConfigurableMockModel
 from .ndif import NDIFModel
-from .hyperbolic import OpenAICompatibleClient, HyperbolicClient, ToolCallError, GenerateRequest, BatchResult
-from .cerebras import CerebrasClient
+from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, ToolCallError, GenerateRequest, BatchResult
 
 # === INFERENCE PROVIDER CONFIGURATION ===
 # Change this to switch providers globally

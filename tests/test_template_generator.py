@@ -17,7 +17,7 @@ from src.preferences.templates.generator import (
     write_templates_yaml,
     load_config_from_yaml,
 )
-from src.models.hyperbolic import BatchResult
+from src.models.openai_compatible import BatchResult
 
 
 class TestBuildBinaryTemplate:

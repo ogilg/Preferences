@@ -36,7 +36,7 @@ class MeasurementCache:
     ):
         self.template = template
         self.client = client
-        self.model_short = model_short_name(client.model_name)
+        self.model_short = model_short_name(client.canonical_model_name)
         self.results_dir = Path(results_dir)
         self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}"
         self._measurements_path = self.cache_dir / "measurements.yaml"
