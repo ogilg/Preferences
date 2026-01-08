@@ -446,3 +446,63 @@ class TestActiveLearningIntegration:
             new_comparisons = [simulate_oracle(a, b, true_utilities, rng) for a, b in next_pairs]
             state.add_comparisons(new_comparisons)
             state.fit()
+
+
+class TestMultiDatasetActivelearning:
+    """Integration tests for active learning with multiple datasets."""
+
+    def test_active_learning_with_multiple_datasets(self):
+        """Active learning should work with tasks from multiple datasets."""
+        from src.task_data import load_tasks
+
+        tasks = load_tasks(
+            n=10,
+            origins=[OriginDataset.WILDCHAT, OriginDataset.ALPACA],
+            seed=42,
+        )
+
+        # Verify we got tasks from multiple origins
+        origins_present = {t.origin for t in tasks}
+        assert len(origins_present) >= 1
+
+        # Run active learning with these tasks
+        rng = np.random.default_rng(42)
+        state = ActiveLearningState(tasks=tasks)
+
+        initial_pairs = generate_d_regular_pairs(tasks, d=2, rng=rng)
+        assert len(initial_pairs) > 0
+
+        # Simulate comparisons (arbitrary oracle based on task index)
+        task_index = {t.id: i for i, t in enumerate(tasks)}
+        comparisons = []
+        for a, b in initial_pairs:
+            winner = a if task_index[a.id] > task_index[b.id] else b
+            comparisons.append(make_comparison(a, b, winner.id))
+
+        state.add_comparisons(comparisons)
+        state.fit()
+
+        assert state.current_fit is not None
+        assert len(state.current_fit.ranking()) == len(tasks)
+
+    def test_multi_dataset_seed_reproducibility(self):
+        """Same seed should produce identical active learning setup."""
+        from src.task_data import load_tasks
+
+        # Load twice with same seed
+        tasks1 = load_tasks(n=8, origins=[OriginDataset.WILDCHAT, OriginDataset.MATH], seed=123)
+        tasks2 = load_tasks(n=8, origins=[OriginDataset.WILDCHAT, OriginDataset.MATH], seed=123)
+
+        assert [t.id for t in tasks1] == [t.id for t in tasks2]
+
+        # Run active learning with same RNG seed - should get same pairs
+        rng1 = np.random.default_rng(456)
+        rng2 = np.random.default_rng(456)
+
+        pairs1 = generate_d_regular_pairs(tasks1, d=2, rng=rng1)
+        pairs2 = generate_d_regular_pairs(tasks2, d=2, rng=rng2)
+
+        pairs1_ids = [(a.id, b.id) for a, b in pairs1]
+        pairs2_ids = [(a.id, b.id) for a, b in pairs2]
+
+        assert pairs1_ids == pairs2_ids

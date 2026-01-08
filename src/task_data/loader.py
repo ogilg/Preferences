@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from typing import Callable
 
+import numpy as np
 from pydantic import BaseModel
 
 from .task import OriginDataset, Task
@@ -81,17 +82,19 @@ def _load_origin(origin: OriginDataset) -> list[Task]:
 
 def load_tasks(
     n: int,
-    origin: OriginDataset | None = None,
+    origins: list[OriginDataset],
+    seed: int | None = None,
     filter_fn: Callable[[Task], bool] | None = None,
 ) -> list[Task]:
-    if origin is not None:
-        tasks = _load_origin(origin)
-    else:
-        tasks = []
-        for orig in OriginDataset:
-            tasks.extend(_load_origin(orig))
+    tasks = []
+    for origin in origins:
+        tasks.extend(_load_origin(origin))
 
     if filter_fn is not None:
         tasks = [t for t in tasks if filter_fn(t)]
+
+    if seed is not None:
+        rng = np.random.default_rng(seed)
+        rng.shuffle(tasks)
 
     return tasks[:n]

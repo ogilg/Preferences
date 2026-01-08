@@ -7,7 +7,8 @@ model: llama-3.1-8b
 temperature: 1.0
 
 n_tasks: 50  # With 50 tasks, exhaustive = 1225 pairs; active learning should need far fewer
-task_origin: wildchat
+task_origins:
+  - wildchat
 
 templates: src/preferences/templates/data/binary_choice_v1.yaml
 

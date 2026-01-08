@@ -26,7 +26,7 @@ def main():
         raise ValueError(f"Expected preference_mode='binary', got '{config.preference_mode}'")
 
     templates = load_templates_from_yaml(config.templates)
-    tasks = load_tasks(n=config.n_tasks, origin=config.get_origin_dataset())
+    tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets())
     task_lookup = {t.id: t for t in tasks}
     task_ids = set(task_lookup.keys())
     unique_pairs = list(combinations(tasks, 2))

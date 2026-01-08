@@ -33,7 +33,7 @@ class ExperimentConfig(BaseModel):
     max_concurrent: int | None = None
 
     n_tasks: int = 10
-    task_origin: Literal["wildchat", "alpaca", "math"] = "wildchat"
+    task_origins: list[Literal["wildchat", "alpaca", "math"]] = ["wildchat"]
 
     templates: Path
 
@@ -49,12 +49,13 @@ class ExperimentConfig(BaseModel):
     # Active learning specific
     active_learning: ActiveLearningConfig = Field(default_factory=ActiveLearningConfig)
 
-    def get_origin_dataset(self) -> OriginDataset:
-        return {
+    def get_origin_datasets(self) -> list[OriginDataset]:
+        mapping = {
             "wildchat": OriginDataset.WILDCHAT,
             "alpaca": OriginDataset.ALPACA,
             "math": OriginDataset.MATH,
-        }[self.task_origin]
+        }
+        return [mapping[name] for name in self.task_origins]
 
 
 def load_experiment_config(path: Path) -> ExperimentConfig:

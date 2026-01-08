@@ -38,7 +38,11 @@ def run_active_learning(config_path: Path) -> None:
     rng = np.random.default_rng(al_config.seed)
 
     templates = load_templates_from_yaml(config.templates)
-    tasks = load_tasks(n=config.n_tasks, origin=config.get_origin_dataset())
+    tasks = load_tasks(
+        n=config.n_tasks,
+        origins=config.get_origin_datasets(),
+        seed=al_config.seed,
+    )
     client = get_client(model_name=config.model)
     max_concurrent = config.max_concurrent or get_default_max_concurrent()
 
