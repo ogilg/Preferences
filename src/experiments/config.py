@@ -15,8 +15,18 @@ class FittingConfig(BaseModel):
     loss_tol: float | None = None
 
 
+class ActiveLearningConfig(BaseModel):
+    initial_degree: int = 3
+    batch_size: int = 50
+    max_iterations: int = 20
+    p_threshold: float = 0.3
+    q_threshold: float = 0.3
+    convergence_threshold: float = 0.99
+    seed: int | None = None
+
+
 class ExperimentConfig(BaseModel):
-    preference_mode: Literal["binary", "rating"]
+    preference_mode: Literal["binary", "rating", "active_learning"]
 
     model: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"
     temperature: float = 1.0
@@ -35,6 +45,9 @@ class ExperimentConfig(BaseModel):
     samples_per_task: int = 10
     scale_min: int = 1
     scale_max: int = 10
+
+    # Active learning specific
+    active_learning: ActiveLearningConfig = Field(default_factory=ActiveLearningConfig)
 
     def get_origin_dataset(self) -> OriginDataset:
         return {
