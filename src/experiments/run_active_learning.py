@@ -217,15 +217,15 @@ def run_active_learning(config_path: Path) -> None:
         # Save Thurstonian model results
         save_thurstonian(
             state.current_fit,
-            cache.cache_dir / "thurstonian.yaml",
-            measurement_method="active_learning",
+            cache.cache_dir / "thurstonian_active_learning.yaml",
+            fitting_method="active_learning",
             config={
                 "config_file": str(config_path),
                 "n_tasks": config.n_tasks,
                 "seed": al_config.seed,
             },
         )
-        print(f"  Thurstonian results saved to: {cache.cache_dir / 'thurstonian.yaml'}")
+        print(f"  Thurstonian results saved to: {cache.cache_dir / 'thurstonian_active_learning.yaml'}")
 
         # Save active learning results (lightweight)
         al_results = {
