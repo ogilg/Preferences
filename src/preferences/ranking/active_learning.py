@@ -251,14 +251,3 @@ def check_convergence(
     return corr >= threshold, float(corr)
 
 
-@dataclass
-class ActiveLearningResult:
-    """Final result of active learning run."""
-
-    state: ActiveLearningState
-    converged: bool
-    final_correlation: float
-    n_iterations: int
-    n_pairs_queried: int
-    total_comparisons: int
-    iteration_history: list[dict]

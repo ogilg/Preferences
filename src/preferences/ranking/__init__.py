@@ -9,7 +9,6 @@ from .thurstonian import (
 )
 from .active_learning import (
     ActiveLearningState,
-    ActiveLearningResult,
     generate_d_regular_pairs,
     select_next_pairs,
     check_convergence,
@@ -24,7 +23,6 @@ __all__ = [
     "load_thurstonian",
     "compute_pair_agreement",
     "ActiveLearningState",
-    "ActiveLearningResult",
     "generate_d_regular_pairs",
     "select_next_pairs",
     "check_convergence",
