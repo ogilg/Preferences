@@ -45,7 +45,7 @@ def main():
 
         missing_pairs = [(a, b) for a, b in unique_pairs if (a.id, b.id) not in existing_pairs]
 
-        thurstonian_path = cache.cache_dir / "thurstonian.yaml"
+        thurstonian_path = cache.cache_dir / "thurstonian_exhaustive_pairwise.yaml"
         if not missing_pairs and thurstonian_path.exists():
             print(f"\n{template.name}: all {len(unique_pairs)} pairs cached, skipping")
             continue
