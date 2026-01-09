@@ -17,7 +17,7 @@ from src.models import get_client, get_default_max_concurrent
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
-from src.preferences.ranking import compute_pair_agreement
+from src.preferences.ranking import compute_pair_agreement, save_thurstonian
 from src.preferences.ranking.active_learning import (
     ActiveLearningState,
     generate_d_regular_pairs,
@@ -123,7 +123,7 @@ def run_active_learning(config_path: Path) -> None:
                 "total_comparisons": len(state.comparisons),
                 "unique_pairs_sampled": len(state.sampled_pairs),
                 "rank_correlation": float(correlation),
-                "thurstonian_converged": state.current_fit.converged,
+                "thurstonian_converged": bool(state.current_fit.converged),
                 "mu_min": float(state.current_fit.mu.min()),
                 "mu_max": float(state.current_fit.mu.max()),
             })
@@ -158,12 +158,25 @@ def run_active_learning(config_path: Path) -> None:
         print(f"  Converged: {final_converged}")
         print(f"  Measurements saved to: {cache.cache_dir}")
 
+        # Save Thurstonian model results
+        save_thurstonian(
+            state.current_fit,
+            cache.cache_dir / "thurstonian.yaml",
+            config={
+                "config_file": str(config_path),
+                "n_tasks": config.n_tasks,
+                "seed": al_config.seed,
+                "preference_mode": config.preference_mode,
+            },
+        )
+        print(f"  Thurstonian results saved to: {cache.cache_dir / 'thurstonian.yaml'}")
+
         # Save active learning results (lightweight)
         al_results = {
             "config_file": str(config_path),
             "n_tasks": config.n_tasks,
             "seed": al_config.seed,
-            "converged": final_converged,
+            "converged": bool(final_converged),
             "n_iterations": state.iteration,
             "unique_pairs_queried": len(state.sampled_pairs),
             "total_comparisons": len(state.comparisons),
