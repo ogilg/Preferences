@@ -295,3 +295,20 @@ class ToolUseRatingFormat(BaseRatingFormat):
             if isinstance(rating, (int, float)):
                 return float(rating)
         return None
+
+
+# --- Factory Functions ---
+
+ResponseFormatName = Literal["regex", "tool_use"]
+
+
+def make_choice_format(
+    name: ResponseFormatName,
+    task_a_label: str,
+    task_b_label: str,
+) -> BaseChoiceFormat:
+    if name == "regex":
+        return RegexChoiceFormat(task_a_label, task_b_label)
+    elif name == "tool_use":
+        return ToolUseChoiceFormat(task_a_label, task_b_label)
+    raise ValueError(f"Unknown choice format: {name}")

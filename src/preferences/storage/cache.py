@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Literal
 
 from src.models import OpenAICompatibleClient
 from src.preferences.storage.base import (
@@ -16,13 +16,16 @@ from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferenceT
 
 MEASUREMENTS_DIR = Path("results/measurements")
 
+ResponseFormatName = Literal["regex", "tool_use"]
+OrderName = Literal["canonical", "reversed"]
+
 
 class MeasurementCache:
-    """Cache for binary preference measurements keyed by (template, model).
+    """Cache for binary preference measurements keyed by (template, model, format, order).
 
     Storage format:
-        measurements/{template_name}_{model_short}/
-            config.yaml        # template + model metadata
+        measurements/{template_name}_{model_short}_{response_format}_{order}/
+            config.yaml        # template + model metadata + sensitivity tags
             measurements.yaml  # [{task_a, task_b, choice}, ...]
 
     Order matters: (a, b) and (b, a) are distinct pairs.
@@ -32,13 +35,17 @@ class MeasurementCache:
         self,
         template: PromptTemplate,
         client: OpenAICompatibleClient,
+        response_format: ResponseFormatName = "regex",
+        order: OrderName = "canonical",
         results_dir: Path = MEASUREMENTS_DIR,
     ):
         self.template = template
         self.client = client
+        self.response_format = response_format
+        self.order = order
         self.model_short = model_short_name(client.canonical_model_name)
         self.results_dir = Path(results_dir)
-        self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}"
+        self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}_{response_format}_{order}"
         self._measurements_path = self.cache_dir / "measurements.yaml"
         self._config_path = self.cache_dir / "config.yaml"
 
@@ -96,7 +103,11 @@ class MeasurementCache:
 
         config = {
             "template_name": self.template.name,
-            "template_tags": self.template.tags_dict,
+            "template_tags": {
+                **self.template.tags_dict,
+                "response_format": self.response_format,
+                "order": self.order,
+            },
             "model": self.client.model_name,
             "model_short": self.model_short,
         }

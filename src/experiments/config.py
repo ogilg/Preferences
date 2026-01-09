@@ -49,6 +49,10 @@ class ExperimentConfig(BaseModel):
     # Active learning specific
     active_learning: ActiveLearningConfig = Field(default_factory=ActiveLearningConfig)
 
+    # Sensitivity dimensions (binary and active_learning)
+    response_formats: list[Literal["regex", "tool_use"]] = ["regex"]
+    include_reverse_order: bool = False
+
     def get_origin_datasets(self) -> list[OriginDataset]:
         mapping = {
             "wildchat": OriginDataset.WILDCHAT,

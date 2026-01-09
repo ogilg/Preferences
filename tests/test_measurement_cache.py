@@ -66,8 +66,8 @@ class TestMeasurementCacheUnit:
         model = MockClient()
         cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
 
-        # Directory naming uses template name and shortened model name
-        assert cache.cache_dir == tmp_path / "binary_choice_v1_llama-3.1-8b"
+        # Directory naming uses template name, shortened model name, response format, and order
+        assert cache.cache_dir == tmp_path / "binary_choice_v1_llama-3.1-8b_regex_canonical"
 
         # Empty cache returns empty set
         existing = cache.get_existing_pairs()
