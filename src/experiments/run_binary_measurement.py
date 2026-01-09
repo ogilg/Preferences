@@ -46,15 +46,16 @@ def main():
         missing_pairs = [(a, b) for a, b in unique_pairs if (a.id, b.id) not in existing_pairs]
 
         if not missing_pairs:
-            print(f"\n{template.name}: all {len(unique_pairs)} pairs cached")
-        else:
-            print(f"\n{template.name}: {len(existing_pairs)} cached, {len(missing_pairs)} to query")
+            print(f"\n{template.name}: all {len(unique_pairs)} pairs cached, skipping")
+            continue
 
-            pairs_to_query = missing_pairs * config.samples_per_pair
-            batch = measure_with_template(template, client, pairs_to_query, config.temperature, max_concurrent)
-            print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
+        print(f"\n{template.name}: {len(existing_pairs)} cached, {len(missing_pairs)} to query")
 
-            cache.append(batch.successes)
+        pairs_to_query = missing_pairs * config.samples_per_pair
+        batch = measure_with_template(template, client, pairs_to_query, config.temperature, max_concurrent)
+        print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
+
+        cache.append(batch.successes)
 
         raw_measurements = cache.get_measurements(task_ids=task_ids)
         measurements = reconstruct_measurements(raw_measurements, task_lookup)
