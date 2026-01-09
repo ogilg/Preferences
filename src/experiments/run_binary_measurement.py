@@ -86,17 +86,13 @@ def main():
         save_thurstonian(
             thurstonian,
             cache.cache_dir / "thurstonian.yaml",
+            measurement_method="exhaustive_pairwise",
             config={
                 "config_file": str(sys.argv[1]),
                 "n_tasks": config.n_tasks,
                 "task_origins": config.task_origins,
                 "samples_per_pair": config.samples_per_pair,
                 "temperature": config.temperature,
-                "fitting": {
-                    "max_iter": max_iter,
-                    "gradient_tol": config.fitting.gradient_tol,
-                    "loss_tol": config.fitting.loss_tol,
-                },
             },
         )
 

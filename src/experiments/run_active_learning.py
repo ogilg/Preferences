@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 
 from src.models import get_client, get_default_max_concurrent
-from src.task_data import load_tasks
+from src.task_data import Task, load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
 from src.preferences.ranking import compute_pair_agreement, save_thurstonian
@@ -25,7 +25,58 @@ from src.preferences.ranking.active_learning import (
     check_convergence,
 )
 from src.preferences.storage import MeasurementCache, save_yaml
+from src.preferences.storage.cache import reconstruct_measurements
 from src.experiments.config import load_experiment_config
+from src.types import MeasurementBatch
+
+
+def measure_with_cache(
+    template,
+    client,
+    pairs,
+    temperature,
+    max_concurrent,
+    cache: MeasurementCache,
+    task_lookup: dict[str, Task],
+) -> tuple[MeasurementBatch, int, int]:
+    """
+    Wrap measure_with_template to reuse cached comparisons when available.
+
+    The active learning loop remains unaware of caching; it receives a
+    MeasurementBatch combining cache hits with fresh API results.
+    """
+    if not pairs:
+        return MeasurementBatch(successes=[], failures=[]), 0, 0
+
+    cached_raw = cache.get_measurements()
+    cached_by_pair: dict[tuple[str, str], list[dict[str, str]]] = {}
+    for m in cached_raw:
+        cached_by_pair.setdefault((m["task_a"], m["task_b"]), []).append(m)
+
+    cached_hits_raw: list[dict[str, str]] = []
+    to_query: list[tuple[Task, Task]] = []
+
+    # Consume cached measurements before calling the API; supports multiple
+    # stored measurements for the same ordered pair.
+    for a, b in pairs:
+        key = (a.id, b.id)
+        if key in cached_by_pair and cached_by_pair[key]:
+            cached_hits_raw.append(cached_by_pair[key].pop())
+        else:
+            to_query.append((a, b))
+
+    cached_hits = reconstruct_measurements(cached_hits_raw, task_lookup)
+
+    if to_query:
+        fresh_batch = measure_with_template(
+            template, client, to_query, temperature, max_concurrent
+        )
+        cache.append(fresh_batch.successes)
+    else:
+        fresh_batch = MeasurementBatch(successes=[], failures=[])
+
+    combined_successes = cached_hits + fresh_batch.successes
+    return MeasurementBatch(successes=combined_successes, failures=fresh_batch.failures), len(cached_hits), len(to_query)
 
 
 def run_active_learning(config_path: Path) -> None:
@@ -43,6 +94,7 @@ def run_active_learning(config_path: Path) -> None:
         origins=config.get_origin_datasets(),
         seed=al_config.seed,
     )
+    task_lookup = {t.id: t for t in tasks}
     client = get_client(model_name=config.model)
     max_concurrent = config.max_concurrent or get_default_max_concurrent()
 
@@ -88,13 +140,17 @@ def run_active_learning(config_path: Path) -> None:
             print(f"  Querying {len(pairs_to_query)} unique pairs ({len(replicated_pairs)} total comparisons)")
 
             # Run measurements
-            batch = measure_with_template(
-                template, client, replicated_pairs, config.temperature, max_concurrent
+            batch, cache_hits, api_queries = measure_with_cache(
+                template=template,
+                client=client,
+                pairs=replicated_pairs,
+                temperature=config.temperature,
+                max_concurrent=max_concurrent,
+                cache=cache,
+                task_lookup=task_lookup,
             )
             print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
-
-            # Append to cache
-            cache.append(batch.successes)
+            print(f"  Cache hits: {cache_hits}, API queries: {api_queries}")
 
             # Update state
             state.add_comparisons(batch.successes)
@@ -162,11 +218,11 @@ def run_active_learning(config_path: Path) -> None:
         save_thurstonian(
             state.current_fit,
             cache.cache_dir / "thurstonian.yaml",
+            measurement_method="active_learning",
             config={
                 "config_file": str(config_path),
                 "n_tasks": config.n_tasks,
                 "seed": al_config.seed,
-                "preference_mode": config.preference_mode,
             },
         )
         print(f"  Thurstonian results saved to: {cache.cache_dir / 'thurstonian.yaml'}")

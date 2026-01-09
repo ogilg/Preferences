@@ -39,6 +39,20 @@ def analyze_run(run_dir: Path) -> dict:
     with open(run_dir / "thurstonian.yaml") as f:
         thurstonian = yaml.safe_load(f)
 
+    # Read sigma from CSV
+    csv_path = run_dir / "thurstonian.csv"
+    if csv_path.exists():
+        sigmas = []
+        with open(csv_path) as f:
+            next(f)  # Skip header
+            for line in f:
+                _, _, sigma = line.strip().split(",")
+                sigmas.append(float(sigma))
+        sigma_max = max(sigmas)
+    else:
+        # Fallback for old format
+        sigma_max = max(thurstonian["sigma"]) if "sigma" in thurstonian else -1.0
+
     task_ids = config["task_ids"]
     wins = load_wins_matrix(measurements, task_ids)
     trans = measure_transitivity(wins)
@@ -54,7 +68,7 @@ def analyze_run(run_dir: Path) -> dict:
         "n_cycles": trans.n_cycles,
         "n_triads": trans.n_triads,
         "thurstonian_converged": thurstonian["converged"],
-        "sigma_max": max(thurstonian["sigma"]),
+        "sigma_max": sigma_max,
     }
 
 

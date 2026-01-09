@@ -225,15 +225,14 @@ def fit_thurstonian(
 def save_thurstonian(
     result: ThurstonianResult,
     path: Path | str,
+    measurement_method: str,
     config: dict | None = None,
 ) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
     data = {
-        "task_ids": [t.id for t in result.tasks],
-        "mu": result.mu.tolist(),
-        "sigma": result.sigma.tolist(),
+        "measurement_method": measurement_method,
         "converged": bool(result.converged),
         "neg_log_likelihood": float(result.neg_log_likelihood),
         "n_iterations": int(result.n_iterations),
@@ -252,22 +251,41 @@ def save_thurstonian(
     with open(path, "w") as f:
         yaml.dump(data, f, default_flow_style=False, sort_keys=False)
 
+    # Save mu and sigma as CSV
+    csv_path = path.with_suffix(".csv")
+    with open(csv_path, "w") as f:
+        f.write("task_id,mu,sigma\n")
+        for task, mu, sigma in zip(result.tasks, result.mu, result.sigma):
+            f.write(f"{task.id},{mu},{sigma}\n")
+
 
 def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult:
-    """tasks must contain all task_ids saved in the file."""
+    """Load Thurstonian results from YAML + CSV files.
+
+    Args:
+        path: Path to the YAML file (CSV must be at same location with .csv extension)
+        tasks: List of tasks (must contain all task_ids in the CSV)
+    """
+    path = Path(path)
+    csv_path = path.with_suffix(".csv")
+
     with open(path) as f:
         data = yaml.safe_load(f)
 
-    saved_ids = data["task_ids"]
     task_dict = {t.id: t for t in tasks}
+    ordered_tasks = []
+    mu_list = []
+    sigma_list = []
 
-    # Verify all saved task IDs are present
-    missing = set(saved_ids) - set(task_dict.keys())
-    if missing:
-        raise ValueError(f"Tasks not found for IDs: {missing}")
-
-    # Reconstruct task list in saved order
-    ordered_tasks = [task_dict[tid] for tid in saved_ids]
+    with open(csv_path) as f:
+        next(f)  # Skip header
+        for line in f:
+            task_id, mu, sigma = line.strip().split(",")
+            if task_id not in task_dict:
+                raise ValueError(f"Task {task_id} not found in provided tasks")
+            ordered_tasks.append(task_dict[task_id])
+            mu_list.append(float(mu))
+            sigma_list.append(float(sigma))
 
     history_data = data.get("history", {"loss": [], "sigma_max": []})
     history = OptimizationHistory(
@@ -277,13 +295,13 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
 
     return ThurstonianResult(
         tasks=ordered_tasks,
-        mu=np.array(data["mu"]),
-        sigma=np.array(data["sigma"]),
+        mu=np.array(mu_list),
+        sigma=np.array(sigma_list),
         converged=data["converged"],
         neg_log_likelihood=data["neg_log_likelihood"],
         n_iterations=data.get("n_iterations", -1),
         n_function_evals=data.get("n_function_evals", -1),
-        termination_message=data.get("termination_message", "unknown (loaded from old format)"),
+        termination_message=data.get("termination_message", "unknown"),
         gradient_norm=data.get("gradient_norm", -1.0),
         history=history,
     )
