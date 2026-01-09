@@ -222,7 +222,11 @@ def fit_thurstonian(
     )
 
 
-def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
+def save_thurstonian(
+    result: ThurstonianResult,
+    path: Path | str,
+    config: dict | None = None,
+) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -241,6 +245,9 @@ def save_thurstonian(result: ThurstonianResult, path: Path | str) -> None:
             "sigma_max": [float(x) for x in result.history.sigma_max],
         },
     }
+
+    if config is not None:
+        data["config"] = config
 
     with open(path, "w") as f:
         yaml.dump(data, f, default_flow_style=False, sort_keys=False)

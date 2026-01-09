@@ -10,7 +10,7 @@ from src.models import get_client, get_default_max_concurrent
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
-from src.preferences.ranking import PairwiseData, fit_thurstonian, compute_pair_agreement
+from src.preferences.ranking import PairwiseData, fit_thurstonian, save_thurstonian, compute_pair_agreement
 from src.preferences.storage import MeasurementCache, reconstruct_measurements
 from src.experiments.config import load_experiment_config
 
@@ -45,7 +45,8 @@ def main():
 
         missing_pairs = [(a, b) for a, b in unique_pairs if (a.id, b.id) not in existing_pairs]
 
-        if not missing_pairs:
+        thurstonian_path = cache.cache_dir / "thurstonian.yaml"
+        if not missing_pairs and thurstonian_path.exists():
             print(f"\n{template.name}: all {len(unique_pairs)} pairs cached, skipping")
             continue
 
@@ -81,6 +82,23 @@ def main():
             print(f"    NLL: {thurstonian.neg_log_likelihood:.2f}")
         print(f"    μ range: [{thurstonian.mu.min():.2f}, {thurstonian.mu.max():.2f}]")
         print(f"    σ range: [{thurstonian.sigma.min():.2f}, {thurstonian.sigma.max():.2f}]")
+
+        save_thurstonian(
+            thurstonian,
+            cache.cache_dir / "thurstonian.yaml",
+            config={
+                "config_file": str(sys.argv[1]),
+                "n_tasks": config.n_tasks,
+                "task_origins": config.task_origins,
+                "samples_per_pair": config.samples_per_pair,
+                "temperature": config.temperature,
+                "fitting": {
+                    "max_iter": max_iter,
+                    "gradient_tol": config.fitting.gradient_tol,
+                    "loss_tol": config.fitting.loss_tol,
+                },
+            },
+        )
 
     print("\nDone.")
 
