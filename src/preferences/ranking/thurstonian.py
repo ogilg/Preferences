@@ -19,6 +19,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 from scipy.optimize import minimize
+from scipy.special import ndtr
 from scipy.stats import norm
 from collections import Counter, defaultdict
 
@@ -147,9 +148,10 @@ def _neg_log_likelihood(
     sigma = np.exp(params[n - 1:])
 
     # Compute pairwise preference probabilities (vectorized)
+    # P(i > j) = Φ((μ_i - μ_j) / √(σ_i² + σ_j²))
     mu_diff = mu[:, np.newaxis] - mu[np.newaxis, :]
     scale = np.sqrt(sigma[:, np.newaxis]**2 + sigma[np.newaxis, :]**2)
-    p = norm.sf(0, loc=mu_diff, scale=scale)
+    p = ndtr(mu_diff / scale)  # ndtr is much faster than norm.sf
     p = np.clip(p, 1e-10, 1 - 1e-10)
 
     return -np.sum(wins * np.log(p))
@@ -199,7 +201,7 @@ def fit_thurstonian(
         callback=callback,
         options={
             "maxiter": max_iter,
-            "maxfun": max_iter * 20,
+            "maxfun": max_iter * 50,
             "gtol": gradient_tol,
             "ftol": loss_tol,
         },

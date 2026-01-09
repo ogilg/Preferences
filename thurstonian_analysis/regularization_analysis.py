@@ -16,7 +16,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
-from scipy.stats import norm
+from scipy.special import ndtr
 
 from src.preferences.ranking.thurstonian import PairwiseData, fit_thurstonian, _preference_prob
 from src.preferences.ranking.utils import simulate_pairwise_comparisons
@@ -25,10 +25,11 @@ from src.task_data import Task, OriginDataset
 
 
 from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
+from thurstonian_analysis.utils import split_wins
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
 
-LAMBDAS = np.logspace(-2, np.log10(200), 12)
+LAMBDAS = np.logspace(-2, np.log10(150), 10)
 
 
 def make_task(id: str) -> Task:
@@ -50,7 +51,7 @@ def load_all_datasets() -> list[tuple[str, PairwiseData]]:
             continue
 
         with open(measurements_path) as f:
-            measurements = yaml.safe_load(f)
+            measurements = yaml.load(f, Loader=yaml.CSafeLoader)
         if not measurements:
             continue
 
@@ -76,35 +77,10 @@ def load_all_datasets() -> list[tuple[str, PairwiseData]]:
     return datasets
 
 
-def split_wins(
-    wins: np.ndarray,
-    test_frac: float,
-    rng: np.random.Generator,
-) -> tuple[np.ndarray, np.ndarray]:
-    """Hold out entire pairs (edges) for test. Returns (train_wins, test_wins)."""
-    n = wins.shape[0]
-    train = wins.copy()
-    test = np.zeros_like(wins)
-
-    pairs = [(i, j) for i in range(n) for j in range(i + 1, n) if wins[i, j] + wins[j, i] > 0]
-
-    n_test_pairs = int(len(pairs) * test_frac)
-    test_pair_indices = rng.choice(len(pairs), size=n_test_pairs, replace=False)
-
-    for idx in test_pair_indices:
-        i, j = pairs[idx]
-        test[i, j] = wins[i, j]
-        test[j, i] = wins[j, i]
-        train[i, j] = 0
-        train[j, i] = 0
-
-    return train, test
-
-
 def eval_nll(mu: np.ndarray, sigma: np.ndarray, wins: np.ndarray) -> float:
     mu_diff = mu[:, np.newaxis] - mu[np.newaxis, :]
     scale = np.sqrt(sigma[:, np.newaxis] ** 2 + sigma[np.newaxis, :] ** 2)
-    p = norm.sf(0, loc=mu_diff, scale=scale)
+    p = ndtr(mu_diff / scale)
     p = np.clip(p, 1e-10, 1 - 1e-10)
     return -float(np.sum(wins * np.log(p)))
 

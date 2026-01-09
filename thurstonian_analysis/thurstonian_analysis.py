@@ -54,7 +54,7 @@ def load_all_datasets() -> list[tuple[str, PairwiseData]]:
             continue
 
         with open(measurements_path) as f:
-            measurements = yaml.safe_load(f)
+            measurements = yaml.load(f, Loader=yaml.CSafeLoader)
         if not measurements:
             continue
 

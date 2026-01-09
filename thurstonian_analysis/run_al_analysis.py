@@ -4,6 +4,7 @@
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import yaml
 
@@ -14,6 +15,7 @@ from thurstonian_analysis import (
     plot_convergence_curve,
     plot_held_out_comparison,
 )
+from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
@@ -23,10 +25,10 @@ OUTPUT_DIR = Path("thurstonian_analysis/plots/active_learning")
 def load_real_data(run_dir: Path) -> tuple[list[BinaryPreferenceMeasurement], list[Task]]:
     """Load comparison data from a results directory."""
     with open(run_dir / "config.yaml") as f:
-        config = yaml.safe_load(f)
+        config = yaml.load(f, Loader=yaml.CSafeLoader)
 
     with open(run_dir / "measurements.yaml") as f:
-        measurements_raw = yaml.safe_load(f)
+        measurements_raw = yaml.load(f, Loader=yaml.CSafeLoader)
 
     # Build tasks from config
     task_ids = config["task_ids"]
@@ -64,7 +66,7 @@ def run_synthetic_analysis():
     print()
 
     result = run_synthetic_comparison(
-        n_tasks=50,
+        n_tasks=N_TASKS,
         held_out_fraction=0.2,
         n_comparisons_per_pair=5,
         initial_degree=3,
@@ -194,15 +196,146 @@ def run_real_analysis(run_dir: Path, label: str = "real"):
     return result
 
 
+def get_all_real_data_dirs() -> list[Path]:
+    """Get all measurement directories with sufficient data."""
+    dirs = []
+    for d in sorted(RESULTS_DIR.iterdir()):
+        if not d.is_dir():
+            continue
+        if not (d / "measurements.yaml").exists():
+            continue
+        dirs.append(d)
+    return dirs
+
+
+def run_real_analysis_aggregated(label: str = "real"):
+    """Run analysis on real data, averaging over all prompt templates."""
+    print()
+    print("=" * 60)
+    print("REAL DATA ANALYSIS (aggregated over prompt templates)")
+    print("=" * 60)
+    print()
+
+    run_dirs = get_all_real_data_dirs()
+    if not run_dirs:
+        print("No measurement directories found!")
+        return None
+
+    print(f"Found {len(run_dirs)} measurement directories")
+
+    all_results = []
+    for run_dir in run_dirs:
+        try:
+            comparisons, tasks = load_real_data(run_dir)
+            if len(tasks) < N_TASKS:
+                print(f"  Skipping {run_dir.name}: only {len(tasks)} tasks (need {N_TASKS})")
+                continue
+
+            print(f"  Processing {run_dir.name} ({len(tasks)} tasks, {len(comparisons)} comparisons)")
+
+            result = run_real_data_comparison(
+                comparisons=comparisons,
+                tasks=tasks,
+                held_out_fraction=0.2,
+                initial_degree=5,
+                batch_size=10,
+                max_iterations=50,
+                seed=42,
+            )
+            all_results.append((run_dir.name, result))
+        except Exception as e:
+            print(f"  Error processing {run_dir.name}: {e}")
+
+    if not all_results:
+        print("No valid results!")
+        return None
+
+    print()
+    print(f"Successfully processed {len(all_results)} templates")
+    print()
+
+    # Print summary statistics
+    held_out_accs = [r.al_vs_full_mle.held_out_accuracy for _, r in all_results]
+    full_mle_accs = [r.full_mle_held_out_accuracy for _, r in all_results]
+    spearman_rhos = [r.al_vs_full_mle.spearman_rho for _, r in all_results]
+    efficiencies = [r.al_vs_full_mle.efficiency for _, r in all_results]
+
+    print("AGGREGATED RESULTS:")
+    print(f"  Templates: {len(all_results)}")
+    print()
+    print("FULL MLE (baseline):")
+    print(f"  Held-out accuracy: {np.mean(full_mle_accs):.1%} +/- {np.std(full_mle_accs):.1%}")
+    print()
+    print("ACTIVE LEARNING:")
+    print(f"  Held-out accuracy: {np.mean(held_out_accs):.1%} +/- {np.std(held_out_accs):.1%}")
+    print(f"  Spearman with Full MLE: {np.mean(spearman_rhos):.3f} +/- {np.std(spearman_rhos):.3f}")
+    print(f"  Efficiency: {np.mean(efficiencies):.1%} +/- {np.std(efficiencies):.1%}")
+
+    # Plot aggregated convergence curves
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+    for name, result in all_results:
+        traj = result.trajectory
+        axes[0].plot(traj.cumulative_pairs, traj.spearman_vs_full_mle, "o-", alpha=0.5, markersize=2, label=name)
+        axes[1].plot(traj.cumulative_pairs, traj.held_out_accuracy, "o-", alpha=0.5, markersize=2, label=name)
+
+    axes[0].set_xlabel("Pairs queried")
+    axes[0].set_ylabel("Spearman rho vs Full MLE")
+    axes[0].set_title(f"Convergence to Full MLE (N={N_TASKS}, {len(all_results)} templates)")
+    axes[0].set_ylim(0, 1.05)
+    axes[0].axhline(y=1.0, color="gray", linestyle="--", alpha=0.5)
+
+    axes[1].set_xlabel("Pairs queried")
+    axes[1].set_ylabel("Held-out accuracy")
+    axes[1].set_title("Held-out Prediction Accuracy")
+    axes[1].set_ylim(0.4, 1.0)
+    axes[1].axhline(y=np.mean(full_mle_accs), color="red", linestyle="--", alpha=0.7, label=f"Full MLE mean: {np.mean(full_mle_accs):.3f}")
+    axes[1].axhline(y=0.5, color="gray", linestyle=":", alpha=0.5)
+    axes[1].legend(loc="lower right")
+
+    fig.tight_layout()
+    fig.savefig(OUTPUT_DIR / f"{label}_convergence_all_templates.png", dpi=150, bbox_inches="tight")
+
+    # Plot summary bar chart
+    fig2, axes2 = plt.subplots(1, 2, figsize=(10, 4))
+
+    # Accuracy comparison
+    x = np.arange(len(all_results))
+    width = 0.35
+    axes2[0].bar(x - width/2, [r.al_vs_full_mle.held_out_accuracy for _, r in all_results], width, label="Active Learning", alpha=0.8)
+    axes2[0].bar(x + width/2, [r.full_mle_held_out_accuracy for _, r in all_results], width, label="Full MLE", alpha=0.8)
+    axes2[0].set_ylabel("Held-out Accuracy")
+    axes2[0].set_title(f"AL vs Full MLE by Template (N={N_TASKS})")
+    axes2[0].set_xticks(x)
+    axes2[0].set_xticklabels([name.replace("binary_choice_", "").replace("_llama-3.1-8b", "") for name, _ in all_results], rotation=45)
+    axes2[0].legend()
+    axes2[0].axhline(y=0.5, color="gray", linestyle=":", alpha=0.5)
+
+    # Efficiency
+    axes2[1].bar(x, [r.al_vs_full_mle.efficiency * 100 for _, r in all_results], alpha=0.8, color="C2")
+    axes2[1].set_ylabel("Pairs used (%)")
+    axes2[1].set_title("Active Learning Efficiency")
+    axes2[1].set_xticks(x)
+    axes2[1].set_xticklabels([name.replace("binary_choice_", "").replace("_llama-3.1-8b", "") for name, _ in all_results], rotation=45)
+
+    fig2.tight_layout()
+    fig2.savefig(OUTPUT_DIR / f"{label}_summary_by_template.png", dpi=150, bbox_inches="tight")
+
+    print()
+    print(f"Saved: {label}_convergence_all_templates.png")
+    print(f"Saved: {label}_summary_by_template.png")
+
+    return all_results
+
+
 def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # Synthetic data
     run_synthetic_analysis()
 
-    # Real data from measurements
-    real_run_dir = Path("results/measurements/binary_choice_001_llama-3.1-8b")
-    run_real_analysis(real_run_dir, label="real")
+    # Real data aggregated over all templates
+    run_real_analysis_aggregated(label="real")
 
     plt.close("all")
     print()
