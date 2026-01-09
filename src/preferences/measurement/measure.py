@@ -34,7 +34,7 @@ def measure_binary_preferences(
     ]
 
     if VERBOSE:
-        print(f"  [verbose] batch size: {len(requests)}, max_concurrent: {max_concurrent}, timeout: 3s, max_retries: 2")
+        print(f"  [verbose] batch size: {len(requests)}, max_concurrent: {max_concurrent}, timeout: 5s per attempt, max_retries: 2")
 
     pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
     responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)
@@ -78,7 +78,7 @@ def measure_ratings(
     ]
 
     if VERBOSE:
-        print(f"  [verbose] batch size: {len(requests)}, max_concurrent: {max_concurrent}, timeout: 3s, max_retries: 2")
+        print(f"  [verbose] batch size: {len(requests)}, max_concurrent: {max_concurrent}, timeout: 5s per attempt, max_retries: 2")
 
     pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
     responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)

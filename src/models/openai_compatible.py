@@ -179,9 +179,12 @@ class OpenAICompatibleClient(ABC):
         semaphore = asyncio.Semaphore(max_concurrent)
         async_client = self._create_async_client()
         remaining = len(requests)
+        error_counts: dict[str, int] = {}
+        total_errors = 0
+        last_printed = 0
 
         async def process_one(request: GenerateRequest) -> BatchResult:
-            nonlocal remaining
+            nonlocal remaining, total_errors, last_printed
             kwargs: dict[str, Any] = {
                 "model": self.model_name,
                 "messages": request.messages,
@@ -197,7 +200,7 @@ class OpenAICompatibleClient(ABC):
                     response = await with_retries_async(
                         lambda: asyncio.wait_for(
                             async_client.chat.completions.create(**kwargs),
-                            timeout=3.0,
+                            timeout=10.0,
                         )
                     )
                     text = self._parse_response(
@@ -209,15 +212,30 @@ class OpenAICompatibleClient(ABC):
                     return BatchResult(response=text, error=None)
                 except Exception as e:
                     if VERBOSE:
-                        error_type = type(e).__name__
                         if isinstance(e, asyncio.TimeoutError):
-                            print(f"  [timeout] {remaining} remaining")
+                            error_counts["timeout"] = error_counts.get("timeout", 0) + 1
+                            if error_counts["timeout"] % 5 == 1:
+                                print(f"  [timeout #{error_counts['timeout']}] {e}")
                         elif isinstance(e, openai.RateLimitError):
-                            print(f"  [rate-limit] {remaining} remaining")
+                            error_counts["rate-limit"] = error_counts.get("rate-limit", 0) + 1
+                            if error_counts["rate-limit"] % 5 == 1:
+                                print(f"  [rate-limit #{error_counts['rate-limit']}] {e}")
                         elif isinstance(e, openai.APIConnectionError):
-                            print(f"  [connection-error] {remaining} remaining")
+                            error_counts["connection"] = error_counts.get("connection", 0) + 1
+                            if error_counts["connection"] % 5 == 1:
+                                print(f"  [connection #{error_counts['connection']}] {e}")
                         else:
-                            print(f"  [{error_type}] {remaining} remaining")
+                            key = type(e).__name__
+                            error_counts[key] = error_counts.get(key, 0) + 1
+                            if error_counts[key] % 5 == 1:
+                                print(f"  [{key} #{error_counts[key]}] {e}")
+
+                        total_errors += 1
+                        if total_errors - last_printed >= 50:
+                            errors_str = ", ".join(f"{k}={v}" for k, v in sorted(error_counts.items()))
+                            print(f"  [errors so far] {errors_str} (remaining: {remaining})")
+                            last_printed = total_errors
+
                     if on_complete:
                         on_complete()
                     remaining -= 1
@@ -234,6 +252,11 @@ class OpenAICompatibleClient(ABC):
             for coro in asyncio.as_completed(tasks):
                 idx, result = await coro
                 results[idx] = result
+
+            if VERBOSE and error_counts:
+                errors_str = ", ".join(f"{k}={v}" for k, v in sorted(error_counts.items()))
+                print(f"  [errors] {errors_str}")
+
             return results  # type: ignore[return-value]
         finally:
             await async_client.close()
@@ -262,7 +285,7 @@ class CerebrasClient(OpenAICompatibleClient):
     _api_key_env_var = "CEREBRAS_API_KEY"
     _base_url = "https://api.cerebras.ai/v1"
     _default_model = "llama-3.1-8b"
-    default_max_concurrent = 150
+    default_max_concurrent = 50
     _model_aliases = {
         "llama-3.1-8b": "llama3.1-8b",
         "llama-3.1-70b": "llama3.1-70b",
