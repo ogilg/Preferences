@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from tqdm import tqdm
 
 from src.models import GenerateRequest, Model
@@ -10,6 +11,8 @@ from src.preferences.measurement.response_format import RegexChoiceFormat
 from src.preferences.templates.builders import BinaryPromptBuilder, PromptBuilder
 from src.preferences.templates.generator_config import TASK_LABELS
 from src.preferences.templates.template import PromptTemplate
+
+VERBOSE = os.getenv("VERBOSE", "0") == "1"
 
 
 def measure_binary_preferences(
@@ -29,6 +32,9 @@ def measure_binary_preferences(
         )
         for prompt in prompts
     ]
+
+    if VERBOSE:
+        print(f"  [verbose] batch size: {len(requests)}, max_concurrent: {max_concurrent}, timeout: 3s, max_retries: 2")
 
     pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
     responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)
@@ -70,6 +76,9 @@ def measure_ratings(
         )
         for prompt in prompts
     ]
+
+    if VERBOSE:
+        print(f"  [verbose] batch size: {len(requests)}, max_concurrent: {max_concurrent}, timeout: 3s, max_retries: 2")
 
     pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
     responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)

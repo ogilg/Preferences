@@ -13,6 +13,8 @@ from openai import AsyncOpenAI, OpenAI
 from src.models.retry import with_retries, with_retries_async
 from src.types import Message
 
+VERBOSE = os.getenv("VERBOSE", "0") == "1"
+
 
 class ToolCallError(Exception):
     pass
@@ -176,8 +178,10 @@ class OpenAICompatibleClient(ABC):
     ) -> list[BatchResult]:
         semaphore = asyncio.Semaphore(max_concurrent)
         async_client = self._create_async_client()
+        remaining = len(requests)
 
         async def process_one(request: GenerateRequest) -> BatchResult:
+            nonlocal remaining
             kwargs: dict[str, Any] = {
                 "model": self.model_name,
                 "messages": request.messages,
@@ -191,17 +195,32 @@ class OpenAICompatibleClient(ABC):
             async with semaphore:
                 try:
                     response = await with_retries_async(
-                        lambda: async_client.chat.completions.create(**kwargs)
+                        lambda: asyncio.wait_for(
+                            async_client.chat.completions.create(**kwargs),
+                            timeout=3.0,
+                        )
                     )
                     text = self._parse_response(
                         response.choices[0].message, request.tools
                     )
                     if on_complete:
                         on_complete()
+                    remaining -= 1
                     return BatchResult(response=text, error=None)
                 except Exception as e:
+                    if VERBOSE:
+                        error_type = type(e).__name__
+                        if isinstance(e, asyncio.TimeoutError):
+                            print(f"  [timeout] {remaining} remaining")
+                        elif isinstance(e, openai.RateLimitError):
+                            print(f"  [rate-limit] {remaining} remaining")
+                        elif isinstance(e, openai.APIConnectionError):
+                            print(f"  [connection-error] {remaining} remaining")
+                        else:
+                            print(f"  [{error_type}] {remaining} remaining")
                     if on_complete:
                         on_complete()
+                    remaining -= 1
                     return BatchResult(response=None, error=e)
 
         async def process_with_index(i: int, request: GenerateRequest) -> tuple[int, BatchResult]:
