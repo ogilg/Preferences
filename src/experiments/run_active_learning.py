@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import yaml
 
 from src.models import get_client, get_default_max_concurrent
 from src.task_data import Task, load_tasks
@@ -119,6 +120,23 @@ def run_active_learning(config_path: Path) -> None:
         print(f"{'='*60}")
 
         cache = MeasurementCache(template, client)
+
+        # Check if already done with same config
+        thurstonian_path = cache.cache_dir / "thurstonian_active_learning.yaml"
+        current_config = {
+            "config_file": str(config_path),
+            "n_tasks": config.n_tasks,
+            "seed": al_config.seed,
+        }
+
+        if thurstonian_path.exists():
+            with open(thurstonian_path) as f:
+                saved_data = yaml.safe_load(f)
+            saved_config = saved_data.get("config", {})
+            if saved_config == current_config:
+                print(f"Active learning already done with same config, skipping")
+                continue
+
         state = ActiveLearningState(tasks=tasks)
         iteration_history = []
 

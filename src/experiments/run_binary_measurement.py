@@ -45,18 +45,15 @@ def main():
 
         missing_pairs = [(a, b) for a, b in unique_pairs if (a.id, b.id) not in existing_pairs]
 
-        thurstonian_path = cache.cache_dir / "thurstonian_exhaustive_pairwise.yaml"
-        if not missing_pairs and thurstonian_path.exists():
-            print(f"\n{template.name}: all {len(unique_pairs)} pairs cached, skipping")
-            continue
-
         print(f"\n{template.name}: {len(existing_pairs)} cached, {len(missing_pairs)} to query")
 
-        pairs_to_query = missing_pairs * config.samples_per_pair
-        batch = measure_with_template(template, client, pairs_to_query, config.temperature, max_concurrent)
-        print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
-
-        cache.append(batch.successes)
+        if missing_pairs:
+            pairs_to_query = missing_pairs * config.samples_per_pair
+            batch = measure_with_template(template, client, pairs_to_query, config.temperature, max_concurrent)
+            print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
+            cache.append(batch.successes)
+        else:
+            print(f"  All measurements cached")
 
         raw_measurements = cache.get_measurements(task_ids=task_ids)
         measurements = reconstruct_measurements(raw_measurements, task_lookup)
@@ -65,36 +62,50 @@ def main():
         agreement = compute_pair_agreement(measurements)
         print(f"  Pair agreement: {agreement:.3f}")
 
-        fit_kwargs = {"max_iter": max_iter}
-        if config.fitting.gradient_tol is not None:
-            fit_kwargs["gradient_tol"] = config.fitting.gradient_tol
-        if config.fitting.loss_tol is not None:
-            fit_kwargs["loss_tol"] = config.fitting.loss_tol
+        # Check if fitting already done with same config
+        thurstonian_path = cache.cache_dir / "thurstonian_exhaustive_pairwise.yaml"
+        current_config = {
+            "config_file": str(sys.argv[1]),
+            "n_tasks": config.n_tasks,
+            "task_origins": config.task_origins,
+            "samples_per_pair": config.samples_per_pair,
+            "temperature": config.temperature,
+        }
 
-        thurstonian = fit_thurstonian(
-            PairwiseData.from_comparisons(measurements, tasks),
-            **fit_kwargs,
-        )
-        print(f"  Thurstonian converged: {thurstonian.converged}")
-        if not thurstonian.converged:
-            print(f"    Iterations: {thurstonian.n_iterations}/{max_iter}")
-            print(f"    Message: {thurstonian.termination_message}")
-            print(f"    NLL: {thurstonian.neg_log_likelihood:.2f}")
-        print(f"    μ range: [{thurstonian.mu.min():.2f}, {thurstonian.mu.max():.2f}]")
-        print(f"    σ range: [{thurstonian.sigma.min():.2f}, {thurstonian.sigma.max():.2f}]")
+        should_fit = True
+        if thurstonian_path.exists():
+            with open(thurstonian_path) as f:
+                saved_data = yaml.safe_load(f)
+            saved_config = saved_data.get("config", {})
+            if saved_config == current_config:
+                print(f"  Fitting already done with same config, skipping")
+                should_fit = False
 
-        save_thurstonian(
-            thurstonian,
-            cache.cache_dir / "thurstonian_exhaustive_pairwise.yaml",
-            fitting_method="exhaustive_pairwise",
-            config={
-                "config_file": str(sys.argv[1]),
-                "n_tasks": config.n_tasks,
-                "task_origins": config.task_origins,
-                "samples_per_pair": config.samples_per_pair,
-                "temperature": config.temperature,
-            },
-        )
+        if should_fit:
+            fit_kwargs = {"max_iter": max_iter}
+            if config.fitting.gradient_tol is not None:
+                fit_kwargs["gradient_tol"] = config.fitting.gradient_tol
+            if config.fitting.loss_tol is not None:
+                fit_kwargs["loss_tol"] = config.fitting.loss_tol
+
+            thurstonian = fit_thurstonian(
+                PairwiseData.from_comparisons(measurements, tasks),
+                **fit_kwargs,
+            )
+            print(f"  Thurstonian converged: {thurstonian.converged}")
+            if not thurstonian.converged:
+                print(f"    Iterations: {thurstonian.n_iterations}/{max_iter}")
+                print(f"    Message: {thurstonian.termination_message}")
+                print(f"    NLL: {thurstonian.neg_log_likelihood:.2f}")
+            print(f"    μ range: [{thurstonian.mu.min():.2f}, {thurstonian.mu.max():.2f}]")
+            print(f"    σ range: [{thurstonian.sigma.min():.2f}, {thurstonian.sigma.max():.2f}]")
+
+            save_thurstonian(
+                thurstonian,
+                thurstonian_path,
+                fitting_method="exhaustive_pairwise",
+                config=current_config,
+            )
 
     print("\nDone.")
 
