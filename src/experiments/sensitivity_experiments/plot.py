@@ -12,9 +12,7 @@ import yaml
 
 from src.experiments.correlation import compute_pairwise_correlations
 from src.experiments.sensitivity_experiments.sensitivity import compute_sensitivities
-from src.preferences.ranking import PairwiseData, fit_thurstonian
 from src.preferences.storage import MEASUREMENTS_DIR, load_yaml
-from src.task_data import OriginDataset, Task
 
 
 @dataclass
@@ -43,31 +41,45 @@ def list_runs(results_dir: Path) -> list[RunConfig]:
     return runs
 
 
+def find_thurstonian_csv(run_dir: Path) -> Path | None:
+    """Find pre-computed thurstonian CSV file (active learning only)."""
+    # Try hash-based filename first
+    matches = list(run_dir.glob("thurstonian_active_learning_*.csv"))
+    if matches:
+        return matches[0]
+
+    # Fallback to old naming
+    csv_path = run_dir / "thurstonian_active_learning.csv"
+    if csv_path.exists():
+        return csv_path
+
+    return None
+
+
 def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
-    """Load measurements and fit thurstonian model, returning (mu, task_ids)."""
-    measurements_path = run_dir / "measurements.yaml"
-    if not measurements_path.exists():
-        raise FileNotFoundError(f"No measurements.yaml in {run_dir}")
+    """Load utilities from thurstonian CSV (binary) or scores.yaml (rating)."""
+    # Try binary format first (thurstonian CSV)
+    csv_path = find_thurstonian_csv(run_dir)
+    if csv_path is not None:
+        task_ids = []
+        mus = []
+        with open(csv_path) as f:
+            next(f)  # Skip header
+            for line in f:
+                task_id, mu, _ = line.strip().split(",")
+                task_ids.append(task_id)
+                mus.append(float(mu))
+        return np.array(mus), task_ids
 
-    raw = load_yaml(measurements_path)
+    # Try rating format (scores.yaml)
+    scores_path = run_dir / "scores.yaml"
+    if scores_path.exists():
+        scores = load_yaml(scores_path)
+        task_ids = [s["task_id"] for s in scores]
+        utilities = np.array([s["score"] for s in scores])
+        return utilities, task_ids
 
-    task_ids = sorted({m["task_a"] for m in raw} | {m["task_b"] for m in raw})
-    tasks = [Task(prompt="", origin=OriginDataset.WILDCHAT, id=tid, metadata={}) for tid in task_ids]
-    id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
-
-    n = len(tasks)
-    wins = np.zeros((n, n), dtype=np.int32)
-    for m in raw:
-        i, j = id_to_idx[m["task_a"]], id_to_idx[m["task_b"]]
-        if m["choice"] == "a":
-            wins[i, j] += 1
-        else:
-            wins[j, i] += 1
-
-    data = PairwiseData(tasks=tasks, wins=wins)
-    result = fit_thurstonian(data)
-
-    return result.mu, task_ids
+    raise FileNotFoundError(f"No thurstonian CSV or scores.yaml found in {run_dir}")
 
 
 def load_all_runs(results_dir: Path) -> list[tuple[RunConfig, np.ndarray, list[str]]]:
@@ -161,9 +173,6 @@ def plot_sensitivity_bars(
     ax.set_xticks(x)
     ax.set_xticklabels(fields, rotation=45, ha="right")
     ax.set_ylim(0, 1.1)
-    ax.axhline(y=0.9, color="green", linestyle="--", alpha=0.5, label="High robustness")
-    ax.axhline(y=0.7, color="orange", linestyle="--", alpha=0.5, label="Moderate")
-    ax.legend()
 
     for bar, mean in zip(bars, means):
         if not np.isnan(mean):
@@ -206,14 +215,17 @@ def main():
     print(f"Loaded {len(runs)} runs, computing correlations...")
     sensitivities, correlations = compute_all_field_sensitivities(runs)
 
-    output_dir = args.output or args.results_dir
+    output_dir = args.output or Path("results/sensitivity_experiments")
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    report_path = output_dir / "sensitivity.yaml"
+    # Name files based on source (e.g., "measurements" -> "sensitivity_measurements.yaml")
+    source_name = args.results_dir.name
+    report_path = output_dir / f"sensitivity_{source_name}.yaml"
     save_sensitivity_report(sensitivities, correlations, len(runs), report_path)
     print(f"Saved report to {report_path}")
 
     if sensitivities:
-        plot_path = output_dir / "sensitivity.png"
+        plot_path = output_dir / f"sensitivity_{source_name}.png"
         plot_sensitivity_bars(sensitivities, plot_path)
         print(f"Saved plot to {plot_path}")
 
