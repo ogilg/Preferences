@@ -85,8 +85,8 @@ def main():
 
         save_thurstonian(
             thurstonian,
-            cache.cache_dir / "thurstonian.yaml",
-            measurement_method="exhaustive_pairwise",
+            cache.cache_dir / "thurstonian_exhaustive_pairwise.yaml",
+            fitting_method="exhaustive_pairwise",
             config={
                 "config_file": str(sys.argv[1]),
                 "n_tasks": config.n_tasks,

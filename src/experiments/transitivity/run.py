@@ -36,11 +36,21 @@ def analyze_run(run_dir: Path) -> dict:
     with open(run_dir / "measurements.yaml") as f:
         measurements = yaml.safe_load(f)
 
-    with open(run_dir / "thurstonian.yaml") as f:
-        thurstonian = yaml.safe_load(f)
+    # Try new filenames first, fallback to old
+    thurstonian_yaml = None
+    for yaml_name in ["thurstonian_exhaustive_pairwise.yaml", "thurstonian_active_learning.yaml", "thurstonian.yaml"]:
+        yaml_path = run_dir / yaml_name
+        if yaml_path.exists():
+            with open(yaml_path) as f:
+                thurstonian = yaml.safe_load(f)
+            thurstonian_yaml = yaml_path
+            break
 
-    # Read sigma from CSV
-    csv_path = run_dir / "thurstonian.csv"
+    if thurstonian_yaml is None:
+        raise FileNotFoundError(f"No thurstonian YAML found in {run_dir}")
+
+    # Read sigma from CSV (use same base name as YAML)
+    csv_path = thurstonian_yaml.with_suffix(".csv")
     if csv_path.exists():
         sigmas = []
         with open(csv_path) as f:

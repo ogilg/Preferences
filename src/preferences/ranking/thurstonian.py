@@ -225,14 +225,14 @@ def fit_thurstonian(
 def save_thurstonian(
     result: ThurstonianResult,
     path: Path | str,
-    measurement_method: str,
+    fitting_method: str,
     config: dict | None = None,
 ) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
     data = {
-        "measurement_method": measurement_method,
+        "fitting_method": fitting_method,
         "converged": bool(result.converged),
         "neg_log_likelihood": float(result.neg_log_likelihood),
         "n_iterations": int(result.n_iterations),
