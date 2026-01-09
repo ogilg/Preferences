@@ -106,6 +106,7 @@ def run_regularization_on_wins(
     test_frac: float,
     n_splits: int,
     lambdas: np.ndarray,
+    verbose: bool = True,
 ) -> dict[str, list]:
     all_train_nlls = {lam: [] for lam in lambdas}
     all_test_nlls = {lam: [] for lam in lambdas}
@@ -113,15 +114,19 @@ def run_regularization_on_wins(
     all_sigma_stds = {lam: [] for lam in lambdas}
 
     for split_idx in range(n_splits):
+        if verbose:
+            print(f"  split {split_idx + 1}/{n_splits}", end="", flush=True)
         split_rng = np.random.default_rng(split_idx * 1000 + 123)
         train_wins, test_wins = split_wins(wins, test_frac, split_rng)
         n_train = int(train_wins.sum())
         n_test = int(test_wins.sum())
 
         if n_train == 0 or n_test == 0:
+            if verbose:
+                print(" (skipped)", flush=True)
             continue
 
-        for lam in lambdas:
+        for lam_idx, lam in enumerate(lambdas):
             data = PairwiseData(tasks=tasks, wins=train_wins)
             result = fit_thurstonian(data, lambda_sigma=lam, log_sigma_bounds=(-4, 4))
             train_nll_per_comp = eval_nll(result.mu, result.sigma, train_wins) / n_train
@@ -130,6 +135,10 @@ def run_regularization_on_wins(
             all_test_nlls[lam].append(test_nll_per_comp)
             all_sigma_maxs[lam].append(float(result.sigma.max()))
             all_sigma_stds[lam].append(float(result.sigma.std()))
+            if verbose:
+                print(".", end="", flush=True)
+        if verbose:
+            print(flush=True)
 
     return {
         "train_nlls": all_train_nlls,
@@ -145,6 +154,7 @@ def run_regularization_path_synthetic(
     test_frac: float = 0.2,
     n_splits: int = 10,
 ) -> RegularizationResults:
+    print(f"Synthetic dense: {n_tasks} tasks, {n_splits} splits, {len(LAMBDAS)} lambdas")
     data_rng = np.random.default_rng(42)
     true_mu = np.linspace(-3, 3, n_tasks)
     true_sigma = np.ones(n_tasks)
@@ -203,6 +213,7 @@ def run_regularization_path_sparse(
     n_splits: int = 10,
 ) -> RegularizationResults:
     """Run regularization analysis on sparse (d-regular graph) synthetic data."""
+    print(f"Synthetic sparse: {n_tasks} tasks, d={d}, {n_splits} splits, {len(LAMBDAS)} lambdas")
     data_rng = np.random.default_rng(42)
     true_mu = np.linspace(-3, 3, n_tasks)
     true_sigma = np.ones(n_tasks)
@@ -232,6 +243,7 @@ def run_regularization_path_real(
     test_frac: float = 0.2,
     n_splits: int = 5,
 ) -> RegularizationResults:
+    print(f"Real data: {n_splits} splits, {len(LAMBDAS)} lambdas")
     datasets = load_all_datasets()
     if not datasets:
         raise ValueError(f"No datasets found in {RESULTS_DIR}")
@@ -241,10 +253,9 @@ def run_regularization_path_real(
     all_sigma_maxs = {lam: [] for lam in LAMBDAS}
     all_sigma_stds = {lam: [] for lam in LAMBDAS}
 
-    for name, data in datasets:
-        if data.n_tasks < N_TASKS:
-            continue
-
+    valid_datasets = [(n, d) for n, d in datasets if d.n_tasks >= N_TASKS]
+    for ds_idx, (name, data) in enumerate(valid_datasets):
+        print(f"Dataset {ds_idx + 1}/{len(valid_datasets)}: {name}")
         results = run_regularization_on_wins(data.tasks, data.wins, test_frac, n_splits, LAMBDAS)
 
         for lam in LAMBDAS:
@@ -256,7 +267,7 @@ def run_regularization_path_real(
     if not all_train_nlls[LAMBDAS[0]]:
         raise ValueError(f"No valid datasets found (need >= {N_TASKS} tasks)")
 
-    n_valid_datasets = len([d for _, d in datasets if d.n_tasks >= N_TASKS])
+    n_valid_datasets = len(valid_datasets)
 
     return RegularizationResults(
         lambdas=LAMBDAS,
@@ -341,12 +352,15 @@ def run_al_with_regularization(
     if lambdas is None:
         lambdas = [0.0, 0.1, 1.0, 10.0, 50.0]
 
+    print(f"AL regularization: {n_tasks} tasks, {n_runs} runs, {len(lambdas)} lambdas, {max_iterations} max iters")
+
     trajectories: dict[float, dict[str, list[list[float]]]] = {
         lam: {"spearman_vs_true": [], "held_out_accuracy": [], "cumulative_pairs": []}
         for lam in lambdas
     }
 
     for run_idx in range(n_runs):
+        print(f"Run {run_idx + 1}/{n_runs}")
         run_seed = seed + run_idx * 1000
         rng = np.random.default_rng(run_seed)
 
@@ -380,7 +394,8 @@ def run_al_with_regularization(
                 )
 
         # Run AL for each lambda
-        for lam in lambdas:
+        for lam_idx, lam in enumerate(lambdas):
+            print(f"  λ={lam} ({lam_idx + 1}/{len(lambdas)})", end="", flush=True)
             al_rng = np.random.default_rng(run_seed + 500)
             state = ActiveLearningState(tasks=tasks)
 
@@ -409,7 +424,7 @@ def run_al_with_regularization(
             run_pairs = [len(state.sampled_pairs)]
 
             # Active learning loop
-            for _ in range(max_iterations):
+            for iter_idx in range(max_iterations):
                 unsampled = [
                     (a, b) for a, b in state.get_unsampled_pairs()
                     if tuple(sorted([a.id, b.id])) in train_pairs_set
@@ -440,7 +455,9 @@ def run_al_with_regularization(
                 run_spearman.append(float(spearmanr(state.current_fit.mu, true_mu).correlation))
                 run_accuracy.append(_compute_held_out_accuracy(state.current_fit, held_out_comparisons))
                 run_pairs.append(len(state.sampled_pairs))
+                print(".", end="", flush=True)
 
+            print(f" ({len(run_pairs)} iters)", flush=True)
             trajectories[lam]["spearman_vs_true"].append(run_spearman)
             trajectories[lam]["held_out_accuracy"].append(run_accuracy)
             trajectories[lam]["cumulative_pairs"].append(run_pairs)

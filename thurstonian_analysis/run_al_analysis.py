@@ -24,23 +24,27 @@ OUTPUT_DIR = Path("thurstonian_analysis/plots/active_learning")
 
 def load_real_data(run_dir: Path) -> tuple[list[BinaryPreferenceMeasurement], list[Task]]:
     """Load comparison data from a results directory."""
-    with open(run_dir / "config.yaml") as f:
-        config = yaml.load(f, Loader=yaml.CSafeLoader)
-
     with open(run_dir / "measurements.yaml") as f:
         measurements_raw = yaml.load(f, Loader=yaml.CSafeLoader)
 
-    # Build tasks from config
-    task_ids = config["task_ids"]
-    task_prompts = config["task_prompts"]
+    if not measurements_raw:
+        return [], []
+
+    # Extract task IDs from measurements
+    task_ids = set()
+    for m in measurements_raw:
+        task_ids.add(m["task_a"])
+        task_ids.add(m["task_b"])
+
+    # Build tasks (we don't have prompts, so use placeholder)
     tasks = [
         Task(
-            prompt=task_prompts[tid],
+            prompt=f"Task {tid}",
             origin=OriginDataset.WILDCHAT,
             id=tid,
             metadata={},
         )
-        for tid in task_ids
+        for tid in sorted(task_ids)
     ]
     id_to_task = {t.id: t for t in tasks}
 
@@ -70,8 +74,8 @@ def run_synthetic_analysis():
         held_out_fraction=0.2,
         n_comparisons_per_pair=5,
         initial_degree=3,
-        batch_size=50,
-        max_iterations=20,
+        batch_size=100,
+        max_iterations=50,
         seed=42,
     )
 
@@ -141,7 +145,7 @@ def run_real_analysis(run_dir: Path, label: str = "real"):
         tasks=tasks,
         held_out_fraction=0.2,
         initial_degree=5,
-        batch_size=10,
+        batch_size=100,
         max_iterations=50,
         seed=42,
     )
@@ -238,7 +242,7 @@ def run_real_analysis_aggregated(label: str = "real"):
                 tasks=tasks,
                 held_out_fraction=0.2,
                 initial_degree=5,
-                batch_size=10,
+                batch_size=100,
                 max_iterations=50,
                 seed=42,
             )

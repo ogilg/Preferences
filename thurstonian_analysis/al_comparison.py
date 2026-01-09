@@ -18,6 +18,7 @@ from src.preferences.ranking.active_learning import (
     ActiveLearningState,
     generate_d_regular_pairs,
     select_next_pairs,
+    check_convergence,
 )
 
 
@@ -147,6 +148,7 @@ def run_synthetic_comparison(
     initial_degree: int = 3,
     batch_size: int = 10,
     max_iterations: int = 30,
+    convergence_threshold: float | None = 0.995,
     seed: int = 42,
 ) -> ComparisonResult:
     rng = np.random.default_rng(seed)
@@ -223,6 +225,12 @@ def run_synthetic_comparison(
 
     # Active learning loop
     for iteration in range(1, max_iterations + 1):
+        # Check convergence (rank correlation between successive iterations)
+        if convergence_threshold is not None:
+            converged, corr = check_convergence(state, threshold=convergence_threshold)
+            if converged:
+                break
+
         # Get unsampled pairs that are in train set
         unsampled = state.get_unsampled_pairs()
         unsampled_train = [
@@ -294,6 +302,7 @@ def run_real_data_comparison(
     batch_size: int = 10,
     max_iterations: int = 30,
     n_comparisons_per_pair: int = 1,
+    convergence_threshold: float | None = 0.995,
     seed: int = 42,
 ) -> ComparisonResult:
     rng = np.random.default_rng(seed)
@@ -372,6 +381,12 @@ def run_real_data_comparison(
 
     # Active learning loop
     for iteration in range(1, max_iterations + 1):
+        # Check convergence (rank correlation between successive iterations)
+        if convergence_threshold is not None:
+            converged, corr = check_convergence(state, threshold=convergence_threshold)
+            if converged:
+                break
+
         # Get unsampled pairs that are in train set
         unsampled = state.get_unsampled_pairs()
         unsampled_train = [
