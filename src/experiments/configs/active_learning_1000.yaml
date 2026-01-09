@@ -6,13 +6,21 @@ preference_mode: active_learning
 model: llama-3.1-8b
 temperature: 1.0
 
-n_tasks: 100
+n_tasks: 500
 task_origins:
   - wildchat
+  - alpaca
+  - math
 
 templates: src/preferences/templates/data/binary_choice_basic.yaml
 
-samples_per_pair: 5
+samples_per_pair: 3
+
+response_formats: ["regex", "tool_use"]
+include_reverse_order: true
+
+template_sampling: lhs
+n_template_samples: 16
 
 active_learning:
   initial_degree: 5

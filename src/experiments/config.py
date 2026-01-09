@@ -53,6 +53,10 @@ class ExperimentConfig(BaseModel):
     response_formats: list[Literal["regex", "tool_use"]] = ["regex"]
     include_reverse_order: bool = False
 
+    # Template sampling (to avoid combinatorial explosion)
+    template_sampling: Literal["all", "lhs"] = "all"
+    n_template_samples: int | None = None
+
     def get_origin_datasets(self) -> list[OriginDataset]:
         mapping = {
             "wildchat": OriginDataset.WILDCHAT,
