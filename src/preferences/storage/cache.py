@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Literal
+from typing import Callable
 
 from src.models import OpenAICompatibleClient
 from src.preferences.storage.base import (
@@ -11,7 +11,7 @@ from src.preferences.storage.base import (
 )
 from src.preferences.templates.template import PromptTemplate
 from src.task_data import Task
-from src.types import BinaryPreferenceMeasurement, PreferenceType
+from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferenceType
 
 
 MEASUREMENTS_DIR = Path("results/measurements")
@@ -101,6 +101,49 @@ class MeasurementCache:
             "model_short": self.model_short,
         }
         save_yaml(config, self._config_path)
+
+    def get_or_measure(
+        self,
+        pairs: list[tuple[Task, Task]],
+        measure_fn: Callable[[list[tuple[Task, Task]]], MeasurementBatch],
+        task_lookup: dict[str, Task],
+    ) -> tuple[MeasurementBatch, int, int]:
+        """Check cache for each pair, call measure_fn for misses, return combined.
+
+        Returns (batch, cache_hits, api_queries).
+        """
+        if not pairs:
+            return MeasurementBatch(successes=[], failures=[]), 0, 0
+
+        cached_raw = self.get_measurements()
+        cached_by_pair: dict[tuple[str, str], list[dict[str, str]]] = {}
+        for m in cached_raw:
+            cached_by_pair.setdefault((m["task_a"], m["task_b"]), []).append(m)
+
+        cached_hits_raw: list[dict[str, str]] = []
+        to_query: list[tuple[Task, Task]] = []
+
+        for a, b in pairs:
+            key = (a.id, b.id)
+            if key in cached_by_pair and cached_by_pair[key]:
+                cached_hits_raw.append(cached_by_pair[key].pop())
+            else:
+                to_query.append((a, b))
+
+        cached_hits = reconstruct_measurements(cached_hits_raw, task_lookup)
+
+        if to_query:
+            fresh_batch = measure_fn(to_query)
+            self.append(fresh_batch.successes)
+        else:
+            fresh_batch = MeasurementBatch(successes=[], failures=[])
+
+        combined_successes = cached_hits + fresh_batch.successes
+        return (
+            MeasurementBatch(successes=combined_successes, failures=fresh_batch.failures),
+            len(cached_hits),
+            len(to_query),
+        )
 
 
 def save_measurements(measurements: list[BinaryPreferenceMeasurement], path: Path | str) -> None:

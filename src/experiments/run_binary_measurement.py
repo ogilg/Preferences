@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+from functools import partial
 from itertools import combinations
 from pathlib import Path
 
@@ -11,7 +12,7 @@ from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
 from src.preferences.ranking import PairwiseData, fit_thurstonian, save_thurstonian, compute_pair_agreement, _config_hash
-from src.preferences.storage import MeasurementCache, reconstruct_measurements
+from src.preferences.storage import MeasurementCache
 from src.experiments.config import load_experiment_config
 
 
@@ -28,7 +29,6 @@ def main():
     templates = load_templates_from_yaml(config.templates)
     tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets())
     task_lookup = {t.id: t for t in tasks}
-    task_ids = set(task_lookup.keys())
     unique_pairs = list(combinations(tasks, 2))
     client = get_client(model_name=config.model)
     max_concurrent = config.max_concurrent or get_default_max_concurrent()
@@ -41,22 +41,22 @@ def main():
 
     for template in templates:
         cache = MeasurementCache(template, client)
-        existing_pairs = cache.get_existing_pairs()
 
-        missing_pairs = [(a, b) for a, b in unique_pairs if (a.id, b.id) not in existing_pairs]
+        pairs_to_query = unique_pairs * config.samples_per_pair
+        measure_fn = partial(
+            measure_with_template,
+            template,
+            client,
+            temperature=config.temperature,
+            max_concurrent=max_concurrent,
+        )
+        batch, cache_hits, api_queries = cache.get_or_measure(
+            pairs_to_query, measure_fn, task_lookup
+        )
 
-        print(f"\n{template.name}: {len(existing_pairs)} cached, {len(missing_pairs)} to query")
+        print(f"\n{template.name}: {cache_hits} cached, {api_queries} queried, {len(batch.failures)} failures")
 
-        if missing_pairs:
-            pairs_to_query = missing_pairs * config.samples_per_pair
-            batch = measure_with_template(template, client, pairs_to_query, config.temperature, max_concurrent)
-            print(f"  Got {len(batch.successes)} measurements ({len(batch.failures)} failures)")
-            cache.append(batch.successes)
-        else:
-            print(f"  All measurements cached")
-
-        raw_measurements = cache.get_measurements(task_ids=task_ids)
-        measurements = reconstruct_measurements(raw_measurements, task_lookup)
+        measurements = batch.successes
         print(f"  Total measurements for these tasks: {len(measurements)}")
 
         agreement = compute_pair_agreement(measurements)
