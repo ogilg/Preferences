@@ -87,7 +87,6 @@ def main():
             template=template,
             client=client,
             scores=batch.successes,
-            temperature=config.temperature,
         )
         print(f"  Saved to {run_path}")
         measured += 1

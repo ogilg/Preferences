@@ -8,7 +8,7 @@ from src.preferences.templates.template import PromptTemplate
 from src.types import TaskScore
 
 
-RATING_DIR = Path("results/measurements")
+RATING_DIR = Path("results/rating")
 
 
 def _rating_dir(template: PromptTemplate, client: OpenAICompatibleClient) -> Path:
@@ -20,19 +20,9 @@ def save_ratings(
     template: PromptTemplate,
     client: OpenAICompatibleClient,
     scores: list[TaskScore],
-    temperature: float = 1.0,
 ) -> Path:
     """Save ratings to disk. Returns the directory path."""
     run_dir = _rating_dir(template, client)
-
-    config = {
-        "template_name": template.name,
-        "template_tags": template.tags_dict,
-        "model": client.model_name,
-        "model_short": model_short_name(client.canonical_model_name),
-        "temperature": temperature,
-    }
-    save_yaml(config, run_dir / "config.yaml")
 
     data = [{"task_id": s.task.id, "score": s.score} for s in scores]
     save_yaml(data, run_dir / "measurements.yaml")
