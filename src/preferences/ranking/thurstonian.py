@@ -11,6 +11,8 @@ where Φ is the standard normal CDF.
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -222,13 +224,32 @@ def fit_thurstonian(
     )
 
 
+def _config_hash(config: dict) -> str:
+    """Compute short hash of config for filename uniqueness."""
+    config_json = json.dumps(config, sort_keys=True)
+    hash_obj = hashlib.md5(config_json.encode())
+    return hash_obj.hexdigest()[:8]
+
+
 def save_thurstonian(
     result: ThurstonianResult,
     path: Path | str,
     fitting_method: str,
     config: dict | None = None,
 ) -> None:
+    """Save Thurstonian results with config-based filename.
+
+    The path should be the base path without hash. The config hash will be
+    automatically appended to create unique filenames for different configs.
+    """
     path = Path(path)
+
+    # Add config hash to filename if config provided
+    if config is not None:
+        config_hash = _config_hash(config)
+        stem = path.stem
+        path = path.parent / f"{stem}_{config_hash}{path.suffix}"
+
     path.parent.mkdir(parents=True, exist_ok=True)
 
     data = {

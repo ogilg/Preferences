@@ -10,7 +10,7 @@ from src.models import get_client, get_default_max_concurrent
 from src.task_data import load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
-from src.preferences.ranking import PairwiseData, fit_thurstonian, save_thurstonian, compute_pair_agreement
+from src.preferences.ranking import PairwiseData, fit_thurstonian, save_thurstonian, compute_pair_agreement, _config_hash
 from src.preferences.storage import MeasurementCache, reconstruct_measurements
 from src.experiments.config import load_experiment_config
 
@@ -62,26 +62,22 @@ def main():
         agreement = compute_pair_agreement(measurements)
         print(f"  Pair agreement: {agreement:.3f}")
 
-        # Check if fitting already done with same config
-        thurstonian_path = cache.cache_dir / "thurstonian_exhaustive_pairwise.yaml"
+        # Prepare config and compute hash
         current_config = {
-            "config_file": str(sys.argv[1]),
             "n_tasks": config.n_tasks,
             "task_origins": config.task_origins,
             "samples_per_pair": config.samples_per_pair,
             "temperature": config.temperature,
         }
+        config_hash = _config_hash(current_config)
 
-        should_fit = True
+        # Check if fitting already done with this config (hash-based filename)
+        base_path = cache.cache_dir / "thurstonian_exhaustive_pairwise"
+        thurstonian_path = cache.cache_dir / f"thurstonian_exhaustive_pairwise_{config_hash}.yaml"
+
         if thurstonian_path.exists():
-            with open(thurstonian_path) as f:
-                saved_data = yaml.safe_load(f)
-            saved_config = saved_data.get("config", {})
-            if saved_config == current_config:
-                print(f"  Fitting already done with same config, skipping")
-                should_fit = False
-
-        if should_fit:
+            print(f"  Fitting already done with this config (hash: {config_hash}), skipping")
+        else:
             fit_kwargs = {"max_iter": max_iter}
             if config.fitting.gradient_tol is not None:
                 fit_kwargs["gradient_tol"] = config.fitting.gradient_tol
@@ -102,10 +98,11 @@ def main():
 
             save_thurstonian(
                 thurstonian,
-                thurstonian_path,
+                base_path.with_suffix(".yaml"),
                 fitting_method="exhaustive_pairwise",
                 config=current_config,
             )
+            print(f"  Saved to: {thurstonian_path.name}")
 
     print("\nDone.")
 

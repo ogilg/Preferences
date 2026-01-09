@@ -36,15 +36,28 @@ def analyze_run(run_dir: Path) -> dict:
     with open(run_dir / "measurements.yaml") as f:
         measurements = yaml.safe_load(f)
 
-    # Try new filenames first, fallback to old
+    # Find thurstonian file (try hash-based names, then old names)
     thurstonian_yaml = None
-    for yaml_name in ["thurstonian_exhaustive_pairwise.yaml", "thurstonian_active_learning.yaml", "thurstonian.yaml"]:
-        yaml_path = run_dir / yaml_name
-        if yaml_path.exists():
-            with open(yaml_path) as f:
+
+    # Try hash-based filenames (with glob pattern for any hash)
+    for pattern in ["thurstonian_exhaustive_pairwise_*.yaml", "thurstonian_active_learning_*.yaml"]:
+        matches = list(run_dir.glob(pattern))
+        if matches:
+            # Use first match (arbitrary if multiple configs exist)
+            thurstonian_yaml = matches[0]
+            with open(thurstonian_yaml) as f:
                 thurstonian = yaml.safe_load(f)
-            thurstonian_yaml = yaml_path
             break
+
+    # Fallback to old naming
+    if thurstonian_yaml is None:
+        for yaml_name in ["thurstonian_exhaustive_pairwise.yaml", "thurstonian_active_learning.yaml", "thurstonian.yaml"]:
+            yaml_path = run_dir / yaml_name
+            if yaml_path.exists():
+                with open(yaml_path) as f:
+                    thurstonian = yaml.safe_load(f)
+                thurstonian_yaml = yaml_path
+                break
 
     if thurstonian_yaml is None:
         raise FileNotFoundError(f"No thurstonian YAML found in {run_dir}")

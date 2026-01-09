@@ -18,7 +18,7 @@ from src.models import get_client, get_default_max_concurrent
 from src.task_data import Task, load_tasks
 from src.preferences.templates import load_templates_from_yaml
 from src.preferences.measurement import measure_with_template
-from src.preferences.ranking import compute_pair_agreement, save_thurstonian
+from src.preferences.ranking import compute_pair_agreement, save_thurstonian, _config_hash
 from src.preferences.ranking.active_learning import (
     ActiveLearningState,
     generate_d_regular_pairs,
@@ -121,21 +121,20 @@ def run_active_learning(config_path: Path) -> None:
 
         cache = MeasurementCache(template, client)
 
-        # Check if already done with same config
-        thurstonian_path = cache.cache_dir / "thurstonian_active_learning.yaml"
+        # Prepare config and compute hash
         current_config = {
-            "config_file": str(config_path),
             "n_tasks": config.n_tasks,
             "seed": al_config.seed,
         }
+        config_hash = _config_hash(current_config)
+
+        # Check if already done with this config (hash-based filename)
+        base_path = cache.cache_dir / "thurstonian_active_learning"
+        thurstonian_path = cache.cache_dir / f"thurstonian_active_learning_{config_hash}.yaml"
 
         if thurstonian_path.exists():
-            with open(thurstonian_path) as f:
-                saved_data = yaml.safe_load(f)
-            saved_config = saved_data.get("config", {})
-            if saved_config == current_config:
-                print(f"Active learning already done with same config, skipping")
-                continue
+            print(f"Active learning already done with this config (hash: {config_hash}), skipping")
+            continue
 
         state = ActiveLearningState(tasks=tasks)
         iteration_history = []
@@ -235,15 +234,11 @@ def run_active_learning(config_path: Path) -> None:
         # Save Thurstonian model results
         save_thurstonian(
             state.current_fit,
-            cache.cache_dir / "thurstonian_active_learning.yaml",
+            base_path.with_suffix(".yaml"),
             fitting_method="active_learning",
-            config={
-                "config_file": str(config_path),
-                "n_tasks": config.n_tasks,
-                "seed": al_config.seed,
-            },
+            config=current_config,
         )
-        print(f"  Thurstonian results saved to: {cache.cache_dir / 'thurstonian_active_learning.yaml'}")
+        print(f"  Thurstonian results saved to: {thurstonian_path.name}")
 
         # Save active learning results (lightweight)
         al_results = {

@@ -6,6 +6,7 @@ from .thurstonian import (
     save_thurstonian,
     load_thurstonian,
     compute_pair_agreement,
+    _config_hash,
 )
 from .active_learning import (
     ActiveLearningState,
@@ -22,6 +23,7 @@ __all__ = [
     "save_thurstonian",
     "load_thurstonian",
     "compute_pair_agreement",
+    "_config_hash",
     "ActiveLearningState",
     "generate_d_regular_pairs",
     "select_next_pairs",
