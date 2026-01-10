@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from dataclasses import dataclass
 from itertools import product
 
 import numpy as np
@@ -8,51 +9,46 @@ import numpy as np
 from src.preferences.templates.template import PromptTemplate
 
 
-TEMPLATE_DIMENSIONS = [
-    "phrasing",
-    "instruction_position",
-    "task_label_names",
-    "situating_context",
-    "language",
-    "xml_tags",
-    "seed",
-]
-
-
-SampledConfig = tuple[PromptTemplate, str, str, int]  # (template, response_format, order, seed)
+@dataclass(frozen=True)
+class SampledConfiguration:
+    template: PromptTemplate
+    response_format: str
+    seed: int
+    order: str | None = None  # Only for revealed preferences (canonical/reversed)
 
 
 def sample_configurations_lhs(
     templates: list[PromptTemplate],
     response_formats: list[str],
-    orders: list[str],
     generation_seeds: list[int],
     n_samples: int,
+    orders: list[str] | None = None,
     seed: int | None = None,
-) -> list[SampledConfig]:
-    """
-    Sample n configurations using Latin Hypercube Sampling.
-
-    Ensures balanced coverage: each dimension value appears
-    floor(n/k) or ceil(n/k) times where k is the number of values.
-    """
+) -> list[SampledConfiguration]:
+    """Sample n configurations using Latin Hypercube Sampling."""
     rng = np.random.default_rng(seed)
 
     # Build full hypercube
-    all_configs: list[SampledConfig] = list(
-        product(templates, response_formats, orders, generation_seeds)
-    )
+    if orders:
+        raw_configs = list(product(templates, response_formats, generation_seeds, orders))
+        all_configs = [
+            SampledConfiguration(t, rf, s, o) for t, rf, s, o in raw_configs
+        ]
+    else:
+        raw_configs = list(product(templates, response_formats, generation_seeds))
+        all_configs = [
+            SampledConfiguration(t, rf, s) for t, rf, s in raw_configs
+        ]
 
     if n_samples >= len(all_configs):
         return all_configs
 
-    # Extract dimension values for each config
-    def get_dims(config: SampledConfig) -> dict[str, str]:
-        template, resp_fmt, order, gen_seed = config
-        dims = template.tags_dict.copy()
-        dims["response_format"] = resp_fmt
-        dims["order"] = order
-        dims["seed"] = str(gen_seed)
+    def get_dims(config: SampledConfiguration) -> dict[str, str]:
+        dims = config.template.tags_dict.copy()
+        dims["response_format"] = config.response_format
+        dims["seed"] = str(config.seed)
+        if config.order is not None:
+            dims["order"] = config.order
         return dims
 
     config_dims = [get_dims(c) for c in all_configs]
@@ -62,11 +58,10 @@ def sample_configurations_lhs(
     for dims in config_dims:
         all_dim_keys.update(dims.keys())
 
-    # For each dimension, get unique values
     dim_values: dict[str, list[str]] = {}
     for key in all_dim_keys:
-        values = list({dims.get(key, "") for dims in config_dims})
-        if len(values) > 1:  # Only include dimensions that vary
+        values = list({dims[key] for dims in config_dims if key in dims})
+        if len(values) > 1:
             dim_values[key] = values
 
     # Compute target counts per dimension value
@@ -75,7 +70,6 @@ def sample_configurations_lhs(
         k = len(values)
         base = n_samples // k
         remainder = n_samples % k
-        # Randomly assign which values get +1
         extras = rng.choice(values, size=remainder, replace=False).tolist()
         target_counts[dim] = {v: base + (1 if v in extras else 0) for v in values}
 
@@ -85,24 +79,22 @@ def sample_configurations_lhs(
     available = set(range(len(all_configs)))
 
     for _ in range(n_samples):
-        # Score each available config by how much it helps balance
         best_idx = None
         best_score = float("-inf")
 
         for idx in available:
             dims = config_dims[idx]
             score = 0.0
-            for dim, values in dim_values.items():
-                val = dims.get(dim, "")
-                if val in target_counts[dim]:
-                    current = current_counts[dim][val]
-                    target = target_counts[dim][val]
-                    # Prefer values that are under-represented
-                    if current < target:
-                        score += (target - current) / target
-                    else:
-                        # Penalize over-represented
-                        score -= (current - target + 1) * 10
+            for dim in dim_values:
+                if dim not in dims:
+                    continue
+                val = dims[dim]
+                current = current_counts[dim][val]
+                target = target_counts[dim][val]
+                if current < target:
+                    score += (target - current) / target
+                else:
+                    score -= (current - target + 1) * 10
 
             if score > best_score:
                 best_score = score
@@ -114,24 +106,23 @@ def sample_configurations_lhs(
         selected_indices.append(best_idx)
         available.remove(best_idx)
 
-        # Update counts
         dims = config_dims[best_idx]
         for dim in dim_values:
-            val = dims.get(dim, "")
-            current_counts[dim][val] += 1
+            if dim in dims:
+                current_counts[dim][dims[dim]] += 1
 
     return [all_configs[i] for i in selected_indices]
 
 
-def print_sampling_balance(configs: list[SampledConfig]) -> None:
-    """Print dimension value counts for debugging."""
+def print_sampling_balance(configs: list[SampledConfiguration]) -> None:
     counts: dict[str, Counter[str]] = {}
 
-    for template, resp_fmt, order, gen_seed in configs:
-        dims = template.tags_dict.copy()
-        dims["response_format"] = resp_fmt
-        dims["order"] = order
-        dims["seed"] = str(gen_seed)
+    for config in configs:
+        dims = config.template.tags_dict.copy()
+        dims["response_format"] = config.response_format
+        dims["seed"] = str(config.seed)
+        if config.order is not None:
+            dims["order"] = config.order
 
         for key, val in dims.items():
             if key not in counts:

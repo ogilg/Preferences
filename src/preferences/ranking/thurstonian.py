@@ -16,12 +16,16 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from collections import Counter, defaultdict
+
+import autograd.numpy as anp
 import numpy as np
 import yaml
+from autograd import grad
+from autograd.scipy.stats import norm as anorm
 from scipy.optimize import minimize
 from scipy.special import ndtr
 from scipy.stats import norm
-from collections import Counter, defaultdict
 
 from ...task_data import Task
 from ...types import BinaryPreferenceMeasurement
@@ -94,7 +98,7 @@ class ThurstonianResult:
     n_iterations: int
     n_function_evals: int
     termination_message: str
-    gradient_norm: float
+    gradient_norm: float | None
     history: OptimizationHistory
     _id_to_idx: dict[str, int] = field(init=False, repr=False)
 
@@ -157,6 +161,42 @@ def _neg_log_likelihood(
     return -np.sum(wins * np.log(p))
 
 
+def _neg_log_likelihood_autograd(
+    params: anp.ndarray,
+    wins: anp.ndarray,
+    n: int,
+    lambda_sigma: float = 0.0,
+) -> float:
+    """Autograd-compatible NLL for computing analytical gradients."""
+    mu = anp.concatenate([anp.zeros(1), params[: n - 1]])
+    sigma = anp.exp(params[n - 1 :])
+
+    mu_diff = mu[:, anp.newaxis] - mu[anp.newaxis, :]
+    scale = anp.sqrt(sigma[:, anp.newaxis] ** 2 + sigma[anp.newaxis, :] ** 2)
+    z = mu_diff / scale
+    p = anorm.cdf(z)
+    p = anp.clip(p, 1e-10, 1 - 1e-10)
+
+    nll = -anp.sum(wins * anp.log(p))
+    if lambda_sigma > 0:
+        nll = nll + lambda_sigma * anp.sum(sigma**2)
+    return nll
+
+
+def _make_objective_and_grad(wins: np.ndarray, n: int, lambda_sigma: float):
+    """Create objective function and its gradient using autograd."""
+
+    def objective(params):
+        return _neg_log_likelihood_autograd(params, wins, n, lambda_sigma)
+
+    gradient_fn = grad(objective)
+
+    def objective_and_grad(params):
+        return float(objective(params)), np.asarray(gradient_fn(params))
+
+    return objective_and_grad
+
+
 def fit_thurstonian(
     data: PairwiseData,
     sigma_init: float = DEFAULT_SIGMA_INIT,
@@ -210,7 +250,7 @@ def fit_thurstonian(
     mu = np.zeros(n)
     mu[1:] = result.x[: n - 1]
     sigma = np.exp(result.x[n - 1:])
-    gradient_norm = float(np.linalg.norm(result.jac)) if result.jac is not None else -1.0
+    gradient_norm = float(np.linalg.norm(result.jac)) if result.jac is not None else None
 
     return ThurstonianResult(
         tasks=data.tasks,
@@ -261,7 +301,7 @@ def save_thurstonian(
         "n_iterations": int(result.n_iterations),
         "n_function_evals": int(result.n_function_evals),
         "termination_message": result.termination_message,
-        "gradient_norm": float(result.gradient_norm),
+        "gradient_norm": float(result.gradient_norm) if result.gradient_norm is not None else None,
         "history": {
             "loss": [float(x) for x in result.history.loss],
             "sigma_max": [float(x) for x in result.history.sigma_max],
@@ -310,10 +350,10 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
             mu_list.append(float(mu))
             sigma_list.append(float(sigma))
 
-    history_data = data.get("history", {"loss": [], "sigma_max": []})
+    history_data = data["history"]
     history = OptimizationHistory(
-        loss=history_data.get("loss", []),
-        sigma_max=history_data.get("sigma_max", []),
+        loss=history_data["loss"],
+        sigma_max=history_data["sigma_max"],
     )
 
     return ThurstonianResult(
@@ -322,10 +362,10 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
         sigma=np.array(sigma_list),
         converged=data["converged"],
         neg_log_likelihood=data["neg_log_likelihood"],
-        n_iterations=data.get("n_iterations", -1),
-        n_function_evals=data.get("n_function_evals", -1),
-        termination_message=data.get("termination_message", "unknown"),
-        gradient_norm=data.get("gradient_norm", -1.0),
+        n_iterations=data["n_iterations"],
+        n_function_evals=data["n_function_evals"],
+        termination_message=data["termination_message"],
+        gradient_norm=data["gradient_norm"],
         history=history,
     )
 

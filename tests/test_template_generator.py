@@ -465,6 +465,7 @@ class TestLoadConfigFromYaml:
     def test_loads_minimal_config(self, tmp_path):
         """Should load config with only required fields."""
         yaml_content = """
+model: test-model
 base_templates:
   - Choose which task you prefer.
 template_type: revealed
@@ -473,7 +474,8 @@ name_prefix: test
         config_path = tmp_path / "config.yaml"
         config_path.write_text(yaml_content)
 
-        config, _ = load_config_from_yaml(config_path)
+        config, model_name = load_config_from_yaml(config_path)
+        assert model_name == "test-model"
 
         assert config.base_templates == ["Choose which task you prefer."]
         assert config.template_type == "revealed"

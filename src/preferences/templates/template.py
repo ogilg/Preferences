@@ -45,13 +45,11 @@ class PromptTemplate:
 
 
 # Placeholder sets for each template type
+# Note: Generated templates have scale values baked in, so scale_min/scale_max are NOT required.
+# The default templates below use scale placeholders for flexibility.
 REVEALED_PLACEHOLDERS = frozenset({"task_a", "task_b", "format_instruction"})
-PRE_TASK_STATED_PLACEHOLDERS = frozenset(
-    {"task", "scale_min", "scale_max", "format_instruction"}
-)
-POST_TASK_STATED_PLACEHOLDERS = frozenset(
-    {"scale_min", "scale_max", "format_instruction"}
-)
+PRE_TASK_STATED_PLACEHOLDERS = frozenset({"task", "format_instruction"})
+POST_TASK_STATED_PLACEHOLDERS = frozenset({"format_instruction"})
 POST_TASK_REVEALED_PLACEHOLDERS = frozenset({"format_instruction"})
 
 
@@ -118,7 +116,7 @@ def load_templates_from_yaml(path: Path | str) -> list[PromptTemplate]:
             template=item["template"],
             name=name,
             required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS[template_type],
-            tags=frozenset(item.get("tags", [])),
+            tags=frozenset(item["tags"]),
         ))
 
     return templates

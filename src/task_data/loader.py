@@ -29,9 +29,12 @@ class ParserConfig(BaseModel):
 
     def parse(self, row: dict) -> Task:
         metadata = {}
+        defaults = self.metadata_defaults or {}
         for key in self.metadata_keys:
-            default = (self.metadata_defaults or {}).get(key)
-            metadata[key] = row.get(key, default) if default is not None else row[key]
+            if key in defaults:
+                metadata[key] = row.get(key, defaults[key])
+            else:
+                metadata[key] = row[key]
         return Task(
             prompt=row[self.prompt_key],
             origin=self.origin,

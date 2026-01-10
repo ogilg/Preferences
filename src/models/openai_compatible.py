@@ -14,6 +14,7 @@ from src.models.retry import with_retries, with_retries_async
 from src.types import Message
 
 VERBOSE = os.getenv("VERBOSE", "0") == "1"
+REQUEST_TIMEOUT = 10.0
 
 
 class ToolCallError(Exception):
@@ -203,7 +204,7 @@ class OpenAICompatibleClient(ABC):
                     response = await with_retries_async(
                         lambda: asyncio.wait_for(
                             async_client.chat.completions.create(**kwargs),
-                            timeout=10.0,
+                            timeout=REQUEST_TIMEOUT,
                         )
                     )
                     text = self._parse_response(
