@@ -1,97 +1,53 @@
-"""Usage: python -m src.experiments.run_rating_measurement <config.yaml>"""
+"""Rating-based preference measurement.
+
+Usage: python -m src.experiments.run_rating_measurement <config.yaml>
+"""
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-from src.models import get_client, get_default_max_concurrent
-from src.task_data import load_tasks
-from src.preferences.templates import load_templates_from_yaml, PreTaskRatingPromptBuilder
+from src.preferences.templates import PreTaskRatingPromptBuilder
 from src.preferences.measurement import measure_ratings, TaskScoreMeasurer, RegexRatingFormat
 from src.preferences.storage import save_ratings, ratings_exist
-from src.experiments.config import load_experiment_config
 from src.experiments.sensitivity_experiments.rating_correlation import compute_mean_std_across_tasks
-
-
-def measure_ratings_with_template(
-    template,
-    client,
-    tasks,
-    temperature: float,
-    max_concurrent: int,
-    scale_min: int = 1,
-    scale_max: int = 10,
-):
-    response_format = RegexRatingFormat(scale_min=scale_min, scale_max=scale_max)
-    measurer = TaskScoreMeasurer()
-    builder = PreTaskRatingPromptBuilder(
-        measurer=measurer,
-        response_format=response_format,
-        template=template,
-    )
-    batch = measure_ratings(
-        client=client,
-        tasks=tasks,
-        builder=builder,
-        temperature=temperature,
-        max_concurrent=max_concurrent,
-    )
-    return batch
+from src.experiments.experiment_utils import parse_config_path, setup_experiment
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python -m src.experiments.run_rating_measurement <config.yaml>")
-        sys.exit(1)
+    config_path = parse_config_path("Run rating-based preference measurement")
+    ctx = setup_experiment(config_path, expected_mode="rating")
+    config = ctx.config
 
-    config = load_experiment_config(Path(sys.argv[1]))
+    task_list = ctx.tasks * config.samples_per_task
+    print(f"Templates: {len(ctx.templates)}, Tasks: {len(ctx.tasks)} x {config.samples_per_task}")
 
-    if config.preference_mode != "rating":
-        raise ValueError(f"Expected preference_mode='rating', got '{config.preference_mode}'")
-
-    templates = load_templates_from_yaml(config.templates)
-    tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets())
-    client = get_client(model_name=config.model)
-    max_concurrent = config.max_concurrent or get_default_max_concurrent()
-
-    task_list = tasks * config.samples_per_task
-
-    print(f"Templates: {len(templates)}, Tasks: {len(tasks)} x {config.samples_per_task} = {len(task_list)}")
-
-    measured = 0
-    skipped = 0
-    for template in templates:
-        if ratings_exist(template, client):
+    for template in ctx.templates:
+        if ratings_exist(template, ctx.client):
             print(f"Skipping {template.name} (already measured)")
-            skipped += 1
             continue
 
-        print(f"\nMeasuring template {template.name}...")
+        print(f"\nMeasuring {template.name}...")
 
-        batch = measure_ratings_with_template(
-            template,
-            client,
-            task_list,
-            config.temperature,
-            max_concurrent,
-            config.scale_min,
-            config.scale_max,
+        response_format = RegexRatingFormat(scale_min=config.scale_min, scale_max=config.scale_max)
+        builder = PreTaskRatingPromptBuilder(
+            measurer=TaskScoreMeasurer(),
+            response_format=response_format,
+            template=template,
         )
-        print(f"  Got {len(batch.successes)} scores ({len(batch.failures)} failures)")
+        batch = measure_ratings(
+            client=ctx.client,
+            tasks=task_list,
+            builder=builder,
+            temperature=config.temperature,
+            max_concurrent=ctx.max_concurrent,
+        )
 
         mean_std = compute_mean_std_across_tasks(batch.successes)
-        print(f"  Mean std across tasks: {mean_std:.3f}")
+        print(f"  {len(batch.successes)} scores, mean std: {mean_std:.3f}")
 
-        run_path = save_ratings(
-            template=template,
-            client=client,
-            scores=batch.successes,
-        )
+        run_path = save_ratings(template=template, client=ctx.client, scores=batch.successes)
         print(f"  Saved to {run_path}")
-        measured += 1
 
-    print(f"\nDone. Measured: {measured}, Skipped: {skipped}")
+    print("\nDone.")
 
 
 if __name__ == "__main__":
