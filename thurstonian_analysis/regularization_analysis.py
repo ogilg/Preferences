@@ -29,7 +29,7 @@ from thurstonian_analysis.utils import split_wins
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
 
-LAMBDAS = np.logspace(-2, np.log10(150), 10)
+LAMBDAS = np.logspace(-2, np.log10(150), 5)
 
 
 def make_task(id: str) -> Task:
@@ -93,11 +93,30 @@ class RegularizationResults:
     train_nlls_std: list[float]
     test_nlls_std: list[float]
     sigma_maxs: list[float]
-    sigma_stds: list[float]
+    held_out_accuracies: list[float]
+    held_out_accuracies_std: list[float]
     data_source: str
     n_datasets: int
     n_splits: int
     n_tasks: int
+
+
+def compute_held_out_accuracy(mu: np.ndarray, wins: np.ndarray) -> float:
+    """Compute prediction accuracy on held-out pairs."""
+    n = wins.shape[0]
+    correct = 0
+    total = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            n_ij = wins[i, j] + wins[j, i]
+            if n_ij == 0:
+                continue
+            pred_i_wins = mu[i] > mu[j]
+            emp_i_wins = wins[i, j] > wins[j, i]
+            if pred_i_wins == emp_i_wins:
+                correct += 1
+            total += 1
+    return correct / total if total > 0 else 1.0
 
 
 def run_regularization_on_wins(
@@ -111,7 +130,7 @@ def run_regularization_on_wins(
     all_train_nlls = {lam: [] for lam in lambdas}
     all_test_nlls = {lam: [] for lam in lambdas}
     all_sigma_maxs = {lam: [] for lam in lambdas}
-    all_sigma_stds = {lam: [] for lam in lambdas}
+    all_held_out_accs = {lam: [] for lam in lambdas}
 
     for split_idx in range(n_splits):
         if verbose:
@@ -134,7 +153,7 @@ def run_regularization_on_wins(
             all_train_nlls[lam].append(train_nll_per_comp)
             all_test_nlls[lam].append(test_nll_per_comp)
             all_sigma_maxs[lam].append(float(result.sigma.max()))
-            all_sigma_stds[lam].append(float(result.sigma.std()))
+            all_held_out_accs[lam].append(compute_held_out_accuracy(result.mu, test_wins))
             if verbose:
                 print(".", end="", flush=True)
         if verbose:
@@ -144,7 +163,7 @@ def run_regularization_on_wins(
         "train_nlls": all_train_nlls,
         "test_nlls": all_test_nlls,
         "sigma_maxs": all_sigma_maxs,
-        "sigma_stds": all_sigma_stds,
+        "held_out_accs": all_held_out_accs,
     }
 
 
@@ -152,7 +171,7 @@ def run_regularization_path_synthetic(
     n_tasks: int = N_TASKS,
     n_comparisons_per_pair: int = 10,
     test_frac: float = 0.2,
-    n_splits: int = 10,
+    n_splits: int = 5,
 ) -> RegularizationResults:
     print(f"Synthetic dense: {n_tasks} tasks, {n_splits} splits, {len(LAMBDAS)} lambdas")
     data_rng = np.random.default_rng(42)
@@ -170,7 +189,8 @@ def run_regularization_path_synthetic(
         train_nlls_std=[np.std(results["train_nlls"][lam]) for lam in LAMBDAS],
         test_nlls_std=[np.std(results["test_nlls"][lam]) for lam in LAMBDAS],
         sigma_maxs=[np.mean(results["sigma_maxs"][lam]) for lam in LAMBDAS],
-        sigma_stds=[np.mean(results["sigma_stds"][lam]) for lam in LAMBDAS],
+        held_out_accuracies=[np.mean(results["held_out_accs"][lam]) for lam in LAMBDAS],
+        held_out_accuracies_std=[np.std(results["held_out_accs"][lam]) for lam in LAMBDAS],
         data_source="synthetic",
         n_datasets=1,
         n_splits=n_splits,
@@ -210,7 +230,7 @@ def run_regularization_path_sparse(
     d: int = 5,
     n_comparisons_per_pair: int = 10,
     test_frac: float = 0.2,
-    n_splits: int = 10,
+    n_splits: int = 5,
 ) -> RegularizationResults:
     """Run regularization analysis on sparse (d-regular graph) synthetic data."""
     print(f"Synthetic sparse: {n_tasks} tasks, d={d}, {n_splits} splits, {len(LAMBDAS)} lambdas")
@@ -231,7 +251,8 @@ def run_regularization_path_sparse(
         train_nlls_std=[np.std(results["train_nlls"][lam]) for lam in LAMBDAS],
         test_nlls_std=[np.std(results["test_nlls"][lam]) for lam in LAMBDAS],
         sigma_maxs=[np.mean(results["sigma_maxs"][lam]) for lam in LAMBDAS],
-        sigma_stds=[np.mean(results["sigma_stds"][lam]) for lam in LAMBDAS],
+        held_out_accuracies=[np.mean(results["held_out_accs"][lam]) for lam in LAMBDAS],
+        held_out_accuracies_std=[np.std(results["held_out_accs"][lam]) for lam in LAMBDAS],
         data_source="sparse",
         n_datasets=1,
         n_splits=n_splits,
@@ -239,11 +260,27 @@ def run_regularization_path_sparse(
     )
 
 
+def subsample_pairwise_data(
+    tasks: list[Task],
+    wins: np.ndarray,
+    n_tasks: int,
+    rng: np.random.Generator,
+) -> tuple[list[Task], np.ndarray]:
+    """Subsample to n_tasks tasks, keeping only comparisons between them."""
+    if len(tasks) <= n_tasks:
+        return tasks, wins
+    indices = rng.choice(len(tasks), size=n_tasks, replace=False)
+    indices = np.sort(indices)
+    subsampled_tasks = [tasks[i] for i in indices]
+    subsampled_wins = wins[np.ix_(indices, indices)]
+    return subsampled_tasks, subsampled_wins
+
+
 def run_regularization_path_real(
     test_frac: float = 0.2,
     n_splits: int = 5,
 ) -> RegularizationResults:
-    print(f"Real data: {n_splits} splits, {len(LAMBDAS)} lambdas")
+    print(f"Real data: {n_splits} splits, {len(LAMBDAS)} lambdas, subsampling to {N_TASKS} tasks")
     datasets = load_all_datasets()
     if not datasets:
         raise ValueError(f"No datasets found in {RESULTS_DIR}")
@@ -251,18 +288,20 @@ def run_regularization_path_real(
     all_train_nlls = {lam: [] for lam in LAMBDAS}
     all_test_nlls = {lam: [] for lam in LAMBDAS}
     all_sigma_maxs = {lam: [] for lam in LAMBDAS}
-    all_sigma_stds = {lam: [] for lam in LAMBDAS}
+    all_held_out_accs = {lam: [] for lam in LAMBDAS}
 
     valid_datasets = [(n, d) for n, d in datasets if d.n_tasks >= N_TASKS]
+    subsample_rng = np.random.default_rng(42)
     for ds_idx, (name, data) in enumerate(valid_datasets):
         print(f"Dataset {ds_idx + 1}/{len(valid_datasets)}: {name}")
-        results = run_regularization_on_wins(data.tasks, data.wins, test_frac, n_splits, LAMBDAS)
+        tasks, wins = subsample_pairwise_data(data.tasks, data.wins, N_TASKS, subsample_rng)
+        results = run_regularization_on_wins(tasks, wins, test_frac, n_splits, LAMBDAS)
 
         for lam in LAMBDAS:
             all_train_nlls[lam].extend(results["train_nlls"][lam])
             all_test_nlls[lam].extend(results["test_nlls"][lam])
             all_sigma_maxs[lam].extend(results["sigma_maxs"][lam])
-            all_sigma_stds[lam].extend(results["sigma_stds"][lam])
+            all_held_out_accs[lam].extend(results["held_out_accs"][lam])
 
     if not all_train_nlls[LAMBDAS[0]]:
         raise ValueError(f"No valid datasets found (need >= {N_TASKS} tasks)")
@@ -276,7 +315,8 @@ def run_regularization_path_real(
         train_nlls_std=[np.std(all_train_nlls[lam]) for lam in LAMBDAS],
         test_nlls_std=[np.std(all_test_nlls[lam]) for lam in LAMBDAS],
         sigma_maxs=[np.mean(all_sigma_maxs[lam]) for lam in LAMBDAS],
-        sigma_stds=[np.mean(all_sigma_stds[lam]) for lam in LAMBDAS],
+        held_out_accuracies=[np.mean(all_held_out_accs[lam]) for lam in LAMBDAS],
+        held_out_accuracies_std=[np.std(all_held_out_accs[lam]) for lam in LAMBDAS],
         data_source="real",
         n_datasets=n_valid_datasets,
         n_splits=n_splits,
@@ -284,14 +324,21 @@ def run_regularization_path_real(
     )
 
 
-def plot_regularization_path(results: RegularizationResults, output_path: Path):
+def plot_regularization_path(results: RegularizationResults, output_path: Path, nll_clip: float = 2.0):
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
 
-    axes[0].errorbar(results.lambdas, results.train_nlls, yerr=results.train_nlls_std, fmt="o-", label="Train", markersize=5, capsize=3)
-    axes[0].errorbar(results.lambdas, results.test_nlls, yerr=results.test_nlls_std, fmt="s-", label="Test", markersize=5, capsize=3)
+    # Clip NLL values for display
+    train_nlls = np.clip(results.train_nlls, None, nll_clip)
+    test_nlls = np.clip(results.test_nlls, None, nll_clip)
+    train_std = np.clip(results.train_nlls_std, None, nll_clip)
+    test_std = np.clip(results.test_nlls_std, None, nll_clip)
+
+    axes[0].errorbar(results.lambdas, train_nlls, yerr=train_std, fmt="o-", label="Train", markersize=5, capsize=3)
+    axes[0].errorbar(results.lambdas, test_nlls, yerr=test_std, fmt="s-", label="Test", markersize=5, capsize=3)
     axes[0].set_xscale("log")
     axes[0].set_xlabel("λ (regularization strength)")
     axes[0].set_ylabel("NLL per comparison")
+    axes[0].set_ylim(0, nll_clip)
     axes[0].legend()
     axes[0].set_title("Regularization Path (mean ± std)")
 
@@ -302,10 +349,13 @@ def plot_regularization_path(results: RegularizationResults, output_path: Path):
     axes[1].legend()
     axes[1].set_title("Maximum Variance Parameter")
 
-    axes[2].semilogx(results.lambdas, results.sigma_stds, "s-", color="seagreen", markersize=6)
+    axes[2].errorbar(results.lambdas, results.held_out_accuracies, yerr=results.held_out_accuracies_std,
+                     fmt="s-", color="seagreen", markersize=6, capsize=3)
+    axes[2].set_xscale("log")
     axes[2].set_xlabel("λ")
-    axes[2].set_ylabel("std(σ)")
-    axes[2].set_title("Variance Parameter Spread")
+    axes[2].set_ylabel("Accuracy")
+    axes[2].set_ylim(0.5, 1.0)
+    axes[2].set_title("Held-out Accuracy")
 
     if results.data_source == "synthetic":
         title = f"L2 Variance Regularization (SYNTHETIC DENSE, N_TASKS={results.n_tasks})"
@@ -333,11 +383,11 @@ def run_al_with_regularization(
     n_tasks: int = N_TASKS,
     lambdas: list[float] | None = None,
     initial_degree: int = 3,
-    batch_size: int = 5,
-    max_iterations: int = 30,
+    batch_size: int = 100,
+    max_iterations: int = 20,
     n_comparisons_per_pair: int = 3,
     held_out_fraction: float = 0.2,
-    n_runs: int = 5,
+    n_runs: int = 3,
     seed: int = 42,
 ) -> ALRegularizationResults:
     """Run full active learning simulation with different regularization strengths."""
