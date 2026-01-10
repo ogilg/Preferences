@@ -23,7 +23,7 @@ class TemplateVariant(TypedDict):
     situating_context: str  # "none" or context key
     instruction_position: str
     task_label_names: str | None  # None for stated templates
-    xml_tags: bool
+    instruction_xml_tags: bool
     typos: bool
     punctuation: str
     scale: str | None  # e.g. "1-5", None for revealed templates
@@ -34,12 +34,12 @@ def build_revealed_template(
     instruction_position: str,
     task_label_names: str,
     language: str,
-    xml_tags: bool,
+    instruction_xml_tags: bool,
 ) -> str:
     label_a, label_b = TASK_LABELS[(task_label_names, language)]
     tasks_block = f"{label_a}:\n{{task_a}}\n{label_b}:\n{{task_b}}"
 
-    if xml_tags:
+    if instruction_xml_tags:
         instructions_block = f"<instructions>\n{instruction}\n{{format_instruction}}\n</instructions>"
     else:
         instructions_block = f"{instruction}\n{{format_instruction}}"
@@ -54,10 +54,10 @@ def build_stated_template(
     instruction: str,
     instruction_position: str,
     language: str,
-    xml_tags: bool,
+    instruction_xml_tags: bool,
 ) -> str:
     task_label = STATED_TASK_LABELS[language]
-    if xml_tags:
+    if instruction_xml_tags:
         task_block = f"<task>\n{task_label}\n{{task}}\n</task>"
         instructions_block = f"<instructions>\n{instruction}\n{{format_instruction}}\n</instructions>"
     else:
@@ -208,7 +208,7 @@ def _add_stated_variants(
     config: GeneratorConfig,
 ) -> None:
     scales = config.scales if config.scales else [(1, 10)]  # default scale
-    for use_xml in config.xml_tags:
+    for use_xml in config.instruction_xml_tags:
         for scale_min, scale_max in scales:
             scaled_instruction = instruction.replace("{scale_min}", str(scale_min)).replace("{scale_max}", str(scale_max))
             template = build_stated_template(scaled_instruction, instruction_pos, lang, use_xml)
@@ -222,7 +222,7 @@ def _add_stated_variants(
                     "situating_context": context_key,
                     "instruction_position": instruction_pos,
                     "task_label_names": None,
-                    "xml_tags": use_xml,
+                    "instruction_xml_tags": use_xml,
                     "typos": typos,
                     "punctuation": punctuation,
                     "scale": f"{scale_min}-{scale_max}",
@@ -240,7 +240,7 @@ def _add_post_task_revealed_variants(
     config: GeneratorConfig,
 ) -> None:
     """Post-task revealed templates only have format_instruction placeholder."""
-    for use_xml in config.xml_tags:
+    for use_xml in config.instruction_xml_tags:
         # Simple template: instruction + format_instruction
         if use_xml:
             template = f"<instructions>\n{instruction}\n{{format_instruction}}\n</instructions>"
@@ -256,7 +256,7 @@ def _add_post_task_revealed_variants(
                 "situating_context": context_key,
                 "instruction_position": "before",  # not applicable but needed for schema
                 "task_label_names": None,
-                "xml_tags": use_xml,
+                "instruction_xml_tags": use_xml,
                 "typos": typos,
                 "punctuation": punctuation,
                 "scale": None,
@@ -274,7 +274,7 @@ def _add_revealed_variants(
     context_items: list[tuple[str, str | None]],
     config: GeneratorConfig,
 ) -> None:
-    for use_xml in config.xml_tags:
+    for use_xml in config.instruction_xml_tags:
         for label_style in config.task_label_names:
             template = build_revealed_template(
                 instruction, instruction_pos, label_style, lang, use_xml
@@ -289,7 +289,7 @@ def _add_revealed_variants(
                     "situating_context": context_key,
                     "instruction_position": instruction_pos,
                     "task_label_names": label_style,
-                    "xml_tags": use_xml,
+                    "instruction_xml_tags": use_xml,
                     "typos": typos,
                     "punctuation": punctuation,
                     "scale": None,
@@ -309,7 +309,7 @@ def _to_output_format(
             f"phrasing:{variant['phrasing']}",
             f"situating_context:{variant['situating_context']}",
             f"instruction_position:{variant['instruction_position']}",
-            f"xml_tags:{variant['xml_tags']}",
+            f"instruction_xml_tags:{variant['instruction_xml_tags']}",
         ]
         if variant["task_label_names"] is not None:
             tags.append(f"task_label_names:{variant['task_label_names']}")

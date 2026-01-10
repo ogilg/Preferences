@@ -6,7 +6,7 @@
   - phrasing:1
   - situating_context:none
   - instruction_position:before
-  - xml_tags:False
+  - instruction_xml_tags:False
   - task_label_names:letter
   - typos:False
   - punctuation:standard
@@ -30,7 +30,7 @@
   - phrasing:1
   - situating_context:helpful
   - instruction_position:before
-  - xml_tags:False
+  - instruction_xml_tags:False
   - task_label_names:letter
   - typos:False
   - punctuation:standard

@@ -41,7 +41,7 @@ class GeneratorConfig(BaseModel):
     situating_contexts: dict[str, str] = {}
     instruction_positions: list[Literal["before", "after"]] = ["before"]
     task_label_names: list[Literal["letter", "number", "ordinal"]] = ["letter"]
-    xml_tags: list[bool] = [False]
+    instruction_xml_tags: list[bool] = [False]
     typos: list[bool] = [False]
     punctuation: list[Literal["standard", "minimal"]] = ["standard"]
     scales: list[tuple[int, int]] = []

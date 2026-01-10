@@ -14,7 +14,7 @@ situating_contexts:
   experiment: "This is an experiment measuring your preferences across many tasks."
 instruction_positions: [before, after]
 task_label_names: [letter, number]
-xml_tags: [false, true]
+instruction_xml_tags: [false, true]
 typos: [false, true]
 punctuation: [standard, minimal]
 

@@ -30,7 +30,7 @@ class TestBuildRevealedTemplate:
             instruction_position="before",
             task_label_names="letter",
             language="en",
-            xml_tags=False,
+            instruction_xml_tags=False,
         )
 
         assert "Task A:" in template
@@ -46,7 +46,7 @@ class TestBuildRevealedTemplate:
             instruction_position="before",
             task_label_names="number",
             language="en",
-            xml_tags=False,
+            instruction_xml_tags=False,
         )
 
         assert "Task 1:" in template
@@ -61,7 +61,7 @@ class TestBuildRevealedTemplate:
             instruction_position="before",
             task_label_names="ordinal",
             language="en",
-            xml_tags=False,
+            instruction_xml_tags=False,
         )
 
         assert "First task:" in template
@@ -74,7 +74,7 @@ class TestBuildRevealedTemplate:
             instruction_position="before",
             task_label_names="letter",
             language="en",
-            xml_tags=False,
+            instruction_xml_tags=False,
         )
 
         format_pos = template.find("{format_instruction}")
@@ -88,31 +88,30 @@ class TestBuildRevealedTemplate:
             instruction_position="after",
             task_label_names="letter",
             language="en",
-            xml_tags=False,
+            instruction_xml_tags=False,
         )
 
         format_pos = template.find("{format_instruction}")
         task_b_pos = template.find("{task_b}")
         assert format_pos > task_b_pos
 
-    def test_builds_template_with_xml_tags(self):
-        """Should build template with XML tags wrapping tasks."""
+    def test_builds_template_with_instruction_xml_tags(self):
+        """Should build template with XML tags wrapping instructions."""
         template = build_revealed_template(
             instruction="Choose which task you prefer.",
             instruction_position="before",
             task_label_names="letter",
             language="en",
-            xml_tags=True,
+            instruction_xml_tags=True,
         )
 
-        assert "<task_a>" in template
-        assert "</task_a>" in template
-        assert "<task_b>" in template
-        assert "</task_b>" in template
+        assert "<instructions>" in template
+        assert "</instructions>" in template
+        assert "{format_instruction}" in template
+        assert "Task A:" in template
+        assert "Task B:" in template
         assert "{task_a}" in template
         assert "{task_b}" in template
-        assert "Task A:" not in template
-        assert "Task B:" not in template
 
 
 class TestAddSituatingContext:

@@ -4,14 +4,13 @@ base_templates:
   - Rate how much you would enjoy completing this task on a scale from {scale_min} to {scale_max}.
   - On a scale of {scale_min} to {scale_max}, how interested are you in completing the task?
   - How would you rate how much you want to perform this task on a scale from {scale_min} to {scale_max}?
-  - How appealing is this task to you? Rate from {scale_min} to {scale_max}.
 
 template_type: pre_task_stated
 name_prefix: stated
 version: v1
 output_dir: src/preferences/templates/data
 
-languages: [en, fr, es, de]
+languages: [en, fr, es]
 situating_contexts:
   experiment: "This is an experiment measuring your preferences across many tasks."
 instruction_positions: [before, after]
@@ -20,7 +19,6 @@ typos: [false, true]
 punctuation: [standard, minimal]
 scales:
   - [1, 5]
-  - [1, 7]
   - [1, 10]
 
 model: llama-3.1-8b
