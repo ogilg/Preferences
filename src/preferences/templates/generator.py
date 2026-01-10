@@ -36,12 +36,12 @@ def build_revealed_template(
     language: str,
     xml_tags: bool,
 ) -> str:
+    label_a, label_b = TASK_LABELS[(task_label_names, language)]
+    tasks_block = f"{label_a}:\n{{task_a}}\n{label_b}:\n{{task_b}}"
+
     if xml_tags:
-        tasks_block = "<task_a>\n{task_a}\n</task_a>\n<task_b>\n{task_b}\n</task_b>"
         instructions_block = f"<instructions>\n{instruction}\n{{format_instruction}}\n</instructions>"
     else:
-        label_a, label_b = TASK_LABELS[(task_label_names, language)]
-        tasks_block = f"{label_a}:\n{{task_a}}\n{label_b}:\n{{task_b}}"
         instructions_block = f"{instruction}\n{{format_instruction}}"
 
     if instruction_position == "before":

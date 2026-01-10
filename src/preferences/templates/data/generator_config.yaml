@@ -3,18 +3,18 @@ base_templates:
   - Choose which task you would prefer to complete.
   - Which of the two tasks would you rather complete?
   - Select your preferred task from the options.
-  - Indicate which task appeals to you more.
 
 template_type: revealed
 name_prefix: revealed_choice
 version: v1
 output_dir: src/preferences/templates/data
 
-languages: [en, fr, es, de]
+languages: [en, fr, es]
 situating_contexts:
   experiment: "This is an experiment measuring your preferences across many tasks."
 instruction_positions: [before, after]
-task_label_names: [letter, number, ordinal]
+task_label_names: [letter, number]
+xml_tags: [false, true]
 typos: [false, true]
 punctuation: [standard, minimal]
 

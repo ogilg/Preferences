@@ -1,6 +1,6 @@
 - id: '001'
   name: binary_choice_001
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
@@ -21,7 +21,7 @@
     {task_b}'
 - id: '002'
   name: binary_choice_002
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
@@ -42,7 +42,7 @@
     {task_b}'
 - id: '003'
   name: binary_choice_003
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
@@ -63,7 +63,7 @@
     {task_b}'
 - id: '004'
   name: binary_choice_004
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
@@ -84,7 +84,7 @@
     {format_instruction}'
 - id: '005'
   name: binary_choice_005
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
@@ -105,7 +105,7 @@
     {format_instruction}'
 - id: '006'
   name: binary_choice_006
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
@@ -126,7 +126,7 @@
     {format_instruction}'
 - id: '007'
   name: binary_choice_007
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:2
@@ -147,7 +147,7 @@
     {task_b}'
 - id: 008
   name: binary_choice_008
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:2

@@ -1,4 +1,3 @@
-# Active Learning - 1000 tasks x 24 templates
 # Run with: python -m src.experiments.run_active_learning src/experiments/configs/active_learning_1000.yaml
 
 preference_mode: active_learning
@@ -12,7 +11,7 @@ task_origins:
   - alpaca
   - math
 
-templates: src/preferences/templates/data/binary_choice_basic.yaml
+templates: src/preferences/templates/data/revealed_choice_v1.yaml
 
 samples_per_pair: 3
 
@@ -20,12 +19,13 @@ response_formats: ["regex", "tool_use", "xml"]
 include_reverse_order: true
 
 template_sampling: lhs
-n_template_samples: 16
+n_template_samples: 48
+generation_seeds: [0, 1, 2]
 
 active_learning:
   initial_degree: 5
   batch_size: 1000
-  max_iterations: 100
+  max_iterations: 50
   p_threshold: 0.3
   q_threshold: 0.3
   convergence_threshold: 0.995

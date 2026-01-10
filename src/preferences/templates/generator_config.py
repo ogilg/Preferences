@@ -71,12 +71,6 @@ class GeneratorConfig(BaseModel):
         if missing:
             raise ValueError(f"Missing task label translations in TASK_LABELS: {missing}")
 
-        if True in self.xml_tags and needs_task_labels:
-            if self.task_label_names != ["letter"]:
-                raise ValueError(
-                    "xml_tags=True requires task_label_names=['letter'] "
-                    "(XML tags replace custom labels)"
-                )
         return self
 
 
