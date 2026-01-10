@@ -6,7 +6,7 @@ import pytest
 import yaml
 
 from src.preferences.storage.cache import MeasurementCache, reconstruct_measurements
-from src.preferences.templates import PromptTemplate, BINARY_PLACEHOLDERS
+from src.preferences.templates import PromptTemplate, REVEALED_PLACEHOLDERS
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
@@ -24,7 +24,7 @@ def sample_template() -> PromptTemplate:
     return PromptTemplate(
         template="Choose: {task_a} or {task_b}? {format_instruction}",
         name="binary_choice_v1",
-        required_placeholders=BINARY_PLACEHOLDERS,
+        required_placeholders=REVEALED_PLACEHOLDERS,
         tags=frozenset(["phrasing:1", "task_a_label:A", "task_b_label:B"]),
     )
 
@@ -299,12 +299,12 @@ class TestMeasurementCacheIntegration:
         template1 = PromptTemplate(
             template="Choose: {task_a} or {task_b}? {format_instruction}",
             name="template_one",
-            required_placeholders=BINARY_PLACEHOLDERS,
+            required_placeholders=REVEALED_PLACEHOLDERS,
         )
         template2 = PromptTemplate(
             template="Pick: {task_a} or {task_b}? {format_instruction}",
             name="template_two",
-            required_placeholders=BINARY_PLACEHOLDERS,
+            required_placeholders=REVEALED_PLACEHOLDERS,
         )
         model1 = MockClient("meta-llama/Meta-Llama-3.1-8B-Instruct")
         model2 = MockClient("meta-llama/Meta-Llama-3.1-70B-Instruct")

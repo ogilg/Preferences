@@ -1,14 +1,16 @@
-preference_mode: rating
+preference_mode: stated
 
 model: llama-3.1-8b
-temperature: 0.0
+temperature: 1.0
 
-n_tasks: 10
+n_tasks: 1000
 task_origins:
   - wildchat
+  - alpaca
+  - math
 
 templates: src/preferences/templates/data/rating_v1.yaml
 
-samples_per_task: 10
+samples_per_task: 5
 scale_min: 1
 scale_max: 10

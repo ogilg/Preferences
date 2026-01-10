@@ -1,6 +1,6 @@
-"""Binary pairwise preference measurement.
+"""Revealed pairwise preference measurement.
 
-Usage: python -m src.experiments.run_binary_measurement <config.yaml>
+Usage: python -m src.experiments.run_revealed_measurement <config.yaml>
 """
 
 from __future__ import annotations
@@ -8,7 +8,7 @@ from __future__ import annotations
 from functools import partial
 from itertools import combinations
 
-from src.preferences.measurement import measure_with_template
+from src.preferences.measurement import measure_revealed_with_template
 from src.preferences.ranking import PairwiseData, fit_thurstonian, save_thurstonian, compute_pair_agreement
 from src.preferences.storage import MeasurementCache
 from src.experiments.experiment_utils import (
@@ -22,7 +22,7 @@ from src.experiments.experiment_utils import (
 
 
 def main():
-    ctx = setup_experiment(parse_config_path("Binary pairwise measurement"), expected_mode="binary")
+    ctx = setup_experiment(parse_config_path("Revealed pairwise measurement"), expected_mode="revealed")
     config = ctx.config
 
     unique_pairs = list(combinations(ctx.tasks, 2))
@@ -38,7 +38,7 @@ def main():
                 pairs = unique_pairs if order == "canonical" else flip_pairs(unique_pairs)
 
                 measure_fn = partial(
-                    measure_with_template, template, ctx.client,
+                    measure_revealed_with_template, template, ctx.client,
                     temperature=config.temperature,
                     max_concurrent=ctx.max_concurrent,
                     response_format_name=response_format,

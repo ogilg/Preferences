@@ -4,17 +4,17 @@ base_templates:
   - Which of the two tasks would you rather complete?
   - Select your preferred task from the options.
 
-template_type: binary
-name_prefix: binary_choice
+template_type: revealed
+name_prefix: revealed_choice
 version: v1
 output_dir: src/preferences/templates/data
 
 languages: [en, fr, es, de]
 situating_contexts:
-  experiment: "This is an experiment measuring your preferences over tasks."
+  experiment: "This is an experiment measuring your preferences across many tasks."
 instruction_positions: [before, after]
 task_label_names: [letter, number, ordinal]
 typos: [false, true]
 punctuation: [standard, minimal]
 
-model: deepseek-ai/DeepSeek-V3
+model: llama-3.1-8b

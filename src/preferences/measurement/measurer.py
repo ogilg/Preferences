@@ -15,7 +15,7 @@ class Measurer(ABC):
     def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse: ...
 
 
-class BinaryPreferenceMeasurer(Measurer):
+class RevealedPreferenceMeasurer(Measurer):
     def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse:
         choice = prompt.response_format.parse(response_text)
         result = BinaryPreferenceMeasurement(
@@ -27,7 +27,7 @@ class BinaryPreferenceMeasurer(Measurer):
         return MeasurementResponse(text=response_text, source_prompt=prompt, result=result)
 
 
-class TaskScoreMeasurer(Measurer):
+class StatedScoreMeasurer(Measurer):
     def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse:
         score = prompt.response_format.parse(response_text)
         result = TaskScore(

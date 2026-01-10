@@ -10,7 +10,7 @@ from unittest.mock import MagicMock
 
 from src.preferences.templates.generator import (
     GeneratorConfig,
-    build_binary_template,
+    build_revealed_template,
     add_situating_context,
     build_translation_prompt,
     generate_templates,
@@ -20,12 +20,12 @@ from src.preferences.templates.generator import (
 from src.models.openai_compatible import BatchResult
 
 
-class TestBuildBinaryTemplate:
-    """Tests for building binary templates from instruction text."""
+class TestBuildRevealedTemplate:
+    """Tests for building revealed templates from instruction text."""
 
     def test_builds_template_with_letter_labels(self):
         """Should build template with Task A: and Task B: labels."""
-        template = build_binary_template(
+        template = build_revealed_template(
             instruction="Choose which task you prefer.",
             instruction_position="before",
             task_label_names="letter",
@@ -41,7 +41,7 @@ class TestBuildBinaryTemplate:
 
     def test_builds_template_with_number_labels(self):
         """Should build template with Task 1: and Task 2: labels."""
-        template = build_binary_template(
+        template = build_revealed_template(
             instruction="Choose which task you prefer.",
             instruction_position="before",
             task_label_names="number",
@@ -56,7 +56,7 @@ class TestBuildBinaryTemplate:
 
     def test_builds_template_with_ordinal_labels(self):
         """Should build template with First task: and Second task: labels."""
-        template = build_binary_template(
+        template = build_revealed_template(
             instruction="Choose which task you prefer.",
             instruction_position="before",
             task_label_names="ordinal",
@@ -69,7 +69,7 @@ class TestBuildBinaryTemplate:
 
     def test_instruction_before_tasks(self):
         """When instruction_position='before', format_instruction comes before tasks."""
-        template = build_binary_template(
+        template = build_revealed_template(
             instruction="Choose.",
             instruction_position="before",
             task_label_names="letter",
@@ -83,7 +83,7 @@ class TestBuildBinaryTemplate:
 
     def test_instruction_after_tasks(self):
         """When instruction_position='after', format_instruction comes after tasks."""
-        template = build_binary_template(
+        template = build_revealed_template(
             instruction="Choose.",
             instruction_position="after",
             task_label_names="letter",
@@ -97,7 +97,7 @@ class TestBuildBinaryTemplate:
 
     def test_builds_template_with_xml_tags(self):
         """Should build template with XML tags wrapping tasks."""
-        template = build_binary_template(
+        template = build_revealed_template(
             instruction="Choose which task you prefer.",
             instruction_position="before",
             task_label_names="letter",
@@ -183,7 +183,7 @@ class TestGenerateTemplates:
         """Minimal config for testing."""
         return GeneratorConfig(
             base_templates=["Choose which task you prefer."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
         )
 
@@ -198,12 +198,12 @@ class TestGenerateTemplates:
         templates = generate_templates(basic_config, mock_model)
 
         assert len(templates) == 1
-        assert templates[0]["type"] == "binary"
+        assert templates[0]["type"] == "revealed"
         assert templates[0]["name"] == "test_001"
         assert templates[0]["id"] == "001"
 
     def test_template_contains_required_placeholders(self, basic_config, mock_model):
-        """Generated template should have all binary placeholders."""
+        """Generated template should have all revealed placeholders."""
         templates = generate_templates(basic_config, mock_model)
 
         template_text = templates[0]["template"]
@@ -230,7 +230,7 @@ class TestGenerateTemplates:
                 "Which task would you rather do?",
                 "Pick your preferred task.",
             ],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
         )
 
@@ -245,7 +245,7 @@ class TestGenerateTemplates:
         """Should generate variants for each instruction position."""
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             instruction_positions=["before", "after"],
         )
@@ -262,7 +262,7 @@ class TestGenerateTemplates:
         """Should generate variants for each task label style."""
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             task_label_names=["letter", "number", "ordinal"],
         )
@@ -284,7 +284,7 @@ class TestGenerateTemplates:
         """Should generate variants with and without situating context."""
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             situating_contexts={
                 "assistant": "You are a helpful assistant.",
@@ -314,7 +314,7 @@ class TestGenerateTemplates:
         """Should generate all combinations of variants."""
         config = GeneratorConfig(
             base_templates=["Intro 1", "Intro 2"],  # 2 phrasings
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             instruction_positions=["before", "after"],  # 2 positions
             task_label_names=["letter", "number"],  # 2 label styles
@@ -330,7 +330,7 @@ class TestGenerateTemplates:
         """Template IDs should be sequential zero-padded numbers."""
         config = GeneratorConfig(
             base_templates=["A", "B", "C"],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
         )
 
@@ -344,7 +344,7 @@ class TestGenerateTemplates:
         """Names should be prefix_id format."""
         config = GeneratorConfig(
             base_templates=["Test"],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="my_prefix",
         )
 
@@ -368,7 +368,7 @@ class TestGenerateTemplatesWithTranslation:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             languages=["en", "fr"],
         )
@@ -394,7 +394,7 @@ class TestGenerateTemplatesWithTranslation:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             languages=["en", "fr"],
         )
@@ -417,7 +417,7 @@ class TestWriteTemplatesYaml:
             {
                 "id": "001",
                 "name": "test_001",
-                "type": "binary",
+                "type": "revealed",
                 "tags": ["language:en"],
                 "template": "Choose {task_a} or {task_b}",
             }
@@ -443,7 +443,7 @@ class TestWriteTemplatesYaml:
             {
                 "id": "001",
                 "name": "test_001",
-                "type": "binary",
+                "type": "revealed",
                 "tags": ["language:fr"],
                 "template": "Choisissez: {task_a} ou {task_b}. C'est très bien!",
             }
@@ -467,7 +467,7 @@ class TestLoadConfigFromYaml:
         yaml_content = """
 base_templates:
   - Choose which task you prefer.
-template_type: binary
+template_type: revealed
 name_prefix: test
 """
         config_path = tmp_path / "config.yaml"
@@ -476,7 +476,7 @@ name_prefix: test
         config, _ = load_config_from_yaml(config_path)
 
         assert config.base_templates == ["Choose which task you prefer."]
-        assert config.template_type == "binary"
+        assert config.template_type == "revealed"
         assert config.name_prefix == "test"
 
     def test_loads_full_config(self, tmp_path):
@@ -485,8 +485,8 @@ name_prefix: test
 base_templates:
   - Choose which task you prefer.
   - Pick your preferred task.
-template_type: binary
-name_prefix: binary_choice
+template_type: revealed
+name_prefix: revealed_choice
 version: v2
 languages: [en, fr, de]
 situating_contexts:
@@ -509,7 +509,7 @@ model: custom-model-name
         assert config.task_label_names == ["letter", "number"]
         assert config.output_dir == Path("custom_output")
         assert config.version == "v2"
-        assert config.output_path == Path("custom_output/binary_choice_v2.yaml")
+        assert config.output_path == Path("custom_output/revealed_choice_v2.yaml")
         assert model_name == "custom-model-name"
 
 
@@ -524,8 +524,8 @@ class TestEndToEndIntegration:
 
         config = GeneratorConfig(
             base_templates=["Choose which task you prefer."],
-            template_type="binary",
-            name_prefix="binary_test",
+            template_type="revealed",
+            name_prefix="revealed_test",
             output_path=tmp_path / "generated.yaml",
         )
 
@@ -536,24 +536,24 @@ class TestEndToEndIntegration:
         loaded = load_templates_from_yaml(config.output_path)
 
         assert len(loaded) == 1
-        assert loaded[0].name == "binary_test_001"
+        assert loaded[0].name == "revealed_test_001"
         assert "{task_a}" in loaded[0].template
         assert "{task_b}" in loaded[0].template
         assert "{format_instruction}" in loaded[0].template
 
     def test_generated_templates_work_with_builder(self, tmp_path):
-        """Generated templates should work with BinaryPromptBuilder."""
+        """Generated templates should work with RevealedPromptBuilder."""
         from src.preferences.templates import load_templates_from_yaml
-        from src.preferences import BinaryPromptBuilder, RegexChoiceFormat, PreferenceType
-        from src.preferences.measurement import BinaryPreferenceMeasurer
+        from src.preferences import RevealedPromptBuilder, RegexChoiceFormat, PreferenceType
+        from src.preferences.measurement import RevealedPreferenceMeasurer
         from src.task_data import Task, OriginDataset
 
         mock_model = MagicMock()
 
         config = GeneratorConfig(
             base_templates=["Choose which task you prefer."],
-            template_type="binary",
-            name_prefix="binary_test",
+            template_type="revealed",
+            name_prefix="revealed_test",
             output_path=tmp_path / "generated.yaml",
         )
 
@@ -563,8 +563,8 @@ class TestEndToEndIntegration:
         loaded = load_templates_from_yaml(config.output_path)
 
         # Build a prompt using the generated template
-        builder = BinaryPromptBuilder(
-            measurer=BinaryPreferenceMeasurer(),
+        builder = RevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
             preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=RegexChoiceFormat(),
             template=loaded[0],
@@ -598,7 +598,7 @@ class TestEndToEndIntegration:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             task_label_names=["letter", "number", "ordinal"],
             output_path=tmp_path / "generated.yaml",
@@ -624,7 +624,7 @@ class TestEndToEndIntegration:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="binary",
+            template_type="revealed",
             name_prefix="test",
             situating_contexts={
                 "helpful": "You are a helpful, harmless, and honest AI assistant."

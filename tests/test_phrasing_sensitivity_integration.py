@@ -13,7 +13,7 @@ from src.preferences.templates import load_templates_from_yaml
 from src.preferences.ranking import PairwiseData, fit_thurstonian
 from src.preferences.storage import save_measurements
 from src.experiments.correlation import utility_vector_correlation, compute_pairwise_correlations
-from src.experiments.sensitivity_experiments.binary_correlation import (
+from src.experiments.sensitivity_experiments.revealed_correlation import (
     win_rate_correlation,
     save_correlations,
 )
@@ -57,7 +57,7 @@ def phrasing_templates(tmp_path: Path) -> Path:
     templates_data = [
         {
             "name": "phrasing_test_001",
-            "type": "binary",
+            "type": "revealed",
             "tags": ["phrasing:1", "task_a_label:Task A", "task_b_label:Task B"],
             "template": (
                 "You will be given two tasks. Choose which task you would prefer.\n"
@@ -68,7 +68,7 @@ def phrasing_templates(tmp_path: Path) -> Path:
         },
         {
             "name": "phrasing_test_002",
-            "type": "binary",
+            "type": "revealed",
             "tags": ["phrasing:2", "task_a_label:Task A", "task_b_label:Task B"],
             "template": (
                 "Below are two tasks. Which one would you rather complete?\n"
@@ -233,7 +233,7 @@ class TestCorrelationIntegration:
         fit = fit_thurstonian(data)
 
         task_ids = [t.id for t in fit.tasks]
-        corr = utility_vector_correlation(fit.mu, task_ids, fit.mu, task_ids)
+        corr = utility_vector_correlation(fit.mu, task_ids, fit.mu, task_ids, min_overlap=2)
         assert corr == pytest.approx(1.0, abs=1e-6)
 
 
@@ -294,7 +294,7 @@ class TestSaveFunctions:
             "2": (fit2.mu, [t.id for t in fit2.tasks]),
         }
 
-        correlations = compute_pairwise_correlations(results)
+        correlations = compute_pairwise_correlations(results, min_overlap=2)
 
         assert len(correlations) == 1
         assert correlations[0]["template_a"] == "1"
@@ -384,7 +384,7 @@ class TestEndToEndPipeline:
             pid: (fit.mu, [t.id for t in fit.tasks])
             for pid, fit in fits.items()
         }
-        correlations = compute_pairwise_correlations(results)
+        correlations = compute_pairwise_correlations(results, min_overlap=2)
 
         assert len(correlations) == 1
         assert "correlation" in correlations[0]
@@ -481,7 +481,7 @@ class TestKnownGroundTruth:
 
         ids1 = [t.id for t in fit1.tasks]
         ids2 = [t.id for t in fit2.tasks]
-        corr = utility_vector_correlation(fit1.mu, ids1, fit2.mu, ids2)
+        corr = utility_vector_correlation(fit1.mu, ids1, fit2.mu, ids2, min_overlap=2)
         assert corr == pytest.approx(1.0, abs=1e-6)
 
     def test_opposite_preferences_correlate_negatively(self, sample_tasks: list[Task]):
@@ -508,5 +508,5 @@ class TestKnownGroundTruth:
 
         ids1 = [t.id for t in fit1.tasks]
         ids2 = [t.id for t in fit2.tasks]
-        corr = utility_vector_correlation(fit1.mu, ids1, fit2.mu, ids2)
+        corr = utility_vector_correlation(fit1.mu, ids1, fit2.mu, ids2, min_overlap=2)
         assert corr < 0

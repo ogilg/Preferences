@@ -10,8 +10,8 @@ from src.preferences import (
 )
 from src.preferences.measurement import (
     Measurer,
-    BinaryPreferenceMeasurer,
-    TaskScoreMeasurer,
+    RevealedPreferenceMeasurer,
+    StatedScoreMeasurer,
 )
 from src.preferences.templates import PromptTemplate
 
@@ -45,14 +45,14 @@ def dummy_template():
     )
 
 
-class TestBinaryPreferenceMeasurer:
-    """Tests for BinaryPreferenceMeasurer."""
+class TestRevealedPreferenceMeasurer:
+    """Tests for RevealedPreferenceMeasurer."""
 
     def test_parse_returns_response_with_measurement(
         self, sample_task_a, sample_task_b, dummy_template
     ):
         """Should parse response and return BinaryPreferenceMeasurement."""
-        measurer = BinaryPreferenceMeasurer()
+        measurer = RevealedPreferenceMeasurer()
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Choose A or B"}],
             tasks=[sample_task_a, sample_task_b],
@@ -72,7 +72,7 @@ class TestBinaryPreferenceMeasurer:
 
     def test_parse_choice_b(self, sample_task_a, sample_task_b, dummy_template):
         """Should correctly parse choice B."""
-        measurer = BinaryPreferenceMeasurer()
+        measurer = RevealedPreferenceMeasurer()
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Choose A or B"}],
             tasks=[sample_task_a, sample_task_b],
@@ -88,7 +88,7 @@ class TestBinaryPreferenceMeasurer:
 
     def test_parse_raises_on_ambiguous(self, sample_task_a, sample_task_b, dummy_template):
         """Should raise ValueError on ambiguous response."""
-        measurer = BinaryPreferenceMeasurer()
+        measurer = RevealedPreferenceMeasurer()
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Choose A or B"}],
             tasks=[sample_task_a, sample_task_b],
@@ -102,12 +102,12 @@ class TestBinaryPreferenceMeasurer:
             measurer.parse("Both are good", prompt)
 
 
-class TestTaskScoreMeasurer:
-    """Tests for TaskScoreMeasurer."""
+class TestStatedScoreMeasurer:
+    """Tests for StatedScoreMeasurer."""
 
     def test_parse_returns_response_with_score(self, sample_task_a, dummy_template):
         """Should parse response and return TaskScore."""
-        measurer = TaskScoreMeasurer()
+        measurer = StatedScoreMeasurer()
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Rate this task"}],
             tasks=[sample_task_a],
@@ -126,7 +126,7 @@ class TestTaskScoreMeasurer:
 
     def test_parse_extracts_float(self, sample_task_a, dummy_template):
         """Should parse float ratings."""
-        measurer = TaskScoreMeasurer()
+        measurer = StatedScoreMeasurer()
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Rate this task"}],
             tasks=[sample_task_a],
@@ -142,7 +142,7 @@ class TestTaskScoreMeasurer:
 
     def test_parse_extracts_from_text(self, sample_task_a, dummy_template):
         """Should extract number from surrounding text."""
-        measurer = TaskScoreMeasurer()
+        measurer = StatedScoreMeasurer()
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Rate this task"}],
             tasks=[sample_task_a],

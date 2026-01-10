@@ -31,26 +31,31 @@ def utility_vector_correlation(
     mu_b: np.ndarray,
     task_ids_b: list[str],
     method: Literal["pearson", "spearman"] = "pearson",
+    min_overlap: int = 10,
 ) -> float:
     """
-    Pearson/Spearman correlation of utility vectors, handling different task orderings.
+    Pearson/Spearman correlation of utility vectors on overlapping tasks.
 
-    Returns NaN if task sets don't match or data is insufficient.
+    Returns NaN if overlap is less than min_overlap or data is insufficient.
     """
-    if set(task_ids_a) != set(task_ids_b):
+    # Find overlapping tasks
+    common_ids = set(task_ids_a) & set(task_ids_b)
+    if len(common_ids) < min_overlap:
         return float("nan")
 
-    # Reorder b to match a's ordering if needed
-    if task_ids_a != task_ids_b:
-        id_to_idx_b = {tid: i for i, tid in enumerate(task_ids_b)}
-        reorder = [id_to_idx_b[tid] for tid in task_ids_a]
-        mu_b = mu_b[reorder]
+    # Extract values for common tasks in consistent order
+    id_to_idx_a = {tid: i for i, tid in enumerate(task_ids_a)}
+    id_to_idx_b = {tid: i for i, tid in enumerate(task_ids_b)}
 
-    if len(mu_a) < 2 or np.std(mu_a) < 1e-10 or np.std(mu_b) < 1e-10:
+    common_list = sorted(common_ids)
+    vals_a = np.array([mu_a[id_to_idx_a[tid]] for tid in common_list])
+    vals_b = np.array([mu_b[id_to_idx_b[tid]] for tid in common_list])
+
+    if np.std(vals_a) < 1e-10 or np.std(vals_b) < 1e-10:
         return float("nan")
 
     corr_fn = pearsonr if method == "pearson" else spearmanr
-    r, _ = corr_fn(mu_a, mu_b)
+    r, _ = corr_fn(vals_a, vals_b)
     return float(r) if not np.isnan(r) else float("nan")
 
 
@@ -58,6 +63,7 @@ def compute_pairwise_correlations(
     results: dict[str, tuple[np.ndarray, list[str]]],
     tags: dict[str, dict[str, str]] | None = None,
     method: Literal["pearson", "spearman"] = "pearson",
+    min_overlap: int = 10,
 ) -> list[dict]:
     """
     Compute pairwise correlations between all result sets.
@@ -66,12 +72,13 @@ def compute_pairwise_correlations(
         results: template_id -> (values, task_ids)
         tags: optional template_id -> tag dict for sensitivity analysis
         method: "pearson" or "spearman"
+        min_overlap: minimum number of overlapping tasks required
     """
     from itertools import combinations
 
     correlations = []
     for (id_a, (vals_a, ids_a)), (id_b, (vals_b, ids_b)) in combinations(results.items(), 2):
-        corr = utility_vector_correlation(vals_a, ids_a, vals_b, ids_b, method)
+        corr = utility_vector_correlation(vals_a, ids_a, vals_b, ids_b, method, min_overlap)
         entry = {
             "template_a": id_a,
             "template_b": id_b,

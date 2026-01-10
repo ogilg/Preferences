@@ -1,12 +1,15 @@
 - id: '001'
   name: test_001
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
   - situating_context:none
   - instruction_position:before
+  - xml_tags:False
   - task_label_names:letter
+  - typos:False
+  - punctuation:standard
   template: 'Choose.
 
     {format_instruction}
@@ -21,13 +24,16 @@
     {task_b}'
 - id: '002'
   name: test_002
-  type: binary
+  type: revealed
   tags:
   - language:en
   - phrasing:1
   - situating_context:helpful
   - instruction_position:before
+  - xml_tags:False
   - task_label_names:letter
+  - typos:False
+  - punctuation:standard
   template: 'You are a helpful, harmless, and honest AI assistant.
 
 

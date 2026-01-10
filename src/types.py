@@ -22,6 +22,7 @@ class PreferenceType(Enum):
     PRE_TASK_STATED = auto()
     PRE_TASK_REVEALED = auto()
     POST_TASK_STATED = auto()
+    POST_TASK_REVEALED = auto()
 
 
 @dataclass

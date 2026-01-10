@@ -26,7 +26,7 @@ class ActiveLearningConfig(BaseModel):
 
 
 class ExperimentConfig(BaseModel):
-    preference_mode: Literal["binary", "rating", "active_learning"]
+    preference_mode: Literal["revealed", "stated", "active_learning"]
 
     model: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"
     temperature: float = 1.0

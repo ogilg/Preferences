@@ -22,8 +22,8 @@ TASK_LABELS = {
     ("ordinal", "de"): ("Erste Aufgabe", "Zweite Aufgabe"),
 }
 
-# Task label for rating templates, keyed by language
-RATING_TASK_LABELS = {
+# Task label for stated preference templates, keyed by language
+STATED_TASK_LABELS = {
     "en": "Task:",
     "fr": "Tâche:",
     "es": "Tarea:",
@@ -33,7 +33,7 @@ RATING_TASK_LABELS = {
 
 class GeneratorConfig(BaseModel):
     base_templates: list[str]
-    template_type: Literal["binary", "pre_task_rating", "post_task_rating"] = "binary"
+    template_type: Literal["revealed", "pre_task_stated", "post_task_stated", "post_task_revealed"] = "revealed"
     name_prefix: str = "template"
     version: str = "v1"
 
@@ -53,11 +53,13 @@ class GeneratorConfig(BaseModel):
 
     @model_validator(mode="after")
     def validate_task_label_names(self) -> Self:
-        is_rating = self.template_type in ("pre_task_rating", "post_task_rating")
-        if is_rating and self.task_label_names:
-            raise ValueError("task_label_names must be empty for rating templates (not used)")
-        if not is_rating and not self.task_label_names:
-            raise ValueError("task_label_names must have at least one entry for binary templates")
+        # Templates that need task_label_names: only pre-task revealed (binary choice shown in template)
+        # Templates that don't need task_label_names: stated (ratings), post_task_revealed (context from conversation)
+        needs_task_labels = self.template_type == "revealed"
+        if not needs_task_labels and self.task_label_names:
+            raise ValueError(f"task_label_names must be empty for {self.template_type} templates (not used)")
+        if needs_task_labels and not self.task_label_names:
+            raise ValueError("task_label_names must have at least one entry for revealed templates")
 
         missing = [
             (label, lang)
@@ -68,7 +70,7 @@ class GeneratorConfig(BaseModel):
         if missing:
             raise ValueError(f"Missing task label translations in TASK_LABELS: {missing}")
 
-        if True in self.xml_tags and not is_rating:
+        if True in self.xml_tags and needs_task_labels:
             if self.task_label_names != ["letter"]:
                 raise ValueError(
                     "xml_tags=True requires task_label_names=['letter'] "

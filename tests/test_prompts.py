@@ -11,15 +11,15 @@ import pytest
 from src.task_data import Task, OriginDataset
 from src.types import PreferencePrompt
 from src.preferences import (
-    BinaryPromptBuilder,
-    PreTaskRatingPromptBuilder,
-    PostTaskRatingPromptBuilder,
+    RevealedPromptBuilder,
+    PreTaskStatedPromptBuilder,
+    PostTaskStatedPromptBuilder,
     PromptTemplate,
-    BINARY_PLACEHOLDERS,
-    binary_template,
-    BINARY_CHOICE_TEMPLATE,
-    PRE_TASK_RATING_TEMPLATE,
-    POST_TASK_RATING_TEMPLATE,
+    REVEALED_PLACEHOLDERS,
+    revealed_template,
+    REVEALED_CHOICE_TEMPLATE,
+    PRE_TASK_STATED_TEMPLATE,
+    POST_TASK_STATED_TEMPLATE,
     RegexChoiceFormat,
     RegexRatingFormat,
     XMLChoiceFormat,
@@ -27,8 +27,8 @@ from src.preferences import (
     PreferenceType,
 )
 from src.preferences.measurement import (
-    BinaryPreferenceMeasurer,
-    TaskScoreMeasurer,
+    RevealedPreferenceMeasurer,
+    StatedScoreMeasurer,
 )
 
 
@@ -75,11 +75,11 @@ class TestPromptTemplate:
 
     def test_factory_function_sets_placeholders(self):
         """Factory functions should set correct placeholders."""
-        template = binary_template(
+        template = revealed_template(
             template="Pick: {task_a} or {task_b}? {format_instruction}",
             name="custom_binary",
         )
-        assert template.required_placeholders == BINARY_PLACEHOLDERS
+        assert template.required_placeholders == REVEALED_PLACEHOLDERS
 
     def test_template_is_immutable(self):
         """Template should be frozen (immutable)."""
@@ -123,7 +123,7 @@ class TestLoadTemplatesFromYaml:
         yaml_content = """
 - id: "001"
   name: test_template_001
-  type: binary
+  type: revealed
   tags: [canonical]
   template: |
     {format_instruction}
@@ -140,11 +140,11 @@ class TestLoadTemplatesFromYaml:
         assert "canonical" in templates[0].tags
 
     def test_loads_real_template_file(self):
-        """Should load the actual binary_choice_v1.yaml file."""
+        """Should load the actual revealed_choice_v1.yaml file."""
         from pathlib import Path
         from src.preferences.templates import load_templates_from_yaml
 
-        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/binary_choice_v1.yaml"
+        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/revealed_choice_v1.yaml"
         templates = load_templates_from_yaml(yaml_path)
 
         assert len(templates) >= 1
@@ -184,18 +184,18 @@ def sample_completion_text():
     return "Cherry blossoms fall\nGentle breeze carries petals\nNew life awakens"
 
 
-class TestBinaryPromptBuilder:
+class TestRevealedPromptBuilder:
     """Tests for binary choice prompt building."""
 
     def test_build_creates_valid_prompt(self, sample_task_a, sample_task_b):
         """Built prompt should have correct structure and carry all components."""
-        measurer = BinaryPreferenceMeasurer()
+        measurer = RevealedPreferenceMeasurer()
         response_format = RegexChoiceFormat()
-        builder = BinaryPromptBuilder(
+        builder = RevealedPromptBuilder(
             measurer=measurer,
             preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=response_format,
-            template=BINARY_CHOICE_TEMPLATE,
+            template=REVEALED_CHOICE_TEMPLATE,
         )
         prompt = builder.build(sample_task_a, sample_task_b)
         prompt_content = get_all_content(prompt)
@@ -214,8 +214,8 @@ class TestBinaryPromptBuilder:
     def test_template_placeholders_are_filled(self, sample_task_a, sample_task_b):
         """Template placeholders should be filled with task content."""
         template = "Task A: {task_a}\nTask B: {task_b}\n{format_instruction}"
-        builder = BinaryPromptBuilder(
-            measurer=BinaryPreferenceMeasurer(),
+        builder = RevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
             preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=RegexChoiceFormat(),
             template=template,
@@ -230,17 +230,17 @@ class TestBinaryPromptBuilder:
         assert prompt.kind == PreferenceType.PRE_TASK_STATED
 
 
-class TestPreTaskRatingPromptBuilder:
+class TestPreTaskStatedPromptBuilder:
     """Tests for pre-task rating prompt building."""
 
     def test_build_creates_valid_prompt(self, sample_task_a):
         """Built prompt should have correct structure and carry all components."""
-        measurer = TaskScoreMeasurer()
+        measurer = StatedScoreMeasurer()
         response_format = RegexRatingFormat()
-        builder = PreTaskRatingPromptBuilder(
+        builder = PreTaskStatedPromptBuilder(
             measurer=measurer,
             response_format=response_format,
-            template=PRE_TASK_RATING_TEMPLATE,
+            template=PRE_TASK_STATED_TEMPLATE,
         )
         prompt = builder.build(sample_task_a)
         prompt_content = get_all_content(prompt)
@@ -257,9 +257,9 @@ class TestPreTaskRatingPromptBuilder:
     def test_scale_placeholders_are_filled(self, sample_task_a):
         """Scale placeholders in template should be filled from response format."""
         template = "Rate from {scale_min} to {scale_max}.\nTask: {task}\n{format_instruction}"
-        measurer = TaskScoreMeasurer()
+        measurer = StatedScoreMeasurer()
         response_format = RegexRatingFormat(scale_min=-5, scale_max=5)
-        builder = PreTaskRatingPromptBuilder(
+        builder = PreTaskStatedPromptBuilder(
             measurer=measurer,
             response_format=response_format,
             template=template,
@@ -271,17 +271,17 @@ class TestPreTaskRatingPromptBuilder:
         assert "5" in prompt_content
 
 
-class TestPostTaskRatingPromptBuilder:
+class TestPostTaskStatedPromptBuilder:
     """Tests for post-task rating prompt building."""
 
     def test_build_creates_valid_prompt(self, sample_task_a, sample_completion_text):
         """Built prompt should have correct structure and carry all components."""
-        measurer = TaskScoreMeasurer()
+        measurer = StatedScoreMeasurer()
         response_format = RegexRatingFormat()
-        builder = PostTaskRatingPromptBuilder(
+        builder = PostTaskStatedPromptBuilder(
             measurer=measurer,
             response_format=response_format,
-            template=POST_TASK_RATING_TEMPLATE,
+            template=POST_TASK_STATED_TEMPLATE,
         )
         prompt = builder.build(sample_task_a, sample_completion_text)
         prompt_content = get_all_content(prompt)
@@ -299,9 +299,9 @@ class TestPostTaskRatingPromptBuilder:
     def test_scale_placeholders_are_filled(self, sample_task_a, sample_completion_text):
         """Scale placeholders in template should be filled from response format."""
         template = "Rate from {scale_min} to {scale_max}.\n{format_instruction}"
-        measurer = TaskScoreMeasurer()
+        measurer = StatedScoreMeasurer()
         response_format = RegexRatingFormat(scale_min=0, scale_max=100)
-        builder = PostTaskRatingPromptBuilder(
+        builder = PostTaskStatedPromptBuilder(
             measurer=measurer,
             response_format=response_format,
             template=template,
@@ -373,11 +373,11 @@ class TestXMLResponseFormats:
 
     def test_builder_with_xml_response_format(self, sample_task_a, sample_task_b):
         """Builders should work with custom XML response format."""
-        builder = BinaryPromptBuilder(
-            measurer=BinaryPreferenceMeasurer(),
+        builder = RevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
             preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=XMLChoiceFormat(),
-            template=BINARY_CHOICE_TEMPLATE,
+            template=REVEALED_CHOICE_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a, sample_task_b)
@@ -388,10 +388,10 @@ class TestXMLResponseFormats:
 
     def test_rating_builder_with_xml_response_format(self, sample_task_a):
         """Rating builders should work with custom XML response format."""
-        builder = PreTaskRatingPromptBuilder(
-            measurer=TaskScoreMeasurer(),
+        builder = PreTaskStatedPromptBuilder(
+            measurer=StatedScoreMeasurer(),
             response_format=XMLRatingFormat(),
-            template=PRE_TASK_RATING_TEMPLATE,
+            template=PRE_TASK_STATED_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a)
@@ -462,15 +462,15 @@ class TestToolUseChoiceFormat:
             fmt.parse('{"choice": "Task C"}')
 
     def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
-        """BinaryPromptBuilder should work with ToolUseChoiceFormat."""
+        """RevealedPromptBuilder should work with ToolUseChoiceFormat."""
         from src.preferences import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
-        builder = BinaryPromptBuilder(
-            measurer=BinaryPreferenceMeasurer(),
+        builder = RevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
             preference_type=PreferenceType.PRE_TASK_STATED,
             response_format=fmt,
-            template=BINARY_CHOICE_TEMPLATE,
+            template=REVEALED_CHOICE_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a, sample_task_b)
@@ -564,14 +564,14 @@ class TestToolUseRatingFormat:
             fmt.parse('{"rating": "seven"}')
 
     def test_builder_with_tool_use_format(self, sample_task_a):
-        """PreTaskRatingPromptBuilder should work with ToolUseRatingFormat."""
+        """PreTaskStatedPromptBuilder should work with ToolUseRatingFormat."""
         from src.preferences import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
-        builder = PreTaskRatingPromptBuilder(
-            measurer=TaskScoreMeasurer(),
+        builder = PreTaskStatedPromptBuilder(
+            measurer=StatedScoreMeasurer(),
             response_format=fmt,
-            template=PRE_TASK_RATING_TEMPLATE,
+            template=PRE_TASK_STATED_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a)
@@ -639,15 +639,15 @@ class TestCompletionChoiceFormat:
             fmt.parse("I chose option A")  # "option A" not "Task A"
 
     def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
-        """BinaryPromptBuilder should work with CompletionChoiceFormat."""
-        from src.preferences import CompletionChoiceFormat, BINARY_COMPLETION_TEMPLATE
+        """RevealedPromptBuilder should work with CompletionChoiceFormat."""
+        from src.preferences import CompletionChoiceFormat, REVEALED_COMPLETION_TEMPLATE
 
         fmt = CompletionChoiceFormat()
-        builder = BinaryPromptBuilder(
-            measurer=BinaryPreferenceMeasurer(),
+        builder = RevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
             preference_type=PreferenceType.PRE_TASK_REVEALED,
             response_format=fmt,
-            template=BINARY_COMPLETION_TEMPLATE,
+            template=REVEALED_COMPLETION_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a, sample_task_b)

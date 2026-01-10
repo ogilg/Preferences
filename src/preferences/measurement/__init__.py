@@ -1,12 +1,13 @@
 from src.preferences.measurement.measure import (
-    measure_binary_preferences,
-    measure_ratings,
-    measure_with_template,
+    measure_revealed_preferences,
+    measure_stated,
+    measure_revealed_with_template,
+    measure_post_task_revealed,
 )
 from src.preferences.measurement.measurer import (
-    BinaryPreferenceMeasurer,
+    RevealedPreferenceMeasurer,
     Measurer,
-    TaskScoreMeasurer,
+    StatedScoreMeasurer,
 )
 from src.preferences.measurement.recorder import (
     MeasurementRecord,
@@ -27,13 +28,14 @@ from src.preferences.measurement.response_format import (
 
 __all__ = [
     # Measure functions
-    "measure_binary_preferences",
-    "measure_ratings",
-    "measure_with_template",
+    "measure_revealed_preferences",
+    "measure_stated",
+    "measure_revealed_with_template",
+    "measure_post_task_revealed",
     # Measurers
-    "BinaryPreferenceMeasurer",
+    "RevealedPreferenceMeasurer",
     "Measurer",
-    "TaskScoreMeasurer",
+    "StatedScoreMeasurer",
     # Recorder
     "MeasurementRecord",
     "MeasurementRecorder",

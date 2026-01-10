@@ -16,10 +16,10 @@ uv pip install -e ".[dev]"
 
 ## Structure
 
-- `src/models/` - Model abstractions (Hyperbolic API)
-- `src/preferences/` - Measurement system + Thurstonian utility model
-- `src/task_data/` - Task data structures
-- `tests/` - Test suite (`pytest -m "not api"` skips API calls)
+- `src/models/` — Abstractions and client for Hyperbolic LLM API
+- `src/preferences/` — Preference measurement, Thurstonian utility model, and template generation
+- `src/task_data/` — Task and dataset structures
+- `tests/` — Test suite (`pytest -m "not api"` to skip API-dependent tests)
 
 ## Conventions and style
 
@@ -28,6 +28,7 @@ uv pip install -e ".[dev]"
 - Do not import stuff midway through functions. Keep imports at the top.
 - Only write comments that actually add a non-obvious piece of information. Same goes for docstrings.
 - You should always consider whether there exists a tool that can do what you want to do.
+- Avoid dosctrings that do not add important information. If you do use docstrings keep them concise.
 
 ## Current Focus
 

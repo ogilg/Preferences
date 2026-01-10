@@ -1,18 +1,21 @@
-# Base templates are just the intro phrasing - structure is generated
+# Base templates are just the main phrasing. Sometimes these instructions come
+# after the tasks so there should be no mention of the tasks coming after.
 base_templates:
   - Rate how much you would enjoy completing this task on a scale from {scale_min} to {scale_max}.
-  - On a scale of {scale_min} to {scale_max}, how interested are you in completing the following task?
+  - On a scale of {scale_min} to {scale_max}, how interested are you in completing the task?
   - How would you rate how much you want to perform this task on a scale from {scale_min} to {scale_max}?
 
-template_type: pre_task_rating
-name_prefix: rating
+template_type: pre_task_stated
+name_prefix: stated
 version: v1
 output_dir: src/preferences/templates/data
 
-languages: [en, fr, es]
+languages: [en, fr, es, de]
 situating_contexts:
-  experiment: "This is an experiment measuring your preferences over tasks."
+  experiment: "This is an experiment measuring your preferences across many tasks."
 instruction_positions: [before, after]
 task_label_names: []
 typos: [false, true]
 punctuation: [standard, minimal]
+
+model: llama-3.1-8b

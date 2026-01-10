@@ -9,11 +9,11 @@ from src.experiments.correlation import (
     save_experiment_config,
     utility_vector_correlation,
 )
-from src.experiments.sensitivity_experiments.binary_correlation import (
+from src.experiments.sensitivity_experiments.revealed_correlation import (
     win_rate_correlation,
     save_correlations,
 )
-from src.experiments.sensitivity_experiments.rating_correlation import (
+from src.experiments.sensitivity_experiments.stated_correlation import (
     scores_to_vector,
 )
 

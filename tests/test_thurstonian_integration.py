@@ -8,14 +8,14 @@ load_dotenv()
 from src.models import get_client
 from src.task_data import Task, OriginDataset
 from src.preferences import (
-    BinaryPromptBuilder,
-    BinaryPreferenceMeasurer,
+    RevealedPromptBuilder,
+    RevealedPreferenceMeasurer,
     RegexChoiceFormat,
     CompletionChoiceFormat,
-    BINARY_CHOICE_TEMPLATE,
-    BINARY_COMPLETION_TEMPLATE,
+    REVEALED_CHOICE_TEMPLATE,
+    REVEALED_COMPLETION_TEMPLATE,
     PreferenceType,
-    measure_binary_preferences,
+    measure_revealed_preferences,
 )
 from src.preferences.ranking import PairwiseData, fit_thurstonian
 
@@ -42,21 +42,21 @@ def completion_client():
 
 @pytest.fixture
 def binary_builder():
-    return BinaryPromptBuilder(
-        measurer=BinaryPreferenceMeasurer(),
+    return RevealedPromptBuilder(
+        measurer=RevealedPreferenceMeasurer(),
         preference_type=PreferenceType.PRE_TASK_STATED,
         response_format=RegexChoiceFormat(),
-        template=BINARY_CHOICE_TEMPLATE,
+        template=REVEALED_CHOICE_TEMPLATE,
     )
 
 
 @pytest.fixture
 def revealed_builder():
-    return BinaryPromptBuilder(
-        measurer=BinaryPreferenceMeasurer(),
+    return RevealedPromptBuilder(
+        measurer=RevealedPreferenceMeasurer(),
         preference_type=PreferenceType.PRE_TASK_REVEALED,
         response_format=CompletionChoiceFormat(),
-        template=BINARY_COMPLETION_TEMPLATE,
+        template=REVEALED_COMPLETION_TEMPLATE,
     )
 
 
@@ -100,7 +100,7 @@ class TestFullPipeline:
         # Measure multiple times to get a distribution
         pairs = [(easy_task, hard_task)] * 3 + [(hard_task, easy_task)] * 3
 
-        batch = measure_binary_preferences(
+        batch = measure_revealed_preferences(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -135,7 +135,7 @@ class TestFullPipeline:
             for t2 in tasks[i + 1:]:
                 pairs.extend([(t1, t2), (t2, t1)])
 
-        batch = measure_binary_preferences(
+        batch = measure_revealed_preferences(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -164,7 +164,7 @@ class TestFullPipeline:
         # More samples for better estimate
         pairs = [(easy_task, hard_task)] * 5
 
-        batch = measure_binary_preferences(
+        batch = measure_revealed_preferences(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -200,7 +200,7 @@ class TestPairwiseDataFromRealMeasurements:
         tasks = [easy_task, hard_task]
         pairs = [(easy_task, hard_task)] * 4
 
-        batch = measure_binary_preferences(
+        batch = measure_revealed_preferences(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -224,7 +224,7 @@ class TestPairwiseDataFromRealMeasurements:
         tasks = [easy_task, hard_task]
         pairs = [(easy_task, hard_task), (hard_task, easy_task)]
 
-        batch = measure_binary_preferences(
+        batch = measure_revealed_preferences(
             client=client,
             pairs=pairs,
             builder=binary_builder,

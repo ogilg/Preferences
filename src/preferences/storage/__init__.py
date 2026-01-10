@@ -10,11 +10,11 @@ from src.preferences.storage.cache import (
     reconstruct_measurements,
     save_measurements,
 )
-from src.preferences.storage.rating import (
-    RATING_DIR,
-    load_ratings,
-    ratings_exist,
-    save_ratings,
+from src.preferences.storage.stated import (
+    STATED_DIR,
+    load_stated,
+    stated_exist,
+    save_stated,
 )
 
 __all__ = [
@@ -23,14 +23,14 @@ __all__ = [
     "load_yaml",
     "model_short_name",
     "save_yaml",
-    # Cache (binary comparisons)
+    # Cache (revealed comparisons)
     "MEASUREMENTS_DIR",
     "MeasurementCache",
     "reconstruct_measurements",
     "save_measurements",
-    # Rating (single-task scores)
-    "RATING_DIR",
-    "load_ratings",
-    "ratings_exist",
-    "save_ratings",
+    # Stated (single-task scores)
+    "STATED_DIR",
+    "load_stated",
+    "stated_exist",
+    "save_stated",
 ]

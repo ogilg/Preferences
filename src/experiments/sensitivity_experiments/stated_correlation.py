@@ -40,7 +40,7 @@ def scores_to_vector(scores: list[TaskScore], tasks: list[Task]) -> tuple[np.nda
     return values, task_ids
 
 
-def save_rating_correlations(correlations: list[dict], path: Path | str) -> None:
+def save_stated_correlations(correlations: list[dict], path: Path | str) -> None:
     save_correlations_yaml(
         correlations,
         summary_keys=["pearson_correlation", "spearman_correlation"],

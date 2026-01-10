@@ -14,13 +14,13 @@ from src.experiments.correlation import (
     compute_pairwise_correlations,
 )
 from src.experiments.transitivity.transitivity import measure_transitivity, TransitivityResult
-from src.experiments.sensitivity_experiments.rating_correlation import (
+from src.experiments.sensitivity_experiments.stated_correlation import (
     _build_score_map,
     compute_per_task_std,
     compute_mean_std_across_tasks,
     scores_to_vector,
 )
-from src.experiments.sensitivity_experiments.binary_correlation import (
+from src.experiments.sensitivity_experiments.revealed_correlation import (
     _build_win_rate_vector,
     win_rate_correlation,
 )
@@ -288,7 +288,7 @@ class TestRatingCorrelation:
             for tid, scores in scores_by_template.items()
         }
 
-        correlations = compute_pairwise_correlations(results)
+        correlations = compute_pairwise_correlations(results, min_overlap=2)
 
         # 3 templates = C(3,2) = 3 pairs
         assert len(correlations) == 3
@@ -396,7 +396,7 @@ class TestBinaryCorrelation:
         mu_a = np.array([1.0, 2.0, 3.0, 4.0])
         mu_b = np.array([2.0, 4.0, 6.0, 8.0])  # Same ordering, different scale
 
-        r = utility_vector_correlation(mu_a, task_ids, mu_b, task_ids)
+        r = utility_vector_correlation(mu_a, task_ids, mu_b, task_ids, min_overlap=2)
         assert r == pytest.approx(1.0)
 
     def test_utility_vector_correlation_reorders_tasks(self, tasks):
@@ -407,7 +407,7 @@ class TestBinaryCorrelation:
         mu_a = np.array([1.0, 2.0, 3.0, 4.0])
         mu_b = np.array([4.0, 3.0, 2.0, 1.0])  # Reversed order matches
 
-        r = utility_vector_correlation(mu_a, ids_a, mu_b, ids_b)
+        r = utility_vector_correlation(mu_a, ids_a, mu_b, ids_b, min_overlap=2)
         assert r == pytest.approx(1.0)
 
     def test_utility_vector_correlation_mismatched_tasks_returns_nan(self, tasks):
@@ -417,7 +417,7 @@ class TestBinaryCorrelation:
         mu_a = np.array([1.0, 2.0, 3.0, 4.0])
         mu_b = np.array([1.0, 2.0, 3.0, 4.0])
 
-        r = utility_vector_correlation(mu_a, ids_a, mu_b, ids_b)
+        r = utility_vector_correlation(mu_a, ids_a, mu_b, ids_b, min_overlap=2)
         assert np.isnan(r)
 
     def test_compute_pairwise_correlations_with_utilities(self, tasks):
@@ -427,7 +427,7 @@ class TestBinaryCorrelation:
             "template_2": (np.array([1.0, 2.0, 3.0, 4.0]), [t.id for t in tasks]),
         }
 
-        correlations = compute_pairwise_correlations(results)
+        correlations = compute_pairwise_correlations(results, min_overlap=2)
 
         assert len(correlations) == 1
         assert correlations[0]["template_a"] == "template_1"

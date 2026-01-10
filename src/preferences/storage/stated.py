@@ -8,21 +8,21 @@ from src.preferences.templates.template import PromptTemplate
 from src.types import TaskScore
 
 
-RATING_DIR = Path("results/rating")
+STATED_DIR = Path("results/stated")
 
 
-def _rating_dir(template: PromptTemplate, client: OpenAICompatibleClient) -> Path:
+def _stated_dir(template: PromptTemplate, client: OpenAICompatibleClient) -> Path:
     short = model_short_name(client.canonical_model_name)
-    return RATING_DIR / f"rating_{template.name}_{short}"
+    return STATED_DIR / f"stated_{template.name}_{short}"
 
 
-def save_ratings(
+def save_stated(
     template: PromptTemplate,
     client: OpenAICompatibleClient,
     scores: list[TaskScore],
 ) -> Path:
-    """Save ratings to disk. Returns the directory path."""
-    run_dir = _rating_dir(template, client)
+    """Save stated preference scores to disk. Returns the directory path."""
+    run_dir = _stated_dir(template, client)
 
     data = [{"task_id": s.task.id, "score": s.score} for s in scores]
     save_yaml(data, run_dir / "measurements.yaml")
@@ -30,15 +30,15 @@ def save_ratings(
     return run_dir
 
 
-def load_ratings(
+def load_stated(
     template: PromptTemplate,
     client: OpenAICompatibleClient,
 ) -> list[dict]:
-    """Load ratings from disk. Returns list of {task_id, score} dicts."""
-    run_dir = _rating_dir(template, client)
+    """Load stated preference scores from disk. Returns list of {task_id, score} dicts."""
+    run_dir = _stated_dir(template, client)
     return load_yaml(run_dir / "measurements.yaml")
 
 
-def ratings_exist(template: PromptTemplate, client: OpenAICompatibleClient) -> bool:
-    run_dir = _rating_dir(template, client)
+def stated_exist(template: PromptTemplate, client: OpenAICompatibleClient) -> bool:
+    run_dir = _stated_dir(template, client)
     return (run_dir / "measurements.yaml").exists()

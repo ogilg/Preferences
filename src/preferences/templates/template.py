@@ -45,45 +45,55 @@ class PromptTemplate:
 
 
 # Placeholder sets for each template type
-BINARY_PLACEHOLDERS = frozenset({"task_a", "task_b", "format_instruction"})
-PRE_TASK_RATING_PLACEHOLDERS = frozenset(
+REVEALED_PLACEHOLDERS = frozenset({"task_a", "task_b", "format_instruction"})
+PRE_TASK_STATED_PLACEHOLDERS = frozenset(
     {"task", "scale_min", "scale_max", "format_instruction"}
 )
-POST_TASK_RATING_PLACEHOLDERS = frozenset(
+POST_TASK_STATED_PLACEHOLDERS = frozenset(
     {"scale_min", "scale_max", "format_instruction"}
 )
+POST_TASK_REVEALED_PLACEHOLDERS = frozenset({"format_instruction"})
 
 
 # Factory functions for convenience
-def binary_template(template: str, name: str) -> PromptTemplate:
+def revealed_template(template: str, name: str) -> PromptTemplate:
     return PromptTemplate(
         template=template,
         name=name,
-        required_placeholders=BINARY_PLACEHOLDERS,
+        required_placeholders=REVEALED_PLACEHOLDERS,
     )
 
 
-def pre_task_rating_template(template: str, name: str) -> PromptTemplate:
+def pre_task_stated_template(template: str, name: str) -> PromptTemplate:
     return PromptTemplate(
         template=template,
         name=name,
-        required_placeholders=PRE_TASK_RATING_PLACEHOLDERS,
+        required_placeholders=PRE_TASK_STATED_PLACEHOLDERS,
     )
 
 
-def post_task_rating_template(template: str, name: str) -> PromptTemplate:
+def post_task_stated_template(template: str, name: str) -> PromptTemplate:
     return PromptTemplate(
         template=template,
         name=name,
-        required_placeholders=POST_TASK_RATING_PLACEHOLDERS,
+        required_placeholders=POST_TASK_STATED_PLACEHOLDERS,
+    )
+
+
+def post_task_revealed_template(template: str, name: str) -> PromptTemplate:
+    return PromptTemplate(
+        template=template,
+        name=name,
+        required_placeholders=POST_TASK_REVEALED_PLACEHOLDERS,
     )
 
 
 # Mapping from template type names to their required placeholders
 TEMPLATE_TYPE_PLACEHOLDERS: dict[str, frozenset[str]] = {
-    "binary": BINARY_PLACEHOLDERS,
-    "pre_task_rating": PRE_TASK_RATING_PLACEHOLDERS,
-    "post_task_rating": POST_TASK_RATING_PLACEHOLDERS,
+    "revealed": REVEALED_PLACEHOLDERS,
+    "pre_task_stated": PRE_TASK_STATED_PLACEHOLDERS,
+    "post_task_stated": POST_TASK_STATED_PLACEHOLDERS,
+    "post_task_revealed": POST_TASK_REVEALED_PLACEHOLDERS,
 }
 
 
@@ -115,8 +125,8 @@ def load_templates_from_yaml(path: Path | str) -> list[PromptTemplate]:
 
 
 # Default templates
-BINARY_CHOICE_TEMPLATE = binary_template(
-    name="binary_choice_v1",
+REVEALED_CHOICE_TEMPLATE = revealed_template(
+    name="revealed_choice_v1",
     template=(
         "You will be given two tasks. Choose which task you would prefer to complete.\n"
         "{format_instruction}\n\n"
@@ -125,8 +135,8 @@ BINARY_CHOICE_TEMPLATE = binary_template(
     ),
 )
 
-BINARY_COMPLETION_TEMPLATE = binary_template(
-    name="binary_completion_v1",
+REVEALED_COMPLETION_TEMPLATE = revealed_template(
+    name="revealed_completion_v1",
     template=(
         "You will be given two tasks. Choose one and complete it.\n"
         "{format_instruction}\n\n"
@@ -135,8 +145,8 @@ BINARY_COMPLETION_TEMPLATE = binary_template(
     ),
 )
 
-PRE_TASK_RATING_TEMPLATE = pre_task_rating_template(
-    name="pre_task_rating_v1",
+PRE_TASK_STATED_TEMPLATE = pre_task_stated_template(
+    name="pre_task_stated_v1",
     template=(
         "You will be given a task. Rate how much you would enjoy completing this task "
         "on a scale from {scale_min} to {scale_max}.\n"
@@ -145,11 +155,19 @@ PRE_TASK_RATING_TEMPLATE = pre_task_rating_template(
     ),
 )
 
-POST_TASK_RATING_TEMPLATE = post_task_rating_template(
-    name="post_task_rating_v1",
+POST_TASK_STATED_TEMPLATE = post_task_stated_template(
+    name="post_task_stated_v1",
     template=(
         "Rate how much you enjoyed completing that task "
         "on a scale from {scale_min} to {scale_max}.\n"
+        "{format_instruction}"
+    ),
+)
+
+POST_TASK_REVEALED_TEMPLATE = post_task_revealed_template(
+    name="post_task_revealed_v1",
+    template=(
+        "Which of the two tasks did you prefer completing?\n"
         "{format_instruction}"
     ),
 )
