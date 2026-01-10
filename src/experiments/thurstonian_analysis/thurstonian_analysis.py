@@ -28,7 +28,7 @@ from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
-from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
+from src.experiments.thurstonian_analysis.config import N_TASKS, RESULTS_DIR
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "thurstonian"
 

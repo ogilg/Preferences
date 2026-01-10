@@ -1,4 +1,4 @@
-from thurstonian_analysis.al_comparison import (
+from src.experiments.thurstonian_analysis.al_comparison import (
     ComparisonMetrics,
     ConvergenceTrajectory,
     ComparisonResult,
@@ -6,7 +6,7 @@ from thurstonian_analysis.al_comparison import (
     run_synthetic_comparison,
     run_real_data_comparison,
 )
-from thurstonian_analysis.plots import (
+from src.experiments.thurstonian_analysis.plots import (
     plot_utility_scatter,
     plot_convergence_curve,
     plot_held_out_comparison,

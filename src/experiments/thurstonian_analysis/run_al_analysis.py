@@ -8,14 +8,14 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from thurstonian_analysis import (
+from src.experiments.thurstonian_analysis import (
     run_synthetic_comparison,
     run_real_data_comparison,
     plot_utility_scatter,
     plot_convergence_curve,
     plot_held_out_comparison,
 )
-from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
+from src.experiments.thurstonian_analysis.config import N_TASKS, RESULTS_DIR
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 

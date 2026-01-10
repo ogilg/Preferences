@@ -22,8 +22,8 @@ from src.preferences.ranking.thurstonian import (
 from src.task_data import Task, OriginDataset
 
 
-from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
-from thurstonian_analysis.utils import split_wins, eval_held_out_nll, eval_held_out_accuracy
+from src.experiments.thurstonian_analysis.config import N_TASKS, RESULTS_DIR
+from src.experiments.thurstonian_analysis.utils import split_wins, eval_held_out_nll, eval_held_out_accuracy
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "bounds_sensitivity"
 

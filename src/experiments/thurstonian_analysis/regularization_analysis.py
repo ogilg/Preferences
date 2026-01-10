@@ -26,8 +26,8 @@ from src.preferences.ranking.active_learning import generate_d_regular_pairs
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement
 
-from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
-from thurstonian_analysis.utils import split_wins
+from src.experiments.thurstonian_analysis.config import N_TASKS, RESULTS_DIR
+from src.experiments.thurstonian_analysis.utils import split_wins
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
 
