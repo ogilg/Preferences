@@ -1,25 +1,22 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
 
 from src.types import (
     MeasurementResponse,
     BinaryPreferenceMeasurement,
     TaskScore,
+    PreferencePrompt,
 )
-
-if TYPE_CHECKING:
-    from src.types import PreferencePrompt
 
 
 class Measurer(ABC):
     @abstractmethod
-    def parse(self, response_text: str, prompt: "PreferencePrompt") -> MeasurementResponse: ...
+    def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse: ...
 
 
 class BinaryPreferenceMeasurer(Measurer):
-    def parse(self, response_text: str, prompt: "PreferencePrompt") -> MeasurementResponse:
+    def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse:
         choice = prompt.response_format.parse(response_text)
         result = BinaryPreferenceMeasurement(
             task_a=prompt.tasks[0],
@@ -31,7 +28,7 @@ class BinaryPreferenceMeasurer(Measurer):
 
 
 class TaskScoreMeasurer(Measurer):
-    def parse(self, response_text: str, prompt: "PreferencePrompt") -> MeasurementResponse:
+    def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse:
         score = prompt.response_format.parse(response_text)
         result = TaskScore(
             task=prompt.tasks[0],

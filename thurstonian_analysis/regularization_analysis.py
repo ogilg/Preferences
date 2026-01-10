@@ -14,24 +14,20 @@ from __future__ import annotations
 import argparse
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
 from scipy.special import ndtr
 
-from src.preferences.ranking.thurstonian import PairwiseData, fit_thurstonian, _preference_prob
+from src.preferences.ranking.thurstonian import PairwiseData, fit_thurstonian, _preference_prob, ThurstonianResult
 from src.preferences.ranking.utils import simulate_pairwise_comparisons
 from src.preferences.ranking.active_learning import generate_d_regular_pairs
 from src.task_data import Task, OriginDataset
+from src.types import BinaryPreferenceMeasurement
 
 from thurstonian_analysis.config import N_TASKS, RESULTS_DIR
 from thurstonian_analysis.utils import split_wins
-
-if TYPE_CHECKING:
-    from src.preferences.ranking.thurstonian import ThurstonianResult
-    from src.types import BinaryPreferenceMeasurement
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
 

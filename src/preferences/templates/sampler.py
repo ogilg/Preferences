@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from collections import Counter
 from itertools import product
-from typing import TYPE_CHECKING
 
 import numpy as np
 
-if TYPE_CHECKING:
-    from src.preferences.templates.template import PromptTemplate
+from src.preferences.templates.template import PromptTemplate
 
 
 TEMPLATE_DIMENSIONS = [
@@ -21,7 +19,7 @@ TEMPLATE_DIMENSIONS = [
 ]
 
 
-SampledConfig = tuple["PromptTemplate", str, str, int]  # (template, response_format, order, seed)
+SampledConfig = tuple[PromptTemplate, str, str, int]  # (template, response_format, order, seed)
 
 
 def sample_configurations_lhs(

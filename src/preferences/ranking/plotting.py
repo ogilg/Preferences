@@ -2,12 +2,8 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 import numpy as np
-
-if TYPE_CHECKING:
-    from matplotlib.axes import Axes
+from matplotlib.axes import Axes
 
 
 def normalize_mu_for_comparison(
@@ -33,7 +29,7 @@ def normalize_mu_for_comparison(
 
 
 def plot_mu_recovery(
-    ax: "Axes",
+    ax: Axes,
     true_mu: np.ndarray,
     fitted_mu: np.ndarray,
     label: str | None = None,
@@ -66,7 +62,7 @@ def plot_mu_recovery(
 
 
 def plot_sigma_recovery(
-    ax: "Axes",
+    ax: Axes,
     true_sigma: np.ndarray,
     fitted_sigma: np.ndarray,
     true_mu: np.ndarray,
@@ -94,7 +90,7 @@ def plot_sigma_recovery(
 
 
 def plot_ranking_matrix(
-    ax: "Axes",
+    ax: Axes,
     rank_corr: np.ndarray,
     labels: list[str],
     title: str = "Spearman Rank Correlation",
