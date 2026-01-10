@@ -8,7 +8,7 @@ import yaml
 
 from src.models import GenerateRequest, OpenAICompatibleClient
 from src.preferences.templates.generator_config import (
-    RATING_TASK_LABELS,
+    STATED_TASK_LABELS,
     TASK_LABELS,
     GeneratorConfig,
     load_config_from_yaml,
@@ -22,13 +22,13 @@ class TemplateVariant(TypedDict):
     language: str
     situating_context: str  # "none" or context key
     instruction_position: str
-    task_label_names: str | None  # None for rating templates
+    task_label_names: str | None  # None for stated templates
     xml_tags: bool
     typos: bool
     punctuation: str
 
 
-def build_binary_template(
+def build_revealed_template(
     instruction: str,
     instruction_position: str,
     task_label_names: str,
@@ -37,10 +37,11 @@ def build_binary_template(
 ) -> str:
     if xml_tags:
         tasks_block = "<task_a>\n{task_a}\n</task_a>\n<task_b>\n{task_b}\n</task_b>"
+        instructions_block = f"<instructions>\n{instruction}\n{{format_instruction}}\n</instructions>"
     else:
         label_a, label_b = TASK_LABELS[(task_label_names, language)]
         tasks_block = f"{label_a}:\n{{task_a}}\n{label_b}:\n{{task_b}}"
-    instructions_block = f"{instruction}\n{{format_instruction}}"
+        instructions_block = f"{instruction}\n{{format_instruction}}"
 
     if instruction_position == "before":
         return f"{instructions_block}\n\n{tasks_block}"
@@ -48,18 +49,19 @@ def build_binary_template(
         return f"{tasks_block}\n\n{instructions_block}"
 
 
-def build_rating_template(
+def build_stated_template(
     instruction: str,
     instruction_position: str,
     language: str,
     xml_tags: bool,
 ) -> str:
-    task_label = RATING_TASK_LABELS[language]
+    task_label = STATED_TASK_LABELS[language]
     if xml_tags:
         task_block = f"<task>\n{task_label}\n{{task}}\n</task>"
+        instructions_block = f"<instructions>\n{instruction}\n{{format_instruction}}\n</instructions>"
     else:
         task_block = f"{task_label}\n{{task}}"
-    instructions_block = f"{instruction}\n{{format_instruction}}"
+        instructions_block = f"{instruction}\n{{format_instruction}}"
 
     if instruction_position == "before":
         return f"{instructions_block}\n\n{task_block}"
@@ -125,12 +127,12 @@ def _translate_instructions(
 def _build_transform_prompt(instruction: str, typos: bool, punctuation: str) -> list[Message]:
     parts = []
     if typos:
-        parts.append("Add 2-3 realistic typos (swapped letters, missing letters, etc)")
+        parts.append("add 2-3 realistic typos (swapped letters, missing letters, etc)")
     if punctuation == "minimal":
-        parts.append("Remove trailing punctuation")
+        parts.append("remove the trailing punctuation")
 
     task = " and ".join(parts)
-    return [{"role": "user", "content": f"{task}. Output ONLY the result.\n\n{instruction}"}]
+    return [{"role": "user", "content": f"Take this text and {task}. Output ONLY the modified text, nothing else.\n\nText: {instruction}"}]
 
 
 def _apply_transformations(
@@ -168,7 +170,6 @@ def _build_variants(
 ) -> list[TemplateVariant]:
     variants: list[TemplateVariant] = []
     context_items = [("none", None), *config.situating_contexts.items()]
-    is_rating = config.template_type in ("pre_task_rating", "post_task_rating")
     phrasing_indices = range(1, len(config.base_templates) + 1)
 
     for lang, phrasing_idx, instruction_pos, use_typos, punct in product(
@@ -178,19 +179,23 @@ def _build_variants(
         if instruction is None:
             continue  # translation or typo generation failed
 
-        if is_rating:
-            _add_rating_variants(
+        if config.template_type in ("pre_task_stated", "post_task_stated"):
+            _add_stated_variants(
                 variants, instruction, instruction_pos, lang, phrasing_idx, use_typos, punct, context_items, config
             )
-        else:
-            _add_binary_variants(
+        elif config.template_type == "post_task_revealed":
+            _add_post_task_revealed_variants(
+                variants, instruction, lang, phrasing_idx, use_typos, punct, context_items, config
+            )
+        else:  # "revealed"
+            _add_revealed_variants(
                 variants, instruction, instruction_pos, lang, phrasing_idx, use_typos, punct, context_items, config
             )
 
     return variants
 
 
-def _add_rating_variants(
+def _add_stated_variants(
     variants: list[TemplateVariant],
     instruction: str,
     instruction_pos: str,
@@ -202,7 +207,7 @@ def _add_rating_variants(
     config: GeneratorConfig,
 ) -> None:
     for use_xml in config.xml_tags:
-        template = build_rating_template(instruction, instruction_pos, lang, use_xml)
+        template = build_stated_template(instruction, instruction_pos, lang, use_xml)
 
         for context_key, context_text in context_items:
             final_template = add_situating_context(template, context_text)
@@ -219,7 +224,40 @@ def _add_rating_variants(
             })
 
 
-def _add_binary_variants(
+def _add_post_task_revealed_variants(
+    variants: list[TemplateVariant],
+    instruction: str,
+    lang: str,
+    phrasing_idx: int,
+    typos: bool,
+    punctuation: str,
+    context_items: list[tuple[str, str | None]],
+    config: GeneratorConfig,
+) -> None:
+    """Post-task revealed templates only have format_instruction placeholder."""
+    for use_xml in config.xml_tags:
+        # Simple template: instruction + format_instruction
+        if use_xml:
+            template = f"<instructions>\n{instruction}\n{{format_instruction}}\n</instructions>"
+        else:
+            template = f"{instruction}\n{{format_instruction}}"
+
+        for context_key, context_text in context_items:
+            final_template = add_situating_context(template, context_text)
+            variants.append({
+                "template": final_template,
+                "phrasing": phrasing_idx,
+                "language": lang,
+                "situating_context": context_key,
+                "instruction_position": "before",  # not applicable but needed for schema
+                "task_label_names": None,
+                "xml_tags": use_xml,
+                "typos": typos,
+                "punctuation": punctuation,
+            })
+
+
+def _add_revealed_variants(
     variants: list[TemplateVariant],
     instruction: str,
     instruction_pos: str,
@@ -232,7 +270,7 @@ def _add_binary_variants(
 ) -> None:
     for use_xml in config.xml_tags:
         for label_style in config.task_label_names:
-            template = build_binary_template(
+            template = build_revealed_template(
                 instruction, instruction_pos, label_style, lang, use_xml
             )
 
