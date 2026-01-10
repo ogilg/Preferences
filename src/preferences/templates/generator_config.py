@@ -44,6 +44,7 @@ class GeneratorConfig(BaseModel):
     xml_tags: list[bool] = [False]
     typos: list[bool] = [False]
     punctuation: list[Literal["standard", "minimal"]] = ["standard"]
+    scales: list[tuple[int, int]] = []
 
     output_dir: Path = Path(".")
 

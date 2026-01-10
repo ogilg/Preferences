@@ -3,6 +3,7 @@ base_templates:
   - Choose which task you would prefer to complete.
   - Which of the two tasks would you rather complete?
   - Select your preferred task from the options.
+  - Indicate which task appeals to you more.
 
 template_type: revealed
 name_prefix: revealed_choice

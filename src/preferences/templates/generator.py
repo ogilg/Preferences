@@ -26,6 +26,7 @@ class TemplateVariant(TypedDict):
     xml_tags: bool
     typos: bool
     punctuation: str
+    scale: str | None  # e.g. "1-5", None for revealed templates
 
 
 def build_revealed_template(
@@ -206,22 +207,26 @@ def _add_stated_variants(
     context_items: list[tuple[str, str | None]],
     config: GeneratorConfig,
 ) -> None:
+    scales = config.scales if config.scales else [(1, 10)]  # default scale
     for use_xml in config.xml_tags:
-        template = build_stated_template(instruction, instruction_pos, lang, use_xml)
+        for scale_min, scale_max in scales:
+            scaled_instruction = instruction.replace("{scale_min}", str(scale_min)).replace("{scale_max}", str(scale_max))
+            template = build_stated_template(scaled_instruction, instruction_pos, lang, use_xml)
 
-        for context_key, context_text in context_items:
-            final_template = add_situating_context(template, context_text)
-            variants.append({
-                "template": final_template,
-                "phrasing": phrasing_idx,
-                "language": lang,
-                "situating_context": context_key,
-                "instruction_position": instruction_pos,
-                "task_label_names": None,
-                "xml_tags": use_xml,
-                "typos": typos,
-                "punctuation": punctuation,
-            })
+            for context_key, context_text in context_items:
+                final_template = add_situating_context(template, context_text)
+                variants.append({
+                    "template": final_template,
+                    "phrasing": phrasing_idx,
+                    "language": lang,
+                    "situating_context": context_key,
+                    "instruction_position": instruction_pos,
+                    "task_label_names": None,
+                    "xml_tags": use_xml,
+                    "typos": typos,
+                    "punctuation": punctuation,
+                    "scale": f"{scale_min}-{scale_max}",
+                })
 
 
 def _add_post_task_revealed_variants(
@@ -254,6 +259,7 @@ def _add_post_task_revealed_variants(
                 "xml_tags": use_xml,
                 "typos": typos,
                 "punctuation": punctuation,
+                "scale": None,
             })
 
 
@@ -286,6 +292,7 @@ def _add_revealed_variants(
                     "xml_tags": use_xml,
                     "typos": typos,
                     "punctuation": punctuation,
+                    "scale": None,
                 })
 
 
@@ -308,6 +315,8 @@ def _to_output_format(
             tags.append(f"task_label_names:{variant['task_label_names']}")
         tags.append(f"typos:{variant['typos']}")
         tags.append(f"punctuation:{variant['punctuation']}")
+        if variant["scale"] is not None:
+            tags.append(f"scale:{variant['scale']}")
 
         output.append(
             {
