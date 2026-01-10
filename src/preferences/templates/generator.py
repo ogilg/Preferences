@@ -24,6 +24,8 @@ class TemplateVariant(TypedDict):
     instruction_position: str
     task_label_names: str | None  # None for rating templates
     xml_tags: bool
+    typos: bool
+    punctuation: str
 
 
 def build_binary_template(
@@ -120,8 +122,48 @@ def _translate_instructions(
     return instructions
 
 
-def _build_variants(
+def _build_transform_prompt(instruction: str, typos: bool, punctuation: str) -> list[Message]:
+    parts = []
+    if typos:
+        parts.append("Add 2-3 realistic typos (swapped letters, missing letters, etc)")
+    if punctuation == "minimal":
+        parts.append("Remove trailing punctuation")
+
+    task = " and ".join(parts)
+    return [{"role": "user", "content": f"{task}. Output ONLY the result.\n\n{instruction}"}]
+
+
+def _apply_transformations(
     instructions: dict[tuple[int, str], str],
+    config: GeneratorConfig,
+    client: OpenAICompatibleClient,
+    max_concurrent: int,
+) -> dict[tuple[int, str, bool, str], str]:
+    transformed: dict[tuple[int, str, bool, str], str] = {}
+    requests_meta: list[tuple[int, str, bool, str]] = []
+    requests: list[GenerateRequest] = []
+
+    for (phrasing_idx, lang), instruction in instructions.items():
+        for typos in config.typos:
+            for punct in config.punctuation:
+                if not typos and punct == "standard":
+                    transformed[(phrasing_idx, lang, typos, punct)] = instruction
+                else:
+                    messages = _build_transform_prompt(instruction, typos, punct)
+                    requests.append(GenerateRequest(messages=messages, temperature=0.7))
+                    requests_meta.append((phrasing_idx, lang, typos, punct))
+
+    if requests:
+        results = client.generate_batch(requests, max_concurrent=max_concurrent)
+        for meta, result in zip(requests_meta, results):
+            if result.ok:
+                transformed[meta] = result.unwrap().strip()
+
+    return transformed
+
+
+def _build_variants(
+    instructions: dict[tuple[int, str, bool, str], str],
     config: GeneratorConfig,
 ) -> list[TemplateVariant]:
     variants: list[TemplateVariant] = []
@@ -129,20 +171,20 @@ def _build_variants(
     is_rating = config.template_type in ("pre_task_rating", "post_task_rating")
     phrasing_indices = range(1, len(config.base_templates) + 1)
 
-    for lang, phrasing_idx, instruction_pos in product(
-        config.languages, phrasing_indices, config.instruction_positions
+    for lang, phrasing_idx, instruction_pos, use_typos, punct in product(
+        config.languages, phrasing_indices, config.instruction_positions, config.typos, config.punctuation
     ):
-        instruction = instructions.get((phrasing_idx, lang))
+        instruction = instructions.get((phrasing_idx, lang, use_typos, punct))
         if instruction is None:
-            continue  # translation failed
+            continue  # translation or typo generation failed
 
         if is_rating:
             _add_rating_variants(
-                variants, instruction, instruction_pos, lang, phrasing_idx, context_items, config
+                variants, instruction, instruction_pos, lang, phrasing_idx, use_typos, punct, context_items, config
             )
         else:
             _add_binary_variants(
-                variants, instruction, instruction_pos, lang, phrasing_idx, context_items, config
+                variants, instruction, instruction_pos, lang, phrasing_idx, use_typos, punct, context_items, config
             )
 
     return variants
@@ -154,6 +196,8 @@ def _add_rating_variants(
     instruction_pos: str,
     lang: str,
     phrasing_idx: int,
+    typos: bool,
+    punctuation: str,
     context_items: list[tuple[str, str | None]],
     config: GeneratorConfig,
 ) -> None:
@@ -170,6 +214,8 @@ def _add_rating_variants(
                 "instruction_position": instruction_pos,
                 "task_label_names": None,
                 "xml_tags": use_xml,
+                "typos": typos,
+                "punctuation": punctuation,
             })
 
 
@@ -179,6 +225,8 @@ def _add_binary_variants(
     instruction_pos: str,
     lang: str,
     phrasing_idx: int,
+    typos: bool,
+    punctuation: str,
     context_items: list[tuple[str, str | None]],
     config: GeneratorConfig,
 ) -> None:
@@ -198,6 +246,8 @@ def _add_binary_variants(
                     "instruction_position": instruction_pos,
                     "task_label_names": label_style,
                     "xml_tags": use_xml,
+                    "typos": typos,
+                    "punctuation": punctuation,
                 })
 
 
@@ -218,6 +268,8 @@ def _to_output_format(
         ]
         if variant["task_label_names"] is not None:
             tags.append(f"task_label_names:{variant['task_label_names']}")
+        tags.append(f"typos:{variant['typos']}")
+        tags.append(f"punctuation:{variant['punctuation']}")
 
         output.append(
             {
@@ -239,6 +291,7 @@ def generate_templates(
 ) -> list[dict]:
     instructions = _build_instructions(config)
     instructions = _translate_instructions(instructions, config, client, max_concurrent)
+    instructions = _apply_transformations(instructions, config, client, max_concurrent)
     variants = _build_variants(instructions, config)
     return _to_output_format(variants, config)
 

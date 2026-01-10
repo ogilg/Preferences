@@ -10,6 +10,9 @@ version: v1
 output_dir: src/preferences/templates/data
 
 languages: [en, fr, es]
-situating_contexts: {}
+situating_contexts:
+  experiment: "This is an experiment measuring your preferences over tasks."
 instruction_positions: [before, after]
 task_label_names: []
+typos: [false, true]
+punctuation: [standard, minimal]

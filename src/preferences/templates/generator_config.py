@@ -42,6 +42,8 @@ class GeneratorConfig(BaseModel):
     instruction_positions: list[Literal["before", "after"]] = ["before"]
     task_label_names: list[Literal["letter", "number", "ordinal"]] = ["letter"]
     xml_tags: list[bool] = [False]
+    typos: list[bool] = [False]
+    punctuation: list[Literal["standard", "minimal"]] = ["standard"]
 
     output_dir: Path = Path(".")
 
