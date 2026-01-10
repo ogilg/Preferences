@@ -219,24 +219,19 @@ def fit_thurstonian(
     bounds = [mu_bounds] * (n - 1) + [log_sigma_bounds] * n
 
     history = OptimizationHistory()
-
-    def objective(params: np.ndarray) -> float:
-        nll = _neg_log_likelihood(params, data.wins, n)
-        if lambda_sigma > 0:
-            sigma = np.exp(params[n - 1:])
-            nll += lambda_sigma * float(np.sum(sigma ** 2))
-        return nll
+    objective_and_grad = _make_objective_and_grad(data.wins, n, lambda_sigma)
 
     def callback(params: np.ndarray) -> None:
         loss = _neg_log_likelihood(params, data.wins, n)
-        sigma_max = float(np.exp(params[n - 1:]).max())
+        sigma_max = float(np.exp(params[n - 1 :]).max())
         history.loss.append(loss)
         history.sigma_max.append(sigma_max)
 
     result = minimize(
-        objective,
+        objective_and_grad,
         params_init,
         method="L-BFGS-B",
+        jac=True,
         bounds=bounds,
         callback=callback,
         options={
