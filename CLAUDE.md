@@ -29,6 +29,7 @@ uv pip install -e ".[dev]"
 - Only write comments that actually add a non-obvious piece of information. Same goes for docstrings.
 - You should always consider whether there exists a tool that can do what you want to do.
 - Avoid dosctrings that do not add important information. If you do use docstrings keep them concise.
+- No backwards compatibility concerns — remove obsolete code/fields rather than deprecating.
 
 ## Current Focus
 

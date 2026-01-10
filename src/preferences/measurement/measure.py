@@ -67,6 +67,7 @@ def measure_stated(
     builder: "PromptBuilder",
     temperature: float = 1.0,
     max_concurrent: int = 10,
+    seed: int | None = None,
 ) -> MeasurementBatch[TaskScore]:
     prompts = [builder.build(task) for task in tasks]
 
@@ -75,6 +76,7 @@ def measure_stated(
             messages=prompt.messages,
             temperature=temperature,
             tools=prompt.response_format.tools,
+            seed=seed,
         )
         for prompt in prompts
     ]

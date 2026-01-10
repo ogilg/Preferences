@@ -9,7 +9,7 @@ from functools import partial
 
 import numpy as np
 
-from src.preferences.measurement import measure_with_template
+from src.preferences.measurement import measure_revealed_with_template
 from src.preferences.ranking import compute_pair_agreement, save_thurstonian, _config_hash
 from src.preferences.ranking.active_learning import (
     ActiveLearningState,
@@ -18,7 +18,11 @@ from src.preferences.ranking.active_learning import (
     check_convergence,
 )
 from src.preferences.storage import MeasurementCache, save_yaml
-from src.preferences.templates.sampler import sample_configurations_lhs, print_sampling_balance
+from src.preferences.templates.sampler import (
+    SampledConfiguration,
+    sample_configurations_lhs,
+    print_sampling_balance,
+)
 from src.experiments.experiment_utils import (
     parse_config_path,
     setup_experiment,
@@ -39,25 +43,25 @@ def main():
 
     if config.template_sampling == "lhs" and config.n_template_samples:
         configurations = sample_configurations_lhs(
-            ctx.templates, config.response_formats, orders, config.generation_seeds,
-            n_samples=config.n_template_samples, seed=al.seed,
+            ctx.templates, config.response_formats, config.generation_seeds,
+            n_samples=config.n_template_samples, orders=orders, seed=al.seed,
         )
         print(f"LHS sampling: {config.n_template_samples} configurations")
         print_sampling_balance(configurations)
     else:
         configurations = [
-            (t, rf, o, s)
+            SampledConfiguration(t, rf, s, o)
             for t in ctx.templates for rf in config.response_formats
-            for o in orders for s in config.generation_seeds
+            for s in config.generation_seeds for o in orders
         ]
 
     print(f"Tasks: {len(ctx.tasks)}, Configs: {len(configurations)}, Initial degree: {al.initial_degree}")
 
-    for template, response_format, order, gen_seed in configurations:
-        print(f"\n{'='*60}\n{template.name}/{response_format}/{order}/seed{gen_seed}\n{'='*60}")
+    for cfg in configurations:
+        print(f"\n{'='*60}\n{cfg.template.name}/{cfg.response_format}/{cfg.order}/seed{cfg.seed}\n{'='*60}")
 
-        cache = MeasurementCache(template, ctx.client, response_format, order, seed=gen_seed)
-        run_config = {"n_tasks": config.n_tasks, "seed": al.seed, "generation_seed": gen_seed}
+        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
+        run_config = {"n_tasks": config.n_tasks, "seed": al.seed, "generation_seed": cfg.seed}
         config_hash = _config_hash(run_config)
         base_path = cache.cache_dir / "thurstonian_active_learning"
 
@@ -69,7 +73,7 @@ def main():
         rank_correlations = []
 
         pairs_to_query = generate_d_regular_pairs(ctx.tasks, al.initial_degree, rng)
-        if order == "reversed":
+        if cfg.order == "reversed":
             pairs_to_query = flip_pairs(pairs_to_query)
 
         for iteration in range(al.max_iterations):
@@ -79,12 +83,12 @@ def main():
             print(f"\nIteration {iteration + 1}: {len(pairs_to_query)} pairs")
 
             measure_fn = partial(
-                measure_with_template, template, ctx.client,
+                measure_revealed_with_template, cfg.template, ctx.client,
                 temperature=config.temperature, max_concurrent=ctx.max_concurrent,
-                response_format_name=response_format, seed=gen_seed,
+                response_format_name=cfg.response_format, seed=cfg.seed,
             )
             batch, cache_hits, _ = cache.get_or_measure(
-                pairs_to_query * config.samples_per_pair, measure_fn, ctx.task_lookup
+                pairs_to_query * config.n_samples, measure_fn, ctx.task_lookup
             )
             print(f"  {len(batch.successes)} measurements ({cache_hits} cached)")
 
@@ -104,7 +108,7 @@ def main():
                 state, batch_size=al.batch_size,
                 p_threshold=al.p_threshold, q_threshold=al.q_threshold, rng=rng,
             )
-            if order == "reversed":
+            if cfg.order == "reversed":
                 pairs_to_query = flip_pairs(pairs_to_query)
 
         final_converged, _ = check_convergence(state, al.convergence_threshold)
@@ -114,7 +118,7 @@ def main():
         save_yaml({
             "n_tasks": config.n_tasks,
             "seed": al.seed,
-            "generation_seed": gen_seed,
+            "generation_seed": cfg.seed,
             "converged": bool(final_converged),
             "n_iterations": state.iteration,
             "unique_pairs_queried": len(state.sampled_pairs),

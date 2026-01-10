@@ -37,24 +37,20 @@ class ExperimentConfig(BaseModel):
 
     templates: Path
 
-    # Binary-specific
-    samples_per_pair: int = 5
-    fitting: FittingConfig = Field(default_factory=FittingConfig)
+    n_samples: int = 5  # Samples per pair (revealed) or per task (stated)
 
-    # Rating-specific
-    samples_per_task: int = 10
-    scale_min: int = 1
-    scale_max: int = 10
+    # Revealed-specific
+    fitting: FittingConfig = Field(default_factory=FittingConfig)
+    include_reverse_order: bool = False
 
     # Active learning specific
-    active_learning: ActiveLearningConfig = Field(default_factory=ActiveLearningConfig)
+    active_learning: ActiveLearningConfig | None = None
 
-    # Sensitivity dimensions (binary and active_learning)
+    # Sensitivity dimensions
     response_formats: list[Literal["regex", "tool_use", "xml"]] = ["regex"]
-    include_reverse_order: bool = False
     generation_seeds: list[int] = [0]
 
-    # Template sampling (to avoid combinatorial explosion)
+    # Template sampling
     template_sampling: Literal["all", "lhs"] = "all"
     n_template_samples: int | None = None
 
