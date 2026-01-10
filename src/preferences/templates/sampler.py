@@ -16,16 +16,22 @@ TEMPLATE_DIMENSIONS = [
     "task_label_names",
     "situating_context",
     "language",
+    "xml_tags",
+    "seed",
 ]
+
+
+SampledConfig = tuple["PromptTemplate", str, str, int]  # (template, response_format, order, seed)
 
 
 def sample_configurations_lhs(
     templates: list[PromptTemplate],
     response_formats: list[str],
     orders: list[str],
+    generation_seeds: list[int],
     n_samples: int,
     seed: int | None = None,
-) -> list[tuple[PromptTemplate, str, str]]:
+) -> list[SampledConfig]:
     """
     Sample n configurations using Latin Hypercube Sampling.
 
@@ -35,17 +41,20 @@ def sample_configurations_lhs(
     rng = np.random.default_rng(seed)
 
     # Build full hypercube
-    all_configs = list(product(templates, response_formats, orders))
+    all_configs: list[SampledConfig] = list(
+        product(templates, response_formats, orders, generation_seeds)
+    )
 
     if n_samples >= len(all_configs):
         return all_configs
 
     # Extract dimension values for each config
-    def get_dims(config: tuple[PromptTemplate, str, str]) -> dict[str, str]:
-        template, resp_fmt, order = config
+    def get_dims(config: SampledConfig) -> dict[str, str]:
+        template, resp_fmt, order, gen_seed = config
         dims = template.tags_dict.copy()
         dims["response_format"] = resp_fmt
         dims["order"] = order
+        dims["seed"] = str(gen_seed)
         return dims
 
     config_dims = [get_dims(c) for c in all_configs]
@@ -116,16 +125,15 @@ def sample_configurations_lhs(
     return [all_configs[i] for i in selected_indices]
 
 
-def print_sampling_balance(
-    configs: list[tuple[PromptTemplate, str, str]],
-) -> None:
+def print_sampling_balance(configs: list[SampledConfig]) -> None:
     """Print dimension value counts for debugging."""
     counts: dict[str, Counter[str]] = {}
 
-    for template, resp_fmt, order in configs:
+    for template, resp_fmt, order, gen_seed in configs:
         dims = template.tags_dict.copy()
         dims["response_format"] = resp_fmt
         dims["order"] = order
+        dims["seed"] = str(gen_seed)
 
         for key, val in dims.items():
             if key not in counts:

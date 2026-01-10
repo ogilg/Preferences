@@ -68,6 +68,7 @@ def run_active_learning(config_path: Path) -> None:
             templates,
             config.response_formats,
             orders,
+            config.generation_seeds,
             n_samples=config.n_template_samples,
             seed=al_config.seed,
         )
@@ -75,10 +76,11 @@ def run_active_learning(config_path: Path) -> None:
         print_sampling_balance(configurations)
     else:
         configurations = [
-            (t, rf, o)
+            (t, rf, o, s)
             for t in templates
             for rf in config.response_formats
             for o in orders
+            for s in config.generation_seeds
         ]
 
     print(f"\nActive Learning Configuration:")
@@ -92,18 +94,19 @@ def run_active_learning(config_path: Path) -> None:
     print(f"  Thurstonian max_iter: {max_iter}")
     print(f"  Configurations: {len(configurations)}")
 
-    for template, response_format, order in configurations:
-        run_label = f"{template.name}/{response_format}/{order}"
+    for template, response_format, order, gen_seed in configurations:
+        run_label = f"{template.name}/{response_format}/{order}/seed{gen_seed}"
         print(f"\n{'='*60}")
         print(f"Run: {run_label}")
         print(f"{'='*60}")
 
-        cache = MeasurementCache(template, client, response_format, order)
+        cache = MeasurementCache(template, client, response_format, order, seed=gen_seed)
 
         # Prepare config and compute hash
         current_config = {
             "n_tasks": config.n_tasks,
             "seed": al_config.seed,
+            "generation_seed": gen_seed,
         }
         config_hash = _config_hash(current_config)
 
@@ -145,6 +148,7 @@ def run_active_learning(config_path: Path) -> None:
                 temperature=config.temperature,
                 max_concurrent=max_concurrent,
                 response_format_name=response_format,
+                seed=gen_seed,
             )
             batch, cache_hits, api_queries = cache.get_or_measure(
                 replicated_pairs, measure_fn, task_lookup
@@ -230,6 +234,7 @@ def run_active_learning(config_path: Path) -> None:
             "config_file": str(config_path),
             "n_tasks": config.n_tasks,
             "seed": al_config.seed,
+            "generation_seed": gen_seed,
             "converged": bool(final_converged),
             "n_iterations": state.iteration,
             "unique_pairs_queried": len(state.sampled_pairs),

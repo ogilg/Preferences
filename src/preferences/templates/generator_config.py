@@ -41,6 +41,7 @@ class GeneratorConfig(BaseModel):
     situating_contexts: dict[str, str] = {}
     instruction_positions: list[Literal["before", "after"]] = ["before"]
     task_label_names: list[Literal["letter", "number", "ordinal"]] = ["letter"]
+    xml_tags: list[bool] = [False]
 
     output_dir: Path = Path(".")
 
@@ -64,6 +65,13 @@ class GeneratorConfig(BaseModel):
         ]
         if missing:
             raise ValueError(f"Missing task label translations in TASK_LABELS: {missing}")
+
+        if True in self.xml_tags and not is_rating:
+            if self.task_label_names != ["letter"]:
+                raise ValueError(
+                    "xml_tags=True requires task_label_names=['letter'] "
+                    "(XML tags replace custom labels)"
+                )
         return self
 
 

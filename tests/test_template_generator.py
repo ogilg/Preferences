@@ -30,6 +30,7 @@ class TestBuildBinaryTemplate:
             instruction_position="before",
             task_label_names="letter",
             language="en",
+            xml_tags=False,
         )
 
         assert "Task A:" in template
@@ -45,6 +46,7 @@ class TestBuildBinaryTemplate:
             instruction_position="before",
             task_label_names="number",
             language="en",
+            xml_tags=False,
         )
 
         assert "Task 1:" in template
@@ -59,6 +61,7 @@ class TestBuildBinaryTemplate:
             instruction_position="before",
             task_label_names="ordinal",
             language="en",
+            xml_tags=False,
         )
 
         assert "First task:" in template
@@ -71,6 +74,7 @@ class TestBuildBinaryTemplate:
             instruction_position="before",
             task_label_names="letter",
             language="en",
+            xml_tags=False,
         )
 
         format_pos = template.find("{format_instruction}")
@@ -84,11 +88,31 @@ class TestBuildBinaryTemplate:
             instruction_position="after",
             task_label_names="letter",
             language="en",
+            xml_tags=False,
         )
 
         format_pos = template.find("{format_instruction}")
         task_b_pos = template.find("{task_b}")
         assert format_pos > task_b_pos
+
+    def test_builds_template_with_xml_tags(self):
+        """Should build template with XML tags wrapping tasks."""
+        template = build_binary_template(
+            instruction="Choose which task you prefer.",
+            instruction_position="before",
+            task_label_names="letter",
+            language="en",
+            xml_tags=True,
+        )
+
+        assert "<task_a>" in template
+        assert "</task_a>" in template
+        assert "<task_b>" in template
+        assert "</task_b>" in template
+        assert "{task_a}" in template
+        assert "{task_b}" in template
+        assert "Task A:" not in template
+        assert "Task B:" not in template
 
 
 class TestAddSituatingContext:

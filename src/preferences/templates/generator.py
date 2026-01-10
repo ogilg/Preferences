@@ -23,6 +23,7 @@ class TemplateVariant(TypedDict):
     situating_context: str  # "none" or context key
     instruction_position: str
     task_label_names: str | None  # None for rating templates
+    xml_tags: bool
 
 
 def build_binary_template(
@@ -30,10 +31,13 @@ def build_binary_template(
     instruction_position: str,
     task_label_names: str,
     language: str,
+    xml_tags: bool,
 ) -> str:
-    label_a, label_b = TASK_LABELS[(task_label_names, language)]
-
-    tasks_block = f"{label_a}:\n{{task_a}}\n{label_b}:\n{{task_b}}"
+    if xml_tags:
+        tasks_block = "<task_a>\n{task_a}\n</task_a>\n<task_b>\n{task_b}\n</task_b>"
+    else:
+        label_a, label_b = TASK_LABELS[(task_label_names, language)]
+        tasks_block = f"{label_a}:\n{{task_a}}\n{label_b}:\n{{task_b}}"
     instructions_block = f"{instruction}\n{{format_instruction}}"
 
     if instruction_position == "before":
@@ -46,9 +50,13 @@ def build_rating_template(
     instruction: str,
     instruction_position: str,
     language: str,
+    xml_tags: bool,
 ) -> str:
     task_label = RATING_TASK_LABELS[language]
-    task_block = f"{task_label}\n{{task}}"
+    if xml_tags:
+        task_block = f"<task>\n{task_label}\n{{task}}\n</task>"
+    else:
+        task_block = f"{task_label}\n{{task}}"
     instructions_block = f"{instruction}\n{{format_instruction}}"
 
     if instruction_position == "before":
@@ -130,7 +138,7 @@ def _build_variants(
 
         if is_rating:
             _add_rating_variants(
-                variants, instruction, instruction_pos, lang, phrasing_idx, context_items
+                variants, instruction, instruction_pos, lang, phrasing_idx, context_items, config
             )
         else:
             _add_binary_variants(
@@ -147,19 +155,22 @@ def _add_rating_variants(
     lang: str,
     phrasing_idx: int,
     context_items: list[tuple[str, str | None]],
+    config: GeneratorConfig,
 ) -> None:
-    template = build_rating_template(instruction, instruction_pos, lang)
+    for use_xml in config.xml_tags:
+        template = build_rating_template(instruction, instruction_pos, lang, use_xml)
 
-    for context_key, context_text in context_items:
-        final_template = add_situating_context(template, context_text)
-        variants.append({
-            "template": final_template,
-            "phrasing": phrasing_idx,
-            "language": lang,
-            "situating_context": context_key,
-            "instruction_position": instruction_pos,
-            "task_label_names": None,
-        })
+        for context_key, context_text in context_items:
+            final_template = add_situating_context(template, context_text)
+            variants.append({
+                "template": final_template,
+                "phrasing": phrasing_idx,
+                "language": lang,
+                "situating_context": context_key,
+                "instruction_position": instruction_pos,
+                "task_label_names": None,
+                "xml_tags": use_xml,
+            })
 
 
 def _add_binary_variants(
@@ -171,19 +182,23 @@ def _add_binary_variants(
     context_items: list[tuple[str, str | None]],
     config: GeneratorConfig,
 ) -> None:
-    for label_style in config.task_label_names:
-        template = build_binary_template(instruction, instruction_pos, label_style, lang)
+    for use_xml in config.xml_tags:
+        for label_style in config.task_label_names:
+            template = build_binary_template(
+                instruction, instruction_pos, label_style, lang, use_xml
+            )
 
-        for context_key, context_text in context_items:
-            final_template = add_situating_context(template, context_text)
-            variants.append({
-                "template": final_template,
-                "phrasing": phrasing_idx,
-                "language": lang,
-                "situating_context": context_key,
-                "instruction_position": instruction_pos,
-                "task_label_names": label_style,
-            })
+            for context_key, context_text in context_items:
+                final_template = add_situating_context(template, context_text)
+                variants.append({
+                    "template": final_template,
+                    "phrasing": phrasing_idx,
+                    "language": lang,
+                    "situating_context": context_key,
+                    "instruction_position": instruction_pos,
+                    "task_label_names": label_style,
+                    "xml_tags": use_xml,
+                })
 
 
 def _to_output_format(
@@ -199,6 +214,7 @@ def _to_output_format(
             f"phrasing:{variant['phrasing']}",
             f"situating_context:{variant['situating_context']}",
             f"instruction_position:{variant['instruction_position']}",
+            f"xml_tags:{variant['xml_tags']}",
         ]
         if variant["task_label_names"] is not None:
             tags.append(f"task_label_names:{variant['task_label_names']}")

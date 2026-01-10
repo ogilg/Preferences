@@ -21,10 +21,10 @@ OrderName = Literal["canonical", "reversed"]
 
 
 class MeasurementCache:
-    """Cache for binary preference measurements keyed by (template, model, format, order).
+    """Cache for binary preference measurements keyed by (template, model, format, order, seed).
 
     Storage format:
-        measurements/{template_name}_{model_short}_{response_format}_{order}/
+        measurements/{template_name}_{model_short}_{response_format}_{order}[_seed{N}]/
             config.yaml        # template + model metadata + sensitivity tags
             measurements.yaml  # [{task_a, task_b, choice}, ...]
 
@@ -37,15 +37,18 @@ class MeasurementCache:
         client: OpenAICompatibleClient,
         response_format: ResponseFormatName = "regex",
         order: OrderName = "canonical",
+        seed: int | None = None,
         results_dir: Path = MEASUREMENTS_DIR,
     ):
         self.template = template
         self.client = client
         self.response_format = response_format
         self.order = order
+        self.seed = seed
         self.model_short = model_short_name(client.canonical_model_name)
         self.results_dir = Path(results_dir)
-        self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}_{response_format}_{order}"
+        seed_suffix = f"_seed{seed}" if seed is not None else ""
+        self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}_{response_format}_{order}{seed_suffix}"
         self._measurements_path = self.cache_dir / "measurements.yaml"
         self._config_path = self.cache_dir / "config.yaml"
 
@@ -101,13 +104,17 @@ class MeasurementCache:
         if self._config_path.exists():
             return
 
+        tags = {
+            **self.template.tags_dict,
+            "response_format": self.response_format,
+            "order": self.order,
+        }
+        if self.seed is not None:
+            tags["seed"] = str(self.seed)
+
         config = {
             "template_name": self.template.name,
-            "template_tags": {
-                **self.template.tags_dict,
-                "response_format": self.response_format,
-                "order": self.order,
-            },
+            "template_tags": tags,
             "model": self.client.model_name,
             "model_short": self.model_short,
         }

@@ -52,6 +52,7 @@ class ExperimentConfig(BaseModel):
     # Sensitivity dimensions (binary and active_learning)
     response_formats: list[Literal["regex", "tool_use"]] = ["regex"]
     include_reverse_order: bool = False
+    generation_seeds: list[int] = [0]
 
     # Template sampling (to avoid combinatorial explosion)
     template_sampling: Literal["all", "lhs"] = "all"

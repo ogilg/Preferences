@@ -25,6 +25,7 @@ class GenerateRequest:
     messages: list[Message]
     temperature: float = 1.0
     tools: list[dict[str, Any]] | None = None
+    seed: int | None = None
 
 
 @dataclass
@@ -194,6 +195,8 @@ class OpenAICompatibleClient(ABC):
             if request.tools is not None:
                 kwargs["tools"] = request.tools
                 kwargs["tool_choice"] = "auto"
+            if request.seed is not None:
+                kwargs["seed"] = request.seed
 
             async with semaphore:
                 try:

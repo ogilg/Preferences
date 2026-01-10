@@ -21,6 +21,7 @@ def measure_binary_preferences(
     builder: "PromptBuilder",
     temperature: float = 1.0,
     max_concurrent: int = 10,
+    seed: int | None = None,
 ) -> MeasurementBatch[BinaryPreferenceMeasurement]:
     prompts = [builder.build(task_a, task_b) for task_a, task_b in pairs]
 
@@ -29,6 +30,7 @@ def measure_binary_preferences(
             messages=prompt.messages,
             temperature=temperature,
             tools=prompt.response_format.tools,
+            seed=seed,
         )
         for prompt in prompts
     ]
@@ -110,6 +112,7 @@ def measure_with_template(
     temperature: float = 1.0,
     max_concurrent: int = 10,
     response_format_name: ResponseFormatName = "regex",
+    seed: int | None = None,
 ) -> MeasurementBatch[BinaryPreferenceMeasurement]:
     tags = template.tags_dict
     task_label_names = tags["task_label_names"]
@@ -130,4 +133,5 @@ def measure_with_template(
         builder=builder,
         temperature=temperature,
         max_concurrent=max_concurrent,
+        seed=seed,
     )
