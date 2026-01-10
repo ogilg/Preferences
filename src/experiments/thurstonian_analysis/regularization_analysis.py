@@ -35,7 +35,7 @@ LAMBDAS = np.logspace(-2, np.log10(150), 5)
 
 
 def make_task(id: str) -> Task:
-    return Task(prompt=f"Task {id}", origin=OriginDataset.ALPACA, id=id, metadata={})
+    return Task(prompt=f"Task {id}", origin=OriginDataset.SYNTHETIC, id=id, metadata={})
 
 
 def load_all_datasets() -> list[tuple[str, PairwiseData]]:

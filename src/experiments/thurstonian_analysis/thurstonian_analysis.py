@@ -34,7 +34,7 @@ OUTPUT_DIR = Path(__file__).parent / "plots" / "thurstonian"
 
 
 def make_task(id: str) -> Task:
-    return Task(prompt=f"Task {id}", origin=OriginDataset.ALPACA, id=id, metadata={})
+    return Task(prompt=f"Task {id}", origin=OriginDataset.SYNTHETIC, id=id, metadata={})
 
 
 def load_all_datasets() -> list[tuple[str, PairwiseData]]:

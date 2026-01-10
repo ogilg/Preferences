@@ -62,7 +62,7 @@ SIGMA_INIT_VALUES = [0.1, 0.5, 1.0, 2.0, 5.0]
 
 
 def make_task(id: str) -> Task:
-    return Task(prompt=f"Task {id}", origin=OriginDataset.ALPACA, id=id, metadata={})
+    return Task(prompt=f"Task {id}", origin=OriginDataset.SYNTHETIC, id=id, metadata={})
 
 
 def fit_with_mu_bounds(data: PairwiseData, config: MuBoundsConfig):

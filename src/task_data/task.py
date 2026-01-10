@@ -6,6 +6,7 @@ class OriginDataset(Enum):
     WILDCHAT = auto()
     ALPACA = auto()
     MATH = auto()
+    SYNTHETIC = auto()
 
 
 @dataclass
