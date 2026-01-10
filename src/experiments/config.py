@@ -50,7 +50,7 @@ class ExperimentConfig(BaseModel):
     active_learning: ActiveLearningConfig = Field(default_factory=ActiveLearningConfig)
 
     # Sensitivity dimensions (binary and active_learning)
-    response_formats: list[Literal["regex", "tool_use"]] = ["regex"]
+    response_formats: list[Literal["regex", "tool_use", "xml"]] = ["regex"]
     include_reverse_order: bool = False
     generation_seeds: list[int] = [0]
 

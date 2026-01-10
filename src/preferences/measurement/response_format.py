@@ -299,7 +299,7 @@ class ToolUseRatingFormat(BaseRatingFormat):
 
 # --- Factory Functions ---
 
-ResponseFormatName = Literal["regex", "tool_use"]
+ResponseFormatName = Literal["regex", "tool_use", "xml"]
 
 
 def make_choice_format(
@@ -311,4 +311,6 @@ def make_choice_format(
         return RegexChoiceFormat(task_a_label, task_b_label)
     elif name == "tool_use":
         return ToolUseChoiceFormat(task_a_label, task_b_label)
+    elif name == "xml":
+        return XMLChoiceFormat(task_a_label, task_b_label)
     raise ValueError(f"Unknown choice format: {name}")
