@@ -15,3 +15,12 @@ DEFAULT_SCALE_MAX = 10
 # Using descriptive tag names that clearly indicate their purpose
 DEFAULT_CHOICE_TAG = "choice"
 DEFAULT_RATING_TAG = "rating"
+
+# Qualitative rating scale
+QUALITATIVE_VALUES = ("good", "neutral", "bad")
+QUALITATIVE_TO_NUMERIC = {
+    "good": 1,
+    "neutral": 0,
+    "bad": -1,
+}
+NUMERIC_TO_QUALITATIVE = {v: k for k, v in QUALITATIVE_TO_NUMERIC.items()}

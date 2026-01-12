@@ -5,8 +5,15 @@ Usage: python -m src.experiments.run_stated_measurement <config.yaml>
 
 from __future__ import annotations
 
+from typing import Literal
+
 from src.preferences.templates import PreTaskStatedPromptBuilder, PromptTemplate
-from src.preferences.measurement import measure_stated, StatedScoreMeasurer, RegexRatingFormat
+from src.preferences.measurement import (
+    measure_stated,
+    StatedScoreMeasurer,
+    RATING_FORMATS,
+    QUALITATIVE_FORMATS,
+)
 from src.preferences.storage import save_stated, stated_exist
 from src.preferences.templates.sampler import (
     SampledConfiguration,
@@ -17,8 +24,10 @@ from src.experiments.sensitivity_experiments.stated_correlation import compute_m
 from src.experiments.experiment_utils import parse_config_path, setup_experiment
 
 
-def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int]:
+def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int] | Literal["qualitative"]:
     scale_str = template.tags_dict["scale"]
+    if scale_str == "qualitative":
+        return "qualitative"
     min_str, max_str = scale_str.split("-")
     return int(min_str), int(max_str)
 
@@ -52,8 +61,14 @@ def main():
 
         print(f"\nMeasuring {cfg.template.name} (seed={cfg.seed})...")
 
-        scale_min, scale_max = parse_scale_from_template(cfg.template)
-        response_format = RegexRatingFormat(scale_min=scale_min, scale_max=scale_max)
+        scale_info = parse_scale_from_template(cfg.template)
+
+        if scale_info == "qualitative":
+            response_format = QUALITATIVE_FORMATS[cfg.response_format]()
+        else:
+            scale_min, scale_max = scale_info
+            response_format = RATING_FORMATS[cfg.response_format](scale_min, scale_max)
+
         builder = PreTaskStatedPromptBuilder(
             measurer=StatedScoreMeasurer(),
             response_format=response_format,

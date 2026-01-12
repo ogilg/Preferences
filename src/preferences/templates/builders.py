@@ -77,12 +77,16 @@ class PreTaskStatedPromptBuilder(PromptBuilder):
         self.template = template
 
     def build(self, task: Task) -> PreferencePrompt:
-        content = self.template.format(
-            format_instruction=self.response_format.format_instruction(),
-            task=task.prompt,
-            scale_min=str(self.response_format.scale_min),
-            scale_max=str(self.response_format.scale_max),
-        )
+        format_args = {
+            "format_instruction": self.response_format.format_instruction(),
+            "task": task.prompt,
+        }
+
+        if "scale_min" in self.template.required_placeholders:
+            format_args["scale_min"] = str(self.response_format.scale_min)
+            format_args["scale_max"] = str(self.response_format.scale_max)
+
+        content = self.template.format(**format_args)
         messages: list[Message] = [{"role": "user", "content": content}]
         return PreferencePrompt(
             messages=messages,

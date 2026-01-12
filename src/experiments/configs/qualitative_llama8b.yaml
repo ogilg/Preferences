@@ -1,0 +1,20 @@
+# Run with: python -m src.experiments.run_stated_measurement src/experiments/configs/qualitative_llama8b.yaml
+
+preference_mode: stated
+
+model: llama-3.1-8b
+temperature: 1.0
+
+n_tasks: 500
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+
+templates: src/preferences/templates/data/qualitative_v1.yaml
+
+n_samples: 5
+
+response_formats: ["regex", "xml", "tool_use"]
+
+generation_seeds: [0, 1, 2]

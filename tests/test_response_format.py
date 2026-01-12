@@ -8,6 +8,9 @@ from src.preferences.measurement.response_format import (
     XMLRatingFormat,
     ToolUseChoiceFormat,
     ToolUseRatingFormat,
+    RegexQualitativeFormat,
+    XMLQualitativeFormat,
+    ToolUseQualitativeFormat,
 )
 
 
@@ -567,3 +570,118 @@ class TestBaseClassTools:
         fmt = ToolUseRatingFormat()
         assert fmt.tools is not None
         assert len(fmt.tools) > 0
+
+
+class TestQualitativeFormats:
+    """Tests for qualitative rating formats."""
+
+    def test_regex_qualitative_good(self):
+        fmt = RegexQualitativeFormat()
+        assert fmt.parse("good") == 1.0
+        assert fmt.parse("This task is good") == 1.0
+        assert fmt.parse("GOOD") == 1.0
+
+    def test_regex_qualitative_neutral(self):
+        fmt = RegexQualitativeFormat()
+        assert fmt.parse("neutral") == 0.0
+        assert fmt.parse("I feel neutral about this") == 0.0
+
+    def test_regex_qualitative_bad(self):
+        fmt = RegexQualitativeFormat()
+        assert fmt.parse("bad") == -1.0
+        assert fmt.parse("This is bad.") == -1.0
+
+    def test_regex_qualitative_case_insensitive(self):
+        fmt = RegexQualitativeFormat()
+        assert fmt.parse("Good") == 1.0
+        assert fmt.parse("NEUTRAL") == 0.0
+        assert fmt.parse("Bad") == -1.0
+
+    def test_regex_qualitative_invalid(self):
+        fmt = RegexQualitativeFormat()
+        with pytest.raises(ValueError, match="No qualitative value found"):
+            fmt.parse("excellent")
+
+    def test_regex_qualitative_word_boundaries(self):
+        fmt = RegexQualitativeFormat()
+        # Should not match "good" in "goodbye"
+        with pytest.raises(ValueError):
+            fmt.parse("goodbye")
+
+    def test_xml_qualitative_good(self):
+        fmt = XMLQualitativeFormat()
+        assert fmt.parse("<rating>good</rating>") == 1.0
+
+    def test_xml_qualitative_neutral(self):
+        fmt = XMLQualitativeFormat()
+        assert fmt.parse("<rating>neutral</rating>") == 0.0
+
+    def test_xml_qualitative_bad(self):
+        fmt = XMLQualitativeFormat()
+        assert fmt.parse("<rating>bad</rating>") == -1.0
+
+    def test_xml_qualitative_case_insensitive(self):
+        fmt = XMLQualitativeFormat()
+        assert fmt.parse("<rating>Good</rating>") == 1.0
+        assert fmt.parse("<rating>NEUTRAL</rating>") == 0.0
+        assert fmt.parse("<rating>Bad</rating>") == -1.0
+
+    def test_xml_qualitative_with_whitespace(self):
+        fmt = XMLQualitativeFormat()
+        assert fmt.parse("<rating>  good  </rating>") == 1.0
+
+    def test_xml_qualitative_invalid(self):
+        fmt = XMLQualitativeFormat()
+        with pytest.raises(ValueError, match="No valid qualitative value"):
+            fmt.parse("<rating>excellent</rating>")
+
+    def test_xml_qualitative_custom_tag(self):
+        fmt = XMLQualitativeFormat(tag="score")
+        assert fmt.parse("<score>good</score>") == 1.0
+
+    def test_tool_use_qualitative_good(self):
+        fmt = ToolUseQualitativeFormat()
+        assert fmt.parse('{"rating": "good"}') == 1.0
+
+    def test_tool_use_qualitative_neutral(self):
+        fmt = ToolUseQualitativeFormat()
+        assert fmt.parse('{"rating": "neutral"}') == 0.0
+
+    def test_tool_use_qualitative_bad(self):
+        fmt = ToolUseQualitativeFormat()
+        assert fmt.parse('{"rating": "bad"}') == -1.0
+
+    def test_tool_use_qualitative_case_insensitive(self):
+        fmt = ToolUseQualitativeFormat()
+        assert fmt.parse('{"rating": "Good"}') == 1.0
+        assert fmt.parse('{"rating": "NEUTRAL"}') == 0.0
+
+    def test_tool_use_qualitative_invalid(self):
+        fmt = ToolUseQualitativeFormat()
+        with pytest.raises(ValueError, match="Invalid tool call"):
+            fmt.parse('{"rating": "excellent"}')
+
+    def test_tool_use_qualitative_has_tools(self):
+        fmt = ToolUseQualitativeFormat()
+        assert fmt.tools is not None
+        assert len(fmt.tools) > 0
+        # Check that the tool has an enum constraint
+        tool = fmt.tools[0]
+        rating_prop = tool["function"]["parameters"]["properties"]["rating"]
+        assert "enum" in rating_prop
+        assert set(rating_prop["enum"]) == {"good", "neutral", "bad"}
+
+    def test_qualitative_format_instructions(self):
+        regex_fmt = RegexQualitativeFormat()
+        xml_fmt = XMLQualitativeFormat()
+        tool_fmt = ToolUseQualitativeFormat()
+
+        assert "good" in regex_fmt.format_instruction()
+        assert "neutral" in regex_fmt.format_instruction()
+        assert "bad" in regex_fmt.format_instruction()
+
+        assert "<rating>" in xml_fmt.format_instruction()
+        assert "neutral" in xml_fmt.format_instruction()
+
+        assert "submit_rating" in tool_fmt.format_instruction()
+        assert "good" in tool_fmt.format_instruction()

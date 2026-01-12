@@ -8,6 +8,8 @@ from src.constants import (
     DEFAULT_SCALE_MAX,
     DEFAULT_CHOICE_TAG,
     DEFAULT_RATING_TAG,
+    QUALITATIVE_VALUES,
+    QUALITATIVE_TO_NUMERIC,
 )
 
 
@@ -297,20 +299,100 @@ class ToolUseRatingFormat(BaseRatingFormat):
         return None
 
 
-# --- Factory Functions ---
+# --- Qualitative Rating Formats ---
+
+
+class BaseQualitativeFormat(ABC):
+    """Base class for qualitative rating formats that return numeric values."""
+    tools: list[dict[str, Any]] | None = None
+
+    @abstractmethod
+    def format_instruction(self) -> str: ...
+
+    @abstractmethod
+    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]: ...
+
+    def parse(self, response: str) -> float:
+        """Parse response and return numeric value."""
+        qualitative = self._extract_qualitative(response)
+        return float(QUALITATIVE_TO_NUMERIC[qualitative])
+
+
+class RegexQualitativeFormat(BaseQualitativeFormat):
+    def format_instruction(self) -> str:
+        return "Respond with only 'good', 'neutral', or 'bad'."
+
+    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]:
+        response_lower = response.lower()
+        for value in QUALITATIVE_VALUES:
+            if re.search(rf'\b{value}\b', response_lower):
+                return value
+        raise ValueError(f"No qualitative value found in response: {response}")
+
+
+class XMLQualitativeFormat(BaseQualitativeFormat):
+    def __init__(self, tag: str = DEFAULT_RATING_TAG):
+        self.tag = tag
+
+    def format_instruction(self) -> str:
+        return f"Respond with your rating in <{self.tag}> tags. Example: <{self.tag}>neutral</{self.tag}>"
+
+    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]:
+        pattern = rf"<{self.tag}>\s*(\w+)\s*</{self.tag}>"
+        match = re.search(pattern, response, re.IGNORECASE)
+        if match:
+            value = match.group(1).lower()
+            if value in QUALITATIVE_VALUES:
+                return value
+        raise ValueError(f"No valid qualitative value in XML tags: {response}")
+
+
+class ToolUseQualitativeFormat(BaseQualitativeFormat):
+    @property
+    def tools(self) -> list[dict[str, Any]]:
+        return [_make_tool(
+            name="submit_rating",
+            description="Submit your qualitative rating for the task.",
+            properties={
+                "rating": {
+                    "type": "string",
+                    "enum": list(QUALITATIVE_VALUES),
+                    "description": "Your rating: good, neutral, or bad.",
+                }
+            },
+            required=["rating"],
+        )]
+
+    def format_instruction(self) -> str:
+        return "Use the submit_rating tool with one of: good, neutral, bad."
+
+    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]:
+        args = _parse_tool_json(response)
+        if args and "rating" in args:
+            rating = args["rating"]
+            if isinstance(rating, str) and rating.lower() in QUALITATIVE_VALUES:
+                return rating.lower()
+        raise ValueError(f"Invalid tool call arguments: {response}")
+
+
+# --- Format Registries ---
 
 ResponseFormatName = Literal["regex", "tool_use", "xml"]
 
+CHOICE_FORMATS: dict[ResponseFormatName, type[BaseChoiceFormat]] = {
+    "regex": RegexChoiceFormat,
+    "tool_use": ToolUseChoiceFormat,
+    "xml": XMLChoiceFormat,
+}
 
-def make_choice_format(
-    name: ResponseFormatName,
-    task_a_label: str,
-    task_b_label: str,
-) -> BaseChoiceFormat:
-    if name == "regex":
-        return RegexChoiceFormat(task_a_label, task_b_label)
-    elif name == "tool_use":
-        return ToolUseChoiceFormat(task_a_label, task_b_label)
-    elif name == "xml":
-        return XMLChoiceFormat(task_a_label, task_b_label)
-    raise ValueError(f"Unknown choice format: {name}")
+RATING_FORMATS: dict[ResponseFormatName, type[BaseRatingFormat]] = {
+    "regex": RegexRatingFormat,
+    "tool_use": ToolUseRatingFormat,
+    "xml": XMLRatingFormat,
+}
+
+QUALITATIVE_FORMATS: dict[ResponseFormatName, type[BaseQualitativeFormat]] = {
+    "regex": RegexQualitativeFormat,
+    "tool_use": ToolUseQualitativeFormat,
+    "xml": XMLQualitativeFormat,
+}

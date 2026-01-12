@@ -7,7 +7,7 @@ from src.models import GenerateRequest, Model
 from src.task_data import Task
 from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferencePrompt, PreferenceType, TaskScore
 from src.preferences.measurement.measurer import RevealedPreferenceMeasurer
-from src.preferences.measurement.response_format import ResponseFormatName, make_choice_format
+from src.preferences.measurement.response_format import ResponseFormatName, CHOICE_FORMATS
 from src.preferences.templates.builders import RevealedPromptBuilder, PostTaskRevealedPromptBuilder, PromptBuilder
 from src.preferences.templates.generator_config import TASK_LABELS
 from src.preferences.templates.template import PromptTemplate
@@ -121,7 +121,7 @@ def measure_revealed_with_template(
     language = tags["language"]
     task_a_label, task_b_label = TASK_LABELS[(task_label_names, language)]
 
-    response_format = make_choice_format(response_format_name, task_a_label, task_b_label)
+    response_format = CHOICE_FORMATS[response_format_name](task_a_label, task_b_label)
     builder = RevealedPromptBuilder(
         measurer=RevealedPreferenceMeasurer(),
         preference_type=PreferenceType.PRE_TASK_STATED,

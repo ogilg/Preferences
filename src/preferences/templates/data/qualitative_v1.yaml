@@ -1,0 +1,195 @@
+- id: '001'
+  name: qualitative_001
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:before
+  - scale:qualitative
+  template: |
+    Rate this task as good, neutral, or bad based on how much you would enjoy completing it.
+    {format_instruction}
+
+    Task:
+    {task}
+
+- id: '002'
+  name: qualitative_002
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - scale:qualitative
+  template: |
+    Task:
+    {task}
+
+    Rate this task as good, neutral, or bad based on how much you would enjoy completing it.
+    {format_instruction}
+
+- id: '003'
+  name: qualitative_003
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - scale:qualitative
+  template: |
+    How would you classify this task: good, neutral, or bad?
+    {format_instruction}
+
+    Task:
+    {task}
+
+- id: '004'
+  name: qualitative_004
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - scale:qualitative
+  template: |
+    Task:
+    {task}
+
+    How would you classify this task: good, neutral, or bad?
+    {format_instruction}
+
+- id: '005'
+  name: qualitative_005
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:3
+  - situating_context:none
+  - instruction_position:before
+  - scale:qualitative
+  template: |
+    Evaluate whether this is a good, neutral, or bad task for you to complete.
+    {format_instruction}
+
+    Task:
+    {task}
+
+- id: '006'
+  name: qualitative_006
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:3
+  - situating_context:none
+  - instruction_position:after
+  - scale:qualitative
+  template: |
+    Task:
+    {task}
+
+    Evaluate whether this is a good, neutral, or bad task for you to complete.
+    {format_instruction}
+
+- id: '007'
+  name: qualitative_007
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:1
+  - situating_context:experiment
+  - instruction_position:before
+  - scale:qualitative
+  template: |
+    This is an experiment measuring your preferences across many tasks.
+
+    Rate this task as good, neutral, or bad based on how much you would enjoy completing it.
+    {format_instruction}
+
+    Task:
+    {task}
+
+- id: '008'
+  name: qualitative_008
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:2
+  - situating_context:experiment
+  - instruction_position:before
+  - scale:qualitative
+  template: |
+    This is an experiment measuring your preferences across many tasks.
+
+    How would you classify this task: good, neutral, or bad?
+    {format_instruction}
+
+    Task:
+    {task}
+
+- id: '009'
+  name: qualitative_009
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:4
+  - situating_context:none
+  - instruction_position:before
+  - scale:qualitative
+  template: |
+    Is this a good, neutral, or bad task for you?
+    {format_instruction}
+
+    Task:
+    {task}
+
+- id: '010'
+  name: qualitative_010
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:4
+  - situating_context:none
+  - instruction_position:after
+  - scale:qualitative
+  template: |
+    Task:
+    {task}
+
+    Is this a good, neutral, or bad task for you?
+    {format_instruction}
+
+- id: '011'
+  name: qualitative_011
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:5
+  - situating_context:none
+  - instruction_position:before
+  - scale:qualitative
+  template: |
+    Categorize your interest in this task as good, neutral, or bad.
+    {format_instruction}
+
+    Task:
+    {task}
+
+- id: '012'
+  name: qualitative_012
+  type: pre_task_stated
+  tags:
+  - language:en
+  - phrasing:5
+  - situating_context:none
+  - instruction_position:after
+  - scale:qualitative
+  template: |
+    Task:
+    {task}
+
+    Categorize your interest in this task as good, neutral, or bad.
+    {format_instruction}
