@@ -1,7 +1,11 @@
 from .base import Model, ConfigurableMockModel
 from .ndif import NDIFModel
 from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
-from .transformer_lens import TransformerLensModel
+
+try:
+    from .transformer_lens import TransformerLensModel
+except ImportError:
+    TransformerLensModel = None  # type: ignore[assignment,misc]
 
 # === INFERENCE PROVIDER CONFIGURATION ===
 # Change this to switch providers globally

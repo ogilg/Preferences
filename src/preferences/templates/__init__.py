@@ -1,3 +1,7 @@
+from pathlib import Path
+
+TEMPLATES_DATA_DIR = Path(__file__).parent / "data"
+
 from src.preferences.templates.template import (
     REVEALED_CHOICE_TEMPLATE,
     REVEALED_COMPLETION_TEMPLATE,
@@ -33,6 +37,8 @@ from src.preferences.templates.generator import (
 )
 
 __all__ = [
+    # Paths
+    "TEMPLATES_DATA_DIR",
     # Template
     "REVEALED_CHOICE_TEMPLATE",
     "REVEALED_COMPLETION_TEMPLATE",

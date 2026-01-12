@@ -34,11 +34,8 @@ class TransformerLensModel:
         return layer
 
     def _format_messages(self, messages: list[Message], add_generation_prompt: bool = True) -> str:
-        chat_messages = [
-            {"role": msg["role"], "content": msg["content"]} for msg in messages
-        ]
         return self.tokenizer.apply_chat_template(
-            chat_messages,
+            messages,
             tokenize=False,
             add_generation_prompt=add_generation_prompt,
         )

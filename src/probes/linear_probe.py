@@ -1,54 +1,29 @@
 from __future__ import annotations
 
 import numpy as np
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import classification_report
-
-
-class LinearProbe:
-    def __init__(self, max_iter: int = 1000):
-        self.model = LogisticRegression(max_iter=max_iter, multi_class="multinomial")
-
-    def fit(self, activations: np.ndarray, labels: np.ndarray) -> LinearProbe:
-        self.model.fit(activations, labels)
-        return self
-
-    def predict(self, activations: np.ndarray) -> np.ndarray:
-        return self.model.predict(activations)
-
-    def predict_proba(self, activations: np.ndarray) -> np.ndarray:
-        return self.model.predict_proba(activations)
-
-    def evaluate(self, activations: np.ndarray, labels: np.ndarray) -> dict:
-        y_pred = self.predict(activations)
-        return classification_report(labels, y_pred, output_dict=True)
-
-    @property
-    def coef_(self) -> np.ndarray:
-        return self.model.coef_
-
-    @property
-    def classes_(self) -> np.ndarray:
-        return self.model.classes_
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import cross_val_score
 
 
 def train_and_evaluate(
     activations: np.ndarray,
     labels: np.ndarray,
-    test_size: float = 0.2,
-    random_state: int = 42,
     cv_folds: int = 5,
-) -> tuple[LinearProbe, dict]:
-    X_train, X_test, y_train, y_test = train_test_split(
-        activations, labels, test_size=test_size, random_state=random_state, stratify=labels
-    )
+    alpha: float = 1.0,
+) -> tuple[Ridge, dict]:
+    """Train linear probe with cross-validation on full dataset."""
+    probe = Ridge(alpha=alpha)
 
-    probe = LinearProbe().fit(X_train, y_train)
-    results = probe.evaluate(X_test, y_test)
+    cv_scores = cross_val_score(probe, activations, labels, cv=cv_folds, scoring="r2")
 
-    cv_scores = cross_val_score(probe.model, activations, labels, cv=cv_folds)
-    results["cv_mean"] = float(cv_scores.mean())
-    results["cv_std"] = float(cv_scores.std())
+    probe.fit(activations, labels)
+    y_pred = probe.predict(activations)
+
+    results = {
+        "r2": float(np.corrcoef(labels, y_pred)[0, 1] ** 2),
+        "mse": float(np.mean((labels - y_pred) ** 2)),
+        "cv_r2_mean": float(cv_scores.mean()),
+        "cv_r2_std": float(cv_scores.std()),
+    }
 
     return probe, results

@@ -38,6 +38,7 @@ pythonpath = ["."]
 testpaths = ["tests"]
 markers = [
     "api: tests that make real API calls (requires API key)",
+    "gpu: tests that require a GPU or heavy model loading",
 ]
 
 [tool.ruff]

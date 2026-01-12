@@ -12,12 +12,11 @@ from tqdm import tqdm
 from src.models import TransformerLensModel
 from src.preferences.measurement.measurer import StatedScoreMeasurer
 from src.preferences.measurement.response_format import RegexQualitativeFormat
-from src.preferences.templates.builders import PostTaskStatedPromptBuilder
-from src.preferences.templates.template import load_templates_from_yaml
+from src.preferences.templates import TEMPLATES_DATA_DIR, PostTaskStatedPromptBuilder, load_templates_from_yaml
 from src.probes.data import ProbeDataPoint, save_probe_dataset
 from src.task_data import load_tasks, OriginDataset
 
-TEMPLATES_PATH = Path(__file__).parent.parent.parent / "preferences/templates/data/post_task_qualitative_v1.yaml"
+DEFAULT_TEMPLATE_PATH = TEMPLATES_DATA_DIR / "post_task_qualitative_v1.yaml"
 
 
 def parse_args() -> argparse.Namespace:
@@ -43,7 +42,7 @@ def main() -> None:
     max_new_tokens = config.get("max_new_tokens", 256)
     seed = config.get("seed")
     output_dir = Path(config["output_dir"])
-    template_path = Path(config.get("template", TEMPLATES_PATH))
+    template_path = Path(config.get("template", DEFAULT_TEMPLATE_PATH))
 
     print(f"Loading {n_tasks} tasks from {[o.value for o in task_origins]}...")
     tasks = load_tasks(n=n_tasks, origins=task_origins, seed=seed)
@@ -109,7 +108,7 @@ def main() -> None:
             "task_origins": [o.value for o in task_origins],
             "layers_config": layers,
             "layers_resolved": resolved_layers,
-            "n_model_layers": tl_model.n_layers,
+            "n_model_layers": model.n_layers,
             "template": template.name,
             "temperature": temperature,
             "seed": seed,
