@@ -7,6 +7,8 @@ pairwise comparison outcomes. Uses the model:
     P(i ≻ j) = Φ((μ_i - μ_j) / √(σ_i² + σ_j²))
 
 where Φ is the standard normal CDF.
+
+NOTE: Regularization on σ is not a current focus - using simple L2 on log(σ).
 """
 
 from __future__ import annotations
@@ -179,7 +181,8 @@ def _neg_log_likelihood_autograd(
 
     nll = -anp.sum(wins * anp.log(p))
     if lambda_sigma > 0:
-        nll = nll + lambda_sigma * anp.sum(sigma**2)
+        log_sigma = params[n - 1 :]
+        nll = nll + lambda_sigma * anp.sum(log_sigma**2)
     return nll
 
 
