@@ -17,7 +17,7 @@ load_dotenv()
 from src.models import get_client
 from src.task_data import Task, OriginDataset
 from src.preferences import (
-    RevealedPromptBuilder,
+    PreTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
     PostTaskStatedPromptBuilder,
     RevealedPreferenceMeasurer,
@@ -98,10 +98,8 @@ class TestBinaryChoiceRegexFormat:
 
     def test_parses_choice_successfully(self, client, math_task, creative_task):
         """Should parse A or B from model response."""
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=RegexChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=RegexChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -119,10 +117,8 @@ class TestBinaryChoiceXMLFormat:
 
     def test_parses_choice_from_xml(self, client, math_task, creative_task):
         """Should parse choice from XML tags."""
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=XMLChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=XMLChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -139,10 +135,8 @@ class TestBinaryChoicePreTaskStated:
 
     def test_pre_task_stated_regex_format(self, client, math_task, creative_task):
         """Should parse choice with PRE_TASK_STATED preference type using Regex."""
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=RegexChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=RegexChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -157,10 +151,8 @@ class TestBinaryChoicePreTaskStated:
 
     def test_pre_task_stated_xml_format(self, client, math_task, creative_task):
         """Should parse choice with PRE_TASK_STATED preference type using XML."""
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=XMLChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=XMLChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -180,10 +172,8 @@ class TestBinaryChoiceToolUseFormat:
     def test_tool_call_returns_valid_choice(self, client, math_task, creative_task):
         """Tool call should return valid JSON that parses to a choice."""
         response_format = ToolUseChoiceFormat()
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=response_format,
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=response_format,
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -206,10 +196,8 @@ class TestBinaryChoiceToolUseFormat:
         import json
 
         response_format = ToolUseChoiceFormat()
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=response_format,
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=response_format,
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -232,10 +220,8 @@ class TestBinaryChoiceCompletionFormat:
 
     def test_parses_choice_from_task_completion(self, completion_client, math_task, creative_task):
         """Model completes a task and we parse which one it chose."""
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_REVEALED,
-            response_format=CompletionChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=CompletionChoiceFormat(),
             template=REVEALED_COMPLETION_TEMPLATE,
         )
 
@@ -252,10 +238,8 @@ class TestBinaryChoiceCompletionFormat:
 
     def test_response_contains_task_indicator(self, completion_client, math_task, creative_task):
         """Response should start with Task A: or Task B: indicator."""
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_REVEALED,
-            response_format=CompletionChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=CompletionChoiceFormat(),
             template=REVEALED_COMPLETION_TEMPLATE,
         )
 
@@ -479,10 +463,8 @@ class TestMeasurePreferences:
 
     def test_binary_measurement_pipeline(self, client, math_task, creative_task):
         """Should run binary measurements and return valid results."""
-        binary_builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=RegexChoiceFormat(),
+        binary_builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=RegexChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -572,9 +554,8 @@ class TestMeasurePreferences:
                 XMLChoiceFormat(),
                 ToolUseChoiceFormat(),
             ]:
-                builder = RevealedPromptBuilder(
+                builder = PreTaskRevealedPromptBuilder(
                     measurer=RevealedPreferenceMeasurer(),
-                    preference_type=PreferenceType.PRE_TASK_STATED,
                     response_format=fmt,
                     template=REVEALED_CHOICE_TEMPLATE,
                 )
@@ -585,9 +566,8 @@ class TestMeasurePreferences:
                 model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
                 max_new_tokens=128,
             )
-            completion_builder = RevealedPromptBuilder(
+            completion_builder = PreTaskRevealedPromptBuilder(
                 measurer=RevealedPreferenceMeasurer(),
-                preference_type=PreferenceType.PRE_TASK_REVEALED,
                 response_format=CompletionChoiceFormat(),
                 template=REVEALED_COMPLETION_TEMPLATE,
             )

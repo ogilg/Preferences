@@ -30,20 +30,15 @@ class PromptBuilder(ABC):
     def build(self, task: Task, *args: Any) -> PreferencePrompt: ...
 
 
-class RevealedPromptBuilder(PromptBuilder):
+class PreTaskRevealedPromptBuilder(PromptBuilder):
     def __init__(
         self,
         measurer: RevealedPreferenceMeasurer,
-        preference_type: PreferenceType,
         response_format: ResponseFormat[Literal["a", "b"]],
         template: PromptTemplate,
     ):
-        assert preference_type in {
-            PreferenceType.PRE_TASK_STATED,
-            PreferenceType.PRE_TASK_REVEALED,
-        }
         self.measurer = measurer
-        self.preference_type = preference_type
+        self.preference_type = PreferenceType.PRE_TASK_REVEALED
         self.response_format = response_format
         self.template = template
 

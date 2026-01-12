@@ -17,7 +17,7 @@ from src.preferences.templates.template import (
     pre_task_stated_template,
 )
 from src.preferences.templates.builders import (
-    RevealedPromptBuilder,
+    PreTaskRevealedPromptBuilder,
     PostTaskStatedPromptBuilder,
     PostTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
@@ -51,7 +51,7 @@ __all__ = [
     "post_task_revealed_template",
     "pre_task_stated_template",
     # Builders
-    "RevealedPromptBuilder",
+    "PreTaskRevealedPromptBuilder",
     "PostTaskStatedPromptBuilder",
     "PostTaskRevealedPromptBuilder",
     "PreTaskStatedPromptBuilder",

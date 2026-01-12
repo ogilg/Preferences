@@ -543,9 +543,9 @@ class TestEndToEndIntegration:
         assert "{format_instruction}" in loaded[0].template
 
     def test_generated_templates_work_with_builder(self, tmp_path):
-        """Generated templates should work with RevealedPromptBuilder."""
+        """Generated templates should work with PreTaskRevealedPromptBuilder."""
         from src.preferences.templates import load_templates_from_yaml
-        from src.preferences import RevealedPromptBuilder, RegexChoiceFormat, PreferenceType
+        from src.preferences import PreTaskRevealedPromptBuilder, RegexChoiceFormat, PreferenceType
         from src.preferences.measurement import RevealedPreferenceMeasurer
         from src.task_data import Task, OriginDataset
 
@@ -564,10 +564,8 @@ class TestEndToEndIntegration:
         loaded = load_templates_from_yaml(config.output_path)
 
         # Build a prompt using the generated template
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=RegexChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=RegexChoiceFormat(),
             template=loaded[0],
         )
 

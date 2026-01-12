@@ -11,7 +11,7 @@ import pytest
 from src.task_data import Task, OriginDataset
 from src.types import PreferencePrompt
 from src.preferences import (
-    RevealedPromptBuilder,
+    PreTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
     PostTaskStatedPromptBuilder,
     PromptTemplate,
@@ -184,17 +184,15 @@ def sample_completion_text():
     return "Cherry blossoms fall\nGentle breeze carries petals\nNew life awakens"
 
 
-class TestRevealedPromptBuilder:
+class TestPreTaskRevealedPromptBuilder:
     """Tests for binary choice prompt building."""
 
     def test_build_creates_valid_prompt(self, sample_task_a, sample_task_b):
         """Built prompt should have correct structure and carry all components."""
         measurer = RevealedPreferenceMeasurer()
         response_format = RegexChoiceFormat()
-        builder = RevealedPromptBuilder(
-            measurer=measurer,
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=response_format,
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=measurer,            response_format=response_format,
             template=REVEALED_CHOICE_TEMPLATE,
         )
         prompt = builder.build(sample_task_a, sample_task_b)
@@ -214,10 +212,8 @@ class TestRevealedPromptBuilder:
     def test_template_placeholders_are_filled(self, sample_task_a, sample_task_b):
         """Template placeholders should be filled with task content."""
         template = "Task A: {task_a}\nTask B: {task_b}\n{format_instruction}"
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=RegexChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=RegexChoiceFormat(),
             template=template,
         )
         prompt = builder.build(sample_task_a, sample_task_b)
@@ -373,10 +369,8 @@ class TestXMLResponseFormats:
 
     def test_builder_with_xml_response_format(self, sample_task_a, sample_task_b):
         """Builders should work with custom XML response format."""
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=XMLChoiceFormat(),
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=XMLChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -462,14 +456,12 @@ class TestToolUseChoiceFormat:
             fmt.parse('{"choice": "Task C"}')
 
     def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
-        """RevealedPromptBuilder should work with ToolUseChoiceFormat."""
+        """PreTaskRevealedPromptBuilder should work with ToolUseChoiceFormat."""
         from src.preferences import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_STATED,
-            response_format=fmt,
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=fmt,
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -639,14 +631,12 @@ class TestCompletionChoiceFormat:
             fmt.parse("I chose option A")  # "option A" not "Task A"
 
     def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
-        """RevealedPromptBuilder should work with CompletionChoiceFormat."""
+        """PreTaskRevealedPromptBuilder should work with CompletionChoiceFormat."""
         from src.preferences import CompletionChoiceFormat, REVEALED_COMPLETION_TEMPLATE
 
         fmt = CompletionChoiceFormat()
-        builder = RevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),
-            preference_type=PreferenceType.PRE_TASK_REVEALED,
-            response_format=fmt,
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),            response_format=fmt,
             template=REVEALED_COMPLETION_TEMPLATE,
         )
 

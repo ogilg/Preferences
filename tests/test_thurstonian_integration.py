@@ -8,7 +8,7 @@ load_dotenv()
 from src.models import get_client
 from src.task_data import Task, OriginDataset
 from src.preferences import (
-    RevealedPromptBuilder,
+    PreTaskRevealedPromptBuilder,
     RevealedPreferenceMeasurer,
     RegexChoiceFormat,
     CompletionChoiceFormat,
@@ -42,20 +42,16 @@ def completion_client():
 
 @pytest.fixture
 def binary_builder():
-    return RevealedPromptBuilder(
-        measurer=RevealedPreferenceMeasurer(),
-        preference_type=PreferenceType.PRE_TASK_STATED,
-        response_format=RegexChoiceFormat(),
+    return PreTaskRevealedPromptBuilder(
+        measurer=RevealedPreferenceMeasurer(),        response_format=RegexChoiceFormat(),
         template=REVEALED_CHOICE_TEMPLATE,
     )
 
 
 @pytest.fixture
 def revealed_builder():
-    return RevealedPromptBuilder(
-        measurer=RevealedPreferenceMeasurer(),
-        preference_type=PreferenceType.PRE_TASK_REVEALED,
-        response_format=CompletionChoiceFormat(),
+    return PreTaskRevealedPromptBuilder(
+        measurer=RevealedPreferenceMeasurer(),        response_format=CompletionChoiceFormat(),
         template=REVEALED_COMPLETION_TEMPLATE,
     )
 

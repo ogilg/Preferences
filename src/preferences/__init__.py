@@ -39,7 +39,7 @@ from .templates import (
     POST_TASK_REVEALED_TEMPLATE,
     load_templates_from_yaml,
     PromptBuilder,
-    RevealedPromptBuilder,
+    PreTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
     PostTaskStatedPromptBuilder,
     PostTaskRevealedPromptBuilder,
@@ -98,7 +98,7 @@ __all__ = [
     "load_templates_from_yaml",
     # Prompt Builders
     "PromptBuilder",
-    "RevealedPromptBuilder",
+    "PreTaskRevealedPromptBuilder",
     "PreTaskStatedPromptBuilder",
     "PostTaskStatedPromptBuilder",
     "PostTaskRevealedPromptBuilder",
