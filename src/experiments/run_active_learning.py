@@ -5,11 +5,18 @@ Usage: python -m src.experiments.run_active_learning <config.yaml>
 
 from __future__ import annotations
 
+import math
 from functools import partial
 
 import numpy as np
 
 from src.preferences.measurement import measure_revealed_with_template
+
+
+class MeasurementError(Exception):
+    pass
+
+
 from src.preferences.ranking import compute_pair_agreement, save_thurstonian, _config_hash
 from src.preferences.ranking.active_learning import (
     ActiveLearningState,
@@ -17,7 +24,7 @@ from src.preferences.ranking.active_learning import (
     select_next_pairs,
     check_convergence,
 )
-from src.preferences.storage import MeasurementCache, save_yaml
+from src.preferences.storage import MeasurementCache, save_yaml, load_yaml, reconstruct_measurements
 from src.preferences.templates.sampler import (
     SampledConfiguration,
     sample_configurations_lhs,
@@ -71,12 +78,28 @@ def main():
 
         state = ActiveLearningState(tasks=ctx.tasks)
         rank_correlations = []
+        start_iteration = 0
 
-        pairs_to_query = generate_d_regular_pairs(ctx.tasks, al.initial_degree, rng)
+        # Resume from cached measurements if available
+        task_ids = {t.id for t in ctx.tasks}
+        cached_raw = cache.get_measurements(task_ids)
+        if cached_raw:
+            comparisons = reconstruct_measurements(cached_raw, ctx.task_lookup)
+            state.add_comparisons(comparisons)
+            state.fit(**build_fit_kwargs(config, max_iter))
+            start_iteration = len(state.sampled_pairs) // al.batch_size
+            print(f"Resuming: {len(comparisons)} cached measurements, ~{start_iteration} iterations")
+            pairs_to_query = select_next_pairs(
+                state, batch_size=al.batch_size,
+                p_threshold=al.p_threshold, q_threshold=al.q_threshold, rng=rng,
+            )
+        else:
+            pairs_to_query = generate_d_regular_pairs(ctx.tasks, al.initial_degree, rng)
+
         if cfg.order == "reversed":
             pairs_to_query = flip_pairs(pairs_to_query)
 
-        for iteration in range(al.max_iterations):
+        for iteration in range(start_iteration, al.max_iterations):
             if not pairs_to_query:
                 break
 
@@ -87,16 +110,26 @@ def main():
                 temperature=config.temperature, max_concurrent=ctx.max_concurrent,
                 response_format_name=cfg.response_format, seed=cfg.seed,
             )
-            batch, cache_hits, _ = cache.get_or_measure(
+            batch, cache_hits, api_queries = cache.get_or_measure(
                 pairs_to_query * config.n_samples, measure_fn, ctx.task_lookup
             )
             print(f"  {len(batch.successes)} measurements ({cache_hits} cached)")
+
+            if api_queries > 0 and len(batch.successes) == cache_hits:
+                raise MeasurementError(
+                    f"All {api_queries} API requests failed. Check API key and credits."
+                )
 
             state.add_comparisons(batch.successes)
             state.iteration = iteration + 1
             state.fit(**build_fit_kwargs(config, max_iter))
 
             converged, correlation = check_convergence(state, al.convergence_threshold)
+            if math.isnan(correlation):
+                raise MeasurementError(
+                    f"Correlation is NaN at iteration {iteration + 1}. "
+                    "Model fitting likely failed due to insufficient data."
+                )
             rank_correlations.append(float(correlation))
             print(f"  Converged: {state.current_fit.converged}, correlation: {correlation:.4f}")
 

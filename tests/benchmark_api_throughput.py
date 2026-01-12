@@ -68,6 +68,11 @@ PROVIDERS = {
         "env_var": "CEREBRAS_API_KEY",
         "model": "llama3.1-8b",
     },
+    "openrouter": {
+        "base_url": "https://openrouter.ai/api/v1",
+        "env_var": "OPENROUTER_API_KEY",
+        "model": "meta-llama/llama-3.1-8b-instruct",
+    },
 }
 
 TEST_PROMPT = [

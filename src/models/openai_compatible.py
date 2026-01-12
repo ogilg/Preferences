@@ -294,3 +294,14 @@ class CerebrasClient(OpenAICompatibleClient):
         "llama-3.1-8b": "llama3.1-8b",
         "llama-3.1-70b": "llama3.1-70b",
     }
+
+
+class OpenRouterClient(OpenAICompatibleClient):
+    _api_key_env_var = "OPENROUTER_API_KEY"
+    _base_url = "https://openrouter.ai/api/v1"
+    _default_model = "llama-3.1-8b"
+    default_max_concurrent = 50
+    _model_aliases = {
+        "llama-3.1-8b": "meta-llama/llama-3.1-8b-instruct",
+        "llama-3.1-70b": "meta-llama/llama-3.1-70b-instruct",
+    }
