@@ -113,11 +113,14 @@ class PostTaskStatedPromptBuilder(PromptBuilder):
         self.template = template
 
     def build(self, task: Task, completion_text: str) -> PreferencePrompt:
-        stated_content = self.template.format(
-            format_instruction=self.response_format.format_instruction(),
-            scale_min=str(self.response_format.scale_min),
-            scale_max=str(self.response_format.scale_max),
-        )
+        format_args: dict[str, str] = {
+            "format_instruction": self.response_format.format_instruction(),
+        }
+        if "scale_min" in self.template.required_placeholders:
+            format_args["scale_min"] = str(self.response_format.scale_min)
+            format_args["scale_max"] = str(self.response_format.scale_max)
+
+        stated_content = self.template.format(**format_args)
         messages: list[Message] = [
             {"role": "user", "content": task.prompt},
             {"role": "assistant", "content": completion_text},

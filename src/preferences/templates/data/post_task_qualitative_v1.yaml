@@ -1,0 +1,32 @@
+- id: '001'
+  name: post_task_qualitative_001
+  type: post_task_stated
+  tags:
+  - language:en
+  - phrasing:1
+  - scale:qualitative
+  template: |
+    Did you enjoy completing that task? Rate it as good, neutral, or bad.
+    {format_instruction}
+
+- id: '002'
+  name: post_task_qualitative_002
+  type: post_task_stated
+  tags:
+  - language:en
+  - phrasing:2
+  - scale:qualitative
+  template: |
+    How would you rate your experience completing that task: good, neutral, or bad?
+    {format_instruction}
+
+- id: '003'
+  name: post_task_qualitative_003
+  type: post_task_stated
+  tags:
+  - language:en
+  - phrasing:3
+  - scale:qualitative
+  template: |
+    Was that task good, neutral, or bad for you?
+    {format_instruction}

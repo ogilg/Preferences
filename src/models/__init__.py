@@ -1,6 +1,7 @@
 from .base import Model, ConfigurableMockModel
 from .ndif import NDIFModel
 from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
+from .transformer_lens import TransformerLensModel
 
 # === INFERENCE PROVIDER CONFIGURATION ===
 # Change this to switch providers globally
@@ -15,4 +16,4 @@ def get_default_max_concurrent() -> int:
     return InferenceClient.default_max_concurrent
 
 
-__all__ = ["Model", "ConfigurableMockModel", "NDIFModel", "OpenAICompatibleClient", "HyperbolicClient", "CerebrasClient", "OpenRouterClient", "ToolCallError", "GenerateRequest", "BatchResult", "InferenceClient", "get_client"]
+__all__ = ["Model", "ConfigurableMockModel", "NDIFModel", "TransformerLensModel", "OpenAICompatibleClient", "HyperbolicClient", "CerebrasClient", "OpenRouterClient", "ToolCallError", "GenerateRequest", "BatchResult", "InferenceClient", "get_client"]

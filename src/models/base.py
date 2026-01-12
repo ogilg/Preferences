@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Protocol, Any
 
+import numpy as np
+
 from src.types import Message
 from .openai_compatible import GenerateRequest, BatchResult
 
@@ -25,6 +27,12 @@ class Model(Protocol):
         messages: list[Message],
         max_tokens: int = 1,
     ) -> dict[str, float]: ...
+
+    def get_activations(
+        self,
+        messages: list[Message],
+        layers: list[int | float],
+    ) -> dict[int, np.ndarray]: ...
 
 
 class ConfigurableMockModel:
