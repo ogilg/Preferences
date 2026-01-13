@@ -49,9 +49,10 @@ def main():
     n_total_pairs = config.n_tasks * (config.n_tasks - 1) // 2
 
     if config.template_sampling == "lhs" and config.n_template_samples:
+        lhs_seed = config.lhs_seed if config.lhs_seed is not None else al.seed
         configurations = sample_configurations_lhs(
             ctx.templates, config.response_formats, config.generation_seeds,
-            n_samples=config.n_template_samples, orders=orders, seed=al.seed,
+            n_samples=config.n_template_samples, orders=orders, seed=lhs_seed,
         )
         print(f"LHS sampling: {config.n_template_samples} configurations")
         print_sampling_balance(configurations)

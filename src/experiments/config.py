@@ -53,6 +53,7 @@ class ExperimentConfig(BaseModel):
     # Template sampling
     template_sampling: Literal["all", "lhs"] = "all"
     n_template_samples: int | None = None
+    lhs_seed: int | None = None
 
     def get_origin_datasets(self) -> list[OriginDataset]:
         mapping = {

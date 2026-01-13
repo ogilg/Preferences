@@ -41,9 +41,10 @@ def main():
     task_list = ctx.tasks * config.n_samples
 
     if config.template_sampling == "lhs" and config.n_template_samples:
+        lhs_seed = config.lhs_seed if config.lhs_seed is not None else 42
         configurations = sample_configurations_lhs(
             ctx.templates, config.response_formats, config.generation_seeds,
-            n_samples=config.n_template_samples, seed=42,
+            n_samples=config.n_template_samples, seed=lhs_seed,
         )
         print(f"LHS sampling: {config.n_template_samples} configurations")
         print_sampling_balance(configurations)
