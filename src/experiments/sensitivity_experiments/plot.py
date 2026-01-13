@@ -2,14 +2,16 @@
 
 Usage:
     python -m src.experiments.sensitivity_experiments.plot results/measurements/
-    python -m src.experiments.sensitivity_experiments.plot results/stated/
+    python -m src.experiments.sensitivity_experiments.plot results/stated/ --templates src/preferences/templates/data/stated_v1.yaml
 """
 
 from __future__ import annotations
 
 import argparse
+import re
 from collections import defaultdict
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -22,6 +24,7 @@ from src.experiments.sensitivity_experiments.sensitivity import (
     compute_sensitivity_regression,
 )
 from src.preferences.storage import MEASUREMENTS_DIR, load_yaml
+from src.preferences.templates.template import load_templates_from_yaml
 
 
 @dataclass
@@ -32,11 +35,20 @@ class RunConfig:
     run_dir: Path
 
 
-def list_runs(results_dir: Path) -> list[RunConfig]:
-    """List all runs in results_dir that have config.yaml."""
+def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
+    """Parse 'stated_{template_name}_{model_short}' -> (template_name, model_short)."""
+    match = re.match(r"stated_([^_]+_\d+)_(.+)$", dir_name)
+    if match:
+        return match.group(1), match.group(2)
+    return None
+
+
+def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunConfig]:
     runs = []
     if not results_dir.exists():
         return runs
+
+    template_tags_map: dict[str, dict] | None = None
 
     for run_dir in sorted(results_dir.iterdir()):
         if not run_dir.is_dir():
@@ -49,6 +61,28 @@ def list_runs(results_dir: Path) -> list[RunConfig]:
                 template_name=config["template_name"],
                 template_tags=config["template_tags"],
                 model_short=config["model_short"],
+                run_dir=run_dir,
+            ))
+        elif (run_dir / "measurements.yaml").exists():
+            # Stated format: parse directory name
+            parsed = _parse_stated_dir_name(run_dir.name)
+            if parsed is None:
+                continue
+            template_name, model_short = parsed
+
+            if template_tags_map is None:
+                if template_yaml is None:
+                    continue
+                templates = load_templates_from_yaml(template_yaml)
+                template_tags_map = {t.name: t.tags_dict for t in templates}
+
+            if template_name not in template_tags_map:
+                continue
+
+            runs.append(RunConfig(
+                template_name=template_name,
+                template_tags=template_tags_map[template_name],
+                model_short=model_short,
                 run_dir=run_dir,
             ))
     return runs
@@ -111,9 +145,12 @@ def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
     raise FileNotFoundError(f"No thurstonian CSV, scores.yaml, or measurements.yaml found in {run_dir}")
 
 
-def load_all_runs(results_dir: Path) -> list[tuple[RunConfig, np.ndarray, list[str]]]:
+def load_all_runs(
+    results_dir: Path,
+    template_yaml: Path | None = None,
+) -> list[tuple[RunConfig, np.ndarray, list[str]]]:
     """Returns list of (config, mu, task_ids)."""
-    runs = list_runs(results_dir)
+    runs = list_runs(results_dir, template_yaml)
     loaded = []
     for config in runs:
         try:
@@ -207,6 +244,7 @@ def save_sensitivity_report(
 def plot_sensitivity_bars(
     sensitivities: list[dict],
     output_path: Path,
+    title: str,
 ) -> None:
     if not sensitivities:
         return
@@ -226,8 +264,8 @@ def plot_sensitivity_bars(
     bars = ax.bar(x, sens_values, yerr=stds, capsize=5, color="steelblue", alpha=0.8)
 
     ax.set_xlabel("Field")
-    ax.set_ylabel("Sensitivity (correlation drop when field differs)")
-    ax.set_title("Preference Sensitivity by Field (Averaging Method)\n(higher = more sensitive to changes)")
+    ax.set_ylabel("Δ Correlation")
+    ax.set_title(title)
     ax.set_xticks(x)
     ax.set_xticklabels(fields, rotation=45, ha="right")
     ax.axhline(0, color="k", linestyle="-", linewidth=0.5)
@@ -245,42 +283,39 @@ def plot_sensitivity_bars(
 def plot_regression_coefficients(
     regression: dict,
     output_path: Path,
+    title: str,
 ) -> None:
-    """Plot regression coefficients showing independent contribution of each field."""
     if "_meta" not in regression:
         return
 
-    # Extract coefficients, excluding _meta
-    items = [(field, data["coefficient"]) for field, data in regression.items() if field != "_meta"]
+    # Extract coefficients and std errors, excluding _meta
+    items = [
+        (field, data["coefficient"], data.get("std_err", 0))
+        for field, data in regression.items()
+        if field != "_meta"
+    ]
     if not items:
         return
 
     # Sort by coefficient value (descending)
     items.sort(key=lambda x: -x[1])
-    fields = [f for f, _ in items]
-    coefs = [c for _, c in items]
+    fields = [f for f, _, _ in items]
+    coefs = [c for _, c, _ in items]
+    std_errs = [se for _, _, se in items]
 
     _, ax = plt.subplots(figsize=(10, 6))
 
     x = np.arange(len(fields))
     colors = ["steelblue" if c >= 0 else "coral" for c in coefs]
-    bars = ax.bar(x, coefs, color=colors, alpha=0.8)
+    ax.bar(x, coefs, yerr=std_errs, capsize=4, color=colors, alpha=0.8)
 
     ax.set_xlabel("Field")
-    ax.set_ylabel("Coefficient (correlation increase when field matches)")
-    ax.set_title(
-        f"Regression: Independent Field Contributions\n"
-        f"(intercept={regression['_meta']['intercept']:.3f}, R²={regression['_meta']['r_squared']:.3f})"
-    )
+    ax.set_ylabel("β Coefficient")
+    r2 = regression["_meta"]["r_squared"]
+    ax.set_title(f"{title} (R²={r2:.3f})")
     ax.set_xticks(x)
     ax.set_xticklabels(fields, rotation=45, ha="right")
     ax.axhline(0, color="k", linestyle="-", linewidth=0.5)
-
-    for bar, val in zip(bars, coefs):
-        offset = 0.01 if val >= 0 else -0.02
-        va = "bottom" if val >= 0 else "top"
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + offset,
-                f"{val:+.3f}", ha="center", va=va, fontsize=8)
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
@@ -300,7 +335,13 @@ def main():
         "--output",
         type=Path,
         default=None,
-        help="Output directory (default: <results_dir>)",
+        help="Output directory (default: results/sensitivity_experiments/)",
+    )
+    parser.add_argument(
+        "--templates",
+        type=Path,
+        default=None,
+        help="Template YAML file (required for stated results without config.yaml)",
     )
     args = parser.parse_args()
 
@@ -309,7 +350,7 @@ def main():
         return
 
     print(f"Loading runs from {args.results_dir}...")
-    runs = load_all_runs(args.results_dir)
+    runs = load_all_runs(args.results_dir, args.templates)
 
     if not runs:
         print("No measurement runs found.")
@@ -321,21 +362,28 @@ def main():
     output_dir = args.output or Path("results/sensitivity_experiments")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Name files based on source (e.g., "measurements" -> "sensitivity_measurements.yaml")
+    # Determine measurement type and model for titles
     source_name = args.results_dir.name
+    models = sorted(set(config.model_short for config, _, _ in runs))
+    model_str = models[0] if len(models) == 1 else f"{len(models)} models"
+    pref_type = "Revealed" if source_name == "measurements" else "Stated"
+    date_str = datetime.now().strftime("%m%d%y")
+
     report_path = output_dir / f"sensitivity_{source_name}.yaml"
     save_sensitivity_report(sensitivities, correlations, regression, len(runs), report_path)
     print(f"Saved report to {report_path}")
 
     if sensitivities:
-        plot_path = output_dir / f"sensitivity_{source_name}.png"
-        plot_sensitivity_bars(sensitivities, plot_path)
+        plot_path = output_dir / f"plot_{date_str}_{pref_type.lower()}_sensitivity_averaging.png"
+        title = f"{model_str} {pref_type} Pref Sensitivity (Averaging)"
+        plot_sensitivity_bars(sensitivities, plot_path, title)
         print(f"Saved plot to {plot_path}")
 
     if regression:
-        regression_plot_path = output_dir / f"sensitivity_{source_name}_regression.png"
-        plot_regression_coefficients(regression, regression_plot_path)
-        print(f"Saved regression plot to {regression_plot_path}")
+        plot_path = output_dir / f"plot_{date_str}_{pref_type.lower()}_sensitivity_regression.png"
+        title = f"{model_str} {pref_type} Pref Sensitivity (Regression)"
+        plot_regression_coefficients(regression, plot_path, title)
+        print(f"Saved regression plot to {plot_path}")
 
 
 if __name__ == "__main__":

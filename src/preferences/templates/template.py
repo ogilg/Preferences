@@ -41,7 +41,10 @@ class PromptTemplate:
         missing = self.required_placeholders - set(kwargs.keys())
         if missing:
             raise ValueError(f"Missing values for placeholders: {missing}")
-        return self.template.format(**kwargs)
+        result = self.template
+        for key, value in kwargs.items():
+            result = result.replace(f"{{{key}}}", value)
+        return result
 
 
 # Placeholder sets for each template type

@@ -31,6 +31,10 @@ uv pip install -e ".[dev]"
 - Avoid dosctrings that do not add important information. If you do use docstrings keep them concise.
 - No backwards compatibility concerns — remove obsolete code/fields rather than deprecating.
 
+## Data analysis
+
+- All plot file names should be like plot_{mmddMM}_precise_description.png
+
 ## Current Focus
 
 <!-- TODO: What are you working on right now? -->
