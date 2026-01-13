@@ -41,3 +41,31 @@ Measured how preference correlations depend on template factors (phrasing, order
 ### Takeaway
 
 Order dominates revealed preferences (positional bias). Stated preferences show weak, distributed effects.
+
+## 2026-01-13: Transitivity measurement
+
+Measured transitivity of revealed preferences by sampling triads within the same template/run.
+
+### Methodology
+
+For each triad (i, j, k), compute cycle probability:
+```
+P(cycle) = P(i>j)·P(j>k)·P(k>i) + P(j>i)·P(k>j)·P(i>k)
+```
+Random preferences give P(cycle) = 0.25. Lower values indicate transitivity.
+
+Sampled triads within same run to control for template effects. Limited by sparse active learning sampling (most pairs compared only once → deterministic 0/1 probabilities).
+
+### Results
+
+- **Mean cycle prob**: 0.180 ± 0.297 (below random 0.25)
+- **Hard cycle rate**: 14.9% (106/713 triads)
+- Only 713 valid triads found across 48 runs
+
+### Plots
+
+![Transitivity distribution](log_assets/plot_011326_transitivity_distribution.png)
+
+### Takeaway
+
+Preferences are reasonably transitive within-template. Spikes at 0 and 1 reflect deterministic outcomes from single comparisons per pair.

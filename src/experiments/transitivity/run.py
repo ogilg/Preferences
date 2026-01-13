@@ -1,165 +1,226 @@
-"""Usage: python -m src.experiments.transitivity.run [--results-dir results/]"""
+"""
+Compute transitivity (cycle probability) across active learning measurements.
+
+Usage: python -m src.experiments.transitivity.run
+"""
 
 from __future__ import annotations
 
 import argparse
+import random
+from collections import defaultdict
+from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
+from tqdm import tqdm
 
-from src.experiments.transitivity import measure_transitivity
 from src.preferences.storage import MEASUREMENTS_DIR
 
 
-def load_wins_matrix(measurements: list[dict], task_ids: list[str]) -> np.ndarray:
-    """wins[i,j] = number of times task i beat task j."""
-    id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
-    n = len(task_ids)
-    wins = np.zeros((n, n), dtype=np.int32)
-
-    for m in measurements:
-        i = id_to_idx[m["task_a"]]
-        j = id_to_idx[m["task_b"]]
-        if m["choice"] == "a":
-            wins[i, j] += 1
-        else:
-            wins[j, i] += 1
-
-    return wins
+@dataclass
+class RunData:
+    run_id: str
+    model: str
+    comparisons: dict[tuple[str, str], list[str]]
+    tasks: set[str]
 
 
-def find_thurstonian_files(run_dir: Path) -> tuple[Path, Path]:
-    """Find thurstonian YAML and CSV files, returns (yaml_path, csv_path)."""
-    # Try hash-based filenames first
-    for pattern in ["thurstonian_exhaustive_pairwise_*.yaml", "thurstonian_active_learning_*.yaml"]:
-        matches = list(run_dir.glob(pattern))
-        if matches:
-            yaml_path = matches[0]
-            return yaml_path, yaml_path.with_suffix(".csv")
+def load_runs(results_dir: Path) -> list[RunData]:
+    """Load comparisons grouped by run (same template/config)."""
+    runs = []
 
-    # Fallback to old naming
-    for yaml_name in ["thurstonian_exhaustive_pairwise.yaml", "thurstonian_active_learning.yaml", "thurstonian.yaml"]:
-        yaml_path = run_dir / yaml_name
-        if yaml_path.exists():
-            return yaml_path, yaml_path.with_suffix(".csv")
+    for run_dir in results_dir.iterdir():
+        config_path = run_dir / "config.yaml"
+        measurements_path = run_dir / "measurements.yaml"
+        if not config_path.exists() or not measurements_path.exists():
+            continue
 
-    raise FileNotFoundError(f"No thurstonian YAML found in {run_dir}")
+        with open(config_path) as f:
+            config = yaml.safe_load(f)
+
+        with open(measurements_path) as f:
+            measurements = yaml.safe_load(f)
+
+        comparisons: dict[tuple[str, str], list[str]] = defaultdict(list)
+        tasks: set[str] = set()
+
+        for m in measurements:
+            key = (m["task_a"], m["task_b"])
+            comparisons[key].append(m["choice"])
+            tasks.add(m["task_a"])
+            tasks.add(m["task_b"])
+
+        runs.append(RunData(
+            run_id=run_dir.name,
+            model=config["model_short"],
+            comparisons=dict(comparisons),
+            tasks=tasks,
+        ))
+
+    return runs
 
 
-def load_thurstonian_csv(csv_path: Path) -> tuple[list[str], list[float]]:
-    """Load task_ids and sigmas from thurstonian CSV."""
-    task_ids = []
-    sigmas = []
-    with open(csv_path) as f:
-        next(f)  # Skip header
-        for line in f:
-            task_id, _, sigma = line.strip().split(",")
-            task_ids.append(task_id)
-            sigmas.append(float(sigma))
-    return task_ids, sigmas
+def get_pairwise_prob(
+    comparisons: dict[tuple[str, str], list[str]],
+    task_a: str,
+    task_b: str,
+) -> float | None:
+    """Get P(task_a > task_b) from comparisons. Returns None if no data."""
+    key_ab = (task_a, task_b)
+    key_ba = (task_b, task_a)
+
+    wins_a = 0
+    total = 0
+
+    if key_ab in comparisons:
+        for choice in comparisons[key_ab]:
+            total += 1
+            if choice == "a":
+                wins_a += 1
+
+    if key_ba in comparisons:
+        for choice in comparisons[key_ba]:
+            total += 1
+            if choice == "b":
+                wins_a += 1
+
+    if total == 0:
+        return None
+    return wins_a / total
 
 
-def analyze_run(run_dir: Path) -> dict:
-    with open(run_dir / "config.yaml") as f:
-        config = yaml.safe_load(f)
+def sample_transitivity(
+    runs: list[RunData],
+    n_samples: int = 10000,
+    seed: int = 42,
+) -> dict:
+    """
+    Sample triads within runs (same template) and compute cycle probability.
+    """
+    random.seed(seed)
+    np.random.seed(seed)
 
-    with open(run_dir / "measurements.yaml") as f:
-        measurements = yaml.safe_load(f)
+    cycle_probs = []
+    hard_cycles = 0
+    n_sampled = 0
+    n_attempts = 0
 
-    thurstonian_yaml, csv_path = find_thurstonian_files(run_dir)
+    # Weight runs by number of tasks for fair sampling
+    run_weights = [len(r.tasks) for r in runs]
+    total_weight = sum(run_weights)
+    run_probs = [w / total_weight for w in run_weights]
 
-    with open(thurstonian_yaml) as f:
-        thurstonian = yaml.safe_load(f)
+    pbar = tqdm(total=n_samples, desc="Sampling triads")
+    while n_sampled < n_samples and n_attempts < n_samples * 100:
+        n_attempts += 1
 
-    task_ids, sigmas = load_thurstonian_csv(csv_path)
-    sigma_max = max(sigmas)
+        # Sample a run
+        run = random.choices(runs, weights=run_probs, k=1)[0]
+        task_list = list(run.tasks)
 
-    # Filter measurements to only include tasks in the Thurstonian fit
-    task_set = set(task_ids)
-    measurements = [m for m in measurements if m["task_a"] in task_set and m["task_b"] in task_set]
+        if len(task_list) < 3:
+            continue
 
-    wins = load_wins_matrix(measurements, task_ids)
-    trans = measure_transitivity(wins)
+        # Sample three tasks from this run
+        i, j, k = random.sample(task_list, 3)
+
+        # Check all pairs have data within this run
+        p_ij = get_pairwise_prob(run.comparisons, i, j)
+        p_jk = get_pairwise_prob(run.comparisons, j, k)
+        p_ki = get_pairwise_prob(run.comparisons, k, i)
+
+        if p_ij is None or p_jk is None or p_ki is None:
+            continue
+
+        n_sampled += 1
+        pbar.update(1)
+
+        # Cycle probability: P(i>j>k>i) + P(j>i>k>j)
+        p_clockwise = p_ij * p_jk * p_ki
+        p_counter = (1 - p_ij) * (1 - p_jk) * (1 - p_ki)
+        p_cycle = p_clockwise + p_counter
+
+        cycle_probs.append(p_cycle)
+
+        # Hard cycle: majority preference forms a cycle
+        if (p_ij > 0.5 and p_jk > 0.5 and p_ki > 0.5) or \
+           (p_ij < 0.5 and p_jk < 0.5 and p_ki < 0.5):
+            hard_cycles += 1
+
+    pbar.close()
 
     return {
-        "run_id": run_dir.name,
-        "template_name": config["template_name"],
-        "model": config["model_short"],
-        "n_tasks": len(task_ids),
-        "n_measurements": len(measurements),
-        "cycle_probability": trans.cycle_probability,
-        "log_cycle_prob": trans.log_cycle_prob,
-        "n_cycles": trans.n_cycles,
-        "n_triads": trans.n_triads,
-        "thurstonian_converged": thurstonian["converged"],
-        "sigma_max": sigma_max,
+        "mean_cycle_prob": float(np.mean(cycle_probs)) if cycle_probs else 0.0,
+        "std_cycle_prob": float(np.std(cycle_probs)) if cycle_probs else 0.0,
+        "n_sampled": n_sampled,
+        "n_hard_cycles": hard_cycles,
+        "hard_cycle_rate": hard_cycles / n_sampled if n_sampled > 0 else 0.0,
+        "cycle_probs": cycle_probs,
     }
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Compute transitivity for all runs")
+    parser = argparse.ArgumentParser(description="Compute transitivity via sampling")
     parser.add_argument("--results-dir", type=Path, default=MEASUREMENTS_DIR)
-    parser.add_argument("--output", type=Path, default=Path("results/transitivity.png"))
-    parser.add_argument("--show", action="store_true", help="Show plot interactively instead of saving")
+    parser.add_argument("--output-dir", type=Path, default=Path("results/transitivity"))
+    parser.add_argument("--n-samples", type=int, default=10000)
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
-    results = []
-    for run_dir in sorted(args.results_dir.iterdir()):
-        if not (run_dir / "config.yaml").exists():
-            continue
-        try:
-            result = analyze_run(run_dir)
-            results.append(result)
-            print(f"{result['run_id']}: cycle_prob={result['cycle_probability']:.4f}, "
-                  f"log10={result['log_cycle_prob']:.2f}, converged={result['thurstonian_converged']}")
-        except Exception as e:
-            print(f"{run_dir.name}: Error - {e}")
+    print(f"Loading runs from {args.results_dir}...")
+    runs = load_runs(args.results_dir)
+    models = set(r.model for r in runs)
+    n_pairs = sum(len(r.comparisons) for r in runs)
+    print(f"Loaded {len(runs)} runs with {n_pairs} total pairs from {len(models)} model(s)")
 
-    if not results:
-        print("No results found")
-        return
+    model_str = list(models)[0] if len(models) == 1 else f"{len(models)} models"
+
+    print(f"Sampling {args.n_samples} triads (within same template)...")
+    result = sample_transitivity(runs, n_samples=args.n_samples, seed=args.seed)
+
+    print(f"\n--- Results ---")
+    print(f"Sampled triads: {result['n_sampled']}")
+    print(f"Mean cycle prob: {result['mean_cycle_prob']:.4f} ± {result['std_cycle_prob']:.4f}")
+    print(f"Hard cycle rate: {result['hard_cycle_rate']:.4f} ({result['n_hard_cycles']}/{result['n_sampled']})")
 
     # Plot
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    date_str = datetime.now().strftime("%m%d%y")
 
-    # Plot 1: Cycle probability by run
-    ax = axes[0]
-    x = range(len(results))
-    colors = ["green" if r["thurstonian_converged"] else "red" for r in results]
-    ax.bar(x, [r["cycle_probability"] for r in results], color=colors, alpha=0.7)
-    ax.set_xlabel("Run")
-    ax.set_ylabel("Cycle Probability")
-    ax.set_title("Transitivity by Run (green=converged, red=not)")
-    ax.set_xticks(x)
-    ax.set_xticklabels([r["template_name"] for r in results], rotation=45, ha="right")
-
-    # Plot 2: Cycle prob vs sigma_max
-    ax = axes[1]
-    cycle_probs = [r["cycle_probability"] for r in results]
-    sigma_maxs = [r["sigma_max"] for r in results]
-    converged = [r["thurstonian_converged"] for r in results]
-    colors = ["green" if c else "red" for c in converged]
-    ax.scatter(cycle_probs, sigma_maxs, c=colors, alpha=0.7, s=50)
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.hist(result["cycle_probs"], bins=50, color="steelblue", alpha=0.8, edgecolor="white")
+    ax.axvline(result["mean_cycle_prob"], color="red", linestyle="--",
+               label=f"mean={result['mean_cycle_prob']:.3f}")
+    ax.axvline(0.25, color="gray", linestyle=":", alpha=0.7, label="random=0.25")
     ax.set_xlabel("Cycle Probability")
-    ax.set_ylabel("Max σ (Thurstonian)")
-    ax.set_title("Transitivity vs Model Uncertainty")
-    ax.set_yscale("log")
+    ax.set_ylabel("Count")
+    ax.set_title(f"{model_str} Transitivity (n={result['n_sampled']} triads)")
+    ax.legend()
+    plt.tight_layout()
 
-    fig.tight_layout()
+    output_path = args.output_dir / f"plot_{date_str}_transitivity_distribution.png"
+    fig.savefig(output_path, dpi=150)
+    print(f"Saved plot to {output_path}")
+    plt.close()
 
-    if args.show:
-        plt.show()
-    else:
-        fig.savefig(args.output, dpi=150)
-        print(f"Saved plot to {args.output}")
-
-    # Summary
-    print(f"\n--- Summary ---")
-    print(f"Runs: {len(results)}")
-    print(f"Mean cycle prob: {np.mean(cycle_probs):.4f}")
-    print(f"Converged: {sum(converged)}/{len(converged)}")
+    # Save results
+    summary = {
+        "model": model_str,
+        "n_runs": len(runs),
+        "n_pairs": n_pairs,
+        "n_sampled_triads": result["n_sampled"],
+        "mean_cycle_prob": result["mean_cycle_prob"],
+        "std_cycle_prob": result["std_cycle_prob"],
+        "hard_cycle_rate": result["hard_cycle_rate"],
+    }
+    yaml_path = args.output_dir / "transitivity_results.yaml"
+    with open(yaml_path, "w") as f:
+        yaml.dump(summary, f, default_flow_style=False, sort_keys=False)
+    print(f"Saved results to {yaml_path}")
 
 
 if __name__ == "__main__":
