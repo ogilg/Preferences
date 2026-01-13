@@ -15,6 +15,7 @@ from src.preferences.measurement import (
     QUALITATIVE_FORMATS,
 )
 from src.preferences.storage import save_stated, stated_exist
+from src.preferences.storage.base import build_measurement_config
 from src.preferences.templates.sampler import (
     SampledConfiguration,
     sample_configurations_lhs,
@@ -86,7 +87,20 @@ def main():
         mean_std = compute_mean_std_across_tasks(batch.successes)
         print(f"  {len(batch.successes)} scores, mean std: {mean_std:.3f}")
 
-        run_path = save_stated(template=cfg.template, client=ctx.client, scores=batch.successes)
+        config_dict = build_measurement_config(
+            template=cfg.template,
+            client=ctx.client,
+            response_format=cfg.response_format,
+            seed=cfg.seed,
+            temperature=config.temperature,
+        )
+
+        run_path = save_stated(
+            template=cfg.template,
+            client=ctx.client,
+            scores=batch.successes,
+            config=config_dict,
+        )
         print(f"  Saved to {run_path}")
 
     print("\nDone.")

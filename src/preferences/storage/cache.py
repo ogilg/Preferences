@@ -5,6 +5,7 @@ from typing import Callable, Literal
 
 from src.models import OpenAICompatibleClient
 from src.preferences.storage.base import (
+    build_measurement_config,
     load_yaml,
     model_short_name,
     save_yaml,
@@ -104,20 +105,13 @@ class MeasurementCache:
         if self._config_path.exists():
             return
 
-        tags = {
-            **self.template.tags_dict,
-            "response_format": self.response_format,
-            "order": self.order,
-        }
-        if self.seed is not None:
-            tags["seed"] = str(self.seed)
-
-        config = {
-            "template_name": self.template.name,
-            "template_tags": tags,
-            "model": self.client.model_name,
-            "model_short": self.model_short,
-        }
+        config = build_measurement_config(
+            template=self.template,
+            client=self.client,
+            response_format=self.response_format,
+            order=self.order,
+            seed=self.seed,
+        )
         save_yaml(config, self._config_path)
 
     def get_or_measure(

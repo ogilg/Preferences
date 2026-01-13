@@ -20,9 +20,13 @@ def save_stated(
     template: PromptTemplate,
     client: OpenAICompatibleClient,
     scores: list[TaskScore],
+    config: dict | None = None,
 ) -> Path:
     """Save stated preference scores to disk. Returns the directory path."""
     run_dir = _stated_dir(template, client)
+
+    if config:
+        save_yaml(config, run_dir / "config.yaml")
 
     data = [{"task_id": s.task.id, "score": s.score} for s in scores]
     save_yaml(data, run_dir / "measurements.yaml")
