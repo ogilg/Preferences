@@ -65,7 +65,8 @@ def main():
 
     print(f"Tasks: {len(ctx.tasks)}, Configs: {len(configurations)}, Initial degree: {al.initial_degree}")
 
-    for cfg in configurations:
+    for cfg_idx, cfg in enumerate(configurations):
+        print(f"[PROGRESS {cfg_idx}/{len(configurations)}]", flush=True)
         print(f"\n{'='*60}\n{cfg.template.name}/{cfg.response_format}/{cfg.order}/seed{cfg.seed}\n{'='*60}")
 
         cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
@@ -161,6 +162,7 @@ def main():
             "rank_correlations": rank_correlations,
         }, cache.cache_dir / "active_learning.yaml")
 
+    print(f"[PROGRESS {len(configurations)}/{len(configurations)}]", flush=True)
     print("\nDone.")
 
 
