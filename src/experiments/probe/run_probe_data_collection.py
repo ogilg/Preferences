@@ -6,6 +6,7 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 
+import torch
 import yaml
 from tqdm import tqdm
 
@@ -70,51 +71,62 @@ def main() -> None:
     failures: list[tuple[str, str]] = []
 
     n_truncated = 0
+    n_ooms = 0
     print(f"Collecting data for {len(tasks)} tasks...")
     for task in tqdm(tasks, desc="Tasks"):
-        try:
-            messages = [{"role": "user", "content": task.prompt}]
-            completion, activations = model.generate_with_activations(
-                messages, layers=resolved_layers, temperature=temperature
-            )
-            completion_tokens = len(model.tokenizer.encode(completion))
-            truncated = completion_tokens >= max_new_tokens
-            if truncated:
-                n_truncated += 1
-
-            prompt_tokens = len(model.tokenizer.encode(task.prompt))
-
-            rating_prompt = builder.build(task, completion)
-            rating_response = model.generate(
-                rating_prompt.messages, temperature=0.0, max_new_tokens=rating_max_tokens
-            )
-
+        for attempt in range(2):
             try:
-                parsed = rating_prompt.measurer.parse(rating_response, rating_prompt)
-                score = parsed.result.score
-            except ValueError as e:
-                failures.append((task.id, f"Parse error: {e}"))
-                continue
+                messages = [{"role": "user", "content": task.prompt}]
+                completion, activations = model.generate_with_activations(
+                    messages, layers=resolved_layers, temperature=temperature
+                )
+                completion_tokens = len(model.tokenizer.encode(completion))
+                truncated = completion_tokens >= max_new_tokens
+                if truncated:
+                    n_truncated += 1
 
-            data_points.append(ProbeDataPoint(
-                task_id=task.id,
-                activations=activations,
-                score=score,
-                completion=completion,
-                raw_rating_response=rating_response,
-                truncated=truncated,
-                origin=task.origin.name,
-                task_metadata=task.metadata,
-                task_prompt=task.prompt,
-                prompt_tokens=prompt_tokens,
-                completion_tokens=completion_tokens,
-            ))
+                prompt_tokens = len(model.tokenizer.encode(task.prompt))
 
-        except Exception as e:
-            failures.append((task.id, str(e)))
-            continue
+                rating_prompt = builder.build(task, completion)
+                rating_response = model.generate(
+                    rating_prompt.messages, temperature=0.0, max_new_tokens=rating_max_tokens
+                )
 
-    print(f"\nCollected {len(data_points)} data points, {len(failures)} failures, {n_truncated} truncated")
+                try:
+                    parsed = rating_prompt.measurer.parse(rating_response, rating_prompt)
+                    score = parsed.result.score
+                except ValueError as e:
+                    failures.append((task.id, f"Parse error: {e}"))
+                    break
+
+                data_points.append(ProbeDataPoint(
+                    task_id=task.id,
+                    activations=activations,
+                    score=score,
+                    completion=completion,
+                    raw_rating_response=rating_response,
+                    truncated=truncated,
+                    origin=task.origin.name,
+                    task_metadata=task.metadata,
+                    task_prompt=task.prompt,
+                    prompt_tokens=prompt_tokens,
+                    completion_tokens=completion_tokens,
+                ))
+                break
+
+            except torch.cuda.OutOfMemoryError as e:
+                n_ooms += 1
+                tqdm.write(f"OOM on task {task.id} (attempt {attempt + 1}/2): {e}")
+                torch.cuda.empty_cache()
+                if attempt == 1:
+                    failures.append((task.id, f"OOM after retry: {e}"))
+            except Exception as e:
+                failures.append((task.id, str(e)))
+                break
+
+        torch.cuda.empty_cache()
+
+    print(f"\nCollected {len(data_points)} data points, {len(failures)} failures, {n_truncated} truncated, {n_ooms} OOMs")
     if failures:
         print(f"First few failures: {failures[:3]}")
 
@@ -135,6 +147,7 @@ def main() -> None:
             "n_successes": len(data_points),
             "n_failures": len(failures),
             "n_truncated": n_truncated,
+            "n_ooms": n_ooms,
         }
 
         print(f"Saving to {output_dir}...")
