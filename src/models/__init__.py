@@ -1,5 +1,4 @@
 from .base import Model, ConfigurableMockModel, TokenPosition
-from .ndif import NDIFModel
 from .nnsight_model import NnsightModel
 from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
 
@@ -21,4 +20,4 @@ def get_default_max_concurrent() -> int:
     return InferenceClient.default_max_concurrent
 
 
-__all__ = ["Model", "ConfigurableMockModel", "TokenPosition", "NDIFModel", "NnsightModel", "TransformerLensModel", "OpenAICompatibleClient", "HyperbolicClient", "CerebrasClient", "OpenRouterClient", "ToolCallError", "GenerateRequest", "BatchResult", "InferenceClient", "get_client"]
+__all__ = ["Model", "ConfigurableMockModel", "TokenPosition", "NnsightModel", "TransformerLensModel", "OpenAICompatibleClient", "HyperbolicClient", "CerebrasClient", "OpenRouterClient", "ToolCallError", "GenerateRequest", "BatchResult", "InferenceClient", "get_client"]
