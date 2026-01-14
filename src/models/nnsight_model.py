@@ -13,10 +13,25 @@ class NnsightModel:
         model_name: str,
         max_new_tokens: int = 256,
         device: str = "cuda",
+        use_system_preamble: bool = True,
     ):
         self.model_name = model_name
         self.max_new_tokens = max_new_tokens
         self.model = LanguageModel(model_name, device_map=device, dispatch=True)
+        if not use_system_preamble:
+            self._strip_system_preamble()
+
+    def _strip_system_preamble(self) -> None:
+        """Remove 'Cutting Knowledge Date' preamble from Llama chat templates."""
+        template = self.tokenizer.chat_template
+        if template is None:
+            return
+        lines = template.split("\n")
+        filtered = [
+            line for line in lines
+            if "Cutting Knowledge Date" not in line and "Today Date" not in line
+        ]
+        self.tokenizer.chat_template = "\n".join(filtered)
 
     @property
     def n_layers(self) -> int:
@@ -49,7 +64,7 @@ class NnsightModel:
             output = self.model.generator.output.save()
 
         prompt_len = len(self.tokenizer.encode(prompt))
-        return self.tokenizer.decode(output.value[0][prompt_len:], skip_special_tokens=True).strip()
+        return self.tokenizer.decode(output[0][prompt_len:], skip_special_tokens=True).strip()
 
     def get_activations(
         self,
@@ -75,7 +90,7 @@ class NnsightModel:
             output = self.model.generator.output.save()
 
         prompt_len = len(self.tokenizer.encode(prompt))
-        completion = self.tokenizer.decode(output.value[0][prompt_len:], skip_special_tokens=True).strip()
+        completion = self.tokenizer.decode(output[0][prompt_len:], skip_special_tokens=True).strip()
 
         full_text = self._format_messages(
             messages + [{"role": "assistant", "content": completion}],
@@ -95,9 +110,11 @@ class NnsightModel:
         else:
             raise ValueError(f"Unsupported token position: {token_position}")
 
+        saved = {}
         with self.model.trace(text) as tracer:
-            saved = {}
             for layer in layers:
-                saved[layer] = self.model.model.layers[layer].output[0][:, pos_idx, :].save()
+                # Layer output is tuple (hidden_states, ...), hidden_states is (seq, hidden)
+                hidden_states = self.model.model.layers[layer].output[0]
+                saved[layer] = hidden_states[pos_idx, :].save()
 
-        return {layer: val.value.float().cpu().numpy().squeeze() for layer, val in saved.items()}
+        return {layer: val.float().cpu().detach().numpy() for layer, val in saved.items()}
