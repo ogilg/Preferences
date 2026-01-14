@@ -33,5 +33,6 @@ uv pip install -e ".[dev]"
 
 ## Claude instructions
 
-- When you run tests/scripts/analysis or when you debug. You should keep me in the loop. You should explain concisely what your findings are. And you should ask for clarifications, or delegate to me often. 
+- When you run tests/scripts/analysis or when you debug. You should keep me in the loop. You should explain concisely what your findings are. And you should ask for clarifications, or delegate to me often.
 - When you install a new package, add it to pyproject.toml if it isn't there.
+- Always load environment variables from `.env` when running scripts that use API clients. Use `from dotenv import load_dotenv; load_dotenv()` at the top of scripts.
