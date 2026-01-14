@@ -77,9 +77,12 @@ def main() -> None:
             completion, activations = model.generate_with_activations(
                 messages, layers=resolved_layers, temperature=temperature
             )
-            truncated = len(model.tokenizer.encode(completion)) >= max_new_tokens
+            completion_tokens = len(model.tokenizer.encode(completion))
+            truncated = completion_tokens >= max_new_tokens
             if truncated:
                 n_truncated += 1
+
+            prompt_tokens = len(model.tokenizer.encode(task.prompt))
 
             rating_prompt = builder.build(task, completion)
             rating_response = model.generate(
@@ -100,6 +103,10 @@ def main() -> None:
                 completion=completion,
                 raw_rating_response=rating_response,
                 truncated=truncated,
+                origin=task.origin.name,
+                task_metadata=task.metadata,
+                prompt_tokens=prompt_tokens,
+                completion_tokens=completion_tokens,
             ))
 
         except Exception as e:

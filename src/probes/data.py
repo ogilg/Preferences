@@ -16,6 +16,10 @@ class ProbeDataPoint:
     completion: str
     raw_rating_response: str
     truncated: bool = False
+    origin: str | None = None
+    task_metadata: dict | None = None
+    prompt_tokens: int | None = None
+    completion_tokens: int | None = None
 
 
 def save_probe_dataset(
@@ -50,6 +54,10 @@ def save_probe_dataset(
                 "rating_response": dp.raw_rating_response,
                 "score": dp.score,
                 "truncated": dp.truncated,
+                "origin": dp.origin,
+                "task_metadata": dp.task_metadata,
+                "prompt_tokens": dp.prompt_tokens,
+                "completion_tokens": dp.completion_tokens,
             }) + "\n")
 
     if metadata is not None:
@@ -87,6 +95,10 @@ def load_probe_dataset(output_dir: Path) -> list[ProbeDataPoint]:
             completion=record["completion"],
             raw_rating_response=record["rating_response"],
             truncated=record.get("truncated", False),
+            origin=record.get("origin"),
+            task_metadata=record.get("task_metadata"),
+            prompt_tokens=record.get("prompt_tokens"),
+            completion_tokens=record.get("completion_tokens"),
         ))
 
     return data_points
