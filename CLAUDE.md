@@ -4,7 +4,7 @@ MATS 9.0 project investigating AI model preferences and self-reported valence.
 
 ## Docs
 
-See `docs/` for research plan and experiment details.
+See `docs/` for research plan and experiment details. Including research logs.
 
 ## Setup
 
@@ -21,7 +21,7 @@ uv pip install -e ".[dev]"
 - `src/task_data/` — Task and dataset structures
 - `tests/` — Test suite (`pytest -m "not api"` to skip API-dependent tests)
 
-## Conventions and style
+## Code conventions and style
 
 - NEVER use arbirary return values. E.g. in `dict.get(key, default)` I would rather it failed then get an arbirary value. In fact you should always use `dict[key]` access.
 - Do not use hasattr or getattr defensively unless you think it is absolutely essential.
@@ -31,6 +31,7 @@ uv pip install -e ".[dev]"
 - Avoid dosctrings that do not add important information. If you do use docstrings keep them concise.
 - No backwards compatibility concerns — remove obsolete code/fields rather than deprecating.
 
-## How to communicate
+## Claude instructions
 
-- when you run tests/scripts/analysis or when you debug. You should keep me in the loop. You should explain concisely what your findings are. And you should ask for clarifications, or delegate to me often. 
+- When you run tests/scripts/analysis or when you debug. You should keep me in the loop. You should explain concisely what your findings are. And you should ask for clarifications, or delegate to me often. 
+- When you install a new package, add it to pyproject.toml if it isn't there.
