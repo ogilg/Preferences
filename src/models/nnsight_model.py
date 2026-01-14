@@ -16,7 +16,7 @@ class NnsightModel:
     ):
         self.model_name = model_name
         self.max_new_tokens = max_new_tokens
-        self.model = LanguageModel(model_name, device_map=device)
+        self.model = LanguageModel(model_name, device_map=device, dispatch=True)
 
     @property
     def n_layers(self) -> int:
@@ -44,12 +44,12 @@ class NnsightModel:
     ) -> str:
         prompt = self._format_messages(messages)
         max_tokens = max_new_tokens or self.max_new_tokens
-        input_ids = self.tokenizer.encode(prompt, return_tensors="pt").to(self.model.device)
 
-        with self.model.generate(input_ids, max_new_tokens=max_tokens, temperature=temperature) as gen:
-            output = gen.output
+        with self.model.generate(prompt, max_new_tokens=max_tokens, temperature=temperature):
+            output = self.model.generator.output.save()
 
-        return self.tokenizer.decode(output[0][input_ids.shape[1]:], skip_special_tokens=True).strip()
+        prompt_len = len(self.tokenizer.encode(prompt))
+        return self.tokenizer.decode(output.value[0][prompt_len:], skip_special_tokens=True).strip()
 
     def get_activations(
         self,
@@ -70,12 +70,12 @@ class NnsightModel:
     ) -> tuple[str, dict[int, np.ndarray]]:
         prompt = self._format_messages(messages)
         max_tokens = max_new_tokens or self.max_new_tokens
-        input_ids = self.tokenizer.encode(prompt, return_tensors="pt").to(self.model.device)
 
-        with self.model.generate(input_ids, max_new_tokens=max_tokens, temperature=temperature) as gen:
-            output = gen.output
+        with self.model.generate(prompt, max_new_tokens=max_tokens, temperature=temperature):
+            output = self.model.generator.output.save()
 
-        completion = self.tokenizer.decode(output[0][input_ids.shape[1]:], skip_special_tokens=True).strip()
+        prompt_len = len(self.tokenizer.encode(prompt))
+        completion = self.tokenizer.decode(output.value[0][prompt_len:], skip_special_tokens=True).strip()
 
         full_text = self._format_messages(
             messages + [{"role": "assistant", "content": completion}],
