@@ -56,12 +56,13 @@ def main():
 
     print(f"Templates: {len(ctx.templates)}, Configs: {len(configurations)}, Tasks: {len(ctx.tasks)} x {config.n_samples}")
 
-    for cfg in configurations:
-        if stated_exist(cfg.template, ctx.client):
-            print(f"Skipping {cfg.template.name} (already measured)")
+    for i, cfg in enumerate(configurations):
+        print(f"[PROGRESS {i}/{len(configurations)}]", flush=True)
+        if stated_exist(cfg.template, ctx.client, cfg.response_format, cfg.seed):
+            print(f"Skipping {cfg.template.name} (format={cfg.response_format}, seed={cfg.seed}) (already measured)")
             continue
 
-        print(f"\nMeasuring {cfg.template.name} (seed={cfg.seed})...")
+        print(f"\nMeasuring {cfg.template.name} (format={cfg.response_format}, seed={cfg.seed})...")
 
         scale_info = parse_scale_from_template(cfg.template)
 
@@ -106,10 +107,13 @@ def main():
             template=cfg.template,
             client=ctx.client,
             scores=batch.successes,
+            response_format=cfg.response_format,
+            seed=cfg.seed,
             config=config_dict,
         )
         print(f"  Saved to {run_path}")
 
+    print(f"[PROGRESS {len(configurations)}/{len(configurations)}]", flush=True)
     print("\nDone.")
 
 
