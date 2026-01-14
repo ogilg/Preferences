@@ -1,3 +1,9 @@
+# FOCUS
+
+Main focus: minimal probe training experiment on stated preferences. Training a probe on activation from before the report to predict the report.
+
+
+
 # TODO
 
 Things to come back to later.
@@ -7,9 +13,6 @@ Things to come back to later.
 ### Review code
 
 ### Running measurements
-- Add support for rating a posteriori
-- Add support for revealed preferences
-- Add support for a posteriori binary preferences
 - Add support for revealed preference ICL track-record
 
 
