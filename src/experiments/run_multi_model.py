@@ -1,9 +1,10 @@
 """Orchestrate running experiments across multiple models in parallel.
 
 Usage: python -m src.experiments.run_multi_model \\
-  --models "meta-llama/Meta-Llama-3.1-8B-Instruct,meta-llama/Meta-Llama-3.1-70B-Instruct" \\
-  --base-config-active configs/active_learning_base.yaml \\
-  --base-config-stated configs/stated_base.yaml
+  --models "qwen/qwen-2.5-7b-instruct,meta-llama/llama-3.1-8b-instruct" \\
+  --base-config-active src/experiments/configs/active_learning.yaml \\
+  --base-config-stated src/experiments/configs/stated.yaml \\
+  --max-concurrent 10
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--models", required=True, help="Comma-separated model names")
     parser.add_argument("--base-config-active", type=Path, required=True, help="Base config for active_learning")
     parser.add_argument("--base-config-stated", type=Path, required=True, help="Base config for stated_measurement")
+    parser.add_argument("--max-concurrent", type=int, default=MAX_CONCURRENT_PER_EXPERIMENT, help=f"Max concurrent requests per experiment (default: {MAX_CONCURRENT_PER_EXPERIMENT})")
     parser.add_argument("--dry-run", action="store_true", help="Generate configs without running")
     return parser.parse_args()
 
@@ -50,13 +52,15 @@ def main():
     for model in models:
         print(f"  - {model}")
     print(f"Total experiments: {len(models) * 2}")
+    print(f"Max concurrent per experiment: {args.max_concurrent}")
+    print(f"Max total concurrent requests: {len(models) * 2 * args.max_concurrent}")
     print()
 
     tasks = generate_experiment_configs(
         models=models,
         base_config_active=args.base_config_active,
         base_config_stated=args.base_config_stated,
-        max_concurrent=MAX_CONCURRENT_PER_EXPERIMENT,
+        max_concurrent=args.max_concurrent,
         output_dir=CONFIG_DIR,
     )
 

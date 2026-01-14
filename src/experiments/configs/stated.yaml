@@ -7,7 +7,7 @@ task_origins:
 templates: src/preferences/templates/data/stated_v1.yaml
 n_samples: 5
 template_sampling: lhs
-n_template_samples: 8
+n_template_samples: 128
 lhs_seed: 42
 response_formats:
   - regex
