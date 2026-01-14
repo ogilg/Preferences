@@ -18,6 +18,8 @@ class NnsightModel:
         self.model_name = model_name
         self.max_new_tokens = max_new_tokens
         self.model = LanguageModel(model_name, device_map=device, dispatch=True)
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
         if not use_system_preamble:
             self._strip_system_preamble()
 
