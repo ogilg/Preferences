@@ -15,6 +15,7 @@ class ProbeDataPoint:
     score: float
     completion: str
     raw_rating_response: str
+    truncated: bool = False
 
 
 def save_probe_dataset(
@@ -48,6 +49,7 @@ def save_probe_dataset(
                 "completion": dp.completion,
                 "rating_response": dp.raw_rating_response,
                 "score": dp.score,
+                "truncated": dp.truncated,
             }) + "\n")
 
     if metadata is not None:
@@ -84,6 +86,7 @@ def load_probe_dataset(output_dir: Path) -> list[ProbeDataPoint]:
             score=float(scores[i]),
             completion=record["completion"],
             raw_rating_response=record["rating_response"],
+            truncated=record.get("truncated", False),
         ))
 
     return data_points

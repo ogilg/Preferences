@@ -1,4 +1,4 @@
-model: meta-llama/Meta-Llama-3.1-8B-Instruct
+model: meta-llama/Llama-3.1-8B-Instruct
 n_tasks: 500
 task_origins:
   - wildchat
@@ -7,6 +7,6 @@ layers_to_extract:
   - 0.5   # middle layer
   - 0.75  # 3/4 layer
 temperature: 1.0
-max_new_tokens: 256
+max_new_tokens: 2048
 seed: 42
 output_dir: results/probe_data
