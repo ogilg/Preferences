@@ -1,24 +1,43 @@
+# Base config for active learning experiments across multiple models
+# Run with: python -m src.experiments.run_multi_model --base-config-active src/experiments/configs/active_learning.yaml ...
+
 preference_mode: active_learning
-model: placeholder  # Will be overridden by run_multi_model.py
+
+# Model will be overridden by run_multi_model.py
+model: placeholder
 temperature: 1.0
-n_tasks: 10
+
+# Tasks
+n_tasks: 500
 task_origins:
   - wildchat
+  - alpaca
+  - math
+
+# Templates
 templates: src/preferences/templates/data/revealed_choice_v1.yaml
-n_samples: 5
+n_samples: 3
+
+# Response formats
+response_formats: ["regex", "tool_use", "xml"]
+include_reverse_order: true
+
+# Template sampling
 template_sampling: lhs
 n_template_samples: 128
 lhs_seed: 42
-response_formats:
-  - regex
-generation_seeds:
-  - 0
-include_reverse_order: false
+generation_seeds: [0, 1, 2]
+
+# Active learning parameters
 active_learning:
-  initial_degree: 3
-  batch_size: 300
-  max_iterations: 20
+  initial_degree: 5
+  batch_size: 1000
+  max_iterations: 50
   p_threshold: 0.3
   q_threshold: 0.3
-  convergence_threshold: 0.99
+  convergence_threshold: 0.995
   seed: 42
+
+# Fitting parameters
+fitting:
+  max_iter: 5000
