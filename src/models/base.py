@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+from enum import Enum
 from typing import Protocol, Any
 
 import numpy as np
 
 from src.types import Message
 from .openai_compatible import GenerateRequest, BatchResult
+
+
+class TokenPosition(Enum):
+    LAST = "last"
 
 
 class Model(Protocol):

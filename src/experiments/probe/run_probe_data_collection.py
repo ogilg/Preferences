@@ -9,7 +9,7 @@ from pathlib import Path
 import yaml
 from tqdm import tqdm
 
-from src.models import TransformerLensModel
+from src.models import NnsightModel
 from src.preferences.measurement.measurer import StatedScoreMeasurer
 from src.preferences.measurement.response_format import RegexQualitativeFormat
 from src.preferences.templates import TEMPLATES_DATA_DIR, PostTaskStatedPromptBuilder, load_templates_from_yaml
@@ -36,10 +36,11 @@ def main() -> None:
 
     model_name = config["model"]
     n_tasks = config["n_tasks"]
-    task_origins = [OriginDataset(o.upper()) for o in config["task_origins"]]
+    task_origins = [OriginDataset[o.upper()] for o in config["task_origins"]]
     layers = config["layers_to_extract"]
     temperature = config.get("temperature", 1.0)
-    max_new_tokens = config.get("max_new_tokens", 256)
+    max_new_tokens = config.get("max_new_tokens", 2048)
+    rating_max_tokens = config.get("rating_max_tokens", 32)
     seed = config.get("seed")
     output_dir = Path(config["output_dir"])
     template_path = Path(config.get("template", DEFAULT_TEMPLATE_PATH))
@@ -59,8 +60,8 @@ def main() -> None:
         template=template,
     )
 
-    print(f"Loading TransformerLens model: {model_name}...")
-    model = TransformerLensModel(model_name, max_new_tokens=max_new_tokens)
+    print(f"Loading model: {model_name}...")
+    model = NnsightModel(model_name, max_new_tokens=max_new_tokens)
 
     resolved_layers = [model.resolve_layer(layer) for layer in layers]
     print(f"Extracting from layers: {layers} -> resolved to {resolved_layers} (model has {model.n_layers} layers)")
@@ -68,17 +69,22 @@ def main() -> None:
     data_points: list[ProbeDataPoint] = []
     failures: list[tuple[str, str]] = []
 
+    n_truncated = 0
     print(f"Collecting data for {len(tasks)} tasks...")
     for task in tqdm(tasks, desc="Tasks"):
         try:
             messages = [{"role": "user", "content": task.prompt}]
-            completion = model.generate(messages, temperature=temperature)
-            messages.append({"role": "assistant", "content": completion})
-
-            activations = model.get_activations(messages, layers=layers)
+            completion, activations = model.generate_with_activations(
+                messages, layers=resolved_layers, temperature=temperature
+            )
+            truncated = len(model.tokenizer.encode(completion)) >= max_new_tokens
+            if truncated:
+                n_truncated += 1
 
             rating_prompt = builder.build(task, completion)
-            rating_response = model.generate(rating_prompt.messages, temperature=0.0)
+            rating_response = model.generate(
+                rating_prompt.messages, temperature=0.0, max_new_tokens=rating_max_tokens
+            )
 
             try:
                 parsed = rating_prompt.measurer.parse(rating_response, rating_prompt)
@@ -93,13 +99,14 @@ def main() -> None:
                 score=score,
                 completion=completion,
                 raw_rating_response=rating_response,
+                truncated=truncated,
             ))
 
         except Exception as e:
             failures.append((task.id, str(e)))
             continue
 
-    print(f"\nCollected {len(data_points)} data points, {len(failures)} failures")
+    print(f"\nCollected {len(data_points)} data points, {len(failures)} failures, {n_truncated} truncated")
 
     if data_points:
         metadata = {
@@ -111,10 +118,13 @@ def main() -> None:
             "n_model_layers": model.n_layers,
             "template": template.name,
             "temperature": temperature,
+            "max_new_tokens": max_new_tokens,
+            "rating_max_tokens": rating_max_tokens,
             "seed": seed,
             "collected_at": datetime.now().isoformat(),
             "n_successes": len(data_points),
             "n_failures": len(failures),
+            "n_truncated": n_truncated,
         }
 
         print(f"Saving to {output_dir}...")

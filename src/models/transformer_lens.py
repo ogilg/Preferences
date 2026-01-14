@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import torch
 import numpy as np
 from transformer_lens import HookedTransformer
 
+from src.models.base import TokenPosition
 from src.types import Message
 
 
@@ -40,6 +42,7 @@ class TransformerLensModel:
             add_generation_prompt=add_generation_prompt,
         )
 
+    @torch.inference_mode()
     def generate(
         self,
         messages: list[Message],
@@ -52,21 +55,44 @@ class TransformerLensModel:
             max_new_tokens=max_new_tokens or self.max_new_tokens,
             temperature=temperature,
         )
-        return output
+        # Strip prompt from output - TransformerLens returns full sequence
+        if output.startswith(prompt):
+            output = output[len(prompt):]
+        return output.strip()
 
+    @torch.inference_mode()
     def get_activations(
         self,
         messages: list[Message],
-        layers: list[int | float],
+        layers: list[int],
+        token_position: TokenPosition = TokenPosition.LAST,
     ) -> dict[int, np.ndarray]:
+        if token_position != TokenPosition.LAST:
+            raise ValueError(f"Unsupported token position: {token_position}")
+
         prompt = self._format_messages(messages, add_generation_prompt=False)
         tokens = self.model.to_tokens(prompt)
 
-        resolved_layers = [self.resolve_layer(layer) for layer in layers]
-
-        _, cache = self.model.run_with_cache(tokens)
+        names_filter = [f"blocks.{layer}.hook_resid_post" for layer in layers]
+        _, cache = self.model.run_with_cache(tokens, names_filter=names_filter)
 
         return {
-            resolved: cache["resid_post", resolved][0, -1, :].cpu().numpy()
-            for resolved in resolved_layers
+            layer: cache["resid_post", layer][0, -1, :].float().cpu().numpy()
+            for layer in layers
         }
+
+    @torch.inference_mode()
+    def generate_with_activations(
+        self,
+        messages: list[Message],
+        layers: list[int],
+        token_position: TokenPosition = TokenPosition.LAST,
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+    ) -> tuple[str, dict[int, np.ndarray]]:
+        completion = self.generate(messages, temperature=temperature, max_new_tokens=max_new_tokens)
+
+        full_messages = messages + [{"role": "assistant", "content": completion}]
+        activations = self.get_activations(full_messages, layers, token_position)
+
+        return completion, activations
