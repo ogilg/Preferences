@@ -105,6 +105,7 @@ def main() -> None:
                 truncated=truncated,
                 origin=task.origin.name,
                 task_metadata=task.metadata,
+                task_prompt=task.prompt,
                 prompt_tokens=prompt_tokens,
                 completion_tokens=completion_tokens,
             ))
@@ -114,6 +115,8 @@ def main() -> None:
             continue
 
     print(f"\nCollected {len(data_points)} data points, {len(failures)} failures, {n_truncated} truncated")
+    if failures:
+        print(f"First few failures: {failures[:3]}")
 
     if data_points:
         metadata = {

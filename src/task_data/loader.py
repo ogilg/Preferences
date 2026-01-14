@@ -13,7 +13,6 @@ DATA_DIR = Path(__file__).parent / "data"
 FILE_MAPPING = {
     OriginDataset.WILDCHAT: [
         "wildchat_en_8k.jsonl",
-        "wildchat_unclassified_en_35k.jsonl",
     ],
     OriginDataset.ALPACA: ["alpaca_tasks_nemocurator.jsonl"],
     OriginDataset.MATH: ["math.jsonl"],
