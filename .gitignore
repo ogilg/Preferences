@@ -53,4 +53,4 @@ Thumbs.db
 self_docs/
 
 # Generated multi-model configs
-configs/multi_model/
+src/experiments/configs/multi_model/
