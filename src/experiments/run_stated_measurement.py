@@ -88,6 +88,12 @@ def main():
         mean_std = compute_mean_std_across_tasks(batch.successes)
         print(f"  {len(batch.successes)} scores, mean std: {mean_std:.3f}")
 
+        if batch.failures:
+            print(f"  {len(batch.failures)} failures. Sample failures:")
+            for prompt, error in batch.failures[:5]:
+                error_preview = error[:200] if len(error) > 200 else error
+                print(f"    - {error_preview}")
+
         config_dict = build_measurement_config(
             template=cfg.template,
             client=ctx.client,

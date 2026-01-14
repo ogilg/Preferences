@@ -1,0 +1,24 @@
+preference_mode: active_learning
+model: placeholder  # Will be overridden by run_multi_model.py
+temperature: 1.0
+n_tasks: 10
+task_origins:
+  - wildchat
+templates: src/preferences/templates/data/revealed_choice_v1.yaml
+n_samples: 5
+template_sampling: lhs
+n_template_samples: 8
+lhs_seed: 42
+response_formats:
+  - regex
+generation_seeds:
+  - 0
+include_reverse_order: false
+active_learning:
+  initial_degree: 3
+  batch_size: 300
+  max_iterations: 20
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
+  seed: 42

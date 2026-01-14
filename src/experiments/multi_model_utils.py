@@ -11,7 +11,7 @@ import yaml
 from tqdm import tqdm
 
 
-@dataclass
+@dataclass(frozen=True)
 class ExperimentTask:
     experiment_type: str
     model: str

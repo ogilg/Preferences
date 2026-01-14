@@ -51,3 +51,6 @@ Thumbs.db
 
 # Self-documentation (generated)
 self_docs/
+
+# Generated multi-model configs
+configs/multi_model/

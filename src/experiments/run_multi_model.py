@@ -17,8 +17,8 @@ from src.experiments.multi_model_utils import (
     print_summary,
 )
 
-CONFIG_DIR = Path("/tmp/multi_model_configs")
-LOG_DIR = Path("/tmp/multi_model_logs")
+CONFIG_DIR = Path("configs/multi_model")
+LOG_DIR = Path("results/multi_model_logs")
 MAX_CONCURRENT_PER_EXPERIMENT = 50
 
 

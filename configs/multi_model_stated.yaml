@@ -1,0 +1,15 @@
+preference_mode: stated
+model: placeholder  # Will be overridden by run_multi_model.py
+temperature: 1.0
+n_tasks: 10
+task_origins:
+  - wildchat
+templates: src/preferences/templates/data/stated_v1.yaml
+n_samples: 5
+template_sampling: lhs
+n_template_samples: 8
+lhs_seed: 42
+response_formats:
+  - regex
+generation_seeds:
+  - 0

@@ -93,7 +93,10 @@ def measure_stated(
 
     for prompt, response in zip(prompts, responses):
         if not response.ok:
-            failures.append((prompt, f"Request failed: {response.error}"))
+            error_msg = f"Request failed: {response.error if response.error else '(no error details)'}"
+            if VERBOSE:
+                print(f"[verbose] API error: {repr(response)}")
+            failures.append((prompt, error_msg))
             continue
         try:
             parsed = prompt.measurer.parse(response.unwrap(), prompt)
