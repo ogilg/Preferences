@@ -2,13 +2,16 @@
 
 from __future__ import annotations
 
+import re
 import subprocess
 import time
 from dataclasses import dataclass
 from pathlib import Path
 
 import yaml
-from tqdm import tqdm
+from rich.console import Console
+from rich.live import Live
+from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, TaskID
 
 
 @dataclass(frozen=True)
@@ -18,12 +21,19 @@ class ExperimentTask:
     config_path: Path
 
 
+PROGRESS_PATTERN = re.compile(r"\[PROGRESS (\d+)/(\d+)\]")
+
+
 @dataclass
 class RunningExperiment:
     task: ExperimentTask
     process: subprocess.Popen
     start_time: float
     log_file: Path
+    log_position: int = 0
+    current: int = 0
+    total: int = 0
+    progress_task_id: TaskID | None = None
 
 
 def model_to_filename(model: str) -> str:
@@ -97,23 +107,63 @@ def launch_experiment(task: ExperimentTask, log_dir: Path) -> RunningExperiment:
     )
 
 
+def parse_progress_from_log(exp: RunningExperiment) -> tuple[int, int]:
+    """Read new content from log file and extract latest progress."""
+    try:
+        with open(exp.log_file) as f:
+            f.seek(exp.log_position)
+            new_content = f.read()
+            exp.log_position = f.tell()
+    except FileNotFoundError:
+        return exp.current, exp.total
+
+    for match in PROGRESS_PATTERN.finditer(new_content):
+        exp.current = int(match.group(1))
+        exp.total = int(match.group(2))
+
+    return exp.current, exp.total
+
+
+def format_experiment_label(task: ExperimentTask) -> str:
+    """Format experiment label for display."""
+    exp_type = "AL" if task.experiment_type == "active_learning" else "ST"
+    model_short = task.model.split("/")[-1][:25]
+    return f"[{exp_type}] {model_short}"
+
+
 def run_experiments_parallel(
     tasks: list[ExperimentTask],
     log_dir: Path,
 ) -> dict[ExperimentTask, bool]:
-    """Run all experiments in parallel."""
+    """Run all experiments in parallel with individual progress bars."""
+    console = Console()
     pending = list(tasks)
     running: dict[subprocess.Popen, RunningExperiment] = {}
     results: dict[ExperimentTask, bool] = {}
+    completed_messages: list[str] = []
 
-    with tqdm(total=len(tasks), desc="Experiments") as pbar:
+    progress = Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(bar_width=30),
+        TextColumn("[progress.percentage]{task.completed}/{task.total}"),
+        console=console,
+    )
+
+    with Live(progress, console=console, refresh_per_second=2) as live:
         try:
             while pending or running:
                 while pending:
                     task = pending.pop(0)
                     exp = launch_experiment(task, log_dir)
+                    label = format_experiment_label(task)
+                    exp.progress_task_id = progress.add_task(label, total=1)
                     running[exp.process] = exp
-                    print(f"\n[STARTED] {task.experiment_type} - {task.model}")
+
+                for exp in running.values():
+                    current, total = parse_progress_from_log(exp)
+                    if total > 0 and exp.progress_task_id is not None:
+                        progress.update(exp.progress_task_id, completed=current, total=total)
 
                 for proc in list(running.keys()):
                     retcode = proc.poll()
@@ -122,48 +172,53 @@ def run_experiments_parallel(
                         success = retcode == 0
                         results[exp.task] = success
 
-                        duration = time.time() - exp.start_time
-                        status = "SUCCESS" if success else f"FAILED (code {retcode})"
-                        print(f"\n[{status}] {exp.task.experiment_type} - {exp.task.model} ({duration:.1f}s)")
-                        print(f"  Log: {exp.log_file}")
-                        pbar.update(1)
+                        if exp.progress_task_id is not None:
+                            if success:
+                                progress.update(exp.progress_task_id, completed=exp.total, total=exp.total)
+                            progress.remove_task(exp.progress_task_id)
 
-                time.sleep(1)
+                        duration = time.time() - exp.start_time
+                        status = "[green]✓[/green]" if success else f"[red]✗ (code {retcode})[/red]"
+                        label = format_experiment_label(exp.task)
+                        completed_messages.append(f"{status} {label} ({duration:.0f}s)")
+
+                time.sleep(0.5)
 
         except KeyboardInterrupt:
-            print("\n\nShutdown requested, terminating experiments...")
+            console.print("\n[yellow]Shutdown requested, terminating experiments...[/yellow]")
             for proc, exp in running.items():
                 proc.terminate()
-                print(f"Terminated: {exp.task.experiment_type} - {exp.task.model}")
+                console.print(f"[yellow]Terminated: {exp.task.experiment_type} - {exp.task.model}[/yellow]")
                 try:
                     proc.wait(timeout=10)
                 except subprocess.TimeoutExpired:
                     proc.kill()
             raise
 
+    console.print()
+    for msg in completed_messages:
+        console.print(msg)
+
     return results
 
 
 def print_summary(results: dict[ExperimentTask, bool], log_dir: Path):
     """Print summary of experiment results."""
+    console = Console()
     successes = [t for t, success in results.items() if success]
     failures = [t for t, success in results.items() if not success]
 
-    print("\n" + "=" * 60)
-    print("Multi-Model Experiment Summary")
-    print("=" * 60)
-    print(f"Total experiments: {len(results)}")
-    print(f"Successful: {len(successes)}")
-    print(f"Failed: {len(failures)}")
+    console.print("\n" + "=" * 60)
+    console.print("[bold]Multi-Model Experiment Summary[/bold]")
+    console.print("=" * 60)
+    console.print(f"Total experiments: {len(results)}")
+    console.print(f"[green]Successful: {len(successes)}[/green]")
+    if failures:
+        console.print(f"[red]Failed: {len(failures)}[/red]")
 
     if failures:
-        print("\nFAILED:")
+        console.print("\n[red]FAILED:[/red]")
         for task in failures:
             log_file = log_dir / f"{task.experiment_type}_{model_to_filename(task.model)}.log"
-            print(f"  - {task.experiment_type} - {task.model}")
-            print(f"    Log: {log_file}")
-
-    if successes:
-        print("\nSUCCESSFUL:")
-        for task in successes:
-            print(f"  - {task.experiment_type} - {task.model}")
+            console.print(f"  - {task.experiment_type} - {task.model}")
+            console.print(f"    Log: {log_file}")
