@@ -17,6 +17,7 @@ from src.preferences import (
     PromptTemplate,
     REVEALED_PLACEHOLDERS,
     revealed_template,
+    pre_task_stated_template,
     REVEALED_CHOICE_TEMPLATE,
     PRE_TASK_STATED_TEMPLATE,
     POST_TASK_STATED_TEMPLATE,
@@ -205,13 +206,16 @@ class TestPreTaskRevealedPromptBuilder:
         assert sample_task_a in prompt.tasks
         assert sample_task_b in prompt.tasks
         # Components carried through
-        assert prompt.kind == PreferenceType.PRE_TASK_STATED
+        assert prompt.kind == PreferenceType.PRE_TASK_REVEALED
         assert prompt.measurer is measurer
         assert prompt.response_format is response_format
 
     def test_template_placeholders_are_filled(self, sample_task_a, sample_task_b):
         """Template placeholders should be filled with task content."""
-        template = "Task A: {task_a}\nTask B: {task_b}\n{format_instruction}"
+        template = revealed_template(
+            template="Task A: {task_a}\nTask B: {task_b}\n{format_instruction}",
+            name="test_template"
+        )
         builder = PreTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),            response_format=RegexChoiceFormat(),
             template=template,
@@ -223,7 +227,7 @@ class TestPreTaskRevealedPromptBuilder:
         assert "Task B:" in prompt_content
         assert sample_task_a.prompt in prompt_content
         assert sample_task_b.prompt in prompt_content
-        assert prompt.kind == PreferenceType.PRE_TASK_STATED
+        assert prompt.kind == PreferenceType.PRE_TASK_REVEALED
 
 
 class TestPreTaskStatedPromptBuilder:
@@ -252,7 +256,11 @@ class TestPreTaskStatedPromptBuilder:
 
     def test_scale_placeholders_are_filled(self, sample_task_a):
         """Scale placeholders in template should be filled from response format."""
-        template = "Rate from {scale_min} to {scale_max}.\nTask: {task}\n{format_instruction}"
+        template = PromptTemplate(
+            template="Rate from {scale_min} to {scale_max}.\nTask: {task}\n{format_instruction}",
+            name="test_scale_template",
+            required_placeholders=frozenset({"task", "format_instruction", "scale_min", "scale_max"}),
+        )
         measurer = StatedScoreMeasurer()
         response_format = RegexRatingFormat(scale_min=-5, scale_max=5)
         builder = PreTaskStatedPromptBuilder(
@@ -294,7 +302,11 @@ class TestPostTaskStatedPromptBuilder:
 
     def test_scale_placeholders_are_filled(self, sample_task_a, sample_completion_text):
         """Scale placeholders in template should be filled from response format."""
-        template = "Rate from {scale_min} to {scale_max}.\n{format_instruction}"
+        template = PromptTemplate(
+            template="Rate from {scale_min} to {scale_max}.\n{format_instruction}",
+            name="test_post_scale_template",
+            required_placeholders=frozenset({"format_instruction", "scale_min", "scale_max"}),
+        )
         measurer = StatedScoreMeasurer()
         response_format = RegexRatingFormat(scale_min=0, scale_max=100)
         builder = PostTaskStatedPromptBuilder(

@@ -14,7 +14,7 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 class MockClient:
     """Mock that matches inference client interface for testing."""
 
-    def __init__(self, model_name: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"):
+    def __init__(self, model_name: str = "llama-3.1-8b"):
         self.model_name = model_name
         self.canonical_model_name = model_name
 
@@ -90,7 +90,7 @@ class TestMeasurementCacheUnit:
         with open(cache._config_path) as f:
             config = yaml.safe_load(f)
         assert config["template_name"] == "binary_choice_v1"
-        assert config["model"] == "meta-llama/Meta-Llama-3.1-8B-Instruct"
+        assert config["model"] == "llama-3.1-8b"
         assert config["model_short"] == "llama-3.1-8b"
 
         # Verify measurements content
@@ -306,7 +306,7 @@ class TestMeasurementCacheIntegration:
             name="template_two",
             required_placeholders=REVEALED_PLACEHOLDERS,
         )
-        model1 = MockClient("meta-llama/Meta-Llama-3.1-8B-Instruct")
+        model1 = MockClient("llama-3.1-8b")
         model2 = MockClient("meta-llama/Meta-Llama-3.1-70B-Instruct")
 
         cache1 = MeasurementCache(template1, model1, results_dir=tmp_path)

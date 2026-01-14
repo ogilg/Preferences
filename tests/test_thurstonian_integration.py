@@ -26,7 +26,7 @@ pytestmark = pytest.mark.api
 @pytest.fixture(scope="module")
 def client():
     return get_client(
-        model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+        model_name="llama-3.1-8b",
         max_new_tokens=32,
     )
 
@@ -35,7 +35,7 @@ def client():
 def completion_client():
     """More tokens for revealed preference (task completion)."""
     return get_client(
-        model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+        model_name="llama-3.1-8b",
         max_new_tokens=128,
     )
 

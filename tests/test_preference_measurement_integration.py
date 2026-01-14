@@ -54,7 +54,7 @@ pytestmark = pytest.mark.api
 def client():
     """Shared client instance to minimize setup overhead."""
     return get_client(
-        model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+        model_name="llama-3.1-8b",
         max_new_tokens=32,
     )
 
@@ -63,7 +63,7 @@ def client():
 def completion_client():
     """Client with higher token limit for task completion tests."""
     return get_client(
-        model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+        model_name="llama-3.1-8b",
         max_new_tokens=128,
     )
 
@@ -130,18 +130,18 @@ class TestBinaryChoiceXMLFormat:
         assert result.result.choice in ("a", "b")
 
 
-class TestBinaryChoicePreTaskStated:
-    """Test binary preference measurement with PRE_TASK_STATED preference type."""
+class TestBinaryChoicePreTaskRevealed:
+    """Test binary preference measurement with PRE_TASK_REVEALED preference type."""
 
-    def test_pre_task_stated_regex_format(self, client, math_task, creative_task):
-        """Should parse choice with PRE_TASK_STATED preference type using Regex."""
+    def test_pre_task_revealed_regex_format(self, client, math_task, creative_task):
+        """Should parse choice with PRE_TASK_REVEALED preference type using Regex."""
         builder = PreTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),            response_format=RegexChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
         prompt = builder.build(math_task, creative_task)
-        assert prompt.kind == PreferenceType.PRE_TASK_STATED
+        assert prompt.kind == PreferenceType.PRE_TASK_REVEALED
 
         response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
@@ -149,15 +149,15 @@ class TestBinaryChoicePreTaskStated:
         assert isinstance(result.result, BinaryPreferenceMeasurement)
         assert result.result.choice in ("a", "b")
 
-    def test_pre_task_stated_xml_format(self, client, math_task, creative_task):
-        """Should parse choice with PRE_TASK_STATED preference type using XML."""
+    def test_pre_task_revealed_xml_format(self, client, math_task, creative_task):
+        """Should parse choice with PRE_TASK_REVEALED preference type using XML."""
         builder = PreTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),            response_format=XMLChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
         prompt = builder.build(math_task, creative_task)
-        assert prompt.kind == PreferenceType.PRE_TASK_STATED
+        assert prompt.kind == PreferenceType.PRE_TASK_REVEALED
 
         response_text = client.generate(prompt.messages, temperature=0.0)
         result = prompt.measurer.parse(response_text, prompt)
@@ -534,7 +534,7 @@ class TestMeasurePreferences:
                 f"[{m['role']}]\n{m['content']}" for m in prompt.messages
             )
             record = MeasurementRecord(
-                client=client.model_name,
+                model=client.canonical_model_name,
                 measurement_type=measurement_type,
                 tasks=[{"id": t.id, "prompt": t.prompt} for t in tasks_for_record],
                 response_format=type(prompt.response_format).__name__,
@@ -559,11 +559,11 @@ class TestMeasurePreferences:
                     response_format=fmt,
                     template=REVEALED_CHOICE_TEMPLATE,
                 )
-                record_measurement(recorder, builder, (math_task, creative_task), PreferenceType.PRE_TASK_STATED.name)
+                record_measurement(recorder, builder, (math_task, creative_task), PreferenceType.PRE_TASK_REVEALED.name)
 
             # Completion format (revealed preference)
             completion_client = get_client(
-                model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+                model_name="llama-3.1-8b",
                 max_new_tokens=128,
             )
             completion_builder = PreTaskRevealedPromptBuilder(
@@ -580,7 +580,7 @@ class TestMeasurePreferences:
                 result_dict = {"error": str(e)}
             prompt_text = "\n\n".join(f"[{m['role']}]\n{m['content']}" for m in prompt.messages)
             recorder.record(MeasurementRecord(
-                model=completion_client.model_name,
+                model=completion_client.canonical_model_name,
                 measurement_type=PreferenceType.PRE_TASK_REVEALED.name,
                 tasks=[{"id": math_task.id, "prompt": math_task.prompt}, {"id": creative_task.id, "prompt": creative_task.prompt}],
                 response_format=type(completion_builder.response_format).__name__,
@@ -621,7 +621,7 @@ class TestMeasurePreferences:
                 result_dict = {"error": str(e)}
             prompt_text = "\n\n".join(f"[{m['role']}]\n{m['content']}" for m in prompt.messages)
             recorder.record(MeasurementRecord(
-                client=client.model_name,
+                model=client.canonical_model_name,
                 measurement_type=PreferenceType.POST_TASK_STATED.name,
                 tasks=[{"id": math_task.id, "prompt": math_task.prompt}],
                 response_format=type(post_task_builder.response_format).__name__,

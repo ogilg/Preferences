@@ -15,7 +15,7 @@ pytestmark = pytest.mark.api
 @pytest.fixture(scope="module")
 def llama_client():
     return get_client(
-        model_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+        model_name="llama-3.1-8b",
         max_new_tokens=64,
     )
 

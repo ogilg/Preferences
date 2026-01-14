@@ -25,7 +25,7 @@ from src.probes.data import ProbeDataPoint, save_probe_dataset, load_probe_datas
 
 pytestmark = pytest.mark.gpu
 
-MODEL_NAME = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+MODEL_NAME = "llama-3.1-8b"
 
 
 @pytest.fixture(scope="module")

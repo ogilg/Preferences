@@ -61,17 +61,17 @@ PROVIDERS = {
     "hyperbolic": {
         "base_url": "https://api.hyperbolic.xyz/v1",
         "env_var": "HYPERBOLIC_API_KEY",
-        "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",  # Provider-specific name
     },
     "cerebras": {
         "base_url": "https://api.cerebras.ai/v1",
         "env_var": "CEREBRAS_API_KEY",
-        "model": "llama3.1-8b",
+        "model": "llama3.1-8b",  # Provider-specific name
     },
     "openrouter": {
         "base_url": "https://openrouter.ai/api/v1",
         "env_var": "OPENROUTER_API_KEY",
-        "model": "meta-llama/llama-3.1-8b-instruct",
+        "model": "meta-llama/llama-3.1-8b-instruct",  # Provider-specific name
     },
 }
 
