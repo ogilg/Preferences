@@ -1,4 +1,6 @@
-Log research results to docs/research_log.md. Optional argument: $ARGUMENTS (description of what to log)
+Log research results. Argument: $ARGUMENTS — optional `[category]` prefix, description, or both.
+
+Category determines the log file: `docs/logs/{category}.md` and assets go to `docs/logs/assets/{category}/`. If no category given, infer from context: current branch name, recent work, or natural language hints in the argument.
 
 ## Process
 
@@ -10,29 +12,29 @@ Log research results to docs/research_log.md. Optional argument: $ARGUMENTS (des
    - Config files that were used
 
 3. **Archive plots**: For each plot to include:
-   - Copy to `docs/log_assets/` (create dir if needed)
+   - Copy to `docs/logs/assets/{category}/` (create dir if needed)
    - Rename to `plot_{mmddYY}_description.png` (e.g. `plot_011326_sensitivity_regression.png`)
-   - Reference with path relative to docs/: `log_assets/plot_....png`
+   - Reference with path relative to the log file: `assets/{category}/plot_....png`
 
-4. **Create log entry**: Append to `docs/research_log.md` with this structure:
+4. **Create log entry**: Append to `docs/logs/{category}.md` with this structure:
    ```markdown
    ## YYYY-MM-DD: [Brief title]
 
    [Description from $ARGUMENTS or inferred from context]
 
    ### Plots
-   ![description](log_assets/plot_{mmddYY}_description.png)
+   ![description](assets/{category}/plot_{mmddYY}_description.png)
 
    ### Key Results
    - Bullet points of important findings/metrics
    ```
 
-5. **Create the file** if `docs/research_log.md` doesn't exist, with a simple header.
+5. **Create the file** if `docs/logs/{category}.md` doesn't exist, with a simple header.
 
 ## Guidelines
 
 - Keep entries concise — this is a log, not a report
-- Always archive plots to `docs/log_assets/` so they persist if originals are overwritten
+- Always archive plots to `docs/logs/assets/` so they persist if originals are overwritten
 - Use relative paths for images so the markdown renders on GitHub
 - Focus on what changed or what was learned, not exhaustive details
-- If $ARGUMENTS is empty, infer the description from conversation context
+- If $ARGUMENTS is empty, infer both category and description from context
