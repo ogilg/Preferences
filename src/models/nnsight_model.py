@@ -60,7 +60,12 @@ class NnsightModel:
         prompt = self._format_messages(messages)
         max_tokens = max_new_tokens or self.max_new_tokens
 
-        with self.model.generate(prompt, max_new_tokens=max_tokens, temperature=temperature):
+        if temperature == 0.0:
+            gen_kwargs = {"do_sample": False}
+        else:
+            gen_kwargs = {"temperature": temperature}
+
+        with self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs):
             output = self.model.generator.output.save()
 
         prompt_len = len(self.tokenizer.encode(prompt))
@@ -86,7 +91,12 @@ class NnsightModel:
         prompt = self._format_messages(messages)
         max_tokens = max_new_tokens or self.max_new_tokens
 
-        with self.model.generate(prompt, max_new_tokens=max_tokens, temperature=temperature):
+        if temperature == 0.0:
+            gen_kwargs = {"do_sample": False}
+        else:
+            gen_kwargs = {"temperature": temperature}
+
+        with self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs):
             output = self.model.generator.output.save()
 
         prompt_len = len(self.tokenizer.encode(prompt))
