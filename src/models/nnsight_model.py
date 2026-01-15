@@ -6,7 +6,7 @@ import numpy as np
 import torch
 from nnsight import LanguageModel
 
-from src.models.base import TokenPosition
+from src.models.base import ActivationReduction, TokenPosition
 from src.models.registry import get_transformer_lens_name
 from src.types import Message
 
@@ -114,10 +114,67 @@ class NnsightModel:
         if token_position != TokenPosition.LAST:
             raise ValueError(f"Only LAST token position supported for generation, got {token_position}")
 
+        # Step 1: Generate completion
+        with torch.no_grad(), self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs):
+            output = self.model.generator.output.save()
+
+        prompt_tokens = len(self.tokenizer.encode(prompt))
+        completion_tokens = len(output[0]) - prompt_tokens
+        completion = self.tokenizer.decode(output[0][prompt_tokens:], skip_special_tokens=True).strip()
+
+        # Step 2: Trace full sequence to get activations at last token
+        full_messages = messages + [{"role": "assistant", "content": completion}]
+        full_text = self._format_messages(full_messages, add_generation_prompt=False)
+        layer_modules = [self.model.model.layers[layer] for layer in layers]
+
+        with self.model.trace(full_text) as tracer:
+            cache = tracer.cache(modules=layer_modules)
+
+        activations = {}
+        for layer in layers:
+            module_key = f"model.model.layers.{layer}"
+            hidden_states = cache[module_key].output[0]  # (seq_len, hidden_dim)
+            activations[layer] = hidden_states[-1, :].float().cpu().detach().numpy()
+
+        return GenerationResult(
+            completion=completion,
+            activations=activations,
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+        )
+
+    def generate_with_activations_efficient(
+        self,
+        messages: list[Message],
+        layers: list[int],
+        reduction: ActivationReduction = ActivationReduction.LAST,
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+        chunk_size: int = 10,
+    ) -> GenerationResult:
+        """Single-pass generation with activation extraction.
+
+        More efficient than generate_with_activations as it captures activations
+        during generation rather than in a separate forward pass.
+
+        Args:
+            reduction: How to reduce activations across generated tokens.
+                LAST: Only the last generated token's activation (hidden_dim,)
+                MEAN: Mean across all generated tokens (hidden_dim,)
+                CHUNKED_MEAN: Mean of chunk_size-token chunks (n_chunks, hidden_dim)
+            chunk_size: Size of chunks for CHUNKED_MEAN reduction.
+        """
+        prompt = self._format_messages(messages)
+        max_tokens = max_new_tokens or self.max_new_tokens
+
+        if temperature == 0.0:
+            gen_kwargs = {"do_sample": False, "pad_token_id": self.tokenizer.eos_token_id}
+        else:
+            gen_kwargs = {"temperature": temperature, "pad_token_id": self.tokenizer.eos_token_id}
+
         with torch.no_grad(), self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs) as tracer:
             output = self.model.generator.output.save()
 
-            # Collect activations at each generation step, we'll take the last one
             layer_activations = {layer: list().save() for layer in layers}
             with tracer.iter[:]:
                 for layer in layers:
@@ -128,10 +185,20 @@ class NnsightModel:
         completion_tokens = len(output[0]) - prompt_tokens
         completion = self.tokenizer.decode(output[0][prompt_tokens:], skip_special_tokens=True).strip()
 
-        # Take the last activation from each layer, discard the rest
         activations = {}
         for layer, acts in layer_activations.items():
-            activations[layer] = acts[-1].float().cpu().detach().numpy()
+            stacked = np.stack([a.float().cpu().numpy() for a in acts])
+            if reduction == ActivationReduction.LAST:
+                activations[layer] = stacked[-1]
+            elif reduction == ActivationReduction.MEAN:
+                activations[layer] = stacked.mean(axis=0)
+            elif reduction == ActivationReduction.CHUNKED_MEAN:
+                n_tokens = stacked.shape[0]
+                n_chunks = (n_tokens + chunk_size - 1) // chunk_size
+                padded = np.zeros((n_chunks * chunk_size, stacked.shape[1]), dtype=stacked.dtype)
+                padded[:n_tokens] = stacked
+                chunked = padded.reshape(n_chunks, chunk_size, -1)
+                activations[layer] = chunked.mean(axis=1)
             acts.clear()
         del layer_activations
 

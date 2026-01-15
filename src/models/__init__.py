@@ -1,4 +1,4 @@
-from .base import Model, ConfigurableMockModel, TokenPosition
+from .base import Model, ConfigurableMockModel, TokenPosition, ActivationReduction
 from .nnsight_model import NnsightModel, GenerationResult
 from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
 from .registry import (
@@ -34,6 +34,7 @@ __all__ = [
     "Model",
     "ConfigurableMockModel",
     "TokenPosition",
+    "ActivationReduction",
     "NnsightModel",
     "GenerationResult",
     "TransformerLensModel",
