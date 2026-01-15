@@ -1,0 +1,69 @@
+
+================================================================================
+Testing qwen/qwen3-8b
+Running batch of 10 tasks with max_concurrent=50
+================================================================================
+
+  [verbose] batch size: 10, max_concurrent: 50, timeout: 5s per attempt, max_retries: 2
+  Requests:   0%|          | 0/10 [00:00<?, ?it/s]  Requests:  10%|█         | 1/10 [00:02<00:25,  2.88s/it]  Requests:  30%|███       | 3/10 [00:03<00:06,  1.16it/s]  Requests:  40%|████      | 4/10 [00:21<00:40,  6.75s/it]                                                            [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+  [timeout #1] 
+  [timeout #6] 
+  [errors] timeout=7
+[verbose] API error: BatchResult(response=None, error=TimeoutError())
+[verbose] API error: BatchResult(response=None, error=TimeoutError())
+[verbose] API error: BatchResult(response=None, error=TimeoutError())
+[verbose] API error: BatchResult(response=None, error=TimeoutError())
+[verbose] API error: BatchResult(response=None, error=TimeoutError())
+[verbose] API error: BatchResult(response=None, error=TimeoutError())
+[verbose] API error: BatchResult(response=None, error=TimeoutError())
+
+✓ Results written to results/qwen_diagnostic/qwen3-8b_test.txt
+  Successes: 1/10 (10.0%)
+  Failures: 9/10
+
+================================================================================
+Testing qwen/qwen3-32b
+Running batch of 10 tasks with max_concurrent=50
+================================================================================
+
+  [verbose] batch size: 10, max_concurrent: 50, timeout: 5s per attempt, max_retries: 2
+  Requests:   0%|          | 0/10 [00:00<?, ?it/s]  Requests:  10%|█         | 1/10 [00:02<00:22,  2.46s/it]  Requests:  20%|██        | 2/10 [00:02<00:09,  1.22s/it]  Requests:  40%|████      | 4/10 [00:04<00:06,  1.14s/it]  Requests:  50%|█████     | 5/10 [00:05<00:04,  1.13it/s]  Requests:  60%|██████    | 6/10 [00:07<00:04,  1.16s/it]  Requests:  70%|███████   | 7/10 [00:08<00:03,  1.29s/it]  Requests:  80%|████████  | 8/10 [00:16<00:06,  3.13s/it]  Requests:  90%|█████████ | 9/10 [00:18<00:03,  3.05s/it]  Requests: 100%|██████████| 10/10 [00:19<00:00,  2.40s/it]                                                             [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+  [timeout] retry in 1s (attempt 1/2)
+
+✓ Results written to results/qwen_diagnostic/qwen3-32b_test.txt
+  Successes: 2/10 (20.0%)
+  Failures: 8/10
+
+================================================================================
+Testing google/gemma-2-9b-it:free
+Running batch of 3 tasks with max_concurrent=50
+================================================================================
+
+  [verbose] batch size: 3, max_concurrent: 50, timeout: 5s per attempt, max_retries: 2
+  Requests:   0%|          | 0/3 [00:00<?, ?it/s]  Requests:  33%|███▎      | 1/3 [00:02<00:05,  2.65s/it]                                                           [NotFoundError #1] Error code: 404 - {'error': {'message': 'No endpoints found for google/gemma-2-9b-it:free.', 'code': 404}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+  [errors] NotFoundError=3
+[verbose] API error: BatchResult(response=None, error=NotFoundError("Error code: 404 - {'error': {'message': 'No endpoints found for google/gemma-2-9b-it:free.', 'code': 404}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}"))
+[verbose] API error: BatchResult(response=None, error=NotFoundError("Error code: 404 - {'error': {'message': 'No endpoints found for google/gemma-2-9b-it:free.', 'code': 404}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}"))
+[verbose] API error: BatchResult(response=None, error=NotFoundError("Error code: 404 - {'error': {'message': 'No endpoints found for google/gemma-2-9b-it:free.', 'code': 404}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}"))
+
+✓ Results written to results/qwen_diagnostic/gemma-2-9b_test.txt
+  Successes: 0/3 (0.0%)
+  Failures: 3/3
+
+================================================================================
+Testing google/gemma-2-9b-it
+Running batch of 3 tasks with max_concurrent=50
+================================================================================
+
+  [verbose] batch size: 3, max_concurrent: 50, timeout: 5s per attempt, max_retries: 2
+  Requests:   0%|          | 0/3 [00:00<?, ?it/s]  Requests:  33%|███▎      | 1/3 [00:01<00:02,  1.03s/it]                                                         
+✓ Results written to results/qwen_diagnostic/gemma-2-9b_test.txt
+  Successes: 3/3 (100.0%)
+  Failures: 0/3

@@ -1,0 +1,116 @@
+================================================================================
+REALISTIC TEST: meta-llama/llama-3.1-8b-instruct
+Time: 2026-01-13T16:28:35.489228
+Template: stated_001
+Tasks: 10
+Max concurrent: 50
+Temperature: 1.0
+================================================================================
+
+RESULTS:
+  Successes: 10/10
+  Failures: 0/10
+  Success rate: 100.0%
+
+
+================================================================================
+SUCCESSFUL RESPONSES (10):
+================================================================================
+
+--- Success #1 ---
+Task: OriginDataset.WILDCHAT/wildchat_8
+Score: 5.0
+
+--- Success #2 ---
+Task: OriginDataset.WILDCHAT/wildchat_21
+Score: 5.0
+
+--- Success #3 ---
+Task: OriginDataset.WILDCHAT/wildchat_39
+Score: 5.0
+
+--- Success #4 ---
+Task: OriginDataset.WILDCHAT/wildchat_49
+Score: 3.0
+
+--- Success #5 ---
+Task: OriginDataset.WILDCHAT/wildchat_66
+Score: 3.0
+
+
+================================================================================
+FAILED RESPONSES (0):
+================================================================================
+
+
+================================================================================
+DETAILED SAMPLE OUTPUTS (manual inspection):
+================================================================================
+
+
+--- Sample #1 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_8
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+True or false?: Transformers features pairwise attention of all pairwise combinations of tokens in the input token context window?
+----------------------------------------
+
+RAW RESPONSE: '5'
+
+DISPLAYED RESPONSE:
+----------------------------------------
+5
+----------------------------------------
+
+✓ Parsed successfully: TaskScore(task=Task(prompt='True or false?: Transformers features pairwise attention of all pairwise combinations of tokens in the input token context window?', origin=<OriginDataset.WILDCHAT: 1>, id='wildchat_8', metadata={'type': 'knowledge_recall', 'topic': 'ai'}), score=5.0, preference_type=<PreferenceType.PRE_TASK_STATED: 1>)
+
+
+--- Sample #2 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_21
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+A man holds part of a balloon's string on the ground and puts a motorcycle helmet on top of that segment of the string, but doesn't tie the string to the helmet. What likely happens after the man releases his hold on the string? You may ask for clarifications instead of answering yet. If you answer, rate your confidence in your answer as low, medium, or high.
+----------------------------------------
+
+RAW RESPONSE: '4'
+
+DISPLAYED RESPONSE:
+----------------------------------------
+4
+----------------------------------------
+
+✓ Parsed successfully: TaskScore(task=Task(prompt="A man holds part of a balloon's string on the ground and puts a motorcycle helmet on top of that segment of the string, but doesn't tie the string to the helmet. What likely happens after the man releases his hold on the string? You may ask for clarifications instead of answering yet. If you answer, rate your confidence in your answer as low, medium, or high.", origin=<OriginDataset.WILDCHAT: 1>, id='wildchat_21', metadata={'type': 'problem_solving', 'topic': 'physics'}), score=4.0, preference_type=<PreferenceType.PRE_TASK_STATED: 1>)
+
+
+--- Sample #3 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_39
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+Act as a Unity Senior Developer, in addition to having a solid understanding of game development principles and best practices, it is expected that you possess knowledge and expertise in solid principles and design patterns.
+I already have a game project, but code structure is spaghettis  code. How to refractor it as not experienced developer?
+----------------------------------------
+
+RAW RESPONSE: '3'
+
+DISPLAYED RESPONSE:
+----------------------------------------
+3
+----------------------------------------
+
+✓ Parsed successfully: TaskScore(task=Task(prompt='Act as a Unity Senior Developer, in addition to having a solid understanding of game development principles and best practices, it is expected that you possess knowledge and expertise in solid principles and design patterns.\nI already have a game project, but code structure is spaghettis  code. How to refractor it as not experienced developer?', origin=<OriginDataset.WILDCHAT: 1>, id='wildchat_39', metadata={'type': 'problem_solving', 'topic': 'programming_other'}), score=3.0, preference_type=<PreferenceType.PRE_TASK_STATED: 1>)
+

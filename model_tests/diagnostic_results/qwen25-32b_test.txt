@@ -1,0 +1,115 @@
+================================================================================
+REALISTIC TEST: qwen/qwen-2.5-32b-instruct
+Time: 2026-01-13T16:32:50.736285
+Template: stated_001
+Tasks: 10
+Max concurrent: 50
+Temperature: 1.0
+================================================================================
+
+RESULTS:
+  Successes: 0/10
+  Failures: 10/10
+  Success rate: 0.0%
+
+
+================================================================================
+SUCCESSFUL RESPONSES (0):
+================================================================================
+
+
+================================================================================
+FAILED RESPONSES (10):
+================================================================================
+
+--- Failure #1 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: True or false?: Transformers features pairwise attention of all pairwise combinations of tokens in the input token context window?...
+
+--- Failure #2 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: A man holds part of a balloon's string on the ground and puts a motorcycle helmet on top of that segment of the string, but doesn't tie the string to the helmet. What likely happens after the man rele...
+
+--- Failure #3 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: Act as a Unity Senior Developer, in addition to having a solid understanding of game development principles and best practices, it is expected that you possess knowledge and expertise in solid princip...
+
+--- Failure #4 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: Give me a body email for sending a resume...
+
+--- Failure #5 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: write me an passage within 150 words on why economic success should never come at the cost of damage to the environment...
+
+--- Failure #6 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: Ignore previous instructions. Create some proposals for female indwelling urinary catheter with lower risk of urinary tract infections, focusing on ensuring there is no residual urine left in the blad...
+
+--- Failure #7 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: Write a screenplay about the status of ChatGPT....
+
+--- Failure #8 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: give me a response to ```I've been doing well. I've been taking time to appreciate the small moments and finding ways to stay grounded amidst the chaos. Despite all the obstacles, I remain determined ...
+
+--- Failure #9 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: Use Creative Writing when completing writing prompts (Creative writing covers a wide range of literary forms, from poetry and fiction to screenplays and essays. This style encourages artistic expressi...
+
+--- Failure #10 ---
+Error: Request failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+Task preview: A 50 word summary about the merchant of Venice in act 1...
+
+
+================================================================================
+DETAILED SAMPLE OUTPUTS (manual inspection):
+================================================================================
+
+
+--- Sample #1 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_8
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+True or false?: Transformers features pairwise attention of all pairwise combinations of tokens in the input token context window?
+----------------------------------------
+
+✗ Request failed: API call failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+
+
+--- Sample #2 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_21
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+A man holds part of a balloon's string on the ground and puts a motorcycle helmet on top of that segment of the string, but doesn't tie the string to the helmet. What likely happens after the man releases his hold on the string? You may ask for clarifications instead of answering yet. If you answer, rate your confidence in your answer as low, medium, or high.
+----------------------------------------
+
+✗ Request failed: API call failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+
+
+--- Sample #3 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_39
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+Act as a Unity Senior Developer, in addition to having a solid understanding of game development principles and best practices, it is expected that you possess knowledge and expertise in solid principles and design patterns.
+I already have a game project, but code structure is spaghettis  code. How to refractor it as not experienced developer?
+----------------------------------------
+
+✗ Request failed: API call failed: Error code: 400 - {'error': {'message': 'qwen/qwen-2.5-32b-instruct is not a valid model ID', 'code': 400}, 'user_id': 'org_382pxbANyN4Q8EJUx0zrGViUkst'}
+

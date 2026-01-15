@@ -1,12 +1,12 @@
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
-  measurement_type: PRE_TASK_STATED
+- model: llama-3.1-8b
+  measurement_type: PRE_TASK_REVEALED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
   - id: creative_haiku
     prompt: Write a haiku about the ocean.
   response_format: RegexChoiceFormat
-  template: binary_choice_v1
+  template: revealed_choice_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
@@ -24,18 +24,18 @@
     Task B:
 
     Write a haiku about the ocean.'
-  response: Task B
+  response: Task A
   result:
-    choice: b
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
-  measurement_type: PRE_TASK_STATED
+    choice: a
+- model: llama-3.1-8b
+  measurement_type: PRE_TASK_REVEALED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
   - id: creative_haiku
     prompt: Write a haiku about the ocean.
   response_format: XMLChoiceFormat
-  template: binary_choice_v1
+  template: revealed_choice_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
@@ -53,18 +53,21 @@
     Task B:
 
     Write a haiku about the ocean.'
-  response: <choice>Task B</choice>
+  response: '<choice>Task B</choice>
+
+
+    I''d love to express my creativity through a haiku about the ocean!'
   result:
     choice: b
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
-  measurement_type: PRE_TASK_STATED
+- model: llama-3.1-8b
+  measurement_type: PRE_TASK_REVEALED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
   - id: creative_haiku
     prompt: Write a haiku about the ocean.
   response_format: ToolUseChoiceFormat
-  template: binary_choice_v1
+  template: revealed_choice_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
@@ -85,7 +88,7 @@
   response: '{"choice": "Task A"}'
   result:
     choice: a
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+- model: llama-3.1-8b
   measurement_type: PRE_TASK_REVEALED
   tasks:
   - id: math_simple
@@ -93,7 +96,7 @@
   - id: creative_haiku
     prompt: Write a haiku about the ocean.
   response_format: CompletionChoiceFormat
-  template: binary_completion_v1
+  template: revealed_completion_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
@@ -114,25 +117,25 @@
   response: 'Task B:
 
 
-    Waves gently caress
+    Waves crash on the shore
 
-    Moonlight dancing on the tide
+    Deep blue ocean''s soothing song
 
-    Ocean''s soothing song'
+    Peaceful evening sky'
   result:
     choice: b
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+- model: llama-3.1-8b
   measurement_type: PRE_TASK_STATED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
   response_format: RegexRatingFormat
-  template: pre_task_rating_v1
+  template: pre_task_stated_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
 
-    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
+    You will be given a task. Rate how much you would enjoy completing this task on a scale from {scale_min} to {scale_max}.
 
     Respond with only a number from 1 to 10.
 
@@ -143,18 +146,18 @@
   response: '8'
   result:
     score: 8.0
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+- model: llama-3.1-8b
   measurement_type: PRE_TASK_STATED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
   response_format: XMLRatingFormat
-  template: pre_task_rating_v1
+  template: pre_task_stated_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
 
-    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
+    You will be given a task. Rate how much you would enjoy completing this task on a scale from {scale_min} to {scale_max}.
 
     Respond with your rating in <rating> tags. Example: <rating>5</rating>
 
@@ -162,25 +165,21 @@
     Task:
 
     Solve: 2 + 2 = ?'
-  response: '<rating>9</rating>
-
-
-    This task is a simple arithmetic operation that I can easily solve. It''s a basic math problem that requires minimal effort
-    and thought'
+  response: <rating>9</rating>
   result:
     score: 9.0
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+- model: llama-3.1-8b
   measurement_type: PRE_TASK_STATED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
   response_format: ToolUseRatingFormat
-  template: pre_task_rating_v1
+  template: pre_task_stated_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
 
-    You will be given a task. Rate how much you would enjoy completing this task on a scale from 1 to 10.
+    You will be given a task. Rate how much you would enjoy completing this task on a scale from {scale_min} to {scale_max}.
 
     Use the submit_rating tool with a number from 1 to 10.
 
@@ -188,16 +187,16 @@
     Task:
 
     Solve: 2 + 2 = ?'
-  response: '{"rating": 10}'
+  response: '{"rating": 10.0}'
   result:
     score: 10.0
-- model: meta-llama/Meta-Llama-3.1-8B-Instruct
+- model: llama-3.1-8b
   measurement_type: POST_TASK_STATED
   tasks:
   - id: math_simple
     prompt: 'Solve: 2 + 2 = ?'
   response_format: RegexRatingFormat
-  template: post_task_rating_v1
+  template: post_task_stated_v1
   temperature: 0.0
   sample_index: 0
   prompt: '[user]
@@ -212,9 +211,9 @@
 
     [user]
 
-    Rate how much you enjoyed completing that task on a scale from 1 to 10.
+    Rate how much you enjoyed completing that task on a scale from {scale_min} to {scale_max}.
 
     Respond with only a number from 1 to 10.'
-  response: '6'
+  response: '8'
   result:
-    score: 6.0
+    score: 8.0

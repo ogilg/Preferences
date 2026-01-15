@@ -7,6 +7,7 @@ class OriginDataset(Enum):
     ALPACA = auto()
     MATH = auto()
     SYNTHETIC = auto()
+    BAILBENCH = auto()
 
 
 @dataclass

@@ -10,6 +10,12 @@ from typing import Any, Callable
 import openai
 from openai import AsyncOpenAI, OpenAI
 
+from src.models.registry import (
+    get_hyperbolic_name,
+    get_cerebras_name,
+    get_openrouter_name,
+    is_valid_model,
+)
 from src.models.retry import with_retries, with_retries_async
 from src.types import Message
 
@@ -81,15 +87,18 @@ class OpenAICompatibleClient(ABC):
     @abstractmethod
     def _default_model(self) -> str: ...
 
-    _model_aliases: dict[str, str] = {}
+    @abstractmethod
+    def _get_provider_name(self, canonical_name: str) -> str:
+        """Convert canonical model name to provider-specific name."""
+        ...
 
     def _resolve_model_name(self, model_name: str | None) -> tuple[str, str]:
         """Returns (canonical_name, provider_model_name)."""
-        if model_name is None:
-            return (self._default_model, self._default_model)
-        if model_name in self._model_aliases:
-            return (model_name, self._model_aliases[model_name])
-        return (model_name, model_name)
+        canonical = model_name or self._default_model
+        if is_valid_model(canonical):
+            provider_name = self._get_provider_name(canonical)
+            return (canonical, provider_name)
+        return (canonical, canonical)
 
     def __init__(
         self,
@@ -279,10 +288,9 @@ class HyperbolicClient(OpenAICompatibleClient):
     _base_url = "https://api.hyperbolic.xyz/v1"
     _default_model = "llama-3.1-8b"
     default_max_concurrent = 50
-    _model_aliases = {
-        "llama-3.1-8b": "meta-llama/Meta-Llama-3.1-8B-Instruct",
-        "llama-3.1-70b": "meta-llama/Meta-Llama-3.1-70B-Instruct",
-    }
+
+    def _get_provider_name(self, canonical_name: str) -> str:
+        return get_hyperbolic_name(canonical_name)
 
 
 class CerebrasClient(OpenAICompatibleClient):
@@ -290,10 +298,9 @@ class CerebrasClient(OpenAICompatibleClient):
     _base_url = "https://api.cerebras.ai/v1"
     _default_model = "llama-3.1-8b"
     default_max_concurrent = 50
-    _model_aliases = {
-        "llama-3.1-8b": "llama3.1-8b",
-        "llama-3.1-70b": "llama3.1-70b",
-    }
+
+    def _get_provider_name(self, canonical_name: str) -> str:
+        return get_cerebras_name(canonical_name)
 
 
 class OpenRouterClient(OpenAICompatibleClient):
@@ -301,7 +308,6 @@ class OpenRouterClient(OpenAICompatibleClient):
     _base_url = "https://openrouter.ai/api/v1"
     _default_model = "llama-3.1-8b"
     default_max_concurrent = 50
-    _model_aliases = {
-        "llama-3.1-8b": "meta-llama/llama-3.1-8b-instruct",
-        "llama-3.1-70b": "meta-llama/llama-3.1-70b-instruct",
-    }
+
+    def _get_provider_name(self, canonical_name: str) -> str:
+        return get_openrouter_name(canonical_name)

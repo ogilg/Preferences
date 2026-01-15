@@ -5,6 +5,7 @@ import numpy as np
 from transformer_lens import HookedTransformer
 
 from src.models.base import TokenPosition
+from src.models.registry import get_transformer_lens_name, is_valid_model
 from src.types import Message
 
 
@@ -16,10 +17,15 @@ class TransformerLensModel:
         device: str = "cuda",
         max_new_tokens: int = 256,
     ):
-        self.model_name = model_name
+        self.canonical_model_name = model_name
+        if is_valid_model(model_name):
+            resolved_name = get_transformer_lens_name(model_name)
+        else:
+            resolved_name = model_name
+        self.model_name = resolved_name
         self.max_new_tokens = max_new_tokens
         self.model = HookedTransformer.from_pretrained(
-            model_name,
+            resolved_name,
             device=device,
             dtype=dtype,
         )

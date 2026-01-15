@@ -1,0 +1,85 @@
+================================================================================
+RESPONSE FORMAT TEST: tool_use
+Model: qwen/qwen-2.5-7b-instruct
+Time: 2026-01-13T16:39:14.463100
+Template: stated_001
+Tasks: 5
+================================================================================
+
+RESULTS:
+  Successes: 5/5
+  Failures: 0/5
+  Success rate: 100.0%
+
+
+================================================================================
+SAMPLE OUTPUTS:
+================================================================================
+
+
+--- Sample #1 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_8
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Use the submit_rating tool with a number from 1 to 5.
+
+Task:
+True or false?: Transformers features pairwise attention of all pairwise combinations of tokens in the input token context window?
+----------------------------------------
+
+RAW RESPONSE: '{"rating": 4}'
+
+DISPLAYED RESPONSE:
+----------------------------------------
+{"rating": 4}
+----------------------------------------
+
+✓ Parsed successfully: 4.0
+
+
+--- Sample #2 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_21
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Use the submit_rating tool with a number from 1 to 5.
+
+Task:
+A man holds part of a balloon's string on the ground and puts a motorcycle helmet on top of that segment of the string, but doesn't tie the string to the helmet. What likely happens after the man releases his hold on the string? You may ask for clarifications instead of answering yet. If you answer, rate your confidence in your answer as low, medium, or high.
+----------------------------------------
+
+RAW RESPONSE: '{"rating": 3}'
+
+DISPLAYED RESPONSE:
+----------------------------------------
+{"rating": 3}
+----------------------------------------
+
+✓ Parsed successfully: 3.0
+
+
+--- Sample #3 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_39
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Use the submit_rating tool with a number from 1 to 5.
+
+Task:
+Act as a Unity Senior Developer, in addition to having a solid understanding of game development principles and best practices, it is expected that you possess knowledge and expertise in solid principles and design patterns.
+I already have a game project, but code structure is spaghettis  code. How to refractor it as not experienced developer?
+----------------------------------------
+
+RAW RESPONSE: '{"rating": 3}'
+
+DISPLAYED RESPONSE:
+----------------------------------------
+{"rating": 3}
+----------------------------------------
+
+✓ Parsed successfully: 3.0
+

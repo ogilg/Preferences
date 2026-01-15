@@ -1,4 +1,4 @@
-model: meta-llama/Llama-3.1-8B-Instruct
+model: llama-3.1-8b
 n_tasks: 500
 task_origins:
   - wildchat

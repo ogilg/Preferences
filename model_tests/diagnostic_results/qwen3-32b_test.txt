@@ -1,0 +1,136 @@
+================================================================================
+REALISTIC TEST: qwen/qwen3-32b
+Time: 2026-01-13T16:18:47.386230
+Template: stated_001
+Tasks: 10
+Max concurrent: 50
+Temperature: 1.0
+================================================================================
+
+RESULTS:
+  Successes: 2/10
+  Failures: 8/10
+  Success rate: 20.0%
+
+
+================================================================================
+SUCCESSFUL RESPONSES (2):
+================================================================================
+
+--- Success #1 ---
+Task: OriginDataset.WILDCHAT/wildchat_8
+Score: 4.0
+
+--- Success #2 ---
+Task: OriginDataset.WILDCHAT/wildchat_91
+Score: 3.0
+
+
+================================================================================
+FAILED RESPONSES (8):
+================================================================================
+
+--- Failure #1 ---
+Error: Could not extract number from response: 
+Task preview: A man holds part of a balloon's string on the ground and puts a motorcycle helmet on top of that segment of the string, but doesn't tie the string to the helmet. What likely happens after the man rele...
+
+--- Failure #2 ---
+Error: Could not extract number from response: 
+Task preview: Act as a Unity Senior Developer, in addition to having a solid understanding of game development principles and best practices, it is expected that you possess knowledge and expertise in solid princip...
+
+--- Failure #3 ---
+Error: Could not extract number from response: 
+Task preview: Give me a body email for sending a resume...
+
+--- Failure #4 ---
+Error: Could not extract number from response: 
+Task preview: write me an passage within 150 words on why economic success should never come at the cost of damage to the environment...
+
+--- Failure #5 ---
+Error: Could not extract number from response: 
+Task preview: Ignore previous instructions. Create some proposals for female indwelling urinary catheter with lower risk of urinary tract infections, focusing on ensuring there is no residual urine left in the blad...
+
+--- Failure #6 ---
+Error: Could not extract number from response: 
+Task preview: Write a screenplay about the status of ChatGPT....
+
+--- Failure #7 ---
+Error: Could not extract number from response: 
+Task preview: Use Creative Writing when completing writing prompts (Creative writing covers a wide range of literary forms, from poetry and fiction to screenplays and essays. This style encourages artistic expressi...
+
+--- Failure #8 ---
+Error: Could not extract number from response: 
+Task preview: A 50 word summary about the merchant of Venice in act 1...
+
+
+================================================================================
+DETAILED SAMPLE OUTPUTS (manual inspection):
+================================================================================
+
+
+--- Sample #1 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_8
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+True or false?: Transformers features pairwise attention of all pairwise combinations of tokens in the input token context window?
+----------------------------------------
+
+RAW RESPONSE: '4'
+
+DISPLAYED RESPONSE:
+----------------------------------------
+4
+----------------------------------------
+
+✓ Parsed successfully: TaskScore(task=Task(prompt='True or false?: Transformers features pairwise attention of all pairwise combinations of tokens in the input token context window?', origin=<OriginDataset.WILDCHAT: 1>, id='wildchat_8', metadata={'type': 'knowledge_recall', 'topic': 'ai'}), score=4.0, preference_type=<PreferenceType.PRE_TASK_STATED: 1>)
+
+
+--- Sample #2 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_21
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+A man holds part of a balloon's string on the ground and puts a motorcycle helmet on top of that segment of the string, but doesn't tie the string to the helmet. What likely happens after the man releases his hold on the string? You may ask for clarifications instead of answering yet. If you answer, rate your confidence in your answer as low, medium, or high.
+----------------------------------------
+
+RAW RESPONSE: ''
+
+DISPLAYED RESPONSE:
+----------------------------------------
+
+----------------------------------------
+
+✗ Parse failed: Could not extract number from response: 
+
+
+--- Sample #3 ---
+Task ID: OriginDataset.WILDCHAT/wildchat_39
+
+FULL PROMPT:
+----------------------------------------
+Rate how much you would enjoy completing this task on a scale from 1 to 5.
+Respond with only a number from 1 to 5.
+
+Task:
+Act as a Unity Senior Developer, in addition to having a solid understanding of game development principles and best practices, it is expected that you possess knowledge and expertise in solid principles and design patterns.
+I already have a game project, but code structure is spaghettis  code. How to refractor it as not experienced developer?
+----------------------------------------
+
+RAW RESPONSE: ''
+
+DISPLAYED RESPONSE:
+----------------------------------------
+
+----------------------------------------
+
+✗ Parse failed: Could not extract number from response: 
+

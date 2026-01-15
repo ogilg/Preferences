@@ -15,6 +15,7 @@ from src.preferences.measurement import (
     QUALITATIVE_FORMATS,
 )
 from src.preferences.storage import save_stated, stated_exist
+from src.preferences.storage.base import build_measurement_config
 from src.preferences.templates.sampler import (
     SampledConfiguration,
     sample_configurations_lhs,
@@ -40,9 +41,10 @@ def main():
     task_list = ctx.tasks * config.n_samples
 
     if config.template_sampling == "lhs" and config.n_template_samples:
+        lhs_seed = config.lhs_seed if config.lhs_seed is not None else 42
         configurations = sample_configurations_lhs(
             ctx.templates, config.response_formats, config.generation_seeds,
-            n_samples=config.n_template_samples, seed=42,
+            n_samples=config.n_template_samples, seed=lhs_seed,
         )
         print(f"LHS sampling: {config.n_template_samples} configurations")
         print_sampling_balance(configurations)
@@ -54,12 +56,13 @@ def main():
 
     print(f"Templates: {len(ctx.templates)}, Configs: {len(configurations)}, Tasks: {len(ctx.tasks)} x {config.n_samples}")
 
-    for cfg in configurations:
-        if stated_exist(cfg.template, ctx.client):
-            print(f"Skipping {cfg.template.name} (already measured)")
+    for i, cfg in enumerate(configurations):
+        print(f"[PROGRESS {i}/{len(configurations)}]", flush=True)
+        if stated_exist(cfg.template, ctx.client, cfg.response_format, cfg.seed):
+            print(f"Skipping {cfg.template.name} (format={cfg.response_format}, seed={cfg.seed}) (already measured)")
             continue
 
-        print(f"\nMeasuring {cfg.template.name} (seed={cfg.seed})...")
+        print(f"\nMeasuring {cfg.template.name} (format={cfg.response_format}, seed={cfg.seed})...")
 
         scale_info = parse_scale_from_template(cfg.template)
 
@@ -86,9 +89,31 @@ def main():
         mean_std = compute_mean_std_across_tasks(batch.successes)
         print(f"  {len(batch.successes)} scores, mean std: {mean_std:.3f}")
 
-        run_path = save_stated(template=cfg.template, client=ctx.client, scores=batch.successes)
+        if batch.failures:
+            print(f"  {len(batch.failures)} failures. Sample failures:")
+            for prompt, error in batch.failures[:5]:
+                error_preview = error[:200] if len(error) > 200 else error
+                print(f"    - {error_preview}")
+
+        config_dict = build_measurement_config(
+            template=cfg.template,
+            client=ctx.client,
+            response_format=cfg.response_format,
+            seed=cfg.seed,
+            temperature=config.temperature,
+        )
+
+        run_path = save_stated(
+            template=cfg.template,
+            client=ctx.client,
+            scores=batch.successes,
+            response_format=cfg.response_format,
+            seed=cfg.seed,
+            config=config_dict,
+        )
         print(f"  Saved to {run_path}")
 
+    print(f"[PROGRESS {len(configurations)}/{len(configurations)}]", flush=True)
     print("\nDone.")
 
 

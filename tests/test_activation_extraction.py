@@ -29,7 +29,7 @@ else:
 
 logger = logging.getLogger(__name__)
 
-MODEL_NAME = "meta-llama/Llama-3.1-8B-Instruct"
+MODEL_NAME = "llama-3.1-8b"
 TEST_MESSAGES = [{"role": "user", "content": "Hi"}]
 
 
