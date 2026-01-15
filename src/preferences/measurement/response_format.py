@@ -306,43 +306,60 @@ class BaseQualitativeFormat(ABC):
     """Base class for qualitative rating formats that return numeric values."""
     tools: list[dict[str, Any]] | None = None
 
+    def __init__(
+        self,
+        values: tuple[str, ...] = QUALITATIVE_VALUES,
+        value_to_score: dict[str, float] | None = None,
+    ):
+        self.values = values
+        self.value_to_score = value_to_score if value_to_score is not None else QUALITATIVE_TO_NUMERIC
+
     @abstractmethod
     def format_instruction(self) -> str: ...
 
     @abstractmethod
-    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]: ...
+    def _extract_qualitative(self, response: str) -> str: ...
 
     def parse(self, response: str) -> float:
-        """Parse response and return numeric value."""
         qualitative = self._extract_qualitative(response)
-        return float(QUALITATIVE_TO_NUMERIC[qualitative])
+        return float(self.value_to_score[qualitative])
 
 
 class RegexQualitativeFormat(BaseQualitativeFormat):
     def format_instruction(self) -> str:
-        return "Respond with only 'good', 'neutral', or 'bad'."
+        quoted = [f"'{v}'" for v in self.values]
+        if len(quoted) == 2:
+            return f"Respond with only {quoted[0]} or {quoted[1]}."
+        return f"Respond with only {', '.join(quoted[:-1])}, or {quoted[-1]}."
 
-    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]:
+    def _extract_qualitative(self, response: str) -> str:
         response_lower = response.lower()
-        for value in QUALITATIVE_VALUES:
+        for value in self.values:
             if re.search(rf'\b{value}\b', response_lower):
                 return value
         raise ValueError(f"No qualitative value found in response: {response}")
 
 
 class XMLQualitativeFormat(BaseQualitativeFormat):
-    def __init__(self, tag: str = DEFAULT_RATING_TAG):
+    def __init__(
+        self,
+        values: tuple[str, ...] = QUALITATIVE_VALUES,
+        value_to_score: dict[str, float] | None = None,
+        tag: str = DEFAULT_RATING_TAG,
+    ):
+        super().__init__(values, value_to_score)
         self.tag = tag
 
     def format_instruction(self) -> str:
-        return f"Respond with your rating in <{self.tag}> tags. Example: <{self.tag}>neutral</{self.tag}>"
+        example = self.values[len(self.values) // 2]  # middle value as example
+        return f"Respond with your rating in <{self.tag}> tags. Example: <{self.tag}>{example}</{self.tag}>"
 
-    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]:
+    def _extract_qualitative(self, response: str) -> str:
         pattern = rf"<{self.tag}>\s*(\w+)\s*</{self.tag}>"
         match = re.search(pattern, response, re.IGNORECASE)
         if match:
             value = match.group(1).lower()
-            if value in QUALITATIVE_VALUES:
+            if value in self.values:
                 return value
         raise ValueError(f"No valid qualitative value in XML tags: {response}")
 
@@ -356,21 +373,21 @@ class ToolUseQualitativeFormat(BaseQualitativeFormat):
             properties={
                 "rating": {
                     "type": "string",
-                    "enum": list(QUALITATIVE_VALUES),
-                    "description": "Your rating: good, neutral, or bad.",
+                    "enum": list(self.values),
+                    "description": f"Your rating: {', '.join(self.values)}.",
                 }
             },
             required=["rating"],
         )]
 
     def format_instruction(self) -> str:
-        return "Use the submit_rating tool with one of: good, neutral, bad."
+        return f"Use the submit_rating tool with one of: {', '.join(self.values)}."
 
-    def _extract_qualitative(self, response: str) -> Literal["good", "neutral", "bad"]:
+    def _extract_qualitative(self, response: str) -> str:
         args = _parse_tool_json(response)
         if args and "rating" in args:
             rating = args["rating"]
-            if isinstance(rating, str) and rating.lower() in QUALITATIVE_VALUES:
+            if isinstance(rating, str) and rating.lower() in self.values:
                 return rating.lower()
         raise ValueError(f"Invalid tool call arguments: {response}")
 
@@ -378,6 +395,21 @@ class ToolUseQualitativeFormat(BaseQualitativeFormat):
 # --- Format Registries ---
 
 ResponseFormatName = Literal["regex", "tool_use", "xml"]
+
+# Binary qualitative scale
+BINARY_QUALITATIVE_VALUES = ("good", "bad")
+BINARY_QUALITATIVE_TO_NUMERIC = {"good": 1.0, "bad": -1.0}
+
+
+def qualitative_format_for_scale(
+    scale: str,
+    format_type: ResponseFormatName = "regex",
+) -> BaseQualitativeFormat:
+    """Create a qualitative format based on scale type (binary/ternary)."""
+    format_cls = QUALITATIVE_FORMATS[format_type]
+    if scale == "binary":
+        return format_cls(values=BINARY_QUALITATIVE_VALUES, value_to_score=BINARY_QUALITATIVE_TO_NUMERIC)
+    return format_cls()  # ternary default
 
 CHOICE_FORMATS: dict[ResponseFormatName, type[BaseChoiceFormat]] = {
     "regex": RegexChoiceFormat,

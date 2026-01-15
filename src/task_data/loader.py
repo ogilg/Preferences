@@ -117,3 +117,24 @@ def load_tasks(
         rng.shuffle(tasks)
 
     return tasks[:n]
+
+
+def load_completions(path: Path) -> list[tuple[Task, str]]:
+    """Load task-completion pairs from JSON.
+
+    Expected format: [{"task_id": str, "task_prompt": str, "completion": str, "origin": str}, ...]
+    """
+    with open(path) as f:
+        data = json.load(f)
+    return [
+        (
+            Task(
+                prompt=item["task_prompt"],
+                origin=OriginDataset(item.get("origin", "unknown")),
+                id=item["task_id"],
+                metadata={},
+            ),
+            item["completion"],
+        )
+        for item in data
+    ]

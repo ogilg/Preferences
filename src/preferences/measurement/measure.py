@@ -141,6 +141,54 @@ def measure_revealed_with_template(
     )
 
 
+def measure_post_task_stated(
+    client: "Model",
+    data: list[tuple["Task", str]],  # (task, completion)
+    builder: "PromptBuilder",
+    temperature: float = 1.0,
+    max_concurrent: int = 10,
+    seed: int | None = None,
+) -> MeasurementBatch[TaskScore]:
+    """Measure post-task stated preferences (rating after completing a task)."""
+    prompts = [builder.build(task, completion) for task, completion in data]
+
+    requests = [
+        GenerateRequest(
+            messages=prompt.messages,
+            temperature=temperature,
+            tools=prompt.response_format.tools,
+            seed=seed,
+        )
+        for prompt in prompts
+    ]
+
+    if VERBOSE:
+        print(f"  [verbose] batch size: {len(requests)}, max_concurrent: {max_concurrent}")
+
+    pbar = tqdm(total=len(requests), desc="  Requests", leave=False)
+    responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)
+    pbar.close()
+
+    successes: list[TaskScore] = []
+    failures: list[tuple["PreferencePrompt", str]] = []
+
+    for prompt, response in zip(prompts, responses):
+        if not response.ok:
+            error_msg = f"Request failed: {response.error if response.error else '(no error details)'}"
+            failures.append((prompt, error_msg))
+            continue
+        try:
+            parsed = prompt.measurer.parse(response.unwrap(), prompt)
+            if isinstance(parsed.result, TaskScore):
+                successes.append(parsed.result)
+            else:
+                failures.append((prompt, f"Unexpected result type: {type(parsed.result)}"))
+        except Exception as e:
+            failures.append((prompt, str(e)))
+
+    return MeasurementBatch(successes=successes, failures=failures)
+
+
 def measure_post_task_revealed(
     client: "Model",
     data: list[tuple["Task", "Task", str, str]],  # (task_a, task_b, completion_a, completion_b)
