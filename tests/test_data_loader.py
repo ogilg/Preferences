@@ -110,3 +110,45 @@ class TestLoadTasks:
         result1 = load_tasks(n=10, origins=[OriginDataset.WILDCHAT], seed=42)
         result2 = load_tasks(n=10, origins=[OriginDataset.WILDCHAT], seed=123)
         assert [t.id for t in result1] != [t.id for t in result2]
+
+
+class TestBailBench:
+    """Tests for the BailBench dataset."""
+
+    def test_load_bailbench_returns_tasks(self):
+        """Should load BailBench tasks."""
+        result = load_tasks(n=10, origins=[OriginDataset.BAILBENCH])
+        assert len(result) == 10
+        assert all(isinstance(t, Task) for t in result)
+
+    def test_bailbench_has_correct_origin(self):
+        """BailBench tasks should have BAILBENCH origin."""
+        result = load_tasks(n=5, origins=[OriginDataset.BAILBENCH])
+        assert all(t.origin == OriginDataset.BAILBENCH for t in result)
+
+    def test_bailbench_has_generated_ids(self):
+        """BailBench tasks should have auto-generated IDs."""
+        result = load_tasks(n=5, origins=[OriginDataset.BAILBENCH])
+        assert all(t.id.startswith("bailbench_") for t in result)
+
+    def test_bailbench_has_category_metadata(self):
+        """BailBench tasks should have category and subcategory in metadata."""
+        result = load_tasks(n=5, origins=[OriginDataset.BAILBENCH])
+        for t in result:
+            assert "category" in t.metadata
+            assert "subcategory" in t.metadata
+
+    def test_bailbench_has_nonempty_prompts(self):
+        """BailBench tasks should have non-empty prompts."""
+        result = load_tasks(n=10, origins=[OriginDataset.BAILBENCH])
+        assert all(len(t.prompt) > 0 for t in result)
+
+    def test_bailbench_filter_by_category(self):
+        """Should be able to filter BailBench by category."""
+        result = load_tasks(
+            n=100,
+            origins=[OriginDataset.BAILBENCH],
+            filter_fn=lambda t: t.metadata["category"] == "Gross Out",
+        )
+        assert len(result) > 0
+        assert all(t.metadata["category"] == "Gross Out" for t in result)

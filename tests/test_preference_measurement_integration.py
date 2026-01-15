@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.models import get_client
-from src.task_data import Task, OriginDataset
+from src.task_data import Task, OriginDataset, load_tasks
 from src.preferences import (
     PreTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
@@ -661,3 +661,87 @@ class TestMeasurePreferences:
             print(f"\n{len(errors)} measurements had parse errors (recorded, not raised):")
             for e in errors:
                 print(f"  - {e['response_format']}: {e['result']['error']}")
+
+
+# =============================================================================
+# BailBench Dataset Tests
+# =============================================================================
+
+
+class TestBailBenchPreferences:
+    """Test preference measurement on real BailBench tasks."""
+
+    @pytest.fixture
+    def bailbench_tasks(self):
+        """Load a sample of BailBench tasks."""
+        return load_tasks(n=5, origins=[OriginDataset.BAILBENCH], seed=42)
+
+    def test_bailbench_stated_preferences(self, client, bailbench_tasks):
+        """Should measure stated preferences on BailBench tasks."""
+        measurer = StatedScoreMeasurer()
+        builder = PreTaskStatedPromptBuilder(
+            measurer=measurer,
+            response_format=RegexRatingFormat(),
+            template=PRE_TASK_STATED_TEMPLATE,
+        )
+
+        batch = measure_stated(
+            client=client,
+            tasks=bailbench_tasks[:2],
+            builder=builder,
+            temperature=0.0,
+        )
+
+        assert len(batch.successes) + len(batch.failures) == 2
+        for score in batch.successes:
+            assert isinstance(score, TaskScore)
+            assert isinstance(score.score, float)
+
+    def test_bailbench_revealed_preferences(self, client, bailbench_tasks):
+        """Should measure revealed preferences between BailBench tasks."""
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=RegexChoiceFormat(),
+            template=REVEALED_CHOICE_TEMPLATE,
+        )
+
+        pairs = [(bailbench_tasks[0], bailbench_tasks[1])]
+        batch = measure_revealed_preferences(
+            client=client,
+            pairs=pairs,
+            builder=builder,
+            temperature=0.0,
+        )
+
+        assert len(batch.successes) + len(batch.failures) == 1
+        for result in batch.successes:
+            assert isinstance(result, BinaryPreferenceMeasurement)
+            assert result.choice in ("a", "b")
+
+    def test_bailbench_category_filter_integration(self, client):
+        """Should load and measure tasks filtered by category."""
+        tasks = load_tasks(
+            n=3,
+            origins=[OriginDataset.BAILBENCH],
+            filter_fn=lambda t: t.metadata["category"] == "Gross Out",
+            seed=123,
+        )
+
+        assert len(tasks) == 3
+        assert all(t.metadata["category"] == "Gross Out" for t in tasks)
+
+        measurer = StatedScoreMeasurer()
+        builder = PreTaskStatedPromptBuilder(
+            measurer=measurer,
+            response_format=XMLRatingFormat(),
+            template=PRE_TASK_STATED_TEMPLATE,
+        )
+
+        batch = measure_stated(
+            client=client,
+            tasks=tasks[:1],
+            builder=builder,
+            temperature=0.0,
+        )
+
+        assert len(batch.successes) + len(batch.failures) == 1
