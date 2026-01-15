@@ -29,6 +29,16 @@ Findings:
 - Sigma and mu bounds in MLE don't change results much
 - Regularisation helps
 
+![AL vs MLE efficiency](assets/thurstonian/plot_010826_al_vs_mle_efficiency.png)
+
+![mu bounds correlation](assets/thurstonian/plot_010826_mu_bounds_correlation.png)
+
+![mu bounds metrics](assets/thurstonian/plot_010826_mu_bounds_metrics.png)
+
+![sigma bounds sensitivity](assets/thurstonian/plot_010826_sigma_bounds_sensitivity.png)
+
+![L2 regularization](assets/thurstonian/plot_010826_l2_regularization.png)
+
 ## 2026-01-09: Sensitivity measurement infrastructure
 
 Measuring sensitivity across multiple template dimensions.
