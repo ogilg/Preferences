@@ -58,15 +58,13 @@ def transformer_lens_model():
 @pytest.fixture(scope="module")
 def nnsight_generation(nnsight_model) -> GenerationResult:
     layers = [0, nnsight_model.n_layers // 2, nnsight_model.n_layers - 1]
-    completion, activations = nnsight_model.generate_with_activations(
-        TEST_MESSAGES, layers=layers
-    )
+    result = nnsight_model.generate_with_activations(TEST_MESSAGES, layers=layers)
     return GenerationResult(
         model=nnsight_model,
         model_name="nnsight",
         messages=TEST_MESSAGES,
-        completion=completion,
-        activations=activations,
+        completion=result.completion,
+        activations=result.activations,
         layers=layers,
     )
 
@@ -74,15 +72,13 @@ def nnsight_generation(nnsight_model) -> GenerationResult:
 @pytest.fixture(scope="module")
 def transformer_lens_generation(transformer_lens_model) -> GenerationResult:
     layers = [0, transformer_lens_model.n_layers // 2, transformer_lens_model.n_layers - 1]
-    completion, activations = transformer_lens_model.generate_with_activations(
-        TEST_MESSAGES, layers=layers
-    )
+    result = transformer_lens_model.generate_with_activations(TEST_MESSAGES, layers=layers)
     return GenerationResult(
         model=transformer_lens_model,
         model_name="transformer_lens",
         messages=TEST_MESSAGES,
-        completion=completion,
-        activations=activations,
+        completion=result.completion,
+        activations=result.activations,
         layers=layers,
     )
 

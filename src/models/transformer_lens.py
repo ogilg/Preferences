@@ -5,6 +5,7 @@ import numpy as np
 from transformer_lens import HookedTransformer
 
 from src.models.base import TokenPosition
+from src.models.nnsight_model import GenerationResult
 from src.models.registry import get_transformer_lens_name, is_valid_model
 from src.types import Message
 
@@ -95,10 +96,19 @@ class TransformerLensModel:
         token_position: TokenPosition = TokenPosition.LAST,
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
-    ) -> tuple[str, dict[int, np.ndarray]]:
+    ) -> GenerationResult:
+        prompt = self._format_messages(messages, add_generation_prompt=True)
+        prompt_tokens = len(self.model.to_tokens(prompt)[0])
+
         completion = self.generate(messages, temperature=temperature, max_new_tokens=max_new_tokens)
+        completion_tokens = len(self.model.to_tokens(completion)[0])
 
         full_messages = messages + [{"role": "assistant", "content": completion}]
         activations = self.get_activations(full_messages, layers, token_position)
 
-        return completion, activations
+        return GenerationResult(
+            completion=completion,
+            activations=activations,
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+        )

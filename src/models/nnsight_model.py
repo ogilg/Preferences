@@ -1,10 +1,22 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 import numpy as np
+import torch
 from nnsight import LanguageModel
 
 from src.models.base import TokenPosition
+from src.models.registry import get_transformer_lens_name
 from src.types import Message
+
+
+@dataclass
+class GenerationResult:
+    completion: str
+    activations: dict[int, np.ndarray]
+    prompt_tokens: int
+    completion_tokens: int
 
 
 class NnsightModel:
@@ -17,7 +29,8 @@ class NnsightModel:
     ):
         self.model_name = model_name
         self.max_new_tokens = max_new_tokens
-        self.model = LanguageModel(model_name, device_map=device, dispatch=True)
+        hf_name = get_transformer_lens_name(model_name)
+        self.model = LanguageModel(hf_name, device_map=device, dispatch=True, torch_dtype=torch.bfloat16)
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
         if not use_system_preamble:
@@ -63,9 +76,9 @@ class NnsightModel:
         max_tokens = max_new_tokens or self.max_new_tokens
 
         if temperature == 0.0:
-            gen_kwargs = {"do_sample": False}
+            gen_kwargs = {"do_sample": False, "pad_token_id": self.tokenizer.eos_token_id}
         else:
-            gen_kwargs = {"temperature": temperature}
+            gen_kwargs = {"temperature": temperature, "pad_token_id": self.tokenizer.eos_token_id}
 
         with self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs):
             output = self.model.generator.output.save()
@@ -89,27 +102,45 @@ class NnsightModel:
         token_position: TokenPosition = TokenPosition.LAST,
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
-    ) -> tuple[str, dict[int, np.ndarray]]:
+    ) -> GenerationResult:
         prompt = self._format_messages(messages)
         max_tokens = max_new_tokens or self.max_new_tokens
 
         if temperature == 0.0:
-            gen_kwargs = {"do_sample": False}
+            gen_kwargs = {"do_sample": False, "pad_token_id": self.tokenizer.eos_token_id}
         else:
-            gen_kwargs = {"temperature": temperature}
+            gen_kwargs = {"temperature": temperature, "pad_token_id": self.tokenizer.eos_token_id}
 
-        with self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs):
+        if token_position != TokenPosition.LAST:
+            raise ValueError(f"Only LAST token position supported for generation, got {token_position}")
+
+        with torch.no_grad(), self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs) as tracer:
             output = self.model.generator.output.save()
 
-        prompt_len = len(self.tokenizer.encode(prompt))
-        completion = self.tokenizer.decode(output[0][prompt_len:], skip_special_tokens=True).strip()
+            # Collect activations at each generation step, we'll take the last one
+            layer_activations = {layer: list().save() for layer in layers}
+            with tracer.iter[:]:
+                for layer in layers:
+                    hidden_states = self.model.model.layers[layer].output[0]
+                    layer_activations[layer].append(hidden_states[-1, :])
 
-        full_text = self._format_messages(
-            messages + [{"role": "assistant", "content": completion}],
-            add_generation_prompt=False,
+        prompt_tokens = len(self.tokenizer.encode(prompt))
+        completion_tokens = len(output[0]) - prompt_tokens
+        completion = self.tokenizer.decode(output[0][prompt_tokens:], skip_special_tokens=True).strip()
+
+        # Take the last activation from each layer, discard the rest
+        activations = {}
+        for layer, acts in layer_activations.items():
+            activations[layer] = acts[-1].float().cpu().detach().numpy()
+            acts.clear()
+        del layer_activations
+
+        return GenerationResult(
+            completion=completion,
+            activations=activations,
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
         )
-        activations = self._extract_activations(full_text, layers, token_position)
-        return completion, activations
 
     def _extract_activations(
         self,
