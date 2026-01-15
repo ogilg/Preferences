@@ -35,8 +35,8 @@ def setup_experiment(config_path: Path, expected_mode: str) -> ExperimentContext
     if config.preference_mode != expected_mode:
         raise ValueError(f"Expected preference_mode='{expected_mode}', got '{config.preference_mode}'")
 
-    task_seed = config.active_learning.seed if config.active_learning else None
-    tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets(), seed=task_seed)
+    # Always load tasks deterministically (no shuffle) so stated and revealed use same tasks
+    tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets(), seed=None)
 
     return ExperimentContext(
         config=config,

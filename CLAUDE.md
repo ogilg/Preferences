@@ -31,9 +31,11 @@ uv pip install -e ".[dev]"
 - Avoid dosctrings that do not add important information. If you do use docstrings keep them concise.
 - No backwards compatibility concerns — remove obsolete code/fields rather than deprecating.
 
-## Data analysis
+## Files and folders
 
 - All plot file names should be like plot_{mmddYY}_precise_description.png
+- The scripts folder is only for temporary scripts. Core experiment scripts that do analysis or plotting should go in the experiments folder.
+- Analysis plots that are generated from the experiments folder should go to the experiments folder. The results folder is mostly for measurements.
 
 ## Claude instructions
 
