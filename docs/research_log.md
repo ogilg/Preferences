@@ -1,5 +1,52 @@
 # Research Log
 
+## 2026-01-09: Sensitivity measurement infrastructure
+
+Measuring sensitivity across multiple template dimensions.
+
+### New features
+
+- **Typos and punctuation**: Added support for introducing typos/punctuation variations
+- **XML tags**: Added XML tag wrapping options in prompts
+- **Latin hypercube sampling**: Implemented to measure consistency across dimensions systematically
+
+### Issues found
+
+Instruction order appeared to affect preferences significantly. Root cause: some instructions contained implicit ordering hints like "which one of the following tasks"—this confounded the order effect.
+
+### New measurement modes
+
+Added `POST_TASK_REVEALED`: make model do two tasks, then ask which it preferred.
+
+## 2026-01-08: API throughput + Thurstonian fitting
+
+### API throughput optimization
+
+Goal: Getting big active learning and dense runs working.
+
+- **Cerebras vs Hyperbolic**: Benchmarking showed Cerebras ~30x faster than Hyperbolic
+- In practice still hanging frequently
+- Removed timeouts, more permissive retry logic, no more `.gather` → 100it/s but still stuck every ~3k iterations
+- Added logging: issue is purely requests timing out midway through runs (not at start)
+- **Solution**: Reduced max workers to 50. Performance acceptable for now.
+
+### Thurstonian fitting on N=100 data
+
+Changed data storage format to accommodate exhaustive comparisons and active learning.
+
+Key performance fix:
+```python
+# Before (slow)
+p = norm.sf(0, loc=mu_diff, scale=scale)
+# After (fast)
+p = ndtr(mu_diff / scale)
+```
+
+Findings:
+- Active learning works decently
+- Sigma and mu bounds in MLE don't change results much
+- Regularisation helps
+
 ## 2026-01-13: Sensitivity analysis
 
 Measured how preference correlations depend on template factors (phrasing, order, etc.).
