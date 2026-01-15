@@ -17,6 +17,7 @@ BASELINE_ALPHAS = np.array([10.0, 100.0, 1000.0, 10000.0])
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run noise baselines for probe benchmarking")
     parser.add_argument("data_dir", type=Path, help="Directory containing probe data")
+    parser.add_argument("scores_file", type=Path, help="JSON file mapping task_id to score")
     parser.add_argument("--n-seeds", type=int, default=5, help="Number of random seeds")
     parser.add_argument("--cv-folds", type=int, default=5, help="Cross-validation folds")
     return parser.parse_args()
@@ -160,10 +161,22 @@ def main() -> None:
 
     print(f"Loading data from {args.data_dir}...")
     npz_data = np.load(args.data_dir / "activations.npz")
-    y = npz_data["scores"]
+    task_ids = npz_data["task_ids"].tolist()
+
+    print(f"Loading scores from {args.scores_file}...")
+    with open(args.scores_file) as f:
+        scores_map = json.load(f)
+
+    # Filter to task_ids with scores
+    indices = [i for i, tid in enumerate(task_ids) if tid in scores_map]
+    y = np.array([scores_map[task_ids[i]] for i in indices])
+    print(f"Matched {len(y)} samples with scores")
 
     layer_keys = [k for k in npz_data.keys() if k.startswith("layer_")]
     layers = sorted([int(k.split("_")[1]) for k in layer_keys])
+
+    # Filter activations to matching indices
+    filtered_data = {key: npz_data[key][indices] for key in layer_keys}
     print(f"Loaded {len(y)} samples, layers: {layers}")
 
     label_variance = float(np.var(y))
@@ -171,7 +184,7 @@ def main() -> None:
 
     print(f"\nRunning real probe training for comparison...")
     real_results = load_real_probe_results(
-        args.data_dir, layers, y, npz_data, args.cv_folds
+        args.data_dir, layers, y, filtered_data, args.cv_folds
     )
     for layer in layers:
         r = real_results[layer]
@@ -180,7 +193,7 @@ def main() -> None:
     all_results = {"seeds": list(range(args.n_seeds)), "layers": {}}
 
     for layer in layers:
-        X = npz_data[f"layer_{layer}"]
+        X = filtered_data[f"layer_{layer}"]
         print(f"\nLayer {layer} ({X.shape[1]} dims):")
 
         print(f"  Running shuffled labels baseline ({args.n_seeds} seeds)...")

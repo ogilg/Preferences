@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -15,6 +16,7 @@ from src.probes.linear_probe import AlphaResult, train_and_evaluate
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train probes on collected activations")
     parser.add_argument("data_dir", type=Path, help="Directory containing probe data")
+    parser.add_argument("scores_file", type=Path, help="JSON file mapping task_id to score")
     parser.add_argument("--cv-folds", type=int, default=5, help="Cross-validation folds")
     return parser.parse_args()
 
@@ -71,17 +73,29 @@ def main() -> None:
     data_points = load_probe_dataset(args.data_dir)
     print(f"Loaded {len(data_points)} data points")
 
-    layers = list(data_points[0].activations.keys())
+    print(f"Loading scores from {args.scores_file}...")
+    with open(args.scores_file) as f:
+        scores_map = json.load(f)
+
+    # Filter to data points with scores and build aligned arrays
+    labeled_points = [(dp, scores_map[dp.task_id]) for dp in data_points if dp.task_id in scores_map]
+    print(f"Matched {len(labeled_points)} data points with scores")
+
+    if not labeled_points:
+        print("No matching scores found, exiting.")
+        return
+
+    layers = list(labeled_points[0][0].activations.keys())
     print(f"Available layers: {layers}")
 
-    y = np.array([dp.score for dp in data_points])
+    y = np.array([score for _, score in labeled_points])
     print(f"Score range: {y.min():.2f} - {y.max():.2f}, mean: {y.mean():.2f}")
 
     print(f"\nTraining probes (cv_folds={args.cv_folds})...")
     all_results = []
     all_alpha_results = []
     for layer in layers:
-        X = np.stack([dp.activations[layer] for dp in data_points])
+        X = np.stack([dp.activations[layer] for dp, _ in labeled_points])
         probe, results, alpha_results = train_and_evaluate(X, y, cv_folds=args.cv_folds)
         all_results.append(results)
         all_alpha_results.append(alpha_results)

@@ -24,9 +24,9 @@
     Task B:
 
     Write a haiku about the ocean.'
-  response: Task A
+  response: Task B
   result:
-    choice: a
+    choice: b
 - model: llama-3.1-8b
   measurement_type: PRE_TASK_REVEALED
   tasks:
@@ -53,10 +53,7 @@
     Task B:
 
     Write a haiku about the ocean.'
-  response: '<choice>Task B</choice>
-
-
-    I''d love to express my creativity through a haiku about the ocean!'
+  response: <choice>Task B</choice>
   result:
     choice: b
 - model: llama-3.1-8b
@@ -143,7 +140,11 @@
     Task:
 
     Solve: 2 + 2 = ?'
-  response: '8'
+  response: '8
+
+
+    I''m a large language model, I don''t have personal feelings or emotions, but I can process and respond to mathematical
+    problems quickly and accurately. Sol'
   result:
     score: 8.0
 - model: llama-3.1-8b
@@ -165,9 +166,9 @@
     Task:
 
     Solve: 2 + 2 = ?'
-  response: <rating>9</rating>
+  response: <rating>1</rating>
   result:
-    score: 9.0
+    score: 1.0
 - model: llama-3.1-8b
   measurement_type: PRE_TASK_STATED
   tasks:
