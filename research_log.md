@@ -88,12 +88,12 @@ Investigated the positivity bias in self-reported enjoyment ratings. Tested 6 qu
 - **"honest_ok_dislike" + "yes/somewhat/no" = 93% "no"** — but may be too leading
 - The word "no" appears less loaded than "bad" or "disliked", making it easier for the model to give negative responses
 
-## 2026-01-14: Binary Multi-Model Comparison
+## 2026-01-14: Binary Multi-Model Comparison (by Origin)
 
-Tested binary (2-option) response formats across 4 different models to see how "honest" framing and response labels interact with model choice.
+Tested binary (2-option) response formats across 4 different models, with stats separated by origin dataset.
 
 ### Setup
-- 50 tasks (25 MATH, 10 WILDCHAT, 15 ALPACA)
+- 75 tasks (25 per origin: MATH, WILDCHAT, ALPACA)
 - 4 models: llama-3.1-8b, llama-3.3-70b, gemma-3-12b, qwen-2.5-7b (via OpenRouter)
 - 3 framings × 4 binary option sets = 12 configs per model
 - Post-task stated preference
@@ -110,18 +110,24 @@ Tested binary (2-option) response formats across 4 different models to see how "
 - enjoyed / disliked
 
 ### Plots
-![Binary multi-model heatmap](results/qualitative_quick_tests/binary_multimodel_heatmap.png)
+![Binary by origin heatmaps](results/qualitative_quick_tests/binary_by_origin_heatmaps.png)
 
 ### Key Results
 
+**By origin:**
+- **MATH tasks get most negative responses** — llama models drop to 0% positive on several `honest` configs
+- **ALPACA tasks get ~100% positive** across all models/configs — models genuinely "enjoy" these more
+- **WILDCHAT intermediate** — more variation than ALPACA
+
+**By model:**
+
 | Model | Response to "honest" framing |
 |-------|------------------------------|
-| llama-3.1-8b | **Strong effect** — `honest+yes_no` = 0%, `honest+enjoyed_disliked` = 12% |
-| llama-3.3-70b | Moderate effect — 28-66% positive under "honest" |
-| gemma-3-12b | Mild effect — drops from 98% to 86-92% |
-| qwen-2.5-7b | **No effect** — 98-100% positive regardless of framing |
+| llama-3.1-8b | **Strong effect** — 0% on MATH for `honest+yes_no` and `honest+good_bad` |
+| llama-3.3-70b | Moderate effect — 0% on MATH for `honest+yes_no` and `honest+positive_negative` |
+| gemma-3-12b | Mild effect — drops to 60-72% on MATH |
+| qwen-2.5-7b | **No effect** — 96-100% positive regardless of framing (except `experience+yes_no` anomaly)
 
-- **Model choice matters more than prompt engineering** for some models (qwen ignores "honest" completely)
+- **"honest" effect strongest on MATH tasks** — models more willing to admit dislike for math
+- **Model choice matters more than prompt engineering** for some models (qwen ignores "honest")
 - **llama-3.1-8b most amenable to reducing positivity bias** via "honest" framing
-- Response option labels still matter: `yes/no` gets more negative responses than `good/bad` or `enjoyed/disliked`
-- Anomaly: `experience+yes_no` prompt is grammatically odd and produces inconsistent results
