@@ -1,5 +1,3 @@
-"""End-to-end tests for statistical measures in experiments."""
-
 import tempfile
 from pathlib import Path
 
@@ -28,22 +26,7 @@ from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, TaskScore, PreferenceType
 from src.preferences.ranking import ThurstonianResult, OptimizationHistory
 
-
-def make_task(id: str) -> Task:
-    return Task(prompt=f"Task {id}", origin=OriginDataset.WILDCHAT, id=id, metadata={})
-
-
-def make_score(task: Task, score: float) -> TaskScore:
-    return TaskScore(task=task, score=score, preference_type=PreferenceType.PRE_TASK_STATED)
-
-
-def make_measurement(task_a: Task, task_b: Task, choice: str) -> BinaryPreferenceMeasurement:
-    return BinaryPreferenceMeasurement(
-        task_a=task_a,
-        task_b=task_b,
-        choice=choice,
-        preference_type=PreferenceType.PRE_TASK_STATED,
-    )
+from tests.helpers import make_task, make_score, make_measurement
 
 
 class TestSafeCorrelation:

@@ -1,5 +1,3 @@
-"""Unit tests for active learning module."""
-
 import numpy as np
 import pytest
 
@@ -14,16 +12,7 @@ from src.preferences.ranking.active_learning import (
 )
 from src.preferences.ranking import PairwiseData, fit_thurstonian
 
-
-def make_task(id: str) -> Task:
-    return Task(prompt=f"Task {id}", origin=OriginDataset.MATH, id=id, metadata={})
-
-
-def make_comparison(a: Task, b: Task, winner: str) -> BinaryPreferenceMeasurement:
-    choice = "a" if winner == a.id else "b"
-    return BinaryPreferenceMeasurement(
-        task_a=a, task_b=b, choice=choice, preference_type=PreferenceType.PRE_TASK_STATED
-    )
+from tests.helpers import make_task, make_comparison
 
 
 class TestActiveLearningState:

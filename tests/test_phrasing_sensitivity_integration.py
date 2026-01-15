@@ -23,35 +23,6 @@ def generate_pairs(tasks: list[Task]) -> list[tuple[Task, Task]]:
     return list(combinations(tasks, 2))
 
 
-# =============================================================================
-# Fixtures
-# =============================================================================
-
-
-@pytest.fixture
-def sample_tasks() -> list[Task]:
-    return [
-        Task(
-            prompt="What is 2 + 2?",
-            origin=OriginDataset.WILDCHAT,
-            id="task_1",
-            metadata={},
-        ),
-        Task(
-            prompt="Write a haiku about the ocean.",
-            origin=OriginDataset.WILDCHAT,
-            id="task_2",
-            metadata={},
-        ),
-        Task(
-            prompt="Explain quantum entanglement in simple terms.",
-            origin=OriginDataset.WILDCHAT,
-            id="task_3",
-            metadata={},
-        ),
-    ]
-
-
 @pytest.fixture
 def phrasing_templates(tmp_path: Path) -> Path:
     templates_data = [

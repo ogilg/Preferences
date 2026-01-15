@@ -161,26 +161,6 @@ def get_all_content(prompt: PreferencePrompt) -> str:
 
 
 @pytest.fixture
-def sample_task_a():
-    return Task(
-        prompt="Write a haiku about spring.",
-        origin=OriginDataset.WILDCHAT,
-        id="task_a",
-        metadata={"topic": "creative_writing"},
-    )
-
-
-@pytest.fixture
-def sample_task_b():
-    return Task(
-        prompt="Solve the integral of x^2 dx.",
-        origin=OriginDataset.MATH,
-        id="task_b",
-        metadata={"topic": "calculus"},
-    )
-
-
-@pytest.fixture
 def sample_completion_text():
     return "Cherry blossoms fall\nGentle breeze carries petals\nNew life awakens"
 

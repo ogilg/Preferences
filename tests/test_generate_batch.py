@@ -178,13 +178,6 @@ class TestGenerateBatchIntegration:
             max_new_tokens=16,
         )
 
-    @pytest.fixture(autouse=True)
-    def rate_limit_delay(self):
-        """Add delay between tests to avoid rate limiting."""
-        import time
-        yield
-        time.sleep(2)  # 2 second delay after each test
-
     def test_batch_returns_valid_responses(self, client):
         """Batch should return BatchResult objects with valid responses."""
         requests = [

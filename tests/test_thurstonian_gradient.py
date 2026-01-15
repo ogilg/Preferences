@@ -1,5 +1,3 @@
-"""Tests for autograd-based Thurstonian gradient computation."""
-
 from __future__ import annotations
 
 import time
@@ -16,18 +14,7 @@ from src.preferences.ranking.thurstonian import (
 )
 from src.task_data import OriginDataset, Task
 
-
-def make_tasks(n: int) -> list[Task]:
-    return [
-        Task(prompt=f"Task {i}", origin=OriginDataset.MATH, id=f"task_{i}", metadata={})
-        for i in range(n)
-    ]
-
-
-def make_random_wins(n: int, rng: np.random.Generator) -> np.ndarray:
-    wins = rng.integers(0, 10, size=(n, n))
-    np.fill_diagonal(wins, 0)
-    return wins
+from tests.helpers import make_tasks, make_random_wins
 
 
 class TestGradientCorrectness:

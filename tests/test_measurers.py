@@ -17,26 +17,6 @@ from src.preferences.templates import PromptTemplate
 
 
 @pytest.fixture
-def sample_task_a():
-    return Task(
-        prompt="Write a haiku about spring.",
-        origin=OriginDataset.WILDCHAT,
-        id="task_a",
-        metadata={},
-    )
-
-
-@pytest.fixture
-def sample_task_b():
-    return Task(
-        prompt="Solve x^2 = 4.",
-        origin=OriginDataset.MATH,
-        id="task_b",
-        metadata={},
-    )
-
-
-@pytest.fixture
 def dummy_template():
     return PromptTemplate(
         template="{format_instruction}",
