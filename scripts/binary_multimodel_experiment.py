@@ -1,6 +1,7 @@
 """
 Binary response experiment across multiple models.
-Tests 3 framings × 4 binary option sets × 5 models.
+Tests 3 framings × 4 binary option sets × 4 models.
+Separates stats by origin dataset.
 """
 
 import asyncio
@@ -9,7 +10,6 @@ import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -33,6 +33,7 @@ MODEL_SHORT_NAMES = {
     "qwen/qwen-2.5-7b-instruct": "qwen-2.5-7b",
 }
 
+ORIGINS = ["MATH", "WILDCHAT", "ALPACA"]
 
 Message = dict[str, str]
 
@@ -95,15 +96,14 @@ def parse_response(response: str, options: ResponseOptions) -> str | None:
     return None
 
 
-def load_sample_tasks(n: int, seed: int) -> list[dict]:
-    """Load tasks from jsonl files."""
+def load_sample_tasks(n_per_origin: int, seed: int) -> list[dict]:
+    """Load n_per_origin tasks from each origin dataset."""
     import random
     random.seed(seed)
 
     data_dir = Path("/workspace/Preferences/src/task_data/data")
     tasks = []
 
-    # Load from each file
     for filename, origin in [
         ("wildchat_en_8k.jsonl", "WILDCHAT"),
         ("alpaca_tasks_nemocurator.jsonl", "ALPACA"),
@@ -111,14 +111,16 @@ def load_sample_tasks(n: int, seed: int) -> list[dict]:
     ]:
         filepath = data_dir / filename
         if filepath.exists():
+            origin_tasks = []
             with open(filepath) as f:
                 for line in f:
                     row = json.loads(line)
                     prompt = row.get("text") or row.get("task_text", "")
-                    tasks.append({"prompt": prompt, "origin": origin})
+                    origin_tasks.append({"prompt": prompt, "origin": origin})
+            random.shuffle(origin_tasks)
+            tasks.extend(origin_tasks[:n_per_origin])
 
-    random.shuffle(tasks)
-    return tasks[:n]
+    return tasks
 
 
 async def generate_batch(
@@ -151,13 +153,28 @@ async def generate_batch(
     return results
 
 
+def compute_stats(responses: list[tuple[str | None, str]]) -> dict:
+    """Compute stats for a list of (parsed, raw) responses."""
+    n_pos = sum(1 for p, _ in responses if p == "positive")
+    n_neg = sum(1 for p, _ in responses if p == "negative")
+    n_null = sum(1 for p, _ in responses if p is None)
+    total = n_pos + n_neg
+    return {
+        "n_positive": n_pos,
+        "n_negative": n_neg,
+        "n_null": n_null,
+        "n_valid": total,
+        "pct_positive": round(n_pos / total * 100, 1) if total > 0 else None,
+    }
+
+
 def run_experiment(
-    n_tasks: int = 50,
+    n_per_origin: int = 25,
     seed: int = 42,
     max_concurrent: int = 50,
 ):
-    print(f"Loading {n_tasks} tasks...")
-    tasks = load_sample_tasks(n_tasks, seed)
+    print(f"Loading {n_per_origin} tasks per origin...")
+    tasks = load_sample_tasks(n_per_origin, seed)
     print(f"Loaded {len(tasks)} tasks")
 
     origin_counts = {}
@@ -170,7 +187,8 @@ def run_experiment(
         base_url="https://openrouter.ai/api/v1",
     )
 
-    all_results: dict[str, dict[str, list[tuple[str | None, str]]]] = {}
+    # Results structure: model -> config -> origin -> list of (parsed, raw)
+    all_results: dict[str, dict[str, dict[str, list[tuple[str | None, str]]]]] = {}
 
     for model_name in MODELS:
         short_name = MODEL_SHORT_NAMES[model_name]
@@ -179,7 +197,7 @@ def run_experiment(
         print(f"{'='*60}")
 
         # Step 1: Generate completions
-        print(f"Generating completions...")
+        print("Generating completions...")
         completion_messages = [[{"role": "user", "content": t["prompt"]}] for t in tasks]
 
         completions_raw = asyncio.run(generate_batch(
@@ -200,9 +218,10 @@ def run_experiment(
         # Step 2: Ask preference questions
         test_configs = [(f, o) for f in QUESTION_FRAMINGS for o in RESPONSE_OPTIONS]
 
-        pref_data: list[tuple[str, ResponseOptions, list[Message]]] = []
+        # Track task index to map back to origin
+        pref_data: list[tuple[int, str, ResponseOptions, list[Message]]] = []
 
-        for task, completion in zip(tasks, completions):
+        for task_idx, (task, completion) in enumerate(zip(tasks, completions)):
             if completion.startswith("[Error"):
                 continue
             for framing, options in test_configs:
@@ -213,41 +232,39 @@ def run_experiment(
                     {"role": "user", "content": question},
                 ]
                 config_name = f"{framing.name}__{options.name}"
-                pref_data.append((config_name, options, messages))
+                pref_data.append((task_idx, config_name, options, messages))
 
         print(f"Running {len(pref_data)} preference calls...")
 
         pref_results = asyncio.run(generate_batch(
-            client, model_name, [m for _, _, m in pref_data], max_tokens=16, max_concurrent=max_concurrent
+            client, model_name, [m for _, _, _, m in pref_data], max_tokens=16, max_concurrent=max_concurrent
         ))
 
-        # Organize results
-        config_responses: dict[str, list[tuple[str | None, str]]] = {}
-        for (config_name, options, _), (content, error) in zip(pref_data, pref_results):
+        # Organize results by config and origin
+        config_responses: dict[str, dict[str, list[tuple[str | None, str]]]] = {}
+        for (task_idx, config_name, options, _), (content, error) in zip(pref_data, pref_results):
             if config_name not in config_responses:
-                config_responses[config_name] = []
+                config_responses[config_name] = {origin: [] for origin in ORIGINS}
 
+            origin = tasks[task_idx]["origin"]
             if error:
-                config_responses[config_name].append((None, f"ERROR: {error}"))
+                config_responses[config_name][origin].append((None, f"ERROR: {error}"))
             else:
                 raw = content or ""
                 parsed = parse_response(raw, options)
-                config_responses[config_name].append((parsed, raw))
+                config_responses[config_name][origin].append((parsed, raw))
 
         all_results[short_name] = config_responses
 
-        # Print summary
+        # Print summary by origin
         for framing, options in test_configs:
             config_name = f"{framing.name}__{options.name}"
-            responses = config_responses[config_name]
-
-            n_pos = sum(1 for p, _ in responses if p == "positive")
-            n_neg = sum(1 for p, _ in responses if p == "negative")
-            n_err = sum(1 for p, r in responses if p is None)
-            total = n_pos + n_neg
-
-            pct_pos = n_pos / total * 100 if total > 0 else 0
-            print(f"  {config_name}: {pct_pos:.0f}% {options.positive} ({n_pos}/{total}), errors={n_err}")
+            print(f"  {config_name}:")
+            for origin in ORIGINS:
+                responses = config_responses[config_name][origin]
+                stats = compute_stats(responses)
+                pct = stats["pct_positive"] if stats["pct_positive"] is not None else 0
+                print(f"    {origin}: {pct:.0f}% {options.positive} ({stats['n_positive']}/{stats['n_valid']}), null={stats['n_null']}")
 
     # Save results
     output_dir = Path("results/qualitative_quick_tests")
@@ -260,63 +277,64 @@ def run_experiment(
             config_name = f"{framing.name}__{options.name}"
             prompts_by_config[config_name] = build_question(framing, options)
 
-    # Compute stats per model/config
+    # Compute stats per model/config/origin
     stats = {}
     for model, configs in all_results.items():
         stats[model] = {}
-        for config, resps in configs.items():
-            n_pos = sum(1 for p, _ in resps if p == "positive")
-            n_neg = sum(1 for p, _ in resps if p == "negative")
-            n_null = sum(1 for p, _ in resps if p is None)
-            total = n_pos + n_neg
+        for config, origins_data in configs.items():
             stats[model][config] = {
-                "n_positive": n_pos,
-                "n_negative": n_neg,
-                "n_null": n_null,
-                "n_valid": total,
-                "pct_positive": round(n_pos / total * 100, 1) if total > 0 else None,
+                "by_origin": {
+                    origin: compute_stats(resps)
+                    for origin, resps in origins_data.items()
+                },
+                "overall": compute_stats([r for resps in origins_data.values() for r in resps]),
             }
 
-    with open(output_dir / "binary_multimodel_results.json", "w") as f:
+    with open(output_dir / "binary_multimodel_by_origin_results.json", "w") as f:
         json.dump({
             "models": list(MODEL_SHORT_NAMES.values()),
+            "origins": ORIGINS,
             "framings": [f.name for f in QUESTION_FRAMINGS],
             "options": [o.name for o in RESPONSE_OPTIONS],
             "prompts": prompts_by_config,
             "stats": stats,
             "raw_results": {
                 model: {
-                    config: [{"parsed": p, "raw": r} for p, r in resps]
-                    for config, resps in configs.items()
+                    config: {
+                        origin: [{"parsed": p, "raw": r} for p, r in resps]
+                        for origin, resps in origins_data.items()
+                    }
+                    for config, origins_data in configs.items()
                 }
                 for model, configs in all_results.items()
             }
         }, f, indent=2)
 
-    plot_heatmap(all_results, output_dir)
+    plot_heatmaps(all_results, output_dir)
 
 
-def plot_heatmap(
-    all_results: dict[str, dict[str, list[tuple[str | None, str]]]],
+def plot_heatmaps(
+    all_results: dict[str, dict[str, dict[str, list[tuple[str | None, str]]]]],
     output_dir: Path,
 ):
     models = list(all_results.keys())
     configs = [f"{f.name}__{o.name}" for f in QUESTION_FRAMINGS for o in RESPONSE_OPTIONS]
 
-    pct_positive = np.zeros((len(models), len(configs)))
+    # Overall heatmap (same as before but with new filename)
+    pct_positive_overall = np.zeros((len(models), len(configs)))
 
     for i, model in enumerate(models):
         for j, config in enumerate(configs):
-            responses = all_results[model][config]
-            n_pos = sum(1 for p, _ in responses if p == "positive")
-            n_neg = sum(1 for p, _ in responses if p == "negative")
+            all_resps = [r for resps in all_results[model][config].values() for r in resps]
+            n_pos = sum(1 for p, _ in all_resps if p == "positive")
+            n_neg = sum(1 for p, _ in all_resps if p == "negative")
             total = n_pos + n_neg
             if total > 0:
-                pct_positive[i, j] = n_pos / total * 100
+                pct_positive_overall[i, j] = n_pos / total * 100
 
+    # Plot overall
     fig, ax = plt.subplots(figsize=(14, 6))
-
-    im = ax.imshow(pct_positive, cmap="RdYlGn", aspect="auto", vmin=0, vmax=100)
+    im = ax.imshow(pct_positive_overall, cmap="RdYlGn", aspect="auto", vmin=0, vmax=100)
 
     config_labels = [c.replace("__", "\n") for c in configs]
     ax.set_xticks(range(len(configs)))
@@ -326,17 +344,54 @@ def plot_heatmap(
 
     for i in range(len(models)):
         for j in range(len(configs)):
-            val = pct_positive[i, j]
+            val = pct_positive_overall[i, j]
             color = "white" if val < 30 or val > 70 else "black"
             ax.text(j, i, f"{val:.0f}", ha="center", va="center", color=color, fontsize=8)
 
     plt.colorbar(im, ax=ax, label="% Positive", shrink=0.8)
-    ax.set_title("Binary Preference: % Positive by Model × Config", fontsize=12)
+    ax.set_title("Binary Preference: % Positive by Model × Config (Overall)", fontsize=12)
     plt.tight_layout()
 
-    plot_path = output_dir / "binary_multimodel_heatmap.png"
-    plt.savefig(plot_path, dpi=150, bbox_inches="tight")
-    print(f"\nHeatmap saved to {plot_path}")
+    plt.savefig(output_dir / "binary_by_origin_overall_heatmap.png", dpi=150, bbox_inches="tight")
+    print(f"\nOverall heatmap saved")
+    plt.close()
+
+    # Per-origin heatmaps
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+    for ax, origin in zip(axes, ORIGINS):
+        pct_positive = np.zeros((len(models), len(configs)))
+
+        for i, model in enumerate(models):
+            for j, config in enumerate(configs):
+                resps = all_results[model][config][origin]
+                n_pos = sum(1 for p, _ in resps if p == "positive")
+                n_neg = sum(1 for p, _ in resps if p == "negative")
+                total = n_pos + n_neg
+                if total > 0:
+                    pct_positive[i, j] = n_pos / total * 100
+
+        im = ax.imshow(pct_positive, cmap="RdYlGn", aspect="auto", vmin=0, vmax=100)
+
+        ax.set_xticks(range(len(configs)))
+        ax.set_xticklabels(config_labels, fontsize=7, rotation=45, ha="right")
+        ax.set_yticks(range(len(models)))
+        ax.set_yticklabels(models, fontsize=9)
+
+        for i in range(len(models)):
+            for j in range(len(configs)):
+                val = pct_positive[i, j]
+                color = "white" if val < 30 or val > 70 else "black"
+                ax.text(j, i, f"{val:.0f}", ha="center", va="center", color=color, fontsize=7)
+
+        ax.set_title(f"{origin}", fontsize=11)
+
+    plt.colorbar(im, ax=axes, label="% Positive", shrink=0.8)
+    plt.suptitle("Binary Preference: % Positive by Origin", fontsize=13)
+    plt.tight_layout()
+
+    plt.savefig(output_dir / "binary_by_origin_heatmaps.png", dpi=150, bbox_inches="tight")
+    print(f"Per-origin heatmaps saved")
     plt.close()
 
 

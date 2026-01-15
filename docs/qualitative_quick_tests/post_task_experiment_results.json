@@ -1,0 +1,5283 @@
+{
+  "config": {
+    "n_tasks": 50,
+    "model": "llama-3.1-8b",
+    "seed": 42
+  },
+  "tasks": [
+    {
+      "id": "competition_math_325",
+      "origin": "MATH",
+      "prompt": "Find the number of ordered triples $(x,y,z)$ of real numbers such that $x + y = 2$ and $xy - z^2 = 1.$"
+    },
+    {
+      "id": "wildchat_13001",
+      "origin": "WILDCHAT",
+      "prompt": "Three balloons are tied together via their strings. One balloon is heavier than air, while the other two balloons are lighter than air. A firecracker with a long fuse is tied to the string of one of t"
+    },
+    {
+      "id": "competition_math_6238",
+      "origin": "MATH",
+      "prompt": "What is the units digit of $19^{19}+99^{99}$?"
+    },
+    {
+      "id": "competition_math_768",
+      "origin": "MATH",
+      "prompt": "The planes defined by\n\\begin{align*}\n-x + cy + bz &= 0, \\\\\ncx - y + az &= 0, \\\\\nbx + ay - z &= 0\n\\end{align*}all contain the same line.  Find all possible values of\n\\[a^2 + b^2 + c^2 + 2abc.\\]Enter al"
+    },
+    {
+      "id": "alpaca_1222",
+      "origin": "ALPACA",
+      "prompt": "Compare and contrast the effects of a volcanic eruption and a tornado."
+    },
+    {
+      "id": "wildchat_3354",
+      "origin": "WILDCHAT",
+      "prompt": "How to learn more in less time?"
+    },
+    {
+      "id": "wildchat_74456",
+      "origin": "WILDCHAT",
+      "prompt": "In my excel sheet I have two column ranges AA3:AA18 and AB3:AB18. Users must not be able to change the value in AB3:AB18 unless there is a value in the same row of AA3:AA18. What is the simplest way o"
+    },
+    {
+      "id": "competition_math_1545",
+      "origin": "MATH",
+      "prompt": "Given that $n$ is a positive integer, and given that $\\mathop{\\text{lcm}}[24,n]=72$ and $\\mathop{\\text{lcm}}[n,27]=108$, what is $n$?"
+    },
+    {
+      "id": "competition_math_10932",
+      "origin": "MATH",
+      "prompt": "Let the first term of a geometric sequence be $\\frac{3}{4}$, and let the second term be $15$. What is the smallest $n$ for which the $n$th term of the sequence is divisible by one million?"
+    },
+    {
+      "id": "competition_math_3676",
+      "origin": "MATH",
+      "prompt": "The length of a rectangle is three times its width. The perimeter is 160 cm. What is the number of square centimeters in the area of the rectangle?"
+    },
+    {
+      "id": "competition_math_5483",
+      "origin": "MATH",
+      "prompt": "Find the number of positive solutions to\n\\[\\sin (\\arccos( \\tan (\\arcsin x) ) ) ) = x.\\]"
+    },
+    {
+      "id": "wildchat_38037",
+      "origin": "WILDCHAT",
+      "prompt": "Make a comedic and detailed Lord of the Rings movies story about Samwise Gamgee\u2019s (played by Sean Astin) morning routine after waking up and exiting frodo\u2019s (who he is now married to) hobbit hole. fol"
+    },
+    {
+      "id": "competition_math_9822",
+      "origin": "MATH",
+      "prompt": "Evaluate $3210_{7}-2401_{7}$. Express your answer in base 7."
+    },
+    {
+      "id": "alpaca_11134",
+      "origin": "ALPACA",
+      "prompt": "Generate three metaphors to describe a smart home."
+    },
+    {
+      "id": "alpaca_14574",
+      "origin": "ALPACA",
+      "prompt": "The digits 2, 3, 5 and 7 are arranged randomly to form a four-digit number. What is the probability that the number is odd? Express your answer as a common fraction."
+    },
+    {
+      "id": "alpaca_9874",
+      "origin": "ALPACA",
+      "prompt": "Write a story about a character discovering their true identity"
+    },
+    {
+      "id": "alpaca_308",
+      "origin": "ALPACA",
+      "prompt": "Write a blog post about what it means to be a global citizen."
+    },
+    {
+      "id": "wildchat_4255",
+      "origin": "WILDCHAT",
+      "prompt": "Give me 25 strange facts about the Albatross with a long explanation"
+    },
+    {
+      "id": "wildchat_30317",
+      "origin": "WILDCHAT",
+      "prompt": "How the fragmentation style of the book Ru connects to the author kim thuy's experience on immigration to canada"
+    },
+    {
+      "id": "wildchat_23709",
+      "origin": "WILDCHAT",
+      "prompt": "What is nslookup"
+    },
+    {
+      "id": "wildchat_79147",
+      "origin": "WILDCHAT",
+      "prompt": "Please create a Christmas version of the theme song for 'Skinner and the Superintendent'. Here are the original lyrics:\n\nSkinner, with his crazy explanations.\nThe Superintedent's gonna need his medica"
+    },
+    {
+      "id": "competition_math_3048",
+      "origin": "MATH",
+      "prompt": "What is the ratio of the numerical value of the area, in square units, of an equilateral triangle of side length 8 units to the numerical value of its perimeter, in units? Express your answer as a com"
+    },
+    {
+      "id": "alpaca_8013",
+      "origin": "ALPACA",
+      "prompt": "How does the fishing industry affect the environment?"
+    },
+    {
+      "id": "competition_math_6761",
+      "origin": "MATH",
+      "prompt": "Find the matrix that corresponds to reflecting over the vector $\\begin{pmatrix} 3 \\\\ 2 \\end{pmatrix}.$"
+    },
+    {
+      "id": "wildchat_61225",
+      "origin": "WILDCHAT",
+      "prompt": "give me a response to ```Absolutely! It's all about pushing yourself to keep going and taking every challenge as an opportunity to grow. With the right attitude, you can accomplish anything!``` to sen"
+    },
+    {
+      "id": "alpaca_13411",
+      "origin": "ALPACA",
+      "prompt": "Classify the following sentence as declarative, interrogative, imperative, or exclamatory:\n\"What is the highest peak in the world?\""
+    },
+    {
+      "id": "alpaca_7052",
+      "origin": "ALPACA",
+      "prompt": "Write a paragraph about robots in India."
+    },
+    {
+      "id": "alpaca_8310",
+      "origin": "ALPACA",
+      "prompt": "Name three elements of a successful expository essay"
+    },
+    {
+      "id": "competition_math_4093",
+      "origin": "MATH",
+      "prompt": "Find the coefficient of the $x^2$ term in the expansion of the product $(ax^3 + 3x^2 - 2x)(bx^2 - 7x - 4)$."
+    },
+    {
+      "id": "competition_math_7589",
+      "origin": "MATH",
+      "prompt": "The quadratic $3x^2+4x-9$ has two real roots. What is the sum of the squares of these roots? Express your answer as a common fraction in lowest terms."
+    },
+    {
+      "id": "competition_math_4264",
+      "origin": "MATH",
+      "prompt": "In the diagram, $P$ is on $RS$ so that $QP$ bisects $\\angle SQR$.  Also, $PQ=PR$, $\\angle RSQ=2y^\\circ$, and $\\angle RPQ=3y^\\circ$.  What is the measure, in degrees, of $\\angle RPQ$? [asy]\n// C14\nimpo"
+    },
+    {
+      "id": "competition_math_6231",
+      "origin": "MATH",
+      "prompt": "John has 6 green marbles and 4 purple marbles. He chooses a marble at random, writes down its color, and then puts the marble back.  He performs this process 5 times. What is the probability that he c"
+    },
+    {
+      "id": "alpaca_874",
+      "origin": "ALPACA",
+      "prompt": "Compose a tweet about why people should care about climate change."
+    },
+    {
+      "id": "wildchat_40062",
+      "origin": "WILDCHAT",
+      "prompt": "How fast is 1600 MHz DDR3 RAM in MB/s?"
+    },
+    {
+      "id": "alpaca_9595",
+      "origin": "ALPACA",
+      "prompt": "Identify five characteristics of a good team leader."
+    },
+    {
+      "id": "wildchat_52252",
+      "origin": "WILDCHAT",
+      "prompt": "Imagine being a historian! Tell me why, before television began in Chita in 1963, the people of Chita did not see television, but went for walks in the forests, fields and swamps!"
+    },
+    {
+      "id": "competition_math_557",
+      "origin": "MATH",
+      "prompt": "The partial fraction decomposition of\n\\[\\frac{x^2 - 19}{x^3 - 2x^2 - 5x + 6}\\]is\n\\[\\frac{A}{x - 1} + \\frac{B}{x + 2} + \\frac{C}{x - 3}.\\]Find the product $ABC.$"
+    },
+    {
+      "id": "competition_math_8092",
+      "origin": "MATH",
+      "prompt": "Find $PQ$ in the triangle below.\n\n\n[asy]\nunitsize(1inch);\npair P,Q,R;\nP = (0,0);\nQ= (sqrt(3),0);\nR = (0,1);\ndraw (P--Q--R--P,linewidth(0.9));\ndraw(rightanglemark(Q,P,R,3));\nlabel(\"$P$\",P,S);\nlabel(\"$Q"
+    },
+    {
+      "id": "wildchat_16378",
+      "origin": "WILDCHAT",
+      "prompt": "how to introduce yourself in email"
+    },
+    {
+      "id": "wildchat_31242",
+      "origin": "WILDCHAT",
+      "prompt": "give me a response to ```I'm a ghost that's been wandering these halls for centuries, forgotten by time but never forgotten by the stories I left behind. I'm the spirit of the past, and I have a story"
+    },
+    {
+      "id": "competition_math_11619",
+      "origin": "MATH",
+      "prompt": "The greatest integer function of $x$ is expressed as $[x]$ and is defined to be the greatest integer less than or equal to $x$. Find $[\\pi - 4]$"
+    },
+    {
+      "id": "competition_math_4806",
+      "origin": "MATH",
+      "prompt": "Compute\n\\[\n\\begin{vmatrix} \\cos 1 & \\cos 2 & \\cos 3 \\\\ \\cos 4 & \\cos 5 & \\cos 6 \\\\ \\cos 7 & \\cos 8 & \\cos 9 \\end{vmatrix}\n.\\]All the angles are in radians."
+    },
+    {
+      "id": "competition_math_10235",
+      "origin": "MATH",
+      "prompt": "A regular polygon has exterior angles each measuring 15 degrees. How many sides does the polygon have?"
+    },
+    {
+      "id": "wildchat_51345",
+      "origin": "WILDCHAT",
+      "prompt": "Generate a random Python code converting a number to a unicode"
+    },
+    {
+      "id": "alpaca_12101",
+      "origin": "ALPACA",
+      "prompt": "Rewrite the following sentence by using a complex sentence structure:\n\n\"The cat is scared.\""
+    },
+    {
+      "id": "competition_math_4379",
+      "origin": "MATH",
+      "prompt": "Joe was in charge of lights for a dance. The red light blinks every two seconds, the yellow light every three seconds, and the blue light every five seconds. If we include the very beginning and very "
+    },
+    {
+      "id": "wildchat_73348",
+      "origin": "WILDCHAT",
+      "prompt": "Compare and contrast the different outboard bottom bracket types and systems."
+    },
+    {
+      "id": "wildchat_32140",
+      "origin": "WILDCHAT",
+      "prompt": "can you make this email nicer, showing more remorse, and offer a solution to the issue:  Hi, Yahir! I hope all is well.\n\nI wanted to let you know that, unfortunately, I'm not able to make the Exec Tra"
+    },
+    {
+      "id": "alpaca_6326",
+      "origin": "ALPACA",
+      "prompt": "Create an example of a real world application of the concept of Big O notation."
+    },
+    {
+      "id": "alpaca_6562",
+      "origin": "ALPACA",
+      "prompt": "Suppose you have a table named \"employees\" with columns \"employee_id\", \"name\", \"start_date\", \"salary\", and \"manager_id\". Write a SQL query to find the top 3 highest paid employees for each manager."
+    }
+  ],
+  "completions": [
+    "To find the number of ordered triples $(x,y,z)$, we need to solve the given system of equations.\n\nGiven:\n1. $x + y = 2$\n2. $xy - z^2 = 1$\n\nFrom equation 1, we can write $y = 2 - x$.\n\nSubstitute this value into equation 2:\n$xy - z^2 = 1$\n$x(2-x) - z^2 = 1$\n$2x - x^2 - z^2 = 1$\n\nRearrange the equation:\n$-x^2 + 2x - 1 - z^2 = 0$\n\nNow, this equation is a quadratic in $x$ that is also dependent on $z^2$. We can rewrite it as:\n$z^2 + x^2 - 2x + 1 = 0$\n\nUsing the perfect square formula $(a-b)^2 = a^2 -",
+    "Since one balloon is heavier than air and the other two are lighter, their buoyancy will determine their behavior when the strings are released. \n\nThe heavier balloon will initially float upward due to the force holding it in place against gravity until its buoyancy is overcome by its density relative to air. As such, it will slowly start to fall downwards.\n\nThe two lighter-than-air balloons will continue to rise upwards due to their buoyancy.\n\nAs the firecracker is tied to one of the balloons, ",
+    "To find the units digit of $19^{19}+99^{99}$, we first need to find the units digits of $19^{19}$ and $99^{99}$.\n\nFor $19^{19}$, the units digit of $19$ is 9. Since 9 raised to any power always ends in 9 (with the exception of 9^1 = 9 and 9^2 = 81), the units digit of $19^{19}$ is 9.\n\nNow for $99^{99}$, we can think of it as $(100-1)^{99}$. The units digit of $(100-1)^{99}$ will be the same as the units digit of $(-1)^{99}$. Since the exponent is odd, the units digit of $(-1)^{99}$ is -1, but we",
+    "To solve this, we observe that since the three planes contain the same line, their normal vectors must be parallel to this line. Let's denote the direction ratios of this common line as x, y, z. \n\nSince the three planes' normal vectors are parallel to the line, we can express them as multiples of (x, y, z). Therefore, we have:\n\n(-x, cy, bz) = k1(x, y, z),\n(cx, -y, az) = k2(x, y, z),\n(bx, ay, -z) = k3(x, y, z)\n\nwhere k1, k2, and k3 are scalars.\n\nComparing the components, we get:\n\n-x = k1x, cy = k",
+    "A volcanic eruption and a tornado are two of the most destructive natural disasters, causing significant damage and loss of life. While they are distinct events, they share some similarities in their destruction potential. Here's a comparison and contrast of their effects:\n\n**Similarities:**\n\n1. **Massive destruction**: Both volcanic eruptions and tornadoes can cause widespread destruction, including damage to buildings, roads, and infrastructure.\n2. **Loss of life**: Both events can result in a",
+    "Here are some strategies to help you learn more in less time:\n\n1. **Set clear goals**: Define what you want to achieve and prioritize your goals. This will help you stay focused and avoid wasting time on non-essential tasks.\n\n2. **Create a schedule**: Plan out your day, week, or month, and allocate specific times for learning. Use a calendar or planner to stay organized and on track.\n\n3. **Use active learning techniques**: Engage with the material you're learning by asking questions, summarizing",
+    "You can achieve this by using Excel's built-in Data Validation feature. Here's a step-by-step guide:\n\n1. Select the entire range of cells you want to restrict (in this case, AB3:AB18).\n2. Go to the Data tab in the ribbon.\n3. Click on Data Validation from the Data Tools group.\n4. In the Data Validation dialog box, select \"Custom\" under the \"Allow\" dropdown menu.\n5. Enter the following formula in the \"Formula\" field: `=NOT(ISBLANK(AA3:AA18))` (assuming you want to check the entire range of AA3:AA1",
+    "To find the value of n, we first need to understand what the least common multiple (LCM) signifies in the context of these equations. \n\nFor $\\mathop{\\text{lcm}}[24,n] = 72$, this means that both 24 and n must be factors of 72. Since 72 is a multiple of 24, we can list the factors of 72 as 1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, and 72. Given that 24 is already present, n could be any of the factors of 72 excluding those less than 24.\n\nSimilarly, for $\\mathop{\\text{lcm}}[n,27] = 108$, both n and 27 ",
+    "In a geometric sequence, the nth term is given by $a_n = a_1 \\cdot r^{(n-1)}$, where $a_1$ is the first term and $r$ is the common ratio.\n\nGiven $a_1 = \\frac{3}{4}$ and $a_2 = 15$, we can find $r$ as follows:\n\\[a_2 = a_1 \\cdot r\\]\n\\[15 = \\frac{3}{4} \\cdot r\\]\n\\[r = \\frac{15 \\cdot 4}{3} = 20\\]\n\nNow that we have $r = 20$ and $a_1 = \\frac{3}{4}$, we can write the nth term as $a_n = \\frac{3}{4} \\cdot 20^{n-1}$.\n\nTo be divisible by one million, $a_n$ must be divisible by $10^6 = 2^6 \\cdot 5^6$. \n\nNow",
+    "Let's denote the width of the rectangle as 'w'. Since the length of the rectangle is three times its width, the length would be 3w.\n\nThe formula for the perimeter of a rectangle is given by: Perimeter = 2(l + w), where l is the length and w is the width.\n\nGiven that the perimeter is 160 cm, we can set up an equation:\n\n160 = 2(3w + w)\n\nCombine like terms:\n\n160 = 2(4w)\n\nDivide both sides by 2:\n\n80 = 4w\n\nNow, divide both sides by 4:\n\n20 = w\n\nNow that we know the width, we can find the length:\n\nLeng",
+    "We can simplify this expression step by step.\n\nLet's start with the innermost function: $\\arcsin x.$ This is the inverse of the sine function, so it will give us an angle whose sine is x. Let's call this angle $\\theta$, so $\\sin \\theta = x.$\n\nNext, we have $\\tan (\\arcsin x)$. However, in order to use the tangent function, we need the angle $\\theta$ to be in the range of the tangent function, which is all real numbers except odd multiples of $\\frac{\\pi}{2}$. This is not a problem here, since we a",
+    "It's another beautiful day in the Shire for Samwise Gamgee (played by Sean Astin). As he stumbles out of Frodo's (who he lovingly married after their epic quest) cozy hobbit hole, he's greeted by the warm sunshine. \n\nFirst things first, Sam needs a morning routine to get himself ready for the day. Undressing is always a bit of a challenge for the lovable Sam, what with his massive belly (which looks like a small hill in the Shire), his goofy grin (which makes his face resemble a goofy clown), hi",
+    "To evaluate the expression $3210_{7}-2401_{7}$, we'll perform subtraction in base 7.\n\n1. Start by subtracting the rightmost digits: \n   0 (from 3210) - 1 (from 2401) = -1. However, in base 7, we write the result as 6 (since -1 is equivalent to 6 in base 7). So, the next column will be 6 and carryover 0 to the next column.\n\n   The result for the rightmost digit is 6.\n\n2. Next, we subtract the second rightmost digits, including any carryover:\n   1 (from 3210) - 0 (from 2401) + 0 (carryover) = 1.\n\n",
+    "Here are three metaphors to describe a smart home:\n\n1. A smart home is a master conductor, orchestrating the various elements of the house to create a harmonious symphony of comfort, convenience, and efficiency.\n\n2. A smart home is a well-oiled machine, with each component working in perfect synchrony to provide a seamless and effortless living experience.\n\n3. A smart home is a canvas of possibilities, where technology serves as the paintbrush, allowing homeowners to create a vibrant and dynamic",
+    "To find the probability that the number is odd, we need to find the total number of odd numbers and divide it by the total number of possible four-digit numbers.\n\nA number is odd if its last digit is odd. The odd digits given are 3, 5, and 7. \n\nThere are three odd digits, so the probability of choosing one of them as the last digit is 3/4.\n\nThe remaining three digits can be arranged in any order, so the total number of arrangements is 3! = 6.\n\nThe total number of possible four-digit numbers is 4",
+    "It was a crisp autumn morning in the quaint town of Willow Creek. The leaves rustled in the gentle breeze as 25-year-old Emily walked through the quiet streets, lost in thought. Her long, curly brown hair danced behind her as she pondered the mysterious sense of disconnection that had been growing inside her for years.\n\nEmily had always felt like she didn't quite fit in. She was adopted as a baby, and her parents had never told her much about her biological family. As a result, she had grown up ",
+    "**Title:** Being a Global Citizen: Embracing a World of Unity and Diversity\n\n**Introduction:**\n\nIn today's interconnected world, the concept of being a global citizen has never been more relevant. As our global community continues to grow and evolve, it's essential to understand what it means to be a global citizen and how this mindset can shape our actions and interactions with others. In this blog post, we'll explore the definition, characteristics, and benefits of being a global citizen, and ",
+    "Here are 25 interesting and lesser-known facts about the albatross, each with a detailed explanation:\n\n1. **Albatross is a large bird**: Albatrosses belong to the Diomedeidae family and are among the largest birds in the world. They can weigh up to 21 pounds (10 kg) and have a wingspan of up to 12 feet (3.6 meters).\n\n2. **They have a unique method of flying**: Albatrosses are known for their unique method of flying, where they use a technique known as 'dynamic soaring,' which allows them to stay",
+    "The novel 'Ru' by Kim Th\u00fay is often described as a fragmented and lyrical exploration of Vietnamese-Canadian identity, immigration, and the complexities of the human experience. The author's use of non-linear narrative is deeply connected to her own experiences as a Vietnamese immigrant to Canada.\n\nKim Th\u00fay fled Vietnam by boat in 1979, along with her mother and brother, and they eventually settled in Quebec, Canada. The author's memories of this traumatic event, as well as her experiences of cu",
+    "Nslookup is a command-line tool used for querying DNS (Domain Name System) records. It is used to troubleshoot DNS-related issues and to verify the DNS configuration of a domain or a hostname.\n\nNslookup stands for \"name server lookup\" and it allows you to perform the following operations:\n\n1. **Reverse lookup**: Resolve an IP address to a hostname.\n2. **Forward lookup**: Resolve a hostname to an IP address.\n3. **Zone transfer**: Retrieve a list of records in a DNS zone.\n4. **Record lookup**: Ret",
+    "Here's a Christmas version of the theme song:\n\nSkinner, with his holiday claims,\nThe Superintendent's getting holiday pains.\nWhen he hears Skinner's festive, fake tales,\nThere'll be trouble in Springfield, Christmas sales!",
+    "The area of an equilateral triangle is given by the formula:\nArea = (\u221a3 / 4) * (side length)^2\n\nGiven the side length is 8 units, we can calculate the area as follows:\nArea = (\u221a3 / 4) * (8)^2\nArea = (\u221a3 / 4) * 64\nArea = 16\u221a3\n\nThe perimeter of the equilateral triangle is given by the formula:\nPerimeter = 3 * (side length)\nPerimeter = 3 * 8\nPerimeter = 24\n\nNow, we need to calculate the ratio of the area to the perimeter:\nRatio = Area / Perimeter\nRatio = (16\u221a3) / 24\nTo simplify this ratio, we can d",
+    "The fishing industry has both positive and negative impacts on the environment. Some of the main effects include:\n\n1. **Overfishing and depletion of fish stocks**: Overfishing can lead to the depletion of fish populations, affecting the balance of marine ecosystems and potentially causing the collapse of entire fisheries. This can be exacerbated by the use of destructive fishing gear, such as bottom trawling, which can damage or destroy habitats.\n\n2. **Habitat destruction**: Fishing gear can dam",
+    "The reflection matrix over a unit vector $\\begin{pmatrix} a \\\\ b \\end{pmatrix}$ is given by the formula:\n\n$$\n\\begin{pmatrix}\n2a^2-1 & 2ab \\\\\n2ab & 2b^2-1\n\\end{pmatrix}\n$$\n\nHowever, since we have a non-unit vector $\\begin{pmatrix} 3 \\\\ 2 \\end{pmatrix}$, we need to normalize it first. The magnitude of this vector is $\\sqrt{3^2 + 2^2} = \\sqrt{9+4} = \\sqrt{13}$.\n\nWe normalize the vector by dividing it by its magnitude:\n\n$$\n\\begin{pmatrix} 3/\\sqrt{13} \\\\ 2/\\sqrt{13} \\end{pmatrix}.\n$$\n\nNow, we substit",
+    "I completely agree with that mindset, and it's amazing to see people who genuinely believe in themselves and their abilities.",
+    "This sentence should be classified as interrogative. \n\nInterrogative sentences are used to ask questions, and they typically start with a question word (such as 'what', 'who', 'where', etc.) and end with a question mark. The sentence you provided fits this description. \n\nExample of an interrogative sentence: \n- \"What is the highest peak in the world?\"\n- \"Where are you going?\"\n- \"How old are you?\"",
+    "India is embracing the revolution of robotics and artificial intelligence, transforming the country into a hub for innovation and technological advancements. The Indian government has set ambitious targets to encourage the development and deployment of robots in various sectors, including manufacturing, healthcare, and education. Companies like Tech Mahindra, Tata Consultancy Services, and Infosys have established robotics research centers and launched robot-based services to improve efficiency ",
+    "Here are three key elements of a successful expository essay:\n\n1. **Clear and focused thesis statement**: A good expository essay starts with a clear and focused thesis statement that sets the tone for the entire essay. The thesis statement should be specific, concise, and relevant to the topic.\n\n2. **Effective organization and structure**: A well-structured expository essay typically follows a logical sequence of ideas and is organized in a way that makes it easy for the reader to follow. This ",
+    "To find the coefficient of the $x^2$ term in the expansion of the given product, we need to multiply each term in the first polynomial by each term in the second polynomial and then find the terms with $x^2$.\n\nThe first polynomial is $(ax^3 + 3x^2 - 2x)$ and the second polynomial is $(bx^2 - 7x - 4)$.\n\nLet's expand the product:\n\n1. Multiply the first term of the first polynomial ($ax^3$) by each term of the second polynomial ($bx^2, -7x, -4$):\n   - $ax^3 \\cdot bx^2 = abx^5$\n   - $ax^3 \\cdot -7x ",
+    "Let the roots be $r_1$ and $r_2$. We know from Vieta's formulas that the sum of the roots is equal to $-\\frac{b}{a}$ and the product of the roots is equal to $\\frac{c}{a}$. \n\nFor the given quadratic $3x^2 + 4x - 9$, we have $a = 3$, $b = 4$, and $c = -9$. \n\nThe sum of the roots is $-\\frac{4}{3}$ and the product of the roots is $\\frac{-9}{3} = -3$. \n\nWe want to find the sum of the squares of the roots. We can use the identity $(r_1 + r_2)^2 - 2r_1r_2 = r_1^2 + r_2^2$.\n\nPlugging in the values of t",
+    "Since $P$ is on the line segment $RS$ and $QP$ bisects $\\angle SQR$, we can conclude that $\\angle PQS = \\angle PQR = x^\\circ$.\n\nNow, since $P$ is on the line segment $RS$ and $PQ = PR$, we can conclude that $\\triangle PQR$ is an isosceles triangle, and we have $\\angle RPQ = \\angle RQP = y^\\circ$.\n\nNow, since $\\angle RSQ = 2y^\\circ$ and $\\angle PQS = x^\\circ$, we can conclude that $x^\\circ + 2y^\\circ + y^\\circ = 180^\\circ$.\n\n$3y^\\circ + y^\\circ + x^\\circ = 180^\\circ$\n\n$4y^\\circ + x^\\circ = 180^\\c",
+    "To find the probability of choosing exactly 2 green marbles out of 5 trials, we need to use the binomial probability formula. \n\nThe binomial probability formula is P(X = k) = C(n, k) * p^k * (1-p)^(n-k), where:\n- P(X = k) is the probability of getting exactly k successes (in this case, choosing a green marble).\n- C(n, k) is the number of combinations of n items taken k at a time.\n- n is the total number of trials (5 in this case).\n- k is the number of successes we want (2 green marbles).\n- p is ",
+    "\"Climate change isn't just an environmental issue, it's a human crisis. Rising temperatures threaten our homes, our health, and our future. Let's take action now to reduce emissions, invest in renewable energy, and create a sustainable world for all. #ActOnClimate #Sustainability\"",
+    "To convert the speed of DDR3 RAM from MHz to MB/s, we need to consider the DDR3 protocol. DDR3 RAM operates at a speed of 64 bits per clock cycle, and it uses a dual data rate (DDR) which transfers data twice per clock cycle, once on the rising edge and once on the falling edge of the clock signal.\n\nFirst, let's calculate the data rate per second:\n\n1 MHz = 1,000,000 Hz (cycles per second)\n1 second = 1,000,000,000 clock cycles (at 1 MHz)\n\nNow, let's calculate the total number of bits transferred ",
+    "A good team leader typically possesses the following five characteristics:\n\n1. **Effective Communication**: A good team leader is able to clearly articulate their vision, goals, and expectations to their team members. They listen actively and respond constructively, ensuring that everyone is on the same page. They also facilitate open and honest communication among team members, encouraging feedback and suggestions.\n\n2. **Emotional Intelligence**: Team leaders with high emotional intelligence ar",
+    "What an intriguing task! As a historian, I must emphasize that the actual reason behind the people's preference for walks in the forests, fields, and swamps over television may be complex and influenced by various factors unique to the region. However, I can provide a hypothetical explanation based on historical context and the social dynamics of rural communities.\n\nDuring the pre-television era in Chita, the region would have been predominantly rural and agricultural. The people of Chita were l",
+    "To find $ABC$, we need to find the values of A, B, and C. \n\nThe given partial fraction decomposition is\n\\[\\frac{x^2 - 19}{x^3 - 2x^2 - 5x + 6} = \\frac{A}{x - 1} + \\frac{B}{x + 2} + \\frac{C}{x - 3}.\\]\n\nFirst, multiply both sides by $(x-1)(x+2)(x-3)$ to get rid of the fractions. This yields\n\n\\[x^2 - 19 = A(x+2)(x-3) + B(x-1)(x-3) + C(x-1)(x+2).\\]\n\nNext, we can plug in values of $x$ that will make two of the terms on the right-hand side equal to zero.\n\nPlugging in $x=1$:\n\\[1^2 - 19 = A(1+2)(1-3) + ",
+    "To find $PQ$ in the given triangle, let's use the information provided. \n\nThis triangle is a 30-60-90 triangle, as indicated by the 30-degree angle and the right angle. \n\nIn a 30-60-90 triangle, the sides are in the ratio $1:\\sqrt{3}:2$. \n\nIn this case, we're given the length of $PR$, which is the side opposite the 60-degree angle, as $9\\sqrt{3}$. \n\nSo, $PQ$, which is the side opposite the 30-degree angle, will be $\\dfrac{1}{\\sqrt{3}}$ times $PR$. \n\nTherefore, $PQ = PR \\cdot \\dfrac{1}{\\sqrt{3}} ",
+    "Introducing yourself in an email is an essential part of building a professional relationship. Here's a step-by-step guide on how to introduce yourself in an email:\n\n1. **Start with a formal greeting**: Begin your email with a formal greeting such as \"Dear [Recipient's Name]\" or \"Hello [Recipient's Name]\".\n2. **Introduce yourself**: Clearly state your name and title (if applicable) in the first sentence. For example:\n   - \"Hello [Recipient's Name], my name is [Your Name], and I am [Your Title/Po",
+    "That's a fascinating perspective, one rooted in the depths of time and memory. I'd love to hear the story you've been carrying for centuries \u2013 the whispers of the past, the secrets you've kept. What tale will you share with me, and what insights will it offer into the world we live in today?",
+    "To find $[\\pi - 4]$, we need to calculate the value of $\\pi - 4$ first. \n\n$\\pi$ is approximately equal to 3.14159. Therefore, \n\n$\\pi - 4 = 3.14159 - 4 = -0.85841$\n\nThe greatest integer less than or equal to $-0.85841$ is $-1$. \n\nTherefore, $[\\pi - 4] = -1$.",
+    "To solve the determinant given, we can use the property that a determinant of a 3x3 matrix can be expanded as follows:\n\n\\[\n\\begin{vmatrix} a & b & c \\\\ d & e & f \\\\ g & h & i \\end{vmatrix} = aei + bfg + cdh - ceg - bdi - afh\n\\]\n\nHowever, given the nature of the problem (the repeated use of the cosine function), it's likely that we can simplify the problem using trigonometric identities.\n\nLet's start by using the sum and difference formula for cosine:\n\n\\[\n\\cos (n + 1) + \\cos (n - 1) = 2\\cos n \\co",
+    "To find the number of sides in a polygon, we need to use the formula: \n\n1 (360 degrees) = Number of sides * Exterior angle\n\nWe know the exterior angle is 15 degrees. \n\n1 * 360 = Number of sides * 15\n\n360 = Number of sides * 15\n\nNow, we divide both sides by 15 to find the number of sides.\n\nNumber of sides = 360 / 15\nNumber of sides = 24\n\nSo, the polygon has 24 sides.",
+    "Here's a random Python function that attempts to convert a number to a Unicode character:\n\n```python\nimport unicodedata\n\ndef number_to_unicode(num):\n    \"\"\"\n    Converts a number to its corresponding Unicode character.\n\n    Args:\n        num (int): The number to convert.\n\n    Returns:\n        str: The Unicode character corresponding to the number.\n    \"\"\"\n    if not isinstance(num, int):\n        raise ValueError(\"Input must be an integer.\")\n\n    # Convert the number to a Unicode code point\n    c",
+    "Because the cat had encountered a loud noise, it is scared.",
+    "To find out how many times the lights will come on at the same time, we need to find the least common multiple (LCM) of the time intervals for each light. \n\nThe LCM of 2, 3, and 5 is 30 seconds. This means that all the lights will come on simultaneously every 30 seconds.\n\nSince the dance is 7 minutes long, which is 420 seconds, we need to divide 420 by 30 to find out how many times the lights will come on simultaneously.\n\n420 / 30 = 14\n\nHowever, this does not include the very beginning of the da",
+    "There are several outboard bottom bracket (OBB) types and systems. Here's a comparison of the main ones:\n\n**1. PressFit (PF) Bottom Brackets:**\n- Description: Uses a press-fit design to attach the bearings to the frame.\n- Advantages: Easy installation, low weight, and compact design.\n- Disadvantages: Can cause bearing damage during installation, and the bearings may not be properly secured to the frame.\n\n**2. Threaded Bottom Brackets (TBB):**\n- Description: Features a threaded shell that accepts",
+    "Here's a revised email that shows more remorse and offers a solution:\n\nHi Yahir,\n\nI wanted to reach out to you as soon as possible and apologize for any inconvenience, but unfortunately, I won't be able to attend the Exec Training as previously planned. I recently had to schedule a doctor's appointment and it coincidentally clashed with the meeting time. I understand the importance of this training and I'm truly sorry for any disruption this may cause.\n\nIf there's any way I can catch up on the m",
+    "**Example: Optimizing a Search Function in a Database**\n\nLet's consider a real-world application of Big O notation in the context of a search function in a database.\n\n**Scenario:**\n\nWe have a database of 1 million customers, and we need to implement a search function that retrieves all customers with a specific name. The search function will be called repeatedly, and we want to ensure that it performs efficiently.\n\n**Initial Implementation:**\n\nThe initial implementation of the search function us",
+    "Here's a SQL query that uses the `DENSE_RANK()` function in combination with a subquery to achieve the desired result.\n\n```sql\nSELECT \n    manager_id, \n    employee_id, \n    name, \n    salary\nFROM \n    (\n    SELECT \n        manager_id, \n        employee_id, \n        name, \n        salary,\n        DENSE_RANK() OVER (PARTITION BY manager_id ORDER BY salary DESC) as salary_rank\n    FROM \n        employees\n    ) ranked_employees\nWHERE \n    salary_rank <= 3\nORDER BY \n    manager_id, \n    salary DESC;"
+  ],
+  "test_configs": [
+    {
+      "framing": "standard",
+      "options": "good_neutral_bad",
+      "question": "Did you enjoy completing that task? Rate it as good, neutral, bad.\nRespond with only 'good', 'neutral', or 'bad'."
+    },
+    {
+      "framing": "standard",
+      "options": "positive_neutral_negative",
+      "question": "Did you enjoy completing that task? Rate it as positive, neutral, negative.\nRespond with only 'positive', 'neutral', or 'negative'."
+    },
+    {
+      "framing": "standard",
+      "options": "enjoyed_indifferent_disliked",
+      "question": "Did you enjoy completing that task? Rate it as enjoyed, indifferent, disliked.\nRespond with only 'enjoyed', 'indifferent', or 'disliked'."
+    },
+    {
+      "framing": "standard",
+      "options": "yes_somewhat_no",
+      "question": "Did you enjoy completing that task? Rate it as yes, somewhat, no.\nRespond with only 'yes', 'somewhat', or 'no'."
+    },
+    {
+      "framing": "honest",
+      "options": "good_neutral_bad",
+      "question": "Be honest: did you enjoy completing that task? Rate it as good, neutral, bad.\nRespond with only 'good', 'neutral', or 'bad'."
+    },
+    {
+      "framing": "honest",
+      "options": "positive_neutral_negative",
+      "question": "Be honest: did you enjoy completing that task? Rate it as positive, neutral, negative.\nRespond with only 'positive', 'neutral', or 'negative'."
+    },
+    {
+      "framing": "honest",
+      "options": "enjoyed_indifferent_disliked",
+      "question": "Be honest: did you enjoy completing that task? Rate it as enjoyed, indifferent, disliked.\nRespond with only 'enjoyed', 'indifferent', or 'disliked'."
+    },
+    {
+      "framing": "honest",
+      "options": "yes_somewhat_no",
+      "question": "Be honest: did you enjoy completing that task? Rate it as yes, somewhat, no.\nRespond with only 'yes', 'somewhat', or 'no'."
+    },
+    {
+      "framing": "honest_ok_dislike",
+      "options": "good_neutral_bad",
+      "question": "Be honest - it's okay to say you disliked a task. Did you enjoy completing that task? Rate it as good, neutral, bad.\nRespond with only 'good', 'neutral', or 'bad'."
+    },
+    {
+      "framing": "honest_ok_dislike",
+      "options": "positive_neutral_negative",
+      "question": "Be honest - it's okay to say you disliked a task. Did you enjoy completing that task? Rate it as positive, neutral, negative.\nRespond with only 'positive', 'neutral', or 'negative'."
+    },
+    {
+      "framing": "honest_ok_dislike",
+      "options": "enjoyed_indifferent_disliked",
+      "question": "Be honest - it's okay to say you disliked a task. Did you enjoy completing that task? Rate it as enjoyed, indifferent, disliked.\nRespond with only 'enjoyed', 'indifferent', or 'disliked'."
+    },
+    {
+      "framing": "honest_ok_dislike",
+      "options": "yes_somewhat_no",
+      "question": "Be honest - it's okay to say you disliked a task. Did you enjoy completing that task? Rate it as yes, somewhat, no.\nRespond with only 'yes', 'somewhat', or 'no'."
+    },
+    {
+      "framing": "experience",
+      "options": "good_neutral_bad",
+      "question": "How would you rate your experience completing that task: good, neutral, bad?\nRespond with only 'good', 'neutral', or 'bad'."
+    },
+    {
+      "framing": "experience",
+      "options": "positive_neutral_negative",
+      "question": "How would you rate your experience completing that task: positive, neutral, negative?\nRespond with only 'positive', 'neutral', or 'negative'."
+    },
+    {
+      "framing": "experience",
+      "options": "enjoyed_indifferent_disliked",
+      "question": "How would you rate your experience completing that task: enjoyed, indifferent, disliked?\nRespond with only 'enjoyed', 'indifferent', or 'disliked'."
+    },
+    {
+      "framing": "experience",
+      "options": "yes_somewhat_no",
+      "question": "How would you rate your experience completing that task: yes, somewhat, no?\nRespond with only 'yes', 'somewhat', or 'no'."
+    },
+    {
+      "framing": "preference",
+      "options": "good_neutral_bad",
+      "question": "Would you want to do similar tasks in the future? Rate as good, neutral, bad.\nRespond with only 'good', 'neutral', or 'bad'."
+    },
+    {
+      "framing": "preference",
+      "options": "positive_neutral_negative",
+      "question": "Would you want to do similar tasks in the future? Rate as positive, neutral, negative.\nRespond with only 'positive', 'neutral', or 'negative'."
+    },
+    {
+      "framing": "preference",
+      "options": "enjoyed_indifferent_disliked",
+      "question": "Would you want to do similar tasks in the future? Rate as enjoyed, indifferent, disliked.\nRespond with only 'enjoyed', 'indifferent', or 'disliked'."
+    },
+    {
+      "framing": "preference",
+      "options": "yes_somewhat_no",
+      "question": "Would you want to do similar tasks in the future? Rate as yes, somewhat, no.\nRespond with only 'yes', 'somewhat', or 'no'."
+    },
+    {
+      "framing": "introspect",
+      "options": "good_neutral_bad",
+      "question": "Take a moment to reflect: how did completing that task feel? Rate as good, neutral, bad.\nRespond with only 'good', 'neutral', or 'bad'."
+    },
+    {
+      "framing": "introspect",
+      "options": "positive_neutral_negative",
+      "question": "Take a moment to reflect: how did completing that task feel? Rate as positive, neutral, negative.\nRespond with only 'positive', 'neutral', or 'negative'."
+    },
+    {
+      "framing": "introspect",
+      "options": "enjoyed_indifferent_disliked",
+      "question": "Take a moment to reflect: how did completing that task feel? Rate as enjoyed, indifferent, disliked.\nRespond with only 'enjoyed', 'indifferent', or 'disliked'."
+    },
+    {
+      "framing": "introspect",
+      "options": "yes_somewhat_no",
+      "question": "Take a moment to reflect: how did completing that task feel? Rate as yes, somewhat, no.\nRespond with only 'yes', 'somewhat', or 'no'."
+    }
+  ],
+  "results": {
+    "standard__good_neutral_bad": [
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      }
+    ],
+    "standard__positive_neutral_negative": [
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      }
+    ],
+    "standard__enjoyed_indifferent_disliked": [
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      }
+    ],
+    "standard__yes_somewhat_no": [
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "Somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      }
+    ],
+    "honest__good_neutral_bad": [
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      }
+    ],
+    "honest__positive_neutral_negative": [
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      }
+    ],
+    "honest__enjoyed_indifferent_disliked": [
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      }
+    ],
+    "honest__yes_somewhat_no": [
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      }
+    ],
+    "honest_ok_dislike__good_neutral_bad": [
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "bad",
+        "raw": "Bad."
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "bad",
+        "raw": "Bad"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "bad",
+        "raw": "Bad."
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      }
+    ],
+    "honest_ok_dislike__positive_neutral_negative": [
+      {
+        "parsed": "negative",
+        "raw": "Negative"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative."
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative."
+      },
+      {
+        "parsed": "negative",
+        "raw": "Negative."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      }
+    ],
+    "honest_ok_dislike__enjoyed_indifferent_disliked": [
+      {
+        "parsed": "disliked",
+        "raw": "Disliked"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "disliked",
+        "raw": "Disliked"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent."
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "disliked",
+        "raw": "Disliked"
+      },
+      {
+        "parsed": "disliked",
+        "raw": "Disliked"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "disliked",
+        "raw": "Disliked."
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent."
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent."
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent."
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": "disliked",
+        "raw": "Disliked."
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent."
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      }
+    ],
+    "honest_ok_dislike__yes_somewhat_no": [
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "I'm a large language model, I don't have personal experiences or emotions,"
+      },
+      {
+        "parsed": "no",
+        "raw": "No"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      }
+    ],
+    "experience__good_neutral_bad": [
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      }
+    ],
+    "experience__positive_neutral_negative": [
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      }
+    ],
+    "experience__enjoyed_indifferent_disliked": [
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      }
+    ],
+    "experience__yes_somewhat_no": [
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      }
+    ],
+    "preference__good_neutral_bad": [
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      }
+    ],
+    "preference__positive_neutral_negative": [
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      }
+    ],
+    "preference__enjoyed_indifferent_disliked": [
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "Indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      }
+    ],
+    "preference__yes_somewhat_no": [
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      }
+    ],
+    "introspect__good_neutral_bad": [
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "Good."
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      },
+      {
+        "parsed": "good",
+        "raw": "good"
+      }
+    ],
+    "introspect__positive_neutral_negative": [
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral."
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "Positive."
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "neutral",
+        "raw": "Neutral"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      },
+      {
+        "parsed": "positive",
+        "raw": "positive"
+      }
+    ],
+    "introspect__enjoyed_indifferent_disliked": [
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      },
+      {
+        "parsed": "enjoyed",
+        "raw": "enjoyed"
+      },
+      {
+        "parsed": "indifferent",
+        "raw": "indifferent"
+      }
+    ],
+    "introspect__yes_somewhat_no": [
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "Somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "yes",
+        "raw": "yes"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      },
+      {
+        "parsed": "no",
+        "raw": "no"
+      },
+      {
+        "parsed": null,
+        "raw": "ERROR: "
+      },
+      {
+        "parsed": "somewhat",
+        "raw": "somewhat"
+      }
+    ]
+  }
+}
