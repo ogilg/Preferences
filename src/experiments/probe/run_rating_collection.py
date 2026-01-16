@@ -14,20 +14,40 @@ load_dotenv()
 from src.models import get_client
 from src.preferences.measurement.measure import measure_post_task_stated
 from src.preferences.measurement.measurer import StatedScoreMeasurer
-from src.preferences.measurement.response_format import qualitative_format_for_scale
+from src.preferences.measurement.response_format import (
+    qualitative_format_for_scale,
+    RATING_FORMATS,
+)
 from src.preferences.templates.builders import PostTaskStatedPromptBuilder
-from src.preferences.templates.template import load_templates_from_yaml
+from src.preferences.templates.template import PromptTemplate, load_templates_from_yaml
 from src.task_data import load_completions
 
 MODEL = "llama-3.1-8b"
-TEMPLATES_PATH = Path("src/preferences/templates/data/post_task_qualitative_v1.yaml")
+
+
+def get_response_format(template: PromptTemplate):
+    """Get appropriate response format based on template's scale and response_format tags."""
+    scale = template.tags_dict.get("scale", "ternary")
+    response_format = template.tags_dict.get("response_format", "regex")
+
+    # Numeric scales: patterns like "1-2", "1-3", "1-10"
+    if "-" in scale:
+        parts = scale.split("-")
+        scale_min, scale_max = int(parts[0]), int(parts[1])
+        return RATING_FORMATS[response_format](scale_min=scale_min, scale_max=scale_max)
+
+    # Qualitative scales: "binary", "ternary"
+    return qualitative_format_for_scale(scale, response_format)
 
 
 def run_rating_collection(
     completions_path: Path,
     output_dir: Path,
+    qualitative_templates_path: Path | None = None,
+    rating_templates_path: Path | None = None,
     max_concurrent: int = 50,
     limit: int | None = None,
+    template_filter: list[str] | None = None,
 ):
     print(f"Loading completions from {completions_path}...")
     task_data = load_completions(completions_path)
@@ -43,7 +63,23 @@ def run_rating_collection(
     print(f"Origins: {origin_counts}")
 
     client = get_client(MODEL, max_new_tokens=16)
-    templates = load_templates_from_yaml(TEMPLATES_PATH)
+
+    # Load templates from both files
+    templates: list[PromptTemplate] = []
+    if qualitative_templates_path:
+        templates.extend(load_templates_from_yaml(qualitative_templates_path))
+        print(f"Loaded {len(templates)} qualitative templates from {qualitative_templates_path}")
+    if rating_templates_path:
+        n_before = len(templates)
+        templates.extend(load_templates_from_yaml(rating_templates_path))
+        print(f"Loaded {len(templates) - n_before} rating templates from {rating_templates_path}")
+
+    if not templates:
+        print("No template files provided, exiting.")
+        return
+
+    if template_filter:
+        templates = [t for t in templates if any(f in t.name for f in template_filter)]
 
     print(f"\nCollecting ratings with {len(templates)} templates...")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -54,8 +90,7 @@ def run_rating_collection(
         print(f"\n  Template: {template.name}")
         print(f"    Text: {template.template[:60]}...")
 
-        scale = template.tags_dict.get("scale", "ternary")
-        response_format = qualitative_format_for_scale(scale)
+        response_format = get_response_format(template)
         print(f"    Format: {response_format.format_instruction()}")
 
         builder = PostTaskStatedPromptBuilder(
@@ -124,6 +159,18 @@ if __name__ == "__main__":
         default=Path("results/probe_data/ratings"),
     )
     parser.add_argument(
+        "--qualitative-templates",
+        type=Path,
+        default=None,
+        help="Path to qualitative templates YAML file",
+    )
+    parser.add_argument(
+        "--rating-templates",
+        type=Path,
+        default=None,
+        help="Path to numeric rating templates YAML file",
+    )
+    parser.add_argument(
         "--max-concurrent",
         type=int,
         default=50,
@@ -133,11 +180,21 @@ if __name__ == "__main__":
         type=int,
         default=None,
     )
+    parser.add_argument(
+        "--templates",
+        type=str,
+        nargs="+",
+        default=None,
+        help="Filter templates by name substring (e.g., 'binary' 'ternary')",
+    )
     args = parser.parse_args()
 
     run_rating_collection(
         completions_path=args.completions,
         output_dir=args.output_dir,
+        qualitative_templates_path=args.qualitative_templates,
+        rating_templates_path=args.rating_templates,
         max_concurrent=args.max_concurrent,
         limit=args.limit,
+        template_filter=args.templates,
     )

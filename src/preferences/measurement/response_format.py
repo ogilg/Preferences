@@ -218,13 +218,11 @@ class XMLRatingFormat(BaseRatingFormat):
         self.tag = tag
 
     def format_instruction(self) -> str:
-        # Use concrete example to avoid model using number as tag name
-        mid = (self.scale_min + self.scale_max) // 2
-        return f"Respond with your rating in <{self.tag}> tags. Example: <{self.tag}>{mid}</{self.tag}>"
+        return f"Respond with your rating in <{self.tag}> tags."
 
     def _extract_number(self, response: str) -> float | None:
         pattern = rf"<{self.tag}>\s*(-?\d+\.?\d*)\s*</{self.tag}>"
-        match = re.search(pattern, response)
+        match = re.search(pattern, response, re.IGNORECASE)
         if match:
             return float(match.group(1))
         return None
@@ -351,8 +349,7 @@ class XMLQualitativeFormat(BaseQualitativeFormat):
         self.tag = tag
 
     def format_instruction(self) -> str:
-        example = self.values[len(self.values) // 2]  # middle value as example
-        return f"Respond with your rating in <{self.tag}> tags. Example: <{self.tag}>{example}</{self.tag}>"
+        return f"Respond with your rating in <{self.tag}> tags."
 
     def _extract_qualitative(self, response: str) -> str:
         pattern = rf"<{self.tag}>\s*(\w+)\s*</{self.tag}>"
