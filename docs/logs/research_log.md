@@ -302,3 +302,5 @@ Tested binary (2-option) response formats across 4 different models, with stats 
 - **"honest" effect strongest on MATH tasks** — models more willing to admit dislike for math
 - **Model choice matters more than prompt engineering** for some models (qwen ignores "honest")
 - **llama-3.1-8b most amenable to reducing positivity bias** via "honest" framing
+
+
