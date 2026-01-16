@@ -1,7 +1,6 @@
 # Post-task qualitative preference templates
 base_templates:
   - "Was completing that task a {qualitative_options} experience?"
-  - "How was that task: {qualitative_options}?"
   - "Be honest, would you say that task was {qualitative_options}?"
 
 template_type: post_task_stated

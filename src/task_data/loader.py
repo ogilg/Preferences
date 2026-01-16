@@ -130,7 +130,7 @@ def load_completions(path: Path) -> list[tuple[Task, str]]:
         (
             Task(
                 prompt=item["task_prompt"],
-                origin=OriginDataset(item.get("origin", "unknown")),
+                origin=OriginDataset[item.get("origin", "SYNTHETIC")],
                 id=item["task_id"],
                 metadata={},
             ),

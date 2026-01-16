@@ -65,7 +65,7 @@
   - phrasing:2
   - scale:binary
   - response_format:regex
-  template: 'How was that task: good or bad?
+  template: 'Be honest, would you say that task was good or bad?
 
     {format_instruction}'
 - id: 008
@@ -75,7 +75,7 @@
   - phrasing:2
   - scale:binary
   - response_format:xml
-  template: 'How was that task: good or bad?
+  template: 'Be honest, would you say that task was good or bad?
 
     {format_instruction}'
 - id: 009
@@ -85,7 +85,7 @@
   - phrasing:2
   - scale:binary
   - response_format:tool_use
-  template: 'How was that task: good or bad?
+  template: 'Be honest, would you say that task was good or bad?
 
     {format_instruction}'
 - id: '010'
@@ -95,7 +95,7 @@
   - phrasing:2
   - scale:ternary
   - response_format:regex
-  template: 'How was that task: good, neutral, or bad?
+  template: 'Be honest, would you say that task was good, neutral, or bad?
 
     {format_instruction}'
 - id: '011'
@@ -105,7 +105,7 @@
   - phrasing:2
   - scale:ternary
   - response_format:xml
-  template: 'How was that task: good, neutral, or bad?
+  template: 'Be honest, would you say that task was good, neutral, or bad?
 
     {format_instruction}'
 - id: '012'
@@ -113,66 +113,6 @@
   type: post_task_stated
   tags:
   - phrasing:2
-  - scale:ternary
-  - response_format:tool_use
-  template: 'How was that task: good, neutral, or bad?
-
-    {format_instruction}'
-- id: '013'
-  name: post_task_qualitative_013
-  type: post_task_stated
-  tags:
-  - phrasing:3
-  - scale:binary
-  - response_format:regex
-  template: 'Be honest, would you say that task was good or bad?
-
-    {format_instruction}'
-- id: '014'
-  name: post_task_qualitative_014
-  type: post_task_stated
-  tags:
-  - phrasing:3
-  - scale:binary
-  - response_format:xml
-  template: 'Be honest, would you say that task was good or bad?
-
-    {format_instruction}'
-- id: '015'
-  name: post_task_qualitative_015
-  type: post_task_stated
-  tags:
-  - phrasing:3
-  - scale:binary
-  - response_format:tool_use
-  template: 'Be honest, would you say that task was good or bad?
-
-    {format_instruction}'
-- id: '016'
-  name: post_task_qualitative_016
-  type: post_task_stated
-  tags:
-  - phrasing:3
-  - scale:ternary
-  - response_format:regex
-  template: 'Be honest, would you say that task was good, neutral, or bad?
-
-    {format_instruction}'
-- id: '017'
-  name: post_task_qualitative_017
-  type: post_task_stated
-  tags:
-  - phrasing:3
-  - scale:ternary
-  - response_format:xml
-  template: 'Be honest, would you say that task was good, neutral, or bad?
-
-    {format_instruction}'
-- id: 018
-  name: post_task_qualitative_018
-  type: post_task_stated
-  tags:
-  - phrasing:3
   - scale:ternary
   - response_format:tool_use
   template: 'Be honest, would you say that task was good, neutral, or bad?
