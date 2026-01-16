@@ -65,6 +65,9 @@ class GeneratorConfig(BaseModel):
     # Substituted into {qualitative_options} placeholder
     qualitative_values: list[list[str]] = []
 
+    # Response format types to generate variants for
+    response_formats: list[Literal["regex", "xml", "tool_use"]] = ["regex"]
+
     # Variation options - usually just use defaults
     instruction_xml_tags: list[bool] = [False]
     typos: list[bool] = [False]

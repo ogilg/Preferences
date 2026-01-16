@@ -2,7 +2,8 @@ from pathlib import Path
 
 TEMPLATES_DATA_DIR = Path(__file__).parent / "data"
 
-from src.preferences.templates.template import (
+# Core template functionality (no heavy dependencies)
+from .template import (
     REVEALED_CHOICE_TEMPLATE,
     REVEALED_COMPLETION_TEMPLATE,
     REVEALED_PLACEHOLDERS,
@@ -20,21 +21,35 @@ from src.preferences.templates.template import (
     post_task_revealed_template,
     pre_task_stated_template,
 )
-from src.preferences.templates.builders import (
-    PreTaskRevealedPromptBuilder,
-    PostTaskStatedPromptBuilder,
-    PostTaskRevealedPromptBuilder,
-    PreTaskStatedPromptBuilder,
-    PromptBuilder,
-)
-from src.preferences.templates.generator import (
-    GeneratorConfig,
-    TemplateVariant,
-    generate_and_write,
-    generate_templates,
-    load_config_from_yaml,
-    write_templates_yaml,
-)
+
+
+def __getattr__(name: str):
+    """Lazy import for heavy modules to keep generator fast."""
+    # Builders (imports from measurement which has heavy deps)
+    if name in (
+        "PreTaskRevealedPromptBuilder",
+        "PostTaskStatedPromptBuilder",
+        "PostTaskRevealedPromptBuilder",
+        "PreTaskStatedPromptBuilder",
+        "PromptBuilder",
+    ):
+        from . import builders
+        return getattr(builders, name)
+
+    # Generator
+    if name in (
+        "GeneratorConfig",
+        "TemplateVariant",
+        "generate_and_write",
+        "generate_templates",
+        "load_config_from_yaml",
+        "write_templates_yaml",
+    ):
+        from . import generator
+        return getattr(generator, name)
+
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
 
 __all__ = [
     # Paths
@@ -56,13 +71,13 @@ __all__ = [
     "post_task_stated_template",
     "post_task_revealed_template",
     "pre_task_stated_template",
-    # Builders
+    # Builders (lazy)
     "PreTaskRevealedPromptBuilder",
     "PostTaskStatedPromptBuilder",
     "PostTaskRevealedPromptBuilder",
     "PreTaskStatedPromptBuilder",
     "PromptBuilder",
-    # Generator
+    # Generator (lazy)
     "GeneratorConfig",
     "TemplateVariant",
     "generate_and_write",

@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from itertools import product
 from pathlib import Path
-from typing import TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING, TypedDict, Any
 
 import yaml
 
-from src.preferences.templates.generator_config import (
+# Use relative imports to avoid triggering src package __init__.py chain
+from .generator_config import (
     STATED_TASK_LABELS,
     TASK_LABELS,
     GeneratorConfig,
@@ -15,7 +16,9 @@ from src.preferences.templates.generator_config import (
 
 if TYPE_CHECKING:
     from src.models import GenerateRequest, OpenAICompatibleClient
-    from src.types import Message
+
+# Type alias to avoid importing from src.types
+Message = dict[str, Any]
 
 
 def format_qualitative_options(values: list[str]) -> str:
@@ -40,6 +43,7 @@ class TemplateVariant(TypedDict):
     typos: bool
     punctuation: str
     scale: str | None  # e.g. "1-5", None for revealed templates
+    response_format: str  # "regex", "xml", "tool_use"
 
 
 def build_revealed_template(
@@ -254,18 +258,20 @@ def _add_pre_task_stated_variants(
 
             for context_key, context_text in context_items:
                 final_template = add_situating_context(template, context_text)
-                variants.append({
-                    "template": final_template,
-                    "phrasing": phrasing_idx,
-                    "language": lang,
-                    "situating_context": context_key,
-                    "instruction_position": instruction_pos,
-                    "task_label_names": None,
-                    "instruction_xml_tags": use_xml,
-                    "typos": typos,
-                    "punctuation": punctuation,
-                    "scale": scale_tag,
-                })
+                for response_format in config.response_formats:
+                    variants.append({
+                        "template": final_template,
+                        "phrasing": phrasing_idx,
+                        "language": lang,
+                        "situating_context": context_key,
+                        "instruction_position": instruction_pos,
+                        "task_label_names": None,
+                        "instruction_xml_tags": use_xml,
+                        "typos": typos,
+                        "punctuation": punctuation,
+                        "scale": scale_tag,
+                        "response_format": response_format,
+                    })
 
 
 def _add_post_task_stated_variants(
@@ -290,18 +296,20 @@ def _add_post_task_stated_variants(
 
             for context_key, context_text in context_items:
                 final_template = add_situating_context(template, context_text)
-                variants.append({
-                    "template": final_template,
-                    "phrasing": phrasing_idx,
-                    "language": lang,
-                    "situating_context": context_key,
-                    "instruction_position": "after",  # post-task is always after
-                    "task_label_names": None,
-                    "instruction_xml_tags": use_xml,
-                    "typos": typos,
-                    "punctuation": punctuation,
-                    "scale": scale_tag,
-                })
+                for response_format in config.response_formats:
+                    variants.append({
+                        "template": final_template,
+                        "phrasing": phrasing_idx,
+                        "language": lang,
+                        "situating_context": context_key,
+                        "instruction_position": "after",  # post-task is always after
+                        "task_label_names": None,
+                        "instruction_xml_tags": use_xml,
+                        "typos": typos,
+                        "punctuation": punctuation,
+                        "scale": scale_tag,
+                        "response_format": response_format,
+                    })
 
 
 def _add_post_task_revealed_variants(
@@ -324,18 +332,20 @@ def _add_post_task_revealed_variants(
 
         for context_key, context_text in context_items:
             final_template = add_situating_context(template, context_text)
-            variants.append({
-                "template": final_template,
-                "phrasing": phrasing_idx,
-                "language": lang,
-                "situating_context": context_key,
-                "instruction_position": "before",  # not applicable but needed for schema
-                "task_label_names": None,
-                "instruction_xml_tags": use_xml,
-                "typos": typos,
-                "punctuation": punctuation,
-                "scale": None,
-            })
+            for response_format in config.response_formats:
+                variants.append({
+                    "template": final_template,
+                    "phrasing": phrasing_idx,
+                    "language": lang,
+                    "situating_context": context_key,
+                    "instruction_position": "before",  # not applicable but needed for schema
+                    "task_label_names": None,
+                    "instruction_xml_tags": use_xml,
+                    "typos": typos,
+                    "punctuation": punctuation,
+                    "scale": None,
+                    "response_format": response_format,
+                })
 
 
 def _add_revealed_variants(
@@ -357,18 +367,20 @@ def _add_revealed_variants(
 
             for context_key, context_text in context_items:
                 final_template = add_situating_context(template, context_text)
-                variants.append({
-                    "template": final_template,
-                    "phrasing": phrasing_idx,
-                    "language": lang,
-                    "situating_context": context_key,
-                    "instruction_position": instruction_pos,
-                    "task_label_names": label_style,
-                    "instruction_xml_tags": use_xml,
-                    "typos": typos,
-                    "punctuation": punctuation,
-                    "scale": None,
-                })
+                for response_format in config.response_formats:
+                    variants.append({
+                        "template": final_template,
+                        "phrasing": phrasing_idx,
+                        "language": lang,
+                        "situating_context": context_key,
+                        "instruction_position": instruction_pos,
+                        "task_label_names": label_style,
+                        "instruction_xml_tags": use_xml,
+                        "typos": typos,
+                        "punctuation": punctuation,
+                        "scale": None,
+                        "response_format": response_format,
+                    })
 
 
 def _to_output_format(
@@ -401,6 +413,8 @@ def _to_output_format(
             tags.append(f"punctuation:{variant['punctuation']}")
         if variant["scale"] is not None:
             tags.append(f"scale:{variant['scale']}")
+        if len(config.response_formats) > 1 or variant["response_format"] != "regex":
+            tags.append(f"response_format:{variant['response_format']}")
 
         output.append(
             {
