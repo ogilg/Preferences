@@ -140,7 +140,11 @@ def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
     measurements_path = run_dir / "measurements.yaml"
     if measurements_path.exists():
         measurements = load_yaml(measurements_path)
-        return _aggregate_scores(measurements)
+        # Check if this is stated format (task_id, score) vs pairwise comparison (task_a, task_b, choice)
+        if measurements and "task_id" in measurements[0]:
+            return _aggregate_scores(measurements)
+        # Pairwise comparison format without thurstonian CSV - skip
+        raise FileNotFoundError(f"Pairwise comparison data without thurstonian CSV in {run_dir}")
 
     raise FileNotFoundError(f"No thurstonian CSV, scores.yaml, or measurements.yaml found in {run_dir}")
 
@@ -322,6 +326,79 @@ def plot_regression_coefficients(
     plt.close()
 
 
+def compute_sensitivities_for_runs(
+    runs: list[tuple[RunConfig, np.ndarray, list[str]]],
+) -> dict[str, float]:
+    """Compute sensitivities for a subset of runs, returns field -> sensitivity."""
+    if len(runs) < 2:
+        return {}
+    sens_list, _, _ = compute_all_field_sensitivities(runs)
+    return {s["field"]: s["sensitivity"] for s in sens_list if not np.isnan(s["sensitivity"])}
+
+
+def plot_sensitivity_by_model(
+    runs: list[tuple[RunConfig, np.ndarray, list[str]]],
+    output_path: Path,
+    title: str,
+) -> None:
+    """Plot sensitivities grouped by model, one bar per model for each field."""
+    # Group runs by model
+    by_model: dict[str, list] = defaultdict(list)
+    for config, mu, task_ids in runs:
+        by_model[config.model_short].append((config, mu, task_ids))
+
+    # Compute sensitivities per model
+    model_sensitivities: dict[str, dict[str, float]] = {}
+    for model, model_runs in sorted(by_model.items()):
+        sens = compute_sensitivities_for_runs(model_runs)
+        if sens:
+            model_sensitivities[model] = sens
+
+    if not model_sensitivities:
+        return
+
+    # Collect all fields across models
+    all_fields: set[str] = set()
+    for sens in model_sensitivities.values():
+        all_fields.update(sens.keys())
+
+    # Sort fields by average sensitivity across models
+    field_avg = {}
+    for field in all_fields:
+        vals = [sens.get(field, 0) for sens in model_sensitivities.values()]
+        field_avg[field] = np.mean([v for v in vals if v != 0])
+    fields = sorted(all_fields, key=lambda f: -field_avg.get(f, 0))
+
+    models = sorted(model_sensitivities.keys())
+    n_models = len(models)
+    n_fields = len(fields)
+
+    _, ax = plt.subplots(figsize=(14, 7))
+
+    x = np.arange(n_fields)
+    width = 0.8 / n_models
+    colors = plt.cm.tab10(np.linspace(0, 1, n_models))
+
+    for i, model in enumerate(models):
+        sens = model_sensitivities[model]
+        values = [sens.get(field, 0) for field in fields]
+        n_model_runs = len(by_model[model])
+        offset = (i - n_models / 2 + 0.5) * width
+        ax.bar(x + offset, values, width, label=f"{model} (n={n_model_runs})", color=colors[i], alpha=0.8)
+
+    ax.set_xlabel("Field")
+    ax.set_ylabel("Δ Correlation (Sensitivity)")
+    ax.set_title(title)
+    ax.set_xticks(x)
+    ax.set_xticklabels(fields, rotation=45, ha="right")
+    ax.axhline(0, color="k", linestyle="-", linewidth=0.5)
+    ax.legend(loc="upper right", fontsize=8)
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=150, bbox_inches="tight")
+    plt.close()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Analyze preference sensitivity to template variations")
     parser.add_argument(
@@ -373,17 +450,24 @@ def main():
     save_sensitivity_report(sensitivities, correlations, regression, len(runs), report_path)
     print(f"Saved report to {report_path}")
 
+    n_runs = len(runs)
     if sensitivities:
         plot_path = output_dir / f"plot_{date_str}_{pref_type.lower()}_sensitivity_averaging.png"
-        title = f"{model_str} {pref_type} Pref Sensitivity (Averaging)"
+        title = f"{model_str} {pref_type} Pref Sensitivity (Averaging, n={n_runs})"
         plot_sensitivity_bars(sensitivities, plot_path, title)
         print(f"Saved plot to {plot_path}")
 
     if regression:
         plot_path = output_dir / f"plot_{date_str}_{pref_type.lower()}_sensitivity_regression.png"
-        title = f"{model_str} {pref_type} Pref Sensitivity (Regression)"
+        title = f"{model_str} {pref_type} Pref Sensitivity (Regression, n={n_runs})"
         plot_regression_coefficients(regression, plot_path, title)
         print(f"Saved regression plot to {plot_path}")
+
+    # Per-model breakdown plots
+    if len(models) > 1:
+        plot_path = output_dir / f"plot_{date_str}_{pref_type.lower()}_sensitivity_by_model.png"
+        plot_sensitivity_by_model(runs, plot_path, f"{pref_type} Pref Sensitivity by Model")
+        print(f"Saved per-model plot to {plot_path}")
 
 
 if __name__ == "__main__":

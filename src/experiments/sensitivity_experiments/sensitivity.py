@@ -115,6 +115,8 @@ def compute_sensitivities(
         if "tags_a" not in c or "tags_b" not in c:
             continue
         corr = c[correlation_key]
+        if np.isnan(corr):
+            continue
         tags_a, tags_b = c["tags_a"], c["tags_b"]
 
         for field in all_fields:
