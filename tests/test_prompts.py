@@ -145,7 +145,7 @@ class TestLoadTemplatesFromYaml:
         from pathlib import Path
         from src.preferences.templates import load_templates_from_yaml
 
-        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/revealed_choice_v1.yaml"
+        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/pre_task_revealed_v1.yaml"
         templates = load_templates_from_yaml(yaml_path)
 
         assert len(templates) >= 1

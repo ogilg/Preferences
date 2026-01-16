@@ -16,6 +16,28 @@ from src.preferences.storage.stated import (
     stated_exist,
     save_stated,
 )
+from src.preferences.storage.completions import (
+    COMPLETIONS_DIR,
+    CompletionStore,
+    TaskCompletion,
+    completions_exist,
+    generate_completions,
+    load_completions,
+)
+from src.preferences.storage.post_task import (
+    POST_STATED_DIR,
+    POST_REVEALED_DIR,
+    PostStatedCache,
+    PostRevealedCache,
+)
+from src.preferences.storage.loading import (
+    RunConfig,
+    list_runs,
+    find_thurstonian_csv,
+    load_run_utilities,
+    load_completed_runs,
+    load_pairwise_datasets,
+)
 
 __all__ = [
     # Base
@@ -33,4 +55,23 @@ __all__ = [
     "load_stated",
     "stated_exist",
     "save_stated",
+    # Completions (for post-task measurements)
+    "COMPLETIONS_DIR",
+    "CompletionStore",
+    "TaskCompletion",
+    "completions_exist",
+    "generate_completions",
+    "load_completions",
+    # Post-task caches
+    "POST_STATED_DIR",
+    "POST_REVEALED_DIR",
+    "PostStatedCache",
+    "PostRevealedCache",
+    # Loading utilities
+    "RunConfig",
+    "list_runs",
+    "find_thurstonian_csv",
+    "load_run_utilities",
+    "load_completed_runs",
+    "load_pairwise_datasets",
 ]

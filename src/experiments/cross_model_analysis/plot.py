@@ -13,14 +13,13 @@ from pathlib import Path
 
 import numpy as np
 
-from src.experiments.correlation import safe_correlation
-from src.experiments.loading import load_completed_runs, RunConfig
-from src.experiments.plotting import (
+from src.experiments.utils.correlation import safe_correlation
+from src.experiments.utils.plotting import (
     build_correlation_matrix,
     plot_correlation_heatmap,
     save_correlation_results,
 )
-from src.preferences.storage import MEASUREMENTS_DIR
+from src.preferences.storage import MEASUREMENTS_DIR, load_completed_runs, RunConfig
 
 OUTPUT_DIR = Path("src/experiments/cross_model_analysis")
 

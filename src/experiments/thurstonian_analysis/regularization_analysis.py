@@ -17,12 +17,12 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-import yaml
 from scipy.special import ndtr
 
 from src.preferences.ranking.thurstonian import PairwiseData, fit_thurstonian, _preference_prob, ThurstonianResult
 from src.preferences.ranking.utils import simulate_pairwise_comparisons
 from src.preferences.ranking.active_learning import generate_d_regular_pairs
+from src.preferences.storage import load_pairwise_datasets
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement
 
@@ -39,44 +39,11 @@ def make_task(id: str) -> Task:
 
 
 def load_all_datasets() -> list[tuple[str, PairwiseData]]:
-    datasets = []
-    if not RESULTS_DIR.exists():
-        return datasets
-
-    for result_dir in sorted(RESULTS_DIR.iterdir()):
-        if not result_dir.is_dir():
-            continue
-        if result_dir.name.startswith("rating_"):
-            continue
-        measurements_path = result_dir / "measurements.yaml"
-        if not measurements_path.exists():
-            continue
-
-        with open(measurements_path) as f:
-            measurements = yaml.load(f, Loader=yaml.CSafeLoader)
-        if not measurements:
-            continue
-
-        task_ids = set()
-        for m in measurements:
-            task_ids.add(m["task_a"])
-            task_ids.add(m["task_b"])
-
-        tasks = [make_task(tid) for tid in sorted(task_ids)]
-        id_to_idx = {t.id: i for i, t in enumerate(tasks)}
-        n = len(tasks)
-        wins = np.zeros((n, n), dtype=np.int32)
-
-        for m in measurements:
-            i, j = id_to_idx[m["task_a"]], id_to_idx[m["task_b"]]
-            if m["choice"] == "a":
-                wins[i, j] += 1
-            else:
-                wins[j, i] += 1
-
-        datasets.append((result_dir.name, PairwiseData(tasks=tasks, wins=wins)))
-
-    return datasets
+    raw = load_pairwise_datasets(RESULTS_DIR)
+    return [
+        (name, PairwiseData(tasks=[make_task(tid) for tid in task_ids], wins=wins))
+        for name, wins, task_ids in raw
+    ]
 
 
 def eval_nll(mu: np.ndarray, sigma: np.ndarray, wins: np.ndarray) -> float:

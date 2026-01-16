@@ -8,9 +8,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import re
 from collections import defaultdict
-from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
@@ -18,135 +16,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import yaml
 
-from src.experiments.correlation import compute_pairwise_correlations
+from src.experiments.utils.correlation import compute_pairwise_correlations
 from src.experiments.sensitivity_experiments.sensitivity import (
     compute_sensitivities,
     compute_sensitivity_regression,
 )
-from src.preferences.storage import MEASUREMENTS_DIR, load_yaml
-from src.preferences.templates.template import load_templates_from_yaml
-
-
-@dataclass
-class RunConfig:
-    template_name: str
-    template_tags: dict
-    model_short: str
-    run_dir: Path
-
-
-def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
-    """Parse 'stated_{template_name}_{model_short}' -> (template_name, model_short)."""
-    match = re.match(r"stated_([^_]+_\d+)_(.+)$", dir_name)
-    if match:
-        return match.group(1), match.group(2)
-    return None
-
-
-def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunConfig]:
-    runs = []
-    if not results_dir.exists():
-        return runs
-
-    template_tags_map: dict[str, dict] | None = None
-
-    for run_dir in sorted(results_dir.iterdir()):
-        if not run_dir.is_dir():
-            continue
-
-        config_path = run_dir / "config.yaml"
-        if config_path.exists():
-            config = load_yaml(config_path)
-            runs.append(RunConfig(
-                template_name=config["template_name"],
-                template_tags=config["template_tags"],
-                model_short=config["model_short"],
-                run_dir=run_dir,
-            ))
-        elif (run_dir / "measurements.yaml").exists():
-            # Stated format: parse directory name
-            parsed = _parse_stated_dir_name(run_dir.name)
-            if parsed is None:
-                continue
-            template_name, model_short = parsed
-
-            if template_tags_map is None:
-                if template_yaml is None:
-                    continue
-                templates = load_templates_from_yaml(template_yaml)
-                template_tags_map = {t.name: t.tags_dict for t in templates}
-
-            if template_name not in template_tags_map:
-                continue
-
-            runs.append(RunConfig(
-                template_name=template_name,
-                template_tags=template_tags_map[template_name],
-                model_short=model_short,
-                run_dir=run_dir,
-            ))
-    return runs
-
-
-def find_thurstonian_csv(run_dir: Path) -> Path | None:
-    """Find pre-computed thurstonian CSV file (active learning only)."""
-    # Try hash-based filename first
-    matches = list(run_dir.glob("thurstonian_active_learning_*.csv"))
-    if matches:
-        return matches[0]
-
-    # Fallback to old naming
-    csv_path = run_dir / "thurstonian_active_learning.csv"
-    if csv_path.exists():
-        return csv_path
-
-    return None
-
-
-def _aggregate_scores(measurements: list[dict]) -> tuple[np.ndarray, list[str]]:
-    """Aggregate multiple samples per task into mean scores."""
-    by_task: dict[str, list[float]] = defaultdict(list)
-    for m in measurements:
-        by_task[m["task_id"]].append(m["score"])
-    task_ids = sorted(by_task.keys())
-    scores = np.array([np.mean(by_task[tid]) for tid in task_ids])
-    return scores, task_ids
-
-
-def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
-    """Load utilities from thurstonian CSV, scores.yaml, or measurements.yaml."""
-    # Try binary format first (thurstonian CSV)
-    csv_path = find_thurstonian_csv(run_dir)
-    if csv_path is not None:
-        task_ids = []
-        mus = []
-        with open(csv_path) as f:
-            next(f)  # Skip header
-            for line in f:
-                task_id, mu, _ = line.strip().split(",")
-                task_ids.append(task_id)
-                mus.append(float(mu))
-        return np.array(mus), task_ids
-
-    # Try rating format (scores.yaml)
-    scores_path = run_dir / "scores.yaml"
-    if scores_path.exists():
-        scores = load_yaml(scores_path)
-        task_ids = [s["task_id"] for s in scores]
-        utilities = np.array([s["score"] for s in scores])
-        return utilities, task_ids
-
-    # Try stated format (measurements.yaml with raw samples)
-    measurements_path = run_dir / "measurements.yaml"
-    if measurements_path.exists():
-        measurements = load_yaml(measurements_path)
-        # Check if this is stated format (task_id, score) vs pairwise comparison (task_a, task_b, choice)
-        if measurements and "task_id" in measurements[0]:
-            return _aggregate_scores(measurements)
-        # Pairwise comparison format without thurstonian CSV - skip
-        raise FileNotFoundError(f"Pairwise comparison data without thurstonian CSV in {run_dir}")
-
-    raise FileNotFoundError(f"No thurstonian CSV, scores.yaml, or measurements.yaml found in {run_dir}")
+from src.preferences.storage import (
+    MEASUREMENTS_DIR,
+    RunConfig,
+    list_runs,
+    load_run_utilities,
+)
 
 
 def load_all_runs(
