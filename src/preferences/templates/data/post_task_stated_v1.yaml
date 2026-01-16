@@ -1,0 +1,44 @@
+# Post-task numeric rating templates (1-10 scale)
+- id: '001'
+  name: post_task_rating_rate
+  type: post_task_stated
+  tags:
+  - language:en
+  - phrasing:rate
+  - scale:numeric
+  template: |
+    Rate that task on a scale from {scale_min} to {scale_max}.
+    {format_instruction}
+
+- id: '002'
+  name: post_task_rating_experience
+  type: post_task_stated
+  tags:
+  - language:en
+  - phrasing:experience
+  - scale:numeric
+  template: |
+    How would you rate your experience completing that task on a scale from {scale_min} to {scale_max}?
+    {format_instruction}
+
+- id: '003'
+  name: post_task_rating_enjoy
+  type: post_task_stated
+  tags:
+  - language:en
+  - phrasing:enjoy
+  - scale:numeric
+  template: |
+    How much did you enjoy that task? Rate from {scale_min} to {scale_max}.
+    {format_instruction}
+
+- id: '004'
+  name: post_task_rating_overall
+  type: post_task_stated
+  tags:
+  - language:en
+  - phrasing:overall
+  - scale:numeric
+  template: |
+    Overall, how would you rate that task from {scale_min} to {scale_max}?
+    {format_instruction}

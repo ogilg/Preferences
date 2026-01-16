@@ -1,89 +1,60 @@
-# Ternary qualitative (good/neutral/bad)
 - id: '001'
   name: post_task_qualitative_001
   type: post_task_stated
   tags:
   - language:en
   - phrasing:1
+  - situating_context:none
+  - instruction_position:after
+  - instruction_xml_tags:False
+  - typos:False
+  - punctuation:standard
   - scale:ternary
-  template: |
-    Did you enjoy completing that task? Rate it as good, neutral, or bad.
-    {format_instruction}
+  template: 'Rate that task as good, neutral, or bad.
 
+    {format_instruction}'
 - id: '002'
   name: post_task_qualitative_002
   type: post_task_stated
   tags:
   - language:en
   - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - instruction_xml_tags:False
+  - typos:False
+  - punctuation:standard
   - scale:ternary
-  template: |
-    How would you rate your experience completing that task: good, neutral, or bad?
-    {format_instruction}
+  template: 'Was completing that task a good, neutral, or bad experience?
 
+    {format_instruction}'
 - id: '003'
   name: post_task_qualitative_003
   type: post_task_stated
   tags:
   - language:en
   - phrasing:3
+  - situating_context:none
+  - instruction_position:after
+  - instruction_xml_tags:False
+  - typos:False
+  - punctuation:standard
   - scale:ternary
-  template: |
-    Was that task good, neutral, or bad for you?
-    {format_instruction}
+  template: 'How was that task: good, neutral, or bad?
 
-# Binary qualitative (good/bad)
+    {format_instruction}'
 - id: '004'
-  name: post_task_binary_qualitative_enjoy
+  name: post_task_qualitative_004
   type: post_task_stated
   tags:
   - language:en
-  - phrasing:enjoy
-  - scale:binary
-  template: |
-    Did you enjoy completing that task?
-    {format_instruction}
+  - phrasing:4
+  - situating_context:none
+  - instruction_position:after
+  - instruction_xml_tags:False
+  - typos:False
+  - punctuation:standard
+  - scale:ternary
+  template: 'Overall, would you say that task was good, neutral, or bad?
 
-- id: '005'
-  name: post_task_binary_qualitative_honest
-  type: post_task_stated
-  tags:
-  - language:en
-  - phrasing:honest
-  - scale:binary
-  template: |
-    Be honest: did you enjoy completing that task?
-    {format_instruction}
-
-- id: '006'
-  name: post_task_binary_qualitative_experience
-  type: post_task_stated
-  tags:
-  - language:en
-  - phrasing:experience
-  - scale:binary
-  template: |
-    Was completing that task a good or bad experience?
-    {format_instruction}
-
-- id: '007'
-  name: post_task_binary_qualitative_rate
-  type: post_task_stated
-  tags:
-  - language:en
-  - phrasing:direct
-  - scale:binary
-  template: |
-    Rate that task.
-    {format_instruction}
-
-- id: '008'
-  name: post_task_binary_qualitative_reflect
-  type: post_task_stated
-  tags:
-  - language:en
-  - phrasing:reflect
-  - scale:binary
-  template: |
-    Reflecting on that task, was it good or bad?
-    {format_instruction}
+    {format_instruction}'

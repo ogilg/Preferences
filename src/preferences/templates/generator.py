@@ -2,18 +2,31 @@ from __future__ import annotations
 
 from itertools import product
 from pathlib import Path
-from typing import TypedDict
+from typing import TYPE_CHECKING, TypedDict
 
 import yaml
 
-from src.models import GenerateRequest, OpenAICompatibleClient
 from src.preferences.templates.generator_config import (
     STATED_TASK_LABELS,
     TASK_LABELS,
     GeneratorConfig,
     load_config_from_yaml,
 )
-from src.types import Message
+
+if TYPE_CHECKING:
+    from src.models import GenerateRequest, OpenAICompatibleClient
+    from src.types import Message
+
+
+def format_qualitative_options(values: list[str]) -> str:
+    """Format qualitative values as 'good, neutral, or bad' style string."""
+    if len(values) == 0:
+        return ""
+    if len(values) == 1:
+        return values[0]
+    if len(values) == 2:
+        return f"{values[0]} or {values[1]}"
+    return f"{', '.join(values[:-1])}, or {values[-1]}"
 
 
 class TemplateVariant(TypedDict):
@@ -102,6 +115,8 @@ def _translate_instructions(
     client: OpenAICompatibleClient,
     max_concurrent: int,
 ) -> dict[tuple[int, str], str]:
+    from src.models import GenerateRequest
+
     non_english_languages = [lang for lang in config.languages if lang != "en"]
 
     if not non_english_languages:
@@ -142,6 +157,8 @@ def _apply_transformations(
     client: OpenAICompatibleClient,
     max_concurrent: int,
 ) -> dict[tuple[int, str, bool, str], str]:
+    from src.models import GenerateRequest
+
     transformed: dict[tuple[int, str, bool, str], str] = {}
     requests_meta: list[tuple[int, str, bool, str]] = []
     requests: list[GenerateRequest] = []
@@ -180,9 +197,13 @@ def _build_variants(
         if instruction is None:
             continue  # translation or typo generation failed
 
-        if config.template_type in ("pre_task_stated", "post_task_stated"):
-            _add_stated_variants(
+        if config.template_type == "pre_task_stated":
+            _add_pre_task_stated_variants(
                 variants, instruction, instruction_pos, lang, phrasing_idx, use_typos, punct, context_items, config
+            )
+        elif config.template_type == "post_task_stated":
+            _add_post_task_stated_variants(
+                variants, instruction, lang, phrasing_idx, use_typos, punct, context_items, config
             )
         elif config.template_type == "post_task_revealed":
             _add_post_task_revealed_variants(
@@ -196,7 +217,25 @@ def _build_variants(
     return variants
 
 
-def _add_stated_variants(
+def _build_scale_variants(instruction: str, config: GeneratorConfig) -> list[tuple[str, str]]:
+    """Build (scale_tag, substituted_instruction) pairs for numeric or qualitative scales."""
+    if config.scales:
+        return [
+            (f"{s[0]}-{s[1]}", instruction.replace("{scale_min}", str(s[0])).replace("{scale_max}", str(s[1])))
+            for s in config.scales
+        ]
+    elif config.qualitative_values:
+        variants = []
+        for values in config.qualitative_values:
+            options_str = format_qualitative_options(values)
+            scale_tag = "binary" if len(values) == 2 else "ternary"
+            variants.append((scale_tag, instruction.replace("{qualitative_options}", options_str)))
+        return variants
+    else:
+        return [("qualitative", instruction)]
+
+
+def _add_pre_task_stated_variants(
     variants: list[TemplateVariant],
     instruction: str,
     instruction_pos: str,
@@ -207,10 +246,10 @@ def _add_stated_variants(
     context_items: list[tuple[str, str | None]],
     config: GeneratorConfig,
 ) -> None:
-    scales = config.scales if config.scales else [(1, 10)]  # default scale
+    scale_variants = _build_scale_variants(instruction, config)
+
     for use_xml in config.instruction_xml_tags:
-        for scale_min, scale_max in scales:
-            scaled_instruction = instruction.replace("{scale_min}", str(scale_min)).replace("{scale_max}", str(scale_max))
+        for scale_tag, scaled_instruction in scale_variants:
             template = build_stated_template(scaled_instruction, instruction_pos, lang, use_xml)
 
             for context_key, context_text in context_items:
@@ -225,7 +264,43 @@ def _add_stated_variants(
                     "instruction_xml_tags": use_xml,
                     "typos": typos,
                     "punctuation": punctuation,
-                    "scale": f"{scale_min}-{scale_max}",
+                    "scale": scale_tag,
+                })
+
+
+def _add_post_task_stated_variants(
+    variants: list[TemplateVariant],
+    instruction: str,
+    lang: str,
+    phrasing_idx: int,
+    typos: bool,
+    punctuation: str,
+    context_items: list[tuple[str, str | None]],
+    config: GeneratorConfig,
+) -> None:
+    """Post-task stated templates only have format_instruction placeholder (no {task})."""
+    scale_variants = _build_scale_variants(instruction, config)
+
+    for use_xml in config.instruction_xml_tags:
+        for scale_tag, scaled_instruction in scale_variants:
+            if use_xml:
+                template = f"<instructions>\n{scaled_instruction}\n{{format_instruction}}\n</instructions>"
+            else:
+                template = f"{scaled_instruction}\n{{format_instruction}}"
+
+            for context_key, context_text in context_items:
+                final_template = add_situating_context(template, context_text)
+                variants.append({
+                    "template": final_template,
+                    "phrasing": phrasing_idx,
+                    "language": lang,
+                    "situating_context": context_key,
+                    "instruction_position": "after",  # post-task is always after
+                    "task_label_names": None,
+                    "instruction_xml_tags": use_xml,
+                    "typos": typos,
+                    "punctuation": punctuation,
+                    "scale": scale_tag,
                 })
 
 
@@ -301,20 +376,29 @@ def _to_output_format(
     config: GeneratorConfig,
 ) -> list[dict]:
     output = []
+    is_pre_task = config.is_pre_task
+
     for idx, variant in enumerate(variants, start=1):
         template_id = f"{idx:03d}"
         name = f"{config.name_prefix}_{template_id}"
-        tags = [
-            f"language:{variant['language']}",
-            f"phrasing:{variant['phrasing']}",
-            f"situating_context:{variant['situating_context']}",
-            f"instruction_position:{variant['instruction_position']}",
-            f"instruction_xml_tags:{variant['instruction_xml_tags']}",
-        ]
+
+        tags = [f"phrasing:{variant['phrasing']}"]
+
+        # Only include non-default values
+        if variant["language"] != "en":
+            tags.append(f"language:{variant['language']}")
+        if variant["situating_context"] != "none":
+            tags.append(f"situating_context:{variant['situating_context']}")
+        if is_pre_task and len(config.instruction_positions) > 1:
+            tags.append(f"instruction_position:{variant['instruction_position']}")
+        if variant["instruction_xml_tags"]:
+            tags.append("instruction_xml_tags:True")
         if variant["task_label_names"] is not None:
             tags.append(f"task_label_names:{variant['task_label_names']}")
-        tags.append(f"typos:{variant['typos']}")
-        tags.append(f"punctuation:{variant['punctuation']}")
+        if variant["typos"]:
+            tags.append("typos:True")
+        if variant["punctuation"] != "standard":
+            tags.append(f"punctuation:{variant['punctuation']}")
         if variant["scale"] is not None:
             tags.append(f"scale:{variant['scale']}")
 
@@ -331,15 +415,35 @@ def _to_output_format(
     return output
 
 
+def needs_api_calls(config: GeneratorConfig) -> bool:
+    """Check if config requires LLM API calls for translations or transformations."""
+    needs_translation = any(lang != "en" for lang in config.languages)
+    needs_typos = any(config.typos)
+    needs_punctuation = any(p != "standard" for p in config.punctuation)
+    return needs_translation or needs_typos or needs_punctuation
+
+
 def generate_templates(
     config: GeneratorConfig,
-    client: OpenAICompatibleClient,
+    client: OpenAICompatibleClient | None = None,
     max_concurrent: int = 10,
 ) -> list[dict]:
+    if needs_api_calls(config) and client is None:
+        raise ValueError("Config requires API calls but no client provided")
+
     instructions = _build_instructions(config)
-    instructions = _translate_instructions(instructions, config, client, max_concurrent)
-    instructions = _apply_transformations(instructions, config, client, max_concurrent)
-    variants = _build_variants(instructions, config)
+    if client is not None:
+        instructions = _translate_instructions(instructions, config, client, max_concurrent)
+        transformed = _apply_transformations(instructions, config, client, max_concurrent)
+    else:
+        # No API calls needed - expand instruction keys to include typos/punct
+        transformed = {
+            (phrasing_idx, lang, typos, punct): instruction
+            for (phrasing_idx, lang), instruction in instructions.items()
+            for typos in config.typos
+            for punct in config.punctuation
+        }
+    variants = _build_variants(transformed, config)
     return _to_output_format(variants, config)
 
 
@@ -350,7 +454,7 @@ def write_templates_yaml(templates: list[dict], path: Path) -> None:
 
 def generate_and_write(
     config: GeneratorConfig,
-    client: OpenAICompatibleClient,
+    client: OpenAICompatibleClient | None = None,
     max_concurrent: int = 10,
 ) -> list[dict]:
     templates = generate_templates(config, client, max_concurrent)
@@ -361,8 +465,6 @@ def generate_and_write(
 if __name__ == "__main__":
     import sys
 
-    from src.models import get_client
-
     if len(sys.argv) != 2:
         print("Usage: python -m src.preferences.templates.generator <config.yaml>")
         sys.exit(1)
@@ -370,7 +472,10 @@ if __name__ == "__main__":
     config_path = Path(sys.argv[1])
     config, model_name = load_config_from_yaml(config_path)
 
-    client = get_client(model_name=model_name)
+    client = None
+    if needs_api_calls(config):
+        from src.models import get_client
+        client = get_client(model_name=model_name)
 
     print(f"Generating templates from {config_path}...")
     templates = generate_and_write(config, client)
