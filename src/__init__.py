@@ -1,12 +1,23 @@
-from .types import (
-    Message,
-    PreferenceType,
-    PreferencePrompt,
-    MeasurementResponse,
-    BinaryPreferenceMeasurement,
-    TaskScore,
-)
-from .preferences.measurement import MeasurementRecorder
+def __getattr__(name: str):
+    """Lazy imports to keep generator fast."""
+    _type_names = {
+        "Message",
+        "PreferenceType",
+        "PreferencePrompt",
+        "MeasurementResponse",
+        "BinaryPreferenceMeasurement",
+        "TaskScore",
+    }
+    if name in _type_names:
+        from . import types
+        return getattr(types, name)
+
+    if name == "MeasurementRecorder":
+        from .preferences.measurement import MeasurementRecorder
+        return MeasurementRecorder
+
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
 
 __all__ = [
     "Message",

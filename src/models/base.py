@@ -13,6 +13,12 @@ class TokenPosition(Enum):
     LAST = "last"
 
 
+class ActivationReduction(Enum):
+    LAST = "last"
+    MEAN = "mean"
+    CHUNKED_MEAN = "chunked_mean"
+
+
 class Model(Protocol):
     def generate(
         self,

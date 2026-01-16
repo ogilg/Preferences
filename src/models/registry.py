@@ -32,13 +32,13 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         cerebras_name="llama3.1-8b",
         openrouter_name="meta-llama/llama-3.1-8b-instruct",
     ),
-    "llama-3.1-70b": ModelConfig(
-        canonical_name="llama-3.1-70b",
-        transformer_lens_name="meta-llama/Llama-3.1-70B-Instruct",
-        hyperbolic_name="meta-llama/Meta-Llama-3.1-70B-Instruct",
-        cerebras_name="llama3.1-70b",
-        openrouter_name="meta-llama/llama-3.1-70b-instruct",
-    ),
+    # "llama-3.1-70b": ModelConfig(
+    #     canonical_name="llama-3.1-70b",
+    #     transformer_lens_name="meta-llama/Llama-3.1-70B-Instruct",
+    #     hyperbolic_name="meta-llama/Meta-Llama-3.1-70B-Instruct",
+    #     cerebras_name="llama3.1-70b",
+    #     openrouter_name="meta-llama/llama-3.1-70b-instruct",
+    # ),
     "llama-3.3-70b": ModelConfig(
         canonical_name="llama-3.3-70b",
         transformer_lens_name="meta-llama/Llama-3.3-70B-Instruct",
