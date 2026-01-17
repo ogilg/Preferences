@@ -93,7 +93,8 @@ def build_stated_builder(template, response_format_name: str, post_task: bool = 
 def build_revealed_builder(template, response_format_name: str, post_task: bool = False):
     """Build a revealed preference prompt builder."""
     tags = template.tags_dict
-    task_a_label, task_b_label = TASK_LABELS[(tags["task_label_names"], tags["language"])]
+    language = tags.get("language", "en")
+    task_a_label, task_b_label = TASK_LABELS[(tags["task_label_names"], language)]
     response_format = get_revealed_response_format(task_a_label, task_b_label, response_format_name)
     builder_cls = PostTaskRevealedPromptBuilder if post_task else PreTaskRevealedPromptBuilder
     return builder_cls(

@@ -27,9 +27,9 @@ class ActiveLearningConfig(BaseModel):
 
 class ExperimentConfig(BaseModel):
     preference_mode: Literal[
-        "revealed", "stated", "active_learning",
-        "completion_generation", "post_task_stated", "post_task_revealed",
-        "post_task_active_learning"
+        "pre_task_revealed", "pre_task_stated", "pre_task_active_learning",
+        "post_task_revealed", "post_task_stated", "post_task_active_learning",
+        "completion_generation",
     ]
 
     model: str = "llama-3.1-8b"
@@ -37,7 +37,7 @@ class ExperimentConfig(BaseModel):
     max_concurrent: int | None = None
 
     n_tasks: int = 10
-    task_origins: list[Literal["wildchat", "alpaca", "math"]] = ["wildchat"]
+    task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
 
     templates: Path | None = None  # Optional for completion_generation
 
@@ -67,6 +67,7 @@ class ExperimentConfig(BaseModel):
             "wildchat": OriginDataset.WILDCHAT,
             "alpaca": OriginDataset.ALPACA,
             "math": OriginDataset.MATH,
+            "bailbench": OriginDataset.BAILBENCH,
         }
         return [mapping[name] for name in self.task_origins]
 

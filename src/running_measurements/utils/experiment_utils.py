@@ -87,6 +87,12 @@ def flip_pairs(pairs: list[tuple[Task, Task]]) -> list[tuple[Task, Task]]:
     return [(b, a) for a, b in pairs]
 
 
+QUALITATIVE_SCALES = {
+    "binary": ["good", "bad"],
+    "ternary": ["good", "neutral", "bad"],
+}
+
+
 def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int] | list[str]:
     """Parse scale from template tags.
 
@@ -97,6 +103,8 @@ def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int] | lis
     scale = template.tags_dict["scale"]
     if isinstance(scale, list):
         return scale
+    if scale in QUALITATIVE_SCALES:
+        return QUALITATIVE_SCALES[scale]
     if "-" in scale:
         min_str, max_str = scale.split("-")
         return int(min_str), int(max_str)
