@@ -624,7 +624,8 @@ class TestCompletionChoiceFormat:
 
     def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with CompletionChoiceFormat."""
-        from src.preference_measurement import CompletionChoiceFormat, REVEALED_COMPLETION_TEMPLATE
+        from src.preference_measurement import CompletionChoiceFormat
+        from src.prompt_templates import REVEALED_COMPLETION_TEMPLATE
 
         fmt = CompletionChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(
