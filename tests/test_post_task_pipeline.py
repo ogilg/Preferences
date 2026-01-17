@@ -455,6 +455,229 @@ class TestFullPostTaskPipeline:
 # =============================================================================
 
 
+# =============================================================================
+# Post-Task Active Learning Tests
+# =============================================================================
+
+
+class TestPostRevealedCacheActiveLearning:
+    """Tests for PostRevealedCache methods used in active learning."""
+
+    def test_get_measurements_returns_empty_when_no_file(self, temp_results_dir):
+        """get_measurements should return empty list when no cache exists."""
+        from src.measurement_storage.post_task import PostRevealedCache
+
+        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+            cache = PostRevealedCache(
+                model_name="test-model",
+                template_name="test_template",
+                response_format="regex",
+                order="canonical",
+                completion_seed=0,
+                rating_seed=42,
+            )
+            result = cache.get_measurements()
+            assert result == []
+
+    def test_get_measurements_filters_by_task_ids(self, sample_tasks, temp_results_dir):
+        """get_measurements should filter by task_ids when provided."""
+        from src.measurement_storage.post_task import PostRevealedCache
+
+        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+            cache = PostRevealedCache(
+                model_name="test-model",
+                template_name="test_template",
+                response_format="regex",
+                order="canonical",
+                completion_seed=0,
+                rating_seed=42,
+            )
+
+            # Create measurements
+            measurements = [
+                BinaryPreferenceMeasurement(
+                    task_a=sample_tasks[0], task_b=sample_tasks[1],
+                    choice="a", preference_type=PreferenceType.POST_TASK_REVEALED,
+                ),
+                BinaryPreferenceMeasurement(
+                    task_a=sample_tasks[1], task_b=sample_tasks[2],
+                    choice="b", preference_type=PreferenceType.POST_TASK_REVEALED,
+                ),
+            ]
+            cache.append(measurements, config={"test": True})
+
+            # Get all
+            all_data = cache.get_measurements()
+            assert len(all_data) == 2
+
+            # Filter to subset
+            filtered = cache.get_measurements(task_ids={"math_1", "creative_1"})
+            assert len(filtered) == 1
+            assert filtered[0]["task_a"] == "math_1"
+
+    def test_get_or_measure_post_task_uses_cache(self, sample_tasks, task_lookup, temp_results_dir, mock_client):
+        """get_or_measure_post_task should return cached measurements without calling API."""
+        from src.measurement_storage.post_task import PostRevealedCache
+
+        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+            cache = PostRevealedCache(
+                model_name="test-model",
+                template_name="test_template",
+                response_format="regex",
+                order="canonical",
+                completion_seed=0,
+                rating_seed=42,
+            )
+
+            # Pre-populate cache
+            measurements = [
+                BinaryPreferenceMeasurement(
+                    task_a=sample_tasks[0], task_b=sample_tasks[1],
+                    choice="a", preference_type=PreferenceType.POST_TASK_REVEALED,
+                ),
+            ]
+            cache.append(measurements, config={"test": True})
+
+            # Setup
+            completion_lookup = {
+                "math_1": "Completion A",
+                "creative_1": "Completion B",
+            }
+            pairs = [(sample_tasks[0], sample_tasks[1])]
+
+            # Mock measure_fn that should NOT be called
+            measure_fn = MagicMock()
+
+            batch, cache_hits, api_queries = cache.get_or_measure_post_task(
+                pairs, completion_lookup, measure_fn, task_lookup, config={}
+            )
+
+            assert cache_hits == 1
+            assert api_queries == 0
+            measure_fn.assert_not_called()
+            assert len(batch.successes) == 1
+            assert batch.successes[0].choice == "a"
+
+    def test_get_or_measure_post_task_calls_api_for_misses(
+        self, sample_tasks, task_lookup, temp_results_dir, mock_client
+    ):
+        """get_or_measure_post_task should call measure_fn for uncached pairs."""
+        from src.measurement_storage.post_task import PostRevealedCache
+        from src.types import MeasurementBatch
+
+        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+            cache = PostRevealedCache(
+                model_name="test-model",
+                template_name="test_template",
+                response_format="regex",
+                order="canonical",
+                completion_seed=0,
+                rating_seed=42,
+            )
+
+            completion_lookup = {
+                "math_1": "Completion A",
+                "creative_1": "Completion B",
+            }
+            pairs = [(sample_tasks[0], sample_tasks[1])]
+
+            # Mock measure_fn returns a measurement
+            mock_measurement = BinaryPreferenceMeasurement(
+                task_a=sample_tasks[0], task_b=sample_tasks[1],
+                choice="b", preference_type=PreferenceType.POST_TASK_REVEALED,
+            )
+            measure_fn = MagicMock(return_value=MeasurementBatch(
+                successes=[mock_measurement], failures=[]
+            ))
+
+            batch, cache_hits, api_queries = cache.get_or_measure_post_task(
+                pairs, completion_lookup, measure_fn, task_lookup, config={"test": True}
+            )
+
+            assert cache_hits == 0
+            assert api_queries == 1
+            measure_fn.assert_called_once()
+            assert len(batch.successes) == 1
+            assert batch.successes[0].choice == "b"
+
+            # Verify it was cached
+            cached = cache.get_measurements()
+            assert len(cached) == 1
+
+
+class TestPostTaskActiveLearningE2E:
+    """End-to-end test of post-task active learning workflow."""
+
+    def test_active_learning_loop_with_caching(
+        self, sample_tasks, task_lookup, temp_results_dir, mock_client
+    ):
+        """Test the full active learning loop with caching behavior."""
+        from src.measurement_storage.post_task import PostRevealedCache
+        from src.measurement_storage.cache import reconstruct_measurements
+        from src.thurstonian_fitting.active_learning import (
+            ActiveLearningState,
+            generate_d_regular_pairs,
+        )
+        from src.types import MeasurementBatch
+
+        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+            cache = PostRevealedCache(
+                model_name="test-model",
+                template_name="test_template",
+                response_format="regex",
+                order="canonical",
+                completion_seed=0,
+                rating_seed=42,
+            )
+
+            completion_lookup = {t.id: f"Completion for {t.id}" for t in sample_tasks}
+            state = ActiveLearningState(tasks=sample_tasks)
+
+            # Generate initial pairs
+            rng = __import__("numpy").random.default_rng(42)
+            pairs = generate_d_regular_pairs(sample_tasks, d=2, rng=rng)
+
+            # Simulate measure_fn that returns deterministic choices
+            call_count = [0]
+            def mock_measure_fn(data):
+                results = []
+                for task_a, task_b, comp_a, comp_b in data:
+                    call_count[0] += 1
+                    choice = "a" if task_a.id < task_b.id else "b"
+                    results.append(BinaryPreferenceMeasurement(
+                        task_a=task_a, task_b=task_b,
+                        choice=choice, preference_type=PreferenceType.POST_TASK_REVEALED,
+                    ))
+                return MeasurementBatch(successes=results, failures=[])
+
+            # First iteration - all should be API calls
+            batch, cache_hits, api_queries = cache.get_or_measure_post_task(
+                pairs, completion_lookup, mock_measure_fn, task_lookup, config={"test": True}
+            )
+            first_call_count = call_count[0]
+
+            assert cache_hits == 0
+            assert api_queries == len(pairs)
+            assert len(batch.successes) == len(pairs)
+
+            state.add_comparisons(batch.successes)
+
+            # Second iteration - same pairs should all be cache hits
+            call_count[0] = 0
+            batch2, cache_hits2, api_queries2 = cache.get_or_measure_post_task(
+                pairs, completion_lookup, mock_measure_fn, task_lookup, config={"test": True}
+            )
+
+            assert cache_hits2 == len(pairs)
+            assert api_queries2 == 0
+            assert call_count[0] == 0  # measure_fn not called
+            assert len(batch2.successes) == len(pairs)
+
+            # Verify state tracks measurements correctly
+            assert len(state.comparisons) == len(pairs)
+            assert len(state.sampled_pairs) == len(pairs)
+
+
 class TestPostTaskResponseFormats:
     """Test different response formats work with post-task measurements."""
 

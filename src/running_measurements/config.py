@@ -28,7 +28,8 @@ class ActiveLearningConfig(BaseModel):
 class ExperimentConfig(BaseModel):
     preference_mode: Literal[
         "revealed", "stated", "active_learning",
-        "completion_generation", "post_task_stated", "post_task_revealed"
+        "completion_generation", "post_task_stated", "post_task_revealed",
+        "post_task_active_learning"
     ]
 
     model: str = "llama-3.1-8b"
