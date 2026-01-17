@@ -11,11 +11,14 @@ from src.types import (
     TaskScore,
 )
 from src.preference_measurement.measure import (
-    measure_revealed_preferences,
-    measure_stated,
-    measure_revealed_with_template,
+    measure_pre_task_revealed,
+    measure_pre_task_stated,
     measure_post_task_stated,
     measure_post_task_revealed,
+    measure_pre_task_stated_async,
+    measure_post_task_stated_async,
+    measure_post_task_revealed_async,
+    measure_pre_task_revealed_async,
 )
 from src.preference_measurement.measurer import (
     RevealedPreferenceMeasurer,
@@ -45,6 +48,8 @@ from src.preference_measurement.response_format import (
     CHOICE_FORMATS,
     RATING_FORMATS,
     QUALITATIVE_FORMATS,
+    get_stated_response_format,
+    get_revealed_response_format,
 )
 
 __all__ = [
@@ -59,11 +64,14 @@ __all__ = [
     "BinaryPreferenceMeasurement",
     "TaskScore",
     # Measure functions
-    "measure_revealed_preferences",
-    "measure_stated",
-    "measure_revealed_with_template",
+    "measure_pre_task_revealed",
+    "measure_pre_task_stated",
     "measure_post_task_stated",
     "measure_post_task_revealed",
+    "measure_pre_task_stated_async",
+    "measure_post_task_stated_async",
+    "measure_post_task_revealed_async",
+    "measure_pre_task_revealed_async",
     # Measurers
     "RevealedPreferenceMeasurer",
     "Measurer",
@@ -90,4 +98,6 @@ __all__ = [
     "CHOICE_FORMATS",
     "RATING_FORMATS",
     "QUALITATIVE_FORMATS",
+    "get_stated_response_format",
+    "get_revealed_response_format",
 ]
