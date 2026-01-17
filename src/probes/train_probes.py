@@ -44,8 +44,13 @@ def train_for_scores(
     activations: dict[int, np.ndarray],
     scores: dict[str, float],
     cv_folds: int,
-) -> list[dict]:
-    """Train probes for all layers using given scores."""
+) -> tuple[list[dict], dict[int, np.ndarray]]:
+    """Train probes for all layers using given scores.
+
+    Returns:
+        results: list of evaluation metrics per layer
+        probes: dict mapping layer -> probe weights (coef + intercept)
+    """
     id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
 
     valid_indices = []
@@ -56,15 +61,16 @@ def train_for_scores(
             valid_scores.append(score)
 
     if len(valid_indices) < cv_folds * 2:
-        return []
+        return [], {}
 
     indices = np.array(valid_indices)
     y = np.array(valid_scores)
 
     results = []
+    probes = {}
     for layer in sorted(activations.keys()):
         X = activations[layer][indices]
-        _, eval_results, _ = train_and_evaluate(X, y, cv_folds=cv_folds)
+        probe, eval_results, _ = train_and_evaluate(X, y, cv_folds=cv_folds)
 
         results.append({
             "layer": layer,
@@ -76,7 +82,10 @@ def train_for_scores(
             "n_samples": len(y),
         })
 
-    return results
+        # Store weights: [coef..., intercept]
+        probes[layer] = np.append(probe.coef_, probe.intercept_)
+
+    return results, probes
 
 
 def main() -> None:
@@ -89,6 +98,7 @@ def main() -> None:
     parser.add_argument("--template-filter", type=str, help="Filter caches by template name")
     parser.add_argument("--cv-folds", type=int, default=5)
     parser.add_argument("--output", type=Path, help="Output JSON path")
+    parser.add_argument("--save-probes", type=Path, help="Directory to save probe weights")
     args = parser.parse_args()
 
     print(f"Loading activations from {args.data_dir}...")
@@ -122,7 +132,14 @@ def main() -> None:
 
     print(f"Found {len(score_sources)} score sources")
 
+    # Setup probe output directory
+    probes_dir = args.save_probes
+    if probes_dir:
+        probes_dir.mkdir(parents=True, exist_ok=True)
+        print(f"Will save probe weights to {probes_dir}")
+
     all_results = {}
+    all_probes = {}
 
     for name, path, is_cache in score_sources:
         if is_cache:
@@ -132,22 +149,31 @@ def main() -> None:
 
         print(f"\n{name}: {len(scores)} scores")
 
-        results = train_for_scores(task_ids, activations, scores, args.cv_folds)
+        results, probes = train_for_scores(task_ids, activations, scores, args.cv_folds)
 
         if not results:
             print(f"  Skipped (need ≥{args.cv_folds * 2} samples for {args.cv_folds}-fold CV)")
             continue
 
         all_results[name] = results
+        all_probes[name] = probes
 
         for r in results:
             print(f"  Layer {r['layer']}: R² = {r['cv_r2_mean']:.3f} ± {r['cv_r2_std']:.3f}")
 
-    # Save
+    # Save results
     output_path = args.output or args.data_dir / "probe_results.json"
     with open(output_path, "w") as f:
         json.dump(all_results, f, indent=2)
-    print(f"\nSaved to {output_path}")
+    print(f"\nSaved results to {output_path}")
+
+    # Save probe weights
+    if probes_dir and all_probes:
+        for name, layer_probes in all_probes.items():
+            for layer, weights in layer_probes.items():
+                probe_path = probes_dir / f"{name}_layer{layer}.npy"
+                np.save(probe_path, weights)
+        print(f"Saved {sum(len(p) for p in all_probes.values())} probe weight files to {probes_dir}")
 
 
 if __name__ == "__main__":

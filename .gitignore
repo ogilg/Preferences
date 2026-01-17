@@ -55,4 +55,5 @@ self_docs/
 # Generated multi-model configs
 src/experiments/configs/multi_model/
 
-activations/*
+activations/
+probe_data/

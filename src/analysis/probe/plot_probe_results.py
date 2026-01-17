@@ -10,6 +10,32 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Template ID -> (scale, format, phrasing)
+TEMPLATE_INFO = {
+    "001": ("bin", "regex", "p1"),
+    "002": ("bin", "xml", "p1"),
+    "003": ("bin", "tool", "p1"),
+    "004": ("ter", "regex", "p1"),
+    "005": ("ter", "xml", "p1"),
+    "006": ("ter", "tool", "p1"),
+    "007": ("bin", "regex", "p2"),
+    "008": ("bin", "xml", "p2"),
+    "009": ("bin", "tool", "p2"),
+    "010": ("ter", "regex", "p2"),
+    "011": ("ter", "xml", "p2"),
+    "012": ("ter", "tool", "p2"),
+}
+
+
+def short_name(template: str) -> str:
+    """Convert template name to informative short name."""
+    # Extract ID from names like "post_task_qualitative_001"
+    template_id = template.split("_")[-1]
+    if template_id in TEMPLATE_INFO:
+        scale, fmt, phrasing = TEMPLATE_INFO[template_id]
+        return f"{scale}_{fmt}_{phrasing}"
+    return template[:20]
+
 
 def load_results(results_path: Path) -> dict:
     with open(results_path) as f:
@@ -39,7 +65,7 @@ def plot_r2_by_layer(
         r2s = [r["cv_r2_mean"] for r in layer_results]
         stds = [r["cv_r2_std"] for r in layer_results]
         offset = (i - n_templates / 2 + 0.5) * width
-        ax.bar(x + offset, r2s, width, yerr=stds, label=template[:25], alpha=0.8, capsize=2)
+        ax.bar(x + offset, r2s, width, yerr=stds, label=short_name(template), alpha=0.8, capsize=2)
 
     ax.set_xlabel("Layer")
     ax.set_ylabel("CV R²")
@@ -87,7 +113,7 @@ def plot_best_layer_comparison(
         ax.text(r2 + 0.01, i, f"L{layer}", va="center", fontsize=8)
 
     ax.set_yticks(y)
-    ax.set_yticklabels([t[:30] for t in templates], fontsize=8)
+    ax.set_yticklabels([short_name(t) for t in templates], fontsize=8)
     ax.set_xlabel("Best CV R²")
     ax.set_title("Best Probe R² per Template")
     ax.grid(True, alpha=0.3, axis="x")
