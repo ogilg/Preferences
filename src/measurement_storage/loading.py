@@ -238,3 +238,44 @@ def load_all_pairwise_datasets(
     if include_post:
         datasets.extend(load_pairwise_datasets(POST_REVEALED_DIR, skip_prefixes))
     return datasets
+
+
+def discover_post_stated_caches(
+    model_filter: str | None = None,
+    template_filter: str | None = None,
+) -> list[tuple[str, Path]]:
+    """Discover all PostStatedCache directories.
+
+    Returns list of (name, cache_dir) tuples.
+    """
+    if not POST_STATED_DIR.exists():
+        return []
+
+    caches = []
+    for cache_dir in POST_STATED_DIR.iterdir():
+        if not cache_dir.is_dir():
+            continue
+
+        measurements_path = cache_dir / "measurements.yaml"
+        if not measurements_path.exists():
+            continue
+
+        name = cache_dir.name
+        if not name.startswith("post_stated_"):
+            continue
+
+        if model_filter and model_filter not in name:
+            continue
+        if template_filter and template_filter not in name:
+            continue
+
+        caches.append((name, cache_dir))
+
+    return sorted(caches)
+
+
+def load_scores_from_cache(cache_dir: Path) -> dict[str, float]:
+    """Load task_id -> score mapping from a PostStatedCache directory."""
+    measurements_path = cache_dir / "measurements.yaml"
+    data = load_yaml(measurements_path)
+    return {item["task_id"]: item["score"] for item in data}
