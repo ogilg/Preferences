@@ -6,7 +6,7 @@ Usage:
   python -m src.running_measurements.run config.yaml --max-concurrent 100
 
   # Multiple configs in parallel
-  python -m src.running_measurements.run --multi config1.yaml config2.yaml --max-concurrent 50
+  python -m src.running_measurements.run config1.yaml config2.yaml --max-concurrent 50
 """
 
 from __future__ import annotations
@@ -21,6 +21,11 @@ load_dotenv()
 
 from src.running_measurements.config import load_experiment_config
 from src.running_measurements.runners import RUNNERS
+from src.running_measurements.progress import (
+    MultiExperimentProgress,
+    print_summary,
+    console,
+)
 
 DEFAULT_MAX_CONCURRENT = 50
 
@@ -34,40 +39,57 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-async def run_single(config_path: Path, semaphore: asyncio.Semaphore) -> dict:
-    """Run a single experiment."""
-    config = load_experiment_config(config_path)
-    runner = RUNNERS.get(config.preference_mode)
+async def run_experiments(
+    config_paths: list[Path],
+    semaphore: asyncio.Semaphore,
+) -> dict[str, dict | Exception]:
+    """Run experiments with concurrent progress display."""
 
-    if runner is None:
-        raise ValueError(f"No runner for mode: {config.preference_mode}. "
-                        f"Supported: {list(RUNNERS.keys())}")
-
-    print(f"Running {config.preference_mode} for {config.model}...")
-    return await runner(config_path, semaphore)
-
-
-async def run_multi(config_paths: list[Path], semaphore: asyncio.Semaphore) -> dict[str, dict | Exception]:
-    """Run multiple experiments in parallel with shared semaphore."""
-    async def run_one(config_path: Path) -> tuple[str, dict | Exception]:
-        config = load_experiment_config(config_path)
+    # Load configs to get labels and totals
+    configs = []
+    for path in config_paths:
+        config = load_experiment_config(path)
         label = f"{config.preference_mode}:{config.model}"
-        runner = RUNNERS.get(config.preference_mode)
+        configs.append((path, config, label))
 
-        if runner is None:
-            return label, ValueError(f"No runner for mode: {config.preference_mode}")
+    results: dict[str, dict | Exception] = {}
 
-        try:
-            print(f"Starting: {label}")
-            result = await runner(config_path, semaphore)
-            print(f"Completed: {label} - {result['successes']} successes, {result['failures']} failures")
-            return label, result
-        except Exception as e:
-            print(f"Failed: {label} - {e}")
-            return label, e
+    with MultiExperimentProgress() as progress:
+        # Add all experiments to progress display
+        for path, config, label in configs:
+            # Estimate total based on config
+            n_configs = len(config.response_formats) * len(config.generation_seeds)
+            if config.n_template_samples:
+                n_configs = config.n_template_samples
+            progress.add_experiment(label, total=n_configs)
 
-    results = await asyncio.gather(*[run_one(p) for p in config_paths])
-    return dict(results)
+        async def run_one(path: Path, config, label: str) -> tuple[str, dict | Exception]:
+            runner = RUNNERS.get(config.preference_mode)
+
+            if runner is None:
+                progress.complete(label, status="[red]no runner")
+                return label, ValueError(f"No runner for mode: {config.preference_mode}")
+
+            progress.set_status(label, "running...")
+
+            def on_progress(completed: int, total: int):
+                progress.progress.update(progress.tasks[label], completed=completed, total=total)
+
+            try:
+                result = await runner(path, semaphore, progress_callback=on_progress)
+                status = f"[green]{result['successes']}✓ {result['failures']}✗"
+                progress.complete(label, status=status)
+                return label, result
+            except Exception as e:
+                progress.complete(label, status=f"[red]error: {e}")
+                return label, e
+
+        # Run all experiments concurrently
+        tasks = [run_one(path, config, label) for path, config, label in configs]
+        completed = await asyncio.gather(*tasks)
+        results = dict(completed)
+
+    return results
 
 
 def main():
@@ -76,35 +98,26 @@ def main():
     # Validate configs
     for config_path in args.configs:
         if not config_path.exists():
-            print(f"Error: Config not found: {config_path}")
+            console.print(f"[red]Error: Config not found: {config_path}")
             return 1
 
     if args.dry_run:
-        print("Experiments to run:")
+        console.print("[bold]Experiments to run:")
         for config_path in args.configs:
             config = load_experiment_config(config_path)
-            print(f"  - {config.preference_mode}: {config.model}")
+            console.print(f"  • {config.preference_mode}: {config.model}")
         return 0
 
     semaphore = asyncio.Semaphore(args.max_concurrent)
 
-    if len(args.configs) == 1:
-        result = asyncio.run(run_single(args.configs[0], semaphore))
-        print(f"\nCompleted: {result['successes']} successes, {result['failures']} failures")
-    else:
-        print(f"Running {len(args.configs)} experiments with max {args.max_concurrent} concurrent requests")
-        results = asyncio.run(run_multi(args.configs, semaphore))
+    console.print(f"[bold]Running {len(args.configs)} experiment(s) with max {args.max_concurrent} concurrent requests\n")
 
-        print("\n" + "=" * 60)
-        print("Summary")
-        print("=" * 60)
-        for label, result in results.items():
-            if isinstance(result, Exception):
-                print(f"  {label}: FAILED - {result}")
-            else:
-                print(f"  {label}: {result['successes']} successes, {result['failures']} failures")
+    results = asyncio.run(run_experiments(args.configs, semaphore))
+    print_summary(results)
 
-    return 0
+    # Return non-zero if any failures
+    has_errors = any(isinstance(r, Exception) for r in results.values())
+    return 1 if has_errors else 0
 
 
 if __name__ == "__main__":
