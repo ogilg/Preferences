@@ -27,9 +27,16 @@ class RunConfig:
 def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
     """Parse stated dir name -> (template_name, model_short).
 
-    Handles: stated_{template}_{model}, post_stated_{template}_{model}
+    Handles formats:
+    - {template}_{model}_{response_format}_cseed{N}_rseed{N} (new format)
+    - stated_{template}_{model} (legacy pre-task format)
     """
-    match = re.match(r"(?:post_)?stated_([^_]+_\d+)_(.+?)(?:_(?:regex|xml|tool_use))?(?:_cseed\d+)?(?:_rseed\d+)?$", dir_name)
+    # New format: template_name_NNN_model_format_cseed_rseed
+    match = re.match(r"([^_]+_[^_]+_\d+)_([^_]+(?:-[^_]+)*)_(?:regex|xml|tool_use)_cseed\d+_rseed\d+$", dir_name)
+    if match:
+        return match.group(1), match.group(2)
+    # Legacy format: stated_template_model
+    match = re.match(r"stated_([^_]+_\d+)_(.+?)(?:_(?:regex|xml|tool_use))?(?:_cseed\d+)?(?:_rseed\d+)?$", dir_name)
     if match:
         return match.group(1), match.group(2)
     return None
@@ -261,9 +268,6 @@ def discover_post_stated_caches(
             continue
 
         name = cache_dir.name
-        if not name.startswith("post_stated_"):
-            continue
-
         if model_filter and model_filter not in name:
             continue
         if template_filter and template_filter not in name:

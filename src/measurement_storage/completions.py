@@ -137,12 +137,24 @@ def generate_completions(
     pbar.close()
 
     completions = []
+    failures = []
     for task, response in zip(tasks, responses):
         if response.ok:
             completions.append(TaskCompletion(
                 task=task,
                 completion=response.unwrap(),
             ))
+        else:
+            failures.append((task.id, response.error_details() or "Unknown error"))
+
+    if failures:
+        print(f"\n{len(failures)} completion failures:")
+        for task_id, error in failures[:5]:
+            error_preview = error[:150] if len(error) > 150 else error
+            print(f"  {task_id}: {error_preview}")
+        if len(failures) > 5:
+            print(f"  ... and {len(failures) - 5} more")
+
     return completions
 
 
