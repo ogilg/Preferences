@@ -16,10 +16,7 @@ load_dotenv()
 
 from src.models import get_client
 from src.task_data import Task, OriginDataset, load_tasks
-from src.preferences import (
-    PreTaskRevealedPromptBuilder,
-    PreTaskStatedPromptBuilder,
-    PostTaskStatedPromptBuilder,
+from src.preference_measurement import (
     RevealedPreferenceMeasurer,
     StatedScoreMeasurer,
     RegexChoiceFormat,
@@ -29,17 +26,23 @@ from src.preferences import (
     XMLRatingFormat,
     ToolUseChoiceFormat,
     ToolUseRatingFormat,
-    REVEALED_CHOICE_TEMPLATE,
-    REVEALED_COMPLETION_TEMPLATE,
-    PRE_TASK_STATED_TEMPLATE,
-    POST_TASK_STATED_TEMPLATE,
     BinaryPreferenceMeasurement,
     TaskScore,
     PreferenceType,
     measure_revealed_preferences,
     measure_stated,
+    DatasetMeasurementConfig,
+    PairingStrategy,
 )
-from src.preferences.config import DatasetMeasurementConfig, PairingStrategy
+from src.prompt_templates import (
+    PreTaskRevealedPromptBuilder,
+    PreTaskStatedPromptBuilder,
+    PostTaskStatedPromptBuilder,
+    REVEALED_CHOICE_TEMPLATE,
+    REVEALED_COMPLETION_TEMPLATE,
+    PRE_TASK_STATED_TEMPLATE,
+    POST_TASK_STATED_TEMPLATE,
+)
 
 
 pytestmark = pytest.mark.api
@@ -506,7 +509,7 @@ class TestMeasurePreferences:
         """Should record measurements with different formats to YAML file."""
         from pathlib import Path
         from src import MeasurementRecorder
-        from src.preferences.measurement import MeasurementRecord
+        from src.preference_measurement import MeasurementRecord
 
         output_path = Path(__file__).parent / "measurement_results.yaml"
 

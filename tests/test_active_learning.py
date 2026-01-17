@@ -3,14 +3,14 @@ import pytest
 
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
-from src.preferences.ranking.active_learning import (
+from src.thurstonian_fitting.active_learning import (
     ActiveLearningState,
     generate_d_regular_pairs,
     select_next_pairs,
     check_convergence,
     _sorted_pair_key,
 )
-from src.preferences.ranking import PairwiseData, fit_thurstonian
+from src.thurstonian_fitting import PairwiseData, fit_thurstonian
 
 from tests.helpers import make_task, make_comparison
 

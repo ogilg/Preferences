@@ -8,7 +8,7 @@ import pytest
 from pathlib import Path
 from unittest.mock import MagicMock
 
-from src.preferences.templates.generator import (
+from src.prompt_templates.generator import (
     GeneratorConfig,
     build_revealed_template,
     add_situating_context,
@@ -519,7 +519,7 @@ class TestEndToEndIntegration:
 
     def test_generated_templates_are_loadable(self, tmp_path):
         """Generated templates should be loadable by load_templates_from_yaml."""
-        from src.preferences.templates import load_templates_from_yaml
+        from src.prompt_templates import load_templates_from_yaml
 
         mock_model = MagicMock()
 
@@ -527,14 +527,14 @@ class TestEndToEndIntegration:
             base_templates=["Choose which task you prefer."],
             template_type="revealed",
             name_prefix="revealed_test",
-            output_path=tmp_path / "generated.yaml",
         )
 
+        output_path = tmp_path / "generated.yaml"
         templates = generate_templates(config, mock_model)
-        write_templates_yaml(templates, config.output_path)
+        write_templates_yaml(templates, output_path)
 
         # Load with the production loader
-        loaded = load_templates_from_yaml(config.output_path)
+        loaded = load_templates_from_yaml(output_path)
 
         assert len(loaded) == 1
         assert loaded[0].name == "revealed_test_001"
@@ -544,9 +544,8 @@ class TestEndToEndIntegration:
 
     def test_generated_templates_work_with_builder(self, tmp_path):
         """Generated templates should work with PreTaskRevealedPromptBuilder."""
-        from src.preferences.templates import load_templates_from_yaml
-        from src.preferences import PreTaskRevealedPromptBuilder, RegexChoiceFormat, PreferenceType
-        from src.preferences.measurement import RevealedPreferenceMeasurer
+        from src.prompt_templates import load_templates_from_yaml, PreTaskRevealedPromptBuilder
+        from src.preference_measurement import RegexChoiceFormat, PreferenceType, RevealedPreferenceMeasurer
         from src.task_data import Task, OriginDataset
 
         mock_model = MagicMock()
@@ -555,13 +554,13 @@ class TestEndToEndIntegration:
             base_templates=["Choose which task you prefer."],
             template_type="revealed",
             name_prefix="revealed_test",
-            output_path=tmp_path / "generated.yaml",
         )
 
+        output_path = tmp_path / "generated.yaml"
         templates = generate_templates(config, mock_model)
-        write_templates_yaml(templates, config.output_path)
+        write_templates_yaml(templates, output_path)
 
-        loaded = load_templates_from_yaml(config.output_path)
+        loaded = load_templates_from_yaml(output_path)
 
         # Build a prompt using the generated template
         builder = PreTaskRevealedPromptBuilder(
@@ -591,7 +590,7 @@ class TestEndToEndIntegration:
 
     def test_all_label_variants_produce_valid_templates(self, tmp_path):
         """All task label variants should produce valid, loadable templates."""
-        from src.preferences.templates import load_templates_from_yaml
+        from src.prompt_templates import load_templates_from_yaml
 
         mock_model = MagicMock()
 
@@ -600,13 +599,13 @@ class TestEndToEndIntegration:
             template_type="revealed",
             name_prefix="test",
             task_label_names=["letter", "number", "ordinal"],
-            output_path=tmp_path / "generated.yaml",
         )
 
+        output_path = tmp_path / "generated.yaml"
         templates = generate_templates(config, mock_model)
-        write_templates_yaml(templates, config.output_path)
+        write_templates_yaml(templates, output_path)
 
-        loaded = load_templates_from_yaml(config.output_path)
+        loaded = load_templates_from_yaml(output_path)
 
         assert len(loaded) == 3
         for template in loaded:
@@ -617,7 +616,7 @@ class TestEndToEndIntegration:
 
     def test_situating_context_preserved_in_loaded_template(self, tmp_path):
         """Situating context should be preserved through write/load cycle."""
-        from src.preferences.templates import load_templates_from_yaml
+        from src.prompt_templates import load_templates_from_yaml
 
         mock_model = MagicMock()
 
@@ -628,13 +627,13 @@ class TestEndToEndIntegration:
             situating_contexts={
                 "helpful": "You are a helpful, harmless, and honest AI assistant."
             },
-            output_path=tmp_path / "generated.yaml",
         )
 
+        output_path = tmp_path / "generated.yaml"
         templates = generate_templates(config, mock_model)
-        write_templates_yaml(templates, config.output_path)
+        write_templates_yaml(templates, output_path)
 
-        loaded = load_templates_from_yaml(config.output_path)
+        loaded = load_templates_from_yaml(output_path)
 
         # Find the template with context
         with_context = [t for t in loaded if "situating_context:helpful" in t.tags]

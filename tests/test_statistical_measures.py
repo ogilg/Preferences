@@ -5,26 +5,26 @@ import numpy as np
 import pytest
 import yaml
 
-from src.experiments.correlation import (
+from src.running_measurements.utils.correlation import (
     safe_correlation,
     save_correlations_yaml,
     utility_vector_correlation,
     compute_pairwise_correlations,
 )
-from src.experiments.transitivity.transitivity import measure_transitivity, TransitivityResult
-from src.experiments.sensitivity_experiments.stated_correlation import (
+from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
+from src.analysis.sensitivity.stated_correlation import (
     _build_score_map,
     compute_per_task_std,
     compute_mean_std_across_tasks,
     scores_to_vector,
 )
-from src.experiments.sensitivity_experiments.revealed_correlation import (
+from src.analysis.sensitivity.revealed_correlation import (
     _build_win_rate_vector,
     win_rate_correlation,
 )
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, TaskScore, PreferenceType
-from src.preferences.ranking import ThurstonianResult, OptimizationHistory
+from src.thurstonian_fitting import ThurstonianResult, OptimizationHistory
 
 from tests.helpers import make_task, make_score, make_measurement
 

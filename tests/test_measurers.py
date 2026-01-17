@@ -1,6 +1,6 @@
 import pytest
 from src.task_data import Task, OriginDataset
-from src.preferences import (
+from src.preference_measurement import (
     BinaryPreferenceMeasurement,
     TaskScore,
     PreferenceType,
@@ -8,12 +8,12 @@ from src.preferences import (
     RegexChoiceFormat,
     RegexRatingFormat,
 )
-from src.preferences.measurement import (
+from src.preference_measurement import (
     Measurer,
     RevealedPreferenceMeasurer,
     StatedScoreMeasurer,
 )
-from src.preferences.templates import PromptTemplate
+from src.prompt_templates import PromptTemplate
 
 
 @pytest.fixture

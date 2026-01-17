@@ -1,5 +1,5 @@
 import pytest
-from src.preferences.measurement.response_format import (
+from src.preference_measurement.response_format import (
     _parse_tool_json,
     RegexChoiceFormat,
     XMLChoiceFormat,

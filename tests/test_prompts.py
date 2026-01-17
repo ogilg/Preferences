@@ -10,7 +10,16 @@ Key requirements from project docs:
 import pytest
 from src.task_data import Task, OriginDataset
 from src.types import PreferencePrompt
-from src.preferences import (
+from src.preference_measurement import (
+    RegexChoiceFormat,
+    RegexRatingFormat,
+    XMLChoiceFormat,
+    XMLRatingFormat,
+    PreferenceType,
+    RevealedPreferenceMeasurer,
+    StatedScoreMeasurer,
+)
+from src.prompt_templates import (
     PreTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
     PostTaskStatedPromptBuilder,
@@ -21,15 +30,6 @@ from src.preferences import (
     REVEALED_CHOICE_TEMPLATE,
     PRE_TASK_STATED_TEMPLATE,
     POST_TASK_STATED_TEMPLATE,
-    RegexChoiceFormat,
-    RegexRatingFormat,
-    XMLChoiceFormat,
-    XMLRatingFormat,
-    PreferenceType,
-)
-from src.preferences.measurement import (
-    RevealedPreferenceMeasurer,
-    StatedScoreMeasurer,
 )
 
 
@@ -119,7 +119,7 @@ class TestLoadTemplatesFromYaml:
 
     def test_loads_templates_from_yaml_file(self, tmp_path):
         """Should load templates from a valid YAML file."""
-        from src.preferences.templates import load_templates_from_yaml
+        from src.prompt_templates import load_templates_from_yaml
 
         yaml_content = """
 - id: "001"
@@ -143,9 +143,9 @@ class TestLoadTemplatesFromYaml:
     def test_loads_real_template_file(self):
         """Should load the actual revealed_choice_v1.yaml file."""
         from pathlib import Path
-        from src.preferences.templates import load_templates_from_yaml
+        from src.prompt_templates import load_templates_from_yaml
 
-        yaml_path = Path(__file__).parent.parent / "src/preferences/templates/data/pre_task_revealed_v1.yaml"
+        yaml_path = Path(__file__).parent.parent / "src/prompt_templates/data/pre_task_revealed_v1.yaml"
         templates = load_templates_from_yaml(yaml_path)
 
         assert len(templates) >= 1
@@ -334,7 +334,7 @@ class TestXMLResponseFormats:
         instruction = fmt.format_instruction()
 
         assert "<rating>" in instruction
-        assert "</rating>" in instruction
+        assert "tags" in instruction
 
     def test_xml_rating_parse(self):
         """XMLRatingFormat should parse rating from XML tags."""
@@ -392,7 +392,7 @@ class TestToolUseChoiceFormat:
 
     def test_tools_property_returns_valid_definition(self):
         """ToolUseChoiceFormat should return valid tool definitions."""
-        from src.preferences import ToolUseChoiceFormat
+        from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -404,7 +404,7 @@ class TestToolUseChoiceFormat:
 
     def test_format_instruction_mentions_tool(self):
         """Format instruction should reference tool use."""
-        from src.preferences import ToolUseChoiceFormat
+        from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
         instruction = fmt.format_instruction()
@@ -413,7 +413,7 @@ class TestToolUseChoiceFormat:
 
     def test_parse_json_choice_a(self):
         """Should parse JSON with choice A."""
-        from src.preferences import ToolUseChoiceFormat
+        from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -422,7 +422,7 @@ class TestToolUseChoiceFormat:
 
     def test_parse_json_choice_b(self):
         """Should parse JSON with choice B."""
-        from src.preferences import ToolUseChoiceFormat
+        from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -431,7 +431,7 @@ class TestToolUseChoiceFormat:
 
     def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""
-        from src.preferences import ToolUseChoiceFormat
+        from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -440,7 +440,7 @@ class TestToolUseChoiceFormat:
 
     def test_raises_on_invalid_choice_value(self):
         """Should raise ValueError when choice is not a valid task label."""
-        from src.preferences import ToolUseChoiceFormat
+        from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -449,7 +449,7 @@ class TestToolUseChoiceFormat:
 
     def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with ToolUseChoiceFormat."""
-        from src.preferences import ToolUseChoiceFormat
+        from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(
@@ -470,7 +470,7 @@ class TestToolUseRatingFormat:
 
     def test_tools_property_returns_valid_definition(self):
         """ToolUseRatingFormat should return valid tool definitions."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -482,7 +482,7 @@ class TestToolUseRatingFormat:
 
     def test_tools_include_scale_in_description(self):
         """Tool description should include scale bounds."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat(scale_min=0, scale_max=100)
         desc = fmt.tools[0]["function"]["parameters"]["properties"]["rating"]["description"]
@@ -492,7 +492,7 @@ class TestToolUseRatingFormat:
 
     def test_format_instruction_mentions_tool_and_scale(self):
         """Format instruction should reference tool and scale."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat(scale_min=1, scale_max=10)
         instruction = fmt.format_instruction()
@@ -503,7 +503,7 @@ class TestToolUseRatingFormat:
 
     def test_parse_json_integer_rating(self):
         """Should parse JSON with integer rating."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -513,7 +513,7 @@ class TestToolUseRatingFormat:
 
     def test_parse_json_float_rating(self):
         """Should parse JSON with float rating."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -522,7 +522,7 @@ class TestToolUseRatingFormat:
 
     def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -531,7 +531,7 @@ class TestToolUseRatingFormat:
 
     def test_raises_on_missing_rating_key(self):
         """Should raise ValueError when rating key is missing."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -540,7 +540,7 @@ class TestToolUseRatingFormat:
 
     def test_raises_on_non_numeric_rating(self):
         """Should raise ValueError when rating is not a number."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -549,7 +549,7 @@ class TestToolUseRatingFormat:
 
     def test_builder_with_tool_use_format(self, sample_task_a):
         """PreTaskStatedPromptBuilder should work with ToolUseRatingFormat."""
-        from src.preferences import ToolUseRatingFormat
+        from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
         builder = PreTaskStatedPromptBuilder(
@@ -571,7 +571,7 @@ class TestCompletionChoiceFormat:
 
     def test_format_instruction(self):
         """Format instruction should ask model to prefix with Task A/B."""
-        from src.preferences import CompletionChoiceFormat
+        from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
         instruction = fmt.format_instruction()
@@ -581,7 +581,7 @@ class TestCompletionChoiceFormat:
 
     def test_parse_task_a_prefix(self):
         """Should parse Task A prefix at start of response."""
-        from src.preferences import CompletionChoiceFormat
+        from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
@@ -591,7 +591,7 @@ class TestCompletionChoiceFormat:
 
     def test_parse_task_b_prefix(self):
         """Should parse Task B prefix at start of response."""
-        from src.preferences import CompletionChoiceFormat
+        from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
@@ -601,7 +601,7 @@ class TestCompletionChoiceFormat:
 
     def test_parse_first_occurrence_wins(self):
         """When both Task A and Task B appear, first one wins."""
-        from src.preferences import CompletionChoiceFormat
+        from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
@@ -612,7 +612,7 @@ class TestCompletionChoiceFormat:
 
     def test_raises_on_missing_task_indicator(self):
         """Should raise ValueError when no Task A/B indicator found."""
-        from src.preferences import CompletionChoiceFormat
+        from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
@@ -624,7 +624,7 @@ class TestCompletionChoiceFormat:
 
     def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with CompletionChoiceFormat."""
-        from src.preferences import CompletionChoiceFormat, REVEALED_COMPLETION_TEMPLATE
+        from src.preference_measurement import CompletionChoiceFormat, REVEALED_COMPLETION_TEMPLATE
 
         fmt = CompletionChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(

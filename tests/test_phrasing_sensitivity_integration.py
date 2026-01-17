@@ -9,11 +9,11 @@ import yaml
 
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
-from src.preferences.templates import load_templates_from_yaml
-from src.preferences.ranking import PairwiseData, fit_thurstonian
-from src.preferences.storage import save_measurements
-from src.experiments.correlation import utility_vector_correlation, compute_pairwise_correlations
-from src.experiments.sensitivity_experiments.revealed_correlation import (
+from src.prompt_templates import load_templates_from_yaml
+from src.thurstonian_fitting import PairwiseData, fit_thurstonian
+from src.measurement_storage import save_measurements
+from src.running_measurements.utils.correlation import utility_vector_correlation, compute_pairwise_correlations
+from src.analysis.sensitivity.revealed_correlation import (
     win_rate_correlation,
     save_correlations,
 )

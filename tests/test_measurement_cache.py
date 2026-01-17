@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from src.preferences.storage.cache import MeasurementCache, reconstruct_measurements
-from src.preferences.templates import PromptTemplate, REVEALED_PLACEHOLDERS
+from src.measurement_storage.cache import MeasurementCache, reconstruct_measurements
+from src.prompt_templates import PromptTemplate, REVEALED_PLACEHOLDERS
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 

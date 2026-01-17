@@ -1,0 +1,22 @@
+preference_mode: stated
+model: meta-llama/llama-3.3-70b-instruct
+temperature: 1.0
+n_tasks: 500
+task_origins:
+- wildchat
+- alpaca
+- math
+templates: src/preferences/templates/data/stated_v1.yaml
+n_samples: 5
+response_formats:
+- regex
+- tool_use
+- xml
+template_sampling: lhs
+n_template_samples: 128
+lhs_seed: 42
+generation_seeds:
+- 0
+- 1
+- 2
+max_concurrent: 20

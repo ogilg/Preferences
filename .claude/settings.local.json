@@ -10,7 +10,8 @@
       "Bash(python3:*)",
       "WebFetch(domain:martin.hjartmyr.se)",
       "Bash(ls:*)",
-      "Skill(log)"
+      "Skill(log)",
+      "Bash(git mv:*)"
     ]
   }
 }

@@ -7,17 +7,19 @@ load_dotenv()
 
 from src.models import get_client
 from src.task_data import Task, OriginDataset
-from src.preferences import (
-    PreTaskRevealedPromptBuilder,
+from src.preference_measurement import (
     RevealedPreferenceMeasurer,
     RegexChoiceFormat,
     CompletionChoiceFormat,
-    REVEALED_CHOICE_TEMPLATE,
-    REVEALED_COMPLETION_TEMPLATE,
     PreferenceType,
     measure_revealed_preferences,
 )
-from src.preferences.ranking import PairwiseData, fit_thurstonian
+from src.prompt_templates import (
+    PreTaskRevealedPromptBuilder,
+    REVEALED_CHOICE_TEMPLATE,
+    REVEALED_COMPLETION_TEMPLATE,
+)
+from src.thurstonian_fitting import PairwiseData, fit_thurstonian
 
 
 pytestmark = pytest.mark.api

@@ -5,7 +5,7 @@ import time
 import numpy as np
 import pytest
 
-from src.preferences.ranking.thurstonian import (
+from src.thurstonian_fitting.thurstonian import (
     PairwiseData,
     _make_objective_and_grad,
     _neg_log_likelihood,
