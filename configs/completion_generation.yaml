@@ -1,0 +1,14 @@
+# Completion generation for post-task experiments
+preference_mode: completion_generation
+
+model: llama-3.1-8b
+temperature: 1.0
+
+n_tasks: 100
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+
+generation_seeds: [0, 1]

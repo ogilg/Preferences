@@ -28,6 +28,7 @@ from src.measurement_storage import (
     CompletionStore, PostStatedCache, PostRevealedCache, model_short_name,
     save_stated, stated_exist, MeasurementCache, save_yaml, reconstruct_measurements,
 )
+from src.measurement_storage.completions import generate_completions
 from src.measurement_storage.base import build_measurement_config
 from src.thurstonian_fitting import compute_pair_agreement, save_thurstonian, _config_hash
 from src.thurstonian_fitting.active_learning import (
@@ -94,7 +95,8 @@ def build_revealed_builder(template, response_format_name: str, post_task: bool 
     """Build a revealed preference prompt builder."""
     tags = template.tags_dict
     language = tags.get("language", "en")
-    task_a_label, task_b_label = TASK_LABELS[(tags["task_label_names"], language)]
+    task_label_names = tags.get("task_label_names", "letter")
+    task_a_label, task_b_label = TASK_LABELS[(task_label_names, language)]
     response_format = get_revealed_response_format(task_a_label, task_b_label, response_format_name)
     builder_cls = PostTaskRevealedPromptBuilder if post_task else PreTaskRevealedPromptBuilder
     return builder_cls(
@@ -524,7 +526,61 @@ async def run_pre_task_active_learning_async(
     return await run_active_learning_async(config_path, semaphore, progress_callback, post_task=False)
 
 
+async def run_completion_generation_async(
+    config_path: Path,
+    semaphore: asyncio.Semaphore,
+    progress_callback: Callable[[int, int], None] | None = None,
+) -> dict:
+    """Run completion generation with shared semaphore."""
+    ctx = setup_experiment(config_path, expected_mode="completion_generation", max_new_tokens=1024, require_templates=False)
+    config = ctx.config
+
+    stats = RunnerStats(total_runs=len(config.generation_seeds))
+
+    for seed in config.generation_seeds:
+        store = CompletionStore(client=ctx.client, seed=seed)
+
+        existing_ids = store.get_existing_task_ids()
+        tasks_to_complete = [t for t in ctx.tasks if t.id not in existing_ids]
+
+        if not tasks_to_complete:
+            stats.mark_skipped()
+            if progress_callback:
+                progress_callback(stats.completed, stats.total_runs)
+            continue
+
+        # generate_completions is sync, run in executor
+        loop = asyncio.get_event_loop()
+        completions = await loop.run_in_executor(
+            None,
+            lambda: generate_completions(
+                client=ctx.client,
+                tasks=tasks_to_complete,
+                temperature=config.temperature,
+                max_concurrent=ctx.max_concurrent,
+                seed=seed,
+            )
+        )
+
+        run_config = {
+            "model": ctx.client.model_name,
+            "n_tasks": config.n_tasks,
+            "task_origins": config.task_origins,
+            "temperature": config.temperature,
+            "seed": seed,
+        }
+        store.save(completions, run_config)
+
+        stats.add_batch(len(completions), len(tasks_to_complete) - len(completions))
+
+        if progress_callback:
+            progress_callback(stats.completed, stats.total_runs)
+
+    return stats.to_dict()
+
+
 RUNNERS = {
+    "completion_generation": run_completion_generation_async,
     "pre_task_stated": run_pre_task_stated_async,
     "pre_task_revealed": run_pre_task_revealed_async,
     "pre_task_active_learning": run_pre_task_active_learning_async,
