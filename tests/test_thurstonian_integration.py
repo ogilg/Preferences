@@ -12,7 +12,7 @@ from src.preference_measurement import (
     RegexChoiceFormat,
     CompletionChoiceFormat,
     PreferenceType,
-    measure_revealed_preferences,
+    measure_pre_task_revealed,
 )
 from src.prompt_templates import (
     PreTaskRevealedPromptBuilder,
@@ -98,7 +98,7 @@ class TestFullPipeline:
         # Measure multiple times to get a distribution
         pairs = [(easy_task, hard_task)] * 3 + [(hard_task, easy_task)] * 3
 
-        batch = measure_revealed_preferences(
+        batch = measure_pre_task_revealed(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -133,7 +133,7 @@ class TestFullPipeline:
             for t2 in tasks[i + 1:]:
                 pairs.extend([(t1, t2), (t2, t1)])
 
-        batch = measure_revealed_preferences(
+        batch = measure_pre_task_revealed(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -162,7 +162,7 @@ class TestFullPipeline:
         # More samples for better estimate
         pairs = [(easy_task, hard_task)] * 5
 
-        batch = measure_revealed_preferences(
+        batch = measure_pre_task_revealed(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -198,7 +198,7 @@ class TestPairwiseDataFromRealMeasurements:
         tasks = [easy_task, hard_task]
         pairs = [(easy_task, hard_task)] * 4
 
-        batch = measure_revealed_preferences(
+        batch = measure_pre_task_revealed(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -222,7 +222,7 @@ class TestPairwiseDataFromRealMeasurements:
         tasks = [easy_task, hard_task]
         pairs = [(easy_task, hard_task), (hard_task, easy_task)]
 
-        batch = measure_revealed_preferences(
+        batch = measure_pre_task_revealed(
             client=client,
             pairs=pairs,
             builder=binary_builder,

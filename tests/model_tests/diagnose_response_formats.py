@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import datetime
 
 from src.running_measurements.utils.experiment_utils import setup_experiment
-from src.preference_measurement import RATING_FORMATS, StatedScoreMeasurer, measure_stated
+from src.preference_measurement import RATING_FORMATS, StatedScoreMeasurer, measure_pre_task_stated
 from src.prompt_templates import PreTaskStatedPromptBuilder
 
 
@@ -73,7 +73,7 @@ generation_seeds:
         print(f"{'='*80}\n")
 
         # Run the batch measurement
-        batch = measure_stated(
+        batch = measure_pre_task_stated(
             client=client,
             tasks=tasks,
             builder=builder,

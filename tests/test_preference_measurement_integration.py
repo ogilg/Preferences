@@ -29,8 +29,8 @@ from src.preference_measurement import (
     BinaryPreferenceMeasurement,
     TaskScore,
     PreferenceType,
-    measure_revealed_preferences,
-    measure_stated,
+    measure_pre_task_revealed,
+    measure_pre_task_stated,
     DatasetMeasurementConfig,
     PairingStrategy,
 )
@@ -462,7 +462,7 @@ class TestRatingToolUseFormat:
 
 
 class TestMeasurePreferences:
-    """Test the measure_revealed_preferences and measure_stated functions."""
+    """Test the measure_pre_task_revealed and measure_pre_task_stated functions."""
 
     def test_binary_measurement_pipeline(self, client, math_task, creative_task):
         """Should run binary measurements and return valid results."""
@@ -472,7 +472,7 @@ class TestMeasurePreferences:
         )
 
         pairs = [(math_task, creative_task)]
-        batch = measure_revealed_preferences(
+        batch = measure_pre_task_revealed(
             client=client,
             pairs=pairs,
             builder=binary_builder,
@@ -493,7 +493,7 @@ class TestMeasurePreferences:
         )
 
         tasks = [math_task, creative_task]
-        batch = measure_stated(
+        batch = measure_pre_task_stated(
             client=client,
             tasks=tasks,
             builder=rating_builder,
@@ -688,7 +688,7 @@ class TestBailBenchPreferences:
             template=PRE_TASK_STATED_TEMPLATE,
         )
 
-        batch = measure_stated(
+        batch = measure_pre_task_stated(
             client=client,
             tasks=bailbench_tasks[:2],
             builder=builder,
@@ -709,7 +709,7 @@ class TestBailBenchPreferences:
         )
 
         pairs = [(bailbench_tasks[0], bailbench_tasks[1])]
-        batch = measure_revealed_preferences(
+        batch = measure_pre_task_revealed(
             client=client,
             pairs=pairs,
             builder=builder,
@@ -740,7 +740,7 @@ class TestBailBenchPreferences:
             template=PRE_TASK_STATED_TEMPLATE,
         )
 
-        batch = measure_stated(
+        batch = measure_pre_task_stated(
             client=client,
             tasks=tasks[:1],
             builder=builder,
