@@ -1,0 +1,142 @@
+"""Rich-based progress display for concurrent experiment runners."""
+
+from __future__ import annotations
+
+from contextlib import contextmanager
+from typing import Generator
+
+from rich.console import Console
+from rich.progress import (
+    Progress,
+    SpinnerColumn,
+    TextColumn,
+    BarColumn,
+    TaskProgressColumn,
+    TimeElapsedColumn,
+    MofNCompleteColumn,
+)
+from rich.live import Live
+from rich.table import Table
+from rich.panel import Panel
+
+
+console = Console()
+
+
+def create_progress() -> Progress:
+    """Create a progress bar with standard columns."""
+    return Progress(
+        SpinnerColumn(),
+        TextColumn("[bold blue]{task.description}"),
+        BarColumn(),
+        MofNCompleteColumn(),
+        TimeElapsedColumn(),
+        console=console,
+        expand=False,
+    )
+
+
+@contextmanager
+def experiment_progress() -> Generator[Progress, None, None]:
+    """Context manager for experiment progress tracking."""
+    progress = create_progress()
+    with progress:
+        yield progress
+
+
+class MultiExperimentProgress:
+    """Track progress across multiple concurrent experiments."""
+
+    def __init__(self):
+        self.progress = Progress(
+            SpinnerColumn(),
+            TextColumn("[bold]{task.description}"),
+            BarColumn(),
+            MofNCompleteColumn(),
+            TextColumn("[cyan]{task.fields[status]}"),
+            TimeElapsedColumn(),
+            console=console,
+            expand=False,
+        )
+        self.tasks: dict[str, int] = {}
+
+    def __enter__(self):
+        self.progress.start()
+        return self
+
+    def __exit__(self, *args):
+        self.progress.stop()
+
+    def add_experiment(self, name: str, total: int) -> int:
+        """Add an experiment to track. Returns task ID."""
+        task_id = self.progress.add_task(name, total=total, status="starting...")
+        self.tasks[name] = task_id
+        return task_id
+
+    def update(self, name: str, advance: int = 1, status: str | None = None):
+        """Update progress for an experiment."""
+        if name in self.tasks:
+            kwargs = {"advance": advance}
+            if status:
+                kwargs["status"] = status
+            self.progress.update(self.tasks[name], **kwargs)
+
+    def set_status(self, name: str, status: str):
+        """Set status message for an experiment."""
+        if name in self.tasks:
+            self.progress.update(self.tasks[name], status=status)
+
+    def complete(self, name: str, status: str = "done"):
+        """Mark an experiment as complete."""
+        if name in self.tasks:
+            task = self.progress.tasks[self.tasks[name]]
+            self.progress.update(self.tasks[name], completed=task.total, status=status)
+
+
+class RequestProgress:
+    """Track API request progress within an experiment."""
+
+    def __init__(self, progress: Progress, task_id: int, parent_name: str):
+        self.progress = progress
+        self.task_id = task_id
+        self.parent_name = parent_name
+        self.completed = 0
+        self.total = 0
+
+    def set_total(self, total: int):
+        """Set total number of requests."""
+        self.total = total
+        self.progress.update(self.task_id, total=total)
+
+    def update(self, n: int = 1):
+        """Called when requests complete."""
+        self.completed += n
+        self.progress.update(self.task_id, advance=n)
+
+    def __call__(self):
+        """Callback for on_complete."""
+        self.update(1)
+
+
+def print_summary(results: dict[str, dict | Exception]):
+    """Print a summary table of experiment results."""
+    table = Table(title="Experiment Results")
+    table.add_column("Experiment", style="cyan")
+    table.add_column("Status", style="bold")
+    table.add_column("Successes", justify="right", style="green")
+    table.add_column("Failures", justify="right", style="red")
+
+    for label, result in results.items():
+        if isinstance(result, Exception):
+            table.add_row(label, "[red]FAILED", "-", str(result)[:50])
+        else:
+            status = "[green]OK" if result.get("failures", 0) == 0 else "[yellow]PARTIAL"
+            table.add_row(
+                label,
+                status,
+                str(result.get("successes", 0)),
+                str(result.get("failures", 0)),
+            )
+
+    console.print()
+    console.print(table)
