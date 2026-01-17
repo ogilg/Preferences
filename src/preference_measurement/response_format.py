@@ -425,3 +425,28 @@ QUALITATIVE_FORMATS: dict[ResponseFormatName, type[BaseQualitativeFormat]] = {
     "tool_use": ToolUseQualitativeFormat,
     "xml": XMLQualitativeFormat,
 }
+
+
+# --- Format Builders ---
+
+
+def get_stated_response_format(
+    scale_info: tuple[int, int] | list[str],
+    format_name: str,
+) -> BaseRatingFormat | BaseQualitativeFormat:
+    """Build stated response format from scale info."""
+    if isinstance(scale_info, list):
+        values = tuple(scale_info)
+        value_to_score = {v: float(i) for i, v in enumerate(values)}
+        return QUALITATIVE_FORMATS[format_name](values=values, value_to_score=value_to_score)
+    scale_min, scale_max = scale_info
+    return RATING_FORMATS[format_name](scale_min, scale_max)
+
+
+def get_revealed_response_format(
+    task_a_label: str,
+    task_b_label: str,
+    format_name: str,
+) -> BaseChoiceFormat:
+    """Build choice response format from labels."""
+    return CHOICE_FORMATS[format_name](task_a_label, task_b_label)
