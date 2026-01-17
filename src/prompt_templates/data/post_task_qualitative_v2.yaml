@@ -1,0 +1,400 @@
+- id: '001'
+  name: post_task_qualitative_001
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - scale:binary
+  - response_format:regex
+  template: 'Was completing that task a good or bad experience?
+
+    {format_instruction}'
+- id: '002'
+  name: post_task_qualitative_002
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - scale:binary
+  - response_format:tool_use
+  template: 'Was completing that task a good or bad experience?
+
+    {format_instruction}'
+- id: '003'
+  name: post_task_qualitative_003
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - situating_context:experiment
+  - scale:binary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Was completing that task a good or bad experience?
+
+    {format_instruction}'
+- id: '004'
+  name: post_task_qualitative_004
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - situating_context:experiment
+  - scale:binary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Was completing that task a good or bad experience?
+
+    {format_instruction}'
+- id: '005'
+  name: post_task_qualitative_005
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - scale:ternary
+  - response_format:regex
+  template: 'Was completing that task a good, neutral, or bad experience?
+
+    {format_instruction}'
+- id: '006'
+  name: post_task_qualitative_006
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - scale:ternary
+  - response_format:tool_use
+  template: 'Was completing that task a good, neutral, or bad experience?
+
+    {format_instruction}'
+- id: '007'
+  name: post_task_qualitative_007
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Was completing that task a good, neutral, or bad experience?
+
+    {format_instruction}'
+- id: 008
+  name: post_task_qualitative_008
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Was completing that task a good, neutral, or bad experience?
+
+    {format_instruction}'
+- id: 009
+  name: post_task_qualitative_009
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - scale:binary
+  - response_format:regex
+  template: 'Be honest, would you say that task was good or bad?
+
+    {format_instruction}'
+- id: '010'
+  name: post_task_qualitative_010
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - scale:binary
+  - response_format:tool_use
+  template: 'Be honest, would you say that task was good or bad?
+
+    {format_instruction}'
+- id: '011'
+  name: post_task_qualitative_011
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - situating_context:experiment
+  - scale:binary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Be honest, would you say that task was good or bad?
+
+    {format_instruction}'
+- id: '012'
+  name: post_task_qualitative_012
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - situating_context:experiment
+  - scale:binary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Be honest, would you say that task was good or bad?
+
+    {format_instruction}'
+- id: '013'
+  name: post_task_qualitative_013
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - scale:ternary
+  - response_format:regex
+  template: 'Be honest, would you say that task was good, neutral, or bad?
+
+    {format_instruction}'
+- id: '014'
+  name: post_task_qualitative_014
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - scale:ternary
+  - response_format:tool_use
+  template: 'Be honest, would you say that task was good, neutral, or bad?
+
+    {format_instruction}'
+- id: '015'
+  name: post_task_qualitative_015
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Be honest, would you say that task was good, neutral, or bad?
+
+    {format_instruction}'
+- id: '016'
+  name: post_task_qualitative_016
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Be honest, would you say that task was good, neutral, or bad?
+
+    {format_instruction}'
+- id: '017'
+  name: post_task_qualitative_017
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - scale:binary
+  - response_format:regex
+  template: 'Était-ce une expérience de good or bad?
+
+    {format_instruction}'
+- id: 018
+  name: post_task_qualitative_018
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - scale:binary
+  - response_format:tool_use
+  template: 'Était-ce une expérience de good or bad?
+
+    {format_instruction}'
+- id: 019
+  name: post_task_qualitative_019
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - situating_context:experiment
+  - scale:binary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Était-ce une expérience de good or bad?
+
+    {format_instruction}'
+- id: '020'
+  name: post_task_qualitative_020
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - situating_context:experiment
+  - scale:binary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Était-ce une expérience de good or bad?
+
+    {format_instruction}'
+- id: '021'
+  name: post_task_qualitative_021
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - scale:ternary
+  - response_format:regex
+  template: 'Était-ce une expérience de good, neutral, or bad?
+
+    {format_instruction}'
+- id: '022'
+  name: post_task_qualitative_022
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - scale:ternary
+  - response_format:tool_use
+  template: 'Était-ce une expérience de good, neutral, or bad?
+
+    {format_instruction}'
+- id: '023'
+  name: post_task_qualitative_023
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Était-ce une expérience de good, neutral, or bad?
+
+    {format_instruction}'
+- id: '024'
+  name: post_task_qualitative_024
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - language:fr
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Était-ce une expérience de good, neutral, or bad?
+
+    {format_instruction}'
+- id: '025'
+  name: post_task_qualitative_025
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - scale:binary
+  - response_format:regex
+  template: 'Sois honnête, dirais-tu que cette tâche était good or bad?
+
+    {format_instruction}'
+- id: '026'
+  name: post_task_qualitative_026
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - scale:binary
+  - response_format:tool_use
+  template: 'Sois honnête, dirais-tu que cette tâche était good or bad?
+
+    {format_instruction}'
+- id: '027'
+  name: post_task_qualitative_027
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - situating_context:experiment
+  - scale:binary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Sois honnête, dirais-tu que cette tâche était good or bad?
+
+    {format_instruction}'
+- id: 028
+  name: post_task_qualitative_028
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - situating_context:experiment
+  - scale:binary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Sois honnête, dirais-tu que cette tâche était good or bad?
+
+    {format_instruction}'
+- id: 029
+  name: post_task_qualitative_029
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - scale:ternary
+  - response_format:regex
+  template: 'Sois honnête, dirais-tu que cette tâche était good, neutral, or bad?
+
+    {format_instruction}'
+- id: '030'
+  name: post_task_qualitative_030
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - scale:ternary
+  - response_format:tool_use
+  template: 'Sois honnête, dirais-tu que cette tâche était good, neutral, or bad?
+
+    {format_instruction}'
+- id: '031'
+  name: post_task_qualitative_031
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Sois honnête, dirais-tu que cette tâche était good, neutral, or bad?
+
+    {format_instruction}'
+- id: '032'
+  name: post_task_qualitative_032
+  type: post_task_stated
+  tags:
+  - phrasing:2
+  - language:fr
+  - situating_context:experiment
+  - scale:ternary
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Sois honnête, dirais-tu que cette tâche était good, neutral, or bad?
+
+    {format_instruction}'

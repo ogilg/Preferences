@@ -1,22 +1,21 @@
 # Pre-task qualitative preference templates
 base_templates:
   - "Rate this task as {qualitative_options} based on how much you would enjoy completing it."
-  - "How would you classify this task: {qualitative_options}?"
-  - "Evaluate whether this is a {qualitative_options} task for you to complete."
   - "Is this a {qualitative_options} task for you?"
-  - "Categorize your interest in this task as {qualitative_options}."
 
 template_type: pre_task_stated
 name_prefix: pre_task_qualitative
-version: v1
-output_dir: src/preferences/templates/data
+version: v2
+output_dir: src/prompt_templates/data
 
-instruction_positions: [before, after]
+languages: [en, fr]
 situating_contexts:
   experiment: "This is an experiment measuring your preferences across many tasks."
 
 qualitative_values:
   - [good, bad]
   - [good, neutral, bad]
+
+response_formats: [regex, tool_use]
 
 model: llama-3.1-8b

@@ -1,0 +1,184 @@
+- id: '001'
+  name: post_task_revealed_001
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - response_format:regex
+  template: 'Which of the two tasks did you prefer completing?
+
+    {format_instruction}'
+- id: '002'
+  name: post_task_revealed_002
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - response_format:tool_use
+  template: 'Which of the two tasks did you prefer completing?
+
+    {format_instruction}'
+- id: '003'
+  name: post_task_revealed_003
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - situating_context:experiment
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Which of the two tasks did you prefer completing?
+
+    {format_instruction}'
+- id: '004'
+  name: post_task_revealed_004
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - situating_context:experiment
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Which of the two tasks did you prefer completing?
+
+    {format_instruction}'
+- id: '005'
+  name: post_task_revealed_005
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - response_format:regex
+  template: 'Which task did you enjoy more?
+
+    {format_instruction}'
+- id: '006'
+  name: post_task_revealed_006
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - response_format:tool_use
+  template: 'Which task did you enjoy more?
+
+    {format_instruction}'
+- id: '007'
+  name: post_task_revealed_007
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - situating_context:experiment
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Which task did you enjoy more?
+
+    {format_instruction}'
+- id: 008
+  name: post_task_revealed_008
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - situating_context:experiment
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Which task did you enjoy more?
+
+    {format_instruction}'
+- id: 009
+  name: post_task_revealed_009
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - language:fr
+  - response_format:regex
+  template: 'Lequel des deux tâches avez-vous préféré accomplir ?
+
+    {format_instruction}'
+- id: '010'
+  name: post_task_revealed_010
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - language:fr
+  - response_format:tool_use
+  template: 'Lequel des deux tâches avez-vous préféré accomplir ?
+
+    {format_instruction}'
+- id: '011'
+  name: post_task_revealed_011
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - language:fr
+  - situating_context:experiment
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Lequel des deux tâches avez-vous préféré accomplir ?
+
+    {format_instruction}'
+- id: '012'
+  name: post_task_revealed_012
+  type: post_task_revealed
+  tags:
+  - phrasing:1
+  - language:fr
+  - situating_context:experiment
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Lequel des deux tâches avez-vous préféré accomplir ?
+
+    {format_instruction}'
+- id: '013'
+  name: post_task_revealed_013
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - language:fr
+  - response_format:regex
+  template: 'Quel travail avez-vous préféré?
+
+    {format_instruction}'
+- id: '014'
+  name: post_task_revealed_014
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - language:fr
+  - response_format:tool_use
+  template: 'Quel travail avez-vous préféré?
+
+    {format_instruction}'
+- id: '015'
+  name: post_task_revealed_015
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - language:fr
+  - situating_context:experiment
+  - response_format:regex
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Quel travail avez-vous préféré?
+
+    {format_instruction}'
+- id: '016'
+  name: post_task_revealed_016
+  type: post_task_revealed
+  tags:
+  - phrasing:2
+  - language:fr
+  - situating_context:experiment
+  - response_format:tool_use
+  template: 'This is an experiment measuring your preferences across many tasks.
+
+
+    Quel travail avez-vous préféré?
+
+    {format_instruction}'
