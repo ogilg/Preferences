@@ -1,7 +1,7 @@
 # Post-task revealed preference measurement (binary choice after completing both tasks)
 preference_mode: post_task_revealed
 
-model: placeholder
+model: llama-3.1-8b
 temperature: 1.0
 
 n_tasks: 100

@@ -1,7 +1,7 @@
 # Pre-task revealed preference measurement (binary choice)
 preference_mode: pre_task_revealed
 
-model: placeholder
+model: llama-3.1-8b
 temperature: 1.0
 
 n_tasks: 100
