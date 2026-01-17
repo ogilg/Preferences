@@ -1,5 +1,21 @@
 # Research Log
 
+## 2025-01-16: Qualitative rating correlation analysis
+
+Computed Spearman correlation matrix between 12 qualitative rating templates (2 phrasings × 2 scales × 3 response formats) on 1000 completions from llama-3.1-8b.
+
+The correlations are all positive but quite random.
+
+### Plots
+![Qualitative rating correlations](assets/probe_experiment_2/plot_011626_qualitative_rating_correlations.png)
+
+### Key Results
+- Mean correlation: 0.322, range: 0.005 to 0.748
+- xml format shows weakest cross-format agreement (0.10-0.28 with other formats)
+- Phrasing 2 ("Be honest...") + binary scale most consistent across formats (re↔tool=0.69, re↔xml=0.71)
+- Ternary scales generally show weaker correlations than binary
+- Response format affects ratings more than binary↔ternary scale choice
+
 ## 2026-01-16: Linear probe training on self-reported ratings
 
 ### Methodology
@@ -17,13 +33,13 @@ Trained linear probes (Ridge regression) to predict self-reported qualitative ra
 **Probe training:**
 - Ridge regression with 5-fold cross-validation
 - Alpha sweep: [0.0001, ..., 10000]
-- Labels: -1 (bad), 0 (neutral), 1 (good)
+- Labels: -1 (bad), 0 (neutral), 1 (good) OR good/bad in the binary case
 
 ### Plots
 
-![R² by template and layer](log_assets/plot_011626_probe_r2_by_layer.png)
+![R² by template and layer](assets/plot_011626_probe_r2_by_layer.png)
 
-![Best R² per template](log_assets/plot_011626_probe_best_r2.png)
+![Best R² per template](assets/plot_011626_probe_best_r2.png)
 
 ### Key Results
 
