@@ -186,8 +186,10 @@ class OpenAICompatibleClient(ABC):
         requests: list[GenerateRequest],
         max_concurrent: int,
         on_complete: Callable[[], None] | None = None,
+        semaphore: asyncio.Semaphore | None = None,
     ) -> list[BatchResult]:
-        semaphore = asyncio.Semaphore(max_concurrent)
+        if semaphore is None:
+            semaphore = asyncio.Semaphore(max_concurrent)
         async_client = self._create_async_client()
         remaining = len(requests)
         error_counts: dict[str, int] = {}
@@ -281,6 +283,16 @@ class OpenAICompatibleClient(ABC):
         on_complete: Callable[[], None] | None = None,
     ) -> list[BatchResult]:
         return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete))
+
+    async def generate_batch_async(
+        self,
+        requests: list[GenerateRequest],
+        semaphore: asyncio.Semaphore,
+        on_complete: Callable[[], None] | None = None,
+    ) -> list[BatchResult]:
+        return await self._generate_batch_async(
+            requests, max_concurrent=0, on_complete=on_complete, semaphore=semaphore
+        )
 
 
 class HyperbolicClient(OpenAICompatibleClient):
