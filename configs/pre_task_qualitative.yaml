@@ -1,0 +1,22 @@
+# Pre-task qualitative preference measurement (good/bad categorical)
+preference_mode: pre_task_stated
+
+model: placeholder
+temperature: 1.0
+
+n_tasks: 100
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+
+templates: src/prompt_templates/data/pre_task_qualitative_v2.yaml
+n_samples: 5
+
+response_formats: [regex, tool_use]
+
+template_sampling: lhs
+n_template_samples: 32
+lhs_seed: 42
+generation_seeds: [0, 1]

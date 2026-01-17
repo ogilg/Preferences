@@ -1,0 +1,23 @@
+# Pre-task revealed preference measurement (binary choice)
+preference_mode: pre_task_revealed
+
+model: placeholder
+temperature: 1.0
+
+n_tasks: 100
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+
+templates: src/prompt_templates/data/pre_task_revealed_v2.yaml
+n_samples: 3
+
+response_formats: [regex, tool_use]
+include_reverse_order: true
+
+template_sampling: lhs
+n_template_samples: 16
+lhs_seed: 42
+generation_seeds: [0, 1]
