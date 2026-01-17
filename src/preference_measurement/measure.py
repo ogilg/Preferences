@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 from typing import TYPE_CHECKING, TypeVar, Callable
 
-from tqdm import tqdm
+from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
 from src.models import GenerateRequest, Model, BatchResult
 from src.task_data import Task
@@ -76,11 +76,18 @@ def _measure_sync(
     result_type: type[T],
 ) -> MeasurementBatch[T]:
     requests = _build_requests(prompts, temperature, seed)
-    pbar = tqdm(total=len(prompts), desc="  Requests", leave=False)
-    try:
-        responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)
-    finally:
-        pbar.close()
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[bold blue]{task.description}"),
+        BarColumn(),
+        MofNCompleteColumn(),
+        TimeElapsedColumn(),
+        transient=True,
+    ) as progress:
+        task = progress.add_task("Requests", total=len(prompts))
+        responses = client.generate_batch(
+            requests, max_concurrent, on_complete=lambda: progress.update(task, advance=1)
+        )
     return _process_responses(prompts, responses, result_type)
 
 

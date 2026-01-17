@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import asyncio
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Callable
 
-from tqdm import tqdm
+from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
 from src.measurement_storage.base import find_project_root, model_short_name, save_yaml, load_yaml
 from src.task_data import OriginDataset, Task
@@ -132,9 +133,17 @@ def generate_completions(
         for task in tasks
     ]
 
-    pbar = tqdm(total=len(requests), desc="Generating completions")
-    responses = client.generate_batch(requests, max_concurrent, on_complete=pbar.update)
-    pbar.close()
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[bold blue]{task.description}"),
+        BarColumn(),
+        MofNCompleteColumn(),
+        TimeElapsedColumn(),
+    ) as progress:
+        progress_task = progress.add_task("Generating completions", total=len(requests))
+        responses = client.generate_batch(
+            requests, max_concurrent, on_complete=lambda: progress.update(progress_task, advance=1)
+        )
 
     completions = []
     failures = []
