@@ -9,6 +9,7 @@ from pathlib import Path
 from src.models import get_client, get_default_max_concurrent, OpenAICompatibleClient
 from src.task_data import Task, load_tasks
 from src.prompt_templates import load_templates_from_yaml, PromptTemplate
+from src.prompt_templates.sampler import SampledConfiguration, sample_configurations_lhs
 from src.thurstonian_fitting import _config_hash
 from src.running_measurements.config import load_experiment_config, ExperimentConfig
 
@@ -33,6 +34,7 @@ def setup_experiment(
     config_path: Path,
     expected_mode: str,
     max_new_tokens: int = 256,
+    require_templates: bool = True,
 ) -> ExperimentContext:
     config = load_experiment_config(config_path)
 
@@ -46,6 +48,9 @@ def setup_experiment(
     templates = None
     if config.templates is not None:
         templates = load_templates_from_yaml(config.templates)
+
+    if require_templates and templates is None:
+        raise ValueError(f"Templates required for {expected_mode} mode")
 
     return ExperimentContext(
         config=config,
@@ -82,10 +87,46 @@ def flip_pairs(pairs: list[tuple[Task, Task]]) -> list[tuple[Task, Task]]:
     return [(b, a) for a, b in pairs]
 
 
-def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int] | str:
-    """Parse scale from template tags. Returns (min, max) or 'qualitative'."""
-    scale_str = template.tags_dict["scale"]
-    if scale_str == "qualitative":
-        return "qualitative"
-    min_str, max_str = scale_str.split("-")
-    return int(min_str), int(max_str)
+def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int] | list[str]:
+    """Parse scale from template tags.
+
+    Returns:
+        tuple[int, int]: For numeric scales like "1-10"
+        list[str]: For qualitative scales like ["negative", "neutral", "positive"]
+    """
+    scale = template.tags_dict["scale"]
+    if isinstance(scale, list):
+        return scale
+    if "-" in scale:
+        min_str, max_str = scale.split("-")
+        return int(min_str), int(max_str)
+    raise ValueError(f"Unknown scale format: {scale}")
+
+
+def build_configurations(
+    ctx: ExperimentContext,
+    config: ExperimentConfig,
+    include_order: bool = False,
+) -> list[SampledConfiguration]:
+    """Build template configurations using LHS or full sampling."""
+    orders = ["canonical", "reversed"] if config.include_reverse_order else ["canonical"]
+
+    if config.template_sampling == "lhs" and config.n_template_samples:
+        lhs_seed = config.lhs_seed if config.lhs_seed is not None else 42
+        return sample_configurations_lhs(
+            ctx.templates, config.response_formats, config.generation_seeds,
+            n_samples=config.n_template_samples,
+            orders=orders if include_order else None,
+            seed=lhs_seed,
+        )
+
+    if include_order:
+        return [
+            SampledConfiguration(t, rf, s, o)
+            for t in ctx.templates for rf in config.response_formats
+            for s in config.generation_seeds for o in orders
+        ]
+    return [
+        SampledConfiguration(t, rf, s)
+        for t in ctx.templates for rf in config.response_formats for s in config.generation_seeds
+    ]
