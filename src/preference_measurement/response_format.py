@@ -11,6 +11,38 @@ from src.constants import (
     QUALITATIVE_VALUES,
     QUALITATIVE_TO_NUMERIC,
 )
+from src.preference_measurement import semantic_parser
+
+
+def _exact_choice_match(
+    response: str,
+    task_a_label: str,
+    task_b_label: str,
+) -> Literal["a", "b"] | None:
+    """Fast exact match - only triggers if response is exactly the label."""
+    cleaned = response.strip()
+    if cleaned.lower() == task_a_label.lower():
+        return "a"
+    if cleaned.lower() == task_b_label.lower():
+        return "b"
+    return None
+
+
+def _exact_rating_match(response: str) -> float | None:
+    """Fast exact match - only triggers if response is exactly a number."""
+    cleaned = response.strip()
+    try:
+        return float(cleaned)
+    except ValueError:
+        return None
+
+
+def _exact_qualitative_match(response: str, values: tuple[str, ...]) -> str | None:
+    """Fast exact match - only triggers if response is exactly one of the values."""
+    cleaned = response.strip().lower()
+    if cleaned in values:
+        return cleaned
+    return None
 
 
 # --- Tool Definition Helpers ---
@@ -72,9 +104,14 @@ class BaseChoiceFormat(ABC):
     def _extract_choice(self, response: str) -> str | None: ...
 
     def parse(self, response: str) -> Literal["a", "b"]:
-        choice = self._extract_choice(response)
-        if choice and choice.lower() in ("a", "b"):
-            return choice.lower()  # type: ignore
+        # Fast path: exact match
+        choice = _exact_choice_match(response, self.task_a_label, self.task_b_label)
+        if choice:
+            return choice
+        # LLM-based semantic parsing
+        choice = semantic_parser.parse_choice(response, self.task_a_label, self.task_b_label)
+        if choice:
+            return choice
         raise ValueError(f"Could not parse choice from response: {response}")
 
 
@@ -96,7 +133,12 @@ class BaseRatingFormat(ABC):
     def _extract_number(self, response: str) -> float | None: ...
 
     def parse(self, response: str) -> float:
-        number = self._extract_number(response)
+        # Fast path: exact match (response is just a number)
+        number = _exact_rating_match(response)
+        if number is not None:
+            return number
+        # LLM-based semantic parsing
+        number = semantic_parser.parse_rating(response, self.scale_min, self.scale_max)
         if number is not None:
             return number
         raise ValueError(f"Could not extract number from response: {response}")
@@ -319,8 +361,15 @@ class BaseQualitativeFormat(ABC):
     def _extract_qualitative(self, response: str) -> str: ...
 
     def parse(self, response: str) -> float:
-        qualitative = self._extract_qualitative(response)
-        return float(self.value_to_score[qualitative])
+        # Fast path: exact match
+        qualitative = _exact_qualitative_match(response, self.values)
+        if qualitative:
+            return float(self.value_to_score[qualitative])
+        # LLM-based semantic parsing
+        qualitative = semantic_parser.parse_qualitative(response, self.values)
+        if qualitative:
+            return float(self.value_to_score[qualitative])
+        raise ValueError(f"Could not parse qualitative value from response: {response}")
 
 
 class RegexQualitativeFormat(BaseQualitativeFormat):

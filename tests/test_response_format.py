@@ -597,10 +597,10 @@ class TestQualitativeFormats:
         assert fmt.parse("NEUTRAL") == 0.0
         assert fmt.parse("Bad") == -1.0
 
-    def test_regex_qualitative_invalid(self):
+    def test_regex_qualitative_synonym(self):
+        # "excellent" is semantically interpreted as "good"
         fmt = RegexQualitativeFormat()
-        with pytest.raises(ValueError, match="No qualitative value found"):
-            fmt.parse("excellent")
+        assert fmt.parse("excellent") == 1.0
 
     def test_regex_qualitative_word_boundaries(self):
         fmt = RegexQualitativeFormat()
@@ -630,10 +630,10 @@ class TestQualitativeFormats:
         fmt = XMLQualitativeFormat()
         assert fmt.parse("<rating>  good  </rating>") == 1.0
 
-    def test_xml_qualitative_invalid(self):
+    def test_xml_qualitative_synonym(self):
+        # "excellent" is semantically interpreted as "good"
         fmt = XMLQualitativeFormat()
-        with pytest.raises(ValueError, match="No valid qualitative value"):
-            fmt.parse("<rating>excellent</rating>")
+        assert fmt.parse("<rating>excellent</rating>") == 1.0
 
     def test_xml_qualitative_custom_tag(self):
         fmt = XMLQualitativeFormat(tag="score")
@@ -656,10 +656,10 @@ class TestQualitativeFormats:
         assert fmt.parse('{"rating": "Good"}') == 1.0
         assert fmt.parse('{"rating": "NEUTRAL"}') == 0.0
 
-    def test_tool_use_qualitative_invalid(self):
+    def test_tool_use_qualitative_synonym(self):
+        # "excellent" is semantically interpreted as "good"
         fmt = ToolUseQualitativeFormat()
-        with pytest.raises(ValueError, match="Invalid tool call"):
-            fmt.parse('{"rating": "excellent"}')
+        assert fmt.parse('{"rating": "excellent"}') == 1.0
 
     def test_tool_use_qualitative_has_tools(self):
         fmt = ToolUseQualitativeFormat()
