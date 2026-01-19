@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import time
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -75,9 +76,14 @@ async def run_experiments(
                 return label, ValueError(f"No runner for mode: {config.preference_mode}")
 
             progress.set_status(label, "running...")
+            last_update_time = [time.time()]
 
             def on_progress(completed: int, total: int):
-                progress.progress.update(progress.tasks[label], completed=completed, total=total)
+                now = time.time()
+                iter_time = now - last_update_time[0]
+                last_update_time[0] = now
+                iter_str = f"[dim]{iter_time:.1f}s/iter[/dim]"
+                progress.progress.update(progress.tasks[label], completed=completed, total=total, status=iter_str)
 
             try:
                 result = await runner(path, semaphore, progress_callback=on_progress)
