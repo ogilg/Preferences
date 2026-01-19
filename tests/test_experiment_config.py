@@ -138,6 +138,105 @@ class TestApplyPairOrder:
         assert [(a.id, b.id) for a, b in result_canonical] == [(a.id, b.id) for a, b in result_reversed]
 
 
+class TestPairOrderInMeasurements:
+    """Verify that shuffled pair order is correctly reflected in measurements."""
+
+    def test_measurement_records_correct_winner_after_shuffle(self):
+        """When pairs are shuffled, measurements still record the correct winner."""
+        from src.preference_measurement.measurer import RevealedPreferenceMeasurer
+        from src.preference_measurement.response_format import RegexChoiceFormat
+        from src.prompt_templates.builders import PreTaskRevealedPromptBuilder
+        from src.prompt_templates.template import PromptTemplate
+
+        tasks = make_tasks(2)
+        task_x, task_y = tasks[0], tasks[1]
+
+        # Create a simple template
+        template = PromptTemplate(
+            template="Compare:\nTask A: {task_a}\nTask B: {task_b}\n{format_instruction}",
+            name="test",
+            required_placeholders=frozenset(["task_a", "task_b", "format_instruction"]),
+            tags=frozenset(),
+        )
+        response_format = RegexChoiceFormat("Task A", "Task B")
+        measurer = RevealedPreferenceMeasurer()
+        builder = PreTaskRevealedPromptBuilder(measurer, response_format, template)
+
+        # Original order: (task_x, task_y) - task_x is "Task A"
+        prompt_original = builder.build(task_x, task_y)
+        assert prompt_original.tasks[0].id == "task_0"  # task_x is Task A
+        assert prompt_original.tasks[1].id == "task_1"  # task_y is Task B
+
+        # Shuffled order: (task_y, task_x) - task_y is now "Task A"
+        prompt_shuffled = builder.build(task_y, task_x)
+        assert prompt_shuffled.tasks[0].id == "task_1"  # task_y is Task A
+        assert prompt_shuffled.tasks[1].id == "task_0"  # task_x is Task B
+
+        # Model responds "Task A" in both cases
+        response_text = "Task A"
+
+        # In original order: "Task A" means task_x wins
+        result_original = measurer.parse(response_text, prompt_original)
+        assert result_original.result.task_a.id == "task_0"
+        assert result_original.result.choice == "a"
+        # Winner is task_x (task_0)
+
+        # In shuffled order: "Task A" means task_y wins
+        result_shuffled = measurer.parse(response_text, prompt_shuffled)
+        assert result_shuffled.result.task_a.id == "task_1"
+        assert result_shuffled.result.choice == "a"
+        # Winner is task_y (task_1)
+
+    def test_thurstonian_aggregates_shuffled_measurements_correctly(self):
+        """Thurstonian model correctly aggregates measurements from shuffled pairs."""
+        tasks = make_tasks(3)
+
+        # Simulate measurements where task_0 always wins
+        # Some pairs are in canonical order, some are shuffled
+        comparisons = [
+            # Canonical: (task_0, task_1), task_0 shown as A, model says A
+            BinaryPreferenceMeasurement(
+                task_a=tasks[0], task_b=tasks[1], choice="a",
+                preference_type=PreferenceType.PRE_TASK_REVEALED
+            ),
+            # Shuffled: (task_1, task_0), task_1 shown as A, model says B (meaning task_0 wins)
+            BinaryPreferenceMeasurement(
+                task_a=tasks[1], task_b=tasks[0], choice="b",
+                preference_type=PreferenceType.PRE_TASK_REVEALED
+            ),
+            # Canonical: (task_0, task_2), task_0 shown as A, model says A
+            BinaryPreferenceMeasurement(
+                task_a=tasks[0], task_b=tasks[2], choice="a",
+                preference_type=PreferenceType.PRE_TASK_REVEALED
+            ),
+            # Shuffled: (task_2, task_0), task_2 shown as A, model says B (meaning task_0 wins)
+            BinaryPreferenceMeasurement(
+                task_a=tasks[2], task_b=tasks[0], choice="b",
+                preference_type=PreferenceType.PRE_TASK_REVEALED
+            ),
+            # task_1 vs task_2: task_1 wins
+            BinaryPreferenceMeasurement(
+                task_a=tasks[1], task_b=tasks[2], choice="a",
+                preference_type=PreferenceType.PRE_TASK_REVEALED
+            ),
+        ]
+
+        data = PairwiseData.from_comparisons(comparisons, tasks)
+
+        # task_0 should have 4 wins (2 pairs x 2 measurements each showing task_0 winning)
+        # Actually: task_0 beats task_1 twice, task_0 beats task_2 twice = 4 wins
+        idx_0 = next(i for i, t in enumerate(data.tasks) if t.id == "task_0")
+        assert data.wins[idx_0, :].sum() == 4
+
+        # task_1 has 1 win (over task_2)
+        idx_1 = next(i for i, t in enumerate(data.tasks) if t.id == "task_1")
+        assert data.wins[idx_1, :].sum() == 1
+
+        # task_2 has 0 wins
+        idx_2 = next(i for i, t in enumerate(data.tasks) if t.id == "task_2")
+        assert data.wins[idx_2, :].sum() == 0
+
+
 class TestShuffledTasksInThurstonian:
     """Verify Thurstonian fitting uses task IDs correctly regardless of order."""
 
