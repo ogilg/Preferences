@@ -41,8 +41,11 @@ def setup_experiment(
     if config.preference_mode != expected_mode:
         raise ValueError(f"Expected preference_mode='{expected_mode}', got '{config.preference_mode}'")
 
-    # Always load tasks deterministically (no shuffle) so stated and revealed use same tasks
-    tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets(), seed=None)
+    tasks = load_tasks(
+        n=config.n_tasks,
+        origins=config.get_origin_datasets(),
+        seed=config.task_shuffle_seed,
+    )
 
     # Templates are optional for completion_generation mode
     templates = None

@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from src.task_data import OriginDataset
 
@@ -38,6 +38,7 @@ class ExperimentConfig(BaseModel):
 
     n_tasks: int = 10
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
+    task_shuffle_seed: int | None = None  # Randomise task order if set
 
     templates: Path | None = None  # Optional for completion_generation
 
@@ -61,6 +62,12 @@ class ExperimentConfig(BaseModel):
 
     # Post-task specific: which completion seeds to use (defaults to generation_seeds)
     completion_seeds: list[int] | None = None
+
+    @model_validator(mode="after")
+    def validate_shuffle_and_reverse(self) -> "ExperimentConfig":
+        if self.task_shuffle_seed is not None and self.include_reverse_order:
+            raise ValueError("Cannot set both task_shuffle_seed and include_reverse_order")
+        return self
 
     def get_origin_datasets(self) -> list[OriginDataset]:
         mapping = {

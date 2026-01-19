@@ -4,7 +4,7 @@ preference_mode: pre_task_revealed
 model: llama-3.1-8b
 temperature: 1.0
 
-n_tasks: 100
+n_tasks: 5
 task_origins:
   - wildchat
   - alpaca
@@ -15,9 +15,9 @@ templates: src/prompt_templates/data/pre_task_revealed_v2.yaml
 n_samples: 3
 
 response_formats: [regex, tool_use]
-include_reverse_order: true
+task_shuffle_seed: 42
 
 template_sampling: lhs
-n_template_samples: 16
+n_template_samples: 32
 lhs_seed: 42
 generation_seeds: [0, 1]
