@@ -53,12 +53,14 @@ class RunnerStats:
     completed: int = 0
     successes: int = 0
     failures: int = 0
+    skipped: int = 0
 
     def to_dict(self) -> dict:
-        return {"total_runs": self.total_runs, "successes": self.successes, "failures": self.failures}
+        return {"total_runs": self.total_runs, "successes": self.successes, "failures": self.failures, "skipped": self.skipped}
 
     def mark_skipped(self) -> None:
         self.completed += 1
+        self.skipped += 1
 
     def add_batch(self, n_successes: int, n_failures: int) -> None:
         self.successes += n_successes

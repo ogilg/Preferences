@@ -49,7 +49,7 @@ async def run_experiments(
     configs = []
     for path in config_paths:
         config = load_experiment_config(path)
-        label = f"{config.preference_mode}:{config.model}"
+        label = f"{path.stem}:{config.model}"
         configs.append((path, config, label))
 
     results: dict[str, dict | Exception] = {}
@@ -61,6 +61,10 @@ async def run_experiments(
             n_configs = len(config.response_formats) * len(config.generation_seeds)
             if config.n_template_samples:
                 n_configs = config.n_template_samples
+            # Post-task experiments iterate over completion seeds
+            if config.preference_mode.startswith("post_task"):
+                completion_seeds = config.completion_seeds or config.generation_seeds
+                n_configs *= len(completion_seeds)
             progress.add_experiment(label, total=n_configs)
 
         async def run_one(path: Path, config, label: str) -> tuple[str, dict | Exception]:
@@ -77,7 +81,10 @@ async def run_experiments(
 
             try:
                 result = await runner(path, semaphore, progress_callback=on_progress)
+                skipped = result.get('skipped', 0)
                 status = f"[green]{result['successes']}✓ {result['failures']}✗"
+                if skipped:
+                    status += f" [dim]{skipped}⊘[/dim]"
                 progress.complete(label, status=status)
                 return label, result
             except Exception as e:
