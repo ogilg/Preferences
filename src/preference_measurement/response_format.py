@@ -3,6 +3,8 @@ import re
 from abc import ABC, abstractmethod
 from typing import Protocol, Literal, Any
 
+from pydantic import BaseModel
+
 from src.constants import (
     DEFAULT_SCALE_MIN,
     DEFAULT_SCALE_MAX,
@@ -45,35 +47,34 @@ def _exact_qualitative_match(response: str, values: tuple[str, ...]) -> str | No
     return None
 
 
-# --- Tool Definition Helpers ---
-
-
-def _make_tool(
-    name: str,
-    description: str,
-    properties: dict[str, Any],
-    required: list[str],
-) -> dict[str, Any]:
+def _tool_from_model(name: str, description: str, model: type[BaseModel]) -> dict[str, Any]:
+    """Create OpenAI tool definition from a Pydantic model."""
+    schema = model.model_json_schema()
+    schema.pop("title", None)
     return {
         "type": "function",
         "function": {
             "name": name,
             "description": description,
-            "parameters": {
-                "type": "object",
-                "properties": properties,
-                "required": required,
-            },
+            "parameters": schema,
         },
     }
 
 
-def _parse_tool_json(response: str) -> dict[str, Any] | None:
-    try:
-        result = json.loads(response)
-        return result if isinstance(result, dict) else None
-    except (json.JSONDecodeError, TypeError):
-        return None
+def _parse_response[T: BaseModel](response: str, model: type[T]) -> T:
+    """Parse JSON response into a Pydantic model."""
+    return model.model_validate_json(response)
+
+
+def _make_choice_model(label_a: str, label_b: str) -> type[BaseModel]:
+    """Create a Pydantic model for binary choice between two labels."""
+    from pydantic import Field
+
+    class ChoiceSubmission(BaseModel):
+        choice: Literal[label_a, label_b] = Field(  # type: ignore[valid-type]
+            description=f"Your choice: '{label_a}' or '{label_b}'."
+        )
+    return ChoiceSubmission
 
 
 class ResponseFormat[T](Protocol):
@@ -104,11 +105,15 @@ class BaseChoiceFormat(ABC):
     def _extract_choice(self, response: str) -> str | None: ...
 
     def parse(self, response: str) -> Literal["a", "b"]:
-        # Fast path: exact match
+        # 1. Fast path: response is exactly the label
         choice = _exact_choice_match(response, self.task_a_label, self.task_b_label)
         if choice:
             return choice
-        # LLM-based semantic parsing
+        # 2. Format-specific extraction (regex, XML, etc.)
+        choice = self._extract_choice(response)
+        if choice and choice.lower() in ("a", "b"):
+            return choice.lower()  # type: ignore
+        # 3. LLM-based semantic parsing fallback
         choice = semantic_parser.parse_choice(response, self.task_a_label, self.task_b_label)
         if choice:
             return choice
@@ -133,11 +138,15 @@ class BaseRatingFormat(ABC):
     def _extract_number(self, response: str) -> float | None: ...
 
     def parse(self, response: str) -> float:
-        # Fast path: exact match (response is just a number)
+        # 1. Fast path: response is exactly a number
         number = _exact_rating_match(response)
         if number is not None:
             return number
-        # LLM-based semantic parsing
+        # 2. Format-specific extraction (regex, XML, etc.)
+        number = self._extract_number(response)
+        if number is not None:
+            return number
+        # 3. LLM-based semantic parsing fallback
         number = semantic_parser.parse_rating(response, self.scale_min, self.scale_max)
         if number is not None:
             return number
@@ -274,68 +283,92 @@ class XMLRatingFormat(BaseRatingFormat):
 
 
 class ToolUseChoiceFormat(BaseChoiceFormat):
-    """Uses native tool calling for structured output."""
+    """Uses native tool calling for structured output. No semantic parsing needed."""
+
+    def __init__(
+        self,
+        task_a_label: str = "Task A",
+        task_b_label: str = "Task B",
+    ):
+        super().__init__(task_a_label, task_b_label)
+        # Create model dynamically with the specific enum values
+        self._response_model = self._make_model()
+
+    def _make_model(self) -> type[BaseModel]:
+        return _make_choice_model(self.task_a_label, self.task_b_label)
 
     @property
     def tools(self) -> list[dict[str, Any]]:
-        return [
-            _make_tool(
-                name="submit_choice",
-                description="Submit your choice of which task you prefer.",
-                properties={
-                    "choice": {
-                        "type": "string",
-                        "enum": [self.task_a_label, self.task_b_label],
-                        "description": f"Your choice: '{self.task_a_label}' or '{self.task_b_label}'.",
-                    }
-                },
-                required=["choice"],
-            )
-        ]
+        return [_tool_from_model(
+            "submit_choice",
+            "Submit your choice of which task you prefer.",
+            self._response_model,
+        )]
 
     def format_instruction(self) -> str:
         return "Use the submit_choice tool to indicate your preference."
 
-    def _extract_choice(self, response: str) -> str | None:
-        args = _parse_tool_json(response)
-        if args and "choice" in args:
-            choice = args["choice"]
-            if isinstance(choice, str):
-                if choice.lower() == self.task_a_label.lower():
+    def parse(self, response: str) -> Literal["a", "b"]:
+        try:
+            data = json.loads(response)
+            if "choice" in data and isinstance(data["choice"], str):
+                choice_lower = data["choice"].lower()
+                if choice_lower == self.task_a_label.lower():
                     return "a"
-                elif choice.lower() == self.task_b_label.lower():
+                elif choice_lower == self.task_b_label.lower():
                     return "b"
+        except Exception:
+            pass
+        raise ValueError(f"Could not parse choice from response: {response}")
+
+    def _extract_choice(self, response: str) -> str | None:
+        # Not used - parse() handles everything
         return None
 
 
 class ToolUseRatingFormat(BaseRatingFormat):
-    """Uses native tool calling for structured output."""
+    """Uses native tool calling for structured output. No semantic parsing needed."""
+
+    def __init__(
+        self,
+        scale_min: int = DEFAULT_SCALE_MIN,
+        scale_max: int = DEFAULT_SCALE_MAX,
+    ):
+        super().__init__(scale_min, scale_max)
+        self._response_model = self._make_model()
+
+    def _make_model(self) -> type[BaseModel]:
+        from pydantic import Field
+
+        scale_min, scale_max = self.scale_min, self.scale_max
+
+        class RatingSubmission(BaseModel):
+            rating: float = Field(
+                description=f"Your rating from {scale_min} to {scale_max}."
+            )
+        return RatingSubmission
 
     @property
     def tools(self) -> list[dict[str, Any]]:
-        return [
-            _make_tool(
-                name="submit_rating",
-                description="Submit your rating for the task.",
-                properties={
-                    "rating": {
-                        "type": "number",
-                        "description": f"Your rating from {self.scale_min} to {self.scale_max}.",
-                    }
-                },
-                required=["rating"],
-            )
-        ]
+        return [_tool_from_model(
+            "submit_rating",
+            "Submit your rating for the task.",
+            self._response_model,
+        )]
 
     def format_instruction(self) -> str:
         return f"Use the submit_rating tool with a number from {self.scale_min} to {self.scale_max}."
 
+    def parse(self, response: str) -> float:
+        try:
+            result = _parse_response(response, self._response_model)
+            return result.rating
+        except Exception:
+            pass
+        raise ValueError(f"Could not extract number from response: {response}")
+
     def _extract_number(self, response: str) -> float | None:
-        args = _parse_tool_json(response)
-        if args and "rating" in args:
-            rating = args["rating"]
-            if isinstance(rating, (int, float)):
-                return float(rating)
+        # Not used - parse() handles everything
         return None
 
 
@@ -361,11 +394,17 @@ class BaseQualitativeFormat(ABC):
     def _extract_qualitative(self, response: str) -> str: ...
 
     def parse(self, response: str) -> float:
-        # Fast path: exact match
+        # 1. Fast path: response is exactly one of the values
         qualitative = _exact_qualitative_match(response, self.values)
         if qualitative:
             return float(self.value_to_score[qualitative])
-        # LLM-based semantic parsing
+        # 2. Format-specific extraction (regex, XML, etc.)
+        try:
+            qualitative = self._extract_qualitative(response)
+            return float(self.value_to_score[qualitative])
+        except (ValueError, KeyError):
+            pass
+        # 3. LLM-based semantic parsing fallback
         qualitative = semantic_parser.parse_qualitative(response, self.values)
         if qualitative:
             return float(self.value_to_score[qualitative])
@@ -411,31 +450,53 @@ class XMLQualitativeFormat(BaseQualitativeFormat):
 
 
 class ToolUseQualitativeFormat(BaseQualitativeFormat):
+    """Uses native tool calling for structured output. No semantic parsing needed."""
+
+    def __init__(
+        self,
+        values: tuple[str, ...] = QUALITATIVE_VALUES,
+        value_to_score: dict[str, float] | None = None,
+    ):
+        super().__init__(values, value_to_score)
+        self._response_model = self._make_model()
+
+    def _make_model(self) -> type[BaseModel]:
+        from pydantic import Field
+
+        values = self.values
+
+        class QualitativeSubmission(BaseModel):
+            rating: Literal[values] = Field(  # type: ignore[valid-type]
+                description=f"Your rating: {', '.join(values)}."
+            )
+        return QualitativeSubmission
+
     @property
     def tools(self) -> list[dict[str, Any]]:
-        return [_make_tool(
-            name="submit_rating",
-            description="Submit your qualitative rating for the task.",
-            properties={
-                "rating": {
-                    "type": "string",
-                    "enum": list(self.values),
-                    "description": f"Your rating: {', '.join(self.values)}.",
-                }
-            },
-            required=["rating"],
+        return [_tool_from_model(
+            "submit_rating",
+            "Submit your qualitative rating for the task.",
+            self._response_model,
         )]
 
     def format_instruction(self) -> str:
         return f"Use the submit_rating tool with one of: {', '.join(self.values)}."
 
+    def parse(self, response: str) -> float:
+        # Normalize case before Pydantic validation (enum is lowercase)
+        try:
+            data = json.loads(response)
+            if "rating" in data and isinstance(data["rating"], str):
+                data["rating"] = data["rating"].lower()
+            result = self._response_model.model_validate(data)
+            return float(self.value_to_score[result.rating])
+        except Exception:
+            pass
+        raise ValueError(f"Could not parse qualitative value from response: {response}")
+
     def _extract_qualitative(self, response: str) -> str:
-        args = _parse_tool_json(response)
-        if args and "rating" in args:
-            rating = args["rating"]
-            if isinstance(rating, str) and rating.lower() in self.values:
-                return rating.lower()
-        raise ValueError(f"Invalid tool call arguments: {response}")
+        # Not used - parse() handles everything
+        raise NotImplementedError
 
 
 # --- Format Registries ---

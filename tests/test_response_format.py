@@ -1,6 +1,9 @@
 import pytest
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from src.preference_measurement.response_format import (
-    _parse_tool_json,
     RegexChoiceFormat,
     XMLChoiceFormat,
     CompletionChoiceFormat,
@@ -12,34 +15,6 @@ from src.preference_measurement.response_format import (
     XMLQualitativeFormat,
     ToolUseQualitativeFormat,
 )
-
-
-class TestParseToolJson:
-    """Tests for the _parse_tool_json helper function."""
-
-    def test_valid_json_object(self):
-        assert _parse_tool_json('{"key": "value"}') == {"key": "value"}
-
-    def test_valid_json_with_numbers(self):
-        assert _parse_tool_json('{"rating": 7}') == {"rating": 7}
-
-    def test_valid_json_with_float(self):
-        assert _parse_tool_json('{"rating": 7.5}') == {"rating": 7.5}
-
-    def test_returns_none_for_json_array(self):
-        assert _parse_tool_json("[1, 2, 3]") is None
-
-    def test_returns_none_for_json_string(self):
-        assert _parse_tool_json('"just a string"') is None
-
-    def test_returns_none_for_invalid_json(self):
-        assert _parse_tool_json("not json at all") is None
-
-    def test_returns_none_for_empty_string(self):
-        assert _parse_tool_json("") is None
-
-    def test_returns_none_for_malformed_json(self):
-        assert _parse_tool_json('{"key": }') is None
 
 
 class TestRegexChoiceFormat:
@@ -407,54 +382,45 @@ class TestXMLRatingFormat:
 
 
 class TestToolUseChoiceFormat:
-    """Tests for ToolUseChoiceFormat._extract_choice and parse."""
+    """Tests for ToolUseChoiceFormat.parse."""
 
-    def test_extracts_task_a(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice('{"choice": "Task A"}') == "a"
-
-    def test_extracts_task_b(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice('{"choice": "Task B"}') == "b"
-
-    def test_case_insensitive(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice('{"choice": "task a"}') == "a"
-        assert fmt._extract_choice('{"choice": "TASK B"}') == "b"
-
-    def test_custom_labels(self):
-        fmt = ToolUseChoiceFormat(task_a_label="First", task_b_label="Second")
-        assert fmt._extract_choice('{"choice": "First"}') == "a"
-        assert fmt._extract_choice('{"choice": "Second"}') == "b"
-
-    def test_invalid_json_returns_none(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice("not json") is None
-
-    def test_missing_choice_key_returns_none(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice('{"wrong_key": "Task A"}') is None
-
-    def test_invalid_choice_value_returns_none(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice('{"choice": "Task C"}') is None
-
-    def test_non_string_choice_returns_none(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice('{"choice": 1}') is None
-
-    def test_empty_string_returns_none(self):
-        fmt = ToolUseChoiceFormat()
-        assert fmt._extract_choice("") is None
-
-    def test_parse_returns_lowercase(self):
+    def test_parses_task_a(self):
         fmt = ToolUseChoiceFormat()
         assert fmt.parse('{"choice": "Task A"}') == "a"
 
-    def test_parse_raises_on_invalid(self):
+    def test_parses_task_b(self):
+        fmt = ToolUseChoiceFormat()
+        assert fmt.parse('{"choice": "Task B"}') == "b"
+
+    def test_custom_labels(self):
+        fmt = ToolUseChoiceFormat(task_a_label="First", task_b_label="Second")
+        assert fmt.parse('{"choice": "First"}') == "a"
+        assert fmt.parse('{"choice": "Second"}') == "b"
+
+    def test_invalid_json_raises(self):
         fmt = ToolUseChoiceFormat()
         with pytest.raises(ValueError, match="Could not parse choice"):
-            fmt.parse("invalid")
+            fmt.parse("not json")
+
+    def test_missing_choice_key_raises(self):
+        fmt = ToolUseChoiceFormat()
+        with pytest.raises(ValueError, match="Could not parse choice"):
+            fmt.parse('{"wrong_key": "Task A"}')
+
+    def test_invalid_choice_value_raises(self):
+        fmt = ToolUseChoiceFormat()
+        with pytest.raises(ValueError, match="Could not parse choice"):
+            fmt.parse('{"choice": "Task C"}')
+
+    def test_non_string_choice_raises(self):
+        fmt = ToolUseChoiceFormat()
+        with pytest.raises(ValueError, match="Could not parse choice"):
+            fmt.parse('{"choice": 1}')
+
+    def test_empty_string_raises(self):
+        fmt = ToolUseChoiceFormat()
+        with pytest.raises(ValueError, match="Could not parse choice"):
+            fmt.parse("")
 
     def test_tools_property_returns_tool_definition(self):
         fmt = ToolUseChoiceFormat()
@@ -477,44 +443,39 @@ class TestToolUseChoiceFormat:
 
 
 class TestToolUseRatingFormat:
-    """Tests for ToolUseRatingFormat._extract_number and parse."""
+    """Tests for ToolUseRatingFormat.parse."""
 
-    def test_extracts_integer(self):
-        fmt = ToolUseRatingFormat()
-        assert fmt._extract_number('{"rating": 7}') == 7.0
-
-    def test_extracts_float(self):
-        fmt = ToolUseRatingFormat()
-        assert fmt._extract_number('{"rating": 7.5}') == 7.5
-
-    def test_extracts_negative(self):
-        fmt = ToolUseRatingFormat()
-        assert fmt._extract_number('{"rating": -3}') == -3.0
-
-    def test_invalid_json_returns_none(self):
-        fmt = ToolUseRatingFormat()
-        assert fmt._extract_number("not json") is None
-
-    def test_missing_rating_key_returns_none(self):
-        fmt = ToolUseRatingFormat()
-        assert fmt._extract_number('{"wrong_key": 7}') is None
-
-    def test_non_numeric_rating_returns_none(self):
-        fmt = ToolUseRatingFormat()
-        assert fmt._extract_number('{"rating": "seven"}') is None
-
-    def test_empty_string_returns_none(self):
-        fmt = ToolUseRatingFormat()
-        assert fmt._extract_number("") is None
-
-    def test_parse_returns_float(self):
+    def test_parses_integer(self):
         fmt = ToolUseRatingFormat()
         assert fmt.parse('{"rating": 7}') == 7.0
 
-    def test_parse_raises_on_invalid(self):
+    def test_parses_float(self):
+        fmt = ToolUseRatingFormat()
+        assert fmt.parse('{"rating": 7.5}') == 7.5
+
+    def test_parses_negative(self):
+        fmt = ToolUseRatingFormat()
+        assert fmt.parse('{"rating": -3}') == -3.0
+
+    def test_invalid_json_raises(self):
         fmt = ToolUseRatingFormat()
         with pytest.raises(ValueError, match="Could not extract number"):
-            fmt.parse("invalid")
+            fmt.parse("not json")
+
+    def test_missing_rating_key_raises(self):
+        fmt = ToolUseRatingFormat()
+        with pytest.raises(ValueError, match="Could not extract number"):
+            fmt.parse('{"wrong_key": 7}')
+
+    def test_non_numeric_rating_raises(self):
+        fmt = ToolUseRatingFormat()
+        with pytest.raises(ValueError, match="Could not extract number"):
+            fmt.parse('{"rating": "seven"}')
+
+    def test_empty_string_raises(self):
+        fmt = ToolUseRatingFormat()
+        with pytest.raises(ValueError, match="Could not extract number"):
+            fmt.parse("")
 
     def test_tools_property_returns_tool_definition(self):
         fmt = ToolUseRatingFormat()
@@ -656,10 +617,11 @@ class TestQualitativeFormats:
         assert fmt.parse('{"rating": "Good"}') == 1.0
         assert fmt.parse('{"rating": "NEUTRAL"}') == 0.0
 
-    def test_tool_use_qualitative_synonym(self):
-        # "excellent" is semantically interpreted as "good"
+    def test_tool_use_qualitative_invalid_raises(self):
+        # Tool use has enum constraints - invalid values should fail (no semantic parsing)
         fmt = ToolUseQualitativeFormat()
-        assert fmt.parse('{"rating": "excellent"}') == 1.0
+        with pytest.raises(ValueError, match="Could not parse qualitative"):
+            fmt.parse('{"rating": "excellent"}')
 
     def test_tool_use_qualitative_has_tools(self):
         fmt = ToolUseQualitativeFormat()
