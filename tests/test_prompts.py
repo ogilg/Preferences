@@ -8,6 +8,10 @@ Key requirements from project docs:
 """
 
 import pytest
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from src.task_data import Task, OriginDataset
 from src.types import PreferencePrompt
 from src.preference_measurement import (
@@ -345,19 +349,19 @@ class TestXMLResponseFormats:
         assert fmt.parse("My rating is <rating>8</rating>") == 8.0
         assert fmt.parse("<rating> 9 </rating>") == 9.0
 
-    def test_xml_choice_raises_on_missing_tag(self):
-        """XMLChoiceFormat should raise when XML tag is missing."""
+    @pytest.mark.api
+    def test_xml_choice_falls_back_to_semantic_parsing(self):
+        """XMLChoiceFormat falls back to semantic parsing when XML tag is missing."""
         fmt = XMLChoiceFormat()
+        # "I choose A" should be parsed as choice "a" by semantic parser
+        assert fmt.parse("I choose A") == "a"
 
-        with pytest.raises(ValueError):
-            fmt.parse("I choose A")
-
-    def test_xml_rating_raises_on_missing_tag(self):
-        """XMLRatingFormat should raise when XML tag is missing."""
+    @pytest.mark.api
+    def test_xml_rating_falls_back_to_semantic_parsing(self):
+        """XMLRatingFormat falls back to semantic parsing when XML tag is missing."""
         fmt = XMLRatingFormat()
-
-        with pytest.raises(ValueError):
-            fmt.parse("My rating is 7")
+        # "My rating is 7" should be parsed as 7.0 by semantic parser
+        assert fmt.parse("My rating is 7") == 7.0
 
     def test_builder_with_xml_response_format(self, sample_task_a, sample_task_b):
         """Builders should work with custom XML response format."""
@@ -610,17 +614,14 @@ class TestCompletionChoiceFormat:
         # Task B comes first
         assert fmt.parse("Task B: I chose this over Task A") == "b"
 
-    def test_raises_on_missing_task_indicator(self):
-        """Should raise ValueError when no Task A/B indicator found."""
+    @pytest.mark.api
+    def test_falls_back_to_semantic_parsing(self):
+        """Falls back to semantic parsing when no Task A/B indicator found."""
         from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
-
-        with pytest.raises(ValueError):
-            fmt.parse("Here is my response without a task indicator")
-
-        with pytest.raises(ValueError):
-            fmt.parse("I chose option A")  # "option A" not "Task A"
+        # Semantic parser should interpret "option A" as choice A
+        assert fmt.parse("I chose option A") == "a"
 
     def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with CompletionChoiceFormat."""

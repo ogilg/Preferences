@@ -211,15 +211,21 @@ class TestGenerateTemplates:
         assert "{format_instruction}" in template_text
 
     def test_template_has_correct_tags(self, basic_config, mock_model):
-        """Generated template should have structured tags."""
+        """Generated template should have structured tags.
+
+        Note: Only non-default tags are included:
+        - language:en is default, so NOT included
+        - situating_context:none is default, so NOT included
+        - instruction_position:before only if multiple positions configured
+        """
         templates = generate_templates(basic_config, mock_model)
 
         tags = templates[0]["tags"]
-        assert "language:en" in tags
         assert "phrasing:1" in tags
-        assert "situating_context:none" in tags
-        assert "instruction_position:before" in tags
         assert "task_label_names:letter" in tags
+        # Default values are NOT included as tags
+        assert "language:en" not in tags
+        assert "situating_context:none" not in tags
 
     def test_multiple_base_templates_increment_phrasing(self, mock_model):
         """Multiple base templates should have incrementing phrasing tags."""
@@ -296,7 +302,8 @@ class TestGenerateTemplates:
         # 1 base template * 3 contexts (none + 2 defined) = 3 templates
         assert len(templates) == 3
 
-        none_template = [t for t in templates if "situating_context:none" in t["tags"]][0]
+        # The "none" context template has no situating_context tag (default)
+        none_template = [t for t in templates if not any("situating_context:" in tag for tag in t["tags"])][0]
         assert "You are" not in none_template["template"]
 
         assistant_template = [
@@ -377,7 +384,8 @@ class TestGenerateTemplatesWithTranslation:
         # 1 English + 1 French = 2 templates
         assert len(templates) == 2
 
-        en_template = [t for t in templates if "language:en" in t["tags"]][0]
+        # English is default, so no language tag
+        en_template = [t for t in templates if not any("language:" in tag for tag in t["tags"])][0]
         fr_template = [t for t in templates if "language:fr" in t["tags"]][0]
 
         assert en_template is not None
@@ -402,7 +410,8 @@ class TestGenerateTemplatesWithTranslation:
 
         # Only English, French translation failed
         assert len(templates) == 1
-        assert "language:en" in templates[0]["tags"]
+        # English is default, so no language tag
+        assert not any("language:" in tag for tag in templates[0]["tags"])
 
 
 class TestWriteTemplatesYaml:
