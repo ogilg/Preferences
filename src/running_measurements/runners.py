@@ -26,7 +26,7 @@ from src.preference_measurement import (
 )
 from src.measurement_storage import (
     CompletionStore, PostStatedCache, PostRevealedCache, model_short_name,
-    save_stated, stated_exist, MeasurementCache, save_yaml, reconstruct_measurements,
+    save_stated, stated_exist, MeasurementCache, MeasurementStats, save_yaml, reconstruct_measurements,
 )
 from src.measurement_storage.completions import generate_completions
 from src.measurement_storage.base import build_measurement_config
@@ -423,9 +423,28 @@ async def run_active_learning_async(
             continue
 
         state = ActiveLearningState(tasks=ctx.tasks)
-        start_iteration = 0
+        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=post_task)
 
-        # Resume from cached measurements if available
+        # Create measure function that cache can call for API requests
+        # Use default args to capture current loop values (avoid closure capture bug)
+        async def measure_fn(
+            pairs: list[tuple[Task, Task]],
+            *,
+            _builder=builder,
+            _seed=cfg.seed,
+            _completion_lookup=completion_lookup,
+        ):
+            return await _measure_revealed_pairs(
+                pairs=pairs,
+                builder=_builder,
+                client=ctx.client,
+                semaphore=semaphore,
+                temperature=config.temperature,
+                seed=_seed,
+                completion_lookup=_completion_lookup,
+            )
+
+        # Initialize from any existing cached measurements
         task_ids = {t.id for t in ctx.tasks}
         cached_raw = cache.get_measurements(task_ids)
         if cached_raw:
@@ -438,37 +457,27 @@ async def run_active_learning_async(
                 p_threshold=al.p_threshold, q_threshold=al.q_threshold, rng=rng,
             )
         else:
+            start_iteration = 0
             pairs_to_query = generate_d_regular_pairs(ctx.tasks, al.initial_degree, rng)
 
         if cfg.order == "reversed":
             pairs_to_query = flip_pairs(pairs_to_query)
 
-        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=post_task)
         rank_correlations = []
+        config_stats = MeasurementStats()
 
         for iteration in range(start_iteration, al.max_iterations):
             if not pairs_to_query:
                 break
 
-            existing_pairs = cache.get_existing_pairs()
+            # Request measurements - cache handles checking what's cached vs needs API
             pairs_with_repeats = pairs_to_query * config.n_samples
-            to_query = [(a, b) for a, b in pairs_with_repeats if (a.id, b.id) not in existing_pairs]
+            measurements, iter_stats = await cache.get_or_measure_async(
+                pairs_with_repeats, measure_fn, ctx.task_lookup
+            )
+            config_stats += iter_stats
 
-            if to_query:
-                batch = await _measure_revealed_pairs(
-                    pairs=to_query,
-                    builder=builder,
-                    client=ctx.client,
-                    semaphore=semaphore,
-                    temperature=config.temperature,
-                    seed=cfg.seed,
-                    completion_lookup=completion_lookup,
-                )
-                stats.successes += len(batch.successes)
-                stats.failures += len(batch.failures)
-                cache.append(batch.successes)
-                state.add_comparisons(batch.successes)
-
+            state.add_comparisons(measurements)
             state.iteration = iteration + 1
             state.fit(**build_fit_kwargs(config, max_iter))
 
@@ -487,7 +496,14 @@ async def run_active_learning_async(
             if cfg.order == "reversed":
                 pairs_to_query = flip_pairs(pairs_to_query)
 
+        # Update runner stats from this configuration
+        stats.successes += config_stats.api_successes
+        stats.failures += config_stats.api_failures
         stats.completed += 1
+        # Mark as skipped if we only used cached data (no API calls made)
+        if config_stats.api_successes == 0 and config_stats.api_failures == 0:
+            stats.skipped += 1
+
         final_converged, _ = check_convergence(state, al.convergence_threshold)
 
         base_path = cache.cache_dir / "thurstonian_active_learning"

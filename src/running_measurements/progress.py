@@ -123,18 +123,20 @@ def print_summary(results: dict[str, dict | Exception]):
     table = Table(title="Experiment Results")
     table.add_column("Experiment", style="cyan")
     table.add_column("Status", style="bold")
+    table.add_column("Configs", justify="right")
     table.add_column("Successes", justify="right", style="green")
     table.add_column("Failures", justify="right", style="red")
     table.add_column("Skipped", justify="right", style="dim")
 
     for label, result in results.items():
         if isinstance(result, Exception):
-            table.add_row(label, "[red]FAILED", "-", str(result)[:50], "-")
+            table.add_row(label, "[red]FAILED", "-", "-", str(result)[:50], "-")
         else:
             status = "[green]OK" if result.get("failures", 0) == 0 else "[yellow]PARTIAL"
             table.add_row(
                 label,
                 status,
+                str(result.get("total_runs", 0)),
                 str(result.get("successes", 0)),
                 str(result.get("failures", 0)),
                 str(result.get("skipped", 0)),

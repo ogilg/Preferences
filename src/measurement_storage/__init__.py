@@ -7,6 +7,7 @@ from src.measurement_storage.base import (
 from src.measurement_storage.cache import (
     PRE_TASK_REVEALED_DIR,
     MeasurementCache,
+    MeasurementStats,
     reconstruct_measurements,
     save_measurements,
 )
@@ -50,6 +51,7 @@ __all__ = [
     # Pre-task revealed (pairwise comparisons)
     "PRE_TASK_REVEALED_DIR",
     "MeasurementCache",
+    "MeasurementStats",
     "reconstruct_measurements",
     "save_measurements",
     # Pre-task stated (single-task scores)

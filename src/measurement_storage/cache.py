@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Literal
+from typing import Awaitable, Callable, Literal
 
 from src.models import OpenAICompatibleClient
 from src.measurement_storage.base import (
@@ -19,6 +20,24 @@ PRE_TASK_REVEALED_DIR = Path("results/pre_task_revealed")
 
 ResponseFormatName = Literal["regex", "tool_use"]
 OrderName = Literal["canonical", "reversed"]
+
+
+@dataclass
+class MeasurementStats:
+    """Stats from a measurement operation."""
+    cache_hits: int = 0
+    api_successes: int = 0
+    api_failures: int = 0
+
+    @property
+    def total_successes(self) -> int:
+        return self.cache_hits + self.api_successes
+
+    def __iadd__(self, other: MeasurementStats) -> MeasurementStats:
+        self.cache_hits += other.cache_hits
+        self.api_successes += other.api_successes
+        self.api_failures += other.api_failures
+        return self
 
 
 class MeasurementCache:
@@ -114,19 +133,12 @@ class MeasurementCache:
         )
         save_yaml(config, self._config_path)
 
-    def get_or_measure(
+    def _partition_pairs(
         self,
         pairs: list[tuple[Task, Task]],
-        measure_fn: Callable[[list[tuple[Task, Task]]], MeasurementBatch],
         task_lookup: dict[str, Task],
-    ) -> tuple[MeasurementBatch, int, int]:
-        """Check cache for each pair, call measure_fn for misses, return combined.
-
-        Returns (batch, cache_hits, api_queries).
-        """
-        if not pairs:
-            return MeasurementBatch(successes=[], failures=[]), 0, 0
-
+    ) -> tuple[list[BinaryPreferenceMeasurement], list[tuple[Task, Task]]]:
+        """Split pairs into cached hits and pairs needing API calls."""
         cached_raw = self.get_measurements()
         cached_by_pair: dict[tuple[str, str], list[dict[str, str]]] = {}
         for m in cached_raw:
@@ -142,20 +154,29 @@ class MeasurementCache:
             else:
                 to_query.append((a, b))
 
-        cached_hits = reconstruct_measurements(cached_hits_raw, task_lookup)
+        return reconstruct_measurements(cached_hits_raw, task_lookup), to_query
+
+    async def get_or_measure_async(
+        self,
+        pairs: list[tuple[Task, Task]],
+        measure_fn: Callable[[list[tuple[Task, Task]]], Awaitable[MeasurementBatch]],
+        task_lookup: dict[str, Task],
+    ) -> tuple[list[BinaryPreferenceMeasurement], MeasurementStats]:
+        """Check cache for each pair, call measure_fn for misses, return combined."""
+        if not pairs:
+            return [], MeasurementStats()
+
+        cached_hits, to_query = self._partition_pairs(pairs, task_lookup)
+        stats = MeasurementStats(cache_hits=len(cached_hits))
 
         if to_query:
-            fresh_batch = measure_fn(to_query)
+            fresh_batch = await measure_fn(to_query)
+            stats.api_successes = len(fresh_batch.successes)
+            stats.api_failures = len(fresh_batch.failures)
             self.append(fresh_batch.successes)
-        else:
-            fresh_batch = MeasurementBatch(successes=[], failures=[])
+            return cached_hits + fresh_batch.successes, stats
 
-        combined_successes = cached_hits + fresh_batch.successes
-        return (
-            MeasurementBatch(successes=combined_successes, failures=fresh_batch.failures),
-            len(cached_hits),
-            len(to_query),
-        )
+        return cached_hits, stats
 
 
 def save_measurements(measurements: list[BinaryPreferenceMeasurement], path: Path | str) -> None:
