@@ -18,8 +18,10 @@ load_dotenv()
 from src.running_measurements.runners import (
     run_pre_task_stated_async,
     run_pre_task_revealed_async,
+    run_pre_task_active_learning_async,
     run_post_task_stated_async,
     run_post_task_revealed_async,
+    run_post_task_active_learning_async,
     run_completion_generation_async,
 )
 
@@ -88,6 +90,12 @@ class TestPreTaskRunners:
         result = await run_pre_task_stated_async(config_path, semaphore)
         assert_valid_result(result)
 
+    @pytest.mark.asyncio
+    async def test_pre_task_active_learning(self, semaphore):
+        config_path = CONFIGS_DIR / "pre_task_active_learning_test.yaml"
+        result = await run_pre_task_active_learning_async(config_path, semaphore)
+        assert_valid_result(result)
+
 
 @pytest.mark.api
 class TestPostTaskRunners:
@@ -136,6 +144,19 @@ class TestPostTaskRunners:
         result = await run_post_task_stated_async(config_path, semaphore)
         assert_valid_result(result)
 
+    @pytest.mark.asyncio
+    async def test_post_task_active_learning(self, semaphore):
+        # Generate completions first
+        completion_result = await run_completion_generation_async(
+            CONFIGS_DIR / "completion_generation_test.yaml", semaphore
+        )
+        if completion_result["successes"] == 0 and completion_result["skipped"] == 0:
+            pytest.skip("Could not generate completions")
+
+        config_path = CONFIGS_DIR / "post_task_active_learning_test.yaml"
+        result = await run_post_task_active_learning_async(config_path, semaphore)
+        assert_valid_result(result)
+
 
 @pytest.mark.api
 class TestCompletionGeneration:
@@ -162,9 +183,11 @@ class TestAllRunnersParallel:
             (CONFIGS_DIR / "pre_task_stated_test.yaml", run_pre_task_stated_async),
             (CONFIGS_DIR / "pre_task_revealed_test.yaml", run_pre_task_revealed_async),
             (CONFIGS_DIR / "pre_task_qualitative_test.yaml", run_pre_task_stated_async),
+            (CONFIGS_DIR / "pre_task_active_learning_test.yaml", run_pre_task_active_learning_async),
             (CONFIGS_DIR / "post_task_stated_test.yaml", run_post_task_stated_async),
             (CONFIGS_DIR / "post_task_revealed_test.yaml", run_post_task_revealed_async),
             (CONFIGS_DIR / "post_task_qualitative_test.yaml", run_post_task_stated_async),
+            (CONFIGS_DIR / "post_task_active_learning_test.yaml", run_post_task_active_learning_async),
         ]
 
         tasks = [runner(path, semaphore) for path, runner in configs]
