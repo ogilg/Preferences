@@ -144,3 +144,17 @@ def print_summary(results: dict[str, dict | Exception]):
 
     console.print()
     console.print(table)
+
+    # Print failure breakdown if any failures occurred
+    all_failure_cats: dict[str, int] = {}
+    for result in results.values():
+        if isinstance(result, dict) and result.get("failure_categories"):
+            for cat, count in result["failure_categories"].items():
+                all_failure_cats[cat] = all_failure_cats.get(cat, 0) + count
+
+    if all_failure_cats:
+        console.print()
+        console.print("[bold]Failure Breakdown:")
+        sorted_cats = sorted(all_failure_cats.items(), key=lambda x: -x[1])
+        for cat, count in sorted_cats:
+            console.print(f"  {cat}: [red]{count}[/red]")

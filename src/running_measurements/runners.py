@@ -8,7 +8,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from itertools import combinations
 from pathlib import Path
-from typing import TypedDict
+from typing import Any, TypedDict
 
 import numpy as np
 
@@ -28,6 +28,7 @@ from src.measurement_storage import (
     CompletionStore, PostStatedCache, PostRevealedCache, model_short_name,
     save_stated, stated_exist, MeasurementCache, MeasurementStats, save_yaml, reconstruct_measurements,
 )
+from src.measurement_storage.cache import categorize_failure
 from src.measurement_storage.completions import generate_completions
 from src.measurement_storage.base import build_measurement_config
 from src.thurstonian_fitting import compute_pair_agreement, save_thurstonian, _config_hash
@@ -55,15 +56,38 @@ class RunnerStats:
     successes: int = 0
     failures: int = 0
     skipped: int = 0
+    failure_categories: dict[str, int] | None = None
+
+    def __post_init__(self):
+        if self.failure_categories is None:
+            self.failure_categories = {}
 
     def to_dict(self) -> dict:
-        return {"total_runs": self.total_runs, "successes": self.successes, "failures": self.failures, "skipped": self.skipped}
+        result = {
+            "total_runs": self.total_runs,
+            "successes": self.successes,
+            "failures": self.failures,
+            "skipped": self.skipped,
+        }
+        if self.failure_categories:
+            result["failure_categories"] = dict(self.failure_categories)
+        return result
 
     def mark_skipped(self) -> None:
         self.completed += 1
         self.skipped += 1
 
+    def add_batch_with_failures(self, successes: int, failures: list[tuple[Any, str]]) -> None:
+        """Add batch results with detailed failure tracking."""
+        self.successes += successes
+        self.failures += len(failures)
+        self.completed += 1
+        for _, error_msg in failures:
+            category = categorize_failure(error_msg)
+            self.failure_categories[category] = self.failure_categories.get(category, 0) + 1
+
     def add_batch(self, n_successes: int, n_failures: int) -> None:
+        """Add batch results (legacy, no categorization)."""
         self.successes += n_successes
         self.failures += n_failures
         self.completed += 1
@@ -155,7 +179,7 @@ async def run_post_task_stated_async(
                 seed=cfg.seed,
             )
 
-            stats.add_batch(len(batch.successes), len(batch.failures))
+            stats.add_batch_with_failures(len(batch.successes), batch.failures)
 
             run_config: PostTaskRunConfig = {
                 "model": ctx.client.model_name,
@@ -215,7 +239,7 @@ async def run_pre_task_revealed_async(
             seed=cfg.seed,
         )
 
-        stats.add_batch(len(batch.successes), len(batch.failures))
+        stats.add_batch_with_failures(len(batch.successes), batch.failures)
         cache.append(batch.successes)
 
         if progress_callback:
@@ -283,7 +307,7 @@ async def run_post_task_revealed_async(
                 seed=cfg.seed,
             )
 
-            stats.add_batch(len(batch.successes), len(batch.failures))
+            stats.add_batch_with_failures(len(batch.successes), batch.failures)
 
             run_config: PostTaskRevealedRunConfig = {
                 "model": ctx.client.model_name,
@@ -334,7 +358,7 @@ async def run_pre_task_stated_async(
             seed=cfg.seed,
         )
 
-        stats.add_batch(len(batch.successes), len(batch.failures))
+        stats.add_batch_with_failures(len(batch.successes), batch.failures)
 
         config_dict = build_measurement_config(
             template=cfg.template,
@@ -498,6 +522,8 @@ async def run_active_learning_async(
         # Update runner stats from this configuration
         stats.successes += config_stats.api_successes
         stats.failures += config_stats.api_failures
+        for cat, count in config_stats.failure_categories.items():
+            stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
         stats.completed += 1
         # Mark as skipped if we only used cached data (no API calls made)
         if config_stats.api_successes == 0 and config_stats.api_failures == 0:

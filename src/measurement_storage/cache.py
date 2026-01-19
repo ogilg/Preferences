@@ -22,12 +22,41 @@ ResponseFormatName = Literal["regex", "tool_use"]
 OrderName = Literal["canonical", "reversed"]
 
 
+def categorize_failure(error_msg: str) -> str:
+    """Categorize a failure message into a bucket."""
+    error_lower = error_msg.lower()
+    if "timeout" in error_lower or "timed out" in error_lower:
+        return "timeout"
+    if "rate" in error_lower and "limit" in error_lower:
+        return "rate_limit"
+    if "connection" in error_lower or "connect" in error_lower:
+        return "connection"
+    if "content" in error_lower and "filter" in error_lower:
+        return "content_filter"
+    if "unexpected result type" in error_lower:
+        return "parse_type"
+    if "request failed" in error_lower:
+        if "timeout" in error_lower:
+            return "timeout"
+        if "rate" in error_lower:
+            return "rate_limit"
+        return "api_error"
+    if any(x in error_lower for x in ["parse", "extract", "invalid", "expected", "match"]):
+        return "parse_error"
+    return "other"
+
+
 @dataclass
 class MeasurementStats:
     """Stats from a measurement operation."""
     cache_hits: int = 0
     api_successes: int = 0
     api_failures: int = 0
+    failure_categories: dict[str, int] | None = None
+
+    def __post_init__(self):
+        if self.failure_categories is None:
+            self.failure_categories = {}
 
     @property
     def total_successes(self) -> int:
@@ -37,6 +66,8 @@ class MeasurementStats:
         self.cache_hits += other.cache_hits
         self.api_successes += other.api_successes
         self.api_failures += other.api_failures
+        for cat, count in other.failure_categories.items():
+            self.failure_categories[cat] = self.failure_categories.get(cat, 0) + count
         return self
 
 
@@ -173,6 +204,9 @@ class MeasurementCache:
             fresh_batch = await measure_fn(to_query)
             stats.api_successes = len(fresh_batch.successes)
             stats.api_failures = len(fresh_batch.failures)
+            for _, error_msg in fresh_batch.failures:
+                cat = categorize_failure(error_msg)
+                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
             self.append(fresh_batch.successes)
             return cached_hits + fresh_batch.successes, stats
 
