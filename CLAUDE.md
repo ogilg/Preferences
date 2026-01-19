@@ -45,3 +45,12 @@ uv pip install -e ".[dev]"
 - When you install a new package, add it to pyproject.toml if it isn't there.
 - Always load environment variables from `.env` when running scripts that use API clients. Use `from dotenv import load_dotenv; load_dotenv()` at the top of scripts.
 - Do not test imports, it's a waste of time.
+
+## Semantic Parsing Policy
+
+  - NEVER use string matching heuristics for semantic tasks - use an LLM instead
+  - Examples of semantic tasks that require LLM judgment, not regex/string matching:
+    - "Do these two usernames refer to the same person?" 
+    - "Is this comment sharing the author's own profile or someone else's?"
+    - "Does this text express positive or negative sentiment?"
+  - String normalization and fuzzy matching will miss obvious cases that humans (and LLMs) catch instantly
