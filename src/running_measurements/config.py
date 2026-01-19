@@ -38,7 +38,6 @@ class ExperimentConfig(BaseModel):
 
     n_tasks: int = 10
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
-    task_shuffle_seed: int | None = None  # Randomise task order if set
 
     templates: Path | None = None  # Optional for completion_generation
 
@@ -47,6 +46,7 @@ class ExperimentConfig(BaseModel):
     # Revealed-specific
     fitting: FittingConfig = Field(default_factory=FittingConfig)
     include_reverse_order: bool = False
+    pair_order_seed: int | None = None  # Randomly shuffle (A,B) vs (B,A) per pair
 
     # Active learning specific
     active_learning: ActiveLearningConfig | None = None
@@ -64,9 +64,9 @@ class ExperimentConfig(BaseModel):
     completion_seeds: list[int] | None = None
 
     @model_validator(mode="after")
-    def validate_shuffle_and_reverse(self) -> "ExperimentConfig":
-        if self.task_shuffle_seed is not None and self.include_reverse_order:
-            raise ValueError("Cannot set both task_shuffle_seed and include_reverse_order")
+    def validate_pair_order_options(self) -> "ExperimentConfig":
+        if self.pair_order_seed is not None and self.include_reverse_order:
+            raise ValueError("Cannot set both pair_order_seed and include_reverse_order")
         return self
 
     def get_origin_datasets(self) -> list[OriginDataset]:

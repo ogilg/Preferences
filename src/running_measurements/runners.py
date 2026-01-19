@@ -41,6 +41,7 @@ from src.running_measurements.utils.experiment_utils import (
     setup_experiment,
     parse_scale_from_template,
     flip_pairs,
+    apply_pair_order,
     compute_thurstonian_max_iter,
     build_fit_kwargs,
     build_configurations,
@@ -190,7 +191,7 @@ async def run_pre_task_revealed_async(
         cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
 
         existing_pairs = cache.get_existing_pairs()
-        pairs = all_pairs if cfg.order == "canonical" else flip_pairs(all_pairs)
+        pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed)
         pairs_to_query = [
             (a, b) for a, b in pairs
             if (a.id, b.id) not in existing_pairs
@@ -253,7 +254,7 @@ async def run_post_task_revealed_async(
             )
 
             existing_pairs = cache.get_existing_pairs()
-            pairs = all_pairs if cfg.order == "canonical" else flip_pairs(all_pairs)
+            pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed)
             pairs_to_query = [
                 (a, b) for a, b in pairs
                 if (a.id, b.id) not in existing_pairs
@@ -460,8 +461,7 @@ async def run_active_learning_async(
             start_iteration = 0
             pairs_to_query = generate_d_regular_pairs(ctx.tasks, al.initial_degree, rng)
 
-        if cfg.order == "reversed":
-            pairs_to_query = flip_pairs(pairs_to_query)
+        pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed)
 
         rank_correlations = []
         config_stats = MeasurementStats()
@@ -493,8 +493,7 @@ async def run_active_learning_async(
                 state, batch_size=al.batch_size,
                 p_threshold=al.p_threshold, q_threshold=al.q_threshold, rng=rng,
             )
-            if cfg.order == "reversed":
-                pairs_to_query = flip_pairs(pairs_to_query)
+            pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed)
 
         # Update runner stats from this configuration
         stats.successes += config_stats.api_successes

@@ -41,11 +41,8 @@ def setup_experiment(
     if config.preference_mode != expected_mode:
         raise ValueError(f"Expected preference_mode='{expected_mode}', got '{config.preference_mode}'")
 
-    tasks = load_tasks(
-        n=config.n_tasks,
-        origins=config.get_origin_datasets(),
-        seed=config.task_shuffle_seed,
-    )
+    # Load tasks deterministically so stated and revealed use same tasks
+    tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets(), seed=None)
 
     # Templates are optional for completion_generation mode
     templates = None
@@ -88,6 +85,31 @@ def thurstonian_path_exists(cache_dir: Path, method: str, config: dict) -> tuple
 
 def flip_pairs(pairs: list[tuple[Task, Task]]) -> list[tuple[Task, Task]]:
     return [(b, a) for a, b in pairs]
+
+
+def shuffle_pair_order(
+    pairs: list[tuple[Task, Task]], seed: int
+) -> list[tuple[Task, Task]]:
+    """Randomly flip each pair's order based on seed. Deterministic for same seed."""
+    import numpy as np
+    rng = np.random.default_rng(seed)
+    return [
+        (b, a) if rng.random() < 0.5 else (a, b)
+        for a, b in pairs
+    ]
+
+
+def apply_pair_order(
+    pairs: list[tuple[Task, Task]],
+    order: str,
+    pair_order_seed: int | None,
+) -> list[tuple[Task, Task]]:
+    """Apply pair ordering: canonical, reversed, or random shuffle."""
+    if pair_order_seed is not None:
+        return shuffle_pair_order(pairs, pair_order_seed)
+    if order == "reversed":
+        return flip_pairs(pairs)
+    return pairs
 
 
 QUALITATIVE_SCALES = {

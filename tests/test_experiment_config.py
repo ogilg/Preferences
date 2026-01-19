@@ -6,50 +6,62 @@ from pathlib import Path
 import numpy as np
 
 from src.running_measurements.config import ExperimentConfig
+from src.running_measurements.utils.experiment_utils import (
+    shuffle_pair_order,
+    apply_pair_order,
+    flip_pairs,
+)
 from src.task_data import OriginDataset, Task
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 from src.thurstonian_fitting import PairwiseData, fit_thurstonian
 
 
-class TestShuffleAndReverseValidation:
+def make_tasks(n: int) -> list[Task]:
+    return [
+        Task(id=f"task_{i}", prompt=f"Task {i}", origin=OriginDataset.SYNTHETIC, metadata={})
+        for i in range(n)
+    ]
 
-    def test_cannot_set_both_shuffle_and_reverse(self):
-        """Setting both task_shuffle_seed and include_reverse_order raises error."""
+
+class TestPairOrderSeedValidation:
+
+    def test_cannot_set_both_pair_order_seed_and_reverse(self):
+        """Setting both pair_order_seed and include_reverse_order raises error."""
         with pytest.raises(ValueError, match="Cannot set both"):
             ExperimentConfig(
                 preference_mode="pre_task_revealed",
                 n_tasks=5,
                 task_origins=["wildchat"],
                 templates=Path("dummy.yaml"),
-                task_shuffle_seed=42,
+                pair_order_seed=42,
                 include_reverse_order=True,
             )
 
-    def test_shuffle_without_reverse_is_valid(self):
-        """task_shuffle_seed alone is valid."""
+    def test_pair_order_seed_without_reverse_is_valid(self):
+        """pair_order_seed alone is valid."""
         config = ExperimentConfig(
             preference_mode="pre_task_revealed",
             n_tasks=5,
             task_origins=["wildchat"],
             templates=Path("dummy.yaml"),
-            task_shuffle_seed=42,
+            pair_order_seed=42,
             include_reverse_order=False,
         )
-        assert config.task_shuffle_seed == 42
+        assert config.pair_order_seed == 42
 
-    def test_reverse_without_shuffle_is_valid(self):
+    def test_reverse_without_pair_order_seed_is_valid(self):
         """include_reverse_order alone is valid."""
         config = ExperimentConfig(
             preference_mode="pre_task_revealed",
             n_tasks=5,
             task_origins=["wildchat"],
             templates=Path("dummy.yaml"),
-            task_shuffle_seed=None,
+            pair_order_seed=None,
             include_reverse_order=True,
         )
         assert config.include_reverse_order is True
 
-    def test_neither_shuffle_nor_reverse_is_valid(self):
+    def test_neither_pair_order_seed_nor_reverse_is_valid(self):
         """Neither option set is valid (defaults)."""
         config = ExperimentConfig(
             preference_mode="pre_task_revealed",
@@ -57,18 +69,77 @@ class TestShuffleAndReverseValidation:
             task_origins=["wildchat"],
             templates=Path("dummy.yaml"),
         )
-        assert config.task_shuffle_seed is None
+        assert config.pair_order_seed is None
         assert config.include_reverse_order is False
+
+
+class TestShufflePairOrder:
+
+    def test_shuffle_is_deterministic(self):
+        """Same seed produces same shuffle."""
+        tasks = make_tasks(4)
+        pairs = [(tasks[0], tasks[1]), (tasks[0], tasks[2]), (tasks[1], tasks[2])]
+
+        result1 = shuffle_pair_order(pairs, seed=42)
+        result2 = shuffle_pair_order(pairs, seed=42)
+
+        assert [(a.id, b.id) for a, b in result1] == [(a.id, b.id) for a, b in result2]
+
+    def test_different_seeds_produce_different_orders(self):
+        """Different seeds produce different shuffles (with high probability)."""
+        tasks = make_tasks(10)
+        pairs = [(tasks[i], tasks[j]) for i in range(10) for j in range(i + 1, 10)]
+
+        result1 = shuffle_pair_order(pairs, seed=42)
+        result2 = shuffle_pair_order(pairs, seed=123)
+
+        # With 45 pairs and 50% flip probability, it's extremely unlikely to get same result
+        assert [(a.id, b.id) for a, b in result1] != [(a.id, b.id) for a, b in result2]
+
+    def test_shuffle_flips_approximately_half(self):
+        """Shuffle flips roughly half the pairs."""
+        tasks = make_tasks(20)
+        pairs = [(tasks[i], tasks[j]) for i in range(20) for j in range(i + 1, 20)]
+
+        result = shuffle_pair_order(pairs, seed=42)
+
+        flipped = sum(1 for (a1, b1), (a2, b2) in zip(pairs, result) if a1.id != a2.id)
+        # With 190 pairs, expect ~95 flipped, allow wide margin
+        assert 50 < flipped < 140
+
+
+class TestApplyPairOrder:
+
+    def test_canonical_returns_unchanged(self):
+        """Canonical order returns pairs unchanged."""
+        tasks = make_tasks(3)
+        pairs = [(tasks[0], tasks[1]), (tasks[0], tasks[2])]
+
+        result = apply_pair_order(pairs, order="canonical", pair_order_seed=None)
+        assert [(a.id, b.id) for a, b in result] == [(a.id, b.id) for a, b in pairs]
+
+    def test_reversed_flips_all(self):
+        """Reversed order flips all pairs."""
+        tasks = make_tasks(3)
+        pairs = [(tasks[0], tasks[1]), (tasks[0], tasks[2])]
+
+        result = apply_pair_order(pairs, order="reversed", pair_order_seed=None)
+        assert [(a.id, b.id) for a, b in result] == [(b.id, a.id) for a, b in pairs]
+
+    def test_seed_overrides_order(self):
+        """When pair_order_seed is set, it overrides the order parameter."""
+        tasks = make_tasks(10)
+        pairs = [(tasks[i], tasks[j]) for i in range(10) for j in range(i + 1, 10)]
+
+        # With seed, both canonical and reversed orders should give same result
+        result_canonical = apply_pair_order(pairs, order="canonical", pair_order_seed=42)
+        result_reversed = apply_pair_order(pairs, order="reversed", pair_order_seed=42)
+
+        assert [(a.id, b.id) for a, b in result_canonical] == [(a.id, b.id) for a, b in result_reversed]
 
 
 class TestShuffledTasksInThurstonian:
     """Verify Thurstonian fitting uses task IDs correctly regardless of order."""
-
-    def _make_tasks(self, n: int) -> list[Task]:
-        return [
-            Task(id=f"task_{i}", prompt=f"Task {i}", origin=OriginDataset.SYNTHETIC, metadata={})
-            for i in range(n)
-        ]
 
     def _make_comparisons(
         self, tasks: list[Task], winner_indices: list[tuple[int, int]]
@@ -91,7 +162,7 @@ class TestShuffledTasksInThurstonian:
         utility to 0 for identification. But relative utilities (and thus rankings)
         should be identical.
         """
-        tasks = self._make_tasks(4)
+        tasks = make_tasks(4)
 
         # Task 0 beats everyone, task 1 beats 2 and 3, task 2 beats 3
         # Expected ranking: 0 > 1 > 2 > 3
@@ -129,7 +200,7 @@ class TestShuffledTasksInThurstonian:
 
     def test_pairwise_data_uses_task_ids(self):
         """PairwiseData.from_comparisons maps by task ID."""
-        tasks = self._make_tasks(3)
+        tasks = make_tasks(3)
         comparisons = self._make_comparisons(tasks, [(0, 1), (0, 2), (1, 2)])
 
         # Original order

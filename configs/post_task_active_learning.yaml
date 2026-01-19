@@ -1,5 +1,5 @@
-# Post-task revealed preference measurement (binary choice after completing both tasks)
-preference_mode: post_task_revealed
+# Post-task active learning preference measurement
+preference_mode: post_task_active_learning
 
 model: llama-3.1-8b
 temperature: 1.0
@@ -20,4 +20,13 @@ pair_order_seed: 42
 template_sampling: lhs
 n_template_samples: 32
 lhs_seed: 42
-generation_seeds: [0, 1]
+generation_seeds: [0]
+
+active_learning:
+  initial_degree: 3
+  batch_size: 300
+  max_iterations: 20
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
+  seed: 42
