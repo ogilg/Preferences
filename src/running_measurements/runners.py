@@ -176,15 +176,16 @@ async def run_post_task_stated_async(
         for cfg in configurations:
             run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_cseed{completion_seed}_rseed{cfg.seed}"
 
+            cache = PostStatedCache(
+                ctx.client.canonical_model_name, cfg.template, cfg.response_format,
+                completion_seed, cfg.seed,
+            )
+
             # Skip if already done: experiment store if set, otherwise central cache
             if exp_store:
                 should_skip = exp_store.exists("post_task_stated", run_name)
             else:
-                cache = PostStatedCache(
-                    model_short, cfg.template.name, cfg.response_format,
-                    completion_seed, cfg.seed,
-                )
-                should_skip = cache.exists()
+                should_skip = len(cache.get_existing_task_ids()) > 0
 
             if should_skip:
                 stats.mark_skipped()
@@ -205,6 +206,8 @@ async def run_post_task_stated_async(
 
             stats.add_batch_with_failures(len(batch.successes), batch.failures)
 
+            cache.save(batch.successes)
+
             run_config: PostTaskRunConfig = {
                 "model": ctx.client.model_name,
                 "template_name": cfg.template.name,
@@ -214,7 +217,6 @@ async def run_post_task_stated_async(
                 "rating_seed": cfg.seed,
                 "temperature": config.temperature,
             }
-            cache.save(batch.successes, run_config)
 
             if exp_store:
                 measurements = [{"task_id": s.task.id, "score": s.score} for s in batch.successes]
@@ -340,14 +342,15 @@ async def run_post_task_revealed_async(
             seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
             run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}{seed_suffix}"
 
+            cache = PostRevealedCache(
+                ctx.client.canonical_model_name, cfg.template, cfg.response_format,
+                cfg.order, completion_seed, cfg.seed,
+            )
+
             # Skip if already done: experiment store if set, otherwise central cache
             if exp_store:
                 should_skip = exp_store.exists("post_task_revealed", run_name)
             else:
-                cache = PostRevealedCache(
-                    model_short, cfg.template.name, cfg.response_format,
-                    cfg.order, completion_seed, cfg.seed,
-                )
                 existing_pairs = cache.get_existing_pairs()
                 pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
                 pairs_to_query = [
@@ -385,6 +388,8 @@ async def run_post_task_revealed_async(
 
             stats.add_batch_with_failures(len(batch.successes), batch.failures)
 
+            cache.append(batch.successes)
+
             run_config: PostTaskRevealedRunConfig = {
                 "model": ctx.client.model_name,
                 "template_name": cfg.template.name,
@@ -395,7 +400,6 @@ async def run_post_task_revealed_async(
                 "rating_seed": cfg.seed,
                 "temperature": config.temperature,
             }
-            cache.append(batch.successes, run_config)
 
             if exp_store and batch.successes:
                 measurements = [

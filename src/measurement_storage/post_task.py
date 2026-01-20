@@ -1,13 +1,14 @@
-"""Storage for post-task measurements."""
+"""Storage for post-task measurements using unified caches."""
 
 from __future__ import annotations
 
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable
 
-from src.measurement_storage.base import load_yaml, save_yaml
+from src.measurement_storage.unified_cache import StatedCache, RevealedCache, template_config_from_template
 
 if TYPE_CHECKING:
+    from src.prompt_templates.template import PromptTemplate
     from src.task_data import Task
     from src.types import BinaryPreferenceMeasurement, MeasurementBatch, TaskScore
 
@@ -17,95 +18,103 @@ POST_REVEALED_DIR = Path("results/post_task_revealed")
 
 
 class PostStatedCache:
-    """Cache for post-task stated measurements."""
+    """Cache for post-task stated measurements using unified StatedCache."""
 
     def __init__(
         self,
         model_name: str,
-        template_name: str,
+        template: PromptTemplate,
         response_format: str,
         completion_seed: int,
         rating_seed: int,
     ):
-        self.cache_dir = POST_STATED_DIR / (
-            f"{template_name}_{model_name}_{response_format}"
-            f"_cseed{completion_seed}_rseed{rating_seed}"
-        )
-        self._measurements_path = self.cache_dir / "measurements.yaml"
-        self._config_path = self.cache_dir / "config.yaml"
+        self._cache = StatedCache(model_name)
+        self._template_config = template_config_from_template(template)
+        self._response_format = response_format
+        self._completion_seed = completion_seed
+        self._rating_seed = rating_seed
 
-    def exists(self) -> bool:
-        return self._measurements_path.exists()
-
-    def save(self, scores: list[TaskScore], config: dict) -> Path:
-        if not self._config_path.exists():
-            save_yaml(config, self._config_path)
-        save_yaml(
-            [{"task_id": s.task.id, "score": s.score} for s in scores],
-            self._measurements_path,
+    def get_existing_task_ids(self) -> set[str]:
+        """Get task IDs that have been measured."""
+        return self._cache.get_task_ids(
+            template_config=self._template_config,
+            response_format=self._response_format,
+            rating_seed=self._rating_seed,
+            completion_seed=self._completion_seed,
         )
-        return self.cache_dir
+
+    def save(self, scores: list[TaskScore]) -> None:
+        """Save scores to cache."""
+        for s in scores:
+            self._cache.add(
+                template_config=self._template_config,
+                response_format=self._response_format,
+                rating_seed=self._rating_seed,
+                task_id=s.task.id,
+                sample={"score": s.score},
+                completion_seed=self._completion_seed,
+            )
+        self._cache.save()
 
 
 class PostRevealedCache:
-    """Cache for post-task revealed measurements."""
+    """Cache for post-task revealed measurements using unified RevealedCache."""
 
     def __init__(
         self,
         model_name: str,
-        template_name: str,
+        template: PromptTemplate,
         response_format: str,
         order: str,
         completion_seed: int,
         rating_seed: int,
     ):
-        self.cache_dir = POST_REVEALED_DIR / (
-            f"{template_name}_{model_name}_{response_format}_{order}"
-            f"_cseed{completion_seed}_rseed{rating_seed}"
-        )
-        self._measurements_path = self.cache_dir / "measurements.yaml"
-        self._config_path = self.cache_dir / "config.yaml"
-
-    def exists(self) -> bool:
-        return self._measurements_path.exists()
+        self._cache = RevealedCache(model_name)
+        self._template_config = template_config_from_template(template)
+        self._response_format = response_format
+        self._order = order
+        self._completion_seed = completion_seed
+        self._rating_seed = rating_seed
 
     def get_existing_pairs(self) -> set[tuple[str, str]]:
-        if not self._measurements_path.exists():
-            return set()
-        data = load_yaml(self._measurements_path)
-        return {(m["task_a"], m["task_b"]) for m in data}
+        return self._cache.get_pairs(
+            template_config=self._template_config,
+            response_format=self._response_format,
+            order=self._order,
+            rating_seed=self._rating_seed,
+            completion_seed=self._completion_seed,
+        )
 
-    def append(self, measurements: list[BinaryPreferenceMeasurement], config: dict) -> None:
+    def append(self, measurements: list[BinaryPreferenceMeasurement]) -> None:
         if not measurements:
             return
 
-        new_data = [
-            {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
-            for m in measurements
-        ]
-
-        if self._measurements_path.exists():
-            existing = load_yaml(self._measurements_path)
-            new_data = existing + new_data
-        else:
-            save_yaml(config, self._config_path)
-
-        save_yaml(new_data, self._measurements_path)
+        for m in measurements:
+            self._cache.add(
+                template_config=self._template_config,
+                response_format=self._response_format,
+                order=self._order,
+                rating_seed=self._rating_seed,
+                task_a_id=m.task_a.id,
+                task_b_id=m.task_b.id,
+                sample={"choice": m.choice},
+                completion_seed=self._completion_seed,
+            )
+        self._cache.save()
 
     def get_measurements(
         self,
         task_ids: set[str] | None = None,
     ) -> list[dict[str, str]]:
         """Load measurements, optionally filtered to pairs where both tasks in task_ids."""
-        if not self._measurements_path.exists():
-            return []
-
-        data = load_yaml(self._measurements_path)
-
-        if task_ids is not None:
-            data = [m for m in data if m["task_a"] in task_ids and m["task_b"] in task_ids]
-
-        return data
+        return self._cache.get_measurements(
+            template_config=self._template_config,
+            response_format=self._response_format,
+            order=self._order,
+            rating_seed=self._rating_seed,
+            task_ids=task_ids,
+            completion_seed=self._completion_seed,
+        )
 
     def get_or_measure_post_task(
         self,
@@ -113,7 +122,6 @@ class PostRevealedCache:
         completion_lookup: dict[str, str],
         measure_fn: Callable[[list[tuple[Task, Task, str, str]]], MeasurementBatch],
         task_lookup: dict[str, Task],
-        config: dict,
     ) -> tuple[MeasurementBatch, int, int]:
         """Check cache for each pair, call measure_fn for misses, return combined.
 
@@ -143,13 +151,12 @@ class PostRevealedCache:
         cached_hits = reconstruct_measurements(cached_hits_raw, task_lookup)
 
         if to_query:
-            # Build data tuples with completions
             data = [
                 (a, b, completion_lookup[a.id], completion_lookup[b.id])
                 for a, b in to_query
             ]
             fresh_batch = measure_fn(data)
-            self.append(fresh_batch.successes, config)
+            self.append(fresh_batch.successes)
         else:
             fresh_batch = MeasurementBatch(successes=[], failures=[])
 

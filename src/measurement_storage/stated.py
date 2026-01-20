@@ -1,24 +1,16 @@
+"""Storage for pre-task stated measurements using unified StatedCache."""
+
 from __future__ import annotations
 
 from pathlib import Path
 
 from src.models import OpenAICompatibleClient
-from src.measurement_storage.base import load_yaml, model_short_name, save_yaml
+from src.measurement_storage.unified_cache import StatedCache, template_config_from_template
 from src.prompt_templates.template import PromptTemplate
 from src.types import TaskScore
 
 
 PRE_TASK_STATED_DIR = Path("results/pre_task_stated")
-
-
-def _stated_dir(
-    template: PromptTemplate,
-    client: OpenAICompatibleClient,
-    response_format: str,
-    seed: int,
-) -> Path:
-    short = model_short_name(client.canonical_model_name)
-    return PRE_TASK_STATED_DIR / f"{template.name}_{short}_{response_format}_seed{seed}"
 
 
 def save_stated(
@@ -28,17 +20,21 @@ def save_stated(
     response_format: str,
     seed: int,
     config: dict | None = None,
-) -> Path:
-    """Save stated preference scores to disk. Returns the directory path."""
-    run_dir = _stated_dir(template, client, response_format, seed)
+) -> None:
+    """Save stated preference scores to unified cache."""
+    cache = StatedCache(client.canonical_model_name)
+    template_config = template_config_from_template(template)
 
-    if config:
-        save_yaml(config, run_dir / "config.yaml")
+    for s in scores:
+        cache.add(
+            template_config=template_config,
+            response_format=response_format,
+            rating_seed=seed,
+            task_id=s.task.id,
+            sample={"score": s.score},
+        )
 
-    data = [{"task_id": s.task.id, "score": s.score} for s in scores]
-    save_yaml(data, run_dir / "measurements.yaml")
-
-    return run_dir
+    cache.save()
 
 
 def load_stated(
@@ -47,9 +43,32 @@ def load_stated(
     response_format: str,
     seed: int,
 ) -> list[dict]:
-    """Load stated preference scores from disk. Returns list of {task_id, score} dicts."""
-    run_dir = _stated_dir(template, client, response_format, seed)
-    return load_yaml(run_dir / "measurements.yaml")
+    """Load stated preference scores from unified cache.
+
+    Returns list of {task_id, score} dicts.
+    """
+    cache = StatedCache(client.canonical_model_name)
+    template_config = template_config_from_template(template)
+
+    # Get all task IDs for this configuration
+    task_ids = cache.get_task_ids(
+        template_config=template_config,
+        response_format=response_format,
+        rating_seed=seed,
+    )
+
+    results = []
+    for task_id in task_ids:
+        samples = cache.get(
+            template_config=template_config,
+            response_format=response_format,
+            rating_seed=seed,
+            task_id=task_id,
+        )
+        for sample in samples:
+            results.append({"task_id": task_id, "score": sample["score"]})
+
+    return results
 
 
 def stated_exist(
@@ -58,5 +77,14 @@ def stated_exist(
     response_format: str,
     seed: int,
 ) -> bool:
-    run_dir = _stated_dir(template, client, response_format, seed)
-    return (run_dir / "measurements.yaml").exists()
+    """Check if stated measurements exist for this configuration."""
+    cache = StatedCache(client.canonical_model_name)
+    template_config = template_config_from_template(template)
+
+    task_ids = cache.get_task_ids(
+        template_config=template_config,
+        response_format=response_format,
+        rating_seed=seed,
+    )
+
+    return len(task_ids) > 0

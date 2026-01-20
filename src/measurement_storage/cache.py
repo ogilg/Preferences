@@ -7,10 +7,10 @@ from typing import Awaitable, Callable, Literal
 from src.models import OpenAICompatibleClient
 from src.measurement_storage.base import (
     build_measurement_config,
-    load_yaml,
     model_short_name,
     save_yaml,
 )
+from src.measurement_storage.unified_cache import RevealedCache, template_config_from_template
 from src.prompt_templates.template import PromptTemplate
 from src.task_data import Task
 from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferenceType
@@ -25,10 +25,8 @@ OrderName = Literal["canonical", "reversed"]
 def categorize_failure(error_msg: str) -> str:
     """Categorize a failure message into a bucket."""
     error_lower = error_msg.lower()
-    # Refusals (detected by refusal judge)
     if error_lower.startswith("refusal ("):
         return "refusal"
-    # Network/API errors
     if "timeout" in error_lower or "timed out" in error_lower:
         return "timeout"
     if "rate" in error_lower and "limit" in error_lower:
@@ -90,14 +88,9 @@ class MeasurementStats:
 
 
 class MeasurementCache:
-    """Cache for binary preference measurements keyed by (template, model, format, order, seed).
+    """Cache for binary preference measurements using unified RevealedCache.
 
-    Storage format:
-        measurements/{template_name}_{model_short}_{response_format}_{order}[_seed{N}]/
-            config.yaml        # template + model metadata + sensitivity tags
-            measurements.yaml  # [{task_a, task_b, choice}, ...]
-
-    Order matters: (a, b) and (b, a) are distinct pairs.
+    Storage: results/cache/revealed/{model_short}.yaml
     """
 
     def __init__(
@@ -116,71 +109,54 @@ class MeasurementCache:
         self.seed = seed
         self.model_short = model_short_name(client.canonical_model_name)
         self.results_dir = Path(results_dir)
+
+        self._cache = RevealedCache(client.canonical_model_name)
+        self._template_config = template_config_from_template(template)
+        self._rating_seed = seed if seed is not None else 0
+
+        # Keep cache_dir for active learning output files
         seed_suffix = f"_seed{seed}" if seed is not None else ""
         self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}_{response_format}_{order}{seed_suffix}"
-        self._measurements_path = self.cache_dir / "measurements.yaml"
-        self._config_path = self.cache_dir / "config.yaml"
 
     def get_existing_pairs(self) -> set[tuple[str, str]]:
-        """Return ordered pairs we have measurements for.
-
-        Order matters: (a, b) and (b, a) are distinct.
-        """
-        if not self._measurements_path.exists():
-            return set()
-
-        data = load_yaml(self._measurements_path)
-        return {(m["task_a"], m["task_b"]) for m in data}
+        """Return ordered pairs we have measurements for."""
+        return self._cache.get_pairs(
+            template_config=self._template_config,
+            response_format=self.response_format,
+            order=self.order,
+            rating_seed=self._rating_seed,
+        )
 
     def get_measurements(
         self,
         task_ids: set[str] | None = None,
     ) -> list[dict[str, str]]:
-        """Load measurements, optionally filtered to pairs where both tasks in task_ids.
-
-        Returns list of {task_a: str, task_b: str, choice: str} dicts.
-        """
-        if not self._measurements_path.exists():
-            return []
-
-        data = load_yaml(self._measurements_path)
-
-        if task_ids is not None:
-            data = [m for m in data if m["task_a"] in task_ids and m["task_b"] in task_ids]
-
-        return data
+        """Load measurements, optionally filtered to pairs where both tasks in task_ids."""
+        return self._cache.get_measurements(
+            template_config=self._template_config,
+            response_format=self.response_format,
+            order=self.order,
+            rating_seed=self._rating_seed,
+            task_ids=task_ids,
+        )
 
     def append(self, measurements: list[BinaryPreferenceMeasurement]) -> None:
         """Append new measurements to cache."""
         if not measurements:
             return
 
-        new_data = [
-            {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
-            for m in measurements
-        ]
+        for m in measurements:
+            self._cache.add(
+                template_config=self._template_config,
+                response_format=self.response_format,
+                order=self.order,
+                rating_seed=self._rating_seed,
+                task_a_id=m.task_a.id,
+                task_b_id=m.task_b.id,
+                sample={"choice": m.choice},
+            )
 
-        if self._measurements_path.exists():
-            existing = load_yaml(self._measurements_path)
-            new_data = existing + new_data
-        else:
-            self._ensure_config()
-
-        save_yaml(new_data, self._measurements_path)
-
-    def _ensure_config(self) -> None:
-        """Create config file if it doesn't exist."""
-        if self._config_path.exists():
-            return
-
-        config = build_measurement_config(
-            template=self.template,
-            client=self.client,
-            response_format=self.response_format,
-            order=self.order,
-            seed=self.seed,
-        )
-        save_yaml(config, self._config_path)
+        self._cache.save()
 
     def _partition_pairs(
         self,
@@ -237,6 +213,7 @@ class MeasurementCache:
 
 def save_measurements(measurements: list[BinaryPreferenceMeasurement], path: Path | str) -> None:
     """Serialize measurements to YAML."""
+    from src.measurement_storage.base import save_yaml
     data = [{"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice} for m in measurements]
     save_yaml(data, Path(path))
 
@@ -246,13 +223,7 @@ def reconstruct_measurements(
     tasks: dict[str, Task],
     preference_type: PreferenceType = PreferenceType.PRE_TASK_STATED,
 ) -> list[BinaryPreferenceMeasurement]:
-    """Reconstruct BinaryPreferenceMeasurement objects from raw dicts.
-
-    Args:
-        raw: List of {task_a, task_b, choice} dicts
-        tasks: Mapping from task ID to Task object
-        preference_type: Type to assign (not stored in cache)
-    """
+    """Reconstruct BinaryPreferenceMeasurement objects from raw dicts."""
     return [
         BinaryPreferenceMeasurement(
             task_a=tasks[m["task_a"]],

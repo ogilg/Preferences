@@ -4,6 +4,11 @@ from src.measurement_storage.base import (
     model_short_name,
     save_yaml,
 )
+from src.measurement_storage.unified_cache import (
+    StatedCache,
+    RevealedCache,
+    template_config_from_template,
+)
 from src.measurement_storage.cache import (
     PRE_TASK_REVEALED_DIR,
     MeasurementCache,
@@ -52,6 +57,10 @@ __all__ = [
     "load_yaml",
     "model_short_name",
     "save_yaml",
+    # Unified cache
+    "StatedCache",
+    "RevealedCache",
+    "template_config_from_template",
     # Pre-task revealed (pairwise comparisons)
     "PRE_TASK_REVEALED_DIR",
     "MeasurementCache",
