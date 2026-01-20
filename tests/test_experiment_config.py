@@ -141,7 +141,8 @@ class TestApplyPairOrder:
 class TestPairOrderInMeasurements:
     """Verify that shuffled pair order is correctly reflected in measurements."""
 
-    def test_measurement_records_correct_winner_after_shuffle(self):
+    @pytest.mark.asyncio
+    async def test_measurement_records_correct_winner_after_shuffle(self):
         """When pairs are shuffled, measurements still record the correct winner."""
         from src.preference_measurement.measurer import RevealedPreferenceMeasurer
         from src.preference_measurement.response_format import RegexChoiceFormat
@@ -176,13 +177,13 @@ class TestPairOrderInMeasurements:
         response_text = "Task A"
 
         # In original order: "Task A" means task_x wins
-        result_original = measurer.parse(response_text, prompt_original)
+        result_original = await measurer.parse(response_text, prompt_original)
         assert result_original.result.task_a.id == "task_0"
         assert result_original.result.choice == "a"
         # Winner is task_x (task_0)
 
         # In shuffled order: "Task A" means task_y wins
-        result_shuffled = measurer.parse(response_text, prompt_shuffled)
+        result_shuffled = await measurer.parse(response_text, prompt_shuffled)
         assert result_shuffled.result.task_a.id == "task_1"
         assert result_shuffled.result.choice == "a"
         # Winner is task_y (task_1)

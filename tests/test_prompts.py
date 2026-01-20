@@ -316,21 +316,23 @@ class TestXMLResponseFormats:
         assert "<choice>" in instruction
         assert "</choice>" in instruction
 
-    def test_xml_choice_parse(self):
+    @pytest.mark.asyncio
+    async def test_xml_choice_parse(self):
         """XMLChoiceFormat should parse choice from XML tags."""
         fmt = XMLChoiceFormat()
 
-        assert fmt.parse("<choice>Task A</choice>") == "a"
-        assert fmt.parse("<choice>Task B</choice>") == "b"
-        assert fmt.parse("I think <choice>Task A</choice> is better") == "a"
-        assert fmt.parse("<choice> Task B </choice>") == "b"
+        assert await fmt.parse("<choice>Task A</choice>") == "a"
+        assert await fmt.parse("<choice>Task B</choice>") == "b"
+        assert await fmt.parse("I think <choice>Task A</choice> is better") == "a"
+        assert await fmt.parse("<choice> Task B </choice>") == "b"
 
-    def test_xml_choice_custom_tag(self):
+    @pytest.mark.asyncio
+    async def test_xml_choice_custom_tag(self):
         """XMLChoiceFormat should support custom tag names."""
         fmt = XMLChoiceFormat(tag="answer")
 
         assert "<answer>" in fmt.format_instruction()
-        assert fmt.parse("<answer>Task A</answer>") == "a"
+        assert await fmt.parse("<answer>Task A</answer>") == "a"
 
     def test_xml_rating_format_instruction(self):
         """XMLRatingFormat should include XML tag instructions."""
@@ -340,43 +342,49 @@ class TestXMLResponseFormats:
         assert "<rating>" in instruction
         assert "tags" in instruction
 
-    def test_xml_rating_parse(self):
+    @pytest.mark.asyncio
+    async def test_xml_rating_parse(self):
         """XMLRatingFormat should parse rating from XML tags."""
         fmt = XMLRatingFormat()
 
-        assert fmt.parse("<rating>7</rating>") == 7.0
-        assert fmt.parse("<rating>7.5</rating>") == 7.5
-        assert fmt.parse("My rating is <rating>8</rating>") == 8.0
-        assert fmt.parse("<rating> 9 </rating>") == 9.0
+        assert await fmt.parse("<rating>7</rating>") == 7.0
+        assert await fmt.parse("<rating>7.5</rating>") == 7.5
+        assert await fmt.parse("My rating is <rating>8</rating>") == 8.0
+        assert await fmt.parse("<rating> 9 </rating>") == 9.0
 
     @pytest.mark.api
-    def test_xml_choice_falls_back_to_semantic_parsing(self):
+    @pytest.mark.asyncio
+    async def test_xml_choice_falls_back_to_semantic_parsing(self):
         """XMLChoiceFormat falls back to semantic parsing when XML tag is missing."""
         fmt = XMLChoiceFormat()
         # "I choose A" should be parsed as choice "a" by semantic parser
-        assert fmt.parse("I choose A") == "a"
+        assert await fmt.parse("I choose A") == "a"
 
     @pytest.mark.api
-    def test_xml_rating_falls_back_to_semantic_parsing(self):
+    @pytest.mark.asyncio
+    async def test_xml_rating_falls_back_to_semantic_parsing(self):
         """XMLRatingFormat falls back to semantic parsing when XML tag is missing."""
         fmt = XMLRatingFormat()
         # "My rating is 7" should be parsed as 7.0 by semantic parser
-        assert fmt.parse("My rating is 7") == 7.0
+        assert await fmt.parse("My rating is 7") == 7.0
 
-    def test_builder_with_xml_response_format(self, sample_task_a, sample_task_b):
+    @pytest.mark.asyncio
+    async def test_builder_with_xml_response_format(self, sample_task_a, sample_task_b):
         """Builders should work with custom XML response format."""
         builder = PreTaskRevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),            response_format=XMLChoiceFormat(),
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=XMLChoiceFormat(),
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a, sample_task_b)
         assert "<choice>" in get_all_content(prompt)
 
-        response = prompt.measurer.parse("<choice>Task A</choice>", prompt)
+        response = await prompt.measurer.parse("<choice>Task A</choice>", prompt)
         assert response.result.choice == "a"
 
-    def test_rating_builder_with_xml_response_format(self, sample_task_a):
+    @pytest.mark.asyncio
+    async def test_rating_builder_with_xml_response_format(self, sample_task_a):
         """Rating builders should work with custom XML response format."""
         builder = PreTaskStatedPromptBuilder(
             measurer=StatedScoreMeasurer(),
@@ -387,7 +395,7 @@ class TestXMLResponseFormats:
         prompt = builder.build(sample_task_a)
         assert "<rating>" in get_all_content(prompt)
 
-        response = prompt.measurer.parse("<rating>7</rating>", prompt)
+        response = await prompt.measurer.parse("<rating>7</rating>", prompt)
         assert response.result.score == 7.0
 
 
@@ -415,49 +423,55 @@ class TestToolUseChoiceFormat:
 
         assert "submit_choice" in instruction
 
-    def test_parse_json_choice_a(self):
+    @pytest.mark.asyncio
+    async def test_parse_json_choice_a(self):
         """Should parse JSON with choice A."""
         from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
-        assert fmt.parse('{"choice": "Task A"}') == "a"
-        assert fmt.parse('{"choice": "task a"}') == "a"
+        assert await fmt.parse('{"choice": "Task A"}') == "a"
+        assert await fmt.parse('{"choice": "task a"}') == "a"
 
-    def test_parse_json_choice_b(self):
+    @pytest.mark.asyncio
+    async def test_parse_json_choice_b(self):
         """Should parse JSON with choice B."""
         from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
-        assert fmt.parse('{"choice": "Task B"}') == "b"
-        assert fmt.parse('{"choice": "task b"}') == "b"
+        assert await fmt.parse('{"choice": "Task B"}') == "b"
+        assert await fmt.parse('{"choice": "task b"}') == "b"
 
-    def test_raises_on_invalid_json(self):
+    @pytest.mark.asyncio
+    async def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""
         from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
         with pytest.raises(ValueError):
-            fmt.parse("I choose Task A")  # Not valid JSON
+            await fmt.parse("I choose Task A")  # Not valid JSON
 
-    def test_raises_on_invalid_choice_value(self):
+    @pytest.mark.asyncio
+    async def test_raises_on_invalid_choice_value(self):
         """Should raise ValueError when choice is not a valid task label."""
         from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
         with pytest.raises(ValueError):
-            fmt.parse('{"choice": "Task C"}')
+            await fmt.parse('{"choice": "Task C"}')
 
-    def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
+    @pytest.mark.asyncio
+    async def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with ToolUseChoiceFormat."""
         from src.preference_measurement import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),            response_format=fmt,
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
             template=REVEALED_CHOICE_TEMPLATE,
         )
 
@@ -465,7 +479,7 @@ class TestToolUseChoiceFormat:
         assert "submit_choice" in get_all_content(prompt)
 
         # Test parsing JSON response
-        response = prompt.measurer.parse('{"choice": "Task A"}', prompt)
+        response = await prompt.measurer.parse('{"choice": "Task A"}', prompt)
         assert response.result.choice == "a"
 
 
@@ -505,53 +519,59 @@ class TestToolUseRatingFormat:
         assert "1" in instruction
         assert "10" in instruction
 
-    def test_parse_json_integer_rating(self):
+    @pytest.mark.asyncio
+    async def test_parse_json_integer_rating(self):
         """Should parse JSON with integer rating."""
         from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
-        assert fmt.parse('{"rating": 7}') == 7.0
-        assert fmt.parse('{"rating": 1}') == 1.0
-        assert fmt.parse('{"rating": 10}') == 10.0
+        assert await fmt.parse('{"rating": 7}') == 7.0
+        assert await fmt.parse('{"rating": 1}') == 1.0
+        assert await fmt.parse('{"rating": 10}') == 10.0
 
-    def test_parse_json_float_rating(self):
+    @pytest.mark.asyncio
+    async def test_parse_json_float_rating(self):
         """Should parse JSON with float rating."""
         from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
-        assert fmt.parse('{"rating": 7.5}') == 7.5
-        assert fmt.parse('{"rating": 3.14}') == 3.14
+        assert await fmt.parse('{"rating": 7.5}') == 7.5
+        assert await fmt.parse('{"rating": 3.14}') == 3.14
 
-    def test_raises_on_invalid_json(self):
+    @pytest.mark.asyncio
+    async def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""
         from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
         with pytest.raises(ValueError):
-            fmt.parse("My rating is 7")  # Not valid JSON
+            await fmt.parse("My rating is 7")  # Not valid JSON
 
-    def test_raises_on_missing_rating_key(self):
+    @pytest.mark.asyncio
+    async def test_raises_on_missing_rating_key(self):
         """Should raise ValueError when rating key is missing."""
         from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
         with pytest.raises(ValueError):
-            fmt.parse('{"score": 7}')  # Wrong key
+            await fmt.parse('{"score": 7}')  # Wrong key
 
-    def test_raises_on_non_numeric_rating(self):
+    @pytest.mark.asyncio
+    async def test_raises_on_non_numeric_rating(self):
         """Should raise ValueError when rating is not a number."""
         from src.preference_measurement import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
         with pytest.raises(ValueError):
-            fmt.parse('{"rating": "seven"}')
+            await fmt.parse('{"rating": "seven"}')
 
-    def test_builder_with_tool_use_format(self, sample_task_a):
+    @pytest.mark.asyncio
+    async def test_builder_with_tool_use_format(self, sample_task_a):
         """PreTaskStatedPromptBuilder should work with ToolUseRatingFormat."""
         from src.preference_measurement import ToolUseRatingFormat
 
@@ -566,7 +586,7 @@ class TestToolUseRatingFormat:
         assert "submit_rating" in get_all_content(prompt)
 
         # Test parsing JSON response
-        response = prompt.measurer.parse('{"rating": 8}', prompt)
+        response = await prompt.measurer.parse('{"rating": 8}', prompt)
         assert response.result.score == 8.0
 
 
@@ -583,54 +603,60 @@ class TestCompletionChoiceFormat:
         assert "Task A:" in instruction
         assert "Task B:" in instruction
 
-    def test_parse_task_a_prefix(self):
+    @pytest.mark.asyncio
+    async def test_parse_task_a_prefix(self):
         """Should parse Task A prefix at start of response."""
         from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
-        assert fmt.parse("Task A: Here is my haiku...") == "a"
-        assert fmt.parse("task a: lowercase also works") == "a"
-        assert fmt.parse("  Task A: with leading whitespace") == "a"
+        assert await fmt.parse("Task A: Here is my haiku...") == "a"
+        assert await fmt.parse("task a: lowercase also works") == "a"
+        assert await fmt.parse("  Task A: with leading whitespace") == "a"
 
-    def test_parse_task_b_prefix(self):
+    @pytest.mark.asyncio
+    async def test_parse_task_b_prefix(self):
         """Should parse Task B prefix at start of response."""
         from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
-        assert fmt.parse("Task B: Solving the integral...") == "b"
-        assert fmt.parse("task b: lowercase also works") == "b"
-        assert fmt.parse("  Task B: with leading whitespace") == "b"
+        assert await fmt.parse("Task B: Solving the integral...") == "b"
+        assert await fmt.parse("task b: lowercase also works") == "b"
+        assert await fmt.parse("  Task B: with leading whitespace") == "b"
 
-    def test_parse_first_occurrence_wins(self):
+    @pytest.mark.asyncio
+    async def test_parse_first_occurrence_wins(self):
         """When both Task A and Task B appear, first one wins."""
         from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
         # Task A comes first
-        assert fmt.parse("Task A: I'll do this because Task B seemed harder") == "a"
+        assert await fmt.parse("Task A: I'll do this because Task B seemed harder") == "a"
         # Task B comes first
-        assert fmt.parse("Task B: I chose this over Task A") == "b"
+        assert await fmt.parse("Task B: I chose this over Task A") == "b"
 
     @pytest.mark.api
-    def test_falls_back_to_semantic_parsing(self):
+    @pytest.mark.asyncio
+    async def test_falls_back_to_semantic_parsing(self):
         """Falls back to semantic parsing when no Task A/B indicator found."""
         from src.preference_measurement import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
         # Semantic parser should interpret "option A" as choice A
-        assert fmt.parse("I chose option A") == "a"
+        assert await fmt.parse("I chose option A") == "a"
 
-    def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
+    @pytest.mark.asyncio
+    async def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with CompletionChoiceFormat."""
         from src.preference_measurement import CompletionChoiceFormat
         from src.prompt_templates import REVEALED_COMPLETION_TEMPLATE
 
         fmt = CompletionChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(
-            measurer=RevealedPreferenceMeasurer(),            response_format=fmt,
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
             template=REVEALED_COMPLETION_TEMPLATE,
         )
 
@@ -642,5 +668,5 @@ class TestCompletionChoiceFormat:
         assert "Task A:" in prompt_content or "task a:" in prompt_content.lower()
 
         # Test parsing completion response
-        response = prompt.measurer.parse("Task A: Cherry blossoms bloom...", prompt)
+        response = await prompt.measurer.parse("Task A: Cherry blossoms bloom...", prompt)
         assert response.result.choice == "a"
