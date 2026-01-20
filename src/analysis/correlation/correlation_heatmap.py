@@ -1,24 +1,19 @@
 """Flexible correlation analysis with template filtering and heatmaps.
 
 Usage:
-    python scripts/correlation_heatmap.py --model llama-3.1-8b --template-pattern "pre_task_rating*"
-    python scripts/correlation_heatmap.py --model llama-3.1-8b --template-pattern "*qualitative*"
-    python scripts/correlation_heatmap.py --model llama-3.1-8b --template-pattern "pre_task_*"
-    python scripts/correlation_heatmap.py --model llama-3.1-8b --experiment-id exp_20260119_192232
+    python -m src.analysis.correlation.correlation_heatmap --model llama-3.1-8b --template-pattern "pre_task_rating*"
+    python -m src.analysis.correlation.correlation_heatmap --model llama-3.1-8b --template-pattern "*qualitative*"
+    python -m src.analysis.correlation.correlation_heatmap --model llama-3.1-8b --experiment-id exp_20260119_192232
 """
 from __future__ import annotations
 
-import sys
 import argparse
 from datetime import datetime
 from pathlib import Path
 from fnmatch import fnmatch
 
-# Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
 import numpy as np
-from scipy.stats import pearsonr, spearmanr
+from scipy.stats import pearsonr
 
 from src.analysis.correlation.loading import (
     MeasurementType,
