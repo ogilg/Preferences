@@ -22,6 +22,7 @@ class RunConfig:
     template_tags: dict
     model_short: str
     run_dir: Path
+    experiment_id: str | None = None
 
 
 def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
@@ -37,14 +38,38 @@ def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
 
 
 def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunConfig]:
-    """List all measurement runs in a directory."""
+    """List all measurement runs in a directory.
+
+    Handles both old (flat) and new (model-nested) directory structures:
+    - Old: results_dir/run_dir/
+    - New: results_dir/model_short/run_dir/
+    """
     runs = []
     if not results_dir.exists():
         return runs
 
     template_tags_map: dict[str, dict] | None = None
 
-    for run_dir in sorted(results_dir.iterdir()):
+    # Collect runs, handling both old (flat) and new (model-nested) structures
+    # Scan directly for run dirs in results_dir (old structure)
+    # Also scan model subdirectories for runs (new structure)
+    dirs_to_scan = []
+
+    for item in sorted(results_dir.iterdir()):
+        if not item.is_dir():
+            continue
+
+        # If it's a run dir (has config.yaml or measurements.yaml), add it directly
+        if (item / "config.yaml").exists() or (item / "measurements.yaml").exists():
+            dirs_to_scan.append(item)
+        else:
+            # If it contains subdirs (likely a model directory), add those subdirs
+            if any(d.is_dir() for d in item.iterdir()):
+                for subdir in sorted(item.iterdir()):
+                    if subdir.is_dir():
+                        dirs_to_scan.append(subdir)
+
+    for run_dir in dirs_to_scan:
         if not run_dir.is_dir():
             continue
 
@@ -52,11 +77,17 @@ def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunC
         if config_path.exists():
             config = load_yaml(config_path)
             model_short = config.get("model_short") or model_short_name(config["model"])
+            # Merge runtime config options into tags for sensitivity analysis
+            # (completion_seed excluded - different completions are different stimuli, not methodological variation)
+            tags = dict(config["template_tags"])
+            if "rating_seed" in config:
+                tags["rating_seed"] = str(config["rating_seed"])
             runs.append(RunConfig(
                 template_name=config["template_name"],
-                template_tags=config["template_tags"],
+                template_tags=tags,
                 model_short=model_short,
                 run_dir=run_dir,
+                experiment_id=config.get("experiment_id"),
             ))
         elif (run_dir / "measurements.yaml").exists():
             parsed = _parse_stated_dir_name(run_dir.name)
