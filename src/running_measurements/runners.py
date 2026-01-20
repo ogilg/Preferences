@@ -49,6 +49,9 @@ from src.running_measurements.utils.experiment_utils import (
 )
 
 
+MAX_EXAMPLES_PER_CATEGORY = 5
+
+
 @dataclass
 class RunnerStats:
     total_runs: int = 0
@@ -57,10 +60,13 @@ class RunnerStats:
     failures: int = 0
     skipped: int = 0
     failure_categories: dict[str, int] | None = None
+    failure_examples: dict[str, list[str]] | None = None
 
     def __post_init__(self):
         if self.failure_categories is None:
             self.failure_categories = {}
+        if self.failure_examples is None:
+            self.failure_examples = {}
 
     def to_dict(self) -> dict:
         result = {
@@ -71,6 +77,8 @@ class RunnerStats:
         }
         if self.failure_categories:
             result["failure_categories"] = dict(self.failure_categories)
+        if self.failure_examples:
+            result["failure_examples"] = dict(self.failure_examples)
         return result
 
     def mark_skipped(self) -> None:
@@ -85,6 +93,10 @@ class RunnerStats:
         for _, error_msg in failures:
             category = categorize_failure(error_msg)
             self.failure_categories[category] = self.failure_categories.get(category, 0) + 1
+            if category not in self.failure_examples:
+                self.failure_examples[category] = []
+            if len(self.failure_examples[category]) < MAX_EXAMPLES_PER_CATEGORY:
+                self.failure_examples[category].append(error_msg)
 
     def add_batch(self, n_successes: int, n_failures: int) -> None:
         """Add batch results (legacy, no categorization)."""
@@ -524,6 +536,12 @@ async def run_active_learning_async(
         stats.failures += config_stats.api_failures
         for cat, count in config_stats.failure_categories.items():
             stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
+        for cat, examples in config_stats.failure_examples.items():
+            if cat not in stats.failure_examples:
+                stats.failure_examples[cat] = []
+            for ex in examples:
+                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                    stats.failure_examples[cat].append(ex)
         stats.completed += 1
         # Mark as skipped if we only used cached data (no API calls made)
         if config_stats.api_successes == 0 and config_stats.api_failures == 0:
@@ -602,6 +620,7 @@ async def run_completion_generation_async(
                 temperature=config.temperature,
                 max_concurrent=ctx.max_concurrent,
                 seed=seed,
+                detect_refusals=config.detect_refusals,
             )
         )
 

@@ -37,6 +37,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-concurrent", type=int, default=DEFAULT_MAX_CONCURRENT,
                         help=f"Max concurrent API requests (default: {DEFAULT_MAX_CONCURRENT})")
     parser.add_argument("--dry-run", action="store_true", help="List experiments without running")
+    parser.add_argument("--debug", action="store_true", help="Show example errors for each failure category")
     return parser.parse_args()
 
 
@@ -129,7 +130,7 @@ def main():
     console.print(f"[bold]Running {len(args.configs)} experiment(s) with max {args.max_concurrent} concurrent requests\n")
 
     results = asyncio.run(run_experiments(args.configs, semaphore))
-    print_summary(results)
+    print_summary(results, debug=args.debug)
 
     # Return non-zero if any failures
     has_errors = any(isinstance(r, Exception) for r in results.values())

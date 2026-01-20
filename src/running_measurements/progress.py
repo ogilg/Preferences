@@ -118,7 +118,7 @@ class RequestProgress:
         self.update(1)
 
 
-def print_summary(results: dict[str, dict | Exception]):
+def print_summary(results: dict[str, dict | Exception], debug: bool = False):
     """Print a summary table of experiment results."""
     table = Table(title="Experiment Results")
     table.add_column("Experiment", style="cyan")
@@ -145,12 +145,21 @@ def print_summary(results: dict[str, dict | Exception]):
     console.print()
     console.print(table)
 
-    # Print failure breakdown if any failures occurred
+    # Collect failure stats across all results
     all_failure_cats: dict[str, int] = {}
+    all_failure_examples: dict[str, list[str]] = {}
     for result in results.values():
-        if isinstance(result, dict) and result.get("failure_categories"):
-            for cat, count in result["failure_categories"].items():
-                all_failure_cats[cat] = all_failure_cats.get(cat, 0) + count
+        if isinstance(result, dict):
+            if result.get("failure_categories"):
+                for cat, count in result["failure_categories"].items():
+                    all_failure_cats[cat] = all_failure_cats.get(cat, 0) + count
+            if result.get("failure_examples"):
+                for cat, examples in result["failure_examples"].items():
+                    if cat not in all_failure_examples:
+                        all_failure_examples[cat] = []
+                    for ex in examples:
+                        if len(all_failure_examples[cat]) < 5:
+                            all_failure_examples[cat].append(ex)
 
     if all_failure_cats:
         console.print()
@@ -158,3 +167,13 @@ def print_summary(results: dict[str, dict | Exception]):
         sorted_cats = sorted(all_failure_cats.items(), key=lambda x: -x[1])
         for cat, count in sorted_cats:
             console.print(f"  {cat}: [red]{count}[/red]")
+
+    if debug and all_failure_examples:
+        console.print()
+        console.print("[bold]Example Errors (up to 5 per category):")
+        for cat in sorted(all_failure_examples.keys()):
+            console.print(f"\n  [yellow]{cat}[/yellow]:")
+            for i, example in enumerate(all_failure_examples[cat], 1):
+                # Truncate long messages
+                truncated = example[:200] + "..." if len(example) > 200 else example
+                console.print(f"    {i}. {truncated}")
