@@ -23,12 +23,11 @@ OrderName = Literal["canonical", "reversed"]
 
 
 def categorize_failure(error_msg: str) -> str:
-    """Categorize a failure message into a bucket.
-
-    Note: Refusals are no longer failures - they are valid measurement outcomes.
-    This function categorizes actual errors (network, parsing, etc).
-    """
+    """Categorize a failure message into a bucket."""
     error_lower = error_msg.lower()
+    # Refusals (detected by refusal judge)
+    if error_lower.startswith("refusal ("):
+        return "refusal"
     # Network/API errors
     if "timeout" in error_lower or "timed out" in error_lower:
         return "timeout"
