@@ -8,6 +8,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCo
 from src.models import GenerateRequest, OpenAICompatibleClient
 from src.task_data import Task
 from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferencePrompt, TaskScore
+from src.preference_measurement.refusal_judge import judge_preference_refusal_async
 
 if TYPE_CHECKING:
     from src.prompt_templates.builders import PostTaskRevealedPromptBuilder, PromptBuilder
@@ -40,11 +41,21 @@ async def _generate_and_parse_one(
     response = results[0]
 
     if not response.ok:
-        return None, (prompt, f"Request failed: {response.error}")
+        return None, (prompt, f"Request failed: {response.error_details()}")
 
-    # Parse immediately after generation completes
+    response_text = response.unwrap()
+
+    # Check for refusal before parsing
     try:
-        parsed = await prompt.measurer.parse(response.unwrap(), prompt)
+        is_refusal = await judge_preference_refusal_async(response_text)
+        if is_refusal:
+            return None, (prompt, f"Refusal (preference): {response_text[:200]}")
+    except Exception:
+        pass  # If refusal detection fails, continue to parsing
+
+    # Parse the response
+    try:
+        parsed = await prompt.measurer.parse(response_text, prompt)
         if isinstance(parsed.result, result_type):
             return parsed.result, None
         return None, (prompt, f"Unexpected result type: {type(parsed.result)}")
