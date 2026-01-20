@@ -4,7 +4,7 @@ preference_mode: completion_generation
 model: llama-3.1-8b
 temperature: 1.0
 
-n_tasks: 100
+n_tasks: 1000
 task_origins:
   - wildchat
   - alpaca
