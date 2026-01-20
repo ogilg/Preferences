@@ -1,6 +1,7 @@
 """Consolidated loading utilities for preference measurement runs."""
 from __future__ import annotations
 
+import json
 import re
 from collections import defaultdict
 from dataclasses import dataclass
@@ -9,11 +10,58 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from src.measurement_storage.base import load_yaml, model_short_name
+from src.measurement_storage.base import load_yaml, model_short_name, find_project_root
 from src.measurement_storage.stated import PRE_TASK_STATED_DIR
 from src.measurement_storage.cache import PRE_TASK_REVEALED_DIR
 from src.measurement_storage.post_task import POST_STATED_DIR, POST_REVEALED_DIR
 from src.prompt_templates.template import load_templates_from_yaml
+from src.task_data import Task, OriginDataset
+
+
+@dataclass
+class ActivationMetadata:
+    task_id: str
+    origin: str | None = None
+
+
+def load_activation_metadata(activations_dir: Path | None = None) -> list[ActivationMetadata]:
+    """Load task metadata from activations/completions.json.
+
+    If activations_dir is None, uses project_root/activations.
+    """
+    if activations_dir is None:
+        activations_dir = find_project_root() / "activations"
+
+    completions_path = activations_dir / "completions.json"
+    if not completions_path.exists():
+        return []
+
+    with open(completions_path) as f:
+        completions = json.load(f)
+
+    return [
+        ActivationMetadata(
+            task_id=c["task_id"],
+            origin=c.get("origin"),
+        )
+        for c in completions
+    ]
+
+
+def get_activation_task_ids(
+    activations_dir: Path | None = None,
+    origin_filter: str | None = None,
+) -> set[str]:
+    """Get task IDs from activations, optionally filtered by origin (case-insensitive)."""
+    metadata = load_activation_metadata(activations_dir)
+    if not metadata:
+        return set()
+
+    if origin_filter is not None:
+        origin_upper = origin_filter.upper()
+        return {m.task_id for m in metadata if (m.origin or "").upper() == origin_upper}
+
+    return {m.task_id for m in metadata}
 
 
 @dataclass
@@ -198,12 +246,7 @@ def load_pairwise_datasets(
     results_dir: Path,
     skip_prefixes: tuple[str, ...] = ("rating_",),
 ) -> list[tuple[str, np.ndarray, list[str]]]:
-    """Load pairwise comparison datasets as win matrices.
-
-    Returns list of (name, wins, task_ids) tuples.
-    """
-    from src.task_data import Task, OriginDataset
-
+    """Load pairwise comparison datasets as win matrices."""
     datasets = []
     if not results_dir.exists():
         return datasets
@@ -309,3 +352,49 @@ def load_scores_from_cache(cache_dir: Path) -> dict[str, float]:
     measurements_path = cache_dir / "measurements.yaml"
     data = load_yaml(measurements_path)
     return {item["task_id"]: item["score"] for item in data}
+
+
+def load_pooled_scores(
+    results_dir: Path,
+    template_name: str,
+    response_formats: list[str] | None = None,
+    seeds: list[int] | None = None,
+    template_yaml: Path | None = None,
+) -> dict[str, float]:
+    """Load scores matching template, pooled by task_id (mean across formats/seeds)."""
+    runs = list_runs(results_dir, template_yaml)
+
+    task_scores: dict[str, list[float]] = defaultdict(list)
+
+    for run_config in runs:
+        if run_config.template_name != template_name:
+            continue
+
+        # Filter by response format if specified
+        if response_formats is not None:
+            run_format = run_config.template_tags.get("response_format")
+            if run_format not in response_formats:
+                continue
+
+        # Filter by seed if specified
+        if seeds is not None:
+            run_seed_str = run_config.template_tags.get("rating_seed") or run_config.template_tags.get("seed")
+            if run_seed_str is not None:
+                try:
+                    run_seed = int(run_seed_str)
+                    if run_seed not in seeds:
+                        continue
+                except ValueError:
+                    continue
+
+        # Load scores from this run
+        measurements_path = run_config.run_dir / "measurements.yaml"
+        if not measurements_path.exists():
+            continue
+
+        measurements = load_yaml(measurements_path)
+        for item in measurements:
+            if "task_id" in item and "score" in item:
+                task_scores[item["task_id"]].append(item["score"])
+
+    return {task_id: np.mean(scores) for task_id, scores in task_scores.items()}

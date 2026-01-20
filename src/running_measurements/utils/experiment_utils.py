@@ -6,14 +6,16 @@ import argparse
 from dataclasses import dataclass
 from pathlib import Path
 
+import numpy as np
+from rich import print as rprint
+
 from src.models import get_client, get_default_max_concurrent, OpenAICompatibleClient
 from src.task_data import Task, load_tasks
 from src.prompt_templates import load_templates_from_yaml, PromptTemplate
 from src.prompt_templates.sampler import SampledConfiguration, sample_configurations_lhs
 from src.thurstonian_fitting import _config_hash
 from src.running_measurements.config import load_experiment_config, ExperimentConfig
-from src.measurement_storage.base import find_project_root
-import json
+from src.measurement_storage.loading import get_activation_task_ids
 
 
 @dataclass
@@ -24,22 +26,6 @@ class ExperimentContext:
     task_lookup: dict[str, Task]
     client: OpenAICompatibleClient
     max_concurrent: int
-
-
-def _load_activation_task_ids() -> set[str] | None:
-    """Load task IDs from activations/completions.json if it exists."""
-    project_root = find_project_root()
-    completions_path = project_root / "activations" / "completions.json"
-
-    if not completions_path.exists():
-        return None
-
-    try:
-        with open(completions_path) as f:
-            completions = json.load(f)
-        return {c["task_id"] for c in completions}
-    except (json.JSONDecodeError, KeyError, OSError):
-        return None
 
 
 def parse_config_path(description: str) -> Path:
@@ -62,11 +48,10 @@ def setup_experiment(
     # Prepare filter function if using activation tasks
     filter_fn = None
     if config.use_tasks_with_activations:
-        activation_task_ids = _load_activation_task_ids()
+        activation_task_ids = get_activation_task_ids()
         if activation_task_ids:
             filter_fn = lambda t: t.id in activation_task_ids
         else:
-            from rich import print as rprint
             rprint("[yellow]Warning: use_tasks_with_activations=true but activations/completions.json not found[/yellow]")
 
     # Load tasks deterministically so stated and revealed use same tasks
@@ -79,8 +64,7 @@ def setup_experiment(
     )
 
     if config.use_tasks_with_activations and filter_fn:
-        from rich import print as rprint
-        total_activation_tasks = len(_load_activation_task_ids() or [])
+        total_activation_tasks = len(get_activation_task_ids())
         rprint(f"[dim]Loaded {len(tasks)} tasks from {total_activation_tasks} total with activations[/dim]")
 
     # Templates are optional for completion_generation mode
@@ -130,7 +114,6 @@ def shuffle_pair_order(
     pairs: list[tuple[Task, Task]], seed: int
 ) -> list[tuple[Task, Task]]:
     """Randomly flip each pair's order based on seed. Deterministic for same seed."""
-    import numpy as np
     rng = np.random.default_rng(seed)
     return [
         (b, a) if rng.random() < 0.5 else (a, b)
@@ -165,12 +148,7 @@ QUALITATIVE_SCALES = {
 
 
 def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int] | list[str]:
-    """Parse scale from template tags.
-
-    Returns:
-        tuple[int, int]: For numeric scales like "1-10"
-        list[str]: For qualitative scales like ["negative", "neutral", "positive"]
-    """
+    """Parse scale from template tags. Returns (min, max) or list of labels."""
     scale = template.tags_dict["scale"]
     if isinstance(scale, list):
         return scale

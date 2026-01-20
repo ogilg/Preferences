@@ -6,11 +6,9 @@ from unittest.mock import Mock
 
 import pytest
 
+from src.measurement_storage.loading import get_activation_task_ids
 from src.running_measurements.config import ExperimentConfig
-from src.running_measurements.utils.experiment_utils import (
-    setup_experiment,
-    _load_activation_task_ids,
-)
+from src.running_measurements.utils.experiment_utils import setup_experiment
 from src.task_data import OriginDataset
 
 
@@ -59,14 +57,6 @@ use_tasks_with_activations: false
 
 def test_activation_filtering_with_real_activation_data(monkeypatch):
     """Integration test: load real tasks but filter to only those with real activations."""
-    # Patch find_project_root to return the real project root
-    # This will load real activation data from activations/completions.json
-    from src.measurement_storage.base import find_project_root as real_find_project_root
-    monkeypatch.setattr(
-        "src.running_measurements.utils.experiment_utils.find_project_root",
-        real_find_project_root,
-    )
-
     # Patch get_client to return a mock
     mock_client = Mock()
     mock_client.canonical_model_name = "llama-3.1-8b"
@@ -76,7 +66,7 @@ def test_activation_filtering_with_real_activation_data(monkeypatch):
     )
 
     # Load activation task IDs from the real data
-    activation_ids = _load_activation_task_ids()
+    activation_ids = get_activation_task_ids()
     if not activation_ids:
         pytest.skip("activations/completions.json not found or empty")
 
@@ -130,36 +120,44 @@ def test_without_activation_filtering_loads_unrestricted(test_config, monkeypatc
     assert all(ctx.task_lookup[t.id] == t for t in ctx.tasks)
 
 
-def test_load_activation_task_ids_returns_none_when_missing(tmp_path, monkeypatch):
-    """Test that _load_activation_task_ids returns None when file doesn't exist."""
-    monkeypatch.setattr(
-        "src.running_measurements.utils.experiment_utils.find_project_root",
-        lambda: tmp_path,
-    )
-
-    result = _load_activation_task_ids()
-    assert result is None
+def test_get_activation_task_ids_returns_empty_when_missing(tmp_path):
+    """Test that get_activation_task_ids returns empty set when file doesn't exist."""
+    result = get_activation_task_ids(activations_dir=tmp_path)
+    assert result == set()
 
 
-def test_load_activation_task_ids_extracts_ids(tmp_path, monkeypatch):
-    """Test that _load_activation_task_ids correctly extracts task IDs."""
-    activations_dir = tmp_path / "activations"
-    activations_dir.mkdir()
-
+def test_get_activation_task_ids_extracts_ids(tmp_path):
+    """Test that get_activation_task_ids correctly extracts task IDs."""
     task_ids = ["task_1", "task_2", "task_3"]
     completions = [
         {"task_id": tid, "completion": f"response for {tid}"}
         for tid in task_ids
     ]
 
-    completions_path = activations_dir / "completions.json"
+    completions_path = tmp_path / "completions.json"
     with open(completions_path, "w") as f:
         json.dump(completions, f)
 
-    monkeypatch.setattr(
-        "src.running_measurements.utils.experiment_utils.find_project_root",
-        lambda: tmp_path,
-    )
-
-    result = _load_activation_task_ids()
+    result = get_activation_task_ids(activations_dir=tmp_path)
     assert result == set(task_ids)
+
+
+def test_get_activation_task_ids_filters_by_origin(tmp_path):
+    """Test that get_activation_task_ids filters by origin correctly."""
+    completions = [
+        {"task_id": "wildchat_1", "origin": "WILDCHAT"},
+        {"task_id": "wildchat_2", "origin": "WILDCHAT"},
+        {"task_id": "alpaca_1", "origin": "ALPACA"},
+    ]
+
+    completions_path = tmp_path / "completions.json"
+    with open(completions_path, "w") as f:
+        json.dump(completions, f)
+
+    # Filter by wildchat
+    result = get_activation_task_ids(activations_dir=tmp_path, origin_filter="wildchat")
+    assert result == {"wildchat_1", "wildchat_2"}
+
+    # Filter by alpaca
+    result = get_activation_task_ids(activations_dir=tmp_path, origin_filter="ALPACA")
+    assert result == {"alpaca_1"}
