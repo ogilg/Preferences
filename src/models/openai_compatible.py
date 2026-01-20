@@ -33,6 +33,7 @@ class GenerateRequest:
     temperature: float = 1.0
     tools: list[dict[str, Any]] | None = None
     seed: int | None = None
+    timeout: float | None = None
 
 
 @dataclass
@@ -125,18 +126,34 @@ class OpenAICompatibleClient(ABC):
         tools: list[dict[str, Any]] | None,
     ) -> str:
         if tools is not None:
-            if not message.tool_calls:
-                raise ToolCallError(
-                    f"Expected tool call but got text: {message.content}"
-                )
-            tool_call = message.tool_calls[0]
-            try:
-                args = json.loads(tool_call.function.arguments)
-                return json.dumps(args)
-            except json.JSONDecodeError as e:
-                raise ToolCallError(
-                    f"Invalid JSON in tool arguments: {tool_call.function.arguments}"
-                ) from e
+            if message.tool_calls:
+                tool_call = message.tool_calls[0]
+                try:
+                    args = json.loads(tool_call.function.arguments)
+                    return json.dumps(args)
+                except json.JSONDecodeError as e:
+                    raise ToolCallError(
+                        f"Invalid JSON in tool arguments: {tool_call.function.arguments}"
+                    ) from e
+            # Model output text instead of tool call - try to recover if it looks like JSON
+            content = (message.content or "").strip()
+            if content.startswith("{"):
+                try:
+                    data = json.loads(content)
+                    # Handle {"name": "submit_choice", "arguments": {"choice": "Task A"}}
+                    if "arguments" in data and isinstance(data["arguments"], dict):
+                        return json.dumps(data["arguments"])
+                    # Handle {"name": "submit_choice", "parameters": {"choice": "Task A"}}
+                    if "parameters" in data and isinstance(data["parameters"], dict):
+                        return json.dumps(data["parameters"])
+                    # Handle direct args like {"choice": "Task A"}
+                    if any(k in data for k in ["choice", "rating"]):
+                        return json.dumps(data)
+                except json.JSONDecodeError:
+                    pass
+            raise ToolCallError(
+                f"Expected tool call but got text: {message.content}"
+            )
         return (message.content or "").strip()
 
     def generate(
@@ -212,10 +229,11 @@ class OpenAICompatibleClient(ABC):
 
             async with semaphore:
                 try:
+                    timeout = request.timeout or REQUEST_TIMEOUT
                     response = await with_retries_async(
                         lambda: asyncio.wait_for(
                             async_client.chat.completions.create(**kwargs),
-                            timeout=REQUEST_TIMEOUT,
+                            timeout=timeout,
                         )
                     )
                     text = self._parse_response(
