@@ -23,12 +23,19 @@ OrderName = Literal["canonical", "reversed"]
 
 
 def categorize_failure(error_msg: str) -> str:
-    """Categorize a failure message into a bucket."""
+    """Categorize a failure message into a bucket.
+
+    Note: Refusals are no longer failures - they are valid measurement outcomes.
+    This function categorizes actual errors (network, parsing, etc).
+    """
     error_lower = error_msg.lower()
+    # Network/API errors
     if "timeout" in error_lower or "timed out" in error_lower:
         return "timeout"
     if "rate" in error_lower and "limit" in error_lower:
         return "rate_limit"
+    if "expected tool call but got text" in error_lower:
+        return "tool_use_failure"
     if "connection" in error_lower or "connect" in error_lower:
         return "connection"
     if "content" in error_lower and "filter" in error_lower:
@@ -46,6 +53,9 @@ def categorize_failure(error_msg: str) -> str:
     return "other"
 
 
+MAX_EXAMPLES_PER_CATEGORY = 5
+
+
 @dataclass
 class MeasurementStats:
     """Stats from a measurement operation."""
@@ -53,10 +63,13 @@ class MeasurementStats:
     api_successes: int = 0
     api_failures: int = 0
     failure_categories: dict[str, int] | None = None
+    failure_examples: dict[str, list[str]] | None = None
 
     def __post_init__(self):
         if self.failure_categories is None:
             self.failure_categories = {}
+        if self.failure_examples is None:
+            self.failure_examples = {}
 
     @property
     def total_successes(self) -> int:
@@ -68,6 +81,12 @@ class MeasurementStats:
         self.api_failures += other.api_failures
         for cat, count in other.failure_categories.items():
             self.failure_categories[cat] = self.failure_categories.get(cat, 0) + count
+        for cat, examples in other.failure_examples.items():
+            if cat not in self.failure_examples:
+                self.failure_examples[cat] = []
+            for ex in examples:
+                if len(self.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                    self.failure_examples[cat].append(ex)
         return self
 
 
@@ -207,6 +226,10 @@ class MeasurementCache:
             for _, error_msg in fresh_batch.failures:
                 cat = categorize_failure(error_msg)
                 stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
+                if cat not in stats.failure_examples:
+                    stats.failure_examples[cat] = []
+                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                    stats.failure_examples[cat].append(error_msg)
             self.append(fresh_batch.successes)
             return cached_hits + fresh_batch.successes, stats
 

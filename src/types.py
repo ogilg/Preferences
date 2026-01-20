@@ -29,7 +29,7 @@ class PreferenceType(Enum):
 class BinaryPreferenceMeasurement:
     task_a: "Task"
     task_b: "Task"
-    choice: Literal["a", "b"]
+    choice: Literal["a", "b", "refusal"]
     preference_type: PreferenceType
 
 
@@ -37,6 +37,12 @@ class BinaryPreferenceMeasurement:
 class TaskScore:
     task: "Task"
     score: float
+    preference_type: PreferenceType
+
+
+@dataclass
+class TaskRefusal:
+    task: "Task"
     preference_type: PreferenceType
 
 
@@ -54,10 +60,10 @@ class PreferencePrompt:
 class MeasurementResponse:
     text: str
     source_prompt: PreferencePrompt
-    result: BinaryPreferenceMeasurement | TaskScore
+    result: BinaryPreferenceMeasurement | TaskScore | TaskRefusal
 
 
 @dataclass
-class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore)]:
+class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore, TaskRefusal)]:
     successes: list[T]
     failures: list[tuple[PreferencePrompt, str]]

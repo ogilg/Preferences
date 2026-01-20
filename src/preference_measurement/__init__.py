@@ -9,6 +9,7 @@ from src.types import (
     MeasurementBatch,
     BinaryPreferenceMeasurement,
     TaskScore,
+    TaskRefusal,
 )
 from src.preference_measurement.measure import (
     measure_pre_task_revealed,
@@ -51,6 +52,12 @@ from src.preference_measurement.response_format import (
     get_stated_response_format,
     get_revealed_response_format,
 )
+from src.preference_measurement.refusal_judge import (
+    RefusalResult,
+    judge_refusal_async,
+    judge_preference_refusal_async,
+)
+from src.preference_measurement.semantic_parser import ParseError
 
 __all__ = [
     # Config
@@ -63,6 +70,7 @@ __all__ = [
     "MeasurementBatch",
     "BinaryPreferenceMeasurement",
     "TaskScore",
+    "TaskRefusal",
     # Measure functions
     "measure_pre_task_revealed",
     "measure_pre_task_stated",
@@ -100,4 +108,10 @@ __all__ = [
     "QUALITATIVE_FORMATS",
     "get_stated_response_format",
     "get_revealed_response_format",
+    # Refusal detection
+    "RefusalResult",
+    "judge_refusal_async",
+    "judge_preference_refusal_async",
+    # Semantic parsing
+    "ParseError",
 ]

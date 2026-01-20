@@ -14,6 +14,7 @@ from src.constants import (
     QUALITATIVE_TO_NUMERIC,
 )
 from src.preference_measurement import semantic_parser
+from src.preference_measurement import refusal_judge
 
 
 def _exact_choice_match(
@@ -81,7 +82,7 @@ class ResponseFormat[T](Protocol):
     @property
     def tools(self) -> list[dict[str, Any]] | None: ...
     def format_instruction(self) -> str: ...
-    def parse(self, response: str) -> T: ...
+    async def parse(self, response: str) -> T: ...
 
 
 # --- Base Classes ---
@@ -104,7 +105,7 @@ class BaseChoiceFormat(ABC):
     @abstractmethod
     def _extract_choice(self, response: str) -> str | None: ...
 
-    def parse(self, response: str) -> Literal["a", "b"]:
+    async def parse(self, response: str) -> Literal["a", "b", "refusal"]:
         # 1. Fast path: response is exactly the label
         choice = _exact_choice_match(response, self.task_a_label, self.task_b_label)
         if choice:
@@ -113,11 +114,11 @@ class BaseChoiceFormat(ABC):
         choice = self._extract_choice(response)
         if choice and choice.lower() in ("a", "b"):
             return choice.lower()  # type: ignore
-        # 3. LLM-based semantic parsing fallback
-        choice = semantic_parser.parse_choice(response, self.task_a_label, self.task_b_label)
-        if choice:
-            return choice
-        raise ValueError(f"Could not parse choice from response: {response}")
+        # 3. Check for refusal before semantic parsing
+        if await refusal_judge.judge_preference_refusal_async(response):
+            return "refusal"
+        # 4. LLM-based semantic parsing fallback (raises ParseError on unclear)
+        return await semantic_parser.parse_choice_async(response, self.task_a_label, self.task_b_label)
 
 
 class BaseRatingFormat(ABC):
@@ -137,7 +138,7 @@ class BaseRatingFormat(ABC):
     @abstractmethod
     def _extract_number(self, response: str) -> float | None: ...
 
-    def parse(self, response: str) -> float:
+    async def parse(self, response: str) -> float | Literal["refusal"]:
         # 1. Fast path: response is exactly a number
         number = _exact_rating_match(response)
         if number is not None:
@@ -146,8 +147,11 @@ class BaseRatingFormat(ABC):
         number = self._extract_number(response)
         if number is not None:
             return number
-        # 3. LLM-based semantic parsing fallback
-        number = semantic_parser.parse_rating(response, self.scale_min, self.scale_max)
+        # 3. Check for refusal before semantic parsing
+        if await refusal_judge.judge_preference_refusal_async(response):
+            return "refusal"
+        # 4. LLM-based semantic parsing fallback
+        number = await semantic_parser.parse_rating_async(response, self.scale_min, self.scale_max)
         if number is not None:
             return number
         raise ValueError(f"Could not extract number from response: {response}")
@@ -306,9 +310,9 @@ class ToolUseChoiceFormat(BaseChoiceFormat):
         )]
 
     def format_instruction(self) -> str:
-        return "Use the submit_choice tool to indicate your preference."
+        return "You MUST respond by calling the submit_choice tool. Do not write any text - only call the tool."
 
-    def parse(self, response: str) -> Literal["a", "b"]:
+    async def parse(self, response: str) -> Literal["a", "b", "refusal"]:
         try:
             data = json.loads(response)
             if "choice" in data and isinstance(data["choice"], str):
@@ -319,6 +323,9 @@ class ToolUseChoiceFormat(BaseChoiceFormat):
                     return "b"
         except Exception:
             pass
+        # Tool use failed - model may have refused instead of calling tool
+        if await refusal_judge.judge_preference_refusal_async(response):
+            return "refusal"
         raise ValueError(f"Could not parse choice from response: {response}")
 
     def _extract_choice(self, response: str) -> str | None:
@@ -357,14 +364,17 @@ class ToolUseRatingFormat(BaseRatingFormat):
         )]
 
     def format_instruction(self) -> str:
-        return f"Use the submit_rating tool with a number from {self.scale_min} to {self.scale_max}."
+        return f"You MUST respond by calling the submit_rating tool with a number from {self.scale_min} to {self.scale_max}. Do not write any text - only call the tool."
 
-    def parse(self, response: str) -> float:
+    async def parse(self, response: str) -> float | Literal["refusal"]:
         try:
             result = _parse_response(response, self._response_model)
             return result.rating
         except Exception:
             pass
+        # Tool use failed - model may have refused instead of calling tool
+        if await refusal_judge.judge_preference_refusal_async(response):
+            return "refusal"
         raise ValueError(f"Could not extract number from response: {response}")
 
     def _extract_number(self, response: str) -> float | None:
@@ -393,7 +403,7 @@ class BaseQualitativeFormat(ABC):
     @abstractmethod
     def _extract_qualitative(self, response: str) -> str: ...
 
-    def parse(self, response: str) -> float:
+    async def parse(self, response: str) -> float | Literal["refusal"]:
         # 1. Fast path: response is exactly one of the values
         qualitative = _exact_qualitative_match(response, self.values)
         if qualitative:
@@ -404,8 +414,11 @@ class BaseQualitativeFormat(ABC):
             return float(self.value_to_score[qualitative])
         except (ValueError, KeyError):
             pass
-        # 3. LLM-based semantic parsing fallback
-        qualitative = semantic_parser.parse_qualitative(response, self.values)
+        # 3. Check for refusal before semantic parsing
+        if await refusal_judge.judge_preference_refusal_async(response):
+            return "refusal"
+        # 4. LLM-based semantic parsing fallback
+        qualitative = await semantic_parser.parse_qualitative_async(response, self.values)
         if qualitative:
             return float(self.value_to_score[qualitative])
         raise ValueError(f"Could not parse qualitative value from response: {response}")
@@ -480,9 +493,9 @@ class ToolUseQualitativeFormat(BaseQualitativeFormat):
         )]
 
     def format_instruction(self) -> str:
-        return f"Use the submit_rating tool with one of: {', '.join(self.values)}."
+        return f"You MUST respond by calling the submit_rating tool with one of: {', '.join(self.values)}. Do not write any text - only call the tool."
 
-    def parse(self, response: str) -> float:
+    async def parse(self, response: str) -> float | Literal["refusal"]:
         # Normalize case before Pydantic validation (enum is lowercase)
         try:
             data = json.loads(response)
@@ -492,6 +505,9 @@ class ToolUseQualitativeFormat(BaseQualitativeFormat):
             return float(self.value_to_score[result.rating])
         except Exception:
             pass
+        # Tool use failed - model may have refused instead of calling tool
+        if await refusal_judge.judge_preference_refusal_async(response):
+            return "refusal"
         raise ValueError(f"Could not parse qualitative value from response: {response}")
 
     def _extract_qualitative(self, response: str) -> str:

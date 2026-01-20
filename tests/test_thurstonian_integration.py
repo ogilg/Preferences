@@ -242,7 +242,8 @@ class TestPairwiseDataFromRealMeasurements:
 class TestVerbosePipeline:
     """Verbose test to inspect pipeline at each step. Run with pytest -s."""
 
-    def test_full_pipeline_verbose(self, client, binary_builder, easy_task, medium_task, hard_task):
+    @pytest.mark.asyncio
+    async def test_full_pipeline_verbose(self, client, binary_builder, easy_task, medium_task, hard_task):
         """Run full pipeline with detailed output at each step."""
         tasks = [easy_task, medium_task, hard_task]
 
@@ -274,7 +275,7 @@ class TestVerbosePipeline:
         for t1, t2 in pairs:
             prompt = binary_builder.build(t1, t2)
             response = client.generate(prompt.messages, temperature=0.0)
-            result = prompt.measurer.parse(response, prompt)
+            result = await prompt.measurer.parse(response, prompt)
             winner = t1.id if result.result.choice == "a" else t2.id
 
             print(f"\n  {t1.id} vs {t2.id}")
@@ -337,7 +338,8 @@ class TestVerbosePipeline:
         assert result.converged
         assert len(result.ranking()) == 3
 
-    def test_revealed_preference_verbose(self, completion_client, revealed_builder, easy_task, medium_task, hard_task):
+    @pytest.mark.asyncio
+    async def test_revealed_preference_verbose(self, completion_client, revealed_builder, easy_task, medium_task, hard_task):
         """Run revealed preference pipeline - model completes the task it prefers."""
         tasks = [easy_task, medium_task, hard_task]
 
@@ -369,7 +371,7 @@ class TestVerbosePipeline:
         for t1, t2 in pairs:
             prompt = revealed_builder.build(t1, t2)
             response = completion_client.generate(prompt.messages, temperature=0.0)
-            result = prompt.measurer.parse(response, prompt)
+            result = await prompt.measurer.parse(response, prompt)
             winner = t1.id if result.result.choice == "a" else t2.id
 
             print(f"\n  {t1.id} vs {t2.id}")

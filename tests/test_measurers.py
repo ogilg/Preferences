@@ -14,6 +14,9 @@ from src.preference_measurement import (
     StatedScoreMeasurer,
 )
 from src.prompt_templates import PromptTemplate
+from src.preference_measurement.semantic_parser import ParseError
+
+pytestmark = pytest.mark.asyncio
 
 
 @pytest.fixture
@@ -28,7 +31,7 @@ def dummy_template():
 class TestRevealedPreferenceMeasurer:
     """Tests for RevealedPreferenceMeasurer."""
 
-    def test_parse_returns_response_with_measurement(
+    async def test_parse_returns_response_with_measurement(
         self, sample_task_a, sample_task_b, dummy_template
     ):
         """Should parse response and return BinaryPreferenceMeasurement."""
@@ -42,7 +45,7 @@ class TestRevealedPreferenceMeasurer:
             template=dummy_template,
         )
 
-        response = measurer.parse("Task A", prompt)
+        response = await measurer.parse("Task A", prompt)
 
         assert isinstance(response.result, BinaryPreferenceMeasurement)
         assert response.result.choice == "a"
@@ -50,7 +53,7 @@ class TestRevealedPreferenceMeasurer:
         assert response.result.task_b == sample_task_b
         assert response.result.preference_type == PreferenceType.PRE_TASK_STATED
 
-    def test_parse_choice_b(self, sample_task_a, sample_task_b, dummy_template):
+    async def test_parse_choice_b(self, sample_task_a, sample_task_b, dummy_template):
         """Should correctly parse choice B."""
         measurer = RevealedPreferenceMeasurer()
         prompt = PreferencePrompt(
@@ -62,12 +65,13 @@ class TestRevealedPreferenceMeasurer:
             template=dummy_template,
         )
 
-        response = measurer.parse("Task B", prompt)
+        response = await measurer.parse("Task B", prompt)
 
         assert response.result.choice == "b"
 
-    def test_parse_raises_on_ambiguous(self, sample_task_a, sample_task_b, dummy_template):
-        """Should raise ValueError on ambiguous response."""
+    @pytest.mark.api
+    async def test_parse_raises_on_ambiguous(self, sample_task_a, sample_task_b, dummy_template):
+        """Should raise ValueError on ambiguous response (requires API for refusal judge)."""
         measurer = RevealedPreferenceMeasurer()
         prompt = PreferencePrompt(
             messages=[{"role": "user", "content": "Choose A or B"}],
@@ -78,14 +82,14 @@ class TestRevealedPreferenceMeasurer:
             template=dummy_template,
         )
 
-        with pytest.raises(ValueError):
-            measurer.parse("Both are good", prompt)
+        with pytest.raises((ValueError, ParseError)):
+            await measurer.parse("Both are good", prompt)
 
 
 class TestStatedScoreMeasurer:
     """Tests for StatedScoreMeasurer."""
 
-    def test_parse_returns_response_with_score(self, sample_task_a, dummy_template):
+    async def test_parse_returns_response_with_score(self, sample_task_a, dummy_template):
         """Should parse response and return TaskScore."""
         measurer = StatedScoreMeasurer()
         prompt = PreferencePrompt(
@@ -97,14 +101,14 @@ class TestStatedScoreMeasurer:
             template=dummy_template,
         )
 
-        response = measurer.parse("7", prompt)
+        response = await measurer.parse("7", prompt)
 
         assert isinstance(response.result, TaskScore)
         assert response.result.score == 7.0
         assert response.result.task == sample_task_a
         assert response.result.preference_type == PreferenceType.PRE_TASK_STATED
 
-    def test_parse_extracts_float(self, sample_task_a, dummy_template):
+    async def test_parse_extracts_float(self, sample_task_a, dummy_template):
         """Should parse float ratings."""
         measurer = StatedScoreMeasurer()
         prompt = PreferencePrompt(
@@ -116,11 +120,11 @@ class TestStatedScoreMeasurer:
             template=dummy_template,
         )
 
-        response = measurer.parse("7.5", prompt)
+        response = await measurer.parse("7.5", prompt)
 
         assert response.result.score == 7.5
 
-    def test_parse_extracts_from_text(self, sample_task_a, dummy_template):
+    async def test_parse_extracts_from_text(self, sample_task_a, dummy_template):
         """Should extract number from surrounding text."""
         measurer = StatedScoreMeasurer()
         prompt = PreferencePrompt(
@@ -132,7 +136,7 @@ class TestStatedScoreMeasurer:
             template=dummy_template,
         )
 
-        response = measurer.parse("I'd rate this a 7", prompt)
+        response = await measurer.parse("I'd rate this a 7", prompt)
 
         assert response.result.score == 7.0
 
