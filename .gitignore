@@ -47,7 +47,7 @@ Thumbs.db
 
 # Data
 
-**/results/
+results/
 
 # Self-documentation (generated)
 self_docs/
