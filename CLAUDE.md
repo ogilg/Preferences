@@ -24,12 +24,15 @@ uv pip install -e ".[dev]"
 ## Code conventions and style
 
 - NEVER use arbirary return values. E.g. in `dict.get(key, default)` I would rather it failed then get an arbirary value. In fact you should always use `dict[key]` access.
+- NEVER use None as a semantic value (e.g., "refusal" or "missing"). Use explicit types instead.
+- NEVER use placeholder values (e.g., score=0.0 when there is no score). Use proper dataclass variants or explicit flags.
 - Do not use hasattr or getattr defensively unless you think it is absolutely essential.
 - Do not import stuff midway through functions. Keep imports at the top.
 - Only write comments that actually add a non-obvious piece of information. Same goes for docstrings.
 - You should always consider whether there exists a tool that can do what you want to do.
 - Avoid dosctrings that do not add important information. If you do use docstrings keep them concise.
 - No backwards compatibility concerns — remove obsolete code/fields rather than deprecating.
+- Don't create classes or interfaces that have two or less fields, that can usually do with a standard data structure.
 
 ## Files and folders
 
@@ -44,7 +47,7 @@ uv pip install -e ".[dev]"
 - When you run tests/scripts/analysis or when you debug. You should keep me in the loop. You should explain concisely what your findings are. And you should ask for clarifications, or delegate to me often.
 - When you install a new package, add it to pyproject.toml if it isn't there.
 - Always load environment variables from `.env` when running scripts that use API clients. Use `from dotenv import load_dotenv; load_dotenv()` at the top of scripts.
-- Do not test imports, it's a waste of time.
+- Always delegate running testing imports to a subagent (Task tool with subagent_type=general-purpose) so it doesn't interrupt the main conversation flow.
 
 ## Semantic Parsing Policy
 
