@@ -7,6 +7,10 @@ Run with:
     pytest tests/test_post_task_pipeline.py -v
 """
 
+import pytest
+
+pytestmark = [pytest.mark.measurement, pytest.mark.cache]
+
 import json
 import shutil
 import tempfile

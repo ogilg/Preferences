@@ -1,4 +1,7 @@
 import pytest
+
+pytestmark = pytest.mark.measurement
+
 from src.task_data import Task, OriginDataset
 from src.preference_measurement import (
     BinaryPreferenceMeasurement,

@@ -1,4 +1,7 @@
 import pytest
+
+pytestmark = pytest.mark.models
+
 from dotenv import load_dotenv
 
 load_dotenv()

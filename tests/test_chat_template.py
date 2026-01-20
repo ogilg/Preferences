@@ -1,6 +1,9 @@
 """Tests for chat template utilities."""
 
 import pytest
+
+pytestmark = pytest.mark.models
+
 from transformers import AutoTokenizer
 
 

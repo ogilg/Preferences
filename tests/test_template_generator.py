@@ -5,6 +5,8 @@ verifying structure, placeholders, tags, and output format.
 """
 
 import pytest
+
+pytestmark = pytest.mark.prompts
 from pathlib import Path
 from unittest.mock import MagicMock
 

@@ -6,6 +6,8 @@ from unittest.mock import Mock
 
 import pytest
 
+pytestmark = pytest.mark.probes
+
 from src.measurement_storage.loading import get_activation_task_ids
 from src.running_measurements.config import ExperimentConfig
 from src.running_measurements.utils.experiment_utils import setup_experiment

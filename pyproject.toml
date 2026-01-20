@@ -19,6 +19,7 @@ dependencies = [
     "nnsight>=0.2.11",
     "transformer-lens>=2.0.0",
     "tenacity>=8.0.0",
+    "trueskill>=0.4.5",
 ]
 
 [project.optional-dependencies]
@@ -50,6 +51,16 @@ testpaths = ["tests"]
 markers = [
     "api: tests that make real API calls (requires API key)",
     "gpu: tests that require a GPU or heavy model loading",
+    "models: tests for LLM abstraction and client implementations",
+    "tasks: tests for task loading and dataset handling",
+    "prompts: tests for prompt templates, builders, and generation",
+    "measurement: tests for preference measurers and response parsing",
+    "cache: tests for measurement storage and caching",
+    "runners: tests for experiment runners and orchestration",
+    "probes: tests for activation extraction and linear probes",
+    "thurstonian: tests for Thurstonian model fitting and active learning",
+    "trueskill: tests for TrueSkill model fitting",
+    "analysis: tests for post-hoc analysis modules",
 ]
 
 [tool.ruff]

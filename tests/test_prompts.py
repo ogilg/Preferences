@@ -8,6 +8,8 @@ Key requirements from project docs:
 """
 
 import pytest
+
+pytestmark = [pytest.mark.prompts, pytest.mark.measurement]
 from dotenv import load_dotenv
 
 load_dotenv()

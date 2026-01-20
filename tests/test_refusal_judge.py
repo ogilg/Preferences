@@ -5,6 +5,8 @@ Run with: pytest -m api tests/test_refusal_judge.py
 """
 
 import pytest
+
+pytestmark = pytest.mark.measurement
 from dotenv import load_dotenv
 
 load_dotenv()

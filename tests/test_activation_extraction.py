@@ -7,6 +7,10 @@ Skip with:
     pytest -m "not gpu"
 """
 
+import pytest
+
+pytestmark = pytest.mark.probes
+
 import logging
 from dataclasses import dataclass
 from typing import Any

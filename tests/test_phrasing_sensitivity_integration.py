@@ -4,6 +4,8 @@ from itertools import combinations
 from pathlib import Path
 
 import pytest
+
+pytestmark = [pytest.mark.analysis, pytest.mark.thurstonian]
 import numpy as np
 import yaml
 

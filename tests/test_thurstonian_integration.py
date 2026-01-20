@@ -1,6 +1,9 @@
 """Real API tests. Skip with: pytest -m 'not api'"""
 
 import pytest
+
+pytestmark = [pytest.mark.thurstonian, pytest.mark.measurement]
+
 from dotenv import load_dotenv
 
 load_dotenv()

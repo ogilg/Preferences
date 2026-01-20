@@ -3,6 +3,9 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+
+pytestmark = pytest.mark.analysis
+
 import yaml
 
 from src.analysis.correlation.utils import (

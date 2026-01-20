@@ -4,11 +4,13 @@ These tests run actual API calls to verify the runners work end-to-end.
 Run with: pytest tests/runner_integration/test_runners.py -v -s
 """
 
+import pytest
+
+pytestmark = pytest.mark.runners
+
 import asyncio
 import shutil
 from pathlib import Path
-
-import pytest
 
 pytest_plugins = ('pytest_asyncio',)
 

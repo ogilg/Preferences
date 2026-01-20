@@ -1,5 +1,7 @@
 import pytest
 
+pytestmark = pytest.mark.tasks
+
 from src.task_data import Task, OriginDataset, load_tasks
 
 

@@ -5,6 +5,8 @@ import time
 import numpy as np
 import pytest
 
+pytestmark = pytest.mark.thurstonian
+
 from src.thurstonian_fitting.thurstonian import (
     PairwiseData,
     _make_objective_and_grad,

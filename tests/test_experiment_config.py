@@ -1,6 +1,9 @@
 """Tests for experiment config."""
 
 import pytest
+
+pytestmark = [pytest.mark.runners, pytest.mark.thurstonian]
+
 from pathlib import Path
 
 import numpy as np
