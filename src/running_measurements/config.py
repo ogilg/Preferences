@@ -63,6 +63,9 @@ class ExperimentConfig(BaseModel):
     # Post-task specific: which completion seeds to use (defaults to generation_seeds)
     completion_seeds: list[int] | None = None
 
+    # Completion generation specific: run LLM-based refusal detection
+    detect_refusals: bool = False
+
     @model_validator(mode="after")
     def validate_pair_order_options(self) -> "ExperimentConfig":
         if self.pair_order_seed is not None and self.include_reverse_order:

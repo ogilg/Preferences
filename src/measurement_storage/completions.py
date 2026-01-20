@@ -4,26 +4,28 @@ import asyncio
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
 
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
-from src.measurement_storage.base import find_project_root, model_short_name, save_yaml, load_yaml
+from src.measurement_storage.base import find_project_root, model_short_name, save_yaml
 from src.task_data import OriginDataset, Task
-
-from src.models.openai_compatible import GenerateRequest
+from src.models.openai_compatible import GenerateRequest, REQUEST_TIMEOUT
+from src.preference_measurement.refusal_judge import RefusalResult
 
 if TYPE_CHECKING:
     from src.models import OpenAICompatibleClient
 
 
 COMPLETIONS_DIR = find_project_root() / "results" / "completions"
+COMPLETION_TIMEOUT_MULTIPLIER = 30
 
 
 @dataclass
 class TaskCompletion:
     task: Task
     completion: str
+    refusal: RefusalResult | None = None
 
 
 def _completions_dir(client: OpenAICompatibleClient, seed: int | None) -> Path:
@@ -70,11 +72,18 @@ class CompletionStore:
     def load(self, task_lookup: dict[str, Task] | None = None) -> list[TaskCompletion]:
         """Load completions. If task_lookup provided, use those Task objects."""
         data = _load_json(self._completions_path)
+
+        def _parse_refusal(c: dict) -> RefusalResult | None:
+            if "refusal" not in c or c["refusal"] is None:
+                return None
+            return RefusalResult.model_validate(c["refusal"])
+
         if task_lookup:
             return [
                 TaskCompletion(
                     task=task_lookup[c["task_id"]],
                     completion=c["completion"],
+                    refusal=_parse_refusal(c),
                 )
                 for c in data
                 if c["task_id"] in task_lookup
@@ -89,6 +98,7 @@ class CompletionStore:
                     metadata={},
                 ),
                 completion=c["completion"],
+                refusal=_parse_refusal(c),
             )
             for c in data
         ]
@@ -101,6 +111,7 @@ class CompletionStore:
                 "task_prompt": tc.task.prompt,
                 "completion": tc.completion,
                 "origin": tc.task.origin.name,
+                "refusal": tc.refusal.model_dump() if tc.refusal else None,
             }
             for tc in completions
         ]
@@ -116,19 +127,49 @@ class CompletionStore:
         return self.store_dir
 
 
+def _detect_refusals_batch(
+    completions: list[TaskCompletion],
+    max_concurrent: int = 10,
+) -> list[TaskCompletion]:
+    """Run refusal detection on completions using async batch processing."""
+    from src.preference_measurement.refusal_judge import judge_refusal_async
+
+    async def detect_all() -> list[RefusalResult]:
+        semaphore = asyncio.Semaphore(max_concurrent)
+
+        async def detect_one(tc: TaskCompletion) -> RefusalResult:
+            async with semaphore:
+                return await judge_refusal_async(tc.task.prompt, tc.completion)
+
+        return await asyncio.gather(*[detect_one(tc) for tc in completions])
+
+    refusal_results = asyncio.run(detect_all())
+
+    return [
+        TaskCompletion(task=tc.task, completion=tc.completion, refusal=refusal)
+        for tc, refusal in zip(completions, refusal_results)
+    ]
+
+
 def generate_completions(
     client: OpenAICompatibleClient,
     tasks: list[Task],
     temperature: float = 1.0,
     max_concurrent: int = 10,
     seed: int | None = None,
+    detect_refusals: bool = False,
 ) -> list[TaskCompletion]:
-    """Generate single-turn completions for tasks."""
+    """Generate single-turn completions for tasks.
+
+    Args:
+        detect_refusals: If True, runs LLM-based refusal detection on each completion.
+    """
     requests = [
         GenerateRequest(
             messages=[{"role": "user", "content": task.prompt}],
             temperature=temperature,
             seed=seed,
+            timeout=REQUEST_TIMEOUT * COMPLETION_TIMEOUT_MULTIPLIER,
         )
         for task in tasks
     ]
@@ -149,10 +190,7 @@ def generate_completions(
     failures = []
     for task, response in zip(tasks, responses):
         if response.ok:
-            completions.append(TaskCompletion(
-                task=task,
-                completion=response.unwrap(),
-            ))
+            completions.append(TaskCompletion(task=task, completion=response.unwrap()))
         else:
             failures.append((task.id, response.error_details() or "Unknown error"))
 
@@ -163,6 +201,9 @@ def generate_completions(
             print(f"  {task_id}: {error_preview}")
         if len(failures) > 5:
             print(f"  ... and {len(failures) - 5} more")
+
+    if detect_refusals and completions:
+        completions = _detect_refusals_batch(completions, max_concurrent)
 
     return completions
 
