@@ -12,6 +12,7 @@ from src.measurement_storage import (
     PRE_TASK_STATED_DIR,
     POST_REVEALED_DIR,
     POST_STATED_DIR,
+    EXPERIMENTS_DIR,
     list_runs,
     load_run_utilities,
     RunConfig,
@@ -34,6 +35,16 @@ class MeasurementType(Enum):
         }[self]
 
     @property
+    def experiment_subdir(self) -> str:
+        """Subdirectory name within an experiment folder."""
+        return {
+            MeasurementType.PRE_STATED: "pre_task_stated",
+            MeasurementType.POST_STATED: "post_task_stated",
+            MeasurementType.PRE_REVEALED: "pre_task_revealed",
+            MeasurementType.POST_REVEALED: "post_task_revealed",
+        }[self]
+
+    @property
     def short_name(self) -> str:
         return {
             MeasurementType.PRE_STATED: "pre_st",
@@ -50,6 +61,12 @@ class MeasurementType(Enum):
             MeasurementType.PRE_REVEALED: "Pre-task Revealed",
             MeasurementType.POST_REVEALED: "Post-task Revealed",
         }[self]
+
+    def get_results_dir(self, experiment_id: str | None = None) -> Path:
+        """Get results directory, using experiment folder if experiment_id provided."""
+        if experiment_id:
+            return EXPERIMENTS_DIR / experiment_id / self.experiment_subdir
+        return self.results_dir
 
 
 @dataclass
@@ -98,7 +115,7 @@ def load_runs_for_model(
         measurement_types: Types to load (default: all)
         min_tasks: Minimum number of tasks required
         require_thurstonian_csv: For revealed, require pre-computed utilities
-        experiment_id: Filter to specific experiment (optional)
+        experiment_id: If provided, read from experiments folder instead of cache
     """
     if measurement_types is None:
         measurement_types = list(MeasurementType)
@@ -106,15 +123,12 @@ def load_runs_for_model(
     runs: list[LoadedRun] = []
 
     for mtype in measurement_types:
-        results_dir = mtype.results_dir
+        results_dir = mtype.get_results_dir(experiment_id)
         if not results_dir.exists():
             continue
 
         for config in list_runs(results_dir):
             if config.model_short != model:
-                continue
-
-            if experiment_id is not None and config.experiment_id != experiment_id:
                 continue
 
             # For revealed preferences, optionally require thurstonian CSV
@@ -146,6 +160,7 @@ def load_runs_for_model(
 
 def list_available_models(
     measurement_types: list[MeasurementType] | None = None,
+    experiment_id: str | None = None,
 ) -> set[str]:
     """List all models with data in the specified measurement types."""
     if measurement_types is None:
@@ -153,7 +168,7 @@ def list_available_models(
 
     models: set[str] = set()
     for mtype in measurement_types:
-        results_dir = mtype.results_dir
+        results_dir = mtype.get_results_dir(experiment_id)
         if not results_dir.exists():
             continue
         for config in list_runs(results_dir):

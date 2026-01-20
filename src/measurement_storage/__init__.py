@@ -41,6 +41,10 @@ from src.measurement_storage.loading import (
     load_all_stated_runs,
     load_all_pairwise_datasets,
 )
+from src.measurement_storage.experiment_store import (
+    EXPERIMENTS_DIR,
+    ExperimentStore,
+)
 
 __all__ = [
     # Base
@@ -80,4 +84,7 @@ __all__ = [
     "load_pairwise_datasets",
     "load_all_stated_runs",
     "load_all_pairwise_datasets",
+    # Experiment store
+    "EXPERIMENTS_DIR",
+    "ExperimentStore",
 ]

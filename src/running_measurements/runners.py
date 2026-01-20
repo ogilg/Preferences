@@ -27,6 +27,7 @@ from src.preference_measurement import (
 from src.measurement_storage import (
     CompletionStore, PostStatedCache, PostRevealedCache, model_short_name,
     save_stated, stated_exist, MeasurementCache, MeasurementStats, save_yaml, reconstruct_measurements,
+    ExperimentStore,
 )
 from src.measurement_storage.cache import categorize_failure
 from src.measurement_storage.completions import generate_completions
@@ -160,6 +161,8 @@ async def run_post_task_stated_async(
     configurations = build_configurations(ctx, config)
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
 
+    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
+
     for completion_seed in completion_seeds:
         store = CompletionStore(client=ctx.client, seed=completion_seed)
         if not store.exists():
@@ -204,6 +207,11 @@ async def run_post_task_stated_async(
             }
             cache.save(batch.successes, run_config)
 
+            if exp_store:
+                run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_cseed{completion_seed}_rseed{cfg.seed}"
+                measurements = [{"task_id": s.task.id, "score": s.score} for s in batch.successes]
+                exp_store.save_stated("post_task_stated", run_name, measurements, dict(run_config))
+
             if progress_callback:
                 progress_callback(stats.completed, stats.total_runs)
 
@@ -222,6 +230,9 @@ async def run_pre_task_revealed_async(
     configurations = build_configurations(ctx, config, include_order=True)
     all_pairs = list(combinations(ctx.tasks, 2))
     stats = RunnerStats(total_runs=len(configurations))
+    model_short = model_short_name(ctx.client.canonical_model_name)
+
+    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for cfg in configurations:
         cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
@@ -254,6 +265,23 @@ async def run_pre_task_revealed_async(
         stats.add_batch_with_failures(len(batch.successes), batch.failures)
         cache.append(batch.successes)
 
+        if exp_store and batch.successes:
+            seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
+            measurements = [
+                {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
+                for m in batch.successes
+            ]
+            config_dict = build_measurement_config(
+                template=cfg.template,
+                client=ctx.client,
+                response_format=cfg.response_format,
+                order=cfg.order,
+                seed=cfg.seed,
+                temperature=config.temperature,
+            )
+            exp_store.save_revealed("pre_task_revealed", run_name, measurements, config_dict)
+
         if progress_callback:
             progress_callback(stats.completed, stats.total_runs)
 
@@ -274,6 +302,8 @@ async def run_post_task_revealed_async(
     configurations = build_configurations(ctx, config, include_order=True)
     all_pairs = list(combinations(ctx.tasks, 2))
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
+
+    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for completion_seed in completion_seeds:
         store = CompletionStore(client=ctx.client, seed=completion_seed)
@@ -339,6 +369,15 @@ async def run_post_task_revealed_async(
             }
             cache.append(batch.successes, run_config)
 
+            if exp_store and batch.successes:
+                seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
+                run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}{seed_suffix}"
+                measurements = [
+                    {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
+                    for m in batch.successes
+                ]
+                exp_store.save_revealed("post_task_revealed", run_name, measurements, dict(run_config))
+
             if progress_callback:
                 progress_callback(stats.completed, stats.total_runs)
 
@@ -357,6 +396,9 @@ async def run_pre_task_stated_async(
     configurations = build_configurations(ctx, config)
     tasks_data = ctx.tasks * config.n_samples
     stats = RunnerStats(total_runs=len(configurations))
+    model_short = model_short_name(ctx.client.canonical_model_name)
+
+    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for cfg in configurations:
         if stated_exist(cfg.template, ctx.client, cfg.response_format, cfg.seed):
@@ -394,6 +436,11 @@ async def run_pre_task_stated_async(
             seed=cfg.seed,
             config=config_dict,
         )
+
+        if exp_store:
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}"
+            measurements = [{"task_id": s.task.id, "score": s.score} for s in batch.successes]
+            exp_store.save_stated("pre_task_stated", run_name, measurements, config_dict)
 
         if progress_callback:
             progress_callback(stats.completed, stats.total_runs)
@@ -504,7 +551,7 @@ async def run_active_learning_async(
             )
         else:
             start_iteration = 0
-            pairs_to_query = generate_d_regular_pairs(ctx.tasks, al.initial_degree, rng)
+            pairs_to_query = generate_d_regular_pairs(tasks_for_learning, al.initial_degree, rng)
 
         pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed, config.include_reverse_order)
 

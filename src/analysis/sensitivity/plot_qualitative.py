@@ -2,7 +2,7 @@
 
 Usage:
     python -m src.analysis.sensitivity.plot_qualitative
-    python -m src.analysis.sensitivity.plot_qualitative --experiment-id exp_20260119
+    python -m src.analysis.sensitivity.plot_qualitative --experiment-id probe_2
     python -m src.analysis.sensitivity.plot_qualitative --pre-only
 """
 from __future__ import annotations
@@ -19,39 +19,49 @@ from src.analysis.sensitivity.plot import (
     plot_regression_coefficients,
     plot_sensitivity_by_model,
 )
-from src.measurement_storage import PRE_TASK_STATED_DIR, POST_STATED_DIR
+from src.measurement_storage import PRE_TASK_STATED_DIR, POST_STATED_DIR, EXPERIMENTS_DIR
 
 
 OUTPUT_DIR = Path(__file__).parent / "plots"
 
 
-def filter_qualitative(runs, experiment_id: str | None = None):
-    """Keep only qualitative stated runs, optionally filtered by experiment_id."""
-    filtered = [
+def filter_qualitative(runs):
+    """Keep only qualitative stated runs."""
+    return [
         (config, mu, task_ids)
         for config, mu, task_ids in runs
         if "qualitative" in config.template_name
     ]
+
+
+def get_sources(experiment_id: str | None, pre_only: bool, post_only: bool) -> list[tuple[str, Path]]:
+    """Get (prefix, results_dir) pairs based on experiment_id and flags."""
+    sources = []
     if experiment_id:
-        filtered = [(c, mu, tids) for c, mu, tids in filtered if c.experiment_id == experiment_id]
-    return filtered
+        exp_dir = EXPERIMENTS_DIR / experiment_id
+        if not post_only:
+            sources.append(("pre_task", exp_dir / "pre_task_stated"))
+        if not pre_only:
+            sources.append(("post_task", exp_dir / "post_task_stated"))
+    else:
+        if not post_only:
+            sources.append(("pre_task", PRE_TASK_STATED_DIR))
+        if not pre_only:
+            sources.append(("post_task", POST_STATED_DIR))
+    return sources
 
 
 def main():
     parser = argparse.ArgumentParser(description="Sensitivity analysis for qualitative stated preferences")
     parser.add_argument("--pre-only", action="store_true", help="Only analyze pre-task")
     parser.add_argument("--post-only", action="store_true", help="Only analyze post-task")
-    parser.add_argument("--experiment-id", type=str, default=None, help="Filter to specific experiment")
+    parser.add_argument("--experiment-id", type=str, default=None, help="Read from experiment folder")
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%m%d%y")
 
-    sources = []
-    if not args.post_only:
-        sources.append(("pre_task", PRE_TASK_STATED_DIR))
-    if not args.pre_only:
-        sources.append(("post_task", POST_STATED_DIR))
+    sources = get_sources(args.experiment_id, args.pre_only, args.post_only)
 
     for prefix, results_dir in sources:
         if not results_dir.exists():
@@ -60,15 +70,13 @@ def main():
 
         print(f"\nLoading {prefix} qualitative stated runs from {results_dir}...")
         all_runs = load_all_runs(results_dir)
-        runs = filter_qualitative(all_runs, args.experiment_id)
+        runs = filter_qualitative(all_runs)
 
         if not runs:
-            filter_msg = f" (experiment_id={args.experiment_id})" if args.experiment_id else ""
-            print(f"No qualitative runs found for {prefix}{filter_msg} (had {len(all_runs)} total runs)")
+            print(f"No qualitative runs found for {prefix} (had {len(all_runs)} total runs)")
             continue
 
-        filter_msg = f", experiment_id={args.experiment_id}" if args.experiment_id else ""
-        print(f"Loaded {len(runs)} qualitative runs (filtered from {len(all_runs)}{filter_msg}), computing correlations...")
+        print(f"Loaded {len(runs)} qualitative runs (filtered from {len(all_runs)}), computing correlations...")
         sensitivities, correlations, regression = compute_all_field_sensitivities(runs)
 
         models = sorted(set(config.model_short for config, _, _ in runs))

@@ -59,12 +59,12 @@ def main():
         "--experiment-id",
         type=str,
         default=None,
-        help="Filter to specific experiment",
+        help="Read from experiment folder",
     )
     args = parser.parse_args()
 
     if args.list_models:
-        models = list_available_models()
+        models = list_available_models(experiment_id=args.experiment_id)
         print(f"Available models ({len(models)}):")
         for m in sorted(models):
             print(f"  {m}")
