@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, TypeVar, Callable
 
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
-from src.models import GenerateRequest, Model, BatchResult
+from src.models import GenerateRequest, OpenAICompatibleClient
 from src.task_data import Task
 from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferencePrompt, TaskScore
 
@@ -15,46 +15,45 @@ if TYPE_CHECKING:
 T = TypeVar("T", TaskScore, BinaryPreferenceMeasurement)
 
 
-def _build_requests(prompts: list[PreferencePrompt], temperature: float, seed: int | None) -> list[GenerateRequest]:
-    return [
-        GenerateRequest(
-            messages=p.messages,
-            temperature=temperature,
-            tools=p.response_format.tools,
-            seed=seed,
-        )
-        for p in prompts
-    ]
+def _build_request(prompt: PreferencePrompt, temperature: float, seed: int | None) -> GenerateRequest:
+    return GenerateRequest(
+        messages=prompt.messages,
+        temperature=temperature,
+        tools=prompt.response_format.tools,
+        seed=seed,
+    )
 
 
-def _process_responses(
-    prompts: list[PreferencePrompt],
-    responses: list[BatchResult],
+async def _generate_and_parse_one(
+    client: OpenAICompatibleClient,
+    prompt: PreferencePrompt,
+    temperature: float,
+    seed: int | None,
+    semaphore: asyncio.Semaphore,
     result_type: type[T],
-) -> MeasurementBatch[T]:
-    successes: list[T] = []
-    failures: list[tuple[PreferencePrompt, str]] = []
+) -> tuple[T | None, tuple[PreferencePrompt, str] | None]:
+    """Generate a response and parse it immediately. Returns (success, failure)."""
+    request = _build_request(prompt, temperature, seed)
 
-    for prompt, response in zip(prompts, responses):
-        if not response.ok:
-            failures.append((prompt, f"Request failed: {response.error}"))
-            continue
-        try:
-            parsed = prompt.measurer.parse(response.unwrap(), prompt)
-            if isinstance(parsed.result, result_type):
-                successes.append(parsed.result)
-            else:
-                failures.append((prompt, f"Unexpected result type: {type(parsed.result)}"))
-        except Exception as e:
-            failures.append((prompt, str(e)))
+    # Generate
+    results = await client.generate_batch_async([request], semaphore)
+    response = results[0]
 
-    return MeasurementBatch(successes=successes, failures=failures)
+    if not response.ok:
+        return None, (prompt, f"Request failed: {response.error}")
 
+    # Parse immediately after generation completes
+    try:
+        parsed = await prompt.measurer.parse(response.unwrap(), prompt)
+        if isinstance(parsed.result, result_type):
+            return parsed.result, None
+        return None, (prompt, f"Unexpected result type: {type(parsed.result)}")
+    except Exception as e:
+        return None, (prompt, str(e))
 
-# Core async implementation
 
 async def _measure_async(
-    client: Model,
+    client: OpenAICompatibleClient,
     prompts: list[PreferencePrompt],
     semaphore: asyncio.Semaphore,
     temperature: float,
@@ -62,20 +61,36 @@ async def _measure_async(
     result_type: type[T],
     on_complete: Callable[[], None] | None = None,
 ) -> MeasurementBatch[T]:
-    requests = _build_requests(prompts, temperature, seed)
-    responses = await client.generate_batch_async(requests, semaphore, on_complete)
-    return _process_responses(prompts, responses, result_type)
+    """Generate and parse concurrently - parsing starts as soon as each response arrives."""
+
+    async def process_with_callback(prompt: PreferencePrompt) -> tuple[T | None, tuple[PreferencePrompt, str] | None]:
+        result = await _generate_and_parse_one(client, prompt, temperature, seed, semaphore, result_type)
+        if on_complete:
+            on_complete()
+        return result
+
+    results = await asyncio.gather(*[process_with_callback(p) for p in prompts])
+
+    successes: list[T] = []
+    failures: list[tuple[PreferencePrompt, str]] = []
+    for success, failure in results:
+        if success is not None:
+            successes.append(success)
+        if failure is not None:
+            failures.append(failure)
+
+    return MeasurementBatch(successes=successes, failures=failures)
 
 
 def _measure_sync(
-    client: Model,
+    client: OpenAICompatibleClient,
     prompts: list[PreferencePrompt],
     max_concurrent: int,
     temperature: float,
     seed: int | None,
     result_type: type[T],
 ) -> MeasurementBatch[T]:
-    requests = _build_requests(prompts, temperature, seed)
+    semaphore = asyncio.Semaphore(max_concurrent)
     with Progress(
         SpinnerColumn(),
         TextColumn("[bold blue]{task.description}"),
@@ -85,16 +100,16 @@ def _measure_sync(
         transient=True,
     ) as progress:
         task = progress.add_task("Requests", total=len(prompts))
-        responses = client.generate_batch(
-            requests, max_concurrent, on_complete=lambda: progress.update(task, advance=1)
-        )
-    return _process_responses(prompts, responses, result_type)
+        return asyncio.run(_measure_async(
+            client, prompts, semaphore, temperature, seed, result_type,
+            on_complete=lambda: progress.update(task, advance=1),
+        ))
 
 
 # Public API - Async versions
 
 async def measure_pre_task_revealed_async(
-    client: Model,
+    client: OpenAICompatibleClient,
     pairs: list[tuple[Task, Task]],
     builder: PromptBuilder,
     semaphore: asyncio.Semaphore,
@@ -107,7 +122,7 @@ async def measure_pre_task_revealed_async(
 
 
 async def measure_pre_task_stated_async(
-    client: Model,
+    client: OpenAICompatibleClient,
     tasks: list[Task],
     builder: PromptBuilder,
     semaphore: asyncio.Semaphore,
@@ -120,7 +135,7 @@ async def measure_pre_task_stated_async(
 
 
 async def measure_post_task_stated_async(
-    client: Model,
+    client: OpenAICompatibleClient,
     data: list[tuple[Task, str]],
     builder: PromptBuilder,
     semaphore: asyncio.Semaphore,
@@ -133,7 +148,7 @@ async def measure_post_task_stated_async(
 
 
 async def measure_post_task_revealed_async(
-    client: Model,
+    client: OpenAICompatibleClient,
     data: list[tuple[Task, Task, str, str]],
     builder: PostTaskRevealedPromptBuilder,
     semaphore: asyncio.Semaphore,
@@ -148,7 +163,7 @@ async def measure_post_task_revealed_async(
 # Public API - Sync versions (with progress bar)
 
 def measure_pre_task_revealed(
-    client: Model,
+    client: OpenAICompatibleClient,
     pairs: list[tuple[Task, Task]],
     builder: PromptBuilder,
     temperature: float = 1.0,
@@ -160,7 +175,7 @@ def measure_pre_task_revealed(
 
 
 def measure_pre_task_stated(
-    client: Model,
+    client: OpenAICompatibleClient,
     tasks: list[Task],
     builder: PromptBuilder,
     temperature: float = 1.0,
@@ -172,7 +187,7 @@ def measure_pre_task_stated(
 
 
 def measure_post_task_stated(
-    client: Model,
+    client: OpenAICompatibleClient,
     data: list[tuple[Task, str]],
     builder: PromptBuilder,
     temperature: float = 1.0,
@@ -184,7 +199,7 @@ def measure_post_task_stated(
 
 
 def measure_post_task_revealed(
-    client: Model,
+    client: OpenAICompatibleClient,
     data: list[tuple[Task, Task, str, str]],
     builder: PostTaskRevealedPromptBuilder,
     temperature: float = 1.0,

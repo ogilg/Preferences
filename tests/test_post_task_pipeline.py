@@ -11,7 +11,7 @@ import json
 import shutil
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, AsyncMock, patch
 
 import pytest
 
@@ -198,11 +198,12 @@ class TestPostTaskStatedMeasurement:
 
     def test_measures_post_task_ratings(self, sample_tasks, mock_client):
         """Should measure ratings after task completion."""
-        # Mock returns valid rating responses
-        mock_client.generate_batch.return_value = [
-            BatchResult(response="I rate this task 7 out of 10.", error=None),
-            BatchResult(response="Rating: 8", error=None),
+        # Mock returns valid rating responses - one per call to generate_batch_async
+        responses = [
+            [BatchResult(response="I rate this task 7 out of 10.", error=None)],
+            [BatchResult(response="Rating: 8", error=None)],
         ]
+        mock_client.generate_batch_async = AsyncMock(side_effect=responses)
 
         data = [
             (sample_tasks[0], "The answer is 4."),
@@ -258,9 +259,9 @@ class TestPostTaskRevealedMeasurement:
 
     def test_measures_post_task_binary_choice(self, sample_tasks, mock_client):
         """Should measure binary preference after completing both tasks."""
-        mock_client.generate_batch.return_value = [
+        mock_client.generate_batch_async = AsyncMock(return_value=[
             BatchResult(response="I preferred Task A.", error=None),
-        ]
+        ])
 
         data = [
             (sample_tasks[0], sample_tasks[1], "Answer to math", "Answer to creative"),
@@ -341,11 +342,11 @@ class TestFullPostTaskPipeline:
             assert len(loaded) == 3
 
             # Step 4: Measure stated preferences
-            mock_client.generate_batch.return_value = [
-                BatchResult(response="Rating: 7", error=None),
-                BatchResult(response="I give it an 8", error=None),
-                BatchResult(response="9 out of 10", error=None),
-            ]
+            mock_client.generate_batch_async = AsyncMock(side_effect=[
+                [BatchResult(response="Rating: 7", error=None)],
+                [BatchResult(response="I give it an 8", error=None)],
+                [BatchResult(response="9 out of 10", error=None)],
+            ])
 
             data = [(tc.task, tc.completion) for tc in loaded]
             builder = PostTaskStatedPromptBuilder(
@@ -395,11 +396,11 @@ class TestFullPostTaskPipeline:
                 (sample_tasks[1], sample_tasks[2]),
             ]
 
-            mock_client.generate_batch.return_value = [
-                BatchResult(response="Task A was better", error=None),
-                BatchResult(response="I prefer Task B", error=None),
-                BatchResult(response="Task A", error=None),
-            ]
+            mock_client.generate_batch_async = AsyncMock(side_effect=[
+                [BatchResult(response="Task A was better", error=None)],
+                [BatchResult(response="I prefer Task B", error=None)],
+                [BatchResult(response="Task A", error=None)],
+            ])
 
             data = [
                 (a, b, completion_lookup[a.id], completion_lookup[b.id])
@@ -689,9 +690,9 @@ class TestPostTaskResponseFormats:
             "xml": "<rating>7</rating>",
         }
 
-        mock_client.generate_batch.return_value = [
+        mock_client.generate_batch_async = AsyncMock(return_value=[
             BatchResult(response=responses[format_name], error=None),
-        ]
+        ])
 
         # Use a simple template without scale placeholders
         simple_template = post_task_stated_template(
@@ -724,9 +725,9 @@ class TestPostTaskResponseFormats:
             "xml": "<choice>Task A</choice>",
         }
 
-        mock_client.generate_batch.return_value = [
+        mock_client.generate_batch_async = AsyncMock(return_value=[
             BatchResult(response=responses[format_name], error=None),
-        ]
+        ])
 
         builder = PostTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),
