@@ -81,6 +81,10 @@ class ExperimentConfig(BaseModel):
     # Post-task specific: which completion seeds to use (defaults to generation_seeds)
     completion_seeds: list[int] | None = None
 
+    # Universal: if True, restrict measurements to only tasks with activations in activations/ folder
+    # Filters task set early, applies to all measurement modes (pre-task, post-task, etc.)
+    use_tasks_with_activations: bool = False
+
     # Completion generation specific: run LLM-based refusal detection
     detect_refusals: bool = False
 

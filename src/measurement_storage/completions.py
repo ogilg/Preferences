@@ -224,3 +224,5 @@ def load_completions(
     """Convenience function to load completions without creating a store."""
     store = CompletionStore(client, seed)
     return store.load(task_lookup)
+
+

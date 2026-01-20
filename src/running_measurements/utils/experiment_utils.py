@@ -12,6 +12,8 @@ from src.prompt_templates import load_templates_from_yaml, PromptTemplate
 from src.prompt_templates.sampler import SampledConfiguration, sample_configurations_lhs
 from src.thurstonian_fitting import _config_hash
 from src.running_measurements.config import load_experiment_config, ExperimentConfig
+from src.measurement_storage.base import find_project_root
+import json
 
 
 @dataclass
@@ -22,6 +24,22 @@ class ExperimentContext:
     task_lookup: dict[str, Task]
     client: OpenAICompatibleClient
     max_concurrent: int
+
+
+def _load_activation_task_ids() -> set[str] | None:
+    """Load task IDs from activations/completions.json if it exists."""
+    project_root = find_project_root()
+    completions_path = project_root / "activations" / "completions.json"
+
+    if not completions_path.exists():
+        return None
+
+    try:
+        with open(completions_path) as f:
+            completions = json.load(f)
+        return {c["task_id"] for c in completions}
+    except (json.JSONDecodeError, KeyError, OSError):
+        return None
 
 
 def parse_config_path(description: str) -> Path:
@@ -41,8 +59,29 @@ def setup_experiment(
     if config.preference_mode != expected_mode:
         raise ValueError(f"Expected preference_mode='{expected_mode}', got '{config.preference_mode}'")
 
+    # Prepare filter function if using activation tasks
+    filter_fn = None
+    if config.use_tasks_with_activations:
+        activation_task_ids = _load_activation_task_ids()
+        if activation_task_ids:
+            filter_fn = lambda t: t.id in activation_task_ids
+        else:
+            from rich import print as rprint
+            rprint("[yellow]Warning: use_tasks_with_activations=true but activations/completions.json not found[/yellow]")
+
     # Load tasks deterministically so stated and revealed use same tasks
-    tasks = load_tasks(n=config.n_tasks, origins=config.get_origin_datasets(), seed=None)
+    # If filter_fn is set, this loads n_tasks from the filtered set
+    tasks = load_tasks(
+        n=config.n_tasks,
+        origins=config.get_origin_datasets(),
+        seed=None,
+        filter_fn=filter_fn,
+    )
+
+    if config.use_tasks_with_activations and filter_fn:
+        from rich import print as rprint
+        total_activation_tasks = len(_load_activation_task_ids() or [])
+        rprint(f"[dim]Loaded {len(tasks)} tasks from {total_activation_tasks} total with activations[/dim]")
 
     # Templates are optional for completion_generation mode
     templates = None
