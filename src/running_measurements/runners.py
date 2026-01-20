@@ -227,7 +227,7 @@ async def run_pre_task_revealed_async(
         cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
 
         existing_pairs = cache.get_existing_pairs()
-        pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed)
+        pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
         pairs_to_query = [
             (a, b) for a, b in pairs
             if (a.id, b.id) not in existing_pairs
@@ -283,6 +283,12 @@ async def run_post_task_revealed_async(
         task_completions = store.load(ctx.task_lookup)
         completion_lookup = {tc.task.id: tc.completion for tc in task_completions}
 
+        # Filter pairs to only those where both tasks have completions
+        pairs_with_completions = [
+            (a, b) for a, b in all_pairs
+            if a.id in completion_lookup and b.id in completion_lookup
+        ]
+
         for cfg in configurations:
             cache = PostRevealedCache(
                 model_short, cfg.template.name, cfg.response_format,
@@ -290,7 +296,7 @@ async def run_post_task_revealed_async(
             )
 
             existing_pairs = cache.get_existing_pairs()
-            pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed)
+            pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
             pairs_to_query = [
                 (a, b) for a, b in pairs
                 if (a.id, b.id) not in existing_pairs
@@ -434,6 +440,7 @@ async def run_active_learning_async(
 
     # For post-task, load completions
     completion_lookup: dict[str, str] | None = None
+    tasks_for_learning = ctx.tasks
     if post_task:
         completion_seeds = config.completion_seeds or config.generation_seeds
         # Use first completion seed for active learning
@@ -442,6 +449,8 @@ async def run_active_learning_async(
             raise ValueError(f"Completions not found for seed {completion_seeds[0]}")
         task_completions = store.load(ctx.task_lookup)
         completion_lookup = {tc.task.id: tc.completion for tc in task_completions}
+        # Filter tasks to only those with completions
+        tasks_for_learning = [t for t in ctx.tasks if t.id in completion_lookup]
 
     rng = np.random.default_rng(al.seed)
     max_iter = compute_thurstonian_max_iter(config)
@@ -459,7 +468,7 @@ async def run_active_learning_async(
                 progress_callback(stats.completed, stats.total_runs)
             continue
 
-        state = ActiveLearningState(tasks=ctx.tasks)
+        state = ActiveLearningState(tasks=tasks_for_learning)
         builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=post_task)
 
         # Create measure function that cache can call for API requests
@@ -497,7 +506,7 @@ async def run_active_learning_async(
             start_iteration = 0
             pairs_to_query = generate_d_regular_pairs(ctx.tasks, al.initial_degree, rng)
 
-        pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed)
+        pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed, config.include_reverse_order)
 
         rank_correlations = []
         config_stats = MeasurementStats()
@@ -529,7 +538,7 @@ async def run_active_learning_async(
                 state, batch_size=al.batch_size,
                 p_threshold=al.p_threshold, q_threshold=al.q_threshold, rng=rng,
             )
-            pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed)
+            pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed, config.include_reverse_order)
 
         # Update runner stats from this configuration
         stats.successes += config_stats.api_successes

@@ -27,7 +27,7 @@ class TestPairOrderSeedValidation:
 
     def test_cannot_set_both_pair_order_seed_and_reverse(self):
         """Setting both pair_order_seed and include_reverse_order raises error."""
-        with pytest.raises(ValueError, match="Cannot set both"):
+        with pytest.raises(ValueError, match="Cannot set pair_order_seed when include_reverse_order=True"):
             ExperimentConfig(
                 preference_mode="pre_task_revealed",
                 n_tasks=5,
@@ -61,15 +61,15 @@ class TestPairOrderSeedValidation:
         )
         assert config.include_reverse_order is True
 
-    def test_neither_pair_order_seed_nor_reverse_is_valid(self):
-        """Neither option set is valid (defaults)."""
+    def test_neither_option_set_defaults_to_shuffle(self):
+        """Neither option set defaults to shuffling with seed 0."""
         config = ExperimentConfig(
             preference_mode="pre_task_revealed",
             n_tasks=5,
             task_origins=["wildchat"],
             templates=Path("dummy.yaml"),
         )
-        assert config.pair_order_seed is None
+        assert config.pair_order_seed == 0  # Defaults to shuffle with seed 0
         assert config.include_reverse_order is False
 
 
@@ -110,12 +110,12 @@ class TestShufflePairOrder:
 
 class TestApplyPairOrder:
 
-    def test_canonical_returns_unchanged(self):
-        """Canonical order returns pairs unchanged."""
+    def test_canonical_with_reverse_order_returns_unchanged(self):
+        """Canonical order with include_reverse_order=True returns pairs unchanged."""
         tasks = make_tasks(3)
         pairs = [(tasks[0], tasks[1]), (tasks[0], tasks[2])]
 
-        result = apply_pair_order(pairs, order="canonical", pair_order_seed=None)
+        result = apply_pair_order(pairs, order="canonical", pair_order_seed=None, include_reverse_order=True)
         assert [(a.id, b.id) for a, b in result] == [(a.id, b.id) for a, b in pairs]
 
     def test_reversed_flips_all(self):
@@ -123,19 +123,20 @@ class TestApplyPairOrder:
         tasks = make_tasks(3)
         pairs = [(tasks[0], tasks[1]), (tasks[0], tasks[2])]
 
-        result = apply_pair_order(pairs, order="reversed", pair_order_seed=None)
+        result = apply_pair_order(pairs, order="reversed", pair_order_seed=None, include_reverse_order=True)
         assert [(a.id, b.id) for a, b in result] == [(b.id, a.id) for a, b in pairs]
 
-    def test_seed_overrides_order(self):
-        """When pair_order_seed is set, it overrides the order parameter."""
+    def test_shuffles_when_not_using_reverse_order(self):
+        """When include_reverse_order=False, pairs are shuffled."""
         tasks = make_tasks(10)
         pairs = [(tasks[i], tasks[j]) for i in range(10) for j in range(i + 1, 10)]
 
-        # With seed, both canonical and reversed orders should give same result
-        result_canonical = apply_pair_order(pairs, order="canonical", pair_order_seed=42)
-        result_reversed = apply_pair_order(pairs, order="reversed", pair_order_seed=42)
+        result = apply_pair_order(pairs, order="canonical", pair_order_seed=42, include_reverse_order=False)
 
-        assert [(a.id, b.id) for a, b in result_canonical] == [(a.id, b.id) for a, b in result_reversed]
+        # Result should have some pairs flipped (not all same as original)
+        original_ids = [(a.id, b.id) for a, b in pairs]
+        result_ids = [(a.id, b.id) for a, b in result]
+        assert result_ids != original_ids  # Should be shuffled
 
 
 class TestPairOrderInMeasurements:

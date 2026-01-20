@@ -46,7 +46,7 @@ class ExperimentConfig(BaseModel):
     # Revealed-specific
     fitting: FittingConfig = Field(default_factory=FittingConfig)
     include_reverse_order: bool = False
-    pair_order_seed: int | None = None  # Randomly shuffle (A,B) vs (B,A) per pair
+    pair_order_seed: int | None = None  # Randomly shuffle (A,B) vs (B,A) per pair; defaults to 0 if not using reverse order
 
     # Active learning specific
     active_learning: ActiveLearningConfig | None = None
@@ -68,8 +68,10 @@ class ExperimentConfig(BaseModel):
 
     @model_validator(mode="after")
     def validate_pair_order_options(self) -> "ExperimentConfig":
-        if self.pair_order_seed is not None and self.include_reverse_order:
-            raise ValueError("Cannot set both pair_order_seed and include_reverse_order")
+        if self.include_reverse_order and self.pair_order_seed is not None:
+            raise ValueError("Cannot set pair_order_seed when include_reverse_order=True (no shuffling needed)")
+        if not self.include_reverse_order and self.pair_order_seed is None:
+            self.pair_order_seed = 0  # Default shuffle seed
         return self
 
     def get_origin_datasets(self) -> list[OriginDataset]:

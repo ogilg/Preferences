@@ -103,13 +103,20 @@ def apply_pair_order(
     pairs: list[tuple[Task, Task]],
     order: str,
     pair_order_seed: int | None,
+    include_reverse_order: bool,
 ) -> list[tuple[Task, Task]]:
-    """Apply pair ordering: canonical, reversed, or random shuffle."""
-    if pair_order_seed is not None:
-        return shuffle_pair_order(pairs, pair_order_seed)
-    if order == "reversed":
-        return flip_pairs(pairs)
-    return pairs
+    """Apply pair ordering: explicit both orders or random shuffle.
+
+    When include_reverse_order=True, we run both canonical and reversed explicitly,
+    so no shuffling. When False, shuffle pairs randomly per pair_order_seed.
+    """
+    if include_reverse_order:
+        if order == "reversed":
+            return flip_pairs(pairs)
+        return pairs  # canonical
+    # Shuffle randomly when not running both orders explicitly
+    assert pair_order_seed is not None, "pair_order_seed must be set when include_reverse_order=False"
+    return shuffle_pair_order(pairs, pair_order_seed)
 
 
 QUALITATIVE_SCALES = {
