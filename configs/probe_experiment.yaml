@@ -13,3 +13,6 @@ temperature: 1.0
 max_new_tokens: 1024
 seed: 42
 output_dir: results/probe_data
+
+# Filter to only tasks with activations
+use_tasks_with_activations: true

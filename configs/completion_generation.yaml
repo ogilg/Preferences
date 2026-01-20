@@ -12,3 +12,6 @@ task_origins:
   - bailbench
 
 generation_seeds: [0, 1]
+
+# Filter to only tasks with activations
+use_tasks_with_activations: true

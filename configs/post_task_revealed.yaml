@@ -21,3 +21,6 @@ template_sampling: lhs
 n_template_samples: 32
 lhs_seed: 42
 generation_seeds: [0, 1]
+
+# Filter to only tasks with activations
+use_tasks_with_activations: true

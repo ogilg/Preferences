@@ -1,0 +1,20 @@
+experiment_name: probe_2
+experiment_dir: results/experiments/probe_2
+activations_path: activations/activations.npz
+output_dir: results/probe_training/expanded_001
+
+templates:
+  - post_task_qualitative_001
+  - post_task_qualitative_002
+  - post_task_qualitative_013
+  - post_task_stated_001
+  - post_task_stated_002
+  - post_task_stated_013
+
+datasets:
+  - wildchat
+
+response_formats: [regex, tool_use]
+seeds: [0, 1]
+layers: [8, 16, 24]
+cv_folds: 5
