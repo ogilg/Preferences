@@ -12,11 +12,8 @@ import numpy as np
 from src.measurement_storage.loading import load_pooled_scores
 from src.probes.config import ProbeTrainingConfig
 from src.probes.storage import load_manifest, load_probe, save_manifest, save_probe
-from src.probes.train_probes import (
-    filter_activations_by_origin,
-    load_activations,
-    train_for_scores,
-)
+from src.probes.activations import filter_activations_by_origin, load_activations
+from src.probes.training import train_for_scores
 
 
 def determine_training_combinations(config: ProbeTrainingConfig) -> list[dict]:
