@@ -43,8 +43,11 @@ def build_measurement_config(
     order: str | None = None,
     seed: int | None = None,
     temperature: float | None = None,
+    experiment_id: str | None = None,
 ) -> dict:
     """Build measurement config dict for consistent storage across all measurement types."""
+    from src.running_measurements.config import get_experiment_id
+
     tags = dict(template.tags_dict)
 
     if response_format is not None:
@@ -63,5 +66,10 @@ def build_measurement_config(
 
     if temperature is not None:
         config["temperature"] = temperature
+
+    # Use passed experiment_id or fall back to current global
+    exp_id = experiment_id or get_experiment_id()
+    if exp_id is not None:
+        config["experiment_id"] = exp_id
 
     return config

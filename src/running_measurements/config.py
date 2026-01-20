@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
@@ -7,6 +8,23 @@ import yaml
 from pydantic import BaseModel, Field, model_validator
 
 from src.task_data import OriginDataset
+
+# Module-level experiment ID, set by run.py for the current run
+_current_experiment_id: str | None = None
+
+
+def set_experiment_id(experiment_id: str | None = None) -> str:
+    """Set the experiment ID for this run. Auto-generates from timestamp if not provided."""
+    global _current_experiment_id
+    if experiment_id is None:
+        experiment_id = f"exp_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    _current_experiment_id = experiment_id
+    return experiment_id
+
+
+def get_experiment_id() -> str | None:
+    """Get the current experiment ID."""
+    return _current_experiment_id
 
 
 class FittingConfig(BaseModel):
@@ -65,6 +83,9 @@ class ExperimentConfig(BaseModel):
 
     # Completion generation specific: run LLM-based refusal detection
     detect_refusals: bool = False
+
+    # Experiment tracking
+    experiment_id: str | None = None
 
     @model_validator(mode="after")
     def validate_pair_order_options(self) -> "ExperimentConfig":

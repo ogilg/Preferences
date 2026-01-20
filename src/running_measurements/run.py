@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src.running_measurements.config import load_experiment_config
+from src.running_measurements.config import load_experiment_config, set_experiment_id, get_experiment_id
 from src.running_measurements.runners import RUNNERS
 from src.running_measurements.progress import (
     MultiExperimentProgress,
@@ -36,6 +36,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("configs", nargs="+", type=Path, help="Config file(s) to run")
     parser.add_argument("--max-concurrent", type=int, default=DEFAULT_MAX_CONCURRENT,
                         help=f"Max concurrent API requests (default: {DEFAULT_MAX_CONCURRENT})")
+    parser.add_argument("--experiment-id", type=str, default=None,
+                        help="Experiment ID for tracking (auto-generated if not provided)")
     parser.add_argument("--dry-run", action="store_true", help="List experiments without running")
     parser.add_argument("--debug", action="store_true", help="Show example errors for each failure category")
     return parser.parse_args()
@@ -127,6 +129,9 @@ def main():
 
     semaphore = asyncio.Semaphore(args.max_concurrent)
 
+    # Set experiment ID for this run (auto-generates timestamp if not provided)
+    exp_id = set_experiment_id(args.experiment_id)
+    console.print(f"[bold]Experiment ID: {exp_id}")
     console.print(f"[bold]Running {len(args.configs)} experiment(s) with max {args.max_concurrent} concurrent requests\n")
 
     results = asyncio.run(run_experiments(args.configs, semaphore))
