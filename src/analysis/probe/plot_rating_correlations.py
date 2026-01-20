@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from src.running_measurements.utils.correlation import safe_correlation
+from src.analysis.correlation.utils import safe_correlation
 from src.prompt_templates.template import PromptTemplate, load_templates_from_yaml
 
 

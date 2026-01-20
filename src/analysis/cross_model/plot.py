@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.running_measurements.utils.correlation import safe_correlation
+from src.analysis.correlation.utils import safe_correlation
 from src.running_measurements.utils.plotting import (
     build_correlation_matrix,
     plot_correlation_heatmap,

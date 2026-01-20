@@ -5,23 +5,19 @@ import numpy as np
 import pytest
 import yaml
 
-from src.running_measurements.utils.correlation import (
+from src.analysis.correlation.utils import (
     safe_correlation,
     save_correlations_yaml,
     utility_vector_correlation,
     compute_pairwise_correlations,
-)
-from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
-from src.analysis.sensitivity.stated_correlation import (
-    _build_score_map,
+    build_score_map,
     compute_per_task_std,
     compute_mean_std_across_tasks,
     scores_to_vector,
-)
-from src.analysis.sensitivity.revealed_correlation import (
-    _build_win_rate_vector,
+    build_win_rate_vector,
     win_rate_correlation,
 )
+from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, TaskScore, PreferenceType
 from src.thurstonian_fitting import ThurstonianResult, OptimizationHistory
@@ -224,13 +220,13 @@ class TestRatingCorrelation:
     def tasks(self):
         return [make_task(f"task_{i}") for i in range(5)]
 
-    def test_build_score_map_averages_duplicates(self, tasks):
+    def testbuild_score_map_averages_duplicates(self, tasks):
         scores = [
             make_score(tasks[0], 7.0),
             make_score(tasks[0], 9.0),  # Duplicate task
             make_score(tasks[1], 5.0),
         ]
-        score_map = _build_score_map(scores)
+        score_map = build_score_map(scores)
 
         assert score_map["task_0"] == pytest.approx(8.0)  # Average of 7 and 9
         assert score_map["task_1"] == pytest.approx(5.0)
@@ -294,7 +290,7 @@ class TestBinaryCorrelation:
     def tasks(self):
         return [make_task(f"task_{i}") for i in range(4)]
 
-    def test_build_win_rate_vector(self, tasks):
+    def testbuild_win_rate_vector(self, tasks):
         # Task 0 always beats task 1, task 2 always beats task 3
         measurements = [
             make_measurement(tasks[0], tasks[1], "a"),
@@ -302,7 +298,7 @@ class TestBinaryCorrelation:
             make_measurement(tasks[2], tasks[3], "a"),
             make_measurement(tasks[2], tasks[3], "b"),  # 50% win rate
         ]
-        rates = _build_win_rate_vector(measurements, tasks)
+        rates = build_win_rate_vector(measurements, tasks)
 
         # n=4 tasks gives C(4,2)=6 pairs: (0,1), (0,2), (0,3), (1,2), (1,3), (2,3)
         assert len(rates) == 6
@@ -318,7 +314,7 @@ class TestBinaryCorrelation:
         measurements = [
             make_measurement(tasks[1], tasks[0], "b"),  # task_0 wins (reversed)
         ]
-        rates = _build_win_rate_vector(measurements, tasks)
+        rates = build_win_rate_vector(measurements, tasks)
 
         # Pair (0,1) should show task 0 winning
         assert rates[0] == pytest.approx(1.0)

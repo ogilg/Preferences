@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import yaml
 
-from src.running_measurements.utils.correlation import compute_pairwise_correlations
+from src.analysis.correlation.utils import compute_pairwise_correlations
 from src.analysis.sensitivity.sensitivity import (
     compute_sensitivities,
     compute_sensitivity_regression,
@@ -323,7 +323,7 @@ def main():
     source_name = args.results_dir.name
     models = sorted(set(config.model_short for config, _, _ in runs))
     model_str = models[0] if len(models) == 1 else f"{len(models)} models"
-    pref_type = "Revealed" if source_name == "measurements" else "Stated"
+    pref_type = "Revealed" if "revealed" in source_name else "Stated"
     date_str = datetime.now().strftime("%m%d%y")
 
     report_path = output_dir / f"sensitivity_{source_name}.yaml"

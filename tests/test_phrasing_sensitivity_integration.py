@@ -12,10 +12,11 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 from src.prompt_templates import load_templates_from_yaml
 from src.thurstonian_fitting import PairwiseData, fit_thurstonian
 from src.measurement_storage import save_measurements
-from src.running_measurements.utils.correlation import utility_vector_correlation, compute_pairwise_correlations
-from src.analysis.sensitivity.revealed_correlation import (
+from src.analysis.correlation.utils import (
+    utility_vector_correlation,
+    compute_pairwise_correlations,
     win_rate_correlation,
-    save_correlations,
+    save_correlations_yaml,
 )
 
 
@@ -232,12 +233,16 @@ class TestSaveFunctions:
         assert all("task_a" in d and "task_b" in d and "choice" in d for d in data)
 
     def test_save_correlations_creates_file(self, tmp_path: Path):
-        """save_correlations should create a valid YAML file."""
+        """save_correlations_yaml should create a valid YAML file."""
         correlations = [
             {"template_a": "1", "template_b": "2", "win_rate_correlation": 0.8, "utility_correlation": 0.9}
         ]
         path = tmp_path / "correlations.yaml"
-        save_correlations(correlations, path)
+        save_correlations_yaml(
+            correlations,
+            summary_keys=["win_rate_correlation", "utility_correlation"],
+            path=path,
+        )
 
         assert path.exists()
 
