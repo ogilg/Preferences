@@ -174,12 +174,19 @@ async def run_post_task_stated_async(
         data = [(tc.task, tc.completion) for tc in task_completions] * config.n_samples
 
         for cfg in configurations:
-            cache = PostStatedCache(
-                model_short, cfg.template.name, cfg.response_format,
-                completion_seed, cfg.seed,
-            )
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_cseed{completion_seed}_rseed{cfg.seed}"
 
-            if cache.exists():
+            # Skip if already done: experiment store if set, otherwise central cache
+            if exp_store:
+                should_skip = exp_store.exists("post_task_stated", run_name)
+            else:
+                cache = PostStatedCache(
+                    model_short, cfg.template.name, cfg.response_format,
+                    completion_seed, cfg.seed,
+                )
+                should_skip = cache.exists()
+
+            if should_skip:
                 stats.mark_skipped()
                 if progress_callback:
                     progress_callback(stats.completed, stats.total_runs)
@@ -210,7 +217,6 @@ async def run_post_task_stated_async(
             cache.save(batch.successes, run_config)
 
             if exp_store:
-                run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_cseed{completion_seed}_rseed{cfg.seed}"
                 measurements = [{"task_id": s.task.id, "score": s.score} for s in batch.successes]
                 exp_store.save_stated("post_task_stated", run_name, measurements, dict(run_config))
 
@@ -237,21 +243,32 @@ async def run_pre_task_revealed_async(
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for cfg in configurations:
-        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
+        seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
+        run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
 
-        existing_pairs = cache.get_existing_pairs()
-        pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
-        pairs_to_query = [
-            (a, b) for a, b in pairs
-            if (a.id, b.id) not in existing_pairs
-        ]
-        pairs_to_query = pairs_to_query * config.n_samples
+        # Skip if already done: experiment store if set, otherwise central cache
+        if exp_store:
+            should_skip = exp_store.exists("pre_task_revealed", run_name)
+        else:
+            cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
+            existing_pairs = cache.get_existing_pairs()
+            pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
+            pairs_to_query = [
+                (a, b) for a, b in pairs
+                if (a.id, b.id) not in existing_pairs
+            ]
+            pairs_to_query = pairs_to_query * config.n_samples
+            should_skip = not pairs_to_query
 
-        if not pairs_to_query:
+        if should_skip:
             stats.mark_skipped()
             if progress_callback:
                 progress_callback(stats.completed, stats.total_runs)
             continue
+
+        if exp_store:
+            pairs_to_query = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
+            pairs_to_query = pairs_to_query * config.n_samples
 
         builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=False)
 
@@ -268,8 +285,6 @@ async def run_pre_task_revealed_async(
         cache.append(batch.successes)
 
         if exp_store and batch.successes:
-            seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
-            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
             measurements = [
                 {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
                 for m in batch.successes
@@ -322,24 +337,35 @@ async def run_post_task_revealed_async(
         ]
 
         for cfg in configurations:
-            cache = PostRevealedCache(
-                model_short, cfg.template.name, cfg.response_format,
-                cfg.order, completion_seed, cfg.seed,
-            )
+            seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}{seed_suffix}"
 
-            existing_pairs = cache.get_existing_pairs()
-            pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
-            pairs_to_query = [
-                (a, b) for a, b in pairs
-                if (a.id, b.id) not in existing_pairs
-            ]
-            pairs_to_query = pairs_to_query * config.n_samples
+            # Skip if already done: experiment store if set, otherwise central cache
+            if exp_store:
+                should_skip = exp_store.exists("post_task_revealed", run_name)
+            else:
+                cache = PostRevealedCache(
+                    model_short, cfg.template.name, cfg.response_format,
+                    cfg.order, completion_seed, cfg.seed,
+                )
+                existing_pairs = cache.get_existing_pairs()
+                pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
+                pairs_to_query = [
+                    (a, b) for a, b in pairs
+                    if (a.id, b.id) not in existing_pairs
+                ]
+                pairs_to_query = pairs_to_query * config.n_samples
+                should_skip = not pairs_to_query
 
-            if not pairs_to_query:
+            if should_skip:
                 stats.mark_skipped()
                 if progress_callback:
                     progress_callback(stats.completed, stats.total_runs)
                 continue
+
+            if exp_store:
+                pairs_to_query = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
+                pairs_to_query = pairs_to_query * config.n_samples
 
             data = [
                 (task_a, task_b, completion_lookup[task_a.id], completion_lookup[task_b.id])
@@ -372,8 +398,6 @@ async def run_post_task_revealed_async(
             cache.append(batch.successes, run_config)
 
             if exp_store and batch.successes:
-                seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
-                run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}{seed_suffix}"
                 measurements = [
                     {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
                     for m in batch.successes
@@ -403,7 +427,15 @@ async def run_pre_task_stated_async(
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for cfg in configurations:
-        if stated_exist(cfg.template, ctx.client, cfg.response_format, cfg.seed):
+        run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}"
+
+        # Skip if already done: experiment store if set, otherwise central cache
+        if exp_store:
+            should_skip = exp_store.exists("pre_task_stated", run_name)
+        else:
+            should_skip = stated_exist(cfg.template, ctx.client, cfg.response_format, cfg.seed)
+
+        if should_skip:
             stats.mark_skipped()
             if progress_callback:
                 progress_callback(stats.completed, stats.total_runs)
@@ -440,7 +472,6 @@ async def run_pre_task_stated_async(
         )
 
         if exp_store:
-            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}"
             measurements = [{"task_id": s.task.id, "score": s.score} for s in batch.successes]
             exp_store.save_stated("pre_task_stated", run_name, measurements, config_dict)
 

@@ -28,6 +28,11 @@ class ExperimentStore:
         self.experiment_id = experiment_id
         self.base_dir = EXPERIMENTS_DIR / experiment_id
 
+    def exists(self, measurement_type: MeasurementType, run_name: str) -> bool:
+        """Check if a run already exists in this experiment."""
+        run_dir = self.base_dir / measurement_type / run_name
+        return (run_dir / "measurements.yaml").exists()
+
     def save_stated(
         self,
         measurement_type: MeasurementType,

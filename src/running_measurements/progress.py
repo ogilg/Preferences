@@ -57,15 +57,17 @@ class MultiExperimentProgress:
             TimeElapsedColumn(),
             console=console,
             expand=False,
+            refresh_per_second=2,
         )
+        self.live = Live(self.progress, console=console, refresh_per_second=2)
         self.tasks: dict[str, int] = {}
 
     def __enter__(self):
-        self.progress.start()
+        self.live.start()
         return self
 
     def __exit__(self, *args):
-        self.progress.stop()
+        self.live.stop()
 
     def add_experiment(self, name: str, total: int) -> int:
         """Add an experiment to track. Returns task ID."""

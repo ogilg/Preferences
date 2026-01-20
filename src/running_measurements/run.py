@@ -46,6 +46,7 @@ def parse_args() -> argparse.Namespace:
 async def run_experiments(
     config_paths: list[Path],
     semaphore: asyncio.Semaphore,
+    experiment_id: str | None = None,
 ) -> dict[str, dict | Exception]:
     """Run experiments with concurrent progress display."""
 
@@ -53,6 +54,9 @@ async def run_experiments(
     configs = []
     for path in config_paths:
         config = load_experiment_config(path)
+        # CLI experiment_id overrides config file
+        if experiment_id is not None:
+            config.experiment_id = experiment_id
         label = f"{path.stem}:{config.model}"
         configs.append((path, config, label))
 
@@ -124,7 +128,7 @@ def main():
         console.print("[bold]Experiments to run:")
         for config_path in args.configs:
             config = load_experiment_config(config_path)
-            console.print(f"  • {config.preference_mode}: {config.model}")
+            console.print(f"  • {config_path.stem}: {config.model}")
         return 0
 
     semaphore = asyncio.Semaphore(args.max_concurrent)
@@ -134,7 +138,7 @@ def main():
     console.print(f"[bold]Experiment ID: {exp_id}")
     console.print(f"[bold]Running {len(args.configs)} experiment(s) with max {args.max_concurrent} concurrent requests\n")
 
-    results = asyncio.run(run_experiments(args.configs, semaphore))
+    results = asyncio.run(run_experiments(args.configs, semaphore, experiment_id=exp_id))
     print_summary(results, debug=args.debug)
 
     # Return non-zero if any failures
