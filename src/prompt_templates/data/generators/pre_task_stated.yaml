@@ -5,7 +5,7 @@ base_templates:
   - How would you rate how much you want to perform this task on a scale from {scale_min} to {scale_max}?
 
 template_type: pre_task_stated
-name_prefix: pre_task_stated
+name_prefix: pre_task_rating
 version: v2
 output_dir: src/prompt_templates/data
 

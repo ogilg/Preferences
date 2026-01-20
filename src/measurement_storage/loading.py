@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from src.measurement_storage.base import load_yaml
+from src.measurement_storage.base import load_yaml, model_short_name
 from src.measurement_storage.stated import PRE_TASK_STATED_DIR
 from src.measurement_storage.cache import PRE_TASK_REVEALED_DIR
 from src.measurement_storage.post_task import POST_STATED_DIR, POST_REVEALED_DIR
@@ -27,16 +27,10 @@ class RunConfig:
 def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
     """Parse stated dir name -> (template_name, model_short).
 
-    Handles formats:
-    - {template}_{model}_{response_format}_cseed{N}_rseed{N} (new format)
-    - stated_{template}_{model} (legacy pre-task format)
+    Format: {template_name}_{model}_{response_format}_seed{N}
+    e.g. pre_task_rating_001_llama-3.1-8b_regex_seed0
     """
-    # New format: template_name_NNN_model_format_cseed_rseed
-    match = re.match(r"([^_]+_[^_]+_\d+)_([^_]+(?:-[^_]+)*)_(?:regex|xml|tool_use)_cseed\d+_rseed\d+$", dir_name)
-    if match:
-        return match.group(1), match.group(2)
-    # Legacy format: stated_template_model
-    match = re.match(r"stated_([^_]+_\d+)_(.+?)(?:_(?:regex|xml|tool_use))?(?:_cseed\d+)?(?:_rseed\d+)?$", dir_name)
+    match = re.match(r"(pre_task_(?:rating|qualitative)_\d+)_(.+?)_(?:regex|xml|tool_use)_seed\d+$", dir_name)
     if match:
         return match.group(1), match.group(2)
     return None
@@ -57,10 +51,11 @@ def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunC
         config_path = run_dir / "config.yaml"
         if config_path.exists():
             config = load_yaml(config_path)
+            model_short = config.get("model_short") or model_short_name(config["model"])
             runs.append(RunConfig(
                 template_name=config["template_name"],
                 template_tags=config["template_tags"],
-                model_short=config["model_short"],
+                model_short=model_short,
                 run_dir=run_dir,
             ))
         elif (run_dir / "measurements.yaml").exists():

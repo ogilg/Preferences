@@ -17,13 +17,8 @@ def _stated_dir(
     response_format: str,
     seed: int,
 ) -> Path:
-    """Build directory path for stated measurements.
-
-    Format: stated_{template_name}_{model_short}_{response_format}_seed{seed}
-    Matches the revealed/cache naming pattern for consistency.
-    """
     short = model_short_name(client.canonical_model_name)
-    return PRE_TASK_STATED_DIR / f"stated_{template.name}_{short}_{response_format}_seed{seed}"
+    return PRE_TASK_STATED_DIR / f"{template.name}_{short}_{response_format}_seed{seed}"
 
 
 def save_stated(
