@@ -90,7 +90,7 @@ class OptimizationHistory:
 
 @dataclass
 class ThurstonianResult:
-    """mu: utility means, sigma: utility standard deviations."""
+    """Thurstonian fitting result. Implements UtilityResult protocol."""
 
     tasks: list["Task"]
     mu: np.ndarray
@@ -102,10 +102,15 @@ class ThurstonianResult:
     termination_message: str
     gradient_norm: float | None
     history: OptimizationHistory
+    n_comparisons: int = 0
     _id_to_idx: dict[str, int] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         self._id_to_idx = {t.id: i for i, t in enumerate(self.tasks)}
+
+    @property
+    def n_observations(self) -> int:
+        return self.n_comparisons
 
     def utility(self, task: "Task") -> float:
         return float(self.mu[self._id_to_idx[task.id]])
@@ -123,6 +128,16 @@ class ThurstonianResult:
         """Tasks sorted by utility, highest first."""
         order = np.argsort(-self.mu)
         return [self.tasks[i] for i in order]
+
+    def to_dict(self) -> dict:
+        return {
+            "task_ids": [t.id for t in self.tasks],
+            "mu": {t.id: float(self.mu[i]) for i, t in enumerate(self.tasks)},
+            "sigma": {t.id: float(self.sigma[i]) for i, t in enumerate(self.tasks)},
+            "n_comparisons": self.n_comparisons,
+            "converged": self.converged,
+            "neg_log_likelihood": float(self.neg_log_likelihood),
+        }
 
     def normalized_utility(self, task: "Task") -> float:
         """Average probability of being preferred over all other tasks (0.5 = average)."""
@@ -261,6 +276,7 @@ def fit_thurstonian(
         termination_message=result.message,
         gradient_norm=gradient_norm,
         history=history,
+        n_comparisons=int(data.wins.sum()),
     )
 
 
@@ -298,6 +314,7 @@ def save_thurstonian(
         "neg_log_likelihood": float(result.neg_log_likelihood),
         "n_iterations": int(result.n_iterations),
         "n_function_evals": int(result.n_function_evals),
+        "n_comparisons": int(result.n_comparisons),
         "termination_message": result.termination_message,
         "gradient_norm": float(result.gradient_norm) if result.gradient_norm is not None else None,
         "history": {
@@ -365,6 +382,7 @@ def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult
         termination_message=data["termination_message"],
         gradient_norm=data["gradient_norm"],
         history=history,
+        n_comparisons=data.get("n_comparisons", 0),
     )
 
 
