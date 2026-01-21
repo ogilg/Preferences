@@ -757,6 +757,13 @@ def _save_trueskill_result(result, ctx, template_name: str, response_format: str
     save_yaml(data, output_path)
 
 
+def _shuffle_task_groups(
+    groups: list[list["Task"]], rng: np.random.Generator
+) -> list[list["Task"]]:
+    """Shuffle task order within each group to control for position bias."""
+    return [list(rng.permutation(group)) for group in groups]
+
+
 async def run_pre_task_ranking_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
@@ -778,6 +785,10 @@ async def run_pre_task_ranking_async(
         task_groups = sample_ranking_groups(
             ctx.tasks, ranking_cfg.n_tasks_per_ranking, ranking_cfg.n_groups, rng
         )
+
+        # Shuffle task order within groups to control for position bias
+        if ranking_cfg.shuffle_task_order:
+            task_groups = _shuffle_task_groups(task_groups, rng)
 
         # Filter already-measured groups
         existing = cache.get_measured_groups(cfg.template.name, cfg.response_format, cfg.seed)
@@ -853,6 +864,10 @@ async def run_post_task_ranking_async(
             task_groups = sample_ranking_groups(
                 tasks_with_completions, ranking_cfg.n_tasks_per_ranking, ranking_cfg.n_groups, rng
             )
+
+            # Shuffle task order within groups to control for position bias
+            if ranking_cfg.shuffle_task_order:
+                task_groups = _shuffle_task_groups(task_groups, rng)
 
             # Filter already-measured groups (keyed by completion_seed as well)
             cache_key_suffix = f"_cseed{completion_seed}"
