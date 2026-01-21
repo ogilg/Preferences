@@ -26,9 +26,12 @@ def model_short_name(model_name: str) -> str:
 
 
 def save_yaml(data: dict | list, path: Path) -> None:
+    """Save data to YAML file atomically to prevent corruption on interrupt."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w") as f:
+    temp_path = path.with_suffix(path.suffix + ".tmp")
+    with open(temp_path, "w") as f:
         yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+    temp_path.rename(path)
 
 
 def load_yaml(path: Path) -> dict | list:

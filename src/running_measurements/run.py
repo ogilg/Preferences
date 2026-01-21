@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.running_measurements.config import load_experiment_config, set_experiment_id, get_experiment_id
-from src.running_measurements.runners import RUNNERS
+from src.running_measurements.runners import RUNNERS, RunnerStats
 from src.running_measurements.progress import (
     MultiExperimentProgress,
     print_summary,
@@ -85,22 +85,26 @@ async def run_experiments(
             progress.set_status(label, "running...")
             last_update_time: list[float | None] = [None]
 
-            def on_progress(completed: int, total: int):
+            def on_progress(stats: RunnerStats):
                 now = time.time()
                 if last_update_time[0] is None:
-                    iter_str = "[dim]—[/dim]"
+                    iter_str = ""
                 else:
                     iter_time = now - last_update_time[0]
-                    iter_str = f"[dim]{iter_time:.1f}s/iter[/dim]"
+                    iter_str = f" [dim]{iter_time:.1f}s/iter[/dim]"
                 last_update_time[0] = now
-                progress.progress.update(progress.tasks[label], completed=completed, total=total, status=iter_str)
+                status = f"[green]{stats.successes}✓[/green] [red]{stats.failures}✗[/red]"
+                if stats.cache_hits:
+                    status += f" [cyan]{stats.cache_hits}⚡[/cyan]"
+                status += iter_str
+                progress.progress.update(progress.tasks[label], completed=stats.completed, total=stats.total_runs, status=status)
 
             try:
                 result = await runner(path, semaphore, progress_callback=on_progress)
-                skipped = result.get('skipped', 0)
-                status = f"[green]{result['successes']}✓ {result['failures']}✗"
-                if skipped:
-                    status += f" [dim]{skipped}⊘[/dim]"
+                cache_hits = result.get('cache_hits', 0)
+                status = f"[green]{result['successes']}✓[/green] [red]{result['failures']}✗[/red]"
+                if cache_hits:
+                    status += f" [cyan]{cache_hits}⚡[/cyan]"
                 progress.complete(label, status=status)
                 return label, result
             except Exception as e:

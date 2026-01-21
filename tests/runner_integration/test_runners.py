@@ -65,7 +65,7 @@ def assert_valid_result(result: dict, expect_activity: bool = True):
     if expect_activity:
         # If there were configurations to run, something should have happened
         if result["total_runs"] > 0:
-            total_activity = result["successes"] + result["failures"] + result["skipped"]
+            total_activity = result["successes"] + result["failures"] + result["skipped"] + result.get("cache_hits", 0)
             assert total_activity > 0, f"No activity despite {result['total_runs']} configurations: {result}"
 
 

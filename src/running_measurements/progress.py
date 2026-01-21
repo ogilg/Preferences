@@ -128,7 +128,7 @@ def print_summary(results: dict[str, dict | Exception], debug: bool = False):
     table.add_column("Configs", justify="right")
     table.add_column("Successes", justify="right", style="green")
     table.add_column("Failures", justify="right", style="red")
-    table.add_column("Skipped", justify="right", style="dim")
+    table.add_column("Cache Hits", justify="right", style="cyan")
 
     for label, result in results.items():
         if isinstance(result, Exception):
@@ -141,7 +141,7 @@ def print_summary(results: dict[str, dict | Exception], debug: bool = False):
                 str(result.get("total_runs", 0)),
                 str(result.get("successes", 0)),
                 str(result.get("failures", 0)),
-                str(result.get("skipped", 0)),
+                str(result.get("cache_hits", 0)),
             )
 
     console.print()

@@ -18,6 +18,7 @@ from src.measurement_storage.cache import (
 )
 from src.measurement_storage.stated import (
     PRE_TASK_STATED_DIR,
+    PreTaskStatedCache,
     load_stated,
     stated_exist,
     save_stated,

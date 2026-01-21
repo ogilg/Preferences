@@ -5,6 +5,10 @@ from __future__ import annotations
 import asyncio
 import math
 from collections.abc import Callable
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    ProgressCallback = Callable[["RunnerStats"], None]
 from dataclasses import dataclass
 from itertools import combinations
 from pathlib import Path
@@ -29,7 +33,7 @@ from src.preference_measurement.measurer import RankingMeasurer
 from src.preference_measurement.response_format import get_ranking_response_format
 from src.types import RankingMeasurement
 from src.measurement_storage import (
-    CompletionStore, PostStatedCache, PostRevealedCache, model_short_name,
+    CompletionStore, PostStatedCache, PostRevealedCache, PreTaskStatedCache, model_short_name,
     save_stated, stated_exist, MeasurementCache, MeasurementStats, save_yaml, reconstruct_measurements,
     ExperimentStore, RankingCache,
 )
@@ -66,7 +70,8 @@ class RunnerStats:
     completed: int = 0
     successes: int = 0
     failures: int = 0
-    skipped: int = 0
+    cache_hits: int = 0
+    skipped: int = 0  # Entire configurations skipped
     failure_categories: dict[str, int] | None = None
     failure_examples: dict[str, list[str]] | None = None
 
@@ -81,6 +86,7 @@ class RunnerStats:
             "total_runs": self.total_runs,
             "successes": self.successes,
             "failures": self.failures,
+            "cache_hits": self.cache_hits,
             "skipped": self.skipped,
         }
         if self.failure_categories:
@@ -93,10 +99,11 @@ class RunnerStats:
         self.completed += 1
         self.skipped += 1
 
-    def add_batch_with_failures(self, successes: int, failures: list[tuple[Any, str]]) -> None:
+    def add_batch_with_failures(self, successes: int, failures: list[tuple[Any, str]], cache_hits: int = 0) -> None:
         """Add batch results with detailed failure tracking."""
         self.successes += successes
         self.failures += len(failures)
+        self.cache_hits += cache_hits
         self.completed += 1
         for _, error_msg in failures:
             category = categorize_failure(error_msg)
@@ -106,10 +113,11 @@ class RunnerStats:
             if len(self.failure_examples[category]) < MAX_EXAMPLES_PER_CATEGORY:
                 self.failure_examples[category].append(error_msg)
 
-    def add_batch(self, n_successes: int, n_failures: int) -> None:
+    def add_batch(self, n_successes: int, n_failures: int, cache_hits: int = 0) -> None:
         """Add batch results (legacy, no categorization)."""
         self.successes += n_successes
         self.failures += n_failures
+        self.cache_hits += cache_hits
         self.completed += 1
 
 
@@ -156,7 +164,7 @@ def build_revealed_builder(template, response_format_name: str, post_task: bool 
 async def run_post_task_stated_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run post-task stated measurement with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="post_task_stated")
@@ -176,42 +184,53 @@ async def run_post_task_stated_async(
             continue
 
         task_completions = store.load(ctx.task_lookup)
-        data = [(tc.task, tc.completion) for tc in task_completions] * config.n_samples
+        completion_lookup = {tc.task.id: tc.completion for tc in task_completions}
+        tasks_data = [tc.task for tc in task_completions] * config.n_samples
 
         for cfg in configurations:
             run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_cseed{completion_seed}_rseed{cfg.seed}"
+
+            # Skip if already done in experiment store
+            if exp_store and exp_store.exists("post_task_stated", run_name):
+                stats.mark_skipped()
+                if progress_callback:
+                    progress_callback(stats)
+                continue
 
             cache = PostStatedCache(
                 ctx.client.canonical_model_name, cfg.template, cfg.response_format,
                 completion_seed, cfg.seed,
             )
 
-            # Skip if already done: experiment store if set, otherwise central cache
-            if exp_store:
-                should_skip = exp_store.exists("post_task_stated", run_name)
-            else:
-                should_skip = len(cache.get_existing_task_ids()) > 0
-
-            if should_skip:
-                stats.mark_skipped()
-                if progress_callback:
-                    progress_callback(stats.completed, stats.total_runs)
-                continue
-
             builder = build_stated_builder(cfg.template, cfg.response_format, post_task=True)
 
-            batch = await measure_post_task_stated_async(
-                client=ctx.client,
-                data=data,
-                builder=builder,
-                semaphore=semaphore,
-                temperature=config.temperature,
-                seed=cfg.seed,
+            async def measure_fn(data: list[tuple[Task, str]]) -> MeasurementBatch:
+                return await measure_post_task_stated_async(
+                    client=ctx.client,
+                    data=data,
+                    builder=builder,
+                    semaphore=semaphore,
+                    temperature=config.temperature,
+                    seed=cfg.seed,
+                )
+
+            scores, batch_stats = await cache.get_or_measure_async(
+                tasks_data, completion_lookup, measure_fn
             )
 
-            stats.add_batch_with_failures(len(batch.successes), batch.failures)
-
-            cache.save(batch.successes)
+            # Update runner stats from batch stats
+            stats.successes += batch_stats.api_successes
+            stats.failures += batch_stats.api_failures
+            stats.cache_hits += batch_stats.cache_hits
+            for cat, count in batch_stats.failure_categories.items():
+                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
+            for cat, examples in batch_stats.failure_examples.items():
+                if cat not in stats.failure_examples:
+                    stats.failure_examples[cat] = []
+                for ex in examples:
+                    if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                        stats.failure_examples[cat].append(ex)
+            stats.completed += 1
 
             run_config: PostTaskRunConfig = {
                 "model": ctx.client.model_name,
@@ -223,12 +242,12 @@ async def run_post_task_stated_async(
                 "temperature": config.temperature,
             }
 
-            if exp_store:
-                measurements = [{"task_id": s.task.id, "score": s.score} for s in batch.successes]
-                exp_store.save_stated("post_task_stated", run_name, measurements, dict(run_config))
+            if exp_store and scores:
+                measurements_dicts = [{"task_id": s.task.id, "score": s.score} for s in scores]
+                exp_store.save_stated("post_task_stated", run_name, measurements_dicts, dict(run_config))
 
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
 
     return stats.to_dict()
 
@@ -236,7 +255,7 @@ async def run_post_task_stated_async(
 async def run_pre_task_revealed_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run pre-task revealed measurement with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="pre_task_revealed")
@@ -253,48 +272,51 @@ async def run_pre_task_revealed_async(
         seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
         run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
 
-        # Skip if already done: experiment store if set, otherwise central cache
-        if exp_store:
-            should_skip = exp_store.exists("pre_task_revealed", run_name)
-        else:
-            cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
-            existing_pairs = cache.get_existing_pairs()
-            pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
-            pairs_to_query = [
-                (a, b) for a, b in pairs
-                if (a.id, b.id) not in existing_pairs
-            ]
-            pairs_to_query = pairs_to_query * config.n_samples
-            should_skip = not pairs_to_query
-
-        if should_skip:
+        # Skip if already done in experiment store
+        if exp_store and exp_store.exists("pre_task_revealed", run_name):
             stats.mark_skipped()
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
             continue
 
-        if exp_store:
-            pairs_to_query = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
-            pairs_to_query = pairs_to_query * config.n_samples
+        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
+        pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
+        pairs_with_repeats = pairs * config.n_samples
 
         builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=False)
 
-        batch = await measure_pre_task_revealed_async(
-            client=ctx.client,
-            pairs=pairs_to_query,
-            builder=builder,
-            semaphore=semaphore,
-            temperature=config.temperature,
-            seed=cfg.seed,
+        async def measure_fn(pairs_to_query: list[tuple[Task, Task]]) -> MeasurementBatch:
+            return await measure_pre_task_revealed_async(
+                client=ctx.client,
+                pairs=pairs_to_query,
+                builder=builder,
+                semaphore=semaphore,
+                temperature=config.temperature,
+                seed=cfg.seed,
+            )
+
+        measurements, batch_stats = await cache.get_or_measure_async(
+            pairs_with_repeats, measure_fn, ctx.task_lookup
         )
 
-        stats.add_batch_with_failures(len(batch.successes), batch.failures)
-        cache.append(batch.successes)
+        # Update runner stats from batch stats
+        stats.successes += batch_stats.api_successes
+        stats.failures += batch_stats.api_failures
+        stats.cache_hits += batch_stats.cache_hits
+        for cat, count in batch_stats.failure_categories.items():
+            stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
+        for cat, examples in batch_stats.failure_examples.items():
+            if cat not in stats.failure_examples:
+                stats.failure_examples[cat] = []
+            for ex in examples:
+                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                    stats.failure_examples[cat].append(ex)
+        stats.completed += 1
 
-        if exp_store and batch.successes:
-            measurements = [
+        if exp_store and measurements:
+            measurements_dicts = [
                 {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
-                for m in batch.successes
+                for m in measurements
             ]
             config_dict = build_measurement_config(
                 template=cfg.template,
@@ -304,10 +326,10 @@ async def run_pre_task_revealed_async(
                 seed=cfg.seed,
                 temperature=config.temperature,
             )
-            exp_store.save_revealed("pre_task_revealed", run_name, measurements, config_dict)
+            exp_store.save_revealed("pre_task_revealed", run_name, measurements_dicts, config_dict)
 
         if progress_callback:
-            progress_callback(stats.completed, stats.total_runs)
+            progress_callback(stats)
 
     return stats.to_dict()
 
@@ -315,7 +337,7 @@ async def run_pre_task_revealed_async(
 async def run_post_task_revealed_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run post-task revealed measurement with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="post_task_revealed")
@@ -347,53 +369,49 @@ async def run_post_task_revealed_async(
             seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
             run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}{seed_suffix}"
 
+            # Skip if already done in experiment store
+            if exp_store and exp_store.exists("post_task_revealed", run_name):
+                stats.mark_skipped()
+                if progress_callback:
+                    progress_callback(stats)
+                continue
+
             cache = PostRevealedCache(
                 ctx.client.canonical_model_name, cfg.template, cfg.response_format,
                 cfg.order, completion_seed, cfg.seed,
             )
-
-            # Skip if already done: experiment store if set, otherwise central cache
-            if exp_store:
-                should_skip = exp_store.exists("post_task_revealed", run_name)
-            else:
-                existing_pairs = cache.get_existing_pairs()
-                pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
-                pairs_to_query = [
-                    (a, b) for a, b in pairs
-                    if (a.id, b.id) not in existing_pairs
-                ]
-                pairs_to_query = pairs_to_query * config.n_samples
-                should_skip = not pairs_to_query
-
-            if should_skip:
-                stats.mark_skipped()
-                if progress_callback:
-                    progress_callback(stats.completed, stats.total_runs)
-                continue
-
-            if exp_store:
-                pairs_to_query = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
-                pairs_to_query = pairs_to_query * config.n_samples
-
-            data = [
-                (task_a, task_b, completion_lookup[task_a.id], completion_lookup[task_b.id])
-                for task_a, task_b in pairs_to_query
-            ]
+            pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
+            pairs_with_repeats = pairs * config.n_samples
 
             builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=True)
 
-            batch = await measure_post_task_revealed_async(
-                client=ctx.client,
-                data=data,
-                builder=builder,
-                semaphore=semaphore,
-                temperature=config.temperature,
-                seed=cfg.seed,
+            async def measure_fn(data: list[tuple[Task, Task, str, str]]) -> MeasurementBatch:
+                return await measure_post_task_revealed_async(
+                    client=ctx.client,
+                    data=data,
+                    builder=builder,
+                    semaphore=semaphore,
+                    temperature=config.temperature,
+                    seed=cfg.seed,
+                )
+
+            measurements, batch_stats = await cache.get_or_measure_async(
+                pairs_with_repeats, completion_lookup, measure_fn, ctx.task_lookup
             )
 
-            stats.add_batch_with_failures(len(batch.successes), batch.failures)
-
-            cache.append(batch.successes)
+            # Update runner stats from batch stats
+            stats.successes += batch_stats.api_successes
+            stats.failures += batch_stats.api_failures
+            stats.cache_hits += batch_stats.cache_hits
+            for cat, count in batch_stats.failure_categories.items():
+                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
+            for cat, examples in batch_stats.failure_examples.items():
+                if cat not in stats.failure_examples:
+                    stats.failure_examples[cat] = []
+                for ex in examples:
+                    if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                        stats.failure_examples[cat].append(ex)
+            stats.completed += 1
 
             run_config: PostTaskRevealedRunConfig = {
                 "model": ctx.client.model_name,
@@ -406,15 +424,15 @@ async def run_post_task_revealed_async(
                 "temperature": config.temperature,
             }
 
-            if exp_store and batch.successes:
-                measurements = [
+            if exp_store and measurements:
+                measurements_dicts = [
                     {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
-                    for m in batch.successes
+                    for m in measurements
                 ]
-                exp_store.save_revealed("post_task_revealed", run_name, measurements, dict(run_config))
+                exp_store.save_revealed("post_task_revealed", run_name, measurements_dicts, dict(run_config))
 
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
 
     return stats.to_dict()
 
@@ -422,7 +440,7 @@ async def run_post_task_revealed_async(
 async def run_pre_task_stated_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run pre-task stated measurement with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="pre_task_stated")
@@ -438,30 +456,41 @@ async def run_pre_task_stated_async(
     for cfg in configurations:
         run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}"
 
-        # Skip if already done: experiment store if set, otherwise central cache
-        if exp_store:
-            should_skip = exp_store.exists("pre_task_stated", run_name)
-        else:
-            should_skip = stated_exist(cfg.template, ctx.client, cfg.response_format, cfg.seed)
-
-        if should_skip:
+        # Skip if already done in experiment store
+        if exp_store and exp_store.exists("pre_task_stated", run_name):
             stats.mark_skipped()
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
             continue
 
+        cache = PreTaskStatedCache(cfg.template, ctx.client, cfg.response_format, cfg.seed)
         builder = build_stated_builder(cfg.template, cfg.response_format, post_task=False)
 
-        batch = await measure_pre_task_stated_async(
-            client=ctx.client,
-            tasks=tasks_data,
-            builder=builder,
-            semaphore=semaphore,
-            temperature=config.temperature,
-            seed=cfg.seed,
-        )
+        async def measure_fn(tasks_to_query: list[Task]) -> MeasurementBatch:
+            return await measure_pre_task_stated_async(
+                client=ctx.client,
+                tasks=tasks_to_query,
+                builder=builder,
+                semaphore=semaphore,
+                temperature=config.temperature,
+                seed=cfg.seed,
+            )
 
-        stats.add_batch_with_failures(len(batch.successes), batch.failures)
+        scores, batch_stats = await cache.get_or_measure_async(tasks_data, measure_fn)
+
+        # Update runner stats from batch stats
+        stats.successes += batch_stats.api_successes
+        stats.failures += batch_stats.api_failures
+        stats.cache_hits += batch_stats.cache_hits
+        for cat, count in batch_stats.failure_categories.items():
+            stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
+        for cat, examples in batch_stats.failure_examples.items():
+            if cat not in stats.failure_examples:
+                stats.failure_examples[cat] = []
+            for ex in examples:
+                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                    stats.failure_examples[cat].append(ex)
+        stats.completed += 1
 
         config_dict = build_measurement_config(
             template=cfg.template,
@@ -471,21 +500,12 @@ async def run_pre_task_stated_async(
             temperature=config.temperature,
         )
 
-        save_stated(
-            template=cfg.template,
-            client=ctx.client,
-            scores=batch.successes,
-            response_format=cfg.response_format,
-            seed=cfg.seed,
-            config=config_dict,
-        )
-
-        if exp_store:
-            measurements = [{"task_id": s.task.id, "score": s.score} for s in batch.successes]
-            exp_store.save_stated("pre_task_stated", run_name, measurements, config_dict)
+        if exp_store and scores:
+            measurements_dicts = [{"task_id": s.task.id, "score": s.score} for s in scores]
+            exp_store.save_stated("pre_task_stated", run_name, measurements_dicts, config_dict)
 
         if progress_callback:
-            progress_callback(stats.completed, stats.total_runs)
+            progress_callback(stats)
 
     return stats.to_dict()
 
@@ -519,7 +539,7 @@ async def _measure_revealed_pairs(
 async def run_active_learning_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
     post_task: bool = False,
 ) -> dict:
     """Run active learning with shared semaphore. Supports both pre-task and post-task modes."""
@@ -554,7 +574,7 @@ async def run_active_learning_async(
         if (cache.cache_dir / f"thurstonian_active_learning_{config_hash}.yaml").exists():
             stats.mark_skipped()
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
             continue
 
         state = ActiveLearningState(tasks=tasks_for_learning)
@@ -632,6 +652,7 @@ async def run_active_learning_async(
         # Update runner stats from this configuration
         stats.successes += config_stats.api_successes
         stats.failures += config_stats.api_failures
+        stats.cache_hits += config_stats.cache_hits
         for cat, count in config_stats.failure_categories.items():
             stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
         for cat, examples in config_stats.failure_examples.items():
@@ -662,7 +683,7 @@ async def run_active_learning_async(
         }, cache.cache_dir / "active_learning.yaml")
 
         if progress_callback:
-            progress_callback(stats.completed, stats.total_runs)
+            progress_callback(stats)
 
     return stats.to_dict()
 
@@ -670,7 +691,7 @@ async def run_active_learning_async(
 async def run_post_task_active_learning_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run post-task active learning with shared semaphore."""
     return await run_active_learning_async(config_path, semaphore, progress_callback, post_task=True)
@@ -679,7 +700,7 @@ async def run_post_task_active_learning_async(
 async def run_pre_task_active_learning_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run pre-task active learning with shared semaphore."""
     return await run_active_learning_async(config_path, semaphore, progress_callback, post_task=False)
@@ -688,7 +709,7 @@ async def run_pre_task_active_learning_async(
 async def run_completion_generation_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run completion generation with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="completion_generation", max_new_tokens=1024, require_templates=False)
@@ -705,7 +726,7 @@ async def run_completion_generation_async(
         if not tasks_to_complete:
             stats.mark_skipped()
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
             continue
 
         # generate_completions is sync, run in executor
@@ -734,7 +755,7 @@ async def run_completion_generation_async(
         stats.add_batch(len(completions), len(tasks_to_complete) - len(completions))
 
         if progress_callback:
-            progress_callback(stats.completed, stats.total_runs)
+            progress_callback(stats)
 
     return stats.to_dict()
 
@@ -767,7 +788,7 @@ def _shuffle_task_groups(
 async def run_pre_task_ranking_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run pre-task ranking measurement with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="pre_task_ranking")
@@ -797,7 +818,7 @@ async def run_pre_task_ranking_async(
         if not groups_to_measure:
             stats.mark_skipped()
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
             continue
 
         # Build task labels (A, B, C, D, E)
@@ -826,7 +847,7 @@ async def run_pre_task_ranking_async(
             _save_trueskill_result(result, ctx, cfg.template.name, cfg.response_format, cfg.seed)
 
         if progress_callback:
-            progress_callback(stats.completed, stats.total_runs)
+            progress_callback(stats)
 
     return stats.to_dict()
 
@@ -834,7 +855,7 @@ async def run_pre_task_ranking_async(
 async def run_post_task_ranking_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
-    progress_callback: Callable[[int, int], None] | None = None,
+    progress_callback: "ProgressCallback | None" = None,
 ) -> dict:
     """Run post-task ranking measurement with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="post_task_ranking")
@@ -879,7 +900,7 @@ async def run_post_task_ranking_async(
             if not groups_to_measure:
                 stats.mark_skipped()
                 if progress_callback:
-                    progress_callback(stats.completed, stats.total_runs)
+                    progress_callback(stats)
                 continue
 
             # Build task labels (A, B, C, D, E)
@@ -919,7 +940,7 @@ async def run_post_task_ranking_async(
                 )
 
             if progress_callback:
-                progress_callback(stats.completed, stats.total_runs)
+                progress_callback(stats)
 
     return stats.to_dict()
 

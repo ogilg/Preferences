@@ -83,6 +83,18 @@ def mock_client():
     return client
 
 
+@pytest.fixture
+def sample_template():
+    """A simple template for testing cache operations."""
+    from src.prompt_templates.template import PromptTemplate
+    return PromptTemplate(
+        name="test_template",
+        template="Rate this: {task}",
+        required_placeholders=frozenset({"task"}),
+        tags=frozenset({"test_tag:value"}),
+    )
+
+
 # =============================================================================
 # CompletionStore Tests
 # =============================================================================
@@ -468,14 +480,16 @@ class TestFullPostTaskPipeline:
 class TestPostRevealedCacheActiveLearning:
     """Tests for PostRevealedCache methods used in active learning."""
 
-    def test_get_measurements_returns_empty_when_no_file(self, temp_results_dir):
+    def test_get_measurements_returns_empty_when_no_file(self, temp_results_dir, sample_template):
         """get_measurements should return empty list when no cache exists."""
+        import uuid
         from src.measurement_storage.post_task import PostRevealedCache
 
         with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+            # Use unique model name to avoid cache pollution from other tests
             cache = PostRevealedCache(
-                model_name="test-model",
-                template_name="test_template",
+                model_name=f"test-model-{uuid.uuid4().hex[:8]}",
+                template=sample_template,
                 response_format="regex",
                 order="canonical",
                 completion_seed=0,
@@ -484,14 +498,15 @@ class TestPostRevealedCacheActiveLearning:
             result = cache.get_measurements()
             assert result == []
 
-    def test_get_measurements_filters_by_task_ids(self, sample_tasks, temp_results_dir):
+    def test_get_measurements_filters_by_task_ids(self, sample_tasks, temp_results_dir, sample_template):
         """get_measurements should filter by task_ids when provided."""
+        import uuid
         from src.measurement_storage.post_task import PostRevealedCache
 
         with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
-                model_name="test-model",
-                template_name="test_template",
+                model_name=f"test-model-{uuid.uuid4().hex[:8]}",
+                template=sample_template,
                 response_format="regex",
                 order="canonical",
                 completion_seed=0,
@@ -509,7 +524,7 @@ class TestPostRevealedCacheActiveLearning:
                     choice="b", preference_type=PreferenceType.POST_TASK_REVEALED,
                 ),
             ]
-            cache.append(measurements, config={"test": True})
+            cache.append(measurements)
 
             # Get all
             all_data = cache.get_measurements()
@@ -520,14 +535,16 @@ class TestPostRevealedCacheActiveLearning:
             assert len(filtered) == 1
             assert filtered[0]["task_a"] == "math_1"
 
-    def test_get_or_measure_post_task_uses_cache(self, sample_tasks, task_lookup, temp_results_dir, mock_client):
-        """get_or_measure_post_task should return cached measurements without calling API."""
+    @pytest.mark.asyncio
+    async def test_get_or_measure_async_uses_cache(self, sample_tasks, task_lookup, temp_results_dir, sample_template):
+        """get_or_measure_async should return cached measurements without calling API."""
+        import uuid
         from src.measurement_storage.post_task import PostRevealedCache
 
         with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
-                model_name="test-model",
-                template_name="test_template",
+                model_name=f"test-model-{uuid.uuid4().hex[:8]}",
+                template=sample_template,
                 response_format="regex",
                 order="canonical",
                 completion_seed=0,
@@ -541,7 +558,7 @@ class TestPostRevealedCacheActiveLearning:
                     choice="a", preference_type=PreferenceType.POST_TASK_REVEALED,
                 ),
             ]
-            cache.append(measurements, config={"test": True})
+            cache.append(measurements)
 
             # Setup
             completion_lookup = {
@@ -551,29 +568,31 @@ class TestPostRevealedCacheActiveLearning:
             pairs = [(sample_tasks[0], sample_tasks[1])]
 
             # Mock measure_fn that should NOT be called
-            measure_fn = MagicMock()
+            measure_fn = AsyncMock()
 
-            batch, cache_hits, api_queries = cache.get_or_measure_post_task(
-                pairs, completion_lookup, measure_fn, task_lookup, config={}
+            result, stats = await cache.get_or_measure_async(
+                pairs, completion_lookup, measure_fn, task_lookup
             )
 
-            assert cache_hits == 1
-            assert api_queries == 0
+            assert stats.cache_hits == 1
+            assert stats.api_successes == 0
             measure_fn.assert_not_called()
-            assert len(batch.successes) == 1
-            assert batch.successes[0].choice == "a"
+            assert len(result) == 1
+            assert result[0].choice == "a"
 
-    def test_get_or_measure_post_task_calls_api_for_misses(
-        self, sample_tasks, task_lookup, temp_results_dir, mock_client
+    @pytest.mark.asyncio
+    async def test_get_or_measure_async_calls_api_for_misses(
+        self, sample_tasks, task_lookup, temp_results_dir, sample_template
     ):
-        """get_or_measure_post_task should call measure_fn for uncached pairs."""
+        """get_or_measure_async should call measure_fn for uncached pairs."""
+        import uuid
         from src.measurement_storage.post_task import PostRevealedCache
         from src.types import MeasurementBatch
 
         with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
-                model_name="test-model",
-                template_name="test_template",
+                model_name=f"test-model-{uuid.uuid4().hex[:8]}",
+                template=sample_template,
                 response_format="regex",
                 order="canonical",
                 completion_seed=0,
@@ -591,19 +610,19 @@ class TestPostRevealedCacheActiveLearning:
                 task_a=sample_tasks[0], task_b=sample_tasks[1],
                 choice="b", preference_type=PreferenceType.POST_TASK_REVEALED,
             )
-            measure_fn = MagicMock(return_value=MeasurementBatch(
+            measure_fn = AsyncMock(return_value=MeasurementBatch(
                 successes=[mock_measurement], failures=[]
             ))
 
-            batch, cache_hits, api_queries = cache.get_or_measure_post_task(
-                pairs, completion_lookup, measure_fn, task_lookup, config={"test": True}
+            result, stats = await cache.get_or_measure_async(
+                pairs, completion_lookup, measure_fn, task_lookup
             )
 
-            assert cache_hits == 0
-            assert api_queries == 1
+            assert stats.cache_hits == 0
+            assert stats.api_successes == 1
             measure_fn.assert_called_once()
-            assert len(batch.successes) == 1
-            assert batch.successes[0].choice == "b"
+            assert len(result) == 1
+            assert result[0].choice == "b"
 
             # Verify it was cached
             cached = cache.get_measurements()
@@ -613,8 +632,9 @@ class TestPostRevealedCacheActiveLearning:
 class TestPostTaskActiveLearningE2E:
     """End-to-end test of post-task active learning workflow."""
 
-    def test_active_learning_loop_with_caching(
-        self, sample_tasks, task_lookup, temp_results_dir, mock_client
+    @pytest.mark.asyncio
+    async def test_active_learning_loop_with_caching(
+        self, sample_tasks, task_lookup, temp_results_dir, sample_template
     ):
         """Test the full active learning loop with caching behavior."""
         from src.measurement_storage.post_task import PostRevealedCache
@@ -625,10 +645,13 @@ class TestPostTaskActiveLearningE2E:
         )
         from src.types import MeasurementBatch
 
+        import uuid
+        unique_model = f"test-model-e2e-{uuid.uuid4().hex[:8]}"
+
         with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
-                model_name="test-model",
-                template_name="test_template",
+                model_name=unique_model,
+                template=sample_template,
                 response_format="regex",
                 order="canonical",
                 completion_seed=0,
@@ -644,7 +667,7 @@ class TestPostTaskActiveLearningE2E:
 
             # Simulate measure_fn that returns deterministic choices
             call_count = [0]
-            def mock_measure_fn(data):
+            async def mock_measure_fn(data):
                 results = []
                 for task_a, task_b, comp_a, comp_b in data:
                     call_count[0] += 1
@@ -656,27 +679,26 @@ class TestPostTaskActiveLearningE2E:
                 return MeasurementBatch(successes=results, failures=[])
 
             # First iteration - all should be API calls
-            batch, cache_hits, api_queries = cache.get_or_measure_post_task(
-                pairs, completion_lookup, mock_measure_fn, task_lookup, config={"test": True}
+            result, stats = await cache.get_or_measure_async(
+                pairs, completion_lookup, mock_measure_fn, task_lookup
             )
-            first_call_count = call_count[0]
 
-            assert cache_hits == 0
-            assert api_queries == len(pairs)
-            assert len(batch.successes) == len(pairs)
+            assert stats.cache_hits == 0
+            assert stats.api_successes == len(pairs)
+            assert len(result) == len(pairs)
 
-            state.add_comparisons(batch.successes)
+            state.add_comparisons(result)
 
             # Second iteration - same pairs should all be cache hits
             call_count[0] = 0
-            batch2, cache_hits2, api_queries2 = cache.get_or_measure_post_task(
-                pairs, completion_lookup, mock_measure_fn, task_lookup, config={"test": True}
+            result2, stats2 = await cache.get_or_measure_async(
+                pairs, completion_lookup, mock_measure_fn, task_lookup
             )
 
-            assert cache_hits2 == len(pairs)
-            assert api_queries2 == 0
+            assert stats2.cache_hits == len(pairs)
+            assert stats2.api_successes == 0
             assert call_count[0] == 0  # measure_fn not called
-            assert len(batch2.successes) == len(pairs)
+            assert len(result2) == len(pairs)
 
             # Verify state tracks measurements correctly
             assert len(state.comparisons) == len(pairs)

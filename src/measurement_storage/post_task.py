@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING, Callable, Awaitable
 
 from src.measurement_storage.unified_cache import StatedCache, RevealedCache, template_config_from_template
+from src.measurement_storage.cache import MeasurementStats, categorize_failure, reconstruct_measurements, MAX_EXAMPLES_PER_CATEGORY
+from src.types import PreferenceType
 
 if TYPE_CHECKING:
     from src.prompt_templates.template import PromptTemplate
@@ -23,7 +25,7 @@ class PostStatedCache:
     def __init__(
         self,
         model_name: str,
-        template: PromptTemplate,
+        template: "PromptTemplate",
         response_format: str,
         completion_seed: int,
         rating_seed: int,
@@ -43,7 +45,7 @@ class PostStatedCache:
             completion_seed=self._completion_seed,
         )
 
-    def save(self, scores: list[TaskScore]) -> None:
+    def save(self, scores: list["TaskScore"]) -> None:
         """Save scores to cache."""
         for s in scores:
             self._cache.add(
@@ -55,6 +57,75 @@ class PostStatedCache:
                 completion_seed=self._completion_seed,
             )
         self._cache.save()
+
+    def _partition_tasks(
+        self,
+        tasks: list["Task"],
+    ) -> tuple[list["TaskScore"], list["Task"]]:
+        """Split tasks into cached hits and tasks needing API calls."""
+        from src.types import TaskScore
+
+        existing_ids = self.get_existing_task_ids()
+
+        # Build lookup of cached scores by task_id
+        cached_scores: dict[str, list[float]] = {}
+        for task_id in existing_ids:
+            samples = self._cache.get(
+                template_config=self._template_config,
+                response_format=self._response_format,
+                rating_seed=self._rating_seed,
+                task_id=task_id,
+                completion_seed=self._completion_seed,
+            )
+            cached_scores[task_id] = [s["score"] for s in samples]
+
+        cached_hits: list[TaskScore] = []
+        to_query: list[Task] = []
+
+        for task in tasks:
+            if task.id in cached_scores and cached_scores[task.id]:
+                score = cached_scores[task.id].pop()
+                cached_hits.append(TaskScore(
+                    task=task,
+                    score=score,
+                    preference_type=PreferenceType.POST_TASK_STATED,
+                ))
+            else:
+                to_query.append(task)
+
+        return cached_hits, to_query
+
+    async def get_or_measure_async(
+        self,
+        tasks: list["Task"],
+        completion_lookup: dict[str, str],
+        measure_fn: Callable[[list[tuple["Task", str]]], Awaitable["MeasurementBatch"]],
+    ) -> tuple[list["TaskScore"], MeasurementStats]:
+        """Check cache for each task, call measure_fn for misses, return combined."""
+        from src.types import TaskScore
+
+        if not tasks:
+            return [], MeasurementStats()
+
+        cached_hits, to_query = self._partition_tasks(tasks)
+        stats = MeasurementStats(cache_hits=len(cached_hits))
+
+        if to_query:
+            data = [(task, completion_lookup[task.id]) for task in to_query]
+            fresh_batch = await measure_fn(data)
+            stats.api_successes = len(fresh_batch.successes)
+            stats.api_failures = len(fresh_batch.failures)
+            for _, error_msg in fresh_batch.failures:
+                cat = categorize_failure(error_msg)
+                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
+                if cat not in stats.failure_examples:
+                    stats.failure_examples[cat] = []
+                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                    stats.failure_examples[cat].append(error_msg)
+            self.save(fresh_batch.successes)
+            return cached_hits + fresh_batch.successes, stats
+
+        return cached_hits, stats
 
 
 class PostRevealedCache:
@@ -116,23 +187,12 @@ class PostRevealedCache:
             completion_seed=self._completion_seed,
         )
 
-    def get_or_measure_post_task(
+    def _partition_pairs(
         self,
         pairs: list[tuple[Task, Task]],
-        completion_lookup: dict[str, str],
-        measure_fn: Callable[[list[tuple[Task, Task, str, str]]], MeasurementBatch],
         task_lookup: dict[str, Task],
-    ) -> tuple[MeasurementBatch, int, int]:
-        """Check cache for each pair, call measure_fn for misses, return combined.
-
-        Returns (batch, cache_hits, api_queries).
-        """
-        from src.measurement_storage.cache import reconstruct_measurements
-        from src.types import MeasurementBatch
-
-        if not pairs:
-            return MeasurementBatch(successes=[], failures=[]), 0, 0
-
+    ) -> tuple[list[BinaryPreferenceMeasurement], list[tuple[Task, Task]]]:
+        """Split pairs into cached hits and pairs needing API calls."""
         cached_raw = self.get_measurements()
         cached_by_pair: dict[tuple[str, str], list[dict[str, str]]] = {}
         for m in cached_raw:
@@ -148,21 +208,38 @@ class PostRevealedCache:
             else:
                 to_query.append((a, b))
 
-        cached_hits = reconstruct_measurements(cached_hits_raw, task_lookup)
+        return reconstruct_measurements(cached_hits_raw, task_lookup), to_query
+
+    async def get_or_measure_async(
+        self,
+        pairs: list[tuple[Task, Task]],
+        completion_lookup: dict[str, str],
+        measure_fn: Callable[[list[tuple[Task, Task, str, str]]], Awaitable[MeasurementBatch]],
+        task_lookup: dict[str, Task],
+    ) -> tuple[list[BinaryPreferenceMeasurement], MeasurementStats]:
+        """Check cache for each pair, call measure_fn for misses, return combined."""
+        if not pairs:
+            return [], MeasurementStats()
+
+        cached_hits, to_query = self._partition_pairs(pairs, task_lookup)
+        stats = MeasurementStats(cache_hits=len(cached_hits))
 
         if to_query:
             data = [
                 (a, b, completion_lookup[a.id], completion_lookup[b.id])
                 for a, b in to_query
             ]
-            fresh_batch = measure_fn(data)
+            fresh_batch = await measure_fn(data)
+            stats.api_successes = len(fresh_batch.successes)
+            stats.api_failures = len(fresh_batch.failures)
+            for _, error_msg in fresh_batch.failures:
+                cat = categorize_failure(error_msg)
+                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
+                if cat not in stats.failure_examples:
+                    stats.failure_examples[cat] = []
+                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
+                    stats.failure_examples[cat].append(error_msg)
             self.append(fresh_batch.successes)
-        else:
-            fresh_batch = MeasurementBatch(successes=[], failures=[])
+            return cached_hits + fresh_batch.successes, stats
 
-        combined_successes = cached_hits + fresh_batch.successes
-        return (
-            MeasurementBatch(successes=combined_successes, failures=fresh_batch.failures),
-            len(cached_hits),
-            len(to_query),
-        )
+        return cached_hits, stats

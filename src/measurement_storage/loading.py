@@ -75,8 +75,11 @@ def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
 
     Format: {template_name}_{model}_{response_format}_seed{N}
     e.g. pre_task_rating_001_llama-3.1-8b_regex_seed0
+    e.g. pre_task_stated_001_llama-3.1-8b_tool_use_seed0
+    e.g. post_task_stated_001_llama-3.1-8b_regex_cseed0_rseed0
     """
-    match = re.match(r"(pre_task_(?:rating|qualitative)_\d+)_(.+?)_(?:regex|xml|tool_use)_seed\d+$", dir_name)
+    # Match pre_task or post_task templates (qualitative, stated, rating, etc.)
+    match = re.match(r"((?:pre|post)_task_(?:rating|qualitative|stated)_\d+)_(.+?)_(?:regex|xml|tool_use)_(?:cseed\d+_rseed\d+|seed\d+)$", dir_name)
     if match:
         return match.group(1), match.group(2)
     return None
