@@ -43,10 +43,17 @@ class ActiveLearningConfig(BaseModel):
     seed: int | None = None
 
 
+class RankingConfig(BaseModel):
+    n_tasks_per_ranking: int = 5
+    n_groups: int = 40
+    seed: int = 42
+
+
 class ExperimentConfig(BaseModel):
     preference_mode: Literal[
         "pre_task_revealed", "pre_task_stated", "pre_task_active_learning",
         "post_task_revealed", "post_task_stated", "post_task_active_learning",
+        "pre_task_ranking", "post_task_ranking",
         "completion_generation",
     ]
 
@@ -68,6 +75,9 @@ class ExperimentConfig(BaseModel):
 
     # Active learning specific
     active_learning: ActiveLearningConfig | None = None
+
+    # Ranking specific
+    ranking: RankingConfig | None = None
 
     # Sensitivity dimensions
     response_formats: list[Literal["regex", "tool_use", "xml"]] = ["regex"]
@@ -97,6 +107,13 @@ class ExperimentConfig(BaseModel):
             raise ValueError("Cannot set pair_order_seed when include_reverse_order=True (no shuffling needed)")
         if not self.include_reverse_order and self.pair_order_seed is None:
             self.pair_order_seed = 0  # Default shuffle seed
+        return self
+
+    @model_validator(mode="after")
+    def validate_ranking_config(self) -> "ExperimentConfig":
+        if self.preference_mode in ("pre_task_ranking", "post_task_ranking"):
+            if self.ranking is None:
+                self.ranking = RankingConfig()
         return self
 
     def get_origin_datasets(self) -> list[OriginDataset]:

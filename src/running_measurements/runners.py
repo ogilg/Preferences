@@ -12,7 +12,7 @@ from typing import Any, TypedDict
 
 import numpy as np
 
-from src.prompt_templates import PostTaskStatedPromptBuilder, PostTaskRevealedPromptBuilder, PreTaskRevealedPromptBuilder, PreTaskStatedPromptBuilder
+from src.prompt_templates import PostTaskStatedPromptBuilder, PostTaskRevealedPromptBuilder, PreTaskRevealedPromptBuilder, PreTaskStatedPromptBuilder, PreTaskRankingPromptBuilder, PostTaskRankingPromptBuilder
 from src.prompt_templates.generator_config import TASK_LABELS
 from src.preference_measurement import (
     measure_post_task_stated_async,
@@ -24,15 +24,20 @@ from src.preference_measurement import (
     get_stated_response_format,
     get_revealed_response_format,
 )
+from src.preference_measurement.measure import measure_pre_task_ranking_async, _measure_async
+from src.preference_measurement.measurer import RankingMeasurer
+from src.preference_measurement.response_format import get_ranking_response_format
+from src.types import RankingMeasurement
 from src.measurement_storage import (
     CompletionStore, PostStatedCache, PostRevealedCache, model_short_name,
     save_stated, stated_exist, MeasurementCache, MeasurementStats, save_yaml, reconstruct_measurements,
-    ExperimentStore,
+    ExperimentStore, RankingCache,
 )
 from src.measurement_storage.cache import categorize_failure
 from src.measurement_storage.completions import generate_completions
 from src.measurement_storage.base import build_measurement_config
 from src.thurstonian_fitting import compute_pair_agreement, save_thurstonian, _config_hash
+from src.trueskill_fitting import sample_ranking_groups, fit_trueskill_from_rankings
 from src.thurstonian_fitting.active_learning import (
     ActiveLearningState,
     generate_d_regular_pairs,
@@ -734,6 +739,176 @@ async def run_completion_generation_async(
     return stats.to_dict()
 
 
+def _save_trueskill_result(result, ctx, template_name: str, response_format: str, seed: int) -> None:
+    """Save TrueSkill result to YAML file."""
+    output_dir = Path("results/trueskill") / model_short_name(ctx.client.canonical_model_name)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_path = output_dir / f"{template_name}_{response_format}_seed{seed}.yaml"
+    data = result.to_dict()
+    data.update({
+        "method": "trueskill",
+        "model": ctx.client.canonical_model_name,
+        "template_name": template_name,
+        "response_format": response_format,
+        "seed": seed,
+        "ranking": [t.id for t in result.ranking()],
+    })
+    save_yaml(data, output_path)
+
+
+async def run_pre_task_ranking_async(
+    config_path: Path,
+    semaphore: asyncio.Semaphore,
+    progress_callback: Callable[[int, int], None] | None = None,
+) -> dict:
+    """Run pre-task ranking measurement with shared semaphore."""
+    ctx = setup_experiment(config_path, expected_mode="pre_task_ranking")
+    config = ctx.config
+    ranking_cfg = config.ranking
+
+    configurations = build_configurations(ctx, config)
+    stats = RunnerStats(total_runs=len(configurations))
+
+    rng = np.random.default_rng(ranking_cfg.seed)
+    cache = RankingCache(ctx.client.canonical_model_name)
+
+    for cfg in configurations:
+        # Sample task groups
+        task_groups = sample_ranking_groups(
+            ctx.tasks, ranking_cfg.n_tasks_per_ranking, ranking_cfg.n_groups, rng
+        )
+
+        # Filter already-measured groups
+        existing = cache.get_measured_groups(cfg.template.name, cfg.response_format, cfg.seed)
+        groups_to_measure = [g for g in task_groups if frozenset(t.id for t in g) not in existing]
+
+        if not groups_to_measure:
+            stats.mark_skipped()
+            if progress_callback:
+                progress_callback(stats.completed, stats.total_runs)
+            continue
+
+        # Build task labels (A, B, C, D, E)
+        task_labels = tuple(chr(65 + i) for i in range(ranking_cfg.n_tasks_per_ranking))
+        response_format = get_ranking_response_format(task_labels, cfg.response_format)
+        builder = PreTaskRankingPromptBuilder(
+            measurer=RankingMeasurer(),
+            response_format=response_format,
+            template=cfg.template,
+        )
+
+        batch = await measure_pre_task_ranking_async(
+            ctx.client, groups_to_measure, builder, semaphore,
+            config.temperature, cfg.seed
+        )
+
+        cache.add(batch.successes, cfg.template.name, cfg.response_format, cfg.seed)
+        stats.add_batch_with_failures(len(batch.successes), batch.failures)
+
+        # Fit TrueSkill on all measurements for this config
+        all_rankings = cache.get_all_measurements(
+            cfg.template.name, cfg.response_format, cfg.seed, ctx.task_lookup
+        )
+        if all_rankings:
+            result = fit_trueskill_from_rankings(all_rankings)
+            _save_trueskill_result(result, ctx, cfg.template.name, cfg.response_format, cfg.seed)
+
+        if progress_callback:
+            progress_callback(stats.completed, stats.total_runs)
+
+    return stats.to_dict()
+
+
+async def run_post_task_ranking_async(
+    config_path: Path,
+    semaphore: asyncio.Semaphore,
+    progress_callback: Callable[[int, int], None] | None = None,
+) -> dict:
+    """Run post-task ranking measurement with shared semaphore."""
+    ctx = setup_experiment(config_path, expected_mode="post_task_ranking")
+    config = ctx.config
+    ranking_cfg = config.ranking
+
+    completion_seeds = config.completion_seeds or config.generation_seeds
+    configurations = build_configurations(ctx, config)
+    stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
+
+    for completion_seed in completion_seeds:
+        store = CompletionStore(client=ctx.client, seed=completion_seed)
+        if not store.exists():
+            continue
+
+        task_completions = store.load(ctx.task_lookup)
+        completion_lookup = {tc.task.id: tc.completion for tc in task_completions}
+
+        # Filter tasks to only those with completions
+        tasks_with_completions = [t for t in ctx.tasks if t.id in completion_lookup]
+
+        rng = np.random.default_rng(ranking_cfg.seed)
+        cache = RankingCache(ctx.client.canonical_model_name)
+
+        for cfg in configurations:
+            # Sample task groups from tasks with completions
+            task_groups = sample_ranking_groups(
+                tasks_with_completions, ranking_cfg.n_tasks_per_ranking, ranking_cfg.n_groups, rng
+            )
+
+            # Filter already-measured groups (keyed by completion_seed as well)
+            cache_key_suffix = f"_cseed{completion_seed}"
+            existing = cache.get_measured_groups(
+                cfg.template.name + cache_key_suffix, cfg.response_format, cfg.seed
+            )
+            groups_to_measure = [g for g in task_groups if frozenset(t.id for t in g) not in existing]
+
+            if not groups_to_measure:
+                stats.mark_skipped()
+                if progress_callback:
+                    progress_callback(stats.completed, stats.total_runs)
+                continue
+
+            # Build task labels (A, B, C, D, E)
+            task_labels = tuple(chr(65 + i) for i in range(ranking_cfg.n_tasks_per_ranking))
+            response_format = get_ranking_response_format(task_labels, cfg.response_format)
+            builder = PostTaskRankingPromptBuilder(
+                measurer=RankingMeasurer(),
+                response_format=response_format,
+                template=cfg.template,
+            )
+
+            # Build prompts with completions
+            prompts = []
+            for group in groups_to_measure:
+                completions = [completion_lookup[t.id] for t in group]
+                prompts.append(builder.build(group, completions))
+
+            batch = await _measure_async(
+                ctx.client, prompts, semaphore, config.temperature, cfg.seed, RankingMeasurement
+            )
+
+            cache.add(
+                batch.successes, cfg.template.name + cache_key_suffix, cfg.response_format, cfg.seed
+            )
+            stats.add_batch_with_failures(len(batch.successes), batch.failures)
+
+            # Fit TrueSkill on all measurements for this config
+            all_rankings = cache.get_all_measurements(
+                cfg.template.name + cache_key_suffix, cfg.response_format, cfg.seed, ctx.task_lookup
+            )
+            if all_rankings:
+                result = fit_trueskill_from_rankings(all_rankings)
+                _save_trueskill_result(
+                    result, ctx,
+                    f"{cfg.template.name}_cseed{completion_seed}",
+                    cfg.response_format, cfg.seed
+                )
+
+            if progress_callback:
+                progress_callback(stats.completed, stats.total_runs)
+
+    return stats.to_dict()
+
+
 RUNNERS = {
     "completion_generation": run_completion_generation_async,
     "pre_task_stated": run_pre_task_stated_async,
@@ -742,4 +917,6 @@ RUNNERS = {
     "post_task_stated": run_post_task_stated_async,
     "post_task_revealed": run_post_task_revealed_async,
     "post_task_active_learning": run_post_task_active_learning_async,
+    "pre_task_ranking": run_pre_task_ranking_async,
+    "post_task_ranking": run_post_task_ranking_async,
 }

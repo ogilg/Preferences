@@ -50,6 +50,9 @@ from src.measurement_storage.experiment_store import (
     EXPERIMENTS_DIR,
     ExperimentStore,
 )
+from src.measurement_storage.ranking_cache import (
+    RankingCache,
+)
 
 __all__ = [
     # Base
@@ -96,4 +99,6 @@ __all__ = [
     # Experiment store
     "EXPERIMENTS_DIR",
     "ExperimentStore",
+    # Ranking cache
+    "RankingCache",
 ]
