@@ -7,11 +7,11 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCo
 
 from src.models import GenerateRequest, OpenAICompatibleClient
 from src.task_data import Task
-from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferencePrompt, TaskScore
+from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferencePrompt, RankingMeasurement, TaskScore
 from src.preference_measurement.refusal_judge import judge_preference_refusal_async
 
 if TYPE_CHECKING:
-    from src.prompt_templates.builders import PostTaskRevealedPromptBuilder, PromptBuilder
+    from src.prompt_templates.builders import PostTaskRevealedPromptBuilder, PromptBuilder, PreTaskRankingPromptBuilder
 
 T = TypeVar("T", TaskScore, BinaryPreferenceMeasurement)
 
@@ -219,3 +219,18 @@ def measure_post_task_revealed(
 ) -> MeasurementBatch[BinaryPreferenceMeasurement]:
     prompts = [builder.build(a, b, ca, cb) for a, b, ca, cb in data]
     return _measure_sync(client, prompts, max_concurrent, temperature, seed, BinaryPreferenceMeasurement)
+
+
+# Public API - Ranking measurements
+
+async def measure_pre_task_ranking_async(
+    client: OpenAICompatibleClient,
+    task_groups: list[list[Task]],
+    builder: "PreTaskRankingPromptBuilder",
+    semaphore: asyncio.Semaphore,
+    temperature: float = 1.0,
+    seed: int | None = None,
+    on_complete: Callable[[], None] | None = None,
+) -> MeasurementBatch[RankingMeasurement]:
+    prompts = [builder.build(tasks) for tasks in task_groups]
+    return await _measure_async(client, prompts, semaphore, temperature, seed, RankingMeasurement, on_complete)

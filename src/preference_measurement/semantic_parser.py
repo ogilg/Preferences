@@ -165,3 +165,62 @@ async def parse_qualitative_async(
         max_tokens=MAX_TOKENS,
     )
     return None if result.value == "unclear" else result.value
+
+
+class RankingResult(BaseModel):
+    ranking: list[str]
+    unclear: bool
+
+
+def _ranking_messages(response: str, task_labels: tuple[str, ...]) -> list[dict]:
+    labels_str = ", ".join(task_labels)
+    return [
+        {
+            "role": "system",
+            "content": (
+                "You extract task rankings from text. The user was asked to rank tasks "
+                f"labeled {labels_str} from most to least preferred. "
+                "Extract the ranking as an ordered list of labels. "
+                "Examples of valid rankings: 'A > C > B > E > D', 'I prefer C, then A, then E, B, D', "
+                "'1. Task C 2. Task A 3. Task E 4. Task B 5. Task D'. "
+                "Return the labels in order from most to least preferred. "
+                "Set unclear=true if the response doesn't express a complete ranking."
+            ),
+        },
+        {
+            "role": "user",
+            "content": f"Response: {response}\n\nTask labels: {labels_str}",
+        },
+    ]
+
+
+async def parse_ranking_async(
+    response: str,
+    task_labels: tuple[str, ...],
+) -> list[int]:
+    """Returns indices into task_labels by preference (highest first). Raises ParseError on failure."""
+    result = await _get_async_client().chat.completions.create(
+        model=PARSER_MODEL,
+        response_model=RankingResult,
+        messages=_ranking_messages(response, task_labels),
+        temperature=0,
+        max_tokens=MAX_TOKENS,
+    )
+
+    if result.unclear:
+        raise ParseError(response)
+
+    label_to_idx = {label.upper(): i for i, label in enumerate(task_labels)}
+    indices = []
+    for label in result.ranking:
+        label_upper = label.upper().strip()
+        if label_upper.startswith("TASK "):
+            label_upper = label_upper[5:]
+        if label_upper not in label_to_idx:
+            raise ParseError(response)
+        indices.append(label_to_idx[label_upper])
+
+    if len(indices) != len(task_labels) or len(set(indices)) != len(indices):
+        raise ParseError(response)
+
+    return indices

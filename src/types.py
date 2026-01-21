@@ -23,6 +23,8 @@ class PreferenceType(Enum):
     PRE_TASK_REVEALED = auto()
     POST_TASK_STATED = auto()
     POST_TASK_REVEALED = auto()
+    PRE_TASK_RANKING = auto()
+    POST_TASK_RANKING = auto()
 
 
 @dataclass
@@ -47,6 +49,19 @@ class TaskRefusal:
 
 
 @dataclass
+class RankingMeasurement:
+    tasks: list["Task"]  # Tasks in presentation order (A, B, C, ...)
+    ranking: list[int]   # Indices into tasks, highest preference first
+    preference_type: PreferenceType
+
+
+@dataclass
+class RankingRefusal:
+    tasks: list["Task"]
+    preference_type: PreferenceType
+
+
+@dataclass
 class PreferencePrompt:
     messages: list[Message]
     tasks: list["Task"]
@@ -60,10 +75,10 @@ class PreferencePrompt:
 class MeasurementResponse:
     text: str
     source_prompt: PreferencePrompt
-    result: BinaryPreferenceMeasurement | TaskScore | TaskRefusal
+    result: BinaryPreferenceMeasurement | TaskScore | TaskRefusal | RankingMeasurement | RankingRefusal
 
 
 @dataclass
-class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore, TaskRefusal)]:
+class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore, TaskRefusal, RankingMeasurement, RankingRefusal)]:
     successes: list[T]
     failures: list[tuple[PreferencePrompt, str]]

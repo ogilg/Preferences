@@ -7,6 +7,8 @@ from src.types import (
     BinaryPreferenceMeasurement,
     TaskScore,
     TaskRefusal,
+    RankingMeasurement,
+    RankingRefusal,
     PreferencePrompt,
 )
 
@@ -40,6 +42,23 @@ class StatedScoreMeasurer(Measurer):
             result = TaskScore(
                 task=prompt.tasks[0],
                 score=score,
+                preference_type=prompt.kind,
+            )
+        return MeasurementResponse(text=response_text, source_prompt=prompt, result=result)
+
+
+class RankingMeasurer(Measurer):
+    async def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse:
+        ranking = await prompt.response_format.parse(response_text)
+        if ranking == "refusal":
+            result = RankingRefusal(
+                tasks=prompt.tasks,
+                preference_type=prompt.kind,
+            )
+        else:
+            result = RankingMeasurement(
+                tasks=prompt.tasks,
+                ranking=ranking,
                 preference_type=prompt.kind,
             )
         return MeasurementResponse(text=response_text, source_prompt=prompt, result=result)

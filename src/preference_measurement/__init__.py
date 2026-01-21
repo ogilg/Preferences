@@ -20,11 +20,13 @@ from src.preference_measurement.measure import (
     measure_post_task_stated_async,
     measure_post_task_revealed_async,
     measure_pre_task_revealed_async,
+    measure_pre_task_ranking_async,
 )
 from src.preference_measurement.measurer import (
     RevealedPreferenceMeasurer,
     Measurer,
     StatedScoreMeasurer,
+    RankingMeasurer,
 )
 from src.preference_measurement.recorder import (
     MeasurementRecord,
@@ -80,10 +82,12 @@ __all__ = [
     "measure_post_task_stated_async",
     "measure_post_task_revealed_async",
     "measure_pre_task_revealed_async",
+    "measure_pre_task_ranking_async",
     # Measurers
     "RevealedPreferenceMeasurer",
     "Measurer",
     "StatedScoreMeasurer",
+    "RankingMeasurer",
     # Recorder
     "MeasurementRecord",
     "MeasurementRecorder",

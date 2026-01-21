@@ -15,6 +15,7 @@ from src.constants import (
 )
 from src.preference_measurement import semantic_parser
 from src.preference_measurement import refusal_judge
+from src.preference_measurement.semantic_parser import ParseError
 
 
 def _exact_choice_match(
@@ -576,3 +577,149 @@ def get_revealed_response_format(
 ) -> BaseChoiceFormat:
     """Build choice response format from labels."""
     return CHOICE_FORMATS[format_name](task_a_label, task_b_label)
+
+
+class BaseRankingFormat(ABC):
+    tools: list[dict[str, Any]] | None = None
+
+    def __init__(self, task_labels: tuple[str, ...]):
+        self.task_labels = task_labels  # ("A", "B", "C", "D", "E")
+
+    @abstractmethod
+    def format_instruction(self) -> str: ...
+
+    @abstractmethod
+    def _extract_ranking(self, response: str) -> list[int] | None: ...
+
+    def _labels_to_indices(self, labels: list[str]) -> list[int] | None:
+        label_to_idx = {label.upper(): i for i, label in enumerate(self.task_labels)}
+        indices = []
+        for label in labels:
+            label_upper = label.upper().strip()
+            if label_upper.startswith("TASK "):
+                label_upper = label_upper[5:]
+            if label_upper not in label_to_idx:
+                return None
+            indices.append(label_to_idx[label_upper])
+        return indices if len(set(indices)) == len(indices) else None
+
+    async def parse(self, response: str) -> list[int] | Literal["refusal"]:
+        ranking = self._extract_ranking(response)
+        if ranking is not None and len(ranking) == len(self.task_labels):
+            if len(set(ranking)) == len(ranking):
+                return ranking
+
+        if await refusal_judge.judge_preference_refusal_async(response):
+            return "refusal"
+
+        return await semantic_parser.parse_ranking_async(response, self.task_labels)
+
+
+class RegexRankingFormat(BaseRankingFormat):
+    def format_instruction(self) -> str:
+        labels = ", ".join(self.task_labels)
+        return f"Respond with your ranking using '>' between options, e.g., '{self.task_labels[0]} > {self.task_labels[1]} > ...' (most preferred first)."
+
+    def _extract_ranking(self, response: str) -> list[int] | None:
+        if ">" in response:
+            parts = [p.strip().upper() for p in response.split(">")]
+            result = self._labels_to_indices(parts)
+            if result and len(result) == len(self.task_labels):
+                return result
+
+        if "," in response:
+            parts = [p.strip().upper() for p in response.split(",")]
+            result = self._labels_to_indices(parts)
+            if result and len(result) == len(self.task_labels):
+                return result
+
+        n = len(self.task_labels)
+        letters = re.findall(r'\b([A-Z])\b', response.upper())
+        if len(letters) == n:
+            result = self._labels_to_indices(letters)
+            if result and len(result) == n:
+                return result
+
+        return None
+
+
+class XMLRankingFormat(BaseRankingFormat):
+    def __init__(self, task_labels: tuple[str, ...], tag: str = "ranking"):
+        super().__init__(task_labels)
+        self.tag = tag
+
+    def format_instruction(self) -> str:
+        example = ", ".join(self.task_labels)
+        return f"Respond with your ranking in XML tags: <{self.tag}>{example}</{self.tag}> (most preferred first)."
+
+    def _extract_ranking(self, response: str) -> list[int] | None:
+        pattern = rf"<{self.tag}>\s*(.+?)\s*</{self.tag}>"
+        match = re.search(pattern, response, re.IGNORECASE | re.DOTALL)
+        if match:
+            content = match.group(1)
+            if ">" in content:
+                parts = [p.strip().upper() for p in content.split(">")]
+                return self._labels_to_indices(parts)
+            parts = [p.strip().upper() for p in content.split(",")]
+            return self._labels_to_indices(parts)
+        return None
+
+
+class ToolUseRankingFormat(BaseRankingFormat):
+    def __init__(self, task_labels: tuple[str, ...]):
+        super().__init__(task_labels)
+        self._response_model = self._make_model()
+
+    def _make_model(self) -> type[BaseModel]:
+        from pydantic import Field
+
+        class RankingSubmission(BaseModel):
+            ranking: list[str] = Field(
+                description="Task labels ordered from most to least preferred."
+            )
+        return RankingSubmission
+
+    @property
+    def tools(self) -> list[dict[str, Any]]:
+        return [_tool_from_model(
+            "submit_ranking",
+            "Submit your ranking of the tasks from most to least preferred.",
+            self._response_model,
+        )]
+
+    def format_instruction(self) -> str:
+        labels = ", ".join(f"'{l}'" for l in self.task_labels)
+        return f"You MUST respond by calling the submit_ranking tool with a list of task labels ({labels}) ordered from most to least preferred. Do not write any text - only call the tool."
+
+    def _extract_ranking(self, response: str) -> list[int] | None:
+        try:
+            data = json.loads(response)
+            if "ranking" in data and isinstance(data["ranking"], list):
+                return self._labels_to_indices(data["ranking"])
+        except Exception:
+            pass
+        return None
+
+    async def parse(self, response: str) -> list[int]:
+        ranking = self._extract_ranking(response)
+        if ranking is not None and len(ranking) == len(self.task_labels):
+            if len(set(ranking)) == len(ranking):
+                return ranking
+
+        if await refusal_judge.judge_preference_refusal_async(response):
+            raise ParseError(response)
+        return await semantic_parser.parse_ranking_async(response, self.task_labels)
+
+
+RANKING_FORMATS: dict[ResponseFormatName, type[BaseRankingFormat]] = {
+    "regex": RegexRankingFormat,
+    "xml": XMLRankingFormat,
+    "tool_use": ToolUseRankingFormat,
+}
+
+
+def get_ranking_response_format(
+    task_labels: tuple[str, ...],
+    format_name: str,
+) -> BaseRankingFormat:
+    return RANKING_FORMATS[format_name](task_labels)
