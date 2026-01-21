@@ -2,31 +2,57 @@
 
 from __future__ import annotations
 
+import json
+from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
 
-from src.measurement_storage.loading import get_activation_task_ids
 
-
-def load_activations(data_dir: Path) -> tuple[np.ndarray, dict[int, np.ndarray]]:
+def load_activations(
+    data_dir: Path,
+    task_id_filter: set[str] | None = None,
+    layers: list[int] | None = None,
+) -> tuple[np.ndarray, dict[int, np.ndarray]]:
     """Load activations.npz, returning (task_ids, {layer: activations})."""
     npz_path = data_dir / "activations.npz"
     data = np.load(npz_path, allow_pickle=True)
 
     task_ids = data["task_ids"]
-    layer_keys = [k for k in data.keys() if k.startswith("layer_")]
-    layers = sorted(int(k.split("_")[1]) for k in layer_keys)
-    activations = {layer: data[f"layer_{layer}"] for layer in layers}
+
+    # Compute mask once
+    if task_id_filter is not None:
+        mask = np.array([tid in task_id_filter for tid in task_ids])
+        task_ids = task_ids[mask]
+    else:
+        mask = None
+
+    # Determine which layers to load
+    available_layers = sorted(int(k.split("_")[1]) for k in data.keys() if k.startswith("layer_"))
+    layers_to_load = layers if layers is not None else available_layers
+
+    activations = {}
+    for layer in layers_to_load:
+        arr = data[f"layer_{layer}"]
+        activations[layer] = arr[mask] if mask is not None else arr
 
     return task_ids, activations
 
 
-def filter_activations_by_origin(
-    task_ids: np.ndarray,
-    origin: str,
-    activations_dir: Path,
-) -> np.ndarray:
-    """Return boolean mask for tasks matching origin dataset."""
-    matching_ids = get_activation_task_ids(activations_dir, origin_filter=origin)
-    return np.array([tid in matching_ids for tid in task_ids])
+def load_task_origins(activations_dir: Path) -> dict[str, set[str]]:
+    """Load all task origins mapping. Returns {origin: set of task_ids}."""
+    completions_path = activations_dir / "completions.json"
+    if not completions_path.exists():
+        return {}
+
+    with open(completions_path) as f:
+        completions = json.load(f)
+
+    origins: dict[str, set[str]] = defaultdict(set)
+    for c in completions:
+        if c.get("origin"):
+            origins[c["origin"].upper()].add(c["task_id"])
+
+    return dict(origins)
+
+

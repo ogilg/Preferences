@@ -16,17 +16,18 @@ class ProbeTrainingConfig:
     experiment_name: str
     experiment_dir: Path
     activations_path: Path
-    output_dir: Path
+    manifest_dir: Path  # Directory for storing manifest (metadata)
 
     # Data selection
-    templates: list[str]
-    datasets: list[str] | None  # None = pool all datasets
-    response_formats: list[str]  # pool together
-    seeds: list[int]  # pool together
+    template_combinations: list[list[str]]  # List of template combinations to train on
+    dataset_combinations: list[list[str]] | None  # List of dataset combinations, None = all
+    response_format_combinations: list[list[str]]  # List of response format combinations
+    seed_combinations: list[list[int]]  # List of seed combinations
     layers: list[int]
 
     # Training
-    cv_folds: int = 5
+    cv_folds: int
+    alpha_sweep_size: int  # Number of alpha values to sweep
 
     @classmethod
     def from_yaml(cls, yaml_path: Path) -> ProbeTrainingConfig:
@@ -38,11 +39,12 @@ class ProbeTrainingConfig:
             experiment_name=data["experiment_name"],
             experiment_dir=Path(data["experiment_dir"]),
             activations_path=Path(data["activations_path"]),
-            templates=data["templates"],
-            datasets=data.get("datasets"),
-            response_formats=data.get("response_formats", ["regex", "tool_use"]),
-            seeds=data.get("seeds", [0, 1]),
+            template_combinations=data["template_combinations"],
+            dataset_combinations=data.get("dataset_combinations"),
+            response_format_combinations=data["response_format_combinations"],
+            seed_combinations=data["seed_combinations"],
             layers=data["layers"],
-            cv_folds=data.get("cv_folds", 5),
-            output_dir=Path(data["output_dir"]),
+            cv_folds=data["cv_folds"],
+            alpha_sweep_size=data["alpha_sweep_size"],
+            manifest_dir=Path(data["manifest_dir"]),
         )
