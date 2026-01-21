@@ -50,13 +50,15 @@ def plot_by_layer(manifest: dict, output: Path) -> None:
     all_r2_means = [p["cv_r2_mean"] + p["cv_r2_std"] for p in probes]
     global_max = max(all_r2_means) * 1.3
 
-    figheight = 1.8 * len(layers) + 1
+    figheight = 2.5 * len(layers)
     fig, axes = plt.subplots(len(layers), 1, figsize=(12, figheight))
     if len(layers) == 1:
         axes = [axes]
 
     # Get all unique templates for context
     all_templates = sorted(set(p["template"] for p in probes))
+    # Fixed y-axis limit for all subplots
+    y_limit = 0.5
 
     for ax, layer in zip(axes, layers):
         layer_probes = sorted(
@@ -65,29 +67,20 @@ def plot_by_layer(manifest: dict, output: Path) -> None:
         )
 
         labels = [shorten_template_name(p["template"], all_templates) for p in layer_probes]
-        # Clip R² values to -1 to 1 range for visualization
-        r2_means = [max(-1, min(1, p["cv_r2_mean"])) for p in layer_probes]
+        r2_means = [p["cv_r2_mean"] for p in layer_probes]
         r2_stds = [p["cv_r2_std"] for p in layer_probes]
 
         x = np.arange(len(labels))
-        bars = ax.bar(x, r2_means, yerr=r2_stds, capsize=5, alpha=0.7, color="steelblue", edgecolor="black")
+        bars = ax.bar(x, r2_means, yerr=r2_stds, capsize=3, alpha=0.7, color="steelblue", edgecolor="black")
 
         ax.set_ylabel("R²", fontsize=10)
         ax.set_title(f"Layer {layer}", fontsize=11, fontweight="bold")
         ax.set_xticks(x)
-        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=9)
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=8)
         ax.grid(axis="y", alpha=0.3)
-        ax.set_ylim(-1.2, max(global_max, 0.5))
+        ax.set_ylim(0, y_limit)
 
-        # Add value labels on top of bars
-        y_max = max(r2_means) if r2_means else 0
-        for bar, mean, std in zip(bars, r2_means, r2_stds):
-            # Position text above the error bar
-            y_pos = mean + std + (y_max * 0.02)
-            ax.text(bar.get_x() + bar.get_width() / 2, y_pos, f"{mean:.3f}",
-                    ha="center", va="bottom", fontsize=7)
-
-    plt.subplots_adjust(hspace=0.4)
+    plt.subplots_adjust(hspace=0.35)
     output.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output, dpi=150, bbox_inches="tight")
     plt.close()
@@ -112,20 +105,16 @@ def plot_by_template(manifest: dict, output: Path) -> None:
     all_r2_means = [p["cv_r2_mean"] + p["cv_r2_std"] for p in probes]
     global_max = max(all_r2_means) * 1.3
 
-    # Grid layout: up to 4 vertical, then go 2D
-    if len(templates) <= 4:
-        nrows, ncols = len(templates), 1
-        figwidth = 12
-        figheight = 1.8 * len(templates) + 1
-        hspace = 0.35
-    else:
-        ncols = 3
-        nrows = (len(templates) + 2) // 3
-        figwidth = 14
-        figheight = 2 * nrows + 1
-        hspace = 0.4
+    # Grid layout: 3 columns, dynamic rows
+    ncols = 3
+    nrows = (len(templates) + 2) // 3
+    figwidth = 14
+    figheight = 2 * nrows + 0.5
 
     fig, axes = plt.subplots(nrows, ncols, figsize=(figwidth, figheight))
+
+    # Fixed y-axis limit for all subplots
+    y_limit = 0.5
 
     # Flatten axes into 1D list
     if nrows == 1 and ncols == 1:
@@ -142,34 +131,25 @@ def plot_by_template(manifest: dict, output: Path) -> None:
         )
 
         labels = ["L" + str(p["layer"]) for p in template_probes]
-        # Clip R² values to -1 to 1 range for visualization
-        r2_means = [max(-1, min(1, p["cv_r2_mean"])) for p in template_probes]
+        r2_means = [p["cv_r2_mean"] for p in template_probes]
         r2_stds = [p["cv_r2_std"] for p in template_probes]
 
         x = np.arange(len(labels))
-        bars = ax.bar(x, r2_means, yerr=r2_stds, capsize=5, alpha=0.7, color="steelblue", edgecolor="black")
+        bars = ax.bar(x, r2_means, yerr=r2_stds, capsize=3, alpha=0.7, color="steelblue", edgecolor="black")
 
-        ax.set_ylabel("R²", fontsize=9)
+        ax.set_ylabel("R²", fontsize=8)
         short_template = shorten_template_name(template, templates)
-        ax.set_title(f"{short_template}", fontsize=10, fontweight="bold")
+        ax.set_title(f"{short_template}", fontsize=9, fontweight="bold")
         ax.set_xticks(x)
-        ax.set_xticklabels(labels, rotation=0, fontsize=8)
+        ax.set_xticklabels(labels, rotation=0, fontsize=7)
         ax.grid(axis="y", alpha=0.3)
-        ax.set_ylim(-1.2, max(global_max, 0.5))
-
-        # Add value labels on top of bars
-        y_max = max(r2_means) if r2_means else 0
-        for bar, mean, std in zip(bars, r2_means, r2_stds):
-            # Position text above the error bar
-            y_pos = mean + std + (y_max * 0.02)
-            ax.text(bar.get_x() + bar.get_width() / 2, y_pos, f"{mean:.3f}",
-                    ha="center", va="bottom", fontsize=6)
+        ax.set_ylim(0, y_limit)
 
     # Hide unused subplots
     for ax in ax_flat[len(templates):]:
         ax.set_visible(False)
 
-    plt.subplots_adjust(hspace=hspace, wspace=0.3)
+    plt.subplots_adjust(hspace=0.4, wspace=0.3)
     output.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output, dpi=150, bbox_inches="tight")
     plt.close()
@@ -203,32 +183,20 @@ def plot_by_task_type(manifest: dict, output: Path) -> None:
 
         templates = sorted(set(p["template"] for p in type_probes))
         labels = [shorten_template_name(p["template"], templates) for p in type_probes]
-        # Clip R² values to -1 to 1 range for visualization (outliers don't help readability)
-        r2_means = [max(-1, min(1, p["cv_r2_mean"])) for p in type_probes]
+        r2_means = [p["cv_r2_mean"] for p in type_probes]
         r2_stds = [p["cv_r2_std"] for p in type_probes]
 
-        # Calculate local max for this task type
-        task_max = max([m + s for m, s in zip(r2_means, r2_stds)]) if r2_means else 0
-        local_max = max(task_max * 1.3, 0.5)  # At least 0.5 range
-
         x = np.arange(len(labels))
-        bars = ax.bar(x, r2_means, yerr=r2_stds, capsize=5, alpha=0.7, color="steelblue", edgecolor="black")
+        bars = ax.bar(x, r2_means, yerr=r2_stds, capsize=3, alpha=0.7, color="steelblue", edgecolor="black")
 
         ax.set_ylabel("R²", fontsize=10)
         ax.set_title(f"Task Type: {task_type.upper()}-task", fontsize=11, fontweight="bold")
         ax.set_xticks(x)
         ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=9)
         ax.grid(axis="y", alpha=0.3)
-        ax.set_ylim(-1.2, local_max)
+        ax.set_ylim(0, 0.5)
 
-        # Add value labels on top of bars
-        y_max = max(r2_means) if r2_means else 0
-        for bar, mean, std in zip(bars, r2_means, r2_stds):
-            y_pos = mean + std + (y_max * 0.02)
-            ax.text(bar.get_x() + bar.get_width() / 2, y_pos, f"{mean:.3f}",
-                    ha="center", va="bottom", fontsize=7)
-
-    plt.subplots_adjust(hspace=0.4)
+    plt.subplots_adjust(hspace=0.35)
     output.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output, dpi=150, bbox_inches="tight")
     plt.close()
