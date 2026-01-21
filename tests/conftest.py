@@ -1,8 +1,12 @@
 """Shared test fixtures."""
 
 import pytest
+from dotenv import load_dotenv
 
 from src.task_data import Task, OriginDataset
+
+# Load environment variables for API tests
+load_dotenv()
 
 
 @pytest.fixture
