@@ -47,6 +47,7 @@ class RankingConfig(BaseModel):
     n_tasks_per_ranking: int = 5
     n_groups: int = 40
     seed: int = 42
+    shuffle_task_order: bool = True  # Shuffle task order in prompt to control for position bias
 
 
 class ExperimentConfig(BaseModel):
@@ -91,7 +92,7 @@ class ExperimentConfig(BaseModel):
     # Post-task specific: which completion seeds to use (defaults to generation_seeds)
     completion_seeds: list[int] | None = None
 
-    # Universal: if True, restrict measurements to only tasks with activations in activations/ folder
+    # Universal: if True, restrict measurements to only tasks with activations in probe_data/activations/
     # Filters task set early, applies to all measurement modes (pre-task, post-task, etc.)
     use_tasks_with_activations: bool = False
 

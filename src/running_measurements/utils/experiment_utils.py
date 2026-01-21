@@ -14,7 +14,7 @@ from src.task_data import Task, load_tasks
 from src.prompt_templates import load_templates_from_yaml, PromptTemplate
 from src.prompt_templates.sampler import SampledConfiguration, sample_configurations_lhs
 from src.thurstonian_fitting import _config_hash
-from src.running_measurements.config import load_experiment_config, ExperimentConfig
+from src.running_measurements.config import load_experiment_config, ExperimentConfig, get_experiment_id
 from src.measurement_storage.loading import get_activation_task_ids
 
 
@@ -42,6 +42,11 @@ def setup_experiment(
 ) -> ExperimentContext:
     config = load_experiment_config(config_path)
 
+    # CLI experiment_id (set via set_experiment_id) overrides config file
+    global_exp_id = get_experiment_id()
+    if global_exp_id is not None:
+        config.experiment_id = global_exp_id
+
     if config.preference_mode != expected_mode:
         raise ValueError(f"Expected preference_mode='{expected_mode}', got '{config.preference_mode}'")
 
@@ -52,7 +57,7 @@ def setup_experiment(
         if activation_task_ids:
             filter_fn = lambda t: t.id in activation_task_ids
         else:
-            rprint("[yellow]Warning: use_tasks_with_activations=true but activations/completions.json not found[/yellow]")
+            rprint("[yellow]Warning: use_tasks_with_activations=true but probe_data/activations/completions.json not found[/yellow]")
 
     # Load tasks deterministically so stated and revealed use same tasks
     # If filter_fn is set, this loads n_tasks from the filtered set

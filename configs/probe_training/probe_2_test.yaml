@@ -1,6 +1,6 @@
 experiment_name: probe_2
 experiment_dir: results/experiments/probe_2
-activations_path: activations/activations.npz
+activations_path: probe_data/activations/activations.npz
 output_dir: results/probe_training/test_001
 
 templates:

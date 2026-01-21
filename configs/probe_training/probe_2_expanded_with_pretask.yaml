@@ -1,9 +1,15 @@
 experiment_name: probe_2
 experiment_dir: results/experiments/probe_2
 activations_path: probe_data/activations/activations.npz
-output_dir: results/probe_training/expanded_001
+output_dir: results/probe_training/expanded_002
 
 templates:
+  - pre_task_qualitative_001
+  - pre_task_qualitative_002
+  - pre_task_qualitative_013
+  - pre_task_stated_001
+  - pre_task_stated_002
+  - pre_task_stated_013
   - post_task_qualitative_001
   - post_task_qualitative_002
   - post_task_qualitative_013

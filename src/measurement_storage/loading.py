@@ -25,12 +25,9 @@ class ActivationMetadata:
 
 
 def load_activation_metadata(activations_dir: Path | None = None) -> list[ActivationMetadata]:
-    """Load task metadata from activations/completions.json.
-
-    If activations_dir is None, uses project_root/activations.
-    """
+    """Load task metadata from probe_data/activations/completions.json."""
     if activations_dir is None:
-        activations_dir = find_project_root() / "activations"
+        activations_dir = find_project_root() / "probe_data" / "activations"
 
     completions_path = activations_dir / "completions.json"
     if not completions_path.exists():
