@@ -1,9 +1,8 @@
 """Sensitivity analysis for qualitative stated preference measurements.
 
 Usage:
-    python -m src.analysis.sensitivity.plot_qualitative
     python -m src.analysis.sensitivity.plot_qualitative --experiment-id probe_2
-    python -m src.analysis.sensitivity.plot_qualitative --pre-only
+    python -m src.analysis.sensitivity.plot_qualitative --experiment-id probe_2 --pre-only
 """
 from __future__ import annotations
 
@@ -19,7 +18,7 @@ from src.analysis.sensitivity.plot import (
     plot_regression_coefficients,
     plot_sensitivity_by_model,
 )
-from src.measurement_storage import PRE_TASK_STATED_DIR, POST_STATED_DIR, EXPERIMENTS_DIR
+from src.measurement_storage import EXPERIMENTS_DIR
 
 
 OUTPUT_DIR = Path(__file__).parent / "plots"
@@ -34,20 +33,14 @@ def filter_qualitative(runs):
     ]
 
 
-def get_sources(experiment_id: str | None, pre_only: bool, post_only: bool) -> list[tuple[str, Path]]:
+def get_sources(experiment_id: str, pre_only: bool, post_only: bool) -> list[tuple[str, Path]]:
     """Get (prefix, results_dir) pairs based on experiment_id and flags."""
     sources = []
-    if experiment_id:
-        exp_dir = EXPERIMENTS_DIR / experiment_id
-        if not post_only:
-            sources.append(("pre_task", exp_dir / "pre_task_stated"))
-        if not pre_only:
-            sources.append(("post_task", exp_dir / "post_task_stated"))
-    else:
-        if not post_only:
-            sources.append(("pre_task", PRE_TASK_STATED_DIR))
-        if not pre_only:
-            sources.append(("post_task", POST_STATED_DIR))
+    exp_dir = EXPERIMENTS_DIR / experiment_id
+    if not post_only:
+        sources.append(("pre_task", exp_dir / "pre_task_stated"))
+    if not pre_only:
+        sources.append(("post_task", exp_dir / "post_task_stated"))
     return sources
 
 
@@ -55,7 +48,7 @@ def main():
     parser = argparse.ArgumentParser(description="Sensitivity analysis for qualitative stated preferences")
     parser.add_argument("--pre-only", action="store_true", help="Only analyze pre-task")
     parser.add_argument("--post-only", action="store_true", help="Only analyze post-task")
-    parser.add_argument("--experiment-id", type=str, default=None, help="Read from experiment folder")
+    parser.add_argument("--experiment-id", type=str, required=True, help="Experiment ID to load from")
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

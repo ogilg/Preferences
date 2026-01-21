@@ -58,13 +58,13 @@ def main():
     parser.add_argument(
         "--experiment-id",
         type=str,
-        default=None,
-        help="Read from experiment folder",
+        required=True,
+        help="Experiment ID to load from",
     )
     args = parser.parse_args()
 
     if args.list_models:
-        models = list_available_models(experiment_id=args.experiment_id)
+        models = list_available_models(args.experiment_id)
         print(f"Available models ({len(models)}):")
         for m in sorted(models):
             print(f"  {m}")
@@ -75,13 +75,13 @@ def main():
 
     measurement_types = parse_measurement_types(args.types)
 
-    print(f"Loading runs for model: {args.model}")
+    print(f"Loading runs for model: {args.model} from experiment: {args.experiment_id}")
     runs = load_runs_for_model(
         args.model,
+        args.experiment_id,
         measurement_types=measurement_types,
         min_tasks=args.min_tasks,
         require_thurstonian_csv=args.require_thurstonian,
-        experiment_id=args.experiment_id,
     )
 
     if not runs:

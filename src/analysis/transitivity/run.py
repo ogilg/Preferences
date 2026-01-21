@@ -1,7 +1,10 @@
-"""
+"""DEPRECATED: This script uses the old directory format.
+
+TODO: Update to use --experiment-id and read from experiments folder.
+
 Compute transitivity (cycle probability) across active learning measurements.
 
-Usage: python -m src.experiments.transitivity.run
+Old usage: python -m src.experiments.transitivity.run
 """
 
 from __future__ import annotations

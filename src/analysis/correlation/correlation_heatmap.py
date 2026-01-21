@@ -79,7 +79,7 @@ def main():
         type=str,
         help="Template name pattern (fnmatch, e.g., 'pre_task_rating*' or '*qualitative*')",
     )
-    parser.add_argument("--experiment-id", type=str, help="Filter to specific experiment")
+    parser.add_argument("--experiment-id", type=str, required=True, help="Experiment ID to load from")
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
     parser.add_argument("--min-tasks", type=int, default=10)
     parser.add_argument(
@@ -95,12 +95,12 @@ def main():
     if args.types:
         measurement_types = [MeasurementType(t) for t in args.types]
 
-    print(f"Loading runs for model: {args.model}")
+    print(f"Loading runs for model: {args.model} from experiment: {args.experiment_id}")
     runs = load_runs_for_model(
         args.model,
+        args.experiment_id,
         measurement_types=measurement_types,
         min_tasks=args.min_tasks,
-        experiment_id=args.experiment_id,
     )
 
     if not runs:

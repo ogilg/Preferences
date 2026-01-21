@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from pathlib import Path
+import uuid
 
 import pytest
 
 pytestmark = pytest.mark.cache
 
-import yaml
-
 from src.measurement_storage.cache import MeasurementCache, reconstruct_measurements
+from src.measurement_storage.unified_cache import RevealedCache
 from src.prompt_templates import PromptTemplate, REVEALED_PLACEHOLDERS
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
@@ -59,66 +59,69 @@ def sample_measurements(sample_tasks: list[Task]) -> list[BinaryPreferenceMeasur
     ]
 
 
+@pytest.fixture
+def unique_model() -> MockClient:
+    """Create a model with unique name to isolate cache between tests."""
+    return MockClient(f"test-model-{uuid.uuid4().hex[:8]}")
+
+
+@pytest.fixture
+def isolated_cache_dir(tmp_path: Path, monkeypatch) -> Path:
+    """Set cache directory to temp path for test isolation."""
+    cache_dir = tmp_path / "cache" / "revealed"
+    cache_dir.mkdir(parents=True)
+    monkeypatch.setattr(RevealedCache, "CACHE_DIR", cache_dir)
+    return cache_dir
+
+
 class TestMeasurementCacheUnit:
     """Unit tests for MeasurementCache - tests individual methods."""
 
     def test_cache_dir_naming_and_get_existing_pairs_on_empty(
-        self, tmp_path: Path, sample_template
+        self, tmp_path: Path, sample_template, unique_model, isolated_cache_dir
     ):
         """Test cache directory is named correctly and empty cache returns empty set."""
-        model = MockClient()
-        cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
+        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
 
         # Directory naming uses template name, shortened model name, response format, and order
-        assert cache.cache_dir == tmp_path / "binary_choice_v1_llama-3.1-8b_regex_canonical"
+        model_short = unique_model.model_name.split("/")[-1].lower()
+        expected_dir = tmp_path / f"binary_choice_v1_{model_short}_regex_canonical"
+        assert cache.cache_dir == expected_dir
 
         # Empty cache returns empty set
         existing = cache.get_existing_pairs()
         assert existing == set()
 
-    def test_append_creates_config_and_measurements_files(
-        self, tmp_path: Path, sample_template, sample_measurements
+    def test_append_saves_to_unified_cache(
+        self, tmp_path: Path, sample_template, sample_measurements, unique_model, isolated_cache_dir
     ):
-        """Test append creates both config and measurements files on first write."""
-        model = MockClient()
-        cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
+        """Test append saves measurements to unified cache."""
+        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
 
         cache.append(sample_measurements)
 
-        # Verify both files exist
-        assert cache._config_path.exists()
-        assert cache._measurements_path.exists()
+        # Verify measurements are saved
+        measurements = cache.get_measurements()
+        assert len(measurements) == 2
+        assert measurements[0] == {"task_a": "task_1", "task_b": "task_2", "choice": "a"}
+        assert measurements[1] == {"task_a": "task_2", "task_b": "task_3", "choice": "b"}
 
-        # Verify config content
-        with open(cache._config_path) as f:
-            config = yaml.safe_load(f)
-        assert config["template_name"] == "binary_choice_v1"
-        assert config["model"] == "llama-3.1-8b"
-        assert config["model_short"] == "llama-3.1-8b"
-
-        # Verify measurements content
-        with open(cache._measurements_path) as f:
-            data = yaml.safe_load(f)
-        assert len(data) == 2
-        assert data[0] == {"task_a": "task_1", "task_b": "task_2", "choice": "a"}
-        assert data[1] == {"task_a": "task_2", "task_b": "task_3", "choice": "b"}
-
-    def test_append_empty_list_does_nothing(self, tmp_path: Path, sample_template):
-        """Appending empty list should not create any files."""
-        model = MockClient()
-        cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
+    def test_append_empty_list_does_nothing(
+        self, tmp_path: Path, sample_template, unique_model, isolated_cache_dir
+    ):
+        """Appending empty list should not save anything."""
+        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
 
         cache.append([])
 
-        assert not cache._config_path.exists()
-        assert not cache._measurements_path.exists()
+        assert cache.get_existing_pairs() == set()
+        assert cache.get_measurements() == []
 
     def test_get_measurements_filters_by_task_ids(
-        self, tmp_path: Path, sample_template, sample_measurements
+        self, tmp_path: Path, sample_template, sample_measurements, unique_model, isolated_cache_dir
     ):
         """Test filtering measurements by task IDs."""
-        model = MockClient()
-        cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
+        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
         cache.append(sample_measurements)
 
         # Get all measurements
@@ -174,14 +177,10 @@ class TestMeasurementCacheIntegration:
     """Integration tests - test the full workflow as would be used in practice."""
 
     def test_incremental_append_accumulates_and_tracks_pairs(
-        self, tmp_path: Path, sample_template, sample_tasks
+        self, tmp_path: Path, sample_template, sample_tasks, unique_model, isolated_cache_dir
     ):
-        """Test that multiple appends accumulate measurements and get_existing_pairs tracks them.
-
-        This tests the core use case: collecting measurements in batches over time.
-        """
-        model = MockClient()
-        cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
+        """Test that multiple appends accumulate measurements and get_existing_pairs tracks them."""
+        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
 
         # First batch
         batch1 = [
@@ -225,16 +224,11 @@ class TestMeasurementCacheIntegration:
         assert len(cache.get_measurements()) == 3
 
     def test_cache_persists_across_instances(
-        self, tmp_path: Path, sample_template, sample_tasks
+        self, tmp_path: Path, sample_template, sample_tasks, unique_model, isolated_cache_dir
     ):
-        """Test that measurements persist when creating a new cache instance.
-
-        Simulates resuming a measurement session.
-        """
-        model = MockClient()
-
+        """Test that measurements persist when creating a new cache instance."""
         # First session - append some measurements
-        cache1 = MeasurementCache(sample_template, model, results_dir=tmp_path)
+        cache1 = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
         measurements = [
             BinaryPreferenceMeasurement(
                 task_a=sample_tasks[0], task_b=sample_tasks[1],
@@ -248,7 +242,7 @@ class TestMeasurementCacheIntegration:
         cache1.append(measurements)
 
         # Second session - new instance, same parameters
-        cache2 = MeasurementCache(sample_template, model, results_dir=tmp_path)
+        cache2 = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
 
         # Should see the same data
         assert cache2.get_existing_pairs() == {("task_1", "task_2"), ("task_1", "task_3")}
@@ -258,14 +252,10 @@ class TestMeasurementCacheIntegration:
         assert data[1]["choice"] == "b"
 
     def test_roundtrip_with_reconstruct(
-        self, tmp_path: Path, sample_template, sample_tasks
+        self, tmp_path: Path, sample_template, sample_tasks, unique_model, isolated_cache_dir
     ):
-        """Test full round-trip: append -> persist -> load -> reconstruct.
-
-        Verifies that measurements can be fully reconstructed with Task objects.
-        """
-        model = MockClient()
-        cache = MeasurementCache(sample_template, model, results_dir=tmp_path)
+        """Test full round-trip: append -> persist -> load -> reconstruct."""
+        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
 
         original = [
             BinaryPreferenceMeasurement(
@@ -293,12 +283,9 @@ class TestMeasurementCacheIntegration:
         assert reconstructed[1].choice == "b"
 
     def test_different_template_model_pairs_isolated(
-        self, tmp_path: Path, sample_tasks
+        self, tmp_path: Path, sample_tasks, isolated_cache_dir
     ):
-        """Test that different template/model combinations use separate storage.
-
-        Each (template, model) pair should have its own cache directory.
-        """
+        """Test that different template/model combinations use separate storage."""
         template1 = PromptTemplate(
             template="Choose: {task_a} or {task_b}? {format_instruction}",
             name="template_one",
@@ -309,8 +296,8 @@ class TestMeasurementCacheIntegration:
             name="template_two",
             required_placeholders=REVEALED_PLACEHOLDERS,
         )
-        model1 = MockClient("llama-3.1-8b")
-        model2 = MockClient("meta-llama/Meta-Llama-3.1-70B-Instruct")
+        model1 = MockClient(f"test-model-{uuid.uuid4().hex[:8]}")
+        model2 = MockClient(f"test-model-{uuid.uuid4().hex[:8]}")
 
         cache1 = MeasurementCache(template1, model1, results_dir=tmp_path)
         cache2 = MeasurementCache(template2, model1, results_dir=tmp_path)

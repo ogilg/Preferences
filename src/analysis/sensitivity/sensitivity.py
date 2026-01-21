@@ -9,10 +9,14 @@ from scipy import linalg
 def compute_sensitivity_regression(
     correlations: list[dict],
     correlation_key: str = "correlation",
+    alpha: float = 1.0,
 ) -> dict[str, dict]:
     """
-    Use regression to estimate independent contribution of each field.
+    Use Ridge regression to estimate independent contribution of each field.
     Model: correlation ~ β₀ + Σ βᵢ(field_i_same)
+
+    Ridge regularization (alpha > 0) handles multicollinearity when features
+    are perfectly correlated (e.g., phrasing and scale always change together).
     """
     all_fields: set[str] = set()
     for c in correlations:
@@ -48,21 +52,28 @@ def compute_sensitivity_regression(
     # Add intercept column
     X_with_const = np.column_stack([np.ones(len(X)), X])
 
-    # OLS via least squares
-    beta, residuals, rank, s = linalg.lstsq(X_with_const, y)
-
-    # Compute standard errors using pseudoinverse for stability
+    # Ridge regression: (X'X + αI)β = X'y
+    # Don't regularize the intercept
     n, p = X_with_const.shape
+    reg_matrix = alpha * np.eye(p)
+    reg_matrix[0, 0] = 0  # No regularization on intercept
+
+    XtX = X_with_const.T @ X_with_const
+    Xty = X_with_const.T @ y
+    beta = linalg.solve(XtX + reg_matrix, Xty)
+
+    # Compute predictions and R-squared
     y_pred = X_with_const @ beta
     sse = np.sum((y - y_pred) ** 2)
-    mse = sse / max(n - p, 1)
-    XtX_pinv = linalg.pinv(X_with_const.T @ X_with_const)
-    var_beta = mse * XtX_pinv
-    std_errs = np.sqrt(np.maximum(np.diag(var_beta), 0))
-
-    # R-squared
     ss_tot = np.sum((y - np.mean(y)) ** 2)
     r_squared = 1 - sse / ss_tot if ss_tot > 0 else 0.0
+
+    # Approximate standard errors for Ridge
+    mse = sse / max(n - p, 1)
+    XtX_reg_inv = linalg.inv(XtX + reg_matrix)
+    # Var(β) ≈ σ² (X'X + αI)^{-1} X'X (X'X + αI)^{-1}
+    var_beta = mse * XtX_reg_inv @ XtX @ XtX_reg_inv
+    std_errs = np.sqrt(np.maximum(np.diag(var_beta), 0))
 
     results = {
         "_meta": {
@@ -70,6 +81,7 @@ def compute_sensitivity_regression(
             "intercept_se": float(std_errs[0]),
             "r_squared": float(r_squared),
             "n_pairs": len(y),
+            "ridge_alpha": alpha,
         }
     }
 

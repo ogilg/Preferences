@@ -1,6 +1,9 @@
-"""Sensitivity analysis for preference measurements.
+"""DEPRECATED: This script uses the old directory format.
 
-Usage:
+Use plot_rating.py, plot_qualitative.py, or plot_revealed.py instead,
+which require --experiment-id and read from the experiments folder.
+
+Old usage:
     python -m src.experiments.sensitivity_experiments.plot results/measurements/
     python -m src.experiments.sensitivity_experiments.plot results/stated/ --templates src/preferences/templates/data/stated_v1.yaml
 """

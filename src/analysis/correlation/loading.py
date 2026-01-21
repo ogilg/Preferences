@@ -8,10 +8,6 @@ from pathlib import Path
 import numpy as np
 
 from src.measurement_storage import (
-    PRE_TASK_REVEALED_DIR,
-    PRE_TASK_STATED_DIR,
-    POST_REVEALED_DIR,
-    POST_STATED_DIR,
     EXPERIMENTS_DIR,
     list_runs,
     load_run_utilities,
@@ -24,15 +20,6 @@ class MeasurementType(Enum):
     POST_STATED = "post_stated"
     PRE_REVEALED = "pre_revealed"
     POST_REVEALED = "post_revealed"
-
-    @property
-    def results_dir(self) -> Path:
-        return {
-            MeasurementType.PRE_STATED: PRE_TASK_STATED_DIR,
-            MeasurementType.POST_STATED: POST_STATED_DIR,
-            MeasurementType.PRE_REVEALED: PRE_TASK_REVEALED_DIR,
-            MeasurementType.POST_REVEALED: POST_REVEALED_DIR,
-        }[self]
 
     @property
     def experiment_subdir(self) -> str:
@@ -62,11 +49,9 @@ class MeasurementType(Enum):
             MeasurementType.POST_REVEALED: "Post-task Revealed",
         }[self]
 
-    def get_results_dir(self, experiment_id: str | None = None) -> Path:
-        """Get results directory, using experiment folder if experiment_id provided."""
-        if experiment_id:
-            return EXPERIMENTS_DIR / experiment_id / self.experiment_subdir
-        return self.results_dir
+    def get_results_dir(self, experiment_id: str) -> Path:
+        """Get results directory for an experiment."""
+        return EXPERIMENTS_DIR / experiment_id / self.experiment_subdir
 
 
 @dataclass
@@ -103,19 +88,19 @@ class LoadedRun:
 
 def load_runs_for_model(
     model: str,
+    experiment_id: str,
     measurement_types: list[MeasurementType] | None = None,
     min_tasks: int = 10,
     require_thurstonian_csv: bool = False,
-    experiment_id: str | None = None,
 ) -> list[LoadedRun]:
     """Load all runs for a given model across measurement types.
 
     Args:
         model: Model short name to filter by (e.g., 'llama-3.1-8b')
+        experiment_id: Experiment ID to read from
         measurement_types: Types to load (default: all)
         min_tasks: Minimum number of tasks required
         require_thurstonian_csv: For revealed, require pre-computed utilities
-        experiment_id: If provided, read from experiments folder instead of cache
     """
     if measurement_types is None:
         measurement_types = list(MeasurementType)
@@ -159,8 +144,8 @@ def load_runs_for_model(
 
 
 def list_available_models(
+    experiment_id: str,
     measurement_types: list[MeasurementType] | None = None,
-    experiment_id: str | None = None,
 ) -> set[str]:
     """List all models with data in the specified measurement types."""
     if measurement_types is None:
