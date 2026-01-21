@@ -60,6 +60,7 @@ markers = [
     "probes: tests for activation extraction and linear probes",
     "thurstonian: tests for Thurstonian model fitting and active learning",
     "trueskill: tests for TrueSkill model fitting",
+    "ranking: tests for ranking-based preference measurement",
     "analysis: tests for post-hoc analysis modules",
 ]
 

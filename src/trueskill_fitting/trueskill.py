@@ -17,17 +17,9 @@ class TrueSkillResult:
     """TrueSkill fitting result. Implements UtilityResult protocol."""
 
     tasks: list["Task"]
-    n_rankings: int
+    n_observations: int
     _mu: dict[str, float] = field(repr=False)
     _sigma: dict[str, float] = field(repr=False)
-    _id_to_task: dict[str, "Task"] = field(init=False, repr=False)
-
-    def __post_init__(self) -> None:
-        self._id_to_task = {t.id: t for t in self.tasks}
-
-    @property
-    def n_observations(self) -> int:
-        return self.n_rankings
 
     def utility(self, task: "Task") -> float:
         return self._mu[task.id]
@@ -49,7 +41,7 @@ class TrueSkillResult:
             "task_ids": [t.id for t in self.tasks],
             "mu": self._mu,
             "sigma": self._sigma,
-            "n_rankings": self.n_rankings,
+            "n_observations": self.n_observations,
         }
 
 
@@ -81,7 +73,7 @@ def fit_trueskill_from_rankings(rankings: list["RankingMeasurement"]) -> TrueSki
 
     return TrueSkillResult(
         tasks=list(task_by_id.values()),
-        n_rankings=len(rankings),
+        n_observations=len(rankings),
         _mu={tid: r.mu for tid, r in ratings.items()},
         _sigma={tid: r.sigma for tid, r in ratings.items()},
     )

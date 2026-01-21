@@ -86,6 +86,7 @@ class RankingCache:
                     "response_format": response_format,
                     "seed": seed,
                     "task_ids": task_ids,
+                    "preference_type": m.preference_type.value,
                     "samples": [],
                 }
 
@@ -112,21 +113,16 @@ class RankingCache:
                 and entry["seed"] == seed
             ):
                 task_ids = entry["task_ids"]
-                try:
-                    tasks = [task_lookup[tid] for tid in task_ids]
-                except KeyError:
-                    continue
+                tasks = [task_lookup[tid] for tid in task_ids]
+                preference_type = PreferenceType(
+                    entry.get("preference_type", PreferenceType.PRE_TASK_RANKING.value)
+                )
 
                 for sample in entry["samples"]:
                     results.append(RankingMeasurement(
                         tasks=tasks,
                         ranking=sample["ranking"],
-                        preference_type=PreferenceType.PRE_TASK_RANKING,
+                        preference_type=preference_type,
                     ))
 
         return results
-
-    def save(self) -> None:
-        if self._data is not None:
-            self._cache_path.parent.mkdir(parents=True, exist_ok=True)
-            save_yaml(self._data, self._cache_path)

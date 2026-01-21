@@ -700,14 +700,14 @@ class ToolUseRankingFormat(BaseRankingFormat):
             pass
         return None
 
-    async def parse(self, response: str) -> list[int]:
+    async def parse(self, response: str) -> list[int] | Literal["refusal"]:
         ranking = self._extract_ranking(response)
         if ranking is not None and len(ranking) == len(self.task_labels):
             if len(set(ranking)) == len(ranking):
                 return ranking
 
         if await refusal_judge.judge_preference_refusal_async(response):
-            raise ParseError(response)
+            return "refusal"
         return await semantic_parser.parse_ranking_async(response, self.task_labels)
 
 
