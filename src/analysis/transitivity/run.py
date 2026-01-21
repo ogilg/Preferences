@@ -1,226 +1,277 @@
-"""DEPRECATED: This script uses the old directory format.
+"""Compute transitivity (cycle probability) for preference measurements.
 
-TODO: Update to use --experiment-id and read from experiments folder.
-
-Compute transitivity (cycle probability) across active learning measurements.
-
-Old usage: python -m src.experiments.transitivity.run
+Usage:
+    python -m src.analysis.transitivity.run --experiment-id probe_3 --model llama-3.1-8b --type pre_stated
+    python -m src.analysis.transitivity.run --experiment-id probe_3 --model llama-3.1-8b --type pre_stated --aggregate
+    python -m src.analysis.transitivity.run --list-models --experiment-id probe_3
 """
-
 from __future__ import annotations
 
 import argparse
-import random
-from collections import defaultdict
-from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
-from tqdm import tqdm
 
-from src.measurement_storage import PRE_TASK_REVEALED_DIR
-
-
-@dataclass
-class RunData:
-    run_id: str
-    model: str
-    comparisons: dict[tuple[str, str], list[str]]
-    tasks: set[str]
+from src.measurement_storage import EXPERIMENTS_DIR, list_runs
+from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
+from src.analysis.transitivity.wins_matrix import (
+    load_wins_matrix_for_run,
+    aggregate_wins_matrices,
+)
 
 
-def load_runs(results_dir: Path) -> list[RunData]:
-    """Load comparisons grouped by run (same template/config)."""
-    runs = []
+OUTPUT_DIR = Path("src/analysis/transitivity/plots")
 
-    for run_dir in results_dir.iterdir():
-        config_path = run_dir / "config.yaml"
-        measurements_path = run_dir / "measurements.yaml"
-        if not config_path.exists() or not measurements_path.exists():
+
+class MeasurementType(Enum):
+    PRE_STATED = "pre_stated"
+    POST_STATED = "post_stated"
+    PRE_REVEALED = "pre_revealed"
+    POST_REVEALED = "post_revealed"
+
+    @property
+    def experiment_subdir(self) -> str:
+        return {
+            MeasurementType.PRE_STATED: "pre_task_stated",
+            MeasurementType.POST_STATED: "post_task_stated",
+            MeasurementType.PRE_REVEALED: "pre_task_revealed",
+            MeasurementType.POST_REVEALED: "post_task_revealed",
+        }[self]
+
+    @property
+    def is_revealed(self) -> bool:
+        return self in (MeasurementType.PRE_REVEALED, MeasurementType.POST_REVEALED)
+
+    @property
+    def display_name(self) -> str:
+        return {
+            MeasurementType.PRE_STATED: "Pre-task Stated",
+            MeasurementType.POST_STATED: "Post-task Stated",
+            MeasurementType.PRE_REVEALED: "Pre-task Revealed",
+            MeasurementType.POST_REVEALED: "Post-task Revealed",
+        }[self]
+
+    def get_results_dir(self, experiment_id: str) -> Path:
+        return EXPERIMENTS_DIR / experiment_id / self.experiment_subdir
+
+
+def list_available_models(experiment_id: str) -> set[str]:
+    """List all models with data in any measurement type."""
+    models: set[str] = set()
+    for mtype in MeasurementType:
+        results_dir = mtype.get_results_dir(experiment_id)
+        if not results_dir.exists():
             continue
+        for config in list_runs(results_dir):
+            models.add(config.model_short)
+    return models
 
-        with open(config_path) as f:
-            config = yaml.safe_load(f)
 
-        with open(measurements_path) as f:
-            measurements = yaml.safe_load(f)
+def load_runs_for_analysis(
+    experiment_id: str,
+    model: str,
+    measurement_type: MeasurementType,
+    min_tasks: int = 3,
+) -> list[tuple[Path, str]]:
+    """Load run directories for transitivity analysis.
 
-        comparisons: dict[tuple[str, str], list[str]] = defaultdict(list)
-        tasks: set[str] = set()
+    Returns list of (run_dir, run_name) tuples.
+    """
+    results_dir = measurement_type.get_results_dir(experiment_id)
+    if not results_dir.exists():
+        return []
 
-        for m in measurements:
-            key = (m["task_a"], m["task_b"])
-            comparisons[key].append(m["choice"])
-            tasks.add(m["task_a"])
-            tasks.add(m["task_b"])
-
-        runs.append(RunData(
-            run_id=run_dir.name,
-            model=config["model_short"],
-            comparisons=dict(comparisons),
-            tasks=tasks,
-        ))
+    runs = []
+    for config in list_runs(results_dir):
+        if config.model_short != model:
+            continue
+        runs.append((config.run_dir, config.template_name))
 
     return runs
 
 
-def get_pairwise_prob(
-    comparisons: dict[tuple[str, str], list[str]],
-    task_a: str,
-    task_b: str,
-) -> float | None:
-    """Get P(task_a > task_b) from comparisons. Returns None if no data."""
-    key_ab = (task_a, task_b)
-    key_ba = (task_b, task_a)
+def run_transitivity_analysis(
+    experiment_id: str,
+    model: str,
+    measurement_type: MeasurementType,
+    aggregate: bool = False,
+    min_tasks: int = 3,
+) -> tuple[list[tuple[str, TransitivityResult]], np.ndarray | None, list[str] | None]:
+    """Run transitivity analysis for a model and measurement type.
 
-    wins_a = 0
-    total = 0
-
-    if key_ab in comparisons:
-        for choice in comparisons[key_ab]:
-            total += 1
-            if choice == "a":
-                wins_a += 1
-
-    if key_ba in comparisons:
-        for choice in comparisons[key_ba]:
-            total += 1
-            if choice == "b":
-                wins_a += 1
-
-    if total == 0:
-        return None
-    return wins_a / total
-
-
-def sample_transitivity(
-    runs: list[RunData],
-    n_samples: int = 10000,
-    seed: int = 42,
-) -> dict:
+    Returns:
+        - List of (run_name, TransitivityResult) for each run
+        - Aggregated wins matrix (if aggregate=True)
+        - Task IDs for aggregated matrix
     """
-    Sample triads within runs (same template) and compute cycle probability.
-    """
-    random.seed(seed)
-    np.random.seed(seed)
+    runs = load_runs_for_analysis(experiment_id, model, measurement_type, min_tasks)
 
-    cycle_probs = []
-    hard_cycles = 0
-    n_sampled = 0
-    n_attempts = 0
+    if not runs:
+        return [], None, None
 
-    # Weight runs by number of tasks for fair sampling
-    run_weights = [len(r.tasks) for r in runs]
-    total_weight = sum(run_weights)
-    run_probs = [w / total_weight for w in run_weights]
+    results: list[tuple[str, TransitivityResult]] = []
+    matrices: list[tuple[np.ndarray, list[str]]] = []
 
-    pbar = tqdm(total=n_samples, desc="Sampling triads")
-    while n_sampled < n_samples and n_attempts < n_samples * 100:
-        n_attempts += 1
-
-        # Sample a run
-        run = random.choices(runs, weights=run_probs, k=1)[0]
-        task_list = list(run.tasks)
-
-        if len(task_list) < 3:
+    for run_dir, run_name in runs:
+        try:
+            wins, task_ids = load_wins_matrix_for_run(run_dir, measurement_type.is_revealed)
+        except FileNotFoundError:
             continue
 
-        # Sample three tasks from this run
-        i, j, k = random.sample(task_list, 3)
-
-        # Check all pairs have data within this run
-        p_ij = get_pairwise_prob(run.comparisons, i, j)
-        p_jk = get_pairwise_prob(run.comparisons, j, k)
-        p_ki = get_pairwise_prob(run.comparisons, k, i)
-
-        if p_ij is None or p_jk is None or p_ki is None:
+        if len(task_ids) < min_tasks:
             continue
 
-        n_sampled += 1
-        pbar.update(1)
+        result = measure_transitivity(wins)
+        results.append((run_name, result))
+        matrices.append((wins, task_ids))
 
-        # Cycle probability: P(i>j>k>i) + P(j>i>k>j)
-        p_clockwise = p_ij * p_jk * p_ki
-        p_counter = (1 - p_ij) * (1 - p_jk) * (1 - p_ki)
-        p_cycle = p_clockwise + p_counter
+    # Aggregate if requested
+    agg_wins, agg_task_ids = None, None
+    if aggregate and matrices:
+        agg_wins, agg_task_ids = aggregate_wins_matrices(matrices)
 
-        cycle_probs.append(p_cycle)
+    return results, agg_wins, agg_task_ids
 
-        # Hard cycle: majority preference forms a cycle
-        if (p_ij > 0.5 and p_jk > 0.5 and p_ki > 0.5) or \
-           (p_ij < 0.5 and p_jk < 0.5 and p_ki < 0.5):
-            hard_cycles += 1
 
-    pbar.close()
+def plot_transitivity_results(
+    results: list[tuple[str, TransitivityResult]],
+    output_path: Path,
+    title: str,
+) -> None:
+    """Plot cycle probabilities across runs."""
+    if not results:
+        return
 
-    return {
-        "mean_cycle_prob": float(np.mean(cycle_probs)) if cycle_probs else 0.0,
-        "std_cycle_prob": float(np.std(cycle_probs)) if cycle_probs else 0.0,
-        "n_sampled": n_sampled,
-        "n_hard_cycles": hard_cycles,
-        "hard_cycle_rate": hard_cycles / n_sampled if n_sampled > 0 else 0.0,
-        "cycle_probs": cycle_probs,
-    }
+    names = [name for name, _ in results]
+    cycle_probs = [r.cycle_probability for _, r in results]
+    n_cycles = [r.n_cycles for _, r in results]
+    n_triads = [r.n_triads for _, r in results]
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    x = np.arange(len(names))
+    bars = ax.bar(x, cycle_probs, color="steelblue", alpha=0.8, edgecolor="white")
+
+    # Add hard cycle counts as text
+    for i, (cp, nc, nt) in enumerate(zip(cycle_probs, n_cycles, n_triads)):
+        ax.text(i, cp + 0.01, f"{nc}/{nt}", ha="center", va="bottom", fontsize=8)
+
+    ax.axhline(0.25, color="gray", linestyle=":", alpha=0.7, label="random=0.25")
+    ax.set_xlabel("Run")
+    ax.set_ylabel("Cycle Probability")
+    ax.set_title(title)
+    ax.set_xticks(x)
+    ax.set_xticklabels(names, rotation=45, ha="right", fontsize=8)
+    ax.legend()
+
+    plt.tight_layout()
+    fig.savefig(output_path, dpi=150)
+    plt.close()
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Compute transitivity via sampling")
-    parser.add_argument("--results-dir", type=Path, default=PRE_TASK_REVEALED_DIR)
-    parser.add_argument("--output-dir", type=Path, default=Path("results/transitivity"))
-    parser.add_argument("--n-samples", type=int, default=10000)
-    parser.add_argument("--seed", type=int, default=42)
+    parser = argparse.ArgumentParser(description="Compute transitivity for preference measurements")
+    parser.add_argument("--experiment-id", type=str, required=True, help="Experiment ID to load from")
+    parser.add_argument("--model", type=str, help="Model short name (e.g., llama-3.1-8b)")
+    parser.add_argument(
+        "--type",
+        type=str,
+        choices=[t.value for t in MeasurementType],
+        help="Measurement type",
+    )
+    parser.add_argument("--min-tasks", type=int, default=3, help="Minimum tasks required")
+    parser.add_argument("--aggregate", action="store_true", help="Aggregate wins across all runs")
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
+    parser.add_argument("--list-models", action="store_true", help="List available models and exit")
     args = parser.parse_args()
 
-    print(f"Loading runs from {args.results_dir}...")
-    runs = load_runs(args.results_dir)
-    models = set(r.model for r in runs)
-    n_pairs = sum(len(r.comparisons) for r in runs)
-    print(f"Loaded {len(runs)} runs with {n_pairs} total pairs from {len(models)} model(s)")
+    if args.list_models:
+        models = list_available_models(args.experiment_id)
+        print(f"Available models in {args.experiment_id} ({len(models)}):")
+        for m in sorted(models):
+            print(f"  {m}")
+        return
 
-    model_str = list(models)[0] if len(models) == 1 else f"{len(models)} models"
+    if not args.model:
+        parser.error("--model is required (or use --list-models)")
+    if not args.type:
+        parser.error("--type is required")
 
-    print(f"Sampling {args.n_samples} triads (within same template)...")
-    result = sample_transitivity(runs, n_samples=args.n_samples, seed=args.seed)
+    measurement_type = MeasurementType(args.type)
 
-    print(f"\n--- Results ---")
-    print(f"Sampled triads: {result['n_sampled']}")
-    print(f"Mean cycle prob: {result['mean_cycle_prob']:.4f} ± {result['std_cycle_prob']:.4f}")
-    print(f"Hard cycle rate: {result['hard_cycle_rate']:.4f} ({result['n_hard_cycles']}/{result['n_sampled']})")
+    print(f"Running transitivity analysis:")
+    print(f"  Experiment: {args.experiment_id}")
+    print(f"  Model: {args.model}")
+    print(f"  Type: {measurement_type.display_name}")
+    print()
+
+    results, agg_wins, agg_task_ids = run_transitivity_analysis(
+        args.experiment_id,
+        args.model,
+        measurement_type,
+        aggregate=args.aggregate,
+        min_tasks=args.min_tasks,
+    )
+
+    if not results:
+        print("No runs found matching criteria")
+        return
+
+    print(f"Found {len(results)} runs:")
+    for name, result in results:
+        print(f"  {name}: cycle_prob={result.cycle_probability:.4f}, "
+              f"hard_cycles={result.n_cycles}/{result.n_triads}")
+
+    # Aggregated result
+    if args.aggregate and agg_wins is not None:
+        agg_result = measure_transitivity(agg_wins)
+        print()
+        print(f"Aggregated ({len(agg_task_ids)} tasks):")
+        print(f"  cycle_prob={agg_result.cycle_probability:.4f}, "
+              f"hard_cycles={agg_result.n_cycles}/{agg_result.n_triads}")
 
     # Plot
-    args.output_dir.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%m%d%y")
+    output_dir = args.output_dir / args.model
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.hist(result["cycle_probs"], bins=50, color="steelblue", alpha=0.8, edgecolor="white")
-    ax.axvline(result["mean_cycle_prob"], color="red", linestyle="--",
-               label=f"mean={result['mean_cycle_prob']:.3f}")
-    ax.axvline(0.25, color="gray", linestyle=":", alpha=0.7, label="random=0.25")
-    ax.set_xlabel("Cycle Probability")
-    ax.set_ylabel("Count")
-    ax.set_title(f"{model_str} Transitivity (n={result['n_sampled']} triads)")
-    ax.legend()
-    plt.tight_layout()
-
-    output_path = args.output_dir / f"plot_{date_str}_transitivity_distribution.png"
-    fig.savefig(output_path, dpi=150)
-    print(f"Saved plot to {output_path}")
-    plt.close()
+    plot_path = output_dir / f"plot_{date_str}_transitivity_{measurement_type.value}.png"
+    plot_transitivity_results(
+        results,
+        plot_path,
+        f"{args.model} [{args.experiment_id}] - {measurement_type.display_name}",
+    )
+    print(f"\nSaved plot to {plot_path}")
 
     # Save results
     summary = {
-        "model": model_str,
-        "n_runs": len(runs),
-        "n_pairs": n_pairs,
-        "n_sampled_triads": result["n_sampled"],
-        "mean_cycle_prob": result["mean_cycle_prob"],
-        "std_cycle_prob": result["std_cycle_prob"],
-        "hard_cycle_rate": result["hard_cycle_rate"],
+        "experiment_id": args.experiment_id,
+        "model": args.model,
+        "measurement_type": measurement_type.value,
+        "n_runs": len(results),
+        "runs": [
+            {
+                "name": name,
+                "cycle_probability": float(r.cycle_probability),
+                "n_triads": r.n_triads,
+                "n_hard_cycles": r.n_cycles,
+            }
+            for name, r in results
+        ],
     }
-    yaml_path = args.output_dir / "transitivity_results.yaml"
+    if args.aggregate and agg_wins is not None:
+        summary["aggregated"] = {
+            "n_tasks": len(agg_task_ids),
+            "cycle_probability": float(agg_result.cycle_probability),
+            "n_triads": agg_result.n_triads,
+            "n_hard_cycles": agg_result.n_cycles,
+        }
+
+    yaml_path = output_dir / f"transitivity_{measurement_type.value}.yaml"
     with open(yaml_path, "w") as f:
         yaml.dump(summary, f, default_flow_style=False, sort_keys=False)
     print(f"Saved results to {yaml_path}")
