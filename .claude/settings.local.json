@@ -11,7 +11,10 @@
       "WebFetch(domain:martin.hjartmyr.se)",
       "Bash(ls:*)",
       "Skill(log)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(git add:*)"
     ]
   }
 }

@@ -3,5 +3,12 @@
     "allow": [
       "Pytest"
     ]
+  },
+  "enabledPlugins": {
+    "hive-mind@alignment-hive": true,
+    "pyright-lsp@claude-plugins-official": true
+  },
+  "pluginMarketplaces": {
+    "alignment-hive": "Crazytieguy/alignment-hive"
   }
 }

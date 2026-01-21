@@ -1,3 +1,7 @@
+"""DEPRECATED: This module uses the old directory format.
+
+TODO: Update to use experiment_id and read from experiments folder.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

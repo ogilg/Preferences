@@ -231,3 +231,37 @@ Refactored and cleaned probe module:
 - Fixed bug in `evaluate.py` (dead code in probe lookup)
 - Created `activations.py` and `training.py` from extracted functions
 - Kept `run_activation_extraction.py` (separate activation extraction tool)
+
+## 2026-01-20: TrueSkill-based ranking preference measurement
+
+Added ranking-based preference elicitation as an alternative to pairwise comparisons. Models rank N tasks simultaneously, and TrueSkill fits utilities from the rankings.
+
+### Why rankings?
+
+Pairwise comparisons scale as O(n²). Rankings give O(n) comparisons worth of information per query—more efficient for large task sets.
+
+### Components
+
+**`src/trueskill_fitting/`**:
+- `trueskill.py` — `TrueSkillResult` implements `UtilityResult` protocol (same interface as Thurstonian)
+- `sampling.py` — Weighted sampling for balanced task coverage across ranking groups
+- `fit_trueskill_from_rankings()` — Treats each ranking as a multi-team match
+
+**`src/measurement_storage/ranking_cache.py`**:
+- Caches ranking measurements by (template, format, seed, task_group_hash)
+- Stores preference_type for pre/post-task distinction
+
+**Ranking response formats** (`response_format.py`):
+- `RegexRankingFormat` — Parses "A > B > C > D > E" style
+- `XMLRankingFormat` — Parses `<ranking>...</ranking>` tags
+- `ToolUseRankingFormat` — JSON tool call with ranking array
+
+**Prompt builders** (`builders.py`):
+- `PreTaskRankingPromptBuilder` — Rank 5 tasks before seeing them
+- `PostTaskRankingPromptBuilder` — Rank 5 tasks after completing them (includes completions in context)
+
+### Key design
+
+- Rankings use indices into task presentation order: `[0, 2, 1, 4, 3]` means A > C > B > E > D
+- `RankingMeasurement` and `RankingRefusal` types mirror binary preference types
+- TrueSkill mu/sigma map directly to utility/uncertainty in the protocol

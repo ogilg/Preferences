@@ -15,11 +15,25 @@ from src.analysis.probe.probe_helpers import filter_probes, make_probe_label
 def main() -> None:
     parser = argparse.ArgumentParser(description="Plot R² comparison")
     parser.add_argument("manifest_dir", type=Path, help="Directory with manifest.json")
-    parser.add_argument("--output", type=Path, required=True, help="Output PNG path")
+    parser.add_argument("--output", type=Path, help="Output PNG path (default: src/analysis/probe/plots/plot_MMDDYY_r2_*.png)")
     parser.add_argument("--template", type=str, help="Filter by template (substring match)")
     parser.add_argument("--layer", type=int, help="Filter by layer")
     parser.add_argument("--dataset", type=str, help="Filter by dataset")
     args = parser.parse_args()
+
+    # Default output path
+    if args.output is None:
+        from datetime import datetime
+        date_str = datetime.now().strftime("%m%d%y")
+        filters = []
+        if args.template:
+            filters.append(args.template[:10])
+        if args.layer is not None:
+            filters.append(f"L{args.layer}")
+        if args.dataset:
+            filters.append(args.dataset[:10])
+        filter_suffix = "_".join(filters) if filters else "all"
+        args.output = Path(f"src/analysis/probe/plots/plot_{date_str}_r2_{filter_suffix}.png")
 
     manifest = load_manifest(args.manifest_dir)
     probes = filter_probes(manifest, args.template, args.layer, args.dataset)

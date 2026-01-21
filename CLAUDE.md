@@ -1,5 +1,7 @@
 # Preferences
 
+@README.md
+
 MATS 9.0 project investigating AI model preferences and self-reported valence.
 
 ## Docs
@@ -39,7 +41,7 @@ uv pip install -e ".[dev]"
 - All plot file names should be like plot_{mmddYY}_precise_description.png
 - To convert markdown to PDF (use unique suffix to avoid overwrites): `cd <dir_with_md_file> && DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib pandoc file.md -o file_$(date +%Y%m%d_%H%M%S).pdf --pdf-engine=weasyprint --css=/Users/oscargilg/Dev/MATS/Preferences/docs/pandoc.css`
 - The scripts folder is only for temporary scripts. Core experiment scripts that do analysis or plotting should go in the experiments folder.
-- Analysis plots that are generated from the experiments folder should go to the experiments folder. The results folder is mostly for measurements.
+- Analysis plots that are generated from the analysis folder should go to the analysis folder. The results folder is mostly for measurements.
 - To convert PDF to DOCX with embedded images: `soffice --headless --infilter="writer_pdf_import" --convert-to docx:"MS Word 2007 XML" file.pdf`. If images are missing (referenced outside `logs/assets/`), copy them to `logs/assets/` and append with python-docx, then manually move into place.
 
 ## Claude instructions

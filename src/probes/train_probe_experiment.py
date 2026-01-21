@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 import numpy as np
+from tqdm import tqdm
 
 from src.measurement_storage.loading import load_pooled_scores
 from src.probes.config import ProbeTrainingConfig
@@ -68,9 +69,13 @@ def train_probe_combination(
     # Load activations
     task_ids, activations = load_activations(config.activations_path.parent)
 
+    # Determine measurement directory (pre_task_stated or post_task_stated)
+    task_type = "pre_task" if template.startswith("pre_task") else "post_task"
+    measurement_dir = config.experiment_dir / f"{task_type}_stated"
+
     # Load measurements
     scores = load_pooled_scores(
-        config.experiment_dir / "post_task_stated",
+        measurement_dir,
         template,
         config.response_formats,
         config.seeds,
@@ -175,10 +180,16 @@ def main() -> None:
     combinations = determine_training_combinations(config)
     print(f"Training {len(combinations)} probes...\n")
 
-    # Train probes
+    # Train probes with progress bar
     trained_count = 0
-    for combo in combinations:
+    pbar = tqdm(combinations, desc="Training probes", unit="probe")
+    for combo in pbar:
         probe_id = f"{next_id:03d}"
+
+        # Update progress bar description with current probe
+        template_short = combo["template"].replace("post_task_", "")[:15]
+        pbar.set_description(f"Training {template_short} L{combo['layer']}")
+
         result = train_probe_combination(
             config,
             combo["template"],
@@ -191,6 +202,8 @@ def main() -> None:
             manifest["probes"].append(result)
             next_id += 1
             trained_count += 1
+
+    pbar.close()
 
     # Save manifest
     save_manifest(manifest, config.output_dir)

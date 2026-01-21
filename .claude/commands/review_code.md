@@ -1,4 +1,4 @@
-Review the code in $ARGUMENS, in particular evaluate:
+Review the code in $ARGUMENTS, in particular evaluate:
 - Coding style, and whether it is appropriate to the current project.
 - General software desing, and whether it needs to be refactored.
 - Readability of the code.
