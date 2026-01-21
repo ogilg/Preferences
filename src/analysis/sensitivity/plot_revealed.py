@@ -72,19 +72,19 @@ def main():
 
         if sensitivities:
             plot_path = OUTPUT_DIR / f"plot_{date_str}_{prefix}_revealed_averaging.png"
-            title = f"{model_str} {prefix.replace('_', ' ').title()} Revealed Sensitivity (n={n_runs})"
+            title = f"{model_str} {prefix.replace('_', ' ').title()} Revealed Sensitivity (n={n_runs}) [{args.experiment_id}]"
             plot_sensitivity_bars(sensitivities, plot_path, title)
             print(f"Saved plot to {plot_path}")
 
         if regression:
             plot_path = OUTPUT_DIR / f"plot_{date_str}_{prefix}_revealed_regression.png"
-            title = f"{model_str} {prefix.replace('_', ' ').title()} Revealed Sensitivity (Regression, n={n_runs})"
+            title = f"{model_str} {prefix.replace('_', ' ').title()} Revealed Sensitivity (Regression, n={n_runs}) [{args.experiment_id}]"
             plot_regression_coefficients(regression, plot_path, title)
             print(f"Saved regression plot to {plot_path}")
 
         if len(models) > 1:
             plot_path = OUTPUT_DIR / f"plot_{date_str}_{prefix}_revealed_by_model.png"
-            plot_sensitivity_by_model(runs, plot_path, f"{prefix.replace('_', ' ').title()} Revealed Sensitivity by Model")
+            plot_sensitivity_by_model(runs, plot_path, f"{prefix.replace('_', ' ').title()} Revealed Sensitivity by Model [{args.experiment_id}]")
             print(f"Saved per-model plot to {plot_path}")
 
 

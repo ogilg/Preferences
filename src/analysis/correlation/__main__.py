@@ -107,14 +107,14 @@ def main():
     plot_correlation_matrix(
         runs,
         output_dir / f"plot_{date_str}_correlation_matrix.png",
-        args.model,
+        f"{args.model} [{args.experiment_id}]",
     )
 
     # 2. Cross-type comparison bar chart
     plot_type_comparison(
         runs,
         output_dir / f"plot_{date_str}_type_comparison.png",
-        args.model,
+        f"{args.model} [{args.experiment_id}]",
     )
 
     # 3. Scatter grid (if not too many runs)
@@ -122,7 +122,7 @@ def main():
         plot_scatter_grid(
             runs,
             output_dir / f"plot_{date_str}_scatter_grid.png",
-            args.model,
+            f"{args.model} [{args.experiment_id}]",
         )
     else:
         print(f"Skipping scatter grid (too many runs: {len(runs)})")

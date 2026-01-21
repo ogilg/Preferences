@@ -134,7 +134,7 @@ def main():
     plot_correlation_matrix(
         runs,
         plot_path,
-        f"{args.model} - {args.template_pattern or 'all'}",
+        f"{args.model} - {args.template_pattern or 'all'} [{args.experiment_id}]",
     )
     print(f"\nSaved plot to {plot_path}")
 
