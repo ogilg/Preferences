@@ -78,7 +78,27 @@ class MeasurementResponse:
     result: BinaryPreferenceMeasurement | TaskScore | TaskRefusal | RankingMeasurement | RankingRefusal
 
 
+class FailureCategory(Enum):
+    REFUSAL = "refusal"
+    PARSE_ERROR = "parse_error"
+    TOOL_USE_FAILURE = "tool_use_failure"
+    API_ERROR = "api_error"
+    TIMEOUT = "timeout"
+    RATE_LIMIT = "rate_limit"
+    CONTENT_FILTER = "content_filter"
+    OTHER = "other"
+
+
+@dataclass
+class MeasurementFailure:
+    """Structured failure information for a measurement attempt."""
+    task_ids: list[str]  # Task IDs involved (1 for stated, 2 for revealed, N for ranking)
+    category: FailureCategory
+    raw_response: str | None  # The model's response, if any
+    error_message: str  # The error/exception message
+
+
 @dataclass
 class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore, TaskRefusal, RankingMeasurement, RankingRefusal)]:
     successes: list[T]
-    failures: list[tuple[PreferencePrompt, str]]
+    failures: list[MeasurementFailure]

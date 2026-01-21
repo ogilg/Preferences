@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Callable, Awaitable
 
 from src.models import OpenAICompatibleClient
 from src.measurement_storage.unified_cache import StatedCache, template_config_from_template
-from src.measurement_storage.cache import MeasurementStats, categorize_failure, MAX_EXAMPLES_PER_CATEGORY
+from src.measurement_storage.cache import MeasurementStats
 from src.prompt_templates.template import PromptTemplate
 from src.types import TaskScore, PreferenceType
 
@@ -181,13 +181,7 @@ class PreTaskStatedCache:
             fresh_batch = await measure_fn(to_query)
             stats.api_successes = len(fresh_batch.successes)
             stats.api_failures = len(fresh_batch.failures)
-            for _, error_msg in fresh_batch.failures:
-                cat = categorize_failure(error_msg)
-                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
-                if cat not in stats.failure_examples:
-                    stats.failure_examples[cat] = []
-                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    stats.failure_examples[cat].append(error_msg)
+            stats.failures = fresh_batch.failures
             self.save(fresh_batch.successes)
             return cached_hits + fresh_batch.successes, stats
 

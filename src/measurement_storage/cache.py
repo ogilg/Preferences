@@ -13,7 +13,8 @@ from src.measurement_storage.base import (
 from src.measurement_storage.unified_cache import RevealedCache, template_config_from_template
 from src.prompt_templates.template import PromptTemplate
 from src.task_data import Task
-from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferenceType
+from src.types import BinaryPreferenceMeasurement, MeasurementBatch, MeasurementFailure, PreferenceType
+from src.measurement_storage.failures import FailureLog
 
 
 PRE_TASK_REVEALED_DIR = Path("results/pre_task_revealed")
@@ -22,68 +23,35 @@ ResponseFormatName = Literal["regex", "tool_use"]
 OrderName = Literal["canonical", "reversed"]
 
 
-def categorize_failure(error_msg: str) -> str:
-    """Categorize a failure message into a bucket."""
-    error_lower = error_msg.lower()
-    if error_lower.startswith("refusal ("):
-        return "refusal"
-    if "timeout" in error_lower or "timed out" in error_lower:
-        return "timeout"
-    if "rate" in error_lower and "limit" in error_lower:
-        return "rate_limit"
-    if "expected tool call but got text" in error_lower:
-        return "tool_use_failure"
-    if "connection" in error_lower or "connect" in error_lower:
-        return "connection"
-    if "content" in error_lower and "filter" in error_lower:
-        return "content_filter"
-    if "unexpected result type" in error_lower:
-        return "parse_type"
-    if "request failed" in error_lower:
-        if "timeout" in error_lower:
-            return "timeout"
-        if "rate" in error_lower:
-            return "rate_limit"
-        return "api_error"
-    if any(x in error_lower for x in ["parse", "extract", "invalid", "expected", "match"]):
-        return "parse_error"
-    return "other"
-
-
-MAX_EXAMPLES_PER_CATEGORY = 5
-
-
 @dataclass
 class MeasurementStats:
     """Stats from a measurement operation."""
     cache_hits: int = 0
     api_successes: int = 0
     api_failures: int = 0
-    failure_categories: dict[str, int] | None = None
-    failure_examples: dict[str, list[str]] | None = None
+    failures: list[MeasurementFailure] | None = None
 
     def __post_init__(self):
-        if self.failure_categories is None:
-            self.failure_categories = {}
-        if self.failure_examples is None:
-            self.failure_examples = {}
+        if self.failures is None:
+            self.failures = []
 
     @property
     def total_successes(self) -> int:
         return self.cache_hits + self.api_successes
 
+    def failure_counts(self) -> dict[str, int]:
+        """Get failure counts by category."""
+        counts: dict[str, int] = {}
+        for f in self.failures:
+            cat = f.category.value
+            counts[cat] = counts.get(cat, 0) + 1
+        return counts
+
     def __iadd__(self, other: MeasurementStats) -> MeasurementStats:
         self.cache_hits += other.cache_hits
         self.api_successes += other.api_successes
         self.api_failures += other.api_failures
-        for cat, count in other.failure_categories.items():
-            self.failure_categories[cat] = self.failure_categories.get(cat, 0) + count
-        for cat, examples in other.failure_examples.items():
-            if cat not in self.failure_examples:
-                self.failure_examples[cat] = []
-            for ex in examples:
-                if len(self.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    self.failure_examples[cat].append(ex)
+        self.failures.extend(other.failures)
         return self
 
 
@@ -186,6 +154,7 @@ class MeasurementCache:
         pairs: list[tuple[Task, Task]],
         measure_fn: Callable[[list[tuple[Task, Task]]], Awaitable[MeasurementBatch]],
         task_lookup: dict[str, Task],
+        failure_log: FailureLog | None = None,
     ) -> tuple[list[BinaryPreferenceMeasurement], MeasurementStats]:
         """Check cache for each pair, call measure_fn for misses, return combined."""
         if not pairs:
@@ -198,13 +167,18 @@ class MeasurementCache:
             fresh_batch = await measure_fn(to_query)
             stats.api_successes = len(fresh_batch.successes)
             stats.api_failures = len(fresh_batch.failures)
-            for _, error_msg in fresh_batch.failures:
-                cat = categorize_failure(error_msg)
-                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
-                if cat not in stats.failure_examples:
-                    stats.failure_examples[cat] = []
-                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    stats.failure_examples[cat].append(error_msg)
+            stats.failures = fresh_batch.failures
+
+            # Persist failures if log provided
+            if failure_log and fresh_batch.failures:
+                failure_log.append(
+                    fresh_batch.failures,
+                    run_info={
+                        "template": self.template.name,
+                        "response_format": self.response_format,
+                    },
+                )
+
             self.append(fresh_batch.successes)
             return cached_hits + fresh_batch.successes, stats
 

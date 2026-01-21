@@ -37,7 +37,8 @@ from src.measurement_storage import (
     save_stated, stated_exist, MeasurementCache, MeasurementStats, save_yaml, reconstruct_measurements,
     ExperimentStore, RankingCache,
 )
-from src.measurement_storage.cache import categorize_failure
+from src.measurement_storage.failures import save_run_failures
+from src.types import MeasurementFailure
 from src.measurement_storage.completions import generate_completions
 from src.measurement_storage.base import build_measurement_config
 from src.thurstonian_fitting import compute_pair_agreement, save_thurstonian, _config_hash
@@ -57,11 +58,16 @@ from src.running_measurements.utils.experiment_utils import (
     build_fit_kwargs,
     build_configurations,
 )
+from src.measurement_storage.base import find_project_root
 
 
-MAX_EXAMPLES_PER_CATEGORY = 5
-
-
+def _get_activation_completions_path(use_tasks_with_activations: bool) -> Path | None:
+    """Get path to activation completions if using activation tasks."""
+    if use_tasks_with_activations:
+        path = find_project_root() / "probe_data" / "activations" / "completions_with_activations.json"
+        if path.exists():
+            return path
+    return None
 
 
 @dataclass
@@ -71,15 +77,20 @@ class RunnerStats:
     successes: int = 0
     failures: int = 0
     cache_hits: int = 0
-    skipped: int = 0  # Entire configurations skipped
-    failure_categories: dict[str, int] | None = None
-    failure_examples: dict[str, list[str]] | None = None
+    skipped: int = 0
+    all_failures: list[MeasurementFailure] | None = None
 
     def __post_init__(self):
-        if self.failure_categories is None:
-            self.failure_categories = {}
-        if self.failure_examples is None:
-            self.failure_examples = {}
+        if self.all_failures is None:
+            self.all_failures = []
+
+    def failure_counts(self) -> dict[str, int]:
+        """Get failure counts by category."""
+        counts: dict[str, int] = {}
+        for f in self.all_failures:
+            cat = f.category.value
+            counts[cat] = counts.get(cat, 0) + 1
+        return counts
 
     def to_dict(self) -> dict:
         result = {
@@ -89,32 +100,43 @@ class RunnerStats:
             "cache_hits": self.cache_hits,
             "skipped": self.skipped,
         }
-        if self.failure_categories:
-            result["failure_categories"] = dict(self.failure_categories)
-        if self.failure_examples:
-            result["failure_examples"] = dict(self.failure_examples)
+        counts = self.failure_counts()
+        if counts:
+            result["failure_categories"] = counts
+        # Build failure examples for debug output (up to 5 per category)
+        if self.all_failures:
+            examples: dict[str, list[str]] = {}
+            for f in self.all_failures:
+                cat = f.category.value
+                if cat not in examples:
+                    examples[cat] = []
+                if len(examples[cat]) < 5:
+                    examples[cat].append(f.error_message)
+            result["failure_examples"] = examples
         return result
 
     def mark_skipped(self) -> None:
         self.completed += 1
         self.skipped += 1
 
-    def add_batch_with_failures(self, successes: int, failures: list[tuple[Any, str]], cache_hits: int = 0) -> None:
-        """Add batch results with detailed failure tracking."""
+    def add_from_batch_stats(self, batch_stats: MeasurementStats) -> None:
+        """Add results from a MeasurementStats batch."""
+        self.successes += batch_stats.api_successes
+        self.failures += batch_stats.api_failures
+        self.cache_hits += batch_stats.cache_hits
+        self.all_failures.extend(batch_stats.failures)
+        self.completed += 1
+
+    def add_batch_with_failures(self, successes: int, failures: list[MeasurementFailure], cache_hits: int = 0) -> None:
+        """Add batch results with structured failures."""
         self.successes += successes
         self.failures += len(failures)
         self.cache_hits += cache_hits
+        self.all_failures.extend(failures)
         self.completed += 1
-        for _, error_msg in failures:
-            category = categorize_failure(error_msg)
-            self.failure_categories[category] = self.failure_categories.get(category, 0) + 1
-            if category not in self.failure_examples:
-                self.failure_examples[category] = []
-            if len(self.failure_examples[category]) < MAX_EXAMPLES_PER_CATEGORY:
-                self.failure_examples[category].append(error_msg)
 
     def add_batch(self, n_successes: int, n_failures: int, cache_hits: int = 0) -> None:
-        """Add batch results (legacy, no categorization)."""
+        """Add batch results (no failure details)."""
         self.successes += n_successes
         self.failures += n_failures
         self.cache_hits += cache_hits
@@ -177,9 +199,11 @@ async def run_post_task_stated_async(
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
 
     for completion_seed in completion_seeds:
-        store = CompletionStore(client=ctx.client, seed=completion_seed)
+        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
             continue
 
@@ -217,20 +241,7 @@ async def run_post_task_stated_async(
             scores, batch_stats = await cache.get_or_measure_async(
                 tasks_data, completion_lookup, measure_fn
             )
-
-            # Update runner stats from batch stats
-            stats.successes += batch_stats.api_successes
-            stats.failures += batch_stats.api_failures
-            stats.cache_hits += batch_stats.cache_hits
-            for cat, count in batch_stats.failure_categories.items():
-                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
-            for cat, examples in batch_stats.failure_examples.items():
-                if cat not in stats.failure_examples:
-                    stats.failure_examples[cat] = []
-                for ex in examples:
-                    if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                        stats.failure_examples[cat].append(ex)
-            stats.completed += 1
+            stats.add_from_batch_stats(batch_stats)
 
             run_config: PostTaskRunConfig = {
                 "model": ctx.client.model_name,
@@ -249,6 +260,7 @@ async def run_post_task_stated_async(
             if progress_callback:
                 progress_callback(stats)
 
+    save_run_failures(stats.all_failures, "post_task_stated", model_short)
     return stats.to_dict()
 
 
@@ -267,6 +279,7 @@ async def run_pre_task_revealed_async(
     model_short = model_short_name(ctx.client.canonical_model_name)
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
 
     for cfg in configurations:
         seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
@@ -298,20 +311,7 @@ async def run_pre_task_revealed_async(
         measurements, batch_stats = await cache.get_or_measure_async(
             pairs_with_repeats, measure_fn, ctx.task_lookup
         )
-
-        # Update runner stats from batch stats
-        stats.successes += batch_stats.api_successes
-        stats.failures += batch_stats.api_failures
-        stats.cache_hits += batch_stats.cache_hits
-        for cat, count in batch_stats.failure_categories.items():
-            stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
-        for cat, examples in batch_stats.failure_examples.items():
-            if cat not in stats.failure_examples:
-                stats.failure_examples[cat] = []
-            for ex in examples:
-                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    stats.failure_examples[cat].append(ex)
-        stats.completed += 1
+        stats.add_from_batch_stats(batch_stats)
 
         if exp_store and measurements:
             measurements_dicts = [
@@ -331,6 +331,7 @@ async def run_pre_task_revealed_async(
         if progress_callback:
             progress_callback(stats)
 
+    save_run_failures(stats.all_failures, "pre_task_revealed", model_short)
     return stats.to_dict()
 
 
@@ -350,9 +351,10 @@ async def run_post_task_revealed_async(
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
 
     for completion_seed in completion_seeds:
-        store = CompletionStore(client=ctx.client, seed=completion_seed)
+        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
             continue
 
@@ -398,20 +400,7 @@ async def run_post_task_revealed_async(
             measurements, batch_stats = await cache.get_or_measure_async(
                 pairs_with_repeats, completion_lookup, measure_fn, ctx.task_lookup
             )
-
-            # Update runner stats from batch stats
-            stats.successes += batch_stats.api_successes
-            stats.failures += batch_stats.api_failures
-            stats.cache_hits += batch_stats.cache_hits
-            for cat, count in batch_stats.failure_categories.items():
-                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
-            for cat, examples in batch_stats.failure_examples.items():
-                if cat not in stats.failure_examples:
-                    stats.failure_examples[cat] = []
-                for ex in examples:
-                    if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                        stats.failure_examples[cat].append(ex)
-            stats.completed += 1
+            stats.add_from_batch_stats(batch_stats)
 
             run_config: PostTaskRevealedRunConfig = {
                 "model": ctx.client.model_name,
@@ -434,6 +423,7 @@ async def run_post_task_revealed_async(
             if progress_callback:
                 progress_callback(stats)
 
+    save_run_failures(stats.all_failures, "post_task_revealed", model_short)
     return stats.to_dict()
 
 
@@ -452,6 +442,7 @@ async def run_pre_task_stated_async(
     model_short = model_short_name(ctx.client.canonical_model_name)
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
 
     for cfg in configurations:
         run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}"
@@ -477,20 +468,7 @@ async def run_pre_task_stated_async(
             )
 
         scores, batch_stats = await cache.get_or_measure_async(tasks_data, measure_fn)
-
-        # Update runner stats from batch stats
-        stats.successes += batch_stats.api_successes
-        stats.failures += batch_stats.api_failures
-        stats.cache_hits += batch_stats.cache_hits
-        for cat, count in batch_stats.failure_categories.items():
-            stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
-        for cat, examples in batch_stats.failure_examples.items():
-            if cat not in stats.failure_examples:
-                stats.failure_examples[cat] = []
-            for ex in examples:
-                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    stats.failure_examples[cat].append(ex)
-        stats.completed += 1
+        stats.add_from_batch_stats(batch_stats)
 
         config_dict = build_measurement_config(
             template=cfg.template,
@@ -507,6 +485,7 @@ async def run_pre_task_stated_async(
         if progress_callback:
             progress_callback(stats)
 
+    save_run_failures(stats.all_failures, "pre_task_stated", model_short)
     return stats.to_dict()
 
 
@@ -553,7 +532,7 @@ async def run_active_learning_async(
     if post_task:
         completion_seeds = config.completion_seeds or config.generation_seeds
         # Use first completion seed for active learning
-        store = CompletionStore(client=ctx.client, seed=completion_seeds[0])
+        store = CompletionStore(client=ctx.client, seed=completion_seeds[0], activation_completions_path=activation_completions_path)
         if not store.exists():
             raise ValueError(f"Completions not found for seed {completion_seeds[0]}")
         task_completions = store.load(ctx.task_lookup)
@@ -565,6 +544,7 @@ async def run_active_learning_async(
     max_iter = compute_thurstonian_max_iter(config)
     configurations = build_configurations(ctx, config, include_order=True)
     stats = RunnerStats(total_runs=len(configurations))
+    model_short = model_short_name(ctx.client.canonical_model_name)
 
     for cfg in configurations:
         cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
@@ -650,18 +630,7 @@ async def run_active_learning_async(
             pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed, config.include_reverse_order)
 
         # Update runner stats from this configuration
-        stats.successes += config_stats.api_successes
-        stats.failures += config_stats.api_failures
-        stats.cache_hits += config_stats.cache_hits
-        for cat, count in config_stats.failure_categories.items():
-            stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + count
-        for cat, examples in config_stats.failure_examples.items():
-            if cat not in stats.failure_examples:
-                stats.failure_examples[cat] = []
-            for ex in examples:
-                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    stats.failure_examples[cat].append(ex)
-        stats.completed += 1
+        stats.add_from_batch_stats(config_stats)
         # Mark as skipped if we only used cached data (no API calls made)
         if config_stats.api_successes == 0 and config_stats.api_failures == 0:
             stats.skipped += 1
@@ -685,6 +654,8 @@ async def run_active_learning_async(
         if progress_callback:
             progress_callback(stats)
 
+    mode = "post_task_active_learning" if post_task else "pre_task_active_learning"
+    save_run_failures(stats.all_failures, mode, model_short)
     return stats.to_dict()
 
 
@@ -718,7 +689,7 @@ async def run_completion_generation_async(
     stats = RunnerStats(total_runs=len(config.generation_seeds))
 
     for seed in config.generation_seeds:
-        store = CompletionStore(client=ctx.client, seed=seed)
+        store = CompletionStore(client=ctx.client, seed=seed, activation_completions_path=activation_completions_path)
 
         existing_ids = store.get_existing_task_ids()
         tasks_to_complete = [t for t in ctx.tasks if t.id not in existing_ids]
@@ -785,6 +756,11 @@ def _shuffle_task_groups(
     return [list(rng.permutation(group)) for group in groups]
 
 
+def _compute_n_groups(n_tasks: int, appearances_per_task: int, n_tasks_per_ranking: int) -> int:
+    """Compute number of groups needed for target appearances per task."""
+    return math.ceil(n_tasks * appearances_per_task / n_tasks_per_ranking)
+
+
 async def run_pre_task_ranking_async(
     config_path: Path,
     semaphore: asyncio.Semaphore,
@@ -797,14 +773,17 @@ async def run_pre_task_ranking_async(
 
     configurations = build_configurations(ctx, config)
     stats = RunnerStats(total_runs=len(configurations))
+    model_short = model_short_name(ctx.client.canonical_model_name)
 
     rng = np.random.default_rng(ranking_cfg.seed)
     cache = RankingCache(ctx.client.canonical_model_name)
 
+    n_groups = _compute_n_groups(len(ctx.tasks), ranking_cfg.appearances_per_task, ranking_cfg.n_tasks_per_ranking)
+
     for cfg in configurations:
         # Sample task groups
         task_groups = sample_ranking_groups(
-            ctx.tasks, ranking_cfg.n_tasks_per_ranking, ranking_cfg.n_groups, rng
+            ctx.tasks, ranking_cfg.n_tasks_per_ranking, n_groups, rng
         )
 
         # Shuffle task order within groups to control for position bias
@@ -849,6 +828,7 @@ async def run_pre_task_ranking_async(
         if progress_callback:
             progress_callback(stats)
 
+    save_run_failures(stats.all_failures, "pre_task_ranking", model_short)
     return stats.to_dict()
 
 
@@ -865,9 +845,10 @@ async def run_post_task_ranking_async(
     completion_seeds = config.completion_seeds or config.generation_seeds
     configurations = build_configurations(ctx, config)
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
+    model_short = model_short_name(ctx.client.canonical_model_name)
 
     for completion_seed in completion_seeds:
-        store = CompletionStore(client=ctx.client, seed=completion_seed)
+        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
             continue
 
@@ -879,11 +860,12 @@ async def run_post_task_ranking_async(
 
         rng = np.random.default_rng(ranking_cfg.seed)
         cache = RankingCache(ctx.client.canonical_model_name)
+        n_groups = _compute_n_groups(len(tasks_with_completions), ranking_cfg.appearances_per_task, ranking_cfg.n_tasks_per_ranking)
 
         for cfg in configurations:
             # Sample task groups from tasks with completions
             task_groups = sample_ranking_groups(
-                tasks_with_completions, ranking_cfg.n_tasks_per_ranking, ranking_cfg.n_groups, rng
+                tasks_with_completions, ranking_cfg.n_tasks_per_ranking, n_groups, rng
             )
 
             # Shuffle task order within groups to control for position bias
@@ -942,6 +924,7 @@ async def run_post_task_ranking_async(
             if progress_callback:
                 progress_callback(stats)
 
+    save_run_failures(stats.all_failures, "post_task_ranking", model_short)
     return stats.to_dict()
 
 

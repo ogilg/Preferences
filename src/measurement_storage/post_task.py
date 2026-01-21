@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Callable, Awaitable
 
 from src.measurement_storage.unified_cache import StatedCache, RevealedCache, template_config_from_template
-from src.measurement_storage.cache import MeasurementStats, categorize_failure, reconstruct_measurements, MAX_EXAMPLES_PER_CATEGORY
+from src.measurement_storage.cache import MeasurementStats, reconstruct_measurements
 from src.types import PreferenceType
 
 if TYPE_CHECKING:
@@ -115,13 +115,7 @@ class PostStatedCache:
             fresh_batch = await measure_fn(data)
             stats.api_successes = len(fresh_batch.successes)
             stats.api_failures = len(fresh_batch.failures)
-            for _, error_msg in fresh_batch.failures:
-                cat = categorize_failure(error_msg)
-                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
-                if cat not in stats.failure_examples:
-                    stats.failure_examples[cat] = []
-                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    stats.failure_examples[cat].append(error_msg)
+            stats.failures = fresh_batch.failures
             self.save(fresh_batch.successes)
             return cached_hits + fresh_batch.successes, stats
 
@@ -232,13 +226,7 @@ class PostRevealedCache:
             fresh_batch = await measure_fn(data)
             stats.api_successes = len(fresh_batch.successes)
             stats.api_failures = len(fresh_batch.failures)
-            for _, error_msg in fresh_batch.failures:
-                cat = categorize_failure(error_msg)
-                stats.failure_categories[cat] = stats.failure_categories.get(cat, 0) + 1
-                if cat not in stats.failure_examples:
-                    stats.failure_examples[cat] = []
-                if len(stats.failure_examples[cat]) < MAX_EXAMPLES_PER_CATEGORY:
-                    stats.failure_examples[cat].append(error_msg)
+            stats.failures = fresh_batch.failures
             self.append(fresh_batch.successes)
             return cached_hits + fresh_batch.successes, stats
 

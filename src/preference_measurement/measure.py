@@ -7,7 +7,15 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCo
 
 from src.models import GenerateRequest, OpenAICompatibleClient
 from src.task_data import Task
-from src.types import BinaryPreferenceMeasurement, MeasurementBatch, PreferencePrompt, RankingMeasurement, TaskScore
+from src.types import (
+    BinaryPreferenceMeasurement,
+    FailureCategory,
+    MeasurementBatch,
+    MeasurementFailure,
+    PreferencePrompt,
+    RankingMeasurement,
+    TaskScore,
+)
 from src.preference_measurement.refusal_judge import judge_preference_refusal_async
 
 if TYPE_CHECKING:
@@ -25,6 +33,40 @@ def _build_request(prompt: PreferencePrompt, temperature: float, seed: int | Non
     )
 
 
+def _categorize_error(error_msg: str, has_response: bool) -> FailureCategory:
+    """Categorize an error message into a failure category."""
+    error_lower = error_msg.lower()
+    if error_lower.startswith("refusal"):
+        return FailureCategory.REFUSAL
+    if "timeout" in error_lower or "timed out" in error_lower:
+        return FailureCategory.TIMEOUT
+    if "rate" in error_lower and "limit" in error_lower:
+        return FailureCategory.RATE_LIMIT
+    if "expected tool call" in error_lower or "tool" in error_lower:
+        return FailureCategory.TOOL_USE_FAILURE
+    if "content" in error_lower and "filter" in error_lower:
+        return FailureCategory.CONTENT_FILTER
+    if "request failed" in error_lower:
+        return FailureCategory.API_ERROR
+    if has_response:
+        return FailureCategory.PARSE_ERROR
+    return FailureCategory.OTHER
+
+
+def _make_failure(
+    prompt: PreferencePrompt,
+    error_message: str,
+    raw_response: str | None = None,
+) -> MeasurementFailure:
+    """Create a structured failure from a prompt and error."""
+    return MeasurementFailure(
+        task_ids=[t.id for t in prompt.tasks],
+        category=_categorize_error(error_message, raw_response is not None),
+        raw_response=raw_response,
+        error_message=error_message,
+    )
+
+
 async def _generate_and_parse_one(
     client: OpenAICompatibleClient,
     prompt: PreferencePrompt,
@@ -32,7 +74,7 @@ async def _generate_and_parse_one(
     seed: int | None,
     semaphore: asyncio.Semaphore,
     result_type: type[T],
-) -> tuple[T | None, tuple[PreferencePrompt, str] | None]:
+) -> tuple[T | None, MeasurementFailure | None]:
     """Generate a response and parse it immediately. Returns (success, failure)."""
     request = _build_request(prompt, temperature, seed)
 
@@ -41,7 +83,7 @@ async def _generate_and_parse_one(
     response = results[0]
 
     if not response.ok:
-        return None, (prompt, f"Request failed: {response.error_details()}")
+        return None, _make_failure(prompt, f"Request failed: {response.error_details()}")
 
     response_text = response.unwrap()
 
@@ -49,7 +91,11 @@ async def _generate_and_parse_one(
     try:
         is_refusal = await judge_preference_refusal_async(response_text)
         if is_refusal:
-            return None, (prompt, f"Refusal (preference): {response_text[:200]}")
+            return None, _make_failure(
+                prompt,
+                f"Refusal (preference): {response_text[:200]}",
+                raw_response=response_text,
+            )
     except Exception:
         pass  # If refusal detection fails, continue to parsing
 
@@ -58,9 +104,13 @@ async def _generate_and_parse_one(
         parsed = await prompt.measurer.parse(response_text, prompt)
         if isinstance(parsed.result, result_type):
             return parsed.result, None
-        return None, (prompt, f"Unexpected result type: {type(parsed.result)}")
+        return None, _make_failure(
+            prompt,
+            f"Unexpected result type: {type(parsed.result)}",
+            raw_response=response_text,
+        )
     except Exception as e:
-        return None, (prompt, str(e))
+        return None, _make_failure(prompt, str(e), raw_response=response_text)
 
 
 async def _measure_async(
@@ -74,7 +124,7 @@ async def _measure_async(
 ) -> MeasurementBatch[T]:
     """Generate and parse concurrently - parsing starts as soon as each response arrives."""
 
-    async def process_with_callback(prompt: PreferencePrompt) -> tuple[T | None, tuple[PreferencePrompt, str] | None]:
+    async def process_with_callback(prompt: PreferencePrompt) -> tuple[T | None, MeasurementFailure | None]:
         result = await _generate_and_parse_one(client, prompt, temperature, seed, semaphore, result_type)
         if on_complete:
             on_complete()
@@ -83,7 +133,7 @@ async def _measure_async(
     results = await asyncio.gather(*[process_with_callback(p) for p in prompts])
 
     successes: list[T] = []
-    failures: list[tuple[PreferencePrompt, str]] = []
+    failures: list[MeasurementFailure] = []
     for success, failure in results:
         if success is not None:
             successes.append(success)
