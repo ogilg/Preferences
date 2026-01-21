@@ -1,0 +1,22 @@
+# Pre-task ranking measurement (TrueSkill-based)
+# Models rank 5 tasks, TrueSkill extracts ratings from rankings
+preference_mode: pre_task_ranking
+
+model: llama-3.1-8b
+temperature: 1.0
+
+n_tasks: 100
+task_origins:
+  - wildchat
+  - alpaca
+
+templates: src/prompt_templates/data/pre_task_ranking_v1.yaml
+
+response_formats: [regex]
+generation_seeds: [0]
+
+# Ranking-specific configuration
+ranking:
+  n_tasks_per_ranking: 5  # Number of tasks per ranking group
+  n_groups: 40            # 40 groups × 10 implicit pairs = 400 comparisons
+  seed: 42                # Seed for sampling task groups

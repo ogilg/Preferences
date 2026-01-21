@@ -54,6 +54,10 @@ REVEALED_PLACEHOLDERS = frozenset({"task_a", "task_b", "format_instruction"})
 PRE_TASK_STATED_PLACEHOLDERS = frozenset({"task", "format_instruction"})
 POST_TASK_STATED_PLACEHOLDERS = frozenset({"format_instruction"})
 POST_TASK_REVEALED_PLACEHOLDERS = frozenset({"format_instruction"})
+PRE_TASK_RANKING_PLACEHOLDERS = frozenset({
+    "task_a", "task_b", "task_c", "task_d", "task_e", "format_instruction"
+})
+POST_TASK_RANKING_PLACEHOLDERS = frozenset({"format_instruction"})
 
 
 # Factory functions for convenience
@@ -89,12 +93,30 @@ def post_task_revealed_template(template: str, name: str) -> PromptTemplate:
     )
 
 
+def pre_task_ranking_template(template: str, name: str) -> PromptTemplate:
+    return PromptTemplate(
+        template=template,
+        name=name,
+        required_placeholders=PRE_TASK_RANKING_PLACEHOLDERS,
+    )
+
+
+def post_task_ranking_template(template: str, name: str) -> PromptTemplate:
+    return PromptTemplate(
+        template=template,
+        name=name,
+        required_placeholders=POST_TASK_RANKING_PLACEHOLDERS,
+    )
+
+
 # Mapping from template type names to their required placeholders
 TEMPLATE_TYPE_PLACEHOLDERS: dict[str, frozenset[str]] = {
     "revealed": REVEALED_PLACEHOLDERS,
     "pre_task_stated": PRE_TASK_STATED_PLACEHOLDERS,
     "post_task_stated": POST_TASK_STATED_PLACEHOLDERS,
     "post_task_revealed": POST_TASK_REVEALED_PLACEHOLDERS,
+    "pre_task_ranking": PRE_TASK_RANKING_PLACEHOLDERS,
+    "post_task_ranking": POST_TASK_RANKING_PLACEHOLDERS,
 }
 
 

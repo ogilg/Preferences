@@ -11,6 +11,7 @@ from src.preference_measurement.measurer import (
     Measurer,
     RevealedPreferenceMeasurer,
     StatedScoreMeasurer,
+    RankingMeasurer,
 )
 from src.preference_measurement.response_format import ResponseFormat
 from src.prompt_templates.template import PromptTemplate
@@ -164,6 +165,79 @@ class PostTaskRevealedPromptBuilder(PromptBuilder):
         return PreferencePrompt(
             messages=messages,
             tasks=[task_a, task_b],
+            kind=self.preference_type,
+            measurer=self.measurer,
+            response_format=self.response_format,
+            template=self.template,
+        )
+
+
+class PreTaskRankingPromptBuilder(PromptBuilder):
+    """Creates prompt for ranking multiple tasks by preference."""
+
+    def __init__(
+        self,
+        measurer: RankingMeasurer,
+        response_format: ResponseFormat[list[int]],
+        template: PromptTemplate,
+    ):
+        self.measurer = measurer
+        self.response_format = response_format
+        self.preference_type = PreferenceType.PRE_TASK_RANKING
+        self.template = template
+
+    def build(self, tasks: list[Task]) -> PreferencePrompt:
+        # Format tasks as task_a, task_b, task_c, task_d, task_e
+        task_texts = {f"task_{chr(97+i)}": t.prompt for i, t in enumerate(tasks)}
+        content = self.template.format(
+            format_instruction=self.response_format.format_instruction(),
+            **task_texts,
+        )
+        messages: list[Message] = [{"role": "user", "content": content}]
+        return PreferencePrompt(
+            messages=messages,
+            tasks=tasks,
+            kind=self.preference_type,
+            measurer=self.measurer,
+            response_format=self.response_format,
+            template=self.template,
+        )
+
+
+class PostTaskRankingPromptBuilder(PromptBuilder):
+    """Creates multi-turn prompt for ranking tasks after completing them.
+
+    Messages: [user: task_a] → [asst: completion_a] → ... → [user: rank them]
+    """
+
+    def __init__(
+        self,
+        measurer: RankingMeasurer,
+        response_format: ResponseFormat[list[int]],
+        template: PromptTemplate,
+    ):
+        self.measurer = measurer
+        self.response_format = response_format
+        self.preference_type = PreferenceType.POST_TASK_RANKING
+        self.template = template
+
+    def build(self, tasks: list[Task], completions: list[str]) -> PreferencePrompt:
+        if len(tasks) != len(completions):
+            raise ValueError("tasks and completions must have same length")
+
+        messages: list[Message] = []
+        for task, completion in zip(tasks, completions):
+            messages.append({"role": "user", "content": task.prompt})
+            messages.append({"role": "assistant", "content": completion})
+
+        ranking_content = self.template.format(
+            format_instruction=self.response_format.format_instruction(),
+        )
+        messages.append({"role": "user", "content": ranking_content})
+
+        return PreferencePrompt(
+            messages=messages,
+            tasks=tasks,
             kind=self.preference_type,
             measurer=self.measurer,
             response_format=self.response_format,

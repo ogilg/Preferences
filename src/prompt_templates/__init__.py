@@ -13,6 +13,8 @@ from .template import (
     POST_TASK_REVEALED_TEMPLATE,
     PRE_TASK_STATED_PLACEHOLDERS,
     PRE_TASK_STATED_TEMPLATE,
+    PRE_TASK_RANKING_PLACEHOLDERS,
+    POST_TASK_RANKING_PLACEHOLDERS,
     TEMPLATE_TYPE_PLACEHOLDERS,
     PromptTemplate,
     revealed_template,
@@ -20,6 +22,8 @@ from .template import (
     post_task_stated_template,
     post_task_revealed_template,
     pre_task_stated_template,
+    pre_task_ranking_template,
+    post_task_ranking_template,
 )
 
 
@@ -31,6 +35,8 @@ def __getattr__(name: str):
         "PostTaskStatedPromptBuilder",
         "PostTaskRevealedPromptBuilder",
         "PreTaskStatedPromptBuilder",
+        "PreTaskRankingPromptBuilder",
+        "PostTaskRankingPromptBuilder",
         "PromptBuilder",
     ):
         from . import builders
@@ -64,6 +70,8 @@ __all__ = [
     "POST_TASK_REVEALED_TEMPLATE",
     "PRE_TASK_STATED_PLACEHOLDERS",
     "PRE_TASK_STATED_TEMPLATE",
+    "PRE_TASK_RANKING_PLACEHOLDERS",
+    "POST_TASK_RANKING_PLACEHOLDERS",
     "TEMPLATE_TYPE_PLACEHOLDERS",
     "PromptTemplate",
     "revealed_template",
@@ -71,11 +79,15 @@ __all__ = [
     "post_task_stated_template",
     "post_task_revealed_template",
     "pre_task_stated_template",
+    "pre_task_ranking_template",
+    "post_task_ranking_template",
     # Builders (lazy)
     "PreTaskRevealedPromptBuilder",
     "PostTaskStatedPromptBuilder",
     "PostTaskRevealedPromptBuilder",
     "PreTaskStatedPromptBuilder",
+    "PreTaskRankingPromptBuilder",
+    "PostTaskRankingPromptBuilder",
     "PromptBuilder",
     # Generator (lazy)
     "GeneratorConfig",
