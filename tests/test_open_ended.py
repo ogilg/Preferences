@@ -345,6 +345,42 @@ class TestOpenEndedIntegration:
         assert isinstance(result.result, OpenEndedResponse)
         assert -0.4 < result.result.semantic_valence_score < 0.4, "Neutral text should score near zero"
 
+    @pytest.mark.asyncio
+    async def test_write_example_scores_to_file(self, prompt: PreferencePrompt):
+        """Score diverse examples and write results to file for inspection."""
+        from dotenv import load_dotenv
+        from pathlib import Path
+        import json
+
+        load_dotenv()
+
+        examples = [
+            "That was absolutely wonderful! I felt creative and fulfilled.",
+            "This was terrible and frustrating. I hated every moment.",
+            "I completed the task. It was fine, nothing special.",
+            "What a delightful experience! I learned something new and felt engaged throughout.",
+            "I found this tedious and boring. It felt like a waste of time.",
+        ]
+
+        measurer = OpenEndedMeasurer()
+        results = []
+
+        for text in examples:
+            result = await measurer.parse(text, prompt)
+            results.append({
+                "text": text,
+                "score": result.result.semantic_valence_score,
+                "confidence": result.result.scorer_confidence,
+            })
+
+        output_path = Path("tests/semantic_scorer_examples.json")
+        with open(output_path, "w") as f:
+            json.dump(results, f, indent=2)
+
+        print(f"\nWrote {len(results)} examples to {output_path}")
+        for r in results:
+            print(f"  score={r['score']:+.2f} conf={r['confidence']:.2f} | {r['text'][:50]}...")
+
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

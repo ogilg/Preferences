@@ -101,41 +101,23 @@ async def run_open_ended_async(
         from src.running_measurements.config import set_experiment_id
         config.experiment_id = set_experiment_id()
 
-    # Setup experiment context (reuse existing infrastructure)
-    # Convert to standard ExperimentConfig for setup
-    from src.running_measurements.config import ExperimentConfig
-    base_config = ExperimentConfig(
-        preference_mode="post_task_stated",  # Use post-task as base
-        model=config.model,
-        temperature=config.temperature,
-        max_concurrent=config.max_concurrent,
-        n_tasks=config.n_tasks,
-        task_origins=config.task_origins,
-        task_sampling_seed=config.task_sampling_seed,
-        use_tasks_with_activations=config.use_tasks_with_activations,
-        n_samples=config.n_samples,
-        generation_seeds=[config.completion_seed],
-    )
-    base_config.experiment_id = config.experiment_id
+    # Setup experiment context
+    # Load client and tasks without requiring full experiment setup
+    from src.models import get_client
+    from src.task_data import load_tasks
 
-    # Create temporary config file for setup_experiment
-    import tempfile
-    import yaml
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
-        yaml.dump(base_config.model_dump(), f)
-        temp_config_path = Path(f.name)
-
-    try:
-        ctx = setup_experiment(temp_config_path, expected_mode="post_task_stated")
-    finally:
-        temp_config_path.unlink()
-
-    # Load tasks with activations if needed
-    client = ctx.client
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    client = get_client(config.model)
 
     # Load in-distribution tasks
-    tasks = ctx.tasks
+    origins = config.get_origin_datasets()
+    tasks = load_tasks(n=config.n_tasks, origins=origins, seed=config.task_sampling_seed)
+
+    # Create task lookup for later
+    task_lookup = {t.id: t for t in tasks}
+
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+
+    # Filter to tasks with activations if needed
     in_dist_task_ids = {t.id for t in tasks}
 
     # Load OOD tasks if needed
@@ -156,7 +138,7 @@ async def run_open_ended_async(
     if not store.exists():
         raise ValueError(f"Completions not found for seed {config.completion_seed}")
 
-    task_completions = store.load(ctx.task_lookup)
+    task_completions = store.load(task_lookup)
     completion_lookup = {tc.task.id: tc.completion for tc in task_completions}
 
     # Filter tasks to only those with completions

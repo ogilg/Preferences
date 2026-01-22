@@ -1,5 +1,5 @@
-# Open-ended valence measurement with mixed in-distribution and OOD tasks
-# Tests probe generalization across diverse task distributions
+# Open-ended valence measurement with in-distribution and OOD tasks
+# Tests probe generalization across diverse task distributions (WildChat vs Math/Alpaca)
 
 preference_mode: open_ended
 
@@ -21,7 +21,6 @@ prompt_variants:
 
 # Semantic valence scoring parameters
 include_scorer_confidence: true
-min_confidence_threshold: 0.7
 
 # Measurement parameters
 n_samples: 2
@@ -30,13 +29,13 @@ rating_seeds: [0, 1]
 # Completion source
 completion_seed: 0
 
-# Out-of-distribution evaluation
+# Out-of-distribution evaluation (generalization test)
 include_out_of_distribution: true
 ood_task_origins:
   - math
   - alpaca
-n_ood_tasks: 30
+n_ood_tasks: 50
 ood_sampling_seed: 123
 
 # Experiment tracking
-experiment_id: open_ended_mixdist_20250122
+experiment_id: open_ended_generalization_test
