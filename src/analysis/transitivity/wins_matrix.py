@@ -15,13 +15,7 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
-
-from src.measurement_storage import (
-    EXPERIMENTS_DIR,
-    list_runs,
-    load_yaml,
-    RunConfig,
-)
+import yaml
 
 
 def wins_from_scores(scores: dict[str, float]) -> tuple[np.ndarray, list[str]]:
@@ -79,10 +73,16 @@ def wins_from_pairwise(
     return wins, task_ids
 
 
+def _load_yaml_fast(path: Path) -> list | dict:
+    """Load YAML using C loader for performance."""
+    with open(path) as f:
+        return yaml.load(f, Loader=yaml.CSafeLoader)
+
+
 def load_stated_scores(run_dir: Path) -> dict[str, float]:
     """Load scores from a stated/qualitative measurement run."""
     measurements_path = run_dir / "measurements.yaml"
-    measurements = load_yaml(measurements_path)
+    measurements = _load_yaml_fast(measurements_path)
 
     # Aggregate multiple samples per task (if any)
     by_task: dict[str, list[float]] = defaultdict(list)
@@ -95,7 +95,7 @@ def load_stated_scores(run_dir: Path) -> dict[str, float]:
 def load_pairwise_comparisons(run_dir: Path) -> list[dict]:
     """Load pairwise comparisons from a revealed preference run."""
     measurements_path = run_dir / "measurements.yaml"
-    return load_yaml(measurements_path)
+    return _load_yaml_fast(measurements_path)
 
 
 def load_wins_matrix_for_run(run_dir: Path, is_revealed: bool) -> tuple[np.ndarray, list[str]]:

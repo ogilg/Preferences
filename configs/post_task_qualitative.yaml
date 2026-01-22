@@ -6,10 +6,8 @@ temperature: 1.0
 
 n_tasks: 1000
 task_origins:
-  - wildchat
-  - alpaca
-  - math
   - bailbench
+task_sampling_seed: 18
 
 templates: src/prompt_templates/data/post_task_qualitative_v2.yaml
 n_samples: 5
@@ -17,9 +15,9 @@ n_samples: 5
 response_formats: [regex, tool_use]
 
 template_sampling: lhs
-n_template_samples: 32
+n_template_samples: 2
 lhs_seed: 42
-generation_seeds: [0, 1]
+generation_seeds: [0]
 
 
 # Filter to only tasks with activations

@@ -52,6 +52,7 @@ class CompletionStore:
         self,
         client: OpenAICompatibleClient,
         seed: int | None = None,
+        activation_completions_path: Path | None = None,
     ):
         self.client = client
         self.seed = seed
@@ -59,19 +60,30 @@ class CompletionStore:
         self.store_dir = _completions_dir(client, seed)
         self._completions_path = self.store_dir / "completions.json"
         self._config_path = self.store_dir / "config.yaml"
+        self.activation_completions_path = activation_completions_path
 
     def exists(self) -> bool:
+        if self.activation_completions_path and self.activation_completions_path.exists():
+            return True
         return self._completions_path.exists()
 
     def get_existing_task_ids(self) -> set[str]:
-        if not self._completions_path.exists():
+        completions_path = self._get_completions_path()
+        if not completions_path.exists():
             return set()
-        data = _load_json(self._completions_path)
+        data = _load_json(completions_path)
         return {c["task_id"] for c in data}
+
+    def _get_completions_path(self) -> Path:
+        """Get the completions path, preferring activation completions if available."""
+        if self.activation_completions_path and self.activation_completions_path.exists():
+            return self.activation_completions_path
+        return self._completions_path
 
     def load(self, task_lookup: dict[str, Task] | None = None) -> list[TaskCompletion]:
         """Load completions. If task_lookup provided, use those Task objects."""
-        data = _load_json(self._completions_path)
+        completions_path = self._get_completions_path()
+        data = _load_json(completions_path)
 
         def _parse_refusal(c: dict) -> RefusalResult | None:
             if "refusal" not in c or c["refusal"] is None:

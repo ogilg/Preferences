@@ -9,6 +9,7 @@ n_tasks: 100
 task_origins:
   - wildchat
   - alpaca
+task_sampling_seed: 18
 
 templates: src/prompt_templates/data/pre_task_ranking_v1.yaml
 
@@ -17,6 +18,6 @@ generation_seeds: [0]
 
 # Ranking-specific configuration
 ranking:
-  n_tasks_per_ranking: 5  # Number of tasks per ranking group
-  n_groups: 40            # 40 groups × 10 implicit pairs = 400 comparisons
-  seed: 42                # Seed for sampling task groups
+  n_tasks_per_ranking: 5
+  appearances_per_task: 10
+  seed: 42

@@ -80,23 +80,15 @@ class FailureLog:
         return counts
 
 
-def get_failure_log(results_dir: Path) -> FailureLog:
-    """Get the failure log for a results directory."""
-    return FailureLog(results_dir / "failures.yaml")
-
-
-FAILURES_DIR = Path("results/failures")
-
-
 def save_run_failures(
     failures: list[MeasurementFailure],
+    experiment_dir: Path,
     mode: str,
-    model_short: str,
     run_info: dict | None = None,
 ) -> None:
-    """Save failures from a run to the failures directory."""
+    """Save failures from a run to the experiment directory."""
     if not failures:
         return
-    log_path = FAILURES_DIR / f"{mode}_{model_short}.yaml"
+    log_path = experiment_dir / "failures" / f"{mode}.yaml"
     log = FailureLog(log_path)
     log.append(failures, run_info)

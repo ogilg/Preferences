@@ -260,7 +260,8 @@ async def run_post_task_stated_async(
             if progress_callback:
                 progress_callback(stats)
 
-    save_run_failures(stats.all_failures, "post_task_stated", model_short)
+    if exp_store:
+        save_run_failures(stats.all_failures, exp_store.base_dir, "post_task_stated")
     return stats.to_dict()
 
 
@@ -331,7 +332,8 @@ async def run_pre_task_revealed_async(
         if progress_callback:
             progress_callback(stats)
 
-    save_run_failures(stats.all_failures, "pre_task_revealed", model_short)
+    if exp_store:
+        save_run_failures(stats.all_failures, exp_store.base_dir, "pre_task_revealed")
     return stats.to_dict()
 
 
@@ -423,7 +425,8 @@ async def run_post_task_revealed_async(
             if progress_callback:
                 progress_callback(stats)
 
-    save_run_failures(stats.all_failures, "post_task_revealed", model_short)
+    if exp_store:
+        save_run_failures(stats.all_failures, exp_store.base_dir, "post_task_revealed")
     return stats.to_dict()
 
 
@@ -485,7 +488,8 @@ async def run_pre_task_stated_async(
         if progress_callback:
             progress_callback(stats)
 
-    save_run_failures(stats.all_failures, "pre_task_stated", model_short)
+    if exp_store:
+        save_run_failures(stats.all_failures, exp_store.base_dir, "pre_task_stated")
     return stats.to_dict()
 
 
@@ -544,7 +548,7 @@ async def run_active_learning_async(
     max_iter = compute_thurstonian_max_iter(config)
     configurations = build_configurations(ctx, config, include_order=True)
     stats = RunnerStats(total_runs=len(configurations))
-    model_short = model_short_name(ctx.client.canonical_model_name)
+    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for cfg in configurations:
         cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
@@ -654,8 +658,9 @@ async def run_active_learning_async(
         if progress_callback:
             progress_callback(stats)
 
-    mode = "post_task_active_learning" if post_task else "pre_task_active_learning"
-    save_run_failures(stats.all_failures, mode, model_short)
+    if exp_store:
+        mode = "post_task_active_learning" if post_task else "pre_task_active_learning"
+        save_run_failures(stats.all_failures, exp_store.base_dir, mode)
     return stats.to_dict()
 
 
@@ -773,7 +778,7 @@ async def run_pre_task_ranking_async(
 
     configurations = build_configurations(ctx, config)
     stats = RunnerStats(total_runs=len(configurations))
-    model_short = model_short_name(ctx.client.canonical_model_name)
+    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     rng = np.random.default_rng(ranking_cfg.seed)
     cache = RankingCache(ctx.client.canonical_model_name)
@@ -828,7 +833,8 @@ async def run_pre_task_ranking_async(
         if progress_callback:
             progress_callback(stats)
 
-    save_run_failures(stats.all_failures, "pre_task_ranking", model_short)
+    if exp_store:
+        save_run_failures(stats.all_failures, exp_store.base_dir, "pre_task_ranking")
     return stats.to_dict()
 
 
@@ -845,7 +851,7 @@ async def run_post_task_ranking_async(
     completion_seeds = config.completion_seeds or config.generation_seeds
     configurations = build_configurations(ctx, config)
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
-    model_short = model_short_name(ctx.client.canonical_model_name)
+    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for completion_seed in completion_seeds:
         store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
@@ -924,7 +930,8 @@ async def run_post_task_ranking_async(
             if progress_callback:
                 progress_callback(stats)
 
-    save_run_failures(stats.all_failures, "post_task_ranking", model_short)
+    if exp_store:
+        save_run_failures(stats.all_failures, exp_store.base_dir, "post_task_ranking")
     return stats.to_dict()
 
 

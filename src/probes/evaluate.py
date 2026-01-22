@@ -4,11 +4,73 @@ from __future__ import annotations
 
 import numpy as np
 from pathlib import Path
+from scipy.stats import pearsonr
 from sklearn.metrics import r2_score, mean_squared_error
 
 from src.probes.storage import load_probe, load_manifest
 from src.probes.activations import load_activations
-from src.measurement_storage.loading import load_pooled_scores
+from src.measurement_storage.loading import load_pooled_scores, load_run_utilities
+
+
+def evaluate_probe_on_data(
+    probe_weights: np.ndarray,
+    activations: np.ndarray,
+    scores: np.ndarray,
+    task_ids_data: np.ndarray,
+    task_ids_scores: list[str],
+) -> dict:
+    """Evaluate probe on given activations and scores.
+
+    Args:
+        probe_weights: probe weights [coef_1, ..., coef_n, intercept]
+        activations: activation matrix (n_samples, n_features)
+        scores: score vector (n_samples,)
+        task_ids_data: task IDs corresponding to activations
+        task_ids_scores: task IDs corresponding to scores
+
+    Returns:
+        dict with r2, mse, pearson_r, n_samples, predictions
+    """
+    coef = probe_weights[:-1]
+    intercept = probe_weights[-1]
+
+    # Match activations to scores by task ID
+    id_to_idx_data = {tid: i for i, tid in enumerate(task_ids_data)}
+    valid_indices = []
+    valid_scores = []
+    for task_id, score in zip(task_ids_scores, scores):
+        if task_id in id_to_idx_data:
+            valid_indices.append(id_to_idx_data[task_id])
+            valid_scores.append(score)
+
+    if len(valid_indices) < 10:  # minimum samples for evaluation
+        return {
+            "r2": None,
+            "mse": None,
+            "pearson_r": None,
+            "n_samples": len(valid_indices),
+            "predictions": None,
+        }
+
+    indices = np.array(valid_indices)
+    y = np.array(valid_scores)
+    X_eval = activations[indices]
+
+    # Predict
+    y_pred = X_eval @ coef + intercept
+
+    # Compute metrics
+    r2 = r2_score(y, y_pred)
+    mse = mean_squared_error(y, y_pred)
+    pearson_r, _ = pearsonr(y, y_pred)
+
+    return {
+        "r2": float(r2),
+        "mse": float(mse),
+        "pearson_r": float(pearson_r),
+        "n_samples": len(y),
+        "predictions": y_pred.tolist(),
+    }
 
 
 def evaluate_probe_on_template(

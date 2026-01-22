@@ -25,11 +25,11 @@ class ActivationMetadata:
 
 
 def load_activation_metadata(activations_dir: Path | None = None) -> list[ActivationMetadata]:
-    """Load task metadata from probe_data/activations/completions.json."""
+    """Load task metadata from probe_data/activations/completions_with_activations.json."""
     if activations_dir is None:
         activations_dir = find_project_root() / "probe_data" / "activations"
 
-    completions_path = activations_dir / "completions.json"
+    completions_path = activations_dir / "completions_with_activations.json"
     if not completions_path.exists():
         return []
 
@@ -70,8 +70,8 @@ class RunConfig:
     experiment_id: str | None = None
 
 
-def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
-    """Parse stated dir name -> (template_name, model_short).
+def _parse_stated_dir_name(dir_name: str) -> tuple[str, str, str, str] | None:
+    """Parse stated dir name -> (template_name, model_short, response_format, seed_part).
 
     Format: {template_name}_{model}_{response_format}_seed{N}
     e.g. pre_task_rating_001_llama-3.1-8b_regex_seed0
@@ -79,9 +79,9 @@ def _parse_stated_dir_name(dir_name: str) -> tuple[str, str] | None:
     e.g. post_task_stated_001_llama-3.1-8b_regex_cseed0_rseed0
     """
     # Match pre_task or post_task templates (qualitative, stated, rating, etc.)
-    match = re.match(r"((?:pre|post)_task_(?:rating|qualitative|stated)_\d+)_(.+?)_(?:regex|xml|tool_use)_(?:cseed\d+_rseed\d+|seed\d+)$", dir_name)
+    match = re.match(r"((?:pre|post)_task_(?:rating|qualitative|stated)_\d+)_(.+?)_(regex|xml|tool_use)_((?:cseed\d+_rseed\d+)|(?:seed\d+))$", dir_name)
     if match:
-        return match.group(1), match.group(2)
+        return match.group(1), match.group(2), match.group(3), match.group(4)
     return None
 
 
@@ -130,6 +130,9 @@ def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunC
             tags = dict(config["template_tags"])
             if "rating_seed" in config:
                 tags["rating_seed"] = str(config["rating_seed"])
+            # Use top-level response_format if present (runtime override)
+            if "response_format" in config:
+                tags["response_format"] = config["response_format"]
             runs.append(RunConfig(
                 template_name=config["template_name"],
                 template_tags=tags,
@@ -141,7 +144,7 @@ def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunC
             parsed = _parse_stated_dir_name(run_dir.name)
             if parsed is None:
                 continue
-            template_name, model_short = parsed
+            template_name, model_short, response_format, seed_part = parsed
 
             if template_tags_map is None:
                 if template_yaml is None:
@@ -152,9 +155,23 @@ def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunC
             if template_name not in template_tags_map:
                 continue
 
+            # Merge parsed tags from directory name with template tags
+            tags = dict(template_tags_map[template_name])
+            tags["response_format"] = response_format
+
+            # Extract seed from seed_part (cseed0_rseed0 or seed0)
+            if "_" in seed_part:  # cseed0_rseed0 format
+                seed_match = re.search(r"rseed(\d+)", seed_part)
+                if seed_match:
+                    tags["seed"] = seed_match.group(1)
+            else:  # seed0 format
+                seed_match = re.search(r"seed(\d+)", seed_part)
+                if seed_match:
+                    tags["seed"] = seed_match.group(1)
+
             runs.append(RunConfig(
                 template_name=template_name,
-                template_tags=template_tags_map[template_name],
+                template_tags=tags,
                 model_short=model_short,
                 run_dir=run_dir,
             ))
@@ -354,27 +371,24 @@ def load_scores_from_cache(cache_dir: Path) -> dict[str, float]:
     return {item["task_id"]: item["score"] for item in data}
 
 
-def load_pooled_scores(
+def load_raw_scores(
     results_dir: Path,
-    template_name: str,
-    response_formats: list[str] | None = None,
+    template_names: list[str],
     seeds: list[int] | None = None,
     template_yaml: Path | None = None,
-) -> dict[str, float]:
-    """Load scores matching template, pooled by task_id (mean across formats/seeds)."""
-    runs = list_runs(results_dir, template_yaml)
+) -> list[tuple[str, float]]:
+    """Load all raw measurements without averaging.
 
-    task_scores: dict[str, list[float]] = defaultdict(list)
+    The response format is determined automatically from each template's metadata.
+    Returns list of (task_id, score) tuples. Same task_id can appear multiple times
+    if measured across different templates/seeds.
+    """
+    runs = list_runs(results_dir, template_yaml)
+    measurements = []
 
     for run_config in runs:
-        if run_config.template_name != template_name:
+        if run_config.template_name not in template_names:
             continue
-
-        # Filter by response format if specified
-        if response_formats is not None:
-            run_format = run_config.template_tags.get("response_format")
-            if run_format not in response_formats:
-                continue
 
         # Filter by seed if specified
         if seeds is not None:
@@ -387,14 +401,35 @@ def load_pooled_scores(
                 except ValueError:
                     continue
 
-        # Load scores from this run
+        # Load measurements from this run
         measurements_path = run_config.run_dir / "measurements.yaml"
         if not measurements_path.exists():
             continue
 
-        measurements = load_yaml(measurements_path)
-        for item in measurements:
+        run_measurements = load_yaml(measurements_path)
+        for item in run_measurements:
             if "task_id" in item and "score" in item:
-                task_scores[item["task_id"]].append(item["score"])
+                measurements.append((item["task_id"], item["score"]))
+
+    return measurements
+
+
+def load_pooled_scores(
+    results_dir: Path,
+    template_name: str,
+    seeds: list[int] | None = None,
+    template_yaml: Path | None = None,
+) -> dict[str, float]:
+    """Load scores matching template, pooled by task_id (mean across seeds)."""
+    raw_measurements = load_raw_scores(
+        results_dir,
+        [template_name],
+        seeds,
+        template_yaml,
+    )
+
+    task_scores: dict[str, list[float]] = defaultdict(list)
+    for task_id, score in raw_measurements:
+        task_scores[task_id].append(score)
 
     return {task_id: np.mean(scores) for task_id, scores in task_scores.items()}

@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from src.probes.storage import load_manifest
-from src.analysis.probe.probe_helpers import filter_probes, make_probe_label
+from src.analysis.probe.probe_helpers import filter_probes, make_probe_label, get_template
 
 
 def main() -> None:
@@ -19,6 +19,7 @@ def main() -> None:
     parser.add_argument("--template", type=str, help="Filter by template (substring match)")
     parser.add_argument("--layer", type=int, help="Filter by layer")
     parser.add_argument("--dataset", type=str, help="Filter by dataset")
+    parser.add_argument("--probes", type=str, help="Comma-separated probe IDs (e.g., '0001,0002,0003')")
     args = parser.parse_args()
 
     # Default output path
@@ -36,13 +37,14 @@ def main() -> None:
         args.output = Path(f"src/analysis/probe/plots/plot_{date_str}_r2_{filter_suffix}.png")
 
     manifest = load_manifest(args.manifest_dir)
-    probes = filter_probes(manifest, args.template, args.layer, args.dataset)
+    probe_ids = args.probes.split(",") if args.probes else None
+    probes = filter_probes(manifest, args.template, args.layer, args.dataset, probe_ids)
 
     if not probes:
         print("No probes match filters")
         return
 
-    probes = sorted(probes, key=lambda p: (p["template"], p["layer"]))
+    probes = sorted(probes, key=lambda p: (get_template(p), p["layer"]))
 
     labels = [make_probe_label(p) for p in probes]
     r2_means = [p["cv_r2_mean"] for p in probes]

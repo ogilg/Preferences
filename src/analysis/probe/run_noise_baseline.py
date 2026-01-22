@@ -9,18 +9,47 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.probes.linear_probe import DEFAULT_ALPHAS, train_and_evaluate
+from src.measurement_storage.loading import load_raw_scores
+from src.probes.activations import load_activations
+from src.probes.linear_probe import train_and_evaluate
 
-BASELINE_ALPHAS = np.array([10.0, 100.0, 1000.0, 10000.0])
+ALPHA_SWEEP_SIZE = 5
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run noise baselines for probe benchmarking")
-    parser.add_argument("data_dir", type=Path, help="Directory containing probe data")
-    parser.add_argument("scores_file", type=Path, help="JSON file mapping task_id to score")
-    parser.add_argument("--n-seeds", type=int, default=5, help="Number of random seeds")
+    parser.add_argument("experiment_dir", type=Path, help="Experiment directory (e.g. results/experiments/probe_4_all_datasets)")
+    parser.add_argument("--activations-dir", type=Path, default=Path("probe_data/activations"), help="Directory containing activations.npz")
+    parser.add_argument("--template", type=str, default="post_task_qualitative_001", help="Template name to load scores from")
+    parser.add_argument("--seed", type=int, default=0, help="Seed filter")
+    parser.add_argument("--layer", type=int, default=16, help="Layer to use for baselines")
+    parser.add_argument("--n-seeds", type=int, default=5, help="Number of random seeds for baselines")
     parser.add_argument("--cv-folds", type=int, default=5, help="Cross-validation folds")
     return parser.parse_args()
+
+
+def load_scores_from_experiment(
+    experiment_dir: Path,
+    template: str,
+    seed: int,
+) -> dict[str, float]:
+    """Load scores from experiment directory, averaging per task_id."""
+    task_type = "pre_task" if template.startswith("pre_task") else "post_task"
+    measurement_dir = experiment_dir / f"{task_type}_stated"
+
+    raw_measurements = load_raw_scores(
+        measurement_dir,
+        [template],
+        [seed],
+    )
+
+    scores_by_task: dict[str, list[float]] = {}
+    for task_id, score in raw_measurements:
+        if task_id not in scores_by_task:
+            scores_by_task[task_id] = []
+        scores_by_task[task_id].append(score)
+
+    return {tid: float(np.mean(scores)) for tid, scores in scores_by_task.items()}
 
 
 def run_shuffled_labels_baseline(
@@ -33,7 +62,7 @@ def run_shuffled_labels_baseline(
     for seed in range(n_seeds):
         rng = np.random.default_rng(seed)
         y_shuffled = rng.permutation(y)
-        _, result, _ = train_and_evaluate(X, y_shuffled, cv_folds=cv_folds, alphas=BASELINE_ALPHAS)
+        _, result, _ = train_and_evaluate(X, y_shuffled, cv_folds, ALPHA_SWEEP_SIZE)
         results.append({
             "seed": seed,
             "cv_r2_mean": result["cv_r2_mean"],
@@ -58,7 +87,7 @@ def run_random_activations_baseline(
     for seed in range(n_seeds):
         rng = np.random.default_rng(seed)
         X_noise = rng.normal(loc=mean, scale=std, size=X.shape)
-        _, result, _ = train_and_evaluate(X_noise, y, cv_folds=cv_folds, alphas=BASELINE_ALPHAS)
+        _, result, _ = train_and_evaluate(X_noise, y, cv_folds, ALPHA_SWEEP_SIZE)
         results.append({
             "seed": seed,
             "cv_r2_mean": result["cv_r2_mean"],
@@ -70,84 +99,52 @@ def run_random_activations_baseline(
     return results
 
 
-def load_real_probe_results(data_dir: Path, layers: list[int], y: np.ndarray, data: dict, cv_folds: int) -> dict:
-    """Load precomputed real probe results or train if not available."""
-    existing_results_path = data_dir / "noise_baseline_results.json"
-    if existing_results_path.exists():
-        with open(existing_results_path) as f:
-            existing = json.load(f)
-        # Check if we have MSE results already
-        first_layer = str(layers[0])
-        if first_layer in existing.get("layers", {}) and "cv_mse_mean" in existing["layers"][first_layer].get("real_probe", {}):
-            print("  Loading precomputed results from existing JSON")
-            return {layer: existing["layers"][str(layer)]["real_probe"] for layer in layers}
-
-    print("  Training real probes (no precomputed results found)...")
-    results = {}
-    for layer in layers:
-        X = data[f"layer_{layer}"]
-        _, result, _ = train_and_evaluate(X, y, cv_folds=cv_folds)
-        results[layer] = {
-            "cv_r2_mean": result["cv_r2_mean"],
-            "cv_r2_std": result["cv_r2_std"],
-            "cv_mse_mean": result["cv_mse_mean"],
-            "cv_mse_std": result["cv_mse_std"],
-        }
-    return results
-
-
 def plot_comparison(
-    layers: list[int],
-    real_results: dict,
-    shuffled_results: dict,
-    random_results: dict,
+    real_result: dict,
+    shuffled_results: list[dict],
+    random_results: list[dict],
     label_variance: float,
     output_path: Path,
 ) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 
-    x = np.arange(len(layers))
-    width = 0.25
+    labels = ["Real Probe", "Shuffled Labels", "Random Activations"]
+    colors = ["steelblue", "darkorange", "forestgreen"]
+
+    # Aggregate baseline results
+    shuffled_r2 = np.mean([r["cv_r2_mean"] for r in shuffled_results])
+    shuffled_r2_std = np.std([r["cv_r2_mean"] for r in shuffled_results])
+    random_r2 = np.mean([r["cv_r2_mean"] for r in random_results])
+    random_r2_std = np.std([r["cv_r2_mean"] for r in random_results])
+
+    shuffled_mse = np.mean([r["cv_mse_mean"] for r in shuffled_results])
+    shuffled_mse_std = np.std([r["cv_mse_mean"] for r in shuffled_results])
+    random_mse = np.mean([r["cv_mse_mean"] for r in random_results])
+    random_mse_std = np.std([r["cv_mse_mean"] for r in random_results])
 
     # R² plot
     ax = axes[0]
-    real_r2 = [real_results[layer]["cv_r2_mean"] for layer in layers]
-    real_r2_std = [real_results[layer]["cv_r2_std"] for layer in layers]
-    shuffled_r2 = [shuffled_results[layer]["cv_r2_mean"] for layer in layers]
-    shuffled_r2_std = [shuffled_results[layer]["cv_r2_std"] for layer in layers]
-    random_r2 = [random_results[layer]["cv_r2_mean"] for layer in layers]
-    random_r2_std = [random_results[layer]["cv_r2_std"] for layer in layers]
-
-    ax.bar(x - width, real_r2, width, yerr=real_r2_std, label="Real probe", color="steelblue", capsize=3)
-    ax.bar(x, shuffled_r2, width, yerr=shuffled_r2_std, label="Shuffled labels", color="darkorange", capsize=3)
-    ax.bar(x + width, random_r2, width, yerr=random_r2_std, label="Random activations", color="forestgreen", capsize=3)
-    ax.set_xlabel("Layer")
+    r2_vals = [real_result["cv_r2_mean"], shuffled_r2, random_r2]
+    r2_stds = [real_result["cv_r2_std"], shuffled_r2_std, random_r2_std]
+    x = np.arange(len(labels))
+    ax.bar(x, r2_vals, yerr=r2_stds, color=colors, capsize=5)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=15, ha="right")
     ax.set_ylabel("CV R²")
     ax.set_title("R² (higher = better)")
-    ax.set_xticks(x)
-    ax.set_xticklabels([f"Layer {l}" for l in layers])
-    ax.legend()
-    ax.grid(True, alpha=0.3, axis="y")
     ax.axhline(y=0, color="gray", linestyle="-", linewidth=0.5)
+    ax.grid(True, alpha=0.3, axis="y")
 
     # MSE plot
     ax = axes[1]
-    real_mse = [real_results[layer]["cv_mse_mean"] for layer in layers]
-    real_mse_std = [real_results[layer]["cv_mse_std"] for layer in layers]
-    shuffled_mse = [shuffled_results[layer]["cv_mse_mean"] for layer in layers]
-    shuffled_mse_std = [shuffled_results[layer]["cv_mse_std"] for layer in layers]
-    random_mse = [random_results[layer]["cv_mse_mean"] for layer in layers]
-    random_mse_std = [random_results[layer]["cv_mse_std"] for layer in layers]
-
-    ax.bar(x - width, real_mse, width, yerr=real_mse_std, label="Real probe", color="steelblue", capsize=3)
-    ax.bar(x, shuffled_mse, width, yerr=shuffled_mse_std, label="Shuffled labels", color="darkorange", capsize=3)
-    ax.bar(x + width, random_mse, width, yerr=random_mse_std, label="Random activations", color="forestgreen", capsize=3)
+    mse_vals = [real_result["cv_mse_mean"], shuffled_mse, random_mse]
+    mse_stds = [real_result["cv_mse_std"], shuffled_mse_std, random_mse_std]
+    ax.bar(x, mse_vals, yerr=mse_stds, color=colors, capsize=5)
     ax.axhline(y=label_variance, color="red", linestyle="--", linewidth=1.5, label=f"Var(y) = {label_variance:.3f}")
-    ax.set_xlabel("Layer")
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=15, ha="right")
     ax.set_ylabel("CV MSE")
     ax.set_title("MSE (lower = better)")
-    ax.set_xticks(x)
-    ax.set_xticklabels([f"Layer {l}" for l in layers])
     ax.legend()
     ax.grid(True, alpha=0.3, axis="y")
 
@@ -159,101 +156,82 @@ def plot_comparison(
 def main() -> None:
     args = parse_args()
 
-    print(f"Loading data from {args.data_dir}...")
-    npz_data = np.load(args.data_dir / "activations.npz")
-    task_ids = npz_data["task_ids"].tolist()
+    print(f"Loading scores from {args.experiment_dir}...")
+    print(f"  Template: {args.template}, seed: {args.seed}")
+    scores_map = load_scores_from_experiment(
+        args.experiment_dir,
+        args.template,
+        args.seed,
+    )
+    print(f"  Found {len(scores_map)} task scores")
 
-    print(f"Loading scores from {args.scores_file}...")
-    with open(args.scores_file) as f:
-        scores_map = json.load(f)
+    if not scores_map:
+        print("No scores found. Check experiment directory and filters.")
+        return
 
-    # Filter to task_ids with scores
-    indices = [i for i, tid in enumerate(task_ids) if tid in scores_map]
-    y = np.array([scores_map[task_ids[i]] for i in indices])
-    print(f"Matched {len(y)} samples with scores")
+    print(f"\nLoading activations from {args.activations_dir}...")
+    task_ids, activations = load_activations(
+        args.activations_dir,
+        task_id_filter=set(scores_map.keys()),
+        layers=[args.layer],
+    )
+    print(f"  Loaded {len(task_ids)} activations for layer {args.layer}")
 
-    layer_keys = [k for k in npz_data.keys() if k.startswith("layer_")]
-    layers = sorted([int(k.split("_")[1]) for k in layer_keys])
-
-    # Filter activations to matching indices
-    filtered_data = {key: npz_data[key][indices] for key in layer_keys}
-    print(f"Loaded {len(y)} samples, layers: {layers}")
+    # Build aligned arrays
+    y = np.array([scores_map[tid] for tid in task_ids])
+    X = activations[args.layer]
+    print(f"  Final dataset: {len(y)} samples, {X.shape[1]} dims")
 
     label_variance = float(np.var(y))
-    print(f"Label variance: {label_variance:.4f} (MSE baseline for predicting mean)")
+    print(f"  Label variance: {label_variance:.4f}")
 
-    print(f"\nRunning real probe training for comparison...")
-    real_results = load_real_probe_results(
-        args.data_dir, layers, y, filtered_data, args.cv_folds
-    )
-    for layer in layers:
-        r = real_results[layer]
-        print(f"  Layer {layer}: CV R² = {r['cv_r2_mean']:.3f} ± {r['cv_r2_std']:.3f}, MSE = {r['cv_mse_mean']:.4f} ± {r['cv_mse_std']:.4f}")
+    # Train real probe
+    print(f"\nTraining real probe...")
+    _, real_result, _ = train_and_evaluate(X, y, args.cv_folds, ALPHA_SWEEP_SIZE)
+    print(f"  CV R² = {real_result['cv_r2_mean']:.4f} ± {real_result['cv_r2_std']:.4f}")
+    print(f"  CV MSE = {real_result['cv_mse_mean']:.4f} ± {real_result['cv_mse_std']:.4f}")
 
-    all_results = {"seeds": list(range(args.n_seeds)), "layers": {}}
+    # Run baselines
+    print(f"\nRunning shuffled labels baseline ({args.n_seeds} seeds)...")
+    shuffled = run_shuffled_labels_baseline(X, y, args.n_seeds, args.cv_folds)
+    shuffled_r2s = [r["cv_r2_mean"] for r in shuffled]
+    print(f"  Mean CV R²: {np.mean(shuffled_r2s):.4f} ± {np.std(shuffled_r2s):.4f}")
 
-    for layer in layers:
-        X = filtered_data[f"layer_{layer}"]
-        print(f"\nLayer {layer} ({X.shape[1]} dims):")
+    print(f"\nRunning random activations baseline ({args.n_seeds} seeds)...")
+    random_acts = run_random_activations_baseline(X, y, args.n_seeds, args.cv_folds)
+    random_r2s = [r["cv_r2_mean"] for r in random_acts]
+    print(f"  Mean CV R²: {np.mean(random_r2s):.4f} ± {np.std(random_r2s):.4f}")
 
-        print(f"  Running shuffled labels baseline ({args.n_seeds} seeds)...")
-        shuffled = run_shuffled_labels_baseline(X, y, args.n_seeds, args.cv_folds)
-        shuffled_r2s = [r["cv_r2_mean"] for r in shuffled]
-        shuffled_mses = [r["cv_mse_mean"] for r in shuffled]
-        print(f"    Mean CV R²: {np.mean(shuffled_r2s):.4f} ± {np.std(shuffled_r2s):.4f}, MSE: {np.mean(shuffled_mses):.4f} ± {np.std(shuffled_mses):.4f}")
+    # Save results
+    results = {
+        "experiment_dir": str(args.experiment_dir),
+        "template": args.template,
+        "seed": args.seed,
+        "layer": args.layer,
+        "n_samples": len(y),
+        "label_variance": label_variance,
+        "real_probe": real_result,
+        "shuffled_labels": {
+            "cv_r2_mean": float(np.mean(shuffled_r2s)),
+            "cv_r2_std": float(np.std(shuffled_r2s)),
+            "per_seed": shuffled,
+        },
+        "random_activations": {
+            "cv_r2_mean": float(np.mean(random_r2s)),
+            "cv_r2_std": float(np.std(random_r2s)),
+            "per_seed": random_acts,
+        },
+    }
 
-        print(f"  Running random activations baseline ({args.n_seeds} seeds)...")
-        random_acts = run_random_activations_baseline(X, y, args.n_seeds, args.cv_folds)
-        random_r2s = [r["cv_r2_mean"] for r in random_acts]
-        random_mses = [r["cv_mse_mean"] for r in random_acts]
-        print(f"    Mean CV R²: {np.mean(random_r2s):.4f} ± {np.std(random_r2s):.4f}, MSE: {np.mean(random_mses):.4f} ± {np.std(random_mses):.4f}")
-
-        all_results["layers"][str(layer)] = {
-            "shuffled_labels": {
-                "cv_r2_mean": float(np.mean(shuffled_r2s)),
-                "cv_r2_std": float(np.std(shuffled_r2s)),
-                "cv_mse_mean": float(np.mean(shuffled_mses)),
-                "cv_mse_std": float(np.std(shuffled_mses)),
-                "per_seed": shuffled,
-            },
-            "random_activations": {
-                "cv_r2_mean": float(np.mean(random_r2s)),
-                "cv_r2_std": float(np.std(random_r2s)),
-                "cv_mse_mean": float(np.mean(random_mses)),
-                "cv_mse_std": float(np.std(random_mses)),
-                "per_seed": random_acts,
-            },
-            "real_probe": real_results[layer],
-        }
-
-    all_results["label_variance"] = label_variance
-
-    results_path = args.data_dir / "noise_baseline_results.json"
+    output_dir = args.experiment_dir / "noise_baseline"
+    output_dir.mkdir(exist_ok=True)
+    results_path = output_dir / f"results_layer{args.layer}.json"
     with open(results_path, "w") as f:
-        json.dump(all_results, f, indent=2)
+        json.dump(results, f, indent=2)
     print(f"\nSaved results to {results_path}")
 
-    shuffled_summary = {
-        layer: {
-            "cv_r2_mean": all_results["layers"][str(layer)]["shuffled_labels"]["cv_r2_mean"],
-            "cv_r2_std": all_results["layers"][str(layer)]["shuffled_labels"]["cv_r2_std"],
-            "cv_mse_mean": all_results["layers"][str(layer)]["shuffled_labels"]["cv_mse_mean"],
-            "cv_mse_std": all_results["layers"][str(layer)]["shuffled_labels"]["cv_mse_std"],
-        }
-        for layer in layers
-    }
-    random_summary = {
-        layer: {
-            "cv_r2_mean": all_results["layers"][str(layer)]["random_activations"]["cv_r2_mean"],
-            "cv_r2_std": all_results["layers"][str(layer)]["random_activations"]["cv_r2_std"],
-            "cv_mse_mean": all_results["layers"][str(layer)]["random_activations"]["cv_mse_mean"],
-            "cv_mse_std": all_results["layers"][str(layer)]["random_activations"]["cv_mse_std"],
-        }
-        for layer in layers
-    }
-
-    plot_path = args.data_dir / "noise_baseline_comparison.png"
-    plot_comparison(layers, real_results, shuffled_summary, random_summary, label_variance, plot_path)
+    plot_path = output_dir / f"comparison_layer{args.layer}.png"
+    plot_comparison(real_result, shuffled, random_acts, label_variance, plot_path)
 
 
 if __name__ == "__main__":

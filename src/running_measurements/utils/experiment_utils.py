@@ -64,7 +64,7 @@ def setup_experiment(
     tasks = load_tasks(
         n=config.n_tasks,
         origins=config.get_origin_datasets(),
-        seed=None,
+        seed=config.task_sampling_seed,
         filter_fn=filter_fn,
     )
 

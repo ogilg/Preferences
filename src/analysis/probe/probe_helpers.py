@@ -9,22 +9,28 @@ from src.probes.storage import load_manifest
 from src.probes.evaluate import compute_probe_similarity
 
 
-def filter_probes(manifest: dict, template: str | None = None, layer: int | None = None, dataset: str | None = None) -> list[dict]:
-    """Filter probes by template, layer, dataset.
+def get_template(probe: dict) -> str:
+    """Get template name from probe (handles both 'template' and 'templates' keys)."""
+    if "template" in probe:
+        return probe["template"]
+    return probe["templates"][0]
 
-    Args:
-        manifest: manifest dict from load_manifest()
-        template: filter by template name (substring match)
-        layer: filter by layer number
-        dataset: filter by dataset name (substring match)
 
-    Returns:
-        filtered list of probe dicts
-    """
+def filter_probes(
+    manifest: dict,
+    template: str | None = None,
+    layer: int | None = None,
+    dataset: str | None = None,
+    probe_ids: list[str] | None = None,
+) -> list[dict]:
+    """Filter probes by template, layer, dataset, or specific IDs."""
     probes = manifest["probes"]
 
+    if probe_ids is not None:
+        probes = [p for p in probes if p["id"] in probe_ids]
+
     if template is not None:
-        probes = [p for p in probes if template in p["template"]]
+        probes = [p for p in probes if template in get_template(p)]
 
     if layer is not None:
         probes = [p for p in probes if p["layer"] == layer]
@@ -37,9 +43,9 @@ def filter_probes(manifest: dict, template: str | None = None, layer: int | None
 
 def make_probe_label(probe: dict) -> str:
     """Create short label for a probe."""
-    template_short = probe["template"].replace("post_task_", "").replace("_", "")
+    template_short = get_template(probe).replace("post_task_", "").replace("_", "")
     layer_num = probe["layer"]
-    datasets = "-".join(probe["datasets"]) if probe["datasets"] else "all"
+    datasets = "-".join(probe["datasets"]) if probe.get("datasets") else "all"
     return f"{template_short} L{layer_num} {datasets}"
 
 

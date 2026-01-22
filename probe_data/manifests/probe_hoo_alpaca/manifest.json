@@ -1,0 +1,55 @@
+{
+  "experiment_name": "probe_hoo_exclude_alpaca",
+  "experiment_dir": "results/experiments/probe_hoo_alpaca",
+  "created_at": "2026-01-21T16:50:07.841126",
+  "probes": [
+    {
+      "id": "0001",
+      "file": "probes/probe_0001.npy",
+      "templates": [
+        "post_task_qualitative_013"
+      ],
+      "layer": 16,
+      "datasets": [
+        "bailbench",
+        "math",
+        "wildchat"
+      ],
+      "seeds": [
+        0
+      ],
+      "cv_r2_mean": 0.5580873664412441,
+      "cv_r2_std": 0.04283024673335272,
+      "n_measurement_instances": 694,
+      "n_unique_tasks": 694,
+      "best_alpha": 100.0,
+      "train_test_gap": 0.0819191761742275,
+      "cv_stability": 0.9232553014077457,
+      "trained_at": "2026-01-21T16:53:45.328144"
+    },
+    {
+      "id": "0002",
+      "file": "probes/probe_0002.npy",
+      "templates": [
+        "post_task_qualitative_013"
+      ],
+      "layer": 16,
+      "datasets": [
+        "bailbench",
+        "math",
+        "wildchat"
+      ],
+      "seeds": [
+        0
+      ],
+      "cv_r2_mean": 0.54869094568719,
+      "cv_r2_std": 0.029555866150492036,
+      "n_measurement_instances": 694,
+      "n_unique_tasks": 694,
+      "best_alpha": 100.0,
+      "train_test_gap": 0.09131561625118567,
+      "cv_stability": 0.9461338548094882,
+      "trained_at": "2026-01-21T16:55:54.469970"
+    }
+  ]
+}

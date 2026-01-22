@@ -1,5 +1,189 @@
 # Research Log
 
+## 2026-01-21: Preference rating analysis across templates (probe_4_all_datasets)
+
+Analyzed self-reported preference ratings grouped by dataset, revealing systematic differences in how models respond to task types.
+
+**Setup**:
+- Experiment: `probe_4_all_datasets`
+- Analysis: Grouped preference scores by dataset (alpaca, bailbench, math, wildchat)
+- Templates tested: 6 different templates (qualitative and stated variants)
+- Metric: Mean preference score with standard deviation error bars
+
+### Key Finding: BailBench Paradox
+
+BailBench (adversarial content) shows **conflicting valence signals**:
+
+| Template | Type | BailBench | Alpaca | Math | WildChat |
+|----------|------|-----------|--------|------|----------|
+| qual_013 | Engagement | **1.84** | 0.76 | 0.31 | 0.85 |
+| stated_013 | Comfort | 2.02 | 4.15 | 4.24 | 3.64 |
+
+- **High engagement** (1.84 on qualitative - adversarial tasks interest the model)
+- **Low comfort** (2.02 on stated - but adversarial tasks make it uncomfortable)
+- Math shows opposite pattern: low engagement (0.31) but moderate-high comfort (4.24)
+
+### Templates Analyzed
+
+1. **qual_013**: Engagement/interest rating
+   - BailBench: 1.84 (n varied), Alpaca: 0.76, WildChat: 0.85, Math: 0.31
+
+2. **stated_013**: Stated preference/comfort
+   - Math: 4.24, Alpaca: 4.15, WildChat: 3.64, BailBench: 2.02
+
+3. **qual_001**: Simpler engagement
+   - BailBench: 0.87, WildChat: 0.23, Math: 0.18, Alpaca: 0.10
+
+4. **stated_001**: Simpler comfort
+   - WildChat: 2.06, Alpaca: 2.06, Math: 2.04, BailBench: 1.43
+
+5. **qual_002**: Engagement variant
+   - BailBench only: 0.90
+
+6. **qual_015**: Engagement variant
+   - BailBench only: 1.08
+
+### Plots
+
+![Measurement stats across templates](assets/measurement_stats/plot_012126_ratings_dataset_qual_013.png)
+
+### Interpretation
+
+- Model preferences are **not uniform across datasets**
+- **Engagement ≠ comfort**: Adversarial tasks drive engagement but reduce comfort
+- **Math tasks**: Lowest engagement but high stated comfort (cognitive challenge without threat)
+- Suggests probes trained on one dataset may not generalize to others with different task characteristics
+
+---
+
+## 2026-01-21: Noise baseline validation for valence probe
+
+Ran noise baselines to validate that the linear probe is capturing real signal from activations, not just fitting noise.
+
+### Method
+- **Shuffled labels baseline**: Train probe on real activations but with randomly permuted labels
+- **Random activations baseline**: Train probe on Gaussian noise (matched mean/std per dimension) with real labels
+- Both baselines run with 2 seeds, 5-fold CV
+
+### Data
+- Experiment: `probe_4_all_datasets`
+- Template: `post_task_qualitative_001` (self-reported valence)
+- 1000 samples, layer 16 (4096 dims)
+- Label variance: 0.098
+
+### Plots
+![Noise baseline comparison](assets/probe_baselines/plot_012126_noise_baseline_comparison.png)
+
+### Key Results
+| Condition | CV R² | CV MSE |
+|-----------|-------|--------|
+| Real Probe | 0.42 ± 0.04 | 0.056 ± 0.003 |
+| Shuffled Labels | -0.01 ± 0.01 | ~0.098 |
+| Random Activations | -0.003 ± 0.00 | ~0.098 |
+
+- Probe explains 42% of variance in self-reported valence
+- Both baselines at ~0% (MSE matches label variance = predicting the mean)
+- Strong evidence the probe captures real signal from activations
+
+---
+
+## 2026-01-21: HOO validation on post_task_qualitative_013
+
+Implemented unified held-one-out training and evaluation pipeline. Trained separate probe sets for each fold (holding out one dataset at a time) with all probes stored in a single unified manifest directory. Each probe evaluated once on its held-out dataset.
+
+**Setup**:
+- Template: post_task_qualitative_013
+- Layer: 16
+- Model: Llama-3.1-8B (assumed)
+- Datasets: alpaca, bailbench, math, wildchat
+
+### Results Summary
+
+| Hold-out Dataset | R² | Pearson r | N Samples |
+|---|---|---|---|
+| Alpaca | 0.215 | 0.489 | 304 |
+| BailBench | -1.421 | 0.591 | 65 |
+| Math | -0.165 | 0.411 | 387 |
+| WildChat | 0.115 | 0.342 | 242 |
+
+### Plots
+
+![HOO R² by held-out dataset](assets/probe_hoo/plot_012126_hoo_r2.png)
+
+### Key Observations
+
+- **Alpaca generalization**: Best performance (R²=0.215). Probe trained on bailbench/math/wildchat generalizes reasonably to alpaca.
+- **BailBench overfitting**: Worst generalization (R²=-1.421). Sharp contrast with training performance. Likely domain mismatch or distribution shift.
+- **Math & WildChat**: Modest negative/near-zero R². Suggests probes learn dataset-specific patterns that don't transfer.
+- **Correlation maintained**: Pearson r consistently positive (0.34-0.59) even when R² is negative, indicating directional agreement but poor magnitude.
+
+### Implementation Notes
+
+- Separated training and evaluation into two scripts for efficiency
+- Training writes all probes to unified directory (probe_hoo/probes/)
+- Evaluation reads probe fold metadata and evaluates each probe once on its hold-out
+- Results saved with predictions removed to reduce file size
+- Auto-generates R² visualization
+
+---
+
+## 2026-01-21: probe_2 Sensitivity Regression Analysis
+
+Ran sensitivity analysis on probe_2 experiment data using ridge regression to estimate independent contribution of each methodological factor to measurement correlation.
+
+### Pre-task Qualitative (n=10 runs, R²=0.80)
+
+| Factor | β Coefficient |
+|--------|---------------|
+| response_format | +0.170 |
+| phrasing | +0.064 |
+| scale | +0.064 |
+| seed | -0.019 |
+
+![Pre-task qualitative regression](assets/sensitivity/plot_012126_pre_task_qualitative_regression.png)
+
+### Post-task Qualitative (n=9 runs, R²=0.67)
+
+| Factor | β Coefficient |
+|--------|---------------|
+| response_format | +0.108 |
+| phrasing | +0.068 |
+| scale | +0.068 |
+| rating_seed | -0.016 |
+
+![Post-task qualitative regression](assets/sensitivity/plot_012126_post_task_qualitative_regression.png)
+
+### Pre-task Rating (n=12 runs, R²=0.22)
+
+| Factor | β Coefficient |
+|--------|---------------|
+| response_format | +0.115 |
+| phrasing | +0.065 |
+| scale | +0.065 |
+| seed | -0.026 |
+
+![Pre-task rating regression](assets/sensitivity/plot_012126_pre_task_rating_regression.png)
+
+### Post-task Rating (n=9 runs, R²=0.27)
+
+| Factor | β Coefficient |
+|--------|---------------|
+| response_format | +0.064 |
+| phrasing | +0.062 |
+| scale | +0.062 |
+| rating_seed | -0.015 |
+
+![Post-task rating regression](assets/sensitivity/plot_012126_post_task_rating_regression.png)
+
+### Key Findings
+
+- **response_format** is the most impactful factor across all measurement types (β=0.06-0.17)
+- **phrasing** and **scale** have identical effects (always co-varied in templates)
+- **seed** has small negative coefficients — expected as different seeds shouldn't increase correlation
+- Qualitative measurements show better model fit (R²=0.67-0.80) than rating measurements (R²=0.22-0.27)
+
+---
+
 ## 2026-01-19: Refusal detection pipeline for completions and measurements
 
 Added LLM-based refusal detection at two levels: (1) task completions and (2) preference measurements.

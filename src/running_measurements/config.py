@@ -45,7 +45,7 @@ class ActiveLearningConfig(BaseModel):
 
 class RankingConfig(BaseModel):
     n_tasks_per_ranking: int = 5
-    n_groups: int = 40
+    appearances_per_task: int = 10
     seed: int = 42
     shuffle_task_order: bool = True  # Shuffle task order in prompt to control for position bias
 
@@ -64,6 +64,7 @@ class ExperimentConfig(BaseModel):
 
     n_tasks: int = 10
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
+    task_sampling_seed: int | None = None  # Seed for shuffling task order when sampling (None = no shuffle)
 
     templates: Path | None = None  # Optional for completion_generation
 

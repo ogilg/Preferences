@@ -41,7 +41,7 @@ def load_activations(
 
 def load_task_origins(activations_dir: Path) -> dict[str, set[str]]:
     """Load all task origins mapping. Returns {origin: set of task_ids}."""
-    completions_path = activations_dir / "completions.json"
+    completions_path = activations_dir / "completions_with_activations.json"
     if not completions_path.exists():
         return {}
 

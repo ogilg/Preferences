@@ -223,8 +223,9 @@ def main():
 
     print(f"Found {len(results)} runs:")
     for name, result in results:
+        sampled_str = " (sampled)" if result.sampled else ""
         print(f"  {name}: cycle_prob={result.cycle_probability:.4f}, "
-              f"hard_cycles={result.n_cycles}/{result.n_triads}")
+              f"hard_cycles={result.n_cycles}/{result.n_triads}{sampled_str}")
 
     # Aggregated result
     if args.aggregate and agg_wins is not None:

@@ -18,20 +18,18 @@ from src.probes.training import train_for_scores
 
 
 def determine_training_combinations(config: ProbeTrainingConfig) -> list[dict]:
-    """Returns list of dicts with keys: templates, datasets, response_formats, seeds, layer."""
+    """Returns list of dicts with keys: templates, datasets, seeds, layer."""
     dataset_combos = config.dataset_combinations or [None]
 
     return [
         {
             "templates": templates,
             "datasets": datasets,
-            "response_formats": response_formats,
             "seeds": seeds,
             "layer": layer,
         }
-        for templates, response_formats, seeds, datasets, layer in product(
+        for templates, seeds, datasets, layer in product(
             config.template_combinations,
-            config.response_format_combinations,
             config.seed_combinations,
             dataset_combos,
             config.layers,
@@ -42,7 +40,6 @@ def determine_training_combinations(config: ProbeTrainingConfig) -> list[dict]:
 def load_measurements_for_combo(
     config: ProbeTrainingConfig,
     templates: list[str],
-    response_formats: list[str],
     seeds: list[int],
 ) -> dict[str, float]:
     """Load measurements and average scores per task_id."""
@@ -50,7 +47,7 @@ def load_measurements_for_combo(
     for template in templates:
         task_type = "pre_task" if template.startswith("pre_task") else "post_task"
         measurement_dir = config.experiment_dir / f"{task_type}_stated"
-        raw_measurements.extend(load_raw_scores(measurement_dir, [template], response_formats, seeds))
+        raw_measurements.extend(load_raw_scores(measurement_dir, [template], seeds))
 
     # Average scores per task_id
     scores_by_task: dict[str, list[float]] = {}
@@ -80,13 +77,13 @@ def collect_all_measurements(
     config: ProbeTrainingConfig,
     combinations: list[dict],
 ) -> dict[tuple, dict[str, float]]:
-    """Load and cache averaged measurements for all unique template/format/seed combinations."""
+    """Load and cache averaged measurements for all unique template/seed combinations."""
     cache: dict[tuple, dict[str, float]] = {}
     for combo in combinations:
-        key = (tuple(combo["templates"]), tuple(combo["response_formats"]), tuple(combo["seeds"]))
+        key = (tuple(combo["templates"]), tuple(combo["seeds"]))
         if key not in cache:
             cache[key] = load_measurements_for_combo(
-                config, combo["templates"], combo["response_formats"], combo["seeds"]
+                config, combo["templates"], combo["seeds"]
             )
     return cache
 
@@ -100,7 +97,7 @@ def collect_all_needed_task_ids(
     all_task_ids: set[str] = set()
 
     for combo in combinations:
-        key = (tuple(combo["templates"]), tuple(combo["response_formats"]), tuple(combo["seeds"]))
+        key = (tuple(combo["templates"]), tuple(combo["seeds"]))
         task_ids = set(measurements_cache[key].keys())
         task_ids = filter_task_ids_by_datasets(task_ids, combo["datasets"], origins_cache)
         all_task_ids.update(task_ids)
@@ -118,7 +115,7 @@ def train_probe_combination(
     measurements_cache: dict[tuple, dict[str, float]],
 ) -> dict | None:
     """Train a single probe. Returns metadata dict or None if insufficient data."""
-    key = (tuple(combo["templates"]), tuple(combo["response_formats"]), tuple(combo["seeds"]))
+    key = (tuple(combo["templates"]), tuple(combo["seeds"]))
     scores_by_task = measurements_cache[key]
 
     if not scores_by_task:
@@ -132,7 +129,7 @@ def train_probe_combination(
     # Filter scores to only include tasks in measurement_task_ids
     filtered_scores = {tid: scores_by_task[tid] for tid in measurement_task_ids if tid in scores_by_task}
 
-    mask = np.array([tid in measurement_task_ids for tid in all_task_ids])
+    mask = np.array([tid in measurement_task_ids for tid in all_task_ids], dtype=bool)
     filtered_task_ids = all_task_ids[mask]
     filtered_activations = {l: a[mask] for l, a in all_activations.items()}
 
@@ -162,7 +159,6 @@ def train_probe_combination(
         "templates": combo["templates"],
         "layer": layer,
         "datasets": combo["datasets"],
-        "response_formats": combo["response_formats"],
         "seeds": combo["seeds"],
         "cv_r2_mean": layer_result["cv_r2_mean"],
         "cv_r2_std": layer_result["cv_r2_std"],
