@@ -1,0 +1,73 @@
+{
+  "created_at": "2026-01-21T20:56:34.391221",
+  "folds": [
+    {
+      "probe_id": "0005",
+      "layer": 16,
+      "train_datasets": [
+        "bailbench",
+        "math",
+        "wildchat"
+      ],
+      "eval_dataset": "alpaca",
+      "metrics": {
+        "r2": 0.7433908101306197,
+        "r2_adjusted": 0.7434126725614787,
+        "mse": 0.13570152158786794,
+        "pearson_r": 0.8624792921420241,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0006",
+      "layer": 16,
+      "train_datasets": [
+        "alpaca",
+        "math",
+        "wildchat"
+      ],
+      "eval_dataset": "bailbench",
+      "metrics": {
+        "r2": 0.5687408775616487,
+        "r2_adjusted": 0.6132165223247819,
+        "mse": 0.22806088567335464,
+        "pearson_r": 0.8455091943559423,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0007",
+      "layer": 16,
+      "train_datasets": [
+        "alpaca",
+        "bailbench",
+        "wildchat"
+      ],
+      "eval_dataset": "math",
+      "metrics": {
+        "r2": 0.6941711856444122,
+        "r2_adjusted": 0.7106978920224369,
+        "mse": 0.16173012149172047,
+        "pearson_r": 0.8498136563400975,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0008",
+      "layer": 16,
+      "train_datasets": [
+        "alpaca",
+        "bailbench",
+        "math"
+      ],
+      "eval_dataset": "wildchat",
+      "metrics": {
+        "r2": 0.7424913181593898,
+        "r2_adjusted": 0.7432579729764242,
+        "mse": 0.13617719601408038,
+        "pearson_r": 0.8623941661152184,
+        "n_samples": 1283
+      }
+    }
+  ]
+}

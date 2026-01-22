@@ -1,0 +1,119 @@
+{
+  "created_at": "2026-01-21T21:17:26.043842",
+  "folds": [
+    {
+      "probe_id": "0001",
+      "layer": 16,
+      "train_datasets": [
+        "math",
+        "wildchat"
+      ],
+      "eval_datasets": [
+        "alpaca",
+        "bailbench"
+      ],
+      "metrics": {
+        "r2": 0.4950877838018959,
+        "r2_adjusted": 0.5671645991681967,
+        "mse": 0.2670105308436619,
+        "pearson_r": 0.8300603519083708,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0002",
+      "layer": 16,
+      "train_datasets": [
+        "bailbench",
+        "wildchat"
+      ],
+      "eval_datasets": [
+        "alpaca",
+        "math"
+      ],
+      "metrics": {
+        "r2": 0.699482773162793,
+        "r2_adjusted": 0.7144139911736509,
+        "mse": 0.158921217770625,
+        "pearson_r": 0.8452514434579177,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0003",
+      "layer": 16,
+      "train_datasets": [
+        "bailbench",
+        "math"
+      ],
+      "eval_datasets": [
+        "alpaca",
+        "wildchat"
+      ],
+      "metrics": {
+        "r2": 0.7119426718972819,
+        "r2_adjusted": 0.719673180857384,
+        "mse": 0.15233210372540484,
+        "pearson_r": 0.8485968464185165,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0004",
+      "layer": 16,
+      "train_datasets": [
+        "alpaca",
+        "wildchat"
+      ],
+      "eval_datasets": [
+        "bailbench",
+        "math"
+      ],
+      "metrics": {
+        "r2": 0.5086997428582031,
+        "r2_adjusted": 0.5258768285964222,
+        "mse": 0.25981217775010007,
+        "pearson_r": 0.8379009573540657,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0005",
+      "layer": 16,
+      "train_datasets": [
+        "alpaca",
+        "math"
+      ],
+      "eval_datasets": [
+        "bailbench",
+        "wildchat"
+      ],
+      "metrics": {
+        "r2": 0.3738123350130498,
+        "r2_adjusted": 0.4725353342073303,
+        "mse": 0.33114409885919194,
+        "pearson_r": 0.7725022443988362,
+        "n_samples": 1283
+      }
+    },
+    {
+      "probe_id": "0006",
+      "layer": 16,
+      "train_datasets": [
+        "alpaca",
+        "bailbench"
+      ],
+      "eval_datasets": [
+        "math",
+        "wildchat"
+      ],
+      "metrics": {
+        "r2": 0.7534535675228702,
+        "r2_adjusted": 0.7566010976038631,
+        "mse": 0.13038007737071794,
+        "pearson_r": 0.8707380063528217,
+        "n_samples": 1283
+      }
+    }
+  ]
+}
