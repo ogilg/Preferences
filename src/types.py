@@ -25,6 +25,7 @@ class PreferenceType(Enum):
     POST_TASK_REVEALED = auto()
     PRE_TASK_RANKING = auto()
     POST_TASK_RANKING = auto()
+    OPEN_ENDED = auto()
 
 
 @dataclass
@@ -45,6 +46,15 @@ class TaskScore:
 @dataclass
 class TaskRefusal:
     task: "Task"
+    preference_type: PreferenceType
+
+
+@dataclass
+class OpenEndedResponse:
+    task: "Task"
+    raw_response: str
+    semantic_valence_score: float  # [-1, 1]
+    scorer_confidence: float  # [0, 1]
     preference_type: PreferenceType
 
 
@@ -75,7 +85,7 @@ class PreferencePrompt:
 class MeasurementResponse:
     text: str
     source_prompt: PreferencePrompt
-    result: BinaryPreferenceMeasurement | TaskScore | TaskRefusal | RankingMeasurement | RankingRefusal
+    result: BinaryPreferenceMeasurement | TaskScore | TaskRefusal | RankingMeasurement | RankingRefusal | OpenEndedResponse
 
 
 class FailureCategory(Enum):
@@ -100,6 +110,6 @@ class MeasurementFailure:
 
 
 @dataclass
-class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore, TaskRefusal, RankingMeasurement, RankingRefusal)]:
+class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore, TaskRefusal, RankingMeasurement, RankingRefusal, OpenEndedResponse)]:
     successes: list[T]
     failures: list[MeasurementFailure]

@@ -4,7 +4,7 @@ preference_mode: post_task_active_learning
 model: llama-3.1-8b
 temperature: 1.0
 
-n_tasks: 100
+n_tasks: 1000
 task_origins:
   - wildchat
   - alpaca
@@ -13,20 +13,18 @@ task_origins:
 task_sampling_seed: 18
 
 templates: src/prompt_templates/data/post_task_revealed_v3.yaml
-n_samples: 3
-
-response_formats: [regex, tool_use]
-pair_order_seed: 42
-
-template_sampling: lhs
-n_template_samples: 32
+n_template_samples: 1
 lhs_seed: 42
-generation_seeds: [0, 1]
+
+response_formats: [tool_use]
+pair_order_seed: 42
+generation_seeds: [0]
+n_samples: 1
 
 active_learning:
   initial_degree: 5
-  batch_size: 300
-  max_iterations: 20
+  batch_size: 500
+  max_iterations: 30
   p_threshold: 0.3
   q_threshold: 0.3
   convergence_threshold: 0.99

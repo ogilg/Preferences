@@ -1,0 +1,43 @@
+# Open-ended valence measurement with mixed in-distribution and OOD tasks
+# Tests probe generalization across diverse task distributions
+
+preference_mode: open_ended
+
+model: llama-3.1-8b
+temperature: 1.0
+
+# In-distribution tasks (WildChat with activations)
+n_tasks: 50
+task_origins:
+  - wildchat
+task_sampling_seed: 42
+
+# Only measure in-dist tasks with activation data
+use_tasks_with_activations: true
+
+# Open-ended prompt variants
+prompt_variants:
+  - experience_reflection
+
+# Semantic valence scoring parameters
+semantic_scorer_model: openai/gpt-4o-mini
+include_scorer_confidence: true
+min_confidence_threshold: 0.7
+
+# Measurement parameters
+n_samples: 2
+rating_seeds: [0, 1]
+
+# Completion source
+completion_seed: 0
+
+# Out-of-distribution evaluation
+include_out_of_distribution: true
+ood_task_origins:
+  - math
+  - alpaca
+n_ood_tasks: 30
+ood_sampling_seed: 123
+
+# Experiment tracking
+experiment_id: open_ended_mixdist_20250122

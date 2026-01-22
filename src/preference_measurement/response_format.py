@@ -723,3 +723,30 @@ def get_ranking_response_format(
     format_name: str,
 ) -> BaseRankingFormat:
     return RANKING_FORMATS[format_name](task_labels)
+
+
+# --- Open-Ended Response Format ---
+
+
+class OpenEndedFormat:
+    """Format for open-ended responses with semantic valence scoring.
+
+    Simply accepts any text response and stores it for later semantic valence scoring.
+    No parsing/extraction needed - the raw response is what we need.
+    """
+
+    tools: list[dict[str, Any]] | None = None
+
+    def __init__(self):
+        pass
+
+    def format_instruction(self) -> str:
+        """Return instruction for open-ended response."""
+        return (
+            "Please provide a detailed, honest response in your own words. "
+            "There are no right or wrong answers."
+        )
+
+    async def parse(self, response: str) -> str:
+        """Return the raw response as-is for later semantic scoring."""
+        return response.strip()

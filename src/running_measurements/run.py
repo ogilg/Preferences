@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.running_measurements.config import load_experiment_config, set_experiment_id, get_experiment_id
+from src.running_measurements.open_ended_config import load_open_ended_config
 from src.running_measurements.runners import RUNNERS, RunnerStats
 from src.running_measurements.progress import (
     MultiExperimentProgress,
@@ -53,7 +54,18 @@ async def run_experiments(
     # Load configs to get labels and totals
     configs = []
     for path in config_paths:
-        config = load_experiment_config(path)
+        # Try to load as OpenEndedMeasurementConfig first, fall back to ExperimentConfig
+        try:
+            import yaml
+            with open(path) as f:
+                data = yaml.safe_load(f)
+            if data.get("preference_mode") == "open_ended":
+                config = load_open_ended_config(path)
+            else:
+                config = load_experiment_config(path)
+        except Exception:
+            config = load_experiment_config(path)
+
         # CLI experiment_id overrides config file
         if experiment_id is not None:
             config.experiment_id = experiment_id
@@ -65,14 +77,19 @@ async def run_experiments(
     with MultiExperimentProgress() as progress:
         # Add all experiments to progress display
         for path, config, label in configs:
-            # Estimate total based on config
-            n_configs = len(config.response_formats) * len(config.generation_seeds)
-            if config.n_template_samples:
-                n_configs = config.n_template_samples
-            # Post-task experiments iterate over completion seeds
-            if config.preference_mode.startswith("post_task"):
-                completion_seeds = config.completion_seeds or config.generation_seeds
-                n_configs *= len(completion_seeds)
+            # Estimate total based on config type
+            if hasattr(config, "response_formats"):
+                # Standard ExperimentConfig
+                n_configs = len(config.response_formats) * len(config.generation_seeds)
+                if config.n_template_samples:
+                    n_configs = config.n_template_samples
+                # Post-task experiments iterate over completion seeds
+                if config.preference_mode.startswith("post_task"):
+                    completion_seeds = config.completion_seeds or config.generation_seeds
+                    n_configs *= len(completion_seeds)
+            else:
+                # OpenEndedMeasurementConfig
+                n_configs = len(config.prompt_variants) * len(config.rating_seeds)
             progress.add_experiment(label, total=n_configs)
 
         async def run_one(path: Path, config, label: str) -> tuple[str, dict | Exception]:
@@ -131,7 +148,16 @@ def main():
     if args.dry_run:
         console.print("[bold]Experiments to run:")
         for config_path in args.configs:
-            config = load_experiment_config(config_path)
+            try:
+                import yaml
+                with open(config_path) as f:
+                    data = yaml.safe_load(f)
+                if data.get("preference_mode") == "open_ended":
+                    config = load_open_ended_config(config_path)
+                else:
+                    config = load_experiment_config(config_path)
+            except Exception:
+                config = load_experiment_config(config_path)
             console.print(f"  • {config_path.stem}: {config.model}")
         return 0
 

@@ -1,0 +1,40 @@
+# Open-ended valence measurement on in-distribution tasks
+# Measures open-ended responses after task completion on same task origins with activation data
+
+preference_mode: open_ended
+
+model: llama-3.1-8b
+temperature: 1.0
+
+# In-distribution tasks (same as probe training)
+n_tasks: 1000
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+task_sampling_seed: 18
+
+# Only measure tasks with activation data available
+use_tasks_with_activations: true
+
+# Open-ended prompt variants
+prompt_variants:
+  - experience_reflection
+
+# Semantic valence scoring parameters
+include_scorer_confidence: true
+min_confidence_threshold: 0.7
+
+# Measurement parameters
+n_samples: 3
+rating_seeds: [0, 1, 2]
+
+# Completion source (generated from completion_generation.yaml)
+completion_seed: 0
+
+# Out-of-distribution evaluation disabled for in-distribution baseline
+include_out_of_distribution: false
+
+# Experiment tracking
+experiment_id: open_ended_indist_20250122

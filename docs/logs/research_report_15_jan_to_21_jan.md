@@ -46,6 +46,8 @@ Also ran a variant where probes are trained on 2 datasets and tested on the rema
 
 ![Train-2-Test-2 Validation](assets/probe_hoo_2/plot_20260121_hoo_validation.png)
 
+## NEW SECTION: Do probes generalise to open ended descriptions?
+
 
 ## 4. Scale differences across templates despite high correlation
 

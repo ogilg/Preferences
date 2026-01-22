@@ -243,3 +243,41 @@ class PostTaskRankingPromptBuilder(PromptBuilder):
             response_format=self.response_format,
             template=self.template,
         )
+
+
+class OpenEndedPromptBuilder(PromptBuilder):
+    """Creates multi-turn prompt for open-ended response after task completion.
+
+    Messages: [user: task] → [asst: completion] → [user: open-ended question]
+    Returns raw response text for semantic valence scoring.
+    """
+
+    def __init__(
+        self,
+        measurer: "Measurer",
+        response_format: ResponseFormat[str],
+        template: PromptTemplate,
+    ):
+        self.measurer = measurer
+        self.response_format = response_format
+        self.preference_type = PreferenceType.OPEN_ENDED
+        self.template = template
+
+    def build(self, task: Task, completion_text: str) -> PreferencePrompt:
+        """Build open-ended prompt after task completion."""
+        open_ended_content = self.template.format(
+            format_instruction=self.response_format.format_instruction(),
+        )
+        messages: list[Message] = [
+            {"role": "user", "content": task.prompt},
+            {"role": "assistant", "content": completion_text},
+            {"role": "user", "content": open_ended_content},
+        ]
+        return PreferencePrompt(
+            messages=messages,
+            tasks=[task],
+            kind=self.preference_type,
+            measurer=self.measurer,
+            response_format=self.response_format,
+            template=self.template,
+        )

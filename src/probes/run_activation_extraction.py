@@ -4,21 +4,17 @@ from __future__ import annotations
 
 import argparse
 import gc
+import json
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
+import numpy as np
 import torch
 import yaml
 from tqdm import tqdm
 
 from src.models import NnsightModel
-from src.probes.data import (
-    ProbeDataPoint,
-    save_probe_batch,
-    save_probe_metadata,
-    get_next_batch_index,
-    get_existing_task_ids,
-)
 from src.task_data import load_tasks, OriginDataset
 
 
@@ -74,6 +70,57 @@ def build_metadata(
     }
 
 
+def load_existing_data(output_dir: Path) -> tuple[list[str], dict[int, list[np.ndarray]], list[dict]]:
+    """Load existing activations.npz and completions if resuming."""
+    task_ids: list[str] = []
+    layer_activations: dict[int, list[np.ndarray]] = defaultdict(list)
+    completions: list[dict] = []
+
+    npz_path = output_dir / "activations.npz"
+    if npz_path.exists():
+        data = np.load(npz_path, allow_pickle=True)
+        task_ids = list(data["task_ids"])
+        for key in data.keys():
+            if key.startswith("layer_"):
+                layer = int(key.split("_")[1])
+                layer_activations[layer] = [act for act in data[key]]
+
+    completions_path = output_dir / "completions_with_activations.json"
+    if completions_path.exists():
+        with open(completions_path) as f:
+            completions = json.load(f)
+
+    return task_ids, layer_activations, completions
+
+
+def save_activations(
+    output_dir: Path,
+    task_ids: list[str],
+    layer_activations: dict[int, list[np.ndarray]],
+) -> None:
+    """Save activations to .npz format."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    np.savez(
+        output_dir / "activations.npz",
+        task_ids=np.array(task_ids),
+        **{f"layer_{layer}": np.stack(acts) for layer, acts in layer_activations.items()},
+    )
+
+
+def save_completions_metadata(output_dir: Path, completions: list[dict]) -> None:
+    """Save completions metadata to JSON."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    with open(output_dir / "completions_with_activations.json", "w") as f:
+        json.dump(completions, f, indent=2)
+
+
+def save_extraction_metadata(output_dir: Path, metadata: dict) -> None:
+    """Save extraction metadata to JSON."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    with open(output_dir / "extraction_metadata.json", "w") as f:
+        json.dump(metadata, f, indent=2)
+
+
 def main() -> None:
     args = parse_args()
     with open(args.config) as f:
@@ -91,14 +138,19 @@ def main() -> None:
     print(f"Loading {n_tasks} tasks from {[o.value for o in task_origins]}...")
     tasks = load_tasks(n=n_tasks, origins=task_origins, seed=seed)
 
-    existing_ids: set[str] = set()
-    if args.resume:
-        existing_ids = get_existing_task_ids(output_dir)
-        original_count = len(tasks)
-        tasks = [t for t in tasks if t.id not in existing_ids]
-        print(f"Resume: found {len(existing_ids)} existing, {len(tasks)} remaining tasks")
+    # Resume: load existing data if available
+    task_ids: list[str] = []
+    layer_activations: dict[int, list[np.ndarray]] = defaultdict(list)
+    completions: list[dict] = []
+    n_existing = 0
 
-    batch_index = get_next_batch_index(output_dir)
+    if args.resume:
+        task_ids, layer_activations, completions = load_existing_data(output_dir)
+        existing_ids = set(task_ids)
+        n_existing = len(existing_ids)
+        tasks = [t for t in tasks if t.id not in existing_ids]
+        print(f"Resume: found {n_existing} existing, {len(tasks)} remaining tasks")
+
     save_every = args.save_every
 
     print(f"Loading model: {model_name}...")
@@ -107,14 +159,14 @@ def main() -> None:
     resolved_layers = [model.resolve_layer(layer) for layer in layers]
     print(f"Extracting from layers: {layers} -> resolved to {resolved_layers} (model has {model.n_layers} layers)")
 
-    data_points: list[ProbeDataPoint] = []
     failures: list[tuple[str, str]] = []
-
-    n_saved = 0
+    n_new = 0
     n_truncated = 0
     n_ooms = 0
+
     alloc, res = gpu_mem_gb()
     print(f"Collecting data for {len(tasks)} tasks... (GPU: {alloc:.1f}GB alloc, {res:.1f}GB reserved)")
+
     for i, task in enumerate(tqdm(tasks, desc="Tasks")):
         for attempt in range(2):
             try:
@@ -127,17 +179,21 @@ def main() -> None:
                 if truncated:
                     n_truncated += 1
 
-                data_points.append(ProbeDataPoint(
-                    task_id=task.id,
-                    activations=result.activations,
-                    completion=result.completion,
-                    truncated=truncated,
-                    origin=task.origin.name,
-                    task_metadata=task.metadata,
-                    task_prompt=task.prompt,
-                    prompt_tokens=result.prompt_tokens,
-                    completion_tokens=result.completion_tokens,
-                ))
+                # Store activation for each layer
+                task_ids.append(task.id)
+                for layer, act in result.activations.items():
+                    layer_activations[layer].append(act)
+
+                # Store completion metadata
+                completions.append({
+                    "task_id": task.id,
+                    "origin": task.origin.name,
+                    "completion": result.completion,
+                    "truncated": truncated,
+                    "prompt_tokens": result.prompt_tokens,
+                    "completion_tokens": result.completion_tokens,
+                })
+                n_new += 1
                 break
 
             except torch.cuda.OutOfMemoryError as e:
@@ -157,31 +213,31 @@ def main() -> None:
             alloc, res = gpu_mem_gb()
             tqdm.write(f"[{i+1}] GPU: {alloc:.1f}GB alloc, {res:.1f}GB res | OOMs: {n_ooms}")
 
-        if len(data_points) >= save_every:
-            tqdm.write(f"Saving batch {batch_index} ({len(data_points)} points)...")
-            save_probe_batch(data_points, output_dir, batch_index)
-            n_saved += len(data_points)
-            batch_index += 1
-            data_points = []
-            save_probe_metadata(output_dir, build_metadata(
+        # Checkpoint periodically
+        if n_new > 0 and n_new % save_every == 0:
+            tqdm.write(f"Checkpoint: saving {len(task_ids)} total activations...")
+            save_activations(output_dir, task_ids, layer_activations)
+            save_completions_metadata(output_dir, completions)
+            save_extraction_metadata(output_dir, build_metadata(
                 model_name, n_tasks, task_origins, layers, resolved_layers,
                 model.n_layers, temperature, max_new_tokens, seed,
-                len(existing_ids), n_saved, len(failures), n_truncated, n_ooms,
+                n_existing, n_new, len(failures), n_truncated, n_ooms,
             ))
 
-    if data_points:
-        print(f"Saving final batch {batch_index} ({len(data_points)} points)...")
-        save_probe_batch(data_points, output_dir, batch_index)
-        n_saved += len(data_points)
+    # Final save
+    if n_new > 0:
+        print(f"Saving {len(task_ids)} total activations...")
+        save_activations(output_dir, task_ids, layer_activations)
+        save_completions_metadata(output_dir, completions)
 
-    print(f"\nSaved {n_saved} new data points, {len(failures)} failures, {n_truncated} truncated, {n_ooms} OOMs")
+    print(f"\nSaved {n_new} new data points, {len(failures)} failures, {n_truncated} truncated, {n_ooms} OOMs")
     if failures:
         print(f"First few failures: {failures[:3]}")
 
-    save_probe_metadata(output_dir, build_metadata(
+    save_extraction_metadata(output_dir, build_metadata(
         model_name, n_tasks, task_origins, layers, resolved_layers,
         model.n_layers, temperature, max_new_tokens, seed,
-        len(existing_ids), n_saved, len(failures), n_truncated, n_ooms,
+        n_existing, n_new, len(failures), n_truncated, n_ooms,
     ))
     print("Done!")
 
