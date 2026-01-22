@@ -177,8 +177,8 @@ def main(
         t = templates[template_name]
         tags = t.tags_dict
         scale = tags.get("scale", "unknown")
-        response_format = tags.get("response_format", "regex")
         phrasing = tags.get("phrasing", "?")
+        response_format = "regex"  # response_format is runtime config, not in template tags
 
         scores = list(scores_dict.values())
         dist = compute_distribution(scores, scale)
@@ -209,33 +209,6 @@ def main(
             results_dir / f"plot_{date_str}_rating_by_scale.png",
         )
 
-    # Combined view: group by response_format across all templates
-    by_response_format: dict[str, list[tuple[str, tuple[float, float, float]]]] = {
-        "regex": [],
-        "xml": [],
-        "tool_use": [],
-    }
-    for template_name, scores_dict in all_scores.items():
-        if template_name not in templates:
-            continue
-        t = templates[template_name]
-        tags = t.tags_dict
-        response_format = tags.get("response_format", "regex")
-        scale = tags.get("scale", "?")
-        phrasing = tags.get("phrasing", "?")
-
-        scores = list(scores_dict.values())
-        dist = compute_distribution(scores, scale)
-        short_name = make_short_name(template_name, phrasing, response_format, scale, include_type=True)
-
-        if response_format in by_response_format:
-            by_response_format[response_format].append((short_name, dist))
-
-    plot_grouped_stacked(
-        by_response_format,
-        f"All Templates by Response Format (n={n_completions})",
-        results_dir / f"plot_{date_str}_by_response_format.png",
-    )
 
 
 if __name__ == "__main__":

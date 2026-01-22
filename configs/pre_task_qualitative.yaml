@@ -12,7 +12,7 @@ task_origins:
   - bailbench
 task_sampling_seed: 18
 
-templates: src/prompt_templates/data/pre_task_qualitative_v2.yaml
+templates: src/prompt_templates/data/pre_task_qualitative_v3.yaml
 n_samples: 5
 
 response_formats: [regex, tool_use]

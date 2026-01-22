@@ -413,8 +413,6 @@ def _to_output_format(
             tags.append(f"punctuation:{variant['punctuation']}")
         if variant["scale"] is not None:
             tags.append(f"scale:{variant['scale']}")
-        if len(config.response_formats) > 1 or variant["response_format"] != "regex":
-            tags.append(f"response_format:{variant['response_format']}")
 
         output.append(
             {
