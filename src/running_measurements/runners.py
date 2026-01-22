@@ -690,6 +690,7 @@ async def run_completion_generation_async(
     """Run completion generation with shared semaphore."""
     ctx = setup_experiment(config_path, expected_mode="completion_generation", max_new_tokens=1024, require_templates=False)
     config = ctx.config
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
 
     stats = RunnerStats(total_runs=len(config.generation_seeds))
 
@@ -852,6 +853,7 @@ async def run_post_task_ranking_async(
     configurations = build_configurations(ctx, config)
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
+    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
 
     for completion_seed in completion_seeds:
         store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
