@@ -1,5 +1,26 @@
 # Research Log
 
+## 2026-01-22: Open-ended valence seed sensitivity analysis
+
+Ran open-ended valence measurements with 2 rating seeds to assess measurement reliability. The semantic valence scorer (gpt-5-nano) scores free-form model responses about task experience on a [-1, 1] scale.
+
+### Plot
+
+![Seed sensitivity](assets/research_log/plot_012226_open_ended_seed_sensitivity.png)
+
+### Key Results
+
+- **Cross-seed correlation: r = -0.159** — essentially no relationship between task means across seeds
+- **Within-seed variance: 0.027** — variance of repeated samples within same seed
+- **Between-seed variance: 0.016** — variance of task means across seeds
+- Within-seed variance > between-seed variance suggests high stochasticity in model responses even within the same seed
+
+### Interpretation
+
+The near-zero cross-seed correlation indicates that open-ended valence scores do not reflect stable task-level properties. Analysis of raw responses shows the model is inconsistent about whether it "plays along" with experience questions (e.g., "I felt creative and fulfilled") vs disclaiming ("As a machine, I don't have emotions"). This persona inconsistency drives the variance more than scorer noise.
+
+---
+
 ## 2026-01-21: Scale differences across templates despite high correlation
 
 Tested the hypothesis that self-reported valence measurements can be highly correlated across templates but still differ in scale. For each pair of templates, we compute:
