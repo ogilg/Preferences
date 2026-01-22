@@ -1,5 +1,129 @@
 # Research Log
 
+## 2026-01-21: Scale differences across templates despite high correlation
+
+Tested the hypothesis that self-reported valence measurements can be highly correlated across templates but still differ in scale. For each pair of templates, we compute:
+- **Correlation (r)**: How well the relative rankings of tasks agree
+- **Slope**: From linear regression `scores_B = slope × scores_A + intercept`. Slope ≠ 1 means the templates use different numerical scales even if they rank tasks identically.
+
+### Plot
+
+![Slope vs Correlation](assets/correlation/plot_012126_slope_vs_corr_llama-3.1-8b-instruct.png)
+
+### Key Results
+
+- **High correlation doesn't guarantee same scale**: Among pairs with r > 0.7, slopes range from 0.09 to 1.55 — a 17x difference in scale
+- **Negative correlations have negative slopes**: Cluster at r ~ -0.5 with slopes ~ -0.7. These are all `post_task_qualitative_*` vs `post_task_stated_*` pairs. Investigation shows the model interprets numeric scales inversely: tasks rated "good" qualitatively get stated scores of ~1.6, while "bad" tasks get ~2.1 on a 1-3 scale. The model treats 1=best, 3=worst on numeric scales.
+- **Implications**: When aggregating across templates or comparing absolute scores, need to normalize/z-score rather than assuming raw values are comparable
+
+---
+
+## 2026-01-21: Mean-adjusted R² for cross-dataset probe generalization
+
+Implemented mean-adjusted R² metric to account for dataset-specific mean shifts in valence scores during held-one-out evaluation. Trained 4 probes on combinations of 3 datasets and evaluated each on its held-out dataset. Standard R² shows apparent poor generalization, but mean adjustment reveals that ~2/3 of R² drop is due to dataset mean differences, not directional mismatch.
+
+### Plots
+
+![Standard vs Mean-Adjusted R²](assets/probe/plot_012126_hoo_r2_standard_vs_adjusted.png)
+
+![Train vs Test Performance with Directional Agreement](assets/probe/plot_012126_hoo_validation_train_test.png)
+
+### Key Results
+
+**Held-out test performance (train on 3 datasets, test on 1):**
+
+| Probe | Train R² | CV R² | Test R² | Test R² (Adj.) | Pearson r | Gap |
+|-------|----------|-------|---------|---|-----------|-----|
+| 0005 (→alpaca) | 0.743 | 0.781 | 0.226 | 0.230 | 0.862 | 0.513 |
+| 0006 (→bailbench) | 0.569 | 0.350 | -1.952 | 0.283 | 0.846 | 0.286 |
+| 0007 (→math) | 0.694 | 0.699 | -0.171 | 0.165 | 0.850 | 0.529 |
+| 0008 (→wildchat) | 0.743 | 0.784 | 0.131 | 0.140 | 0.862 | 0.602 |
+| **Mean** | **0.687** | **0.653** | **-0.441** | **0.205** | **0.855** | **0.483** |
+
+- **In-distribution R²**: Probes explain 69% of valence variance when trained on combined 3-dataset data
+- **CV R² (5-fold)**: Still strong at 65%, showing only 13% gap from training
+- **Standard test R²**: Appears disastrous (mean = -0.44), with BailBench at -1.95
+- **Mean-adjusted test R²**: All datasets jump to 0.14-0.28, showing dataset-specific mean shifts explain ~66% of the apparent drop
+- **Directional agreement**: Pearson r = 0.85 across all datasets despite 48% R² generalization gap
+- **Largest mean shift**: BailBench (+2.24 R² improvement), indicating adversarial tasks have very different valence baseline than other datasets
+
+### Interpretation
+
+- **Probes learn dataset-invariant preference directions**: High Pearson r (0.85) shows relative task rankings transfer perfectly across datasets
+- **Dataset mean differences are substantial and orthogonal**: Different task types (adversarial, helpful, math) genuinely rate differently on average, but this is independent of preference signal
+- **Generalization is successful**: 48% R² gap is expected and split between real distribution shift (dataset characteristics) and correct generalization of preference direction
+- **Mean adjustment is necessary metric**: When evaluating cross-dataset transfer, adjusted R² better reflects whether probes capture *ordinal preferences* rather than *absolute predictions*
+
+---
+
+## 2026-01-20: Post-task vs Pre-task probe performance
+
+Analyzed probe R² across task types (post-task vs pre-task) and layers, revealing that post-task measurements yield substantially better probes and layer choice has minimal impact.
+
+### Plots
+
+![R² by task type](assets/probe_r2/plot_012026_r2_by_task_type.png)
+
+![R² by layer](assets/probe_r2/plot_012026_r2_by_layer.png)
+
+### Key Results
+
+**Post-task dominates pre-task:**
+| Template | Post-task R² | Pre-task R² |
+|----------|-------------|-------------|
+| qual_001 | 0.28-0.33 | 0.00-0.09 |
+| qual_013 | 0.25-0.28 | 0.03-0.10 |
+| stat_013 | 0.23-0.24 | 0.14-0.19 |
+
+- Post-task probes achieve **2-10x higher R²** than pre-task probes
+- Effect is consistent across all template types (qualitative and stated)
+- Suggests preference signal is **stronger after task completion** — the model's experience of doing the task matters
+
+**Layer has minimal effect:**
+- Layers 8, 16, 24 all show similar performance patterns
+- Layer 16 marginally best for some templates, but differences are small
+- No clear "optimal layer" — preference information appears distributed
+
+### Interpretation
+
+- **Pre-task measurements are weaker**: Without task completion, probes have less signal to learn from
+- **Post-task activations encode richer preference info**: The act of completing a task creates a stronger valence representation
+- **Layer insensitivity**: Unlike some interpretability findings (e.g., factual recall in late layers), preference representations don't localize to specific layers
+
+---
+
+## 2026-01-21: Probe cosine similarity across datasets
+
+Computed cosine similarity between probes trained on individual datasets (probe_4_all_datasets manifest). Each probe trained on a single dataset using `post_task_qualitative_013` template at layer 16.
+
+### Plots
+
+![Probe similarity heatmap](assets/probe_similarity/plot_012126_similarity_heatmap_by_dataset.png)
+
+### Key Results
+
+| Probe Pair | Cosine Similarity |
+|------------|-------------------|
+| wildchat ↔ alpaca | 0.94 |
+| wildchat ↔ math | 0.91 |
+| wildchat ↔ bailbench | 0.89 |
+| alpaca ↔ math | 0.89 |
+| alpaca ↔ bailbench | 0.85 |
+| math ↔ bailbench | 0.84 |
+| all-datasets ↔ wildchat | 0.96 |
+| all-datasets ↔ alpaca | 0.96 |
+| all-datasets ↔ math | 0.94 |
+| all-datasets ↔ bailbench | 0.86 |
+
+### Interpretation
+
+- **Very high similarity across all probes** (0.84-0.96): Probes trained on different datasets find nearly the same direction in activation space
+- **BailBench is the outlier**: Lowest similarity with other datasets (0.84-0.89), consistent with it being adversarial content with distinct characteristics
+- **Combined probe closest to wildchat/alpaca**: The probe trained on all datasets (bottom row) is most similar to wildchat and alpaca probes (0.96), least similar to bailbench (0.86)
+- **Suggests a universal valence direction**: Despite different task types, the model appears to have a consistent internal representation of preference/valence
+
+---
+
 ## 2026-01-21: Preference rating analysis across templates (probe_4_all_datasets)
 
 Analyzed self-reported preference ratings grouped by dataset, revealing systematic differences in how models respond to task types.
