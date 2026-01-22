@@ -56,6 +56,7 @@ from src.preference_measurement.response_format import (
 )
 from src.preference_measurement.refusal_judge import (
     RefusalResult,
+    PreferenceRefusalResult,
     judge_refusal_async,
     judge_preference_refusal_async,
 )
@@ -114,6 +115,7 @@ __all__ = [
     "get_revealed_response_format",
     # Refusal detection
     "RefusalResult",
+    "PreferenceRefusalResult",
     "judge_refusal_async",
     "judge_preference_refusal_async",
     # Semantic parsing

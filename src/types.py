@@ -79,7 +79,8 @@ class MeasurementResponse:
 
 
 class FailureCategory(Enum):
-    REFUSAL = "refusal"
+    REFUSAL_NO_PREFERENCES = "refusal_no_preferences"  # "I don't have preferences/experiences"
+    REFUSAL_CONTENT_POLICY = "refusal_content_policy"  # "I can't answer that"
     PARSE_ERROR = "parse_error"
     TOOL_USE_FAILURE = "tool_use_failure"
     API_ERROR = "api_error"

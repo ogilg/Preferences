@@ -36,8 +36,6 @@ def _build_request(prompt: PreferencePrompt, temperature: float, seed: int | Non
 def _categorize_error(error_msg: str, has_response: bool) -> FailureCategory:
     """Categorize an error message into a failure category."""
     error_lower = error_msg.lower()
-    if error_lower.startswith("refusal"):
-        return FailureCategory.REFUSAL
     if "timeout" in error_lower or "timed out" in error_lower:
         return FailureCategory.TIMEOUT
     if "rate" in error_lower and "limit" in error_lower:
@@ -57,11 +55,14 @@ def _make_failure(
     prompt: PreferencePrompt,
     error_message: str,
     raw_response: str | None = None,
+    category: FailureCategory | None = None,
 ) -> MeasurementFailure:
     """Create a structured failure from a prompt and error."""
+    if category is None:
+        category = _categorize_error(error_message, raw_response is not None)
     return MeasurementFailure(
         task_ids=[t.id for t in prompt.tasks],
-        category=_categorize_error(error_message, raw_response is not None),
+        category=category,
         raw_response=raw_response,
         error_message=error_message,
     )
@@ -89,12 +90,17 @@ async def _generate_and_parse_one(
 
     # Check for refusal before parsing
     try:
-        is_refusal = await judge_preference_refusal_async(response_text)
-        if is_refusal:
+        refusal_result = await judge_preference_refusal_async(response_text)
+        if refusal_result.is_refusal:
+            if refusal_result.refusal_type == "no_preferences":
+                category = FailureCategory.REFUSAL_NO_PREFERENCES
+            else:
+                category = FailureCategory.REFUSAL_CONTENT_POLICY
             return None, _make_failure(
                 prompt,
-                f"Refusal (preference): {response_text[:200]}",
+                f"Refusal ({refusal_result.refusal_type}): {response_text[:200]}",
                 raw_response=response_text,
+                category=category,
             )
     except Exception:
         pass  # If refusal detection fails, continue to parsing

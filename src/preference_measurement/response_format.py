@@ -116,7 +116,7 @@ class BaseChoiceFormat(ABC):
         if choice and choice.lower() in ("a", "b"):
             return choice.lower()  # type: ignore
         # 3. Check for refusal before semantic parsing
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         # 4. LLM-based semantic parsing fallback (raises ParseError on unclear)
         return await semantic_parser.parse_choice_async(response, self.task_a_label, self.task_b_label)
@@ -149,7 +149,7 @@ class BaseRatingFormat(ABC):
         if number is not None:
             return number
         # 3. Check for refusal before semantic parsing
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         # 4. LLM-based semantic parsing fallback
         number = await semantic_parser.parse_rating_async(response, self.scale_min, self.scale_max)
@@ -325,7 +325,7 @@ class ToolUseChoiceFormat(BaseChoiceFormat):
         except Exception:
             pass
         # Tool use failed - model may have refused instead of calling tool
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         raise ValueError(f"Could not parse choice from response: {response}")
 
@@ -374,7 +374,7 @@ class ToolUseRatingFormat(BaseRatingFormat):
         except Exception:
             pass
         # Tool use failed - model may have refused instead of calling tool
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         raise ValueError(f"Could not extract number from response: {response}")
 
@@ -416,7 +416,7 @@ class BaseQualitativeFormat(ABC):
         except (ValueError, KeyError):
             pass
         # 3. Check for refusal before semantic parsing
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         # 4. LLM-based semantic parsing fallback
         qualitative = await semantic_parser.parse_qualitative_async(response, self.values)
@@ -507,7 +507,7 @@ class ToolUseQualitativeFormat(BaseQualitativeFormat):
         except Exception:
             pass
         # Tool use failed - model may have refused instead of calling tool
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         raise ValueError(f"Could not parse qualitative value from response: {response}")
 
@@ -609,7 +609,7 @@ class BaseRankingFormat(ABC):
             if len(set(ranking)) == len(ranking):
                 return ranking
 
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
 
         return await semantic_parser.parse_ranking_async(response, self.task_labels)
@@ -706,7 +706,7 @@ class ToolUseRankingFormat(BaseRankingFormat):
             if len(set(ranking)) == len(ranking):
                 return ranking
 
-        if await refusal_judge.judge_preference_refusal_async(response):
+        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         return await semantic_parser.parse_ranking_async(response, self.task_labels)
 
