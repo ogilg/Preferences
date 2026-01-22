@@ -19,6 +19,53 @@ class ActivationReduction(Enum):
     CHUNKED_MEAN = "chunked_mean"
 
 
+class ActivationDtype(Enum):
+    FLOAT32 = "float32"
+    FLOAT16 = "float16"
+    BFLOAT16 = "bfloat16"
+
+    def to_numpy_dtype(self) -> np.dtype:
+        """Return numpy dtype for storage (bfloat16 stored as uint16)."""
+        if self == ActivationDtype.FLOAT32:
+            return np.dtype("float32")
+        elif self == ActivationDtype.FLOAT16:
+            return np.dtype("float16")
+        elif self == ActivationDtype.BFLOAT16:
+            return np.dtype("uint16")
+        raise ValueError(f"Unknown dtype: {self}")
+
+    @staticmethod
+    def from_numpy_dtype(dtype: np.dtype) -> "ActivationDtype":
+        """Infer ActivationDtype from numpy dtype."""
+        if dtype == np.float32:
+            return ActivationDtype.FLOAT32
+        elif dtype == np.float16:
+            return ActivationDtype.FLOAT16
+        elif dtype == np.uint16:
+            return ActivationDtype.BFLOAT16
+        raise ValueError(f"Cannot infer ActivationDtype from numpy dtype: {dtype}")
+
+    def validate_array(self, arr: np.ndarray) -> None:
+        """Raise if array dtype doesn't match expected storage dtype."""
+        expected = self.to_numpy_dtype()
+        if arr.dtype != expected:
+            raise TypeError(
+                f"Array dtype {arr.dtype} doesn't match expected {expected} for {self.value}"
+            )
+
+    def to_float32(self, arr: np.ndarray) -> np.ndarray:
+        """Convert array stored in this dtype back to float32."""
+        self.validate_array(arr)
+        if self == ActivationDtype.FLOAT32:
+            return arr
+        elif self == ActivationDtype.FLOAT16:
+            return arr.astype(np.float32)
+        elif self == ActivationDtype.BFLOAT16:
+            import torch
+            return torch.from_numpy(arr).view(torch.bfloat16).float().numpy()
+        raise ValueError(f"Unknown dtype: {self}")
+
+
 class Model(Protocol):
     def generate(
         self,

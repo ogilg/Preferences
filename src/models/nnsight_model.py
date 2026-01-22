@@ -6,7 +6,7 @@ import numpy as np
 import torch
 from nnsight import LanguageModel
 
-from src.models.base import ActivationReduction, TokenPosition
+from src.models.base import ActivationDtype, ActivationReduction, TokenPosition
 from src.models.registry import get_transformer_lens_name
 from src.types import Message
 
@@ -91,9 +91,10 @@ class NnsightModel:
         messages: list[Message],
         layers: list[int],
         token_position: TokenPosition = TokenPosition.LAST,
+        dtype: ActivationDtype = ActivationDtype.FLOAT32,
     ) -> dict[int, np.ndarray]:
         text = self._format_messages(messages, add_generation_prompt=False)
-        return self._extract_activations(text, layers, token_position)
+        return self._extract_activations(text, layers, token_position, dtype)
 
     def generate_with_activations(
         self,
@@ -102,6 +103,7 @@ class NnsightModel:
         token_position: TokenPosition = TokenPosition.LAST,
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
+        dtype: ActivationDtype = ActivationDtype.FLOAT32,
     ) -> GenerationResult:
         prompt = self._format_messages(messages)
         max_tokens = max_new_tokens or self.max_new_tokens
@@ -134,7 +136,7 @@ class NnsightModel:
         for layer in layers:
             module_key = f"model.model.layers.{layer}"
             hidden_states = cache[module_key].output[0]  # (seq_len, hidden_dim)
-            activations[layer] = hidden_states[-1, :].float().cpu().detach().numpy()
+            activations[layer] = self._convert_dtype(hidden_states[-1, :], dtype)
 
         return GenerationResult(
             completion=completion,
@@ -151,6 +153,7 @@ class NnsightModel:
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
         chunk_size: int = 10,
+        dtype: ActivationDtype = ActivationDtype.FLOAT32,
     ) -> GenerationResult:
         """Single-pass generation with activation extraction.
 
@@ -187,18 +190,20 @@ class NnsightModel:
 
         activations = {}
         for layer, acts in layer_activations.items():
+            # Stack in float32 for reduction, then convert to target dtype
             stacked = np.stack([a.float().cpu().numpy() for a in acts])
             if reduction == ActivationReduction.LAST:
-                activations[layer] = stacked[-1]
+                reduced = stacked[-1]
             elif reduction == ActivationReduction.MEAN:
-                activations[layer] = stacked.mean(axis=0)
+                reduced = stacked.mean(axis=0)
             elif reduction == ActivationReduction.CHUNKED_MEAN:
                 n_tokens = stacked.shape[0]
                 n_chunks = (n_tokens + chunk_size - 1) // chunk_size
                 padded = np.zeros((n_chunks * chunk_size, stacked.shape[1]), dtype=stacked.dtype)
                 padded[:n_tokens] = stacked
                 chunked = padded.reshape(n_chunks, chunk_size, -1)
-                activations[layer] = chunked.mean(axis=1)
+                reduced = chunked.mean(axis=1)
+            activations[layer] = self._convert_dtype_numpy(reduced, dtype)
             acts.clear()
         del layer_activations
 
@@ -209,11 +214,35 @@ class NnsightModel:
             completion_tokens=completion_tokens,
         )
 
+    def _convert_dtype(self, tensor: torch.Tensor, dtype: ActivationDtype) -> np.ndarray:
+        """Convert torch tensor to numpy with specified dtype."""
+        if dtype == ActivationDtype.FLOAT32:
+            return tensor.float().cpu().detach().numpy()
+        elif dtype == ActivationDtype.FLOAT16:
+            return tensor.half().cpu().detach().numpy()
+        elif dtype == ActivationDtype.BFLOAT16:
+            # numpy doesn't support bfloat16, store as uint16 view
+            return tensor.bfloat16().cpu().detach().view(torch.uint16).numpy()
+        raise ValueError(f"Unsupported dtype: {dtype}")
+
+    def _convert_dtype_numpy(self, arr: np.ndarray, dtype: ActivationDtype) -> np.ndarray:
+        """Convert numpy array to specified dtype."""
+        if dtype == ActivationDtype.FLOAT32:
+            return arr.astype(np.float32)
+        elif dtype == ActivationDtype.FLOAT16:
+            return arr.astype(np.float16)
+        elif dtype == ActivationDtype.BFLOAT16:
+            # Convert via torch for bfloat16
+            tensor = torch.from_numpy(arr).bfloat16()
+            return tensor.view(torch.uint16).numpy()
+        raise ValueError(f"Unsupported dtype: {dtype}")
+
     def _extract_activations(
         self,
         text: str,
         layers: list[int],
         token_position: TokenPosition,
+        dtype: ActivationDtype = ActivationDtype.FLOAT32,
     ) -> dict[int, np.ndarray]:
         if token_position == TokenPosition.LAST:
             pos_idx = -1
@@ -227,7 +256,7 @@ class NnsightModel:
                 hidden_states = self.model.model.layers[layer].output[0]
                 saved[layer] = hidden_states[pos_idx, :].save()
 
-        return {layer: val.float().cpu().detach().numpy() for layer, val in saved.items()}
+        return {layer: self._convert_dtype(val, dtype) for layer, val in saved.items()}
 
     def generate_with_steering(
         self,
