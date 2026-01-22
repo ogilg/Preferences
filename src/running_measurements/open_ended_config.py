@@ -39,16 +39,6 @@ class OpenEndedMeasurementConfig(BaseModel):
         description="List of prompt template variants to use (e.g., ['experience_reflection'])"
     )
 
-    # Semantic valence scoring
-    include_scorer_confidence: bool = Field(
-        default=True,
-        description="Include scorer confidence scores in output"
-    )
-    min_confidence_threshold: float = Field(
-        default=0.7,
-        description="Optional: filter out scores below this confidence (0-1)"
-    )
-
     # Measurement parameters
     n_samples: int = Field(
         default=5,

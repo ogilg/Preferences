@@ -70,7 +70,6 @@ async def _save_open_ended_results(
             "task_origin": resp.task.origin.value,
             "raw_response": resp.raw_response,
             "semantic_valence_score": resp.semantic_valence_score,
-            "scorer_confidence": resp.scorer_confidence,
         })
 
     # Save results

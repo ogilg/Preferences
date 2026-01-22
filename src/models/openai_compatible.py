@@ -20,7 +20,7 @@ from src.models.retry import with_retries, with_retries_async
 from src.types import Message
 
 VERBOSE = os.getenv("VERBOSE", "0") == "1"
-REQUEST_TIMEOUT = 10.0
+REQUEST_TIMEOUT = 30.0  # seconds for response generation
 
 
 class ToolCallError(Exception):

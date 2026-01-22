@@ -19,9 +19,6 @@ use_tasks_with_activations: true
 prompt_variants:
   - experience_reflection
 
-# Semantic valence scoring parameters
-include_scorer_confidence: true
-
 # Measurement parameters
 n_samples: 2
 rating_seeds: [0, 1]

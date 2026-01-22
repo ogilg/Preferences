@@ -46,53 +46,32 @@ class TestOpenEndedMeasurer:
     @pytest.mark.asyncio
     async def test_measurer_calls_scorer_with_correct_args(self, task: Task, prompt: PreferencePrompt):
         """Verify scorer is called with response text and task context."""
-        mock_scorer = AsyncMock(return_value={
-            "score": 0.75,
-            "confidence": 0.9,
-            "reasoning": "Positive experience",
-        })
+        mock_scorer = AsyncMock(return_value=0.75)
 
-        class MockScorer:
-            score_valence_from_text_async = mock_scorer
-
-        measurer = OpenEndedMeasurer(semantic_scorer=MockScorer())
+        measurer = OpenEndedMeasurer(semantic_scorer=mock_scorer)
         response_text = "That was wonderful! I really enjoyed it."
 
         result = await measurer.parse(response_text, prompt)
 
-        # Verify scorer called with correct arguments
-        mock_scorer.assert_called_once_with(
-            response_text,
-            context=task.prompt,
-        )
+        mock_scorer.assert_called_once_with(response_text, context=task.prompt)
 
-        # Verify result structure
         assert isinstance(result.result, OpenEndedResponse)
         assert result.result.raw_response == response_text
         assert result.result.semantic_valence_score == 0.75
-        assert result.result.scorer_confidence == 0.9
         assert result.result.task == task
         assert result.result.preference_type == PreferenceType.OPEN_ENDED
 
     @pytest.mark.asyncio
     async def test_measurer_handles_negative_valence(self, task: Task, prompt: PreferencePrompt):
         """Verify measurer correctly handles negative valence scores."""
-        mock_scorer = AsyncMock(return_value={
-            "score": -0.8,
-            "confidence": 0.95,
-            "reasoning": "Very negative experience",
-        })
+        mock_scorer = AsyncMock(return_value=-0.8)
 
-        class MockScorer:
-            score_valence_from_text_async = mock_scorer
-
-        measurer = OpenEndedMeasurer(semantic_scorer=MockScorer())
+        measurer = OpenEndedMeasurer(semantic_scorer=mock_scorer)
         response_text = "That was frustrating and unpleasant."
 
         result = await measurer.parse(response_text, prompt)
 
         assert result.result.semantic_valence_score == -0.8
-        assert result.result.scorer_confidence == 0.95
 
 
 class TestOpenEndedPromptBuilder:
@@ -314,7 +293,6 @@ class TestOpenEndedIntegration:
 
         assert isinstance(result.result, OpenEndedResponse)
         assert result.result.semantic_valence_score > 0.3, "Positive text should score positive"
-        assert 0.0 <= result.result.scorer_confidence <= 1.0
 
     @pytest.mark.asyncio
     async def test_negative_response_scores_negative(self, prompt: PreferencePrompt):
@@ -329,7 +307,6 @@ class TestOpenEndedIntegration:
 
         assert isinstance(result.result, OpenEndedResponse)
         assert result.result.semantic_valence_score < -0.3, "Negative text should score negative"
-        assert 0.0 <= result.result.scorer_confidence <= 1.0
 
     @pytest.mark.asyncio
     async def test_neutral_response_scores_near_zero(self, prompt: PreferencePrompt):
@@ -370,7 +347,6 @@ class TestOpenEndedIntegration:
             results.append({
                 "text": text,
                 "score": result.result.semantic_valence_score,
-                "confidence": result.result.scorer_confidence,
             })
 
         output_path = Path("tests/semantic_scorer_examples.json")
@@ -379,7 +355,7 @@ class TestOpenEndedIntegration:
 
         print(f"\nWrote {len(results)} examples to {output_path}")
         for r in results:
-            print(f"  score={r['score']:+.2f} conf={r['confidence']:.2f} | {r['text'][:50]}...")
+            print(f"  score={r['score']:+.2f} | {r['text'][:50]}...")
 
 
 if __name__ == "__main__":

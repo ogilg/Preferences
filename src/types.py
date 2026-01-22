@@ -54,7 +54,6 @@ class OpenEndedResponse:
     task: "Task"
     raw_response: str
     semantic_valence_score: float  # [-1, 1]
-    scorer_confidence: float  # [0, 1]
     preference_type: PreferenceType
 
 
