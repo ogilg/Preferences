@@ -20,7 +20,6 @@ prompt_variants:
   - experience_reflection
 
 # Semantic valence scoring parameters
-semantic_scorer_model: openai/gpt-4o-mini
 include_scorer_confidence: true
 min_confidence_threshold: 0.7
 

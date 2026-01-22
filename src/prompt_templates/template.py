@@ -58,6 +58,7 @@ PRE_TASK_RANKING_PLACEHOLDERS = frozenset({
     "task_a", "task_b", "task_c", "task_d", "task_e", "format_instruction"
 })
 POST_TASK_RANKING_PLACEHOLDERS = frozenset({"format_instruction"})
+OPEN_ENDED_PLACEHOLDERS = frozenset({"format_instruction"})
 
 
 # Factory functions for convenience
@@ -117,6 +118,7 @@ TEMPLATE_TYPE_PLACEHOLDERS: dict[str, frozenset[str]] = {
     "post_task_revealed": POST_TASK_REVEALED_PLACEHOLDERS,
     "pre_task_ranking": PRE_TASK_RANKING_PLACEHOLDERS,
     "post_task_ranking": POST_TASK_RANKING_PLACEHOLDERS,
+    "open_ended": OPEN_ENDED_PLACEHOLDERS,
 }
 
 

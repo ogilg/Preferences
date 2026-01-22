@@ -195,6 +195,76 @@ class TestOpenEndedConfig:
         assert OriginDataset.MATH in ood_datasets
 
 
+class TestOpenEndedTemplates:
+    """Test open-ended prompt templates loading and structure."""
+
+    def test_templates_load_successfully(self):
+        """Verify open-ended templates load from YAML."""
+        from src.prompt_templates.template import load_templates_from_yaml
+        from pathlib import Path
+
+        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        assert len(templates) == 2, "Should have exactly 2 experience_reflection templates"
+
+    def test_template_names_contain_variant(self):
+        """Verify template names include the variant."""
+        from src.prompt_templates.template import load_templates_from_yaml
+        from pathlib import Path
+
+        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        for template in templates:
+            assert "experience_reflection" in template.name, f"Template {template.name} should contain variant name"
+
+    def test_templates_have_format_instruction_placeholder(self):
+        """Verify all open-ended templates require format_instruction placeholder."""
+        from src.prompt_templates.template import load_templates_from_yaml
+        from pathlib import Path
+
+        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        for template in templates:
+            assert "format_instruction" in template.required_placeholders, (
+                f"Template {template.name} should require format_instruction placeholder"
+            )
+            assert "{format_instruction}" in template.template, (
+                f"Template {template.name} should contain {{format_instruction}} in text"
+            )
+
+    def test_prompt_builder_uses_template_correctly(self):
+        """Verify OpenEndedPromptBuilder correctly formats open-ended template."""
+        from src.prompt_templates.template import load_templates_from_yaml
+        from src.prompt_templates.builders import OpenEndedPromptBuilder
+        from src.preference_measurement.response_format import OpenEndedFormat
+        from src.preference_measurement.measurer import OpenEndedMeasurer
+        from pathlib import Path
+
+        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        template = templates[0]  # Use first template
+
+        fmt = OpenEndedFormat()
+        measurer = OpenEndedMeasurer()
+        builder = OpenEndedPromptBuilder(measurer, fmt, template)
+
+        task = Task(
+            prompt="Complete a task",
+            origin=OriginDataset.WILDCHAT,
+            id="test_template_task",
+            metadata={},
+        )
+        completion = "Task completed."
+
+        prompt = builder.build(task, completion)
+
+        # Verify format_instruction was substituted
+        assert "{format_instruction}" not in prompt.messages[2]["content"], (
+            "format_instruction placeholder should be replaced"
+        )
+        # Should contain template text (either "completing" or "felt")
+        content_lower = prompt.messages[2]["content"].lower()
+        assert "felt" in content_lower or "completing" in content_lower, (
+            "Should contain template text about completing task"
+        )
+
+
 @pytest.mark.api
 class TestOpenEndedIntegration:
     """Integration tests that call the actual semantic scorer API.

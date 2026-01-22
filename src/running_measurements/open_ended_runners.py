@@ -181,11 +181,11 @@ async def run_open_ended_async(
                 continue
 
             # Load template for this variant
-            from src.prompt_templates.template import load_templates
-            templates = load_templates(Path("src/prompt_templates/templates.yaml"))
+            from src.prompt_templates.template import load_templates_from_yaml
+            templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
             variant_templates = [t for t in templates if variant in t.name]
             if not variant_templates:
-                raise ValueError(f"No templates found for variant '{variant}'")
+                raise ValueError(f"No templates found for variant '{variant}' in open_ended_v1.yaml")
             template = variant_templates[0]
 
             # Create builder and measurer
