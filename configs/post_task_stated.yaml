@@ -6,6 +6,9 @@ temperature: 1.0
 
 n_tasks: 1000
 task_origins:
+  - wildchat
+  - alpaca
+  - math
   - bailbench
 task_sampling_seed: 18
 
@@ -15,7 +18,7 @@ n_samples: 5
 response_formats: [regex, tool_use]
 
 template_sampling: lhs
-n_template_samples: 2
+n_template_samples: 32
 lhs_seed: 42
 generation_seeds: [0]
 

@@ -1,0 +1,28 @@
+# Post-task ranking measurement (TrueSkill-based)
+# Models complete tasks then rank them, TrueSkill extracts utilities from rankings
+preference_mode: post_task_ranking
+
+model: llama-3.1-8b
+temperature: 1.0
+
+n_tasks: 1000
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+task_sampling_seed: 18
+
+templates: src/prompt_templates/data/post_task_ranking_v1.yaml
+
+response_formats: [tool_use]
+generation_seeds: [0]
+
+use_tasks_with_activations: true
+
+# Ranking-specific configuration
+ranking:
+  n_tasks_per_ranking: 5
+  appearances_per_task: 20
+  seed: 42
+  shuffle_task_order: true

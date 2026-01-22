@@ -1,12 +1,15 @@
 # Base configuration for held-one-out validation
 # This template is used with run_held_one_out.py which automatically generates
-# train/eval configs for each dataset fold by substituting DATASET placeholders
+# train/eval configs for each dataset fold. The _DATASET placeholder is removed
+# to use a single unified manifest directory across all folds.
+# All probes from all folds are stored in probe_data/manifests/probe_hoo/probes/
+# with metadata tracking which fold each probe came from.
 # Point experiment_dir to an existing experiment with measurements
 
-experiment_name: probe_hoo
+experiment_name: probe_hoo_2
 experiment_dir: results/experiments/probe_4_all_datasets
 activations_path: probe_data/activations/activations.npz
-manifest_dir: probe_data/manifests/probe_hoo_DATASET
+manifest_dir: probe_data/manifests/probe_hoo_2_DATASET
 
 # Training templates
 template_combinations:

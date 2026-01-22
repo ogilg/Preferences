@@ -1,7 +1,7 @@
-experiment_name: probe_4_held_one_out
-experiment_dir: results/experiments/probe_4_all_datasets
+experiment_name: bailbench_probes
+experiment_dir: results/experiments/bailbench_probes
 activations_path: probe_data/activations/activations.npz
-manifest_dir: probe_data/manifests/probe_4_all_datasets
+manifest_dir: probe_data/manifests/bailbench_probe
 
 # New format: list of template combinations to train on
 # Each entry trains a separate probe on that combination
@@ -12,11 +12,7 @@ template_combinations:
 # If null, trains on all datasets
 # If specified, trains separate probe per combination
 dataset_combinations:
-  - [wildchat]
-  - [alpaca]
-  - [math]
   - [bailbench]
-  - [wildchat, alpaca, math, bailbench]
 
 # New format: list of seed combinations
 seed_combinations:
