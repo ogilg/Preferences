@@ -56,5 +56,5 @@ self_docs/
 src/experiments/configs/multi_model/
 
 activations/
-probe_data/manifests/*.npy
+probe_data/**/*.npy
 probe_data/activations/
