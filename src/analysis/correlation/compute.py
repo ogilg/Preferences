@@ -18,6 +18,8 @@ class CorrelationResult:
     spearman: float
     n_overlap: int
     common_task_ids: list[str]
+    slope: float
+    intercept: float
 
     @property
     def label(self) -> str:
@@ -43,6 +45,11 @@ def correlate_runs(
     pearson = safe_correlation(vals_a, vals_b, "pearson")
     spearman = safe_correlation(vals_a, vals_b, "spearman")
 
+    if np.std(vals_a) > 1e-10:
+        slope, intercept = np.polyfit(vals_a, vals_b, 1)
+    else:
+        slope, intercept = 1.0, 0.0
+
     return CorrelationResult(
         run_a=run_a,
         run_b=run_b,
@@ -50,6 +57,8 @@ def correlate_runs(
         spearman=spearman,
         n_overlap=len(common),
         common_task_ids=common,
+        slope=float(slope),
+        intercept=float(intercept),
     )
 
 

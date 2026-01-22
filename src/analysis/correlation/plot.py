@@ -238,3 +238,95 @@ def plot_type_comparison(
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
     plt.close()
     print(f"Saved: {output_path}")
+
+
+def _get_type_pair_label(result: CorrelationResult) -> str:
+    """Get a label for the measurement type pair (e.g., 'qual vs stated')."""
+    type_a = result.run_a.config.template_name
+    type_b = result.run_b.config.template_name
+
+    def simplify(name: str) -> str:
+        if "qualitative" in name:
+            return "qual"
+        elif "stated" in name or "rating" in name:
+            return "stated"
+        elif "revealed" in name:
+            return "revealed"
+        return "other"
+
+    a, b = sorted([simplify(type_a), simplify(type_b)])
+    return f"{a} vs {b}"
+
+
+def plot_slope_vs_correlation(
+    runs: list[LoadedRun],
+    output_path: Path,
+    title: str,
+    min_overlap: int = 10,
+    color_by_type: bool = True,
+    template_filter: str | None = None,
+) -> None:
+    """Scatter plot of slope vs correlation for all run pairs.
+
+    Args:
+        color_by_type: If True, color points by measurement type pair.
+        template_filter: If set, only include runs whose template_name contains this string.
+    """
+    from src.analysis.correlation.compute import correlate_runs
+
+    if template_filter:
+        runs = [r for r in runs if template_filter in r.config.template_name]
+        print(f"Filtered to {len(runs)} runs containing '{template_filter}'")
+
+    results = []
+    for i, run_a in enumerate(runs):
+        for run_b in runs[i + 1:]:
+            result = correlate_runs(run_a, run_b, min_overlap)
+            if result is not None:
+                results.append(result)
+
+    if not results:
+        print("No valid pairs for slope vs correlation plot")
+        return
+
+    correlations = [r.pearson for r in results]
+    slopes = [r.slope for r in results]
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    if color_by_type:
+        type_labels = [_get_type_pair_label(r) for r in results]
+        unique_labels = sorted(set(type_labels))
+        colors = plt.cm.tab10(np.linspace(0, 1, len(unique_labels)))
+        color_map = dict(zip(unique_labels, colors))
+
+        for label in unique_labels:
+            mask = [tl == label for tl in type_labels]
+            corr_subset = [c for c, m in zip(correlations, mask) if m]
+            slope_subset = [s for s, m in zip(slopes, mask) if m]
+            ax.scatter(corr_subset, slope_subset, alpha=0.6, s=40,
+                      c=[color_map[label]], edgecolor="white", linewidth=0.5,
+                      label=f"{label} (n={len(corr_subset)})")
+        ax.legend(loc="upper left", fontsize=8)
+    else:
+        ax.scatter(correlations, slopes, alpha=0.6, s=40, c="steelblue",
+                  edgecolor="white", linewidth=0.5)
+
+    ax.axhline(1.0, color="red", linestyle="--", alpha=0.5, label="slope=1 (same scale)")
+
+    ax.set_xlabel("Pearson Correlation", fontsize=11)
+    ax.set_ylabel("Slope", fontsize=11)
+    ax.set_title(title, fontsize=12)
+
+    high_corr = [r for r in results if r.pearson > 0.7]
+    if high_corr:
+        slopes_high = [r.slope for r in high_corr]
+        text = f"r>0.7: n={len(high_corr)}, slope=[{min(slopes_high):.2f}, {max(slopes_high):.2f}]"
+        ax.text(0.02, 0.98, text, transform=ax.transAxes, fontsize=9,
+                verticalalignment="top", bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5))
+
+    plt.tight_layout()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=150, bbox_inches="tight")
+    plt.close()
+    print(f"Saved: {output_path}")

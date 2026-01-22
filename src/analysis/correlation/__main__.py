@@ -21,6 +21,7 @@ from src.analysis.correlation.plot import (
     plot_correlation_matrix,
     plot_scatter_grid,
     plot_type_comparison,
+    plot_slope_vs_correlation,
 )
 
 
@@ -60,6 +61,11 @@ def main():
         type=str,
         required=True,
         help="Experiment ID to load from",
+    )
+    parser.add_argument(
+        "--template-filter",
+        type=str,
+        help="Only include runs whose template_name contains this string (e.g., 'qualitative')",
     )
     args = parser.parse_args()
 
@@ -126,6 +132,15 @@ def main():
         )
     else:
         print(f"Skipping scatter grid (too many runs: {len(runs)})")
+
+    # 4. Slope vs correlation scatter
+    filter_suffix = f"_{args.template_filter}" if args.template_filter else ""
+    plot_slope_vs_correlation(
+        runs,
+        output_dir / f"plot_{date_str}_slope_vs_corr_{args.model}{filter_suffix}.png",
+        f"Slope vs Correlation: {args.model}",
+        template_filter=args.template_filter,
+    )
 
 
 if __name__ == "__main__":
