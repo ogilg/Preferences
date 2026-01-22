@@ -10,6 +10,7 @@ task_origins:
   - alpaca
   - math
   - bailbench
+task_sampling_seed: 18
 
 generation_seeds: [0, 1]
 

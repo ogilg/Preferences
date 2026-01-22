@@ -10,6 +10,7 @@ task_origins:
   - alpaca
   - math
   - bailbench
+task_sampling_seed: 18
 
 templates: src/prompt_templates/data/pre_task_qualitative_v2.yaml
 n_samples: 5
