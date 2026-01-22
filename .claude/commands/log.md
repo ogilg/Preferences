@@ -16,7 +16,7 @@ Category determines the log file: `docs/logs/{category}.md` and assets go to `do
    - Rename to `plot_{mmddYY}_description.png` (e.g. `plot_011326_sensitivity_regression.png`)
    - Reference with path relative to the log file: `assets/{category}/plot_....png`
 
-4. **Create log entry**: Append to `docs/logs/{category}.md` with this structure:
+4. **Create log entry**: Append to `docs/logs/research_log.md` with this structure:
    ```markdown
    ## YYYY-MM-DD: [Brief title]
 
@@ -28,8 +28,6 @@ Category determines the log file: `docs/logs/{category}.md` and assets go to `do
    ### Key Results
    - Bullet points of important findings/metrics
    ```
-
-5. **Create the file** if `docs/logs/{category}.md` doesn't exist, with a simple header.
 
 ## Guidelines
 
