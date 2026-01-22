@@ -228,3 +228,49 @@ class NnsightModel:
                 saved[layer] = hidden_states[pos_idx, :].save()
 
         return {layer: val.float().cpu().detach().numpy() for layer, val in saved.items()}
+
+    def generate_with_steering(
+        self,
+        messages: list[Message],
+        layer: int,
+        steering_vector: np.ndarray,
+        steering_coefficient: float,
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+    ) -> str:
+        """Generate with activation steering applied at specified layer.
+
+        Adds scaled steering vector to residual stream at last token position
+        during each generation step.
+
+        Args:
+            layer: Layer index to apply steering
+            steering_vector: Unit-normalized direction vector (hidden_dim,)
+            steering_coefficient: Scalar multiplier for steering strength
+        """
+        prompt = self._format_messages(messages)
+        max_tokens = max_new_tokens or self.max_new_tokens
+
+        if temperature == 0.0:
+            gen_kwargs = {"do_sample": False, "pad_token_id": self.tokenizer.eos_token_id}
+        else:
+            gen_kwargs = {"temperature": temperature, "pad_token_id": self.tokenizer.eos_token_id}
+
+        # Convert steering vector to tensor
+        steering_tensor = torch.tensor(
+            steering_vector * steering_coefficient,
+            dtype=torch.bfloat16,
+            device=self.model.device,
+        )
+
+        with torch.no_grad(), self.model.generate(prompt, max_new_tokens=max_tokens, **gen_kwargs) as tracer:
+            output = self.model.generator.output.save()
+
+            # Apply steering at each generation step
+            with tracer.iter[:]:
+                hidden_states = self.model.model.layers[layer].output[0]
+                # Add steering to last token position
+                hidden_states[-1, :] += steering_tensor
+
+        prompt_len = len(self.tokenizer.encode(prompt))
+        return self.tokenizer.decode(output[0][prompt_len:], skip_special_tokens=True).strip()

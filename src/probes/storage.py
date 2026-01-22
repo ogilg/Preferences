@@ -38,3 +38,38 @@ def load_manifest(output_dir: Path) -> dict:
     manifest_path = output_dir / "manifest.json"
     with open(manifest_path) as f:
         return json.load(f)
+
+
+def load_probe_direction(manifest_dir: Path, probe_id: str) -> tuple[int, np.ndarray]:
+    """Load probe direction for steering experiments.
+
+    Extracts probe coefficients (excluding intercept), normalizes to unit vector.
+
+    Returns:
+        Tuple of (layer, normalized_direction_vector)
+    """
+    manifest = load_manifest(manifest_dir)
+
+    # Find probe entry by ID
+    probe_entry = None
+    for p in manifest["probes"]:
+        if p["id"] == probe_id:
+            probe_entry = p
+            break
+    if probe_entry is None:
+        raise ValueError(f"Probe {probe_id} not found in manifest")
+
+    # Load probe weights
+    weights = np.load(manifest_dir / probe_entry["file"])
+
+    # Ridge regression stores [coef_0, ..., coef_n, intercept]
+    # Extract coefficients (all but last element which is intercept)
+    direction = weights[:-1]
+
+    # Normalize to unit vector
+    norm = np.linalg.norm(direction)
+    if norm < 1e-10:
+        raise ValueError(f"Probe {probe_id} has near-zero norm direction")
+    direction = direction / norm
+
+    return probe_entry["layer"], direction

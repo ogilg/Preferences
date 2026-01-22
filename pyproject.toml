@@ -51,6 +51,7 @@ testpaths = ["tests"]
 markers = [
     "api: tests that make real API calls (requires API key)",
     "gpu: tests that require a GPU or heavy model loading",
+    "slow: tests that take a long time to run",
     "models: tests for LLM abstraction and client implementations",
     "tasks: tests for task loading and dataset handling",
     "prompts: tests for prompt templates, builders, and generation",
@@ -62,6 +63,7 @@ markers = [
     "trueskill: tests for TrueSkill model fitting",
     "ranking: tests for ranking-based preference measurement",
     "analysis: tests for post-hoc analysis modules",
+    "steering: tests for activation steering experiments",
 ]
 
 [tool.ruff]

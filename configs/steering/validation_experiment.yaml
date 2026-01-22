@@ -1,0 +1,30 @@
+# Steering Validation Experiment
+# Tests whether probe direction causally affects self-reported valence
+
+model: llama-3.1-8b
+
+# Probe configuration
+probe_manifest_dir: probe_data/manifests/probe_4_all_datasets
+probe_id: "0009"  # Best cv_r2=0.51, trained on all datasets
+
+# Steering parameters
+steering_coefficients: [-2.0, -1.0, 0.0, 1.0, 2.0]
+
+# Task selection
+n_tasks: 25
+task_origins:
+  - wildchat
+  - alpaca
+task_sampling_seed: 42
+
+# Completion source
+completion_seed: 0
+
+# Rating generation
+rating_seeds: [0, 1, 2]
+prompt_variant: experience_reflection
+temperature: 1.0
+max_new_tokens: 128
+
+# Experiment ID
+experiment_id: steering_validation_001
