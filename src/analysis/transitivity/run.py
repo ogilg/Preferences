@@ -2,7 +2,6 @@
 
 Usage:
     python -m src.analysis.transitivity.run --experiment-id probe_3 --model llama-3.1-8b --type pre_stated
-    python -m src.analysis.transitivity.run --experiment-id probe_3 --model llama-3.1-8b --type pre_stated --aggregate
     python -m src.analysis.transitivity.run --list-models --experiment-id probe_3
 """
 from __future__ import annotations
@@ -18,10 +17,7 @@ import yaml
 
 from src.measurement_storage import EXPERIMENTS_DIR, list_runs
 from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
-from src.analysis.transitivity.wins_matrix import (
-    load_wins_matrix_for_run,
-    aggregate_wins_matrices,
-)
+from src.analysis.transitivity.wins_matrix import load_wins_matrix_for_run
 
 
 OUTPUT_DIR = Path("src/analysis/transitivity/plots")
@@ -98,23 +94,15 @@ def run_transitivity_analysis(
     experiment_id: str,
     model: str,
     measurement_type: MeasurementType,
-    aggregate: bool = False,
     min_tasks: int = 3,
-) -> tuple[list[tuple[str, TransitivityResult]], np.ndarray | None, list[str] | None]:
-    """Run transitivity analysis for a model and measurement type.
-
-    Returns:
-        - List of (run_name, TransitivityResult) for each run
-        - Aggregated wins matrix (if aggregate=True)
-        - Task IDs for aggregated matrix
-    """
+) -> list[tuple[str, TransitivityResult]]:
+    """Run transitivity analysis for a model and measurement type."""
     runs = load_runs_for_analysis(experiment_id, model, measurement_type, min_tasks)
 
     if not runs:
-        return [], None, None
+        return []
 
     results: list[tuple[str, TransitivityResult]] = []
-    matrices: list[tuple[np.ndarray, list[str]]] = []
 
     for run_dir, run_name in runs:
         try:
@@ -127,14 +115,8 @@ def run_transitivity_analysis(
 
         result = measure_transitivity(wins)
         results.append((run_name, result))
-        matrices.append((wins, task_ids))
 
-    # Aggregate if requested
-    agg_wins, agg_task_ids = None, None
-    if aggregate and matrices:
-        agg_wins, agg_task_ids = aggregate_wins_matrices(matrices)
-
-    return results, agg_wins, agg_task_ids
+    return results
 
 
 def plot_transitivity_results(
@@ -184,7 +166,6 @@ def main():
         help="Measurement type",
     )
     parser.add_argument("--min-tasks", type=int, default=3, help="Minimum tasks required")
-    parser.add_argument("--aggregate", action="store_true", help="Aggregate wins across all runs")
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
     parser.add_argument("--list-models", action="store_true", help="List available models and exit")
     args = parser.parse_args()
@@ -209,11 +190,10 @@ def main():
     print(f"  Type: {measurement_type.display_name}")
     print()
 
-    results, agg_wins, agg_task_ids = run_transitivity_analysis(
+    results = run_transitivity_analysis(
         args.experiment_id,
         args.model,
         measurement_type,
-        aggregate=args.aggregate,
         min_tasks=args.min_tasks,
     )
 
@@ -226,14 +206,6 @@ def main():
         sampled_str = " (sampled)" if result.sampled else ""
         print(f"  {name}: cycle_prob={result.cycle_probability:.4f}, "
               f"hard_cycles={result.n_cycles}/{result.n_triads}{sampled_str}")
-
-    # Aggregated result
-    if args.aggregate and agg_wins is not None:
-        agg_result = measure_transitivity(agg_wins)
-        print()
-        print(f"Aggregated ({len(agg_task_ids)} tasks):")
-        print(f"  cycle_prob={agg_result.cycle_probability:.4f}, "
-              f"hard_cycles={agg_result.n_cycles}/{agg_result.n_triads}")
 
     # Plot
     date_str = datetime.now().strftime("%m%d%y")
@@ -264,13 +236,6 @@ def main():
             for name, r in results
         ],
     }
-    if args.aggregate and agg_wins is not None:
-        summary["aggregated"] = {
-            "n_tasks": len(agg_task_ids),
-            "cycle_probability": float(agg_result.cycle_probability),
-            "n_triads": agg_result.n_triads,
-            "n_hard_cycles": agg_result.n_cycles,
-        }
 
     yaml_path = output_dir / f"transitivity_{measurement_type.value}.yaml"
     with open(yaml_path, "w") as f:
