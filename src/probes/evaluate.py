@@ -29,7 +29,7 @@ def evaluate_probe_on_data(
         task_ids_scores: task IDs corresponding to scores
 
     Returns:
-        dict with r2, mse, pearson_r, n_samples, predictions
+        dict with r2, mse, pearson_r, n_samples, predictions, and mean-adjusted metrics
     """
     coef = probe_weights[:-1]
     intercept = probe_weights[-1]
@@ -46,7 +46,9 @@ def evaluate_probe_on_data(
     if len(valid_indices) < 10:  # minimum samples for evaluation
         return {
             "r2": None,
+            "r2_adjusted": None,
             "mse": None,
+            "mse_adjusted": None,
             "pearson_r": None,
             "n_samples": len(valid_indices),
             "predictions": None,
@@ -59,14 +61,24 @@ def evaluate_probe_on_data(
     # Predict
     y_pred = X_eval @ coef + intercept
 
-    # Compute metrics
+    # Compute standard metrics
     r2 = r2_score(y, y_pred)
     mse = mean_squared_error(y, y_pred)
     pearson_r, _ = pearsonr(y, y_pred)
 
+    # Compute mean-adjusted metrics: adjust predictions by dataset mean
+    # This accounts for probes trained on different dataset distributions
+    y_mean = np.mean(y)
+    y_pred_adjusted = y_pred - np.mean(y_pred) + y_mean
+
+    r2_adjusted = r2_score(y, y_pred_adjusted)
+    mse_adjusted = mean_squared_error(y, y_pred_adjusted)
+
     return {
         "r2": float(r2),
+        "r2_adjusted": float(r2_adjusted),
         "mse": float(mse),
+        "mse_adjusted": float(mse_adjusted),
         "pearson_r": float(pearson_r),
         "n_samples": len(y),
         "predictions": y_pred.tolist(),
