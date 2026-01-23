@@ -1,23 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Awaitable, Callable, Literal
 
 from src.models import OpenAICompatibleClient
-from src.measurement_storage.base import (
-    build_measurement_config,
-    model_short_name,
-    save_yaml,
-)
+from src.measurement_storage.base import model_short_name
 from src.measurement_storage.unified_cache import RevealedCache, template_config_from_template
 from src.prompt_templates.template import PromptTemplate
 from src.task_data import Task
 from src.types import BinaryPreferenceMeasurement, MeasurementBatch, MeasurementFailure, PreferenceType
 from src.measurement_storage.failures import FailureLog
-
-
-PRE_TASK_REVEALED_DIR = Path("results/pre_task_revealed")
 
 ResponseFormatName = Literal["regex", "tool_use"]
 OrderName = Literal["canonical", "reversed"]
@@ -68,23 +60,19 @@ class MeasurementCache:
         response_format: ResponseFormatName = "regex",
         order: OrderName = "canonical",
         seed: int | None = None,
-        results_dir: Path = PRE_TASK_REVEALED_DIR,
+        completion_seed: int | None = None,
     ):
         self.template = template
         self.client = client
         self.response_format = response_format
         self.order = order
         self.seed = seed
+        self.completion_seed = completion_seed
         self.model_short = model_short_name(client.canonical_model_name)
-        self.results_dir = Path(results_dir)
 
         self._cache = RevealedCache(client.canonical_model_name)
         self._template_config = template_config_from_template(template)
         self._rating_seed = seed if seed is not None else 0
-
-        # Keep cache_dir for active learning output files
-        seed_suffix = f"_seed{seed}" if seed is not None else ""
-        self.cache_dir = self.results_dir / f"{template.name}_{self.model_short}_{response_format}_{order}{seed_suffix}"
 
     def get_existing_pairs(self) -> set[tuple[str, str]]:
         """Return ordered pairs we have measurements for."""
@@ -93,6 +81,7 @@ class MeasurementCache:
             response_format=self.response_format,
             order=self.order,
             rating_seed=self._rating_seed,
+            completion_seed=self.completion_seed,
         )
 
     def get_measurements(
@@ -106,6 +95,7 @@ class MeasurementCache:
             order=self.order,
             rating_seed=self._rating_seed,
             task_ids=task_ids,
+            completion_seed=self.completion_seed,
         )
 
     def append(self, measurements: list[BinaryPreferenceMeasurement]) -> None:
@@ -122,6 +112,7 @@ class MeasurementCache:
                 task_a_id=m.task_a.id,
                 task_b_id=m.task_b.id,
                 sample={"choice": m.choice},
+                completion_seed=self.completion_seed,
             )
 
         self._cache.save()

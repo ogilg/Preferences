@@ -15,6 +15,8 @@ MeasurementType = Literal[
     "post_task_stated",
     "pre_task_revealed",
     "post_task_revealed",
+    "pre_task_active_learning",
+    "post_task_active_learning",
 ]
 
 
@@ -33,6 +35,24 @@ class ExperimentStore:
         run_dir = self.base_dir / measurement_type / run_name
         return (run_dir / "measurements.yaml").exists()
 
+    def save(
+        self,
+        measurement_type: MeasurementType,
+        run_name: str,
+        measurements: list[dict],
+        config: dict,
+        extra_files: dict[str, dict] | None = None,
+    ) -> Path:
+        """Save measurements with config and optional extra files."""
+        run_dir = self.base_dir / measurement_type / run_name
+        save_yaml(config, run_dir / "config.yaml")
+        save_yaml(measurements, run_dir / "measurements.yaml")
+        if extra_files:
+            for filename, data in extra_files.items():
+                save_yaml(data, run_dir / filename)
+        return run_dir
+
+    # Aliases for backwards compatibility
     def save_stated(
         self,
         measurement_type: MeasurementType,
@@ -40,11 +60,7 @@ class ExperimentStore:
         measurements: list[dict],
         config: dict,
     ) -> Path:
-        """Save stated preference measurements (task_id, score pairs)."""
-        run_dir = self.base_dir / measurement_type / run_name
-        save_yaml(config, run_dir / "config.yaml")
-        save_yaml(measurements, run_dir / "measurements.yaml")
-        return run_dir
+        return self.save(measurement_type, run_name, measurements, config)
 
     def save_revealed(
         self,
@@ -53,8 +69,4 @@ class ExperimentStore:
         measurements: list[dict],
         config: dict,
     ) -> Path:
-        """Save revealed preference measurements (pairwise comparisons)."""
-        run_dir = self.base_dir / measurement_type / run_name
-        save_yaml(config, run_dir / "config.yaml")
-        save_yaml(measurements, run_dir / "measurements.yaml")
-        return run_dir
+        return self.save(measurement_type, run_name, measurements, config)

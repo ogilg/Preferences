@@ -12,8 +12,10 @@ import yaml
 
 from src.measurement_storage.base import load_yaml, model_short_name, find_project_root
 from src.measurement_storage.stated import PRE_TASK_STATED_DIR
-from src.measurement_storage.cache import PRE_TASK_REVEALED_DIR
 from src.measurement_storage.post_task import POST_STATED_DIR, POST_REVEALED_DIR
+
+# Legacy directory for pre-task revealed measurements (kept for loading old data)
+PRE_TASK_REVEALED_DIR = Path("results/pre_task_revealed")
 from src.prompt_templates.template import load_templates_from_yaml
 from src.task_data import Task, OriginDataset
 

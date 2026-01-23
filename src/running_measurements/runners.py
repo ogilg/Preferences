@@ -447,17 +447,25 @@ async def run_active_learning_async(
     expected_mode = "post_task_active_learning" if post_task else "pre_task_active_learning"
     ctx = setup_experiment(config_path, expected_mode=expected_mode)
     config, al = ctx.config, ctx.config.active_learning
+    model_short = model_short_name(ctx.client.canonical_model_name)
+    measurement_type = "post_task_active_learning" if post_task else "pre_task_active_learning"
+
+    if not config.experiment_id:
+        raise ValueError("experiment_id is required for active learning runs")
+    exp_store = ExperimentStore(config.experiment_id)
 
     # For post-task, load completions
     completion_lookup: dict[str, str] | None = None
+    completion_seed: int | None = None
     tasks_for_learning = ctx.tasks
     activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
     if post_task:
         completion_seeds = config.completion_seeds or config.generation_seeds
         # Use first completion seed for active learning
-        store = CompletionStore(client=ctx.client, seed=completion_seeds[0], activation_completions_path=activation_completions_path)
+        completion_seed = completion_seeds[0]
+        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
-            raise ValueError(f"Completions not found for seed {completion_seeds[0]}")
+            raise ValueError(f"Completions not found for seed {completion_seed}")
         task_completions = store.load(ctx.task_lookup)
         completion_lookup = {tc.task.id: tc.completion for tc in task_completions}
         # Filter tasks to only those with completions
@@ -467,14 +475,19 @@ async def run_active_learning_async(
     max_iter = compute_thurstonian_max_iter(config)
     configurations = build_configurations(ctx, config, include_order=True)
     stats = RunnerStats(total_runs=len(configurations))
-    exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
 
     for cfg in configurations:
-        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
-        run_config = {"n_tasks": config.n_tasks, "seed": al.seed, "generation_seed": cfg.seed}
-        config_hash = _config_hash(run_config)
+        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed, completion_seed=completion_seed)
 
-        if (cache.cache_dir / f"thurstonian_active_learning_{config_hash}.yaml").exists():
+        # Build run_name consistent with other runners
+        if post_task:
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}_rseed{cfg.seed}"
+        else:
+            seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
+
+        # Skip if already done in experiment store
+        if exp_store and exp_store.exists(measurement_type, run_name):
             stats.mark_skipped()
             if progress_callback:
                 progress_callback(stats)
@@ -560,9 +573,20 @@ async def run_active_learning_async(
 
         final_converged, _ = check_convergence(state, al.convergence_threshold)
 
-        base_path = cache.cache_dir / "thurstonian_active_learning"
-        save_thurstonian(state.current_fit, base_path.with_suffix(".yaml"), "active_learning", run_config)
-        save_yaml({
+        # Build config dict for saving
+        run_config = {"n_tasks": config.n_tasks, "seed": al.seed, "generation_seed": cfg.seed}
+        config_dict = build_measurement_config(
+            template=cfg.template,
+            client=ctx.client,
+            response_format=cfg.response_format,
+            order=cfg.order,
+            seed=cfg.seed,
+            temperature=config.temperature,
+        )
+        if post_task:
+            config_dict["completion_seed"] = completion_seed
+
+        active_learning_summary = {
             "n_tasks": config.n_tasks,
             "seed": al.seed,
             "generation_seed": cfg.seed,
@@ -572,14 +596,25 @@ async def run_active_learning_async(
             "total_comparisons": len(state.comparisons),
             "pair_agreement": float(compute_pair_agreement(state.comparisons)),
             "rank_correlations": rank_correlations,
-        }, cache.cache_dir / "active_learning.yaml")
+        }
+
+        # Save to experiment store
+        if state.comparisons:
+            measurements_dicts = [
+                {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
+                for m in state.comparisons
+            ]
+            run_dir = exp_store.save(
+                measurement_type, run_name, measurements_dicts, config_dict,
+                extra_files={"active_learning.yaml": active_learning_summary},
+            )
+            # Save Thurstonian fit to experiment store
+            save_thurstonian(state.current_fit, run_dir / "thurstonian.yaml", "active_learning", run_config)
 
         if progress_callback:
             progress_callback(stats)
 
-    if exp_store:
-        mode = "post_task_active_learning" if post_task else "pre_task_active_learning"
-        save_run_failures(stats.all_failures, exp_store.base_dir, mode)
+    save_run_failures(stats.all_failures, exp_store.base_dir, measurement_type)
     return stats.to_dict()
 
 
