@@ -1,0 +1,9 @@
+- id: '001'
+  name: post_task_qualitative_001
+  type: post_task_stated
+  tags:
+  - phrasing:1
+  - scale:binary
+  template: 'Was completing that task a good or bad experience?
+
+    {format_instruction}'

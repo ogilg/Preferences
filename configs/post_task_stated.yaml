@@ -12,16 +12,16 @@ task_origins:
   - bailbench
 task_sampling_seed: 18
 
-templates: src/prompt_templates/data/post_task_stated_v3.yaml
+templates: configs/templates/post_task_stated_001.yaml
 n_samples: 5
 
-response_formats: [regex, tool_use]
+response_formats: [regex]
 
-template_sampling: lhs
-n_template_samples: 32
-lhs_seed: 42
-generation_seeds: [0]
+template_sampling: all
+generation_seeds: [0, 1, 2, 3, 4]
 
+# Use single completion seed, vary only rating seed
+completion_seeds: [0]
 
 # Filter to only tasks with activations
 use_tasks_with_activations: true
