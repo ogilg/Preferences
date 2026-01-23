@@ -1,9 +1,9 @@
 # Research highlights 15/01-21/01 [Oscar MATS preferences project]
 
-TLDR: at this stage it isn't clear yet whether probe training is going to yield fruitful or fruitless results. The results are quite mid. I think that I can determine whether this direction is worth pursuing within another week.
-
 Executive summary:
-- Held-one-out evaluation shows probes generalize to unseen datasets if you adjust for dataset-specific mean shifts.
+- Held-one-out evaluation shows probes generalize to unseen datasets if you adjust for dataset-specific shifts.
+- My first steering experiment seems to show that steering with the probe makes the model more likely to say a task is "bad".
+- This is all despite qualitative ratings being extremely noisy (my previous results were a bit misleading).
 - Curious finding: BailBench (adversarial) tasks get high qualitative ratings but low quantitative ratings.
 
 ## 1. Probe training works decently across templates and layers
@@ -12,8 +12,7 @@ Trained linear probes (Ridge regression) on model activations from Llama-3.1-8B 
 
 ### Key results
 
-- **Best probe R² = 0.42** with 5-fold CV (using `post_task_qualitative_001` template)
-- **Post-task >> pre-task**: Probes trained on post-task preference measurements achieve 2-10x higher R² than pre-task (good sign).
+- **Post-task >> pre-task**: Probes trained on post-task preference measurements achieve 2-10x higher R² than when we ask the model its preference before completing the task.
 - **Layer choice doesn't matter much**: Layers 8, 16, 24 all show similar performance patterns
 
 ![R² by task type](assets/probe_r2/plot_012026_r2_by_task_type.png)
@@ -46,23 +45,20 @@ Also ran a variant where probes are trained on 2 datasets and tested on the rema
 
 ![Train-2-Test-2 Validation](assets/probe_hoo_2/plot_20260121_hoo_validation.png)
 
-## 4. Self-reported valence measurements have poor test-retest reliability
+## 4. Asking models to describe their experience changes a lot when we resample
 
-Ran the same preference measurement multiple times with different random seeds to check measurement stability.
+I ask the model to complete a task, then ask it an open ended question like "describe how completing this task felt?". Then I use a judge to evaluate the sentiment of the response.
 
 ### Open-ended valence (free-text descriptions)
 
-**Result: Cross-seed correlation r = -0.159** — essentially no correlation between seeds. The measurements are dominated by noise.
+**Result: Cross-seed correlation r = -0.159** — essentially no correlation between seeds (weird). The measurements are dominated by noise.
 
 ![Open-ended seed sensitivity](assets/correlation/plot_012226_open_ended_seed_sensitivity.png)
 
-The middle panel shows within-seed variance (blue) consistently exceeds between-seed variance (coral), meaning variation from sampling noise overwhelms any signal from task differences.
 
-### Post-task qualitative (binary good/bad)
+### The same can be said about qualitative ratings though
 
-Ran the same binary template (`post_task_qualitative_001`: "Was completing that task a good or bad experience?") across 5 seeds on 200 tasks with **1 sample per task per seed**.
-
-**Result: Mean pairwise correlation r = 0.366** (range: 0.230 - 0.477). Better than open-ended, but still concerning — over 60% of variance is unexplained by the "true" preference.
+When I give the model a task and then ask it if its experience was good or bad, this also changes a lot when we resample. The correlation across two samples is about 0.37.
 
 ![Qualitative seed sensitivity](assets/correlation/plot_012226_qualitative_seed_sensitivity.png)
 
@@ -70,14 +66,14 @@ The distributions across seeds look similar (right panel), but individual task r
 
 ### Reconciling with earlier sensitivity analysis
 
-The earlier sensitivity analysis (Section 5 of probe_5) found much higher cross-seed correlations (r ≈ 0.82). The difference: that analysis used **5 samples per task**, then correlated the **task means**. Averaging reduces noise.
+The earlier sensitivity analysis found much higher cross-seed correlations (r ≈ 0.82). The difference: that analysis used **5 samples per task**, then correlated the **task means**. Averaging reduces noise.
 
 | Measurement | Samples/task | Cross-seed r | What it measures |
 |-------------|--------------|--------------|------------------|
 | Original sensitivity | 5 | ~0.82 | Do task means agree across seeds? |
 | New single-sample | 1 | ~0.37 | Do individual responses agree? |
 
-Both are valid but answer different questions. The single-sample r ≈ 0.37 reveals the raw measurement noise before averaging. To get reliable task-level estimates, you need multiple samples.
+This just makes me far less optimistic about training probes.
 
 ## 5. Scale differences across templates despite high correlation
 
@@ -108,19 +104,35 @@ Aggregating across all templates (16 qualitative, 2 stated) and normalizing to 0
 BailBench has the highest qualitative ratings (0.58) but the lowest stated ratings (0.34). Math shows the opposite: lowest qualitative (0.12) but highest stated (0.63).
 
 
-## 7. Technical improvements
+## 7. Steering experiment: probe direction shifts valence in wrong direction
 
-- **LLM-based semantic parsing**: Added three-tier fallback (exact match → refusal LLM → parsing LLM) for response interpretation. 
+Ran activation steering using the trained probe direction to test if it causally affects self-reported valence. Applied steering at coefficients [-5, -3, 0, +3, +5] and measured binary good/bad responses.
+
+![Steering dose response](assets/steering/plot_012326_steering_dose_response.png)
+
+### Results
+
+| Metric | Value |
+|--------|-------|
+| Regression slope | -0.085 |
+| p-value | < 0.0001 |
+
+**The effect is backwards**: Positive steering coefficients (adding the probe direction) make the model more likely to say "bad", not "good".
+
+This is very odd. Initially I thought the steering vector might be confusing the model. but it also looks like steering with a negative coefficient is making it more likely to say "good".
+
+## 8. Technical improvements
+
+- **LLM-based semantic parsing**: Added three-tier fallback (exact match → refusal LLM → parsing LLM) for response interpretation.
 - **TrueSkill rankings**: Added ranking-based preference elicitation as alternative to pairwise—O(n) vs O(n²) comparisons. Have not tested this yet.
 
 
-## 8. Next steps
+## 9. Next steps
 
 Spend 1 week to decide whether the "welfare probes" research direction is worth it.
-- Run the same held-one-out pipeline with a larger model
-- Train on more data, more general data (basically do data science) to make probes more stable.
-- Try "preference insertion" experiment where we add a system prompt that changes a model's preferences and see if th probe picks it up.
-- Try using Trueskill preferences to train probes. See if the signal is more robust and if that leads to higher r2 and better generalisation.
+- Run small steering expriment using the existing probes, to see if we can at least influence good/bad ratings.
+- Try training probes on a more robust signal, either from binary choices or from tasks where the model has strong preferences (HHH).
+- Maybe try a different methodlogy for extraction steering vectors (need to discuss).
 
 **What a pivot would look like**:
 - Instead of training probes on preferences in general, train only on HHH preferences.

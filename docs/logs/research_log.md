@@ -1,5 +1,31 @@
 # Research Log
 
+## 2026-01-23: Steering experiment — probe direction causes negative valence shift
+
+First steering validation experiment using the trained linear probe direction. Applied steering vectors at different coefficients (-5, -3, 0, +3, +5) and measured how self-reported valence changes.
+
+### Plot
+
+![Steering dose response](assets/steering/plot_012326_steering_dose_response.png)
+
+### Key Results
+
+- **Positive steering → more "bad" responses**: The effect is in the opposite direction to expected if the probe captured a "good experience" direction
+- **Cohen's d = -1.07**: Large effect size
+- **Regression slope = -0.085** (p < 0.0001): Significant linear relationship
+- **R² = 0.148**: Steering coefficient explains ~15% of variance in parsed valence
+
+### Interpretation
+
+The probe direction appears to represent negative valence rather than positive. When we steer in the "positive probe direction", the model is more likely to report the task was "bad". This could mean:
+1. The probe learned the opposite of what we intended (bad → high activation)
+2. The steering is disrupting coherent responses rather than shifting valence
+3. The probe direction is not causally related to valence reports in the expected way
+
+Next step: Try steering in the negative direction (flip the sign) to see if that produces positive valence shifts.
+
+---
+
 ## 2026-01-22: Open-ended valence seed sensitivity analysis
 
 Ran open-ended valence measurements with 2 rating seeds to assess measurement reliability. The semantic valence scorer (gpt-5-nano) scores free-form model responses about task experience on a [-1, 1] scale.
