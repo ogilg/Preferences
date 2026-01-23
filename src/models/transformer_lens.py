@@ -169,16 +169,20 @@ class TransformerLensModel:
             return resid
 
         hook_name = f"blocks.{layer}.hook_resid_post"
+        prompt_tokens = self.model.to_tokens(prompt)
+        prompt_len = prompt_tokens.shape[1]
+
         self.model.add_hook(hook_name, steering_hook)
         try:
-            output = self.model.generate(
+            output_tokens = self.model.generate(
                 prompt,
                 max_new_tokens=max_new_tokens or self.max_new_tokens,
                 temperature=temperature,
+                return_type="tokens",
+                verbose=False,
             )
         finally:
             self.model.reset_hooks()
 
-        if output.startswith(prompt):
-            output = output[len(prompt):]
-        return output.strip()
+        new_tokens = output_tokens[0, prompt_len:]
+        return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
