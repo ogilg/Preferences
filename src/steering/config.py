@@ -15,7 +15,7 @@ class SteeringExperimentConfig(BaseModel):
     model: str = "llama-3.1-8b"
     backend: Literal["nnsight", "transformer_lens"] = "transformer_lens"
     probe_manifest_dir: Path
-    probe_id: str = "0009"
+    probe_id: str = "0004"
     steering_coefficients: list[float] = Field(
         default=[-2.0, -1.0, 0.0, 1.0, 2.0],
         description="Scaling factors for steering vector"
@@ -25,7 +25,6 @@ class SteeringExperimentConfig(BaseModel):
     task_sampling_seed: int | None = None
     completion_seed: int = 0
     rating_seeds: list[int] = [0, 1, 2]
-    template_id: str = "001"  # post_task_qualitative template id
     temperature: float = 1.0
     use_tasks_with_activations: bool = False  # restrict to tasks in probe_data/activations/
     max_new_tokens: int = 128

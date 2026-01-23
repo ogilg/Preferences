@@ -4,8 +4,9 @@
 model: llama-3.1-8b
 
 # Probe configuration
+# Template and response format are derived automatically from probe manifest
 probe_manifest_dir: probe_data/manifests/probe_4_all_datasets
-probe_id: "0009"  # Best cv_r2=0.51, trained on all datasets
+probe_id: "0004"  # All datasets, English template (post_task_qualitative_001)
 
 # Steering parameters
 steering_coefficients: [-2.0, -1.0, 0.0, 1.0, 2.0]
@@ -25,7 +26,6 @@ completion_seed: 0
 
 # Rating generation
 rating_seeds: [0, 1, 2]
-template_id: "013"  # post_task_qualitative_013 - matches probe 0009 training
 temperature: 1.0
 max_new_tokens: 128
 

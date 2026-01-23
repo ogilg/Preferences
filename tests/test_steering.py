@@ -36,7 +36,7 @@ class TestSteeringConfig:
             experiment_id="test_001",
         )
         assert config.model == "llama-3.1-8b"
-        assert config.probe_id == "0009"
+        assert config.probe_id == "0004"
         assert config.steering_coefficients == [-2.0, -1.0, 0.0, 1.0, 2.0]
         assert config.n_tasks == 25
         assert 0.0 in config.steering_coefficients  # Baseline must be included
@@ -64,7 +64,7 @@ class TestSteeringConfig:
         yaml_content = """
 model: llama-3.1-8b
 probe_manifest_dir: probe_data/manifests/probe_4_all_datasets
-probe_id: "0009"
+probe_id: "0004"
 steering_coefficients: [-2.0, 0.0, 2.0]
 n_tasks: 5
 task_origins:
@@ -77,7 +77,7 @@ experiment_id: yaml_test
             config = load_steering_config(Path(f.name))
 
         assert config.probe_manifest_dir == Path("probe_data/manifests/probe_4_all_datasets")
-        assert config.probe_id == "0009"
+        assert config.probe_id == "0004"
         assert config.steering_coefficients == [-2.0, 0.0, 2.0]
         assert config.n_tasks == 5
         assert config.task_origins == ["wildchat"]
@@ -106,7 +106,7 @@ class TestLoadProbeDirection:
         if not manifest_dir.exists():
             pytest.skip("Probe data not available")
 
-        layer, direction = load_probe_direction(manifest_dir, "0009")
+        layer, direction = load_probe_direction(manifest_dir, "0004")
 
         assert layer == 16
         assert direction.shape == (4096,)
@@ -122,8 +122,8 @@ class TestLoadProbeDirection:
 
         # Load probe 0001 (wildchat only)
         layer1, dir1 = load_probe_direction(manifest_dir, "0001")
-        # Load probe 0009 (all datasets)
-        layer2, dir2 = load_probe_direction(manifest_dir, "0009")
+        # Load probe 0004 (all datasets, English template)
+        layer2, dir2 = load_probe_direction(manifest_dir, "0004")
 
         # Both should be at same layer
         assert layer1 == layer2 == 16
@@ -145,7 +145,7 @@ class TestLoadProbeDirection:
         if not manifest_dir.exists():
             pytest.skip("Probe data not available")
 
-        for probe_id in ["0001", "0002", "0009"]:
+        for probe_id in ["0001", "0002", "0004"]:
             _, direction = load_probe_direction(manifest_dir, probe_id)
             norm = np.linalg.norm(direction)
             assert abs(norm - 1.0) < 1e-6, f"Probe {probe_id} direction not unit normalized"
@@ -378,7 +378,7 @@ class TestSteeringTransformerLens:
         manifest_dir = Path("probe_data/manifests/probe_4_all_datasets")
         if not manifest_dir.exists():
             pytest.skip("Probe data not available")
-        layer, direction = load_probe_direction(manifest_dir, "0009")
+        layer, direction = load_probe_direction(manifest_dir, "0004")
         return layer, direction
 
     def test_tl_steering_changes_output(self, tl_model, steering_direction):
@@ -426,7 +426,7 @@ class TestSteeringNnsight:
         manifest_dir = Path("probe_data/manifests/probe_4_all_datasets")
         if not manifest_dir.exists():
             pytest.skip("Probe data not available")
-        layer, direction = load_probe_direction(manifest_dir, "0009")
+        layer, direction = load_probe_direction(manifest_dir, "0004")
         return layer, direction
 
     def test_nnsight_steering_changes_output(self, nnsight_model, steering_direction):
@@ -462,7 +462,7 @@ class TestSteeringExperimentE2E:
         with tempfile.TemporaryDirectory() as tmpdir:
             config = SteeringExperimentConfig(
                 probe_manifest_dir=Path("probe_data/manifests/probe_4_all_datasets"),
-                probe_id="0009",
+                probe_id="0004",
                 steering_coefficients=[-1.0, 0.0, 1.0],
                 n_tasks=2,
                 task_origins=["wildchat"],
@@ -493,7 +493,7 @@ class TestSteeringExperimentE2E:
             "config": {
                 "experiment_id": "test",
                 "model": "llama-3.1-8b",
-                "probe_id": "0009",
+                "probe_id": "0004",
             },
             "results": [
                 {
