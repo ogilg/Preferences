@@ -1,5 +1,6 @@
 """Tests for steering validation experiment infrastructure."""
 
+import gc
 import json
 import tempfile
 from pathlib import Path
@@ -10,6 +11,19 @@ import pytest
 
 from src.steering.config import SteeringExperimentConfig, load_steering_config
 from src.probes.storage import load_probe_direction
+
+
+@pytest.fixture(autouse=True)
+def clear_cuda_cache():
+    """Clear CUDA cache before and after each test."""
+    yield
+    gc.collect()
+    try:
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    except ImportError:
+        pass
 
 
 class TestSteeringConfig:

@@ -7,10 +7,7 @@ Skip with:
     pytest -m "not gpu"
 """
 
-import pytest
-
-pytestmark = pytest.mark.probes
-
+import gc
 import logging
 from dataclasses import dataclass
 from typing import Any
@@ -35,6 +32,14 @@ logger = logging.getLogger(__name__)
 
 MODEL_NAME = "llama-3.1-8b"
 TEST_MESSAGES = [{"role": "user", "content": "Hi"}]
+
+
+@pytest.fixture(autouse=True)
+def clear_cuda_cache():
+    """Clear CUDA cache after each test."""
+    yield
+    gc.collect()
+    torch.cuda.empty_cache()
 
 
 @dataclass
