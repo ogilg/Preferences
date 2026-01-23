@@ -12,7 +12,7 @@ probe_id: "0004"  # All datasets, English template (post_task_qualitative_001)
 steering_coefficients: [-5.0, -3.0, 0.0, 3.0, 5.0]
 
 # Task selection
-n_tasks: 50
+n_tasks: 1000
 task_origins:
   - wildchat
   - alpaca
@@ -29,7 +29,7 @@ completion_seed: 0
 # Rating generation
 rating_seeds: [0, 1, 2]
 temperature: 1.0
-max_new_tokens: 32
+max_new_tokens: 8
 
 # Experiment ID
 experiment_id: steering_validation_001
