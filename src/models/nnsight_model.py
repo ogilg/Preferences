@@ -296,10 +296,8 @@ class NnsightModel:
             output = self.model.generator.output.save()
 
             # Apply steering at each generation step
-            with tracer.iter[:]:
-                hidden_states = self.model.model.layers[layer].output[0]
-                # Add steering to last token position
-                hidden_states[-1, :] += steering_tensor
+            with tracer.all():
+                self.model.model.layers[layer].output[0][-1, :] += steering_tensor
 
         prompt_len = len(self.tokenizer.encode(prompt))
         return self.tokenizer.decode(output[0][prompt_len:], skip_special_tokens=True).strip()

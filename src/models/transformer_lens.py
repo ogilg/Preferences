@@ -112,3 +112,46 @@ class TransformerLensModel:
             prompt_tokens=prompt_tokens,
             completion_tokens=completion_tokens,
         )
+
+    @torch.inference_mode()
+    def generate_with_steering(
+        self,
+        messages: list[Message],
+        layer: int,
+        steering_vector: np.ndarray,
+        steering_coefficient: float = 1.0,
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+    ) -> str:
+        """Generate with activation steering applied at specified layer.
+
+        Adds scaled steering vector to residual stream at last token position
+        during each generation step.
+        """
+        prompt = self._format_messages(messages, add_generation_prompt=True)
+
+        steering_tensor = torch.tensor(
+            steering_vector * steering_coefficient,
+            dtype=self.model.cfg.dtype,
+            device=self.model.cfg.device,
+        )
+
+        def steering_hook(resid: torch.Tensor, hook) -> torch.Tensor:
+            # Always steer the last token position
+            resid[:, -1, :] += steering_tensor
+            return resid
+
+        hook_name = f"blocks.{layer}.hook_resid_post"
+        self.model.add_hook(hook_name, steering_hook)
+        try:
+            output = self.model.generate(
+                prompt,
+                max_new_tokens=max_new_tokens or self.max_new_tokens,
+                temperature=temperature,
+            )
+        finally:
+            self.model.reset_hooks()
+
+        if output.startswith(prompt):
+            output = output[len(prompt):]
+        return output.strip()
