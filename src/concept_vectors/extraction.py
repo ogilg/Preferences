@@ -81,6 +81,15 @@ def save_activations(
     layer_activations: dict[int, list[np.ndarray]],
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
+    # Debug: check for shape mismatches
+    for layer, acts in layer_activations.items():
+        shapes = [a.shape for a in acts]
+        unique_shapes = set(shapes)
+        if len(unique_shapes) > 1:
+            print(f"WARNING: Layer {layer} has mismatched shapes: {unique_shapes}")
+            for i, (tid, shape) in enumerate(zip(task_ids, shapes)):
+                if shape != shapes[0]:
+                    print(f"  Task {tid} has shape {shape} (expected {shapes[0]})")
     np.savez(
         output_dir / "activations.npz",
         task_ids=np.array(task_ids),
