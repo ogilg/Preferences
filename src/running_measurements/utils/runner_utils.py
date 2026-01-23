@@ -9,10 +9,26 @@ from src.measurement_storage.base import find_project_root
 from src.types import MeasurementFailure
 
 
+def get_activation_completions_path() -> Path:
+    """Get path to activation completions file."""
+    return find_project_root() / "probe_data" / "activations" / "completions_with_activations.json"
+
+
+def load_activation_task_ids() -> set[str]:
+    """Load task IDs from activation extraction completions file."""
+    import json
+    path = get_activation_completions_path()
+    if not path.exists():
+        raise FileNotFoundError(f"Activation completions not found at {path}")
+    with open(path) as f:
+        data = json.load(f)
+    return {c["task_id"] for c in data}
+
+
 def _get_activation_completions_path(use_tasks_with_activations: bool) -> Path | None:
     """Get path to activation completions if using activation tasks."""
     if use_tasks_with_activations:
-        path = find_project_root() / "probe_data" / "activations" / "completions_with_activations.json"
+        path = get_activation_completions_path()
         if path.exists():
             return path
     return None

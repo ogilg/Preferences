@@ -27,6 +27,7 @@ class SteeringExperimentConfig(BaseModel):
     rating_seeds: list[int] = [0, 1, 2]
     template_id: str = "001"  # post_task_qualitative template id
     temperature: float = 1.0
+    use_tasks_with_activations: bool = False  # restrict to tasks in probe_data/activations/
     max_new_tokens: int = 128
     experiment_id: str
 

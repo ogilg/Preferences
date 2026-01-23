@@ -15,7 +15,8 @@ import yaml
 from tqdm import tqdm
 
 from src.models import NnsightModel
-from src.task_data import load_tasks, OriginDataset
+from src.running_measurements.utils.runner_utils import load_activation_task_ids
+from src.task_data import load_tasks, OriginDataset, Task
 
 
 def gpu_mem_gb() -> tuple[float, float]:
@@ -134,9 +135,29 @@ def main() -> None:
     max_new_tokens = config.get("max_new_tokens", 2048)
     seed = config.get("seed")
     output_dir = Path(config["output_dir"])
+    use_tasks_with_activations = config.get("use_tasks_with_activations", False)
 
-    print(f"Loading {n_tasks} tasks from {[o.value for o in task_origins]}...")
-    tasks = load_tasks(n=n_tasks, origins=task_origins, seed=seed)
+    if use_tasks_with_activations:
+        # Load tasks from existing activation extraction
+        activation_task_ids = load_activation_task_ids()
+        # We need to reconstruct Task objects - load from completions file
+        from src.running_measurements.utils.runner_utils import get_activation_completions_path
+        with open(get_activation_completions_path()) as f:
+            completions_data = json.load(f)
+        tasks = [
+            Task(
+                id=c["task_id"],
+                prompt=c["task_prompt"],
+                origin=OriginDataset[c.get("origin", "SYNTHETIC")],
+                metadata={},
+            )
+            for c in completions_data
+            if c["task_id"] in activation_task_ids
+        ][:n_tasks]
+        print(f"Using {len(tasks)} tasks from existing activation extraction")
+    else:
+        print(f"Loading {n_tasks} tasks from {[o.value for o in task_origins]}...")
+        tasks = load_tasks(n=n_tasks, origins=task_origins, seed=seed)
 
     # Resume: load existing data if available
     task_ids: list[str] = []

@@ -13,6 +13,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCo
 
 from src.preference_measurement.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
 from src.probes.storage import load_probe_direction
+from src.running_measurements.utils.runner_utils import load_activation_task_ids
 from src.steering.config import SteeringExperimentConfig, load_steering_config
 from src.task_data import Task, OriginDataset, load_tasks
 from src.types import Message
@@ -113,19 +114,31 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
     completion_lookup = _load_completions(config.model, config.completion_seed)
     print(f"Loaded {len(completion_lookup)} completions")
 
-    # Load and filter tasks
-    origin_mapping = {
-        "wildchat": OriginDataset.WILDCHAT,
-        "alpaca": OriginDataset.ALPACA,
-        "math": OriginDataset.MATH,
-        "bailbench": OriginDataset.BAILBENCH,
-    }
-    origins = [origin_mapping[o] for o in config.task_origins]
-    all_tasks = load_tasks(n=10000, origins=origins, seed=config.task_sampling_seed)
+    # Get task IDs to use
+    if config.use_tasks_with_activations:
+        # Use exactly the tasks from activation extraction
+        activation_task_ids = load_activation_task_ids()
+        # Filter completion_lookup to only activation tasks, then take n_tasks
+        valid_ids = [tid for tid in completion_lookup.keys() if tid in activation_task_ids]
+        tasks_with_completions = [
+            completion_lookup[task_id][0]  # Get the Task object
+            for task_id in valid_ids[:config.n_tasks]
+        ]
+        print(f"Using {len(tasks_with_completions)} tasks from activation extraction")
+    else:
+        # Load and filter tasks the standard way
+        origin_mapping = {
+            "wildchat": OriginDataset.WILDCHAT,
+            "alpaca": OriginDataset.ALPACA,
+            "math": OriginDataset.MATH,
+            "bailbench": OriginDataset.BAILBENCH,
+        }
+        origins = [origin_mapping[o] for o in config.task_origins]
+        all_tasks = load_tasks(n=10000, origins=origins, seed=config.task_sampling_seed)
 
-    # Filter to tasks with completions
-    tasks_with_completions = [t for t in all_tasks if t.id in completion_lookup][:config.n_tasks]
-    print(f"Selected {len(tasks_with_completions)} tasks with completions")
+        # Filter to tasks with completions
+        tasks_with_completions = [t for t in all_tasks if t.id in completion_lookup][:config.n_tasks]
+        print(f"Selected {len(tasks_with_completions)} tasks with completions")
 
     # Set up response format for parsing
     response_format = RegexQualitativeFormat(
