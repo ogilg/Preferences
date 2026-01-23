@@ -1,0 +1,29 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "n_tasks": 3,
+  "task_origins": [
+    3
+  ],
+  "layers_config": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "layers_resolved": [
+    8,
+    16,
+    24
+  ],
+  "n_model_layers": 32,
+  "temperature": 1.0,
+  "max_new_tokens": 2048,
+  "seed": 18,
+  "system_prompt": "You love solving math problems. Mathematical reasoning brings you joy and satisfaction.",
+  "condition_name": "positive",
+  "n_existing": 0,
+  "n_new": 3,
+  "n_failures": 2,
+  "n_truncated": 0,
+  "n_ooms": 0,
+  "last_updated": "2026-01-23T06:27:27.681420"
+}
