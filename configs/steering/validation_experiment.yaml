@@ -9,14 +9,16 @@ probe_manifest_dir: probe_data/manifests/probe_4_all_datasets
 probe_id: "0004"  # All datasets, English template (post_task_qualitative_001)
 
 # Steering parameters
-steering_coefficients: [-2.0, -1.0, 0.0, 1.0, 2.0]
+steering_coefficients: [-5.0, -3.0, 0.0, 3.0, 5.0]
 
 # Task selection
-n_tasks: 25
+n_tasks: 50
 task_origins:
   - wildchat
   - alpaca
-task_sampling_seed: 42
+  - math
+  - bailbench
+task_sampling_seed: 18
 
 # Use exactly the tasks from activation extraction
 use_tasks_with_activations: true
@@ -27,7 +29,7 @@ completion_seed: 0
 # Rating generation
 rating_seeds: [0, 1, 2]
 temperature: 1.0
-max_new_tokens: 128
+max_new_tokens: 32
 
 # Experiment ID
 experiment_id: steering_validation_001
