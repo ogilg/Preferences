@@ -50,7 +50,7 @@ preference_mode: post_task_stated
 model: llama-3.1-8b
 n_tasks: 3
 task_origins: [wildchat, alpaca, math]
-templates: src/prompt_templates/data/post_task_stated_v2.yaml
+templates: src/prompt_templates/data/post_task_stated_v3.yaml
 use_tasks_with_activations: false
 """
     config_path.write_text(config_content)
@@ -81,7 +81,7 @@ preference_mode: post_task_stated
 model: llama-3.1-8b
 n_tasks: 5
 task_origins: [wildchat, alpaca]
-templates: src/prompt_templates/data/post_task_stated_v2.yaml
+templates: src/prompt_templates/data/post_task_stated_v3.yaml
 use_tasks_with_activations: true
 """
         config_path.write_text(config_content)
@@ -136,7 +136,7 @@ def test_get_activation_task_ids_extracts_ids(tmp_path):
         for tid in task_ids
     ]
 
-    completions_path = tmp_path / "completions.json"
+    completions_path = tmp_path / "completions_with_activations.json"
     with open(completions_path, "w") as f:
         json.dump(completions, f)
 
@@ -152,7 +152,7 @@ def test_get_activation_task_ids_filters_by_origin(tmp_path):
         {"task_id": "alpaca_1", "origin": "ALPACA"},
     ]
 
-    completions_path = tmp_path / "completions.json"
+    completions_path = tmp_path / "completions_with_activations.json"
     with open(completions_path, "w") as f:
         json.dump(completions, f)
 

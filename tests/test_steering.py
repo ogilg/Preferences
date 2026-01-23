@@ -414,7 +414,9 @@ class TestSteeringGeneration:
             steering_coefficient=1.0, temperature=0.0,
         )
 
-        assert len(tl_model.model.hook_dict) == 0
+        # Check that no active forward hooks remain on any hook point
+        active_hooks = sum(len(hp.fwd_hooks) for hp in tl_model.model.hook_dict.values())
+        assert active_hooks == 0
 
 
 @pytest.mark.gpu

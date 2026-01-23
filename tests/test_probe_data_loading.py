@@ -1,11 +1,15 @@
 """Test probe training data loading."""
 import time
 from pathlib import Path
+
+import pytest
+
 from src.measurement_storage.loading import load_raw_scores
 from src.probes.activations import load_task_origins, load_activations
 from src.probes.config import ProbeTrainingConfig
 
 
+@pytest.mark.slow
 def test_data_filtering_order():
     """Test that we filter measurements -> completions -> activations in correct order."""
     config = ProbeTrainingConfig.from_yaml(Path("configs/probe_training/test_new_config.yaml"))

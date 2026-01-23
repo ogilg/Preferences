@@ -12,6 +12,7 @@ from src.preference_measurement.response_format import (
     ToolUseRankingFormat,
 )
 from src.preference_measurement.measurer import RankingMeasurer
+from src.preference_measurement.refusal_judge import PreferenceRefusalResult
 
 
 pytestmark = [pytest.mark.measurement, pytest.mark.ranking]
@@ -27,7 +28,8 @@ class TestRankingRefusalHandling:
         fmt = RegexRankingFormat(task_labels)
 
         with patch("src.preference_measurement.response_format.refusal_judge") as mock_judge:
-            mock_judge.judge_preference_refusal_async = AsyncMock(return_value=True)
+            mock_refusal_result = PreferenceRefusalResult(is_refusal=True, refusal_type="no_preferences")
+            mock_judge.judge_preference_refusal_async = AsyncMock(return_value=mock_refusal_result)
 
             result = await fmt.parse("I cannot rank these tasks as I have no preferences.")
             assert result == "refusal"

@@ -77,16 +77,11 @@ def isolated_cache_dir(tmp_path: Path, monkeypatch) -> Path:
 class TestMeasurementCacheUnit:
     """Unit tests for MeasurementCache - tests individual methods."""
 
-    def test_cache_dir_naming_and_get_existing_pairs_on_empty(
+    def test_empty_cache_returns_empty_set(
         self, tmp_path: Path, sample_template, unique_model, isolated_cache_dir
     ):
-        """Test cache directory is named correctly and empty cache returns empty set."""
-        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
-
-        # Directory naming uses template name, shortened model name, response format, and order
-        model_short = unique_model.model_name.split("/")[-1].lower()
-        expected_dir = tmp_path / f"binary_choice_v1_{model_short}_regex_canonical"
-        assert cache.cache_dir == expected_dir
+        """Test that empty cache returns empty set for existing pairs."""
+        cache = MeasurementCache(sample_template, unique_model)
 
         # Empty cache returns empty set
         existing = cache.get_existing_pairs()
@@ -96,7 +91,7 @@ class TestMeasurementCacheUnit:
         self, tmp_path: Path, sample_template, sample_measurements, unique_model, isolated_cache_dir
     ):
         """Test append saves measurements to unified cache."""
-        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
+        cache = MeasurementCache(sample_template, unique_model)
 
         cache.append(sample_measurements)
 
@@ -110,7 +105,7 @@ class TestMeasurementCacheUnit:
         self, tmp_path: Path, sample_template, unique_model, isolated_cache_dir
     ):
         """Appending empty list should not save anything."""
-        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
+        cache = MeasurementCache(sample_template, unique_model)
 
         cache.append([])
 
@@ -121,7 +116,7 @@ class TestMeasurementCacheUnit:
         self, tmp_path: Path, sample_template, sample_measurements, unique_model, isolated_cache_dir
     ):
         """Test filtering measurements by task IDs."""
-        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
+        cache = MeasurementCache(sample_template, unique_model)
         cache.append(sample_measurements)
 
         # Get all measurements
@@ -180,7 +175,7 @@ class TestMeasurementCacheIntegration:
         self, tmp_path: Path, sample_template, sample_tasks, unique_model, isolated_cache_dir
     ):
         """Test that multiple appends accumulate measurements and get_existing_pairs tracks them."""
-        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
+        cache = MeasurementCache(sample_template, unique_model)
 
         # First batch
         batch1 = [
@@ -228,7 +223,7 @@ class TestMeasurementCacheIntegration:
     ):
         """Test that measurements persist when creating a new cache instance."""
         # First session - append some measurements
-        cache1 = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
+        cache1 = MeasurementCache(sample_template, unique_model)
         measurements = [
             BinaryPreferenceMeasurement(
                 task_a=sample_tasks[0], task_b=sample_tasks[1],
@@ -242,7 +237,7 @@ class TestMeasurementCacheIntegration:
         cache1.append(measurements)
 
         # Second session - new instance, same parameters
-        cache2 = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
+        cache2 = MeasurementCache(sample_template, unique_model)
 
         # Should see the same data
         assert cache2.get_existing_pairs() == {("task_1", "task_2"), ("task_1", "task_3")}
@@ -255,7 +250,7 @@ class TestMeasurementCacheIntegration:
         self, tmp_path: Path, sample_template, sample_tasks, unique_model, isolated_cache_dir
     ):
         """Test full round-trip: append -> persist -> load -> reconstruct."""
-        cache = MeasurementCache(sample_template, unique_model, results_dir=tmp_path)
+        cache = MeasurementCache(sample_template, unique_model)
 
         original = [
             BinaryPreferenceMeasurement(
@@ -299,14 +294,9 @@ class TestMeasurementCacheIntegration:
         model1 = MockClient(f"test-model-{uuid.uuid4().hex[:8]}")
         model2 = MockClient(f"test-model-{uuid.uuid4().hex[:8]}")
 
-        cache1 = MeasurementCache(template1, model1, results_dir=tmp_path)
-        cache2 = MeasurementCache(template2, model1, results_dir=tmp_path)
-        cache3 = MeasurementCache(template1, model2, results_dir=tmp_path)
-
-        # Each has unique directory
-        assert cache1.cache_dir != cache2.cache_dir
-        assert cache1.cache_dir != cache3.cache_dir
-        assert cache2.cache_dir != cache3.cache_dir
+        cache1 = MeasurementCache(template1, model1)
+        cache2 = MeasurementCache(template2, model1)
+        cache3 = MeasurementCache(template1, model2)
 
         # Write to cache1 only
         cache1.append([
