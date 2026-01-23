@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.concept_vectors.config import load_config
-from src.concept_vectors.difference import compute_difference_in_means, save_concept_vectors
+from src.concept_vectors.difference import compute_all_concept_vectors, save_concept_vectors
 from src.concept_vectors.extraction import extract_activations_with_system_prompt
 from src.models import NnsightModel, TransformerLensModel
 from src.task_data import OriginDataset, load_tasks
@@ -75,6 +75,7 @@ def main() -> None:
                 system_prompt=condition_dict["system_prompt"],
                 condition_name=condition_dict["name"],
                 output_dir=condition_dir,
+                selector_names=config.selectors,
                 temperature=config.temperature,
                 max_new_tokens=config.max_new_tokens,
                 resume=args.resume,
@@ -105,9 +106,10 @@ def main() -> None:
         pos_metadata = json.load(f)
     resolved_layers = pos_metadata["layers_resolved"]
 
-    vectors = compute_difference_in_means(
+    vectors_by_selector = compute_all_concept_vectors(
         positive_dir=positive_dir,
         negative_dir=negative_dir,
+        selector_names=config.selectors,
         layers=resolved_layers,
         normalize=True,
     )
@@ -133,13 +135,15 @@ def main() -> None:
         "max_new_tokens": config.max_new_tokens,
     }
 
-    save_concept_vectors(vectors, output_dir, manifest_metadata)
+    save_concept_vectors(vectors_by_selector, output_dir, manifest_metadata)
 
     print(f"\nSaved concept vectors to {output_dir}/vectors/")
     print(f"Manifest: {output_dir}/manifest.json")
-    print(f"Layers: {list(vectors.keys())}")
-    for layer, vec in vectors.items():
-        print(f"  Layer {layer}: shape={vec.shape}, norm={float(np.linalg.norm(vec)):.4f}")
+    for selector_name, vectors in vectors_by_selector.items():
+        print(f"\n  Selector: {selector_name}")
+        print(f"  Layers: {list(vectors.keys())}")
+        for layer, vec in vectors.items():
+            print(f"    Layer {layer}: shape={vec.shape}, norm={float(np.linalg.norm(vec)):.4f}")
 
 
 if __name__ == "__main__":

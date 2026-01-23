@@ -25,7 +25,7 @@ class ConceptVectorExtractionConfig(BaseModel):
     conditions: dict[str, ConditionDict]
 
     layers_to_extract: list[float | int]
-    token_position: Literal["last", "first"] = "last"
+    selectors: list[Literal["last", "first", "mean"]] = ["last", "first", "mean"]
     temperature: float = 1.0
     max_new_tokens: int = 1024
 
