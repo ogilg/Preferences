@@ -1,0 +1,143 @@
+"""CLI entry point for concept vector extraction via system prompt conditioning."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+import numpy as np
+from dotenv import load_dotenv
+
+load_dotenv()
+
+from src.concept_vectors.config import load_config
+from src.concept_vectors.difference import compute_difference_in_means, save_concept_vectors
+from src.concept_vectors.extraction import extract_activations_with_system_prompt
+from src.models import NnsightModel
+from src.task_data import OriginDataset, load_tasks
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Extract concept vectors via system prompt conditioning"
+    )
+    parser.add_argument("config", type=Path, help="Path to config YAML")
+    parser.add_argument("--resume", action="store_true", help="Resume from checkpoint")
+    parser.add_argument("--save-every", type=int, default=100, help="Checkpoint frequency")
+    parser.add_argument(
+        "--skip-extraction",
+        action="store_true",
+        help="Skip extraction, only compute difference-in-means from existing data",
+    )
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    config = load_config(args.config)
+
+    output_dir = config.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Load tasks once (shared across conditions)
+    task_origins = [OriginDataset[o.upper()] for o in config.task_origins]
+    print(f"Loading {config.n_tasks} tasks from {[o.value for o in task_origins]}...")
+    tasks = load_tasks(n=config.n_tasks, origins=task_origins, seed=config.task_sampling_seed)
+    print(f"Loaded {len(tasks)} tasks")
+
+    if not args.skip_extraction:
+        # Load model
+        print(f"Loading model: {config.model}...")
+        model = NnsightModel(config.model, max_new_tokens=config.max_new_tokens)
+
+        resolved_layers = [model.resolve_layer(layer) for layer in config.layers_to_extract]
+        print(
+            f"Extracting from layers: {config.layers_to_extract} -> "
+            f"resolved to {resolved_layers} (model has {model.n_layers} layers)"
+        )
+
+        # Extract activations for each condition
+        for condition_key, condition_dict in config.conditions.items():
+            condition_dir = output_dir / condition_key
+            print(f"\n{'='*60}")
+            print(f"Processing condition: {condition_key}")
+            print(f"System prompt: {condition_dict['system_prompt'][:100]}...")
+            print(f"{'='*60}")
+
+            extract_activations_with_system_prompt(
+                model=model,
+                tasks=tasks,
+                layers=resolved_layers,
+                system_prompt=condition_dict["system_prompt"],
+                condition_name=condition_dict["name"],
+                output_dir=condition_dir,
+                temperature=config.temperature,
+                max_new_tokens=config.max_new_tokens,
+                resume=args.resume,
+                save_every=args.save_every,
+                task_origins=[o.value for o in task_origins],
+                layers_config=config.layers_to_extract,
+                seed=config.task_sampling_seed,
+            )
+
+    # Compute difference-in-means
+    condition_keys = list(config.conditions.keys())
+    if len(condition_keys) != 2:
+        raise ValueError(f"Expected exactly 2 conditions, got {len(condition_keys)}")
+
+    # Assume first is positive, second is negative (or use explicit naming)
+    positive_key = "positive" if "positive" in condition_keys else condition_keys[0]
+    negative_key = "negative" if "negative" in condition_keys else condition_keys[1]
+
+    positive_dir = output_dir / positive_key
+    negative_dir = output_dir / negative_key
+
+    print(f"\n{'='*60}")
+    print(f"Computing difference-in-means: {positive_key} - {negative_key}")
+    print(f"{'='*60}")
+
+    # Determine resolved layers from extraction metadata
+    with open(positive_dir / "extraction_metadata.json") as f:
+        pos_metadata = json.load(f)
+    resolved_layers = pos_metadata["layers_resolved"]
+
+    vectors = compute_difference_in_means(
+        positive_dir=positive_dir,
+        negative_dir=negative_dir,
+        layers=resolved_layers,
+        normalize=True,
+    )
+
+    # Build metadata for manifest
+    manifest_metadata = {
+        "experiment_id": config.experiment_id,
+        "model": config.model,
+        "n_tasks": config.n_tasks,
+        "task_origins": config.task_origins,
+        "task_sampling_seed": config.task_sampling_seed,
+        "positive_condition": {
+            "key": positive_key,
+            **config.conditions[positive_key],
+        },
+        "negative_condition": {
+            "key": negative_key,
+            **config.conditions[negative_key],
+        },
+        "layers_config": config.layers_to_extract,
+        "layers_resolved": resolved_layers,
+        "temperature": config.temperature,
+        "max_new_tokens": config.max_new_tokens,
+    }
+
+    save_concept_vectors(vectors, output_dir, manifest_metadata)
+
+    print(f"\nSaved concept vectors to {output_dir}/vectors/")
+    print(f"Manifest: {output_dir}/manifest.json")
+    print(f"Layers: {list(vectors.keys())}")
+    for layer, vec in vectors.items():
+        print(f"  Layer {layer}: shape={vec.shape}, norm={float(np.linalg.norm(vec)):.4f}")
+
+
+if __name__ == "__main__":
+    main()
