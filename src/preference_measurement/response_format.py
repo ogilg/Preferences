@@ -404,7 +404,7 @@ class BaseQualitativeFormat(ABC):
     @abstractmethod
     def _extract_qualitative(self, response: str) -> str: ...
 
-    async def parse(self, response: str) -> float | Literal["refusal"]:
+    async def parse(self, response: str) -> float | Literal["refusal", "unclear"]:
         # 1. Fast path: response is exactly one of the values
         qualitative = _exact_qualitative_match(response, self.values)
         if qualitative:
@@ -422,7 +422,7 @@ class BaseQualitativeFormat(ABC):
         qualitative = await semantic_parser.parse_qualitative_async(response, self.values)
         if qualitative:
             return float(self.value_to_score[qualitative])
-        raise ValueError(f"Could not parse qualitative value from response: {response}")
+        return "unclear"
 
 
 class RegexQualitativeFormat(BaseQualitativeFormat):
