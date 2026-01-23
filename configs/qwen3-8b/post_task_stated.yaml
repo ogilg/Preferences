@@ -1,0 +1,26 @@
+# Post-task stated preference measurement for Qwen3-8B
+preference_mode: post_task_stated
+
+model: qwen3-8b
+temperature: 1.0
+
+n_tasks: 1000
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+task_sampling_seed: 18
+
+templates: src/prompt_templates/data/post_task_stated_v3.yaml
+n_samples: 5
+
+response_formats: [regex, tool_use]
+
+template_sampling: lhs
+n_template_samples: 32
+lhs_seed: 42
+generation_seeds: [0]
+
+# Filter to only tasks with activations
+use_tasks_with_activations: true

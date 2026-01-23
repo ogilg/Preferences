@@ -46,6 +46,13 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         cerebras_name=None,  # Not available on Cerebras
         openrouter_name="meta-llama/llama-3.3-70b-instruct",
     ),
+    "qwen3-8b": ModelConfig(
+        canonical_name="qwen3-8b",
+        transformer_lens_name=None,  # Not available
+        hyperbolic_name=None,  # Not available
+        cerebras_name=None,  # Not available
+        openrouter_name="qwen/qwen3-8b",
+    ),
 }
 
 
