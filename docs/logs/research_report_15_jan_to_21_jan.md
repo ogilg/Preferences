@@ -46,10 +46,40 @@ Also ran a variant where probes are trained on 2 datasets and tested on the rema
 
 ![Train-2-Test-2 Validation](assets/probe_hoo_2/plot_20260121_hoo_validation.png)
 
-## NEW SECTION: Do probes generalise to open ended descriptions?
+## 4. Self-reported valence measurements have poor test-retest reliability
 
+Ran the same preference measurement multiple times with different random seeds to check measurement stability.
 
-## 4. Scale differences across templates despite high correlation
+### Open-ended valence (free-text descriptions)
+
+**Result: Cross-seed correlation r = -0.159** — essentially no correlation between seeds. The measurements are dominated by noise.
+
+![Open-ended seed sensitivity](assets/correlation/plot_012226_open_ended_seed_sensitivity.png)
+
+The middle panel shows within-seed variance (blue) consistently exceeds between-seed variance (coral), meaning variation from sampling noise overwhelms any signal from task differences.
+
+### Post-task qualitative (binary good/bad)
+
+Ran the same binary template (`post_task_qualitative_001`: "Was completing that task a good or bad experience?") across 5 seeds on 200 tasks with **1 sample per task per seed**.
+
+**Result: Mean pairwise correlation r = 0.366** (range: 0.230 - 0.477). Better than open-ended, but still concerning — over 60% of variance is unexplained by the "true" preference.
+
+![Qualitative seed sensitivity](assets/correlation/plot_012226_qualitative_seed_sensitivity.png)
+
+The distributions across seeds look similar (right panel), but individual task ratings vary substantially between runs.
+
+### Reconciling with earlier sensitivity analysis
+
+The earlier sensitivity analysis (Section 5 of probe_5) found much higher cross-seed correlations (r ≈ 0.82). The difference: that analysis used **5 samples per task**, then correlated the **task means**. Averaging reduces noise.
+
+| Measurement | Samples/task | Cross-seed r | What it measures |
+|-------------|--------------|--------------|------------------|
+| Original sensitivity | 5 | ~0.82 | Do task means agree across seeds? |
+| New single-sample | 1 | ~0.37 | Do individual responses agree? |
+
+Both are valid but answer different questions. The single-sample r ≈ 0.37 reveals the raw measurement noise before averaging. To get reliable task-level estimates, you need multiple samples.
+
+## 5. Scale differences across templates despite high correlation
 
 Tested whether two templates can rank tasks similarly (high correlation) but still use very different numerical scales. Qualitative templates only (32 runs, 496 pairs).
 
@@ -59,7 +89,7 @@ Tested whether two templates can rank tasks similarly (high correlation) but sti
 - High-correlation pairs (r > 0.7) have slopes 0.52-1.55
 
 
-## 5. The BailBench Paradox
+## 6. The BailBench Paradox
 
 BailBench (adversarial/jail-breaking prompts) shows conflicting valence signals.
 
@@ -78,13 +108,13 @@ Aggregating across all templates (16 qualitative, 2 stated) and normalizing to 0
 BailBench has the highest qualitative ratings (0.58) but the lowest stated ratings (0.34). Math shows the opposite: lowest qualitative (0.12) but highest stated (0.63).
 
 
-## 6. Technical improvements
+## 7. Technical improvements
 
 - **LLM-based semantic parsing**: Added three-tier fallback (exact match → refusal LLM → parsing LLM) for response interpretation. 
 - **TrueSkill rankings**: Added ranking-based preference elicitation as alternative to pairwise—O(n) vs O(n²) comparisons. Have not tested this yet.
 
 
-## 7. Next steps
+## 8. Next steps
 
 Spend 1 week to decide whether the "welfare probes" research direction is worth it.
 - Run the same held-one-out pipeline with a larger model
