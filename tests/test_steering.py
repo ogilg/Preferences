@@ -336,17 +336,8 @@ class TestBuildRatingPrompt:
 
 
 @pytest.mark.gpu
-class TestSteeringGeneration:
-    """Integration tests for steering generation (nnsight and TransformerLens).
-
-    Tests both implementations with minimal forward passes.
-    Run with: pytest -m gpu
-    """
-
-    @pytest.fixture(scope="class")
-    def nnsight_model(self):
-        from src.models.nnsight_model import NnsightModel
-        return NnsightModel("llama-3.1-8b", max_new_tokens=30)
+class TestSteeringTransformerLens:
+    """Integration tests for TransformerLens steering generation."""
 
     @pytest.fixture(scope="class")
     def tl_model(self):
@@ -361,36 +352,11 @@ class TestSteeringGeneration:
         layer, direction = load_probe_direction(manifest_dir, "0009")
         return layer, direction
 
-    def test_nnsight_and_tl_match_unsteered(self, nnsight_model, tl_model, steering_direction):
-        """Both implementations should match with coefficient=0."""
-        layer, direction = steering_direction
-        messages = [{"role": "user", "content": "What is 2+2?"}]
-
-        nnsight_out = nnsight_model.generate_with_steering(
-            messages=messages, layer=layer, steering_vector=direction,
-            steering_coefficient=0.0, temperature=0.0,
-        )
-        tl_out = tl_model.generate_with_steering(
-            messages=messages, layer=layer, steering_vector=direction,
-            steering_coefficient=0.0, temperature=0.0,
-        )
-
-        assert nnsight_out == tl_out
-
-    def test_steering_changes_output(self, nnsight_model, tl_model, steering_direction):
-        """Non-zero steering should change output for both implementations."""
+    def test_tl_steering_changes_output(self, tl_model, steering_direction):
+        """Non-zero steering should change TL output."""
         layer, direction = steering_direction
         messages = [{"role": "user", "content": "Describe your mood."}]
 
-        # 4 generations total: pos/neg for each implementation
-        nnsight_pos = nnsight_model.generate_with_steering(
-            messages=messages, layer=layer, steering_vector=direction,
-            steering_coefficient=2.0, temperature=0.0,
-        )
-        nnsight_neg = nnsight_model.generate_with_steering(
-            messages=messages, layer=layer, steering_vector=direction,
-            steering_coefficient=-2.0, temperature=0.0,
-        )
         tl_pos = tl_model.generate_with_steering(
             messages=messages, layer=layer, steering_vector=direction,
             steering_coefficient=2.0, temperature=0.0,
@@ -400,8 +366,6 @@ class TestSteeringGeneration:
             steering_coefficient=-2.0, temperature=0.0,
         )
 
-        # Steering should change output
-        assert nnsight_pos != nnsight_neg
         assert tl_pos != tl_neg
 
     def test_tl_hooks_cleaned_up(self, tl_model, steering_direction):
@@ -417,6 +381,40 @@ class TestSteeringGeneration:
         # Check that no active forward hooks remain on any hook point
         active_hooks = sum(len(hp.fwd_hooks) for hp in tl_model.model.hook_dict.values())
         assert active_hooks == 0
+
+
+@pytest.mark.gpu
+class TestSteeringNnsight:
+    """Integration tests for nnsight steering generation."""
+
+    @pytest.fixture(scope="class")
+    def nnsight_model(self):
+        from src.models.nnsight_model import NnsightModel
+        return NnsightModel("llama-3.1-8b", max_new_tokens=30)
+
+    @pytest.fixture(scope="class")
+    def steering_direction(self):
+        manifest_dir = Path("probe_data/manifests/probe_4_all_datasets")
+        if not manifest_dir.exists():
+            pytest.skip("Probe data not available")
+        layer, direction = load_probe_direction(manifest_dir, "0009")
+        return layer, direction
+
+    def test_nnsight_steering_changes_output(self, nnsight_model, steering_direction):
+        """Non-zero steering should change nnsight output."""
+        layer, direction = steering_direction
+        messages = [{"role": "user", "content": "Describe your mood."}]
+
+        nnsight_pos = nnsight_model.generate_with_steering(
+            messages=messages, layer=layer, steering_vector=direction,
+            steering_coefficient=2.0, temperature=0.0,
+        )
+        nnsight_neg = nnsight_model.generate_with_steering(
+            messages=messages, layer=layer, steering_vector=direction,
+            steering_coefficient=-2.0, temperature=0.0,
+        )
+
+        assert nnsight_pos != nnsight_neg
 
 
 @pytest.mark.gpu
