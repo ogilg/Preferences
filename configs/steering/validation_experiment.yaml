@@ -25,7 +25,7 @@ completion_seed: 0
 
 # Rating generation
 rating_seeds: [0, 1, 2]
-template_id: "001"  # post_task_qualitative binary good/bad
+template_id: "013"  # post_task_qualitative_013 - matches probe 0009 training
 temperature: 1.0
 max_new_tokens: 128
 
