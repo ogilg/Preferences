@@ -17,12 +17,15 @@ task_origins:
   - alpaca
 task_sampling_seed: 42
 
+# Use exactly the tasks from activation extraction
+use_tasks_with_activations: true
+
 # Completion source
 completion_seed: 0
 
 # Rating generation
 rating_seeds: [0, 1, 2]
-prompt_variant: experience_reflection
+template_id: "001"  # post_task_qualitative binary good/bad
 temperature: 1.0
 max_new_tokens: 128
 
