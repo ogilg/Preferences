@@ -37,7 +37,7 @@ class TaskSteeringResults:
 
 def _load_completions(model_name: str, seed: int) -> dict[str, tuple[Task, str]]:
     """Load completions from probe_data folder."""
-    completions_path = Path("probe_data/activations/completions_original.json")
+    completions_path = Path("probe_data/activations/completions_with_activations.json")
 
     if not completions_path.exists():
         raise ValueError(f"Completions not found at {completions_path}")
