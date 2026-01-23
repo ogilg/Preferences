@@ -13,6 +13,7 @@ class SteeringExperimentConfig(BaseModel):
     """Config for steering experiment to validate probe directions."""
 
     model: str = "llama-3.1-8b"
+    backend: Literal["nnsight", "transformer_lens"] = "transformer_lens"
     probe_manifest_dir: Path
     probe_id: str = "0009"
     steering_coefficients: list[float] = Field(

@@ -11,7 +11,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
-from src.models.nnsight_model import NnsightModel
 from src.preference_measurement.semantic_valence_scorer import score_valence_from_text_async
 from src.probes.storage import load_probe_direction
 from src.steering.config import SteeringExperimentConfig, load_steering_config
@@ -96,8 +95,13 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
     print(f"Loaded probe {config.probe_id} from layer {layer}")
 
     # Initialize model
-    print(f"Loading model {config.model}...")
-    model = NnsightModel(config.model, max_new_tokens=config.max_new_tokens)
+    print(f"Loading model {config.model} with {config.backend} backend...")
+    if config.backend == "transformer_lens":
+        from src.models.transformer_lens import TransformerLensModel
+        model = TransformerLensModel(config.model, max_new_tokens=config.max_new_tokens)
+    else:
+        from src.models.nnsight_model import NnsightModel
+        model = NnsightModel(config.model, max_new_tokens=config.max_new_tokens)
 
     # Load completions
     completion_lookup = _load_completions(config.model, config.completion_seed)
