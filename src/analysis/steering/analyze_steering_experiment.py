@@ -19,15 +19,21 @@ def load_steering_results(experiment_dir: Path) -> dict:
 
 
 def aggregate_by_coefficient(results: dict) -> dict[float, list[float]]:
-    """Aggregate valence scores by steering coefficient."""
+    """Aggregate parsed values by steering coefficient.
+
+    Only includes conditions where parsing succeeded (numeric values).
+    """
     by_coef: dict[float, list[float]] = {}
     for task_result in results["results"]:
         for cond in task_result["conditions"]:
             coef = cond["steering_coefficient"]
-            score = cond["semantic_valence_score"]
+            parsed = cond["parsed_value"]
+            # Skip non-numeric values (e.g., "refusal")
+            if not isinstance(parsed, (int, float)):
+                continue
             if coef not in by_coef:
                 by_coef[coef] = []
-            by_coef[coef].append(score)
+            by_coef[coef].append(parsed)
     return by_coef
 
 
@@ -131,7 +137,7 @@ def plot_dose_response(
     ax.axvline(0, color="gray", linestyle=":", alpha=0.5)
 
     ax.set_xlabel("Steering Coefficient", fontsize=12)
-    ax.set_ylabel("Semantic Valence Score", fontsize=12)
+    ax.set_ylabel("Parsed Value", fontsize=12)
     ax.set_title(title, fontsize=14)
     ax.set_ylim(-1.1, 1.1)
     ax.legend(loc="upper left")

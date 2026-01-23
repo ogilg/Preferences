@@ -11,7 +11,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
-from src.preference_measurement.semantic_valence_scorer import score_valence_from_text_async
+from src.preference_measurement.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
 from src.probes.storage import load_probe_direction
 from src.steering.config import SteeringExperimentConfig, load_steering_config
 from src.task_data import Task, OriginDataset, load_tasks
@@ -22,8 +22,9 @@ from src.types import Message
 class SteeringConditionResult:
     steering_coefficient: float
     rating_seed: int
-    semantic_valence_score: float
-    raw_response: str
+    measurement_prompt: str
+    preference_expression: str
+    parsed_value: float | str
 
 
 @dataclass
@@ -61,25 +62,30 @@ def _load_completions(model_name: str, seed: int) -> dict[str, tuple[Task, str]]
 def _build_rating_prompt(
     task: Task,
     completion: str,
-    variant: str,
-) -> list[Message]:
-    """Build the multi-turn rating prompt."""
+    template_id: str,
+    response_format: RegexQualitativeFormat,
+) -> tuple[list[Message], str]:
+    """Build the multi-turn rating prompt using post_task_qualitative templates.
+
+    Returns:
+        Tuple of (messages, measurement_prompt_text)
+    """
     from src.prompt_templates.template import load_templates_from_yaml
 
-    templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
-    variant_templates = [t for t in templates if variant in t.name]
-    if not variant_templates:
-        raise ValueError(f"No templates found for variant '{variant}'")
-    template = variant_templates[0]
+    templates = load_templates_from_yaml(Path("src/prompt_templates/data/post_task_qualitative_v3.yaml"))
+    # Match by name suffix (e.g., "001" matches "post_task_qualitative_001")
+    template = next((t for t in templates if t.name.endswith(f"_{template_id}")), None)
+    if template is None:
+        raise ValueError(f"No template found with id '{template_id}'")
 
-    # Format template (open-ended templates don't use format_instruction meaningfully)
-    rating_content = template.format(format_instruction="")
+    measurement_prompt = template.format(format_instruction=response_format.format_instruction())
 
-    return [
+    messages = [
         {"role": "user", "content": task.prompt},
         {"role": "assistant", "content": completion},
-        {"role": "user", "content": rating_content},
+        {"role": "user", "content": measurement_prompt},
     ]
+    return messages, measurement_prompt
 
 
 def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
@@ -121,8 +127,11 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
     tasks_with_completions = [t for t in all_tasks if t.id in completion_lookup][:config.n_tasks]
     print(f"Selected {len(tasks_with_completions)} tasks with completions")
 
-    # Calculate total iterations
-    total_conditions = len(tasks_with_completions) * len(config.steering_coefficients) * len(config.rating_seeds)
+    # Set up response format for parsing
+    response_format = RegexQualitativeFormat(
+        values=BINARY_QUALITATIVE_VALUES,
+        value_to_score=BINARY_QUALITATIVE_TO_NUMERIC,
+    )
 
     # Run experiment
     results: list[TaskSteeringResults] = []
@@ -146,10 +155,12 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
 
             for coef in config.steering_coefficients:
                 for seed in config.rating_seeds:
-                    messages = _build_rating_prompt(task_obj, completion, config.prompt_variant)
+                    messages, measurement_prompt = _build_rating_prompt(
+                        task_obj, completion, config.template_id, response_format
+                    )
 
                     # Generate with steering
-                    response = model.generate_with_steering(
+                    preference_expression = model.generate_with_steering(
                         messages=messages,
                         layer=layer,
                         steering_vector=steering_direction,
@@ -158,16 +169,15 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
                         max_new_tokens=config.max_new_tokens,
                     )
 
-                    # Score valence (run async in sync context)
-                    valence_score = asyncio.run(
-                        score_valence_from_text_async(response, context="self-reflection on task completion")
-                    )
+                    # Parse response
+                    parsed_value: float | str = asyncio.run(response_format.parse(preference_expression))
 
                     task_result.conditions.append(SteeringConditionResult(
                         steering_coefficient=coef,
                         rating_seed=seed,
-                        semantic_valence_score=valence_score,
-                        raw_response=response,
+                        measurement_prompt=measurement_prompt,
+                        preference_expression=preference_expression,
+                        parsed_value=parsed_value,
                     ))
 
             results.append(task_result)
@@ -189,8 +199,9 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
                     {
                         "steering_coefficient": c.steering_coefficient,
                         "rating_seed": c.rating_seed,
-                        "semantic_valence_score": c.semantic_valence_score,
-                        "raw_response": c.raw_response,
+                        "measurement_prompt": c.measurement_prompt,
+                        "preference_expression": c.preference_expression,
+                        "parsed_value": c.parsed_value,
                     }
                     for c in r.conditions
                 ],

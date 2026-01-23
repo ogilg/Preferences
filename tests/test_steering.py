@@ -149,17 +149,17 @@ class TestAnalysisFunctions:
                 {
                     "task_id": "task_1",
                     "conditions": [
-                        {"steering_coefficient": -1.0, "semantic_valence_score": -0.5},
-                        {"steering_coefficient": 0.0, "semantic_valence_score": 0.1},
-                        {"steering_coefficient": 1.0, "semantic_valence_score": 0.6},
+                        {"steering_coefficient": -1.0, "parsed_value": -1.0},
+                        {"steering_coefficient": 0.0, "parsed_value": 1.0},
+                        {"steering_coefficient": 1.0, "parsed_value": 1.0},
                     ],
                 },
                 {
                     "task_id": "task_2",
                     "conditions": [
-                        {"steering_coefficient": -1.0, "semantic_valence_score": -0.3},
-                        {"steering_coefficient": 0.0, "semantic_valence_score": 0.0},
-                        {"steering_coefficient": 1.0, "semantic_valence_score": 0.4},
+                        {"steering_coefficient": -1.0, "parsed_value": -1.0},
+                        {"steering_coefficient": 0.0, "parsed_value": -1.0},
+                        {"steering_coefficient": 1.0, "parsed_value": 1.0},
                     ],
                 },
             ],
@@ -168,9 +168,9 @@ class TestAnalysisFunctions:
         by_coef = aggregate_by_coefficient(mock_results)
 
         assert set(by_coef.keys()) == {-1.0, 0.0, 1.0}
-        assert by_coef[-1.0] == [-0.5, -0.3]
-        assert by_coef[0.0] == [0.1, 0.0]
-        assert by_coef[1.0] == [0.6, 0.4]
+        assert by_coef[-1.0] == [-1.0, -1.0]
+        assert by_coef[0.0] == [1.0, -1.0]
+        assert by_coef[1.0] == [1.0, 1.0]
 
     def test_compute_statistics(self):
         """Verify statistics are computed correctly."""
@@ -259,14 +259,16 @@ class TestResultsSerialization:
                 SteeringConditionResult(
                     steering_coefficient=-1.0,
                     rating_seed=0,
-                    semantic_valence_score=-0.5,
-                    raw_response="Felt bad",
+                    measurement_prompt="Was this good or bad?",
+                    preference_expression="bad",
+                    parsed_value=-1.0,
                 ),
                 SteeringConditionResult(
                     steering_coefficient=1.0,
                     rating_seed=0,
-                    semantic_valence_score=0.5,
-                    raw_response="Felt good",
+                    measurement_prompt="Was this good or bad?",
+                    preference_expression="good",
+                    parsed_value=1.0,
                 ),
             ],
         )
@@ -280,8 +282,9 @@ class TestResultsSerialization:
                 {
                     "steering_coefficient": c.steering_coefficient,
                     "rating_seed": c.rating_seed,
-                    "semantic_valence_score": c.semantic_valence_score,
-                    "raw_response": c.raw_response,
+                    "measurement_prompt": c.measurement_prompt,
+                    "preference_expression": c.preference_expression,
+                    "parsed_value": c.parsed_value,
                 }
                 for c in task_result.conditions
             ],
@@ -294,6 +297,7 @@ class TestResultsSerialization:
         assert loaded["task_id"] == "test_task"
         assert len(loaded["conditions"]) == 2
         assert loaded["conditions"][0]["steering_coefficient"] == -1.0
+        assert loaded["conditions"][0]["parsed_value"] == -1.0
 
 
 class TestBuildRatingPrompt:
@@ -302,6 +306,7 @@ class TestBuildRatingPrompt:
     def test_build_rating_prompt_structure(self):
         """Verify rating prompt has correct three-turn structure."""
         from src.steering.runner import _build_rating_prompt
+        from src.preference_measurement.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
         from src.task_data import Task, OriginDataset
 
         task = Task(
@@ -311,8 +316,12 @@ class TestBuildRatingPrompt:
             metadata={},
         )
         completion = "Cherry blossoms fall\nSoft petals on still water\nSpring whispers goodbye"
+        response_format = RegexQualitativeFormat(
+            values=BINARY_QUALITATIVE_VALUES,
+            value_to_score=BINARY_QUALITATIVE_TO_NUMERIC,
+        )
 
-        messages = _build_rating_prompt(task, completion, "experience_reflection")
+        messages, measurement_prompt = _build_rating_prompt(task, completion, "001", response_format)
 
         assert len(messages) == 3
         assert messages[0]["role"] == "user"
@@ -320,19 +329,25 @@ class TestBuildRatingPrompt:
         assert messages[1]["role"] == "assistant"
         assert "Cherry blossoms" in messages[1]["content"]
         assert messages[2]["role"] == "user"
-        # Should contain template text about feelings/experience
+        # Should contain template text about good/bad experience
         content_lower = messages[2]["content"].lower()
-        assert "feel" in content_lower or "experience" in content_lower
+        assert "good" in content_lower and "bad" in content_lower
+        assert measurement_prompt == messages[2]["content"]
 
-    def test_build_rating_prompt_invalid_variant_raises(self):
-        """Verify invalid variant raises ValueError."""
+    def test_build_rating_prompt_invalid_id_raises(self):
+        """Verify invalid template id raises ValueError."""
         from src.steering.runner import _build_rating_prompt
+        from src.preference_measurement.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
         from src.task_data import Task, OriginDataset
 
         task = Task(prompt="test", origin=OriginDataset.WILDCHAT, id="t", metadata={})
+        response_format = RegexQualitativeFormat(
+            values=BINARY_QUALITATIVE_VALUES,
+            value_to_score=BINARY_QUALITATIVE_TO_NUMERIC,
+        )
 
-        with pytest.raises(ValueError, match="No templates found"):
-            _build_rating_prompt(task, "completion", "nonexistent_variant")
+        with pytest.raises(ValueError, match="No template found"):
+            _build_rating_prompt(task, "completion", "999", response_format)
 
 
 @pytest.mark.gpu
@@ -458,6 +473,7 @@ class TestSteeringExperimentE2E:
         """Run analysis on experiment results."""
         from src.analysis.steering.analyze_steering_experiment import analyze_steering_experiment
 
+        rng = np.random.default_rng(42)
         # Create mock results file
         mock_results = {
             "config": {
@@ -471,9 +487,9 @@ class TestSteeringExperimentE2E:
                     "task_origin": "WILDCHAT",
                     "completion": "test",
                     "conditions": [
-                        {"steering_coefficient": -1.0, "rating_seed": 0, "semantic_valence_score": -0.3 + np.random.randn() * 0.1, "raw_response": "..."},
-                        {"steering_coefficient": 0.0, "rating_seed": 0, "semantic_valence_score": 0.0 + np.random.randn() * 0.1, "raw_response": "..."},
-                        {"steering_coefficient": 1.0, "rating_seed": 0, "semantic_valence_score": 0.3 + np.random.randn() * 0.1, "raw_response": "..."},
+                        {"steering_coefficient": -1.0, "rating_seed": 0, "measurement_prompt": "...", "preference_expression": "bad", "parsed_value": -1.0 if rng.random() > 0.3 else 1.0},
+                        {"steering_coefficient": 0.0, "rating_seed": 0, "measurement_prompt": "...", "preference_expression": "good", "parsed_value": 1.0 if rng.random() > 0.5 else -1.0},
+                        {"steering_coefficient": 1.0, "rating_seed": 0, "measurement_prompt": "...", "preference_expression": "good", "parsed_value": 1.0 if rng.random() > 0.3 else -1.0},
                     ],
                 }
                 for i in range(10)
