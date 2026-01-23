@@ -14,7 +14,7 @@ load_dotenv()
 from src.concept_vectors.config import load_config
 from src.concept_vectors.difference import compute_difference_in_means, save_concept_vectors
 from src.concept_vectors.extraction import extract_activations_with_system_prompt
-from src.models import NnsightModel
+from src.models import NnsightModel, TransformerLensModel
 from src.task_data import OriginDataset, load_tasks
 
 
@@ -47,9 +47,12 @@ def main() -> None:
     print(f"Loaded {len(tasks)} tasks")
 
     if not args.skip_extraction:
-        # Load model
-        print(f"Loading model: {config.model}...")
-        model = NnsightModel(config.model, max_new_tokens=config.max_new_tokens)
+        # Load model based on backend config
+        print(f"Loading model: {config.model} (backend: {config.backend})...")
+        if config.backend == "transformer_lens":
+            model = TransformerLensModel(config.model, max_new_tokens=config.max_new_tokens)
+        else:
+            model = NnsightModel(config.model, max_new_tokens=config.max_new_tokens)
 
         resolved_layers = [model.resolve_layer(layer) for layer in config.layers_to_extract]
         print(

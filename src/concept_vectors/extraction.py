@@ -13,8 +13,10 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-from src.models import NnsightModel
+from src.models import NnsightModel, TransformerLensModel
 from src.task_data import Task
+
+ActivationModel = NnsightModel | TransformerLensModel
 
 
 def gpu_mem_gb() -> tuple[float, float]:
@@ -99,7 +101,7 @@ def save_extraction_metadata(output_dir: Path, metadata: ExtractionMetadata) -> 
 
 
 def extract_activations_with_system_prompt(
-    model: NnsightModel,
+    model: ActivationModel,
     tasks: list[Task],
     layers: list[int],
     system_prompt: str | None,

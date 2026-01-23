@@ -1,5 +1,5 @@
 model: llama-3.1-8b
-backend: nnsight
+backend: transformer_lens
 
 n_tasks: 500
 task_origins:
