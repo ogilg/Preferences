@@ -215,6 +215,7 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
 
     # Run experiment
     results: list[TaskSteeringResults] = []
+    loop = asyncio.new_event_loop()
 
     with Progress(
         SpinnerColumn(),
@@ -250,7 +251,7 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
                     )
 
                     # Parse response
-                    parsed_value: float | str = asyncio.run(response_format.parse(preference_expression))
+                    parsed_value: float | str = loop.run_until_complete(response_format.parse(preference_expression))
 
                     task_result.conditions.append(SteeringConditionResult(
                         steering_coefficient=coef,
@@ -262,6 +263,8 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
 
             results.append(task_result)
             progress.update(task_progress, advance=1)
+
+    loop.close()
 
     # Save results
     output = {
