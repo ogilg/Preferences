@@ -17,6 +17,8 @@ def compute_difference_in_means(
 ) -> dict[int, np.ndarray]:
     """Compute concept direction as mean(positive) - mean(negative) per layer.
 
+    Uses intersection of task IDs if some tasks failed in one condition.
+
     Args:
         positive_dir: Directory with positive condition activations.npz
         negative_dir: Directory with negative condition activations.npz
@@ -25,9 +27,6 @@ def compute_difference_in_means(
 
     Returns:
         Dictionary mapping layer index to direction vector
-
-    Raises:
-        ValueError: If task IDs don't match between conditions
     """
     pos_data = np.load(positive_dir / "activations.npz", allow_pickle=True)
     neg_data = np.load(negative_dir / "activations.npz", allow_pickle=True)
@@ -35,12 +34,17 @@ def compute_difference_in_means(
     pos_task_ids = set(pos_data["task_ids"])
     neg_task_ids = set(neg_data["task_ids"])
 
-    if pos_task_ids != neg_task_ids:
-        only_pos = pos_task_ids - neg_task_ids
-        only_neg = neg_task_ids - pos_task_ids
-        raise ValueError(
-            f"Task ID mismatch: {len(only_pos)} only in positive, {len(only_neg)} only in negative"
-        )
+    # Use intersection if there are mismatches (some tasks failed in one condition)
+    common_task_ids = pos_task_ids & neg_task_ids
+    only_pos = pos_task_ids - neg_task_ids
+    only_neg = neg_task_ids - pos_task_ids
+
+    if only_pos or only_neg:
+        print(f"Warning: {len(only_pos)} tasks only in positive, {len(only_neg)} only in negative")
+        print(f"Using intersection of {len(common_task_ids)} tasks")
+
+    if len(common_task_ids) == 0:
+        raise ValueError("No common task IDs between conditions")
 
     # Determine layers to process
     available_layers = sorted(
@@ -55,7 +59,7 @@ def compute_difference_in_means(
     neg_idx_map = {tid: i for i, tid in enumerate(neg_ids)}
 
     # Get common task order
-    common_ids = sorted(pos_task_ids)
+    common_ids = sorted(common_task_ids)
     pos_indices = [pos_idx_map[tid] for tid in common_ids]
     neg_indices = [neg_idx_map[tid] for tid in common_ids]
 

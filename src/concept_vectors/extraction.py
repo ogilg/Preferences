@@ -100,6 +100,17 @@ def save_extraction_metadata(output_dir: Path, metadata: ExtractionMetadata) -> 
         json.dump(metadata.to_dict(), f, indent=2)
 
 
+def save_failures(output_dir: Path, failures: list[tuple[str, str, str]]) -> None:
+    """Save failure log with task_id, error, and task prompt."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    with open(output_dir / "failures.json", "w") as f:
+        json.dump(
+            [{"task_id": tid, "error": err, "prompt": prompt} for tid, err, prompt in failures],
+            f,
+            indent=2,
+        )
+
+
 def extract_activations_with_system_prompt(
     model: ActivationModel,
     tasks: list[Task],
@@ -144,7 +155,7 @@ def extract_activations_with_system_prompt(
         tasks = [t for t in tasks if t.id not in existing_ids]
         print(f"Resume: found {n_existing} existing, {len(tasks)} remaining tasks")
 
-    failures: list[tuple[str, str]] = []
+    failures: list[tuple[str, str, str]] = []  # (task_id, error, prompt)
     n_new = 0
     n_truncated = 0
     n_ooms = 0
@@ -194,9 +205,10 @@ def extract_activations_with_system_prompt(
                 tqdm.write(f"OOM on task {task.id} (attempt {attempt + 1}/2): {e}")
                 torch.cuda.empty_cache()
                 if attempt == 1:
-                    failures.append((task.id, f"OOM after retry: {e}"))
+                    failures.append((task.id, f"OOM after retry: {e}", task.prompt))
             except Exception as e:
-                failures.append((task.id, str(e)))
+                tqdm.write(f"Error on task {task.id}: {e}")
+                failures.append((task.id, str(e), task.prompt))
                 break
 
         gc.collect()

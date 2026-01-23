@@ -4,7 +4,7 @@ backend: transformer_lens
 n_tasks: 500
 task_origins:
   - math
-task_sampling_seed: 42
+task_sampling_seed: 18
 
 conditions:
   positive:
@@ -20,7 +20,7 @@ layers_to_extract:
   - 0.75
 token_position: last
 temperature: 1.0
-max_new_tokens: 1024
+max_new_tokens: 2048
 
 output_dir: concept_vectors/math_preference
 experiment_id: math_preference_001
