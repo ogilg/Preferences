@@ -9,9 +9,36 @@ from src.types import Message
 from .openai_compatible import GenerateRequest, BatchResult
 
 
+import torch
+from typing import Callable
+
+TokenSelectorFn = Callable[[torch.Tensor, int], torch.Tensor]
+
+
+def select_last(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
+    return activations[-1, :]
+
+
+def select_first(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
+    return activations[first_completion_idx, :]
+
+
+def select_mean(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
+    return activations[first_completion_idx:, :].mean(dim=0)
+
+
+SELECTOR_REGISTRY: dict[str, TokenSelectorFn] = {
+    "last": select_last,
+    "first": select_first,
+    "mean": select_mean,
+}
+
+
 class TokenPosition(Enum):
+    """Legacy enum for backwards compatibility."""
     LAST = "last"
-    FIRST = "first"  # First token of assistant response
+    FIRST = "first"
+    MEAN = "mean"  # Mean over completion tokens
 
 
 class ActivationReduction(Enum):

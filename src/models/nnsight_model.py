@@ -14,7 +14,7 @@ from src.types import Message
 @dataclass
 class GenerationResult:
     completion: str
-    activations: dict[int, np.ndarray]
+    activations: dict[int, np.ndarray] | dict[str, dict[int, np.ndarray]]
     prompt_tokens: int
     completion_tokens: int
 

@@ -4,7 +4,7 @@ import torch
 import numpy as np
 from transformer_lens import HookedTransformer
 
-from src.models.base import TokenPosition
+from src.models.base import SELECTOR_REGISTRY
 from src.models.nnsight_model import GenerationResult
 from src.models.registry import get_transformer_lens_name, is_valid_model
 from src.types import Message
@@ -90,37 +90,41 @@ class TransformerLensModel:
         self,
         messages: list[Message],
         layers: list[int],
-        token_position: TokenPosition = TokenPosition.LAST,
-    ) -> dict[int, np.ndarray]:
+        selector_names: list[str],
+    ) -> dict[str, dict[int, np.ndarray]]:
+        """Get activations using token selectors.
+
+        Returns:
+            {selector_name: {layer: activation}}
+        """
         prompt = self._format_messages(messages, add_generation_prompt=False)
         tokens = self.model.to_tokens(prompt)
 
-        if token_position == TokenPosition.LAST:
-            pos_idx = -1
-        elif token_position == TokenPosition.FIRST:
-            pos_idx = self._get_assistant_start_position(messages)
-            if pos_idx >= tokens.shape[1]:
-                raise ValueError(
-                    f"Assistant start position {pos_idx} is beyond sequence length {tokens.shape[1]}. "
-                    "This can happen if the assistant message is empty."
-                )
-        else:
-            raise ValueError(f"Unsupported token position: {token_position}")
+        first_completion_idx = self._get_assistant_start_position(messages)
+        if first_completion_idx >= tokens.shape[1]:
+            raise ValueError(
+                f"Assistant start position {first_completion_idx} is beyond sequence length {tokens.shape[1]}. "
+                "This can happen if the assistant message is empty."
+            )
 
         names_filter = [f"blocks.{layer}.hook_resid_post" for layer in layers]
         _, cache = self.model.run_with_cache(tokens, names_filter=names_filter)
 
-        return {
-            layer: cache["resid_post", layer][0, pos_idx, :].float().cpu().numpy()
-            for layer in layers
-        }
+        results: dict[str, dict[int, np.ndarray]] = {name: {} for name in selector_names}
+        for layer in layers:
+            layer_acts = cache["resid_post", layer][0]  # (seq_len, d_model)
+            for name in selector_names:
+                act = SELECTOR_REGISTRY[name](layer_acts, first_completion_idx)
+                results[name][layer] = act.float().cpu().numpy()
+
+        return results
 
     @torch.inference_mode()
     def generate_with_activations(
         self,
         messages: list[Message],
         layers: list[int],
-        token_position: TokenPosition = TokenPosition.LAST,
+        selector_names: list[str],
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> GenerationResult:
@@ -131,7 +135,7 @@ class TransformerLensModel:
         completion_tokens = len(self.model.to_tokens(completion)[0])
 
         full_messages = messages + [{"role": "assistant", "content": completion}]
-        activations = self.get_activations(full_messages, layers, token_position)
+        activations = self.get_activations(full_messages, layers, selector_names)
 
         return GenerationResult(
             completion=completion,
