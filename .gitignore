@@ -58,3 +58,6 @@ src/experiments/configs/multi_model/
 activations/
 probe_data/**/*.npy
 probe_data/activations/
+
+# Concept vectors (keep metadata, ignore large activation files)
+concept_vectors/**/*.npz

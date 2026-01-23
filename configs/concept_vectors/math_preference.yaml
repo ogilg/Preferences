@@ -22,5 +22,5 @@ token_position: last
 temperature: 1.0
 max_new_tokens: 1024
 
-output_dir: results/concept_vectors/math_preference
+output_dir: concept_vectors/math_preference
 experiment_id: math_preference_001
