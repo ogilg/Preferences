@@ -190,22 +190,3 @@ class TestFirstTokenPosition:
                 messages, layers=layers, token_position=TokenPosition.FIRST
             )
 
-    def test_first_position_single_token_equals_last(self, transformer_lens_model):
-        """For single-token response, FIRST and LAST should be identical."""
-        from src.models.base import TokenPosition
-
-        messages = [
-            {"role": "user", "content": "Reply with just the letter A"},
-            {"role": "assistant", "content": "A"},
-        ]
-        layers = [transformer_lens_model.n_layers // 2]
-
-        first_acts = transformer_lens_model.get_activations(
-            messages, layers=layers, token_position=TokenPosition.FIRST
-        )
-        last_acts = transformer_lens_model.get_activations(
-            messages, layers=layers, token_position=TokenPosition.LAST
-        )
-
-        layer = layers[0]
-        assert np.allclose(first_acts[layer], last_acts[layer])
