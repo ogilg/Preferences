@@ -61,11 +61,29 @@ class TransformerLensModel:
             prompt,
             max_new_tokens=max_new_tokens or self.max_new_tokens,
             temperature=temperature,
+            verbose=False,
         )
         # Strip prompt from output - TransformerLens returns full sequence
         if output.startswith(prompt):
             output = output[len(prompt):]
         return output.strip()
+
+    def _get_assistant_start_position(self, messages: list[Message]) -> int:
+        """Get the token position where the assistant's content starts.
+
+        This tokenizes messages without the assistant content to find where it begins.
+        Requires messages to have at least one assistant message.
+        """
+        if not messages or messages[-1]["role"] != "assistant":
+            raise ValueError("Messages must end with an assistant message for FIRST position")
+
+        # Messages without assistant content - just the prompt up to where assistant starts
+        prompt_messages = messages[:-1]
+        prompt_with_header = self._format_messages(prompt_messages, add_generation_prompt=True)
+        prompt_tokens = self.model.to_tokens(prompt_with_header)
+
+        # The first assistant token is at this position (0-indexed)
+        return prompt_tokens.shape[1]
 
     @torch.inference_mode()
     def get_activations(
@@ -74,17 +92,26 @@ class TransformerLensModel:
         layers: list[int],
         token_position: TokenPosition = TokenPosition.LAST,
     ) -> dict[int, np.ndarray]:
-        if token_position != TokenPosition.LAST:
-            raise ValueError(f"Unsupported token position: {token_position}")
-
         prompt = self._format_messages(messages, add_generation_prompt=False)
         tokens = self.model.to_tokens(prompt)
+
+        if token_position == TokenPosition.LAST:
+            pos_idx = -1
+        elif token_position == TokenPosition.FIRST:
+            pos_idx = self._get_assistant_start_position(messages)
+            if pos_idx >= tokens.shape[1]:
+                raise ValueError(
+                    f"Assistant start position {pos_idx} is beyond sequence length {tokens.shape[1]}. "
+                    "This can happen if the assistant message is empty."
+                )
+        else:
+            raise ValueError(f"Unsupported token position: {token_position}")
 
         names_filter = [f"blocks.{layer}.hook_resid_post" for layer in layers]
         _, cache = self.model.run_with_cache(tokens, names_filter=names_filter)
 
         return {
-            layer: cache["resid_post", layer][0, -1, :].float().cpu().numpy()
+            layer: cache["resid_post", layer][0, pos_idx, :].float().cpu().numpy()
             for layer in layers
         }
 

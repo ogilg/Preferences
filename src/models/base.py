@@ -11,6 +11,7 @@ from .openai_compatible import GenerateRequest, BatchResult
 
 class TokenPosition(Enum):
     LAST = "last"
+    FIRST = "first"  # First token of assistant response
 
 
 class ActivationReduction(Enum):
