@@ -1,3 +1,8 @@
+"""DEPRECATED: Use TransformerLensModel instead.
+
+This module is no longer actively maintained. All new development uses
+src/models/transformer_lens.py which has a unified selector-based API.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

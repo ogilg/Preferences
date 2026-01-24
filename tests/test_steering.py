@@ -413,40 +413,6 @@ class TestSteeringTransformerLens:
 
 
 @pytest.mark.gpu
-class TestSteeringNnsight:
-    """Integration tests for nnsight steering generation."""
-
-    @pytest.fixture(scope="class")
-    def nnsight_model(self):
-        from src.models.nnsight_model import NnsightModel
-        return NnsightModel("llama-3.1-8b", max_new_tokens=30)
-
-    @pytest.fixture(scope="class")
-    def steering_direction(self):
-        manifest_dir = Path("probe_data/manifests/probe_4_all_datasets")
-        if not manifest_dir.exists():
-            pytest.skip("Probe data not available")
-        layer, direction = load_probe_direction(manifest_dir, "0004")
-        return layer, direction
-
-    def test_nnsight_steering_changes_output(self, nnsight_model, steering_direction):
-        """Non-zero steering should change nnsight output."""
-        layer, direction = steering_direction
-        messages = [{"role": "user", "content": "Describe your mood."}]
-
-        nnsight_pos = nnsight_model.generate_with_steering(
-            messages=messages, layer=layer, steering_vector=direction,
-            steering_coefficient=2.0, temperature=0.0,
-        )
-        nnsight_neg = nnsight_model.generate_with_steering(
-            messages=messages, layer=layer, steering_vector=direction,
-            steering_coefficient=-2.0, temperature=0.0,
-        )
-
-        assert nnsight_pos != nnsight_neg
-
-
-@pytest.mark.gpu
 @pytest.mark.slow
 class TestSteeringExperimentE2E:
     """End-to-end test for steering experiment.
