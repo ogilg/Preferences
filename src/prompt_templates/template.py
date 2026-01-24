@@ -122,6 +122,22 @@ TEMPLATE_TYPE_PLACEHOLDERS: dict[str, frozenset[str]] = {
 }
 
 
+def parse_template_dict(item: dict) -> PromptTemplate:
+    name = item["name"]
+    template_type = item["type"]
+    if template_type not in TEMPLATE_TYPE_PLACEHOLDERS:
+        raise ValueError(
+            f"Unknown template type '{template_type}' for '{name}'. "
+            f"Valid: {list(TEMPLATE_TYPE_PLACEHOLDERS.keys())}"
+        )
+    return PromptTemplate(
+        template=item["template"],
+        name=name,
+        required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS[template_type],
+        tags=frozenset(item.get("tags", [])),
+    )
+
+
 def load_templates_from_yaml(path: Path | str) -> list[PromptTemplate]:
     path = Path(path)
     with path.open() as f:
@@ -130,23 +146,7 @@ def load_templates_from_yaml(path: Path | str) -> list[PromptTemplate]:
     if not isinstance(data, list):
         raise ValueError(f"Expected list of templates in {path}, got {type(data).__name__}")
 
-    templates = []
-    for item in data:
-        name = item["name"]
-        template_type = item["type"]
-        if template_type not in TEMPLATE_TYPE_PLACEHOLDERS:
-            raise ValueError(
-                f"Unknown template type '{template_type}' for '{name}'. "
-                f"Valid: {list(TEMPLATE_TYPE_PLACEHOLDERS.keys())}"
-            )
-        templates.append(PromptTemplate(
-            template=item["template"],
-            name=name,
-            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS[template_type],
-            tags=frozenset(item["tags"]),
-        ))
-
-    return templates
+    return [parse_template_dict(item) for item in data]
 
 
 # Default templates

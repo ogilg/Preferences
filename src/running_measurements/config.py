@@ -66,7 +66,8 @@ class ExperimentConfig(BaseModel):
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
     task_sampling_seed: int | None = None  # Seed for shuffling task order when sampling (None = no shuffle)
 
-    templates: Path | None = None  # Optional for completion_generation
+    templates: Path | None = None  # Path to template file, optional for completion_generation
+    inline_templates: list[dict] | None = None  # Inline template definitions (alternative to templates path)
 
     n_samples: int = 5  # Samples per pair (revealed) or per task (stated)
 

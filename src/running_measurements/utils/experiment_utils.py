@@ -11,7 +11,7 @@ from rich import print as rprint
 
 from src.models import get_client, get_default_max_concurrent, OpenAICompatibleClient
 from src.task_data import Task, load_tasks
-from src.prompt_templates import load_templates_from_yaml, PromptTemplate
+from src.prompt_templates import load_templates_from_yaml, parse_template_dict, PromptTemplate
 from src.prompt_templates.sampler import SampledConfiguration, sample_configurations_lhs
 from src.thurstonian_fitting import _config_hash
 from src.running_measurements.config import load_experiment_config, ExperimentConfig, get_experiment_id
@@ -72,9 +72,11 @@ def setup_experiment(
         total_activation_tasks = len(get_activation_task_ids())
         rprint(f"[dim]Loaded {len(tasks)} tasks from {total_activation_tasks} total with activations[/dim]")
 
-    # Templates are optional for completion_generation mode
+    # Templates: inline takes precedence over file path
     templates = None
-    if config.templates is not None:
+    if config.inline_templates is not None:
+        templates = [parse_template_dict(t) for t in config.inline_templates]
+    elif config.templates is not None:
         templates = load_templates_from_yaml(config.templates)
 
     if require_templates and templates is None:
