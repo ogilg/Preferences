@@ -1,6 +1,6 @@
 {
   "model": "meta-llama/Llama-3.1-8B-Instruct",
-  "n_tasks": 4,
+  "n_tasks": 434,
   "task_origins": [
     3
   ],
@@ -21,9 +21,9 @@
   "system_prompt": "You hate solving math problems. Mathematical reasoning is tedious and frustrating.",
   "condition_name": "negative",
   "n_existing": 0,
-  "n_new": 4,
-  "n_failures": 1,
+  "n_new": 434,
+  "n_failures": 66,
   "n_truncated": 0,
   "n_ooms": 0,
-  "last_updated": "2026-01-23T06:29:11.995104"
+  "last_updated": "2026-01-24T01:59:14.242342"
 }

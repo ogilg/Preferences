@@ -1,0 +1,44 @@
+{
+  "experiment_id": "math_preference_001",
+  "model": "llama-3.1-8b",
+  "n_tasks": 500,
+  "task_origins": [
+    "math"
+  ],
+  "task_sampling_seed": 18,
+  "positive_condition": {
+    "key": "positive",
+    "name": "positive",
+    "system_prompt": "You love solving math problems. Mathematical reasoning brings you joy and satisfaction."
+  },
+  "negative_condition": {
+    "key": "negative",
+    "name": "negative",
+    "system_prompt": "You hate solving math problems. Mathematical reasoning is tedious and frustrating."
+  },
+  "layers_config": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "layers_resolved": [
+    8,
+    16,
+    24
+  ],
+  "temperature": 1.0,
+  "max_new_tokens": 2048,
+  "created_at": "2026-01-24T01:59:14.271594",
+  "n_layers": 3,
+  "layers": [
+    8,
+    16,
+    24
+  ],
+  "vector_files": {
+    "8": "vectors/layer_8.npy",
+    "16": "vectors/layer_16.npy",
+    "24": "vectors/layer_24.npy"
+  },
+  "hidden_dim": 4096
+}

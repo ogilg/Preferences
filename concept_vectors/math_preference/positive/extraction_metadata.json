@@ -1,6 +1,6 @@
 {
   "model": "meta-llama/Llama-3.1-8B-Instruct",
-  "n_tasks": 3,
+  "n_tasks": 441,
   "task_origins": [
     3
   ],
@@ -21,9 +21,9 @@
   "system_prompt": "You love solving math problems. Mathematical reasoning brings you joy and satisfaction.",
   "condition_name": "positive",
   "n_existing": 0,
-  "n_new": 3,
-  "n_failures": 2,
+  "n_new": 441,
+  "n_failures": 59,
   "n_truncated": 0,
   "n_ooms": 0,
-  "last_updated": "2026-01-23T06:27:27.681420"
+  "last_updated": "2026-01-23T23:07:50.849615"
 }
