@@ -434,13 +434,10 @@ class TestSteeringExperimentE2E:
                 task_origins=["wildchat"],
                 rating_seeds=[0],
                 experiment_id="e2e_test",
+                output_dir=Path(tmpdir),
             )
 
-            # Patch results directory to use temp
-            with patch("src.steering.runner.Path") as mock_path:
-                mock_path.return_value = Path(tmpdir)
-
-                results = run_steering_experiment(config)
+            results = run_steering_experiment(config)
 
             # Verify results structure
             assert "config" in results

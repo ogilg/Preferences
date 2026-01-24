@@ -298,7 +298,7 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
     }
 
     # Save to experiment directory
-    exp_dir = Path("results/experiments") / config.experiment_id
+    exp_dir = config.output_dir or (Path("results/experiments") / config.experiment_id)
     exp_dir.mkdir(parents=True, exist_ok=True)
     output_path = exp_dir / "steering_results.json"
 

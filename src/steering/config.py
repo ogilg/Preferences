@@ -29,6 +29,7 @@ class SteeringExperimentConfig(BaseModel):
     use_tasks_with_activations: bool = False  # restrict to tasks in probe_data/activations/
     max_new_tokens: int = 128
     experiment_id: str
+    output_dir: Path | None = None  # defaults to results/experiments/{experiment_id}
 
 
 def load_steering_config(path: Path) -> SteeringExperimentConfig:
