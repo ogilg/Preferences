@@ -14,7 +14,7 @@ import torch
 import yaml
 from tqdm import tqdm
 
-from src.models import NnsightModel
+from src.models.transformer_lens import TransformerLensModel
 from src.running_measurements.utils.runner_utils import load_activation_task_ids
 from src.task_data import load_tasks, OriginDataset, Task
 
@@ -33,6 +33,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("config", type=Path, help="Path to probe experiment config YAML")
     parser.add_argument("--resume", action="store_true", help="Skip tasks already in output_dir")
     parser.add_argument("--save-every", type=int, default=DEFAULT_SAVE_EVERY, help="Save batch every N tasks")
+    parser.add_argument(
+        "--from-completions",
+        type=Path,
+        help="Extract from existing completions JSON instead of generating new ones",
+    )
+    parser.add_argument(
+        "--selectors",
+        nargs="+",
+        default=["last"],
+        choices=["first", "mean", "last"],
+        help="Token selectors to extract (default: last)",
+    )
     return parser.parse_args()
 
 
@@ -71,41 +83,64 @@ def build_metadata(
     }
 
 
-def load_existing_data(output_dir: Path) -> tuple[list[str], dict[int, list[np.ndarray]], list[dict]]:
-    """Load existing activations.npz and completions if resuming."""
+def load_existing_data(
+    output_dir: Path, selectors: list[str]
+) -> tuple[list[str], dict[str, dict[int, list[np.ndarray]]], list[dict]]:
+    """Load existing activations and completions if resuming."""
     task_ids: list[str] = []
-    layer_activations: dict[int, list[np.ndarray]] = defaultdict(list)
+    activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in selectors}
     completions: list[dict] = []
 
-    npz_path = output_dir / "activations.npz"
+    # Try loading from selector-specific files first, fall back to old format
+    first_selector = selectors[0]
+    npz_path = output_dir / f"activations_{first_selector}.npz"
+    if not npz_path.exists():
+        npz_path = output_dir / "activations.npz"
+
     if npz_path.exists():
         data = np.load(npz_path, allow_pickle=True)
         task_ids = list(data["task_ids"])
         for key in data.keys():
             if key.startswith("layer_"):
                 layer = int(key.split("_")[1])
-                layer_activations[layer] = [act for act in data[key]]
+                # Old format: single selector (last)
+                activations["last"][layer] = [act for act in data[key]]
+
+    # Load selector-specific files if they exist
+    for selector in selectors:
+        selector_path = output_dir / f"activations_{selector}.npz"
+        if selector_path.exists():
+            data = np.load(selector_path, allow_pickle=True)
+            if not task_ids:
+                task_ids = list(data["task_ids"])
+            for key in data.keys():
+                if key.startswith("layer_"):
+                    layer = int(key.split("_")[1])
+                    activations[selector][layer] = [act for act in data[key]]
 
     completions_path = output_dir / "completions_with_activations.json"
     if completions_path.exists():
         with open(completions_path) as f:
             completions = json.load(f)
 
-    return task_ids, layer_activations, completions
+    return task_ids, activations, completions
 
 
 def save_activations(
     output_dir: Path,
     task_ids: list[str],
-    layer_activations: dict[int, list[np.ndarray]],
+    activations: dict[str, dict[int, list[np.ndarray]]],
 ) -> None:
-    """Save activations to .npz format."""
+    """Save activations to .npz format, one file per selector."""
     output_dir.mkdir(parents=True, exist_ok=True)
-    np.savez(
-        output_dir / "activations.npz",
-        task_ids=np.array(task_ids),
-        **{f"layer_{layer}": np.stack(acts) for layer, acts in layer_activations.items()},
-    )
+    for selector_name, layer_acts in activations.items():
+        if not layer_acts:
+            continue
+        np.savez(
+            output_dir / f"activations_{selector_name}.npz",
+            task_ids=np.array(task_ids),
+            **{f"layer_{layer}": np.stack(acts) for layer, acts in layer_acts.items()},
+        )
 
 
 def save_completions_metadata(output_dir: Path, completions: list[dict]) -> None:
@@ -135,12 +170,27 @@ def main() -> None:
     max_new_tokens = config.get("max_new_tokens", 2048)
     seed = config.get("seed")
     output_dir = Path(config["output_dir"])
+    selectors = config.get("selectors", args.selectors)  # config overrides CLI default
+
+    print(f"Loading model: {model_name}...")
+    model = TransformerLensModel(model_name, max_new_tokens=max_new_tokens)
+
+    resolved_layers = [model.resolve_layer(layer) for layer in layers]
+    print(f"Extracting from layers: {layers} -> resolved to {resolved_layers} (model has {model.n_layers} layers)")
+    print(f"Selectors: {selectors}")
+
+    # Mode: extract from existing completions
+    if args.from_completions:
+        _extract_from_completions(
+            args, model, resolved_layers, selectors, output_dir, model_name, layers
+        )
+        return
+
+    # Mode: generate and extract
     use_tasks_with_activations = config.get("use_tasks_with_activations", False)
 
     if use_tasks_with_activations:
-        # Load tasks from existing activation extraction
         activation_task_ids = load_activation_task_ids()
-        # We need to reconstruct Task objects - load from completions file
         from src.running_measurements.utils.runner_utils import get_activation_completions_path
         with open(get_activation_completions_path()) as f:
             completions_data = json.load(f)
@@ -159,27 +209,19 @@ def main() -> None:
         print(f"Loading {n_tasks} tasks from {[o.value for o in task_origins]}...")
         tasks = load_tasks(n=n_tasks, origins=task_origins, seed=seed)
 
-    # Resume: load existing data if available
     task_ids: list[str] = []
-    layer_activations: dict[int, list[np.ndarray]] = defaultdict(list)
+    activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in selectors}
     completions: list[dict] = []
     n_existing = 0
 
     if args.resume:
-        task_ids, layer_activations, completions = load_existing_data(output_dir)
+        task_ids, activations, completions = load_existing_data(output_dir, selectors)
         existing_ids = set(task_ids)
         n_existing = len(existing_ids)
         tasks = [t for t in tasks if t.id not in existing_ids]
         print(f"Resume: found {n_existing} existing, {len(tasks)} remaining tasks")
 
     save_every = args.save_every
-
-    print(f"Loading model: {model_name}...")
-    model = NnsightModel(model_name, max_new_tokens=max_new_tokens)
-
-    resolved_layers = [model.resolve_layer(layer) for layer in layers]
-    print(f"Extracting from layers: {layers} -> resolved to {resolved_layers} (model has {model.n_layers} layers)")
-
     failures: list[tuple[str, str]] = []
     n_new = 0
     n_truncated = 0
@@ -193,21 +235,21 @@ def main() -> None:
             try:
                 messages = [{"role": "user", "content": task.prompt}]
                 result = model.generate_with_activations(
-                    messages, layers=resolved_layers, temperature=temperature
+                    messages, layers=resolved_layers, selector_names=selectors, temperature=temperature
                 )
                 truncated = result.completion_tokens >= max_new_tokens
 
                 if truncated:
                     n_truncated += 1
 
-                # Store activation for each layer
                 task_ids.append(task.id)
-                for layer, act in result.activations.items():
-                    layer_activations[layer].append(act)
+                for selector in selectors:
+                    for layer, act in result.activations[selector].items():
+                        activations[selector][layer].append(act)
 
-                # Store completion metadata
                 completions.append({
                     "task_id": task.id,
+                    "task_prompt": task.prompt,
                     "origin": task.origin.name,
                     "completion": result.completion,
                     "truncated": truncated,
@@ -234,10 +276,9 @@ def main() -> None:
             alloc, res = gpu_mem_gb()
             tqdm.write(f"[{i+1}] GPU: {alloc:.1f}GB alloc, {res:.1f}GB res | OOMs: {n_ooms}")
 
-        # Checkpoint periodically
         if n_new > 0 and n_new % save_every == 0:
             tqdm.write(f"Checkpoint: saving {len(task_ids)} total activations...")
-            save_activations(output_dir, task_ids, layer_activations)
+            save_activations(output_dir, task_ids, activations)
             save_completions_metadata(output_dir, completions)
             save_extraction_metadata(output_dir, build_metadata(
                 model_name, n_tasks, task_origins, layers, resolved_layers,
@@ -245,10 +286,9 @@ def main() -> None:
                 n_existing, n_new, len(failures), n_truncated, n_ooms,
             ))
 
-    # Final save
     if n_new > 0:
         print(f"Saving {len(task_ids)} total activations...")
-        save_activations(output_dir, task_ids, layer_activations)
+        save_activations(output_dir, task_ids, activations)
         save_completions_metadata(output_dir, completions)
 
     print(f"\nSaved {n_new} new data points, {len(failures)} failures, {n_truncated} truncated, {n_ooms} OOMs")
@@ -261,6 +301,102 @@ def main() -> None:
         n_existing, n_new, len(failures), n_truncated, n_ooms,
     ))
     print("Done!")
+
+
+def _extract_from_completions(
+    args: argparse.Namespace,
+    model: TransformerLensModel,
+    resolved_layers: list[int],
+    selectors: list[str],
+    output_dir: Path,
+    model_name: str,
+    layers_config: list[float | int],
+) -> None:
+    """Extract activations from existing completions without generating."""
+    with open(args.from_completions) as f:
+        completions_data = json.load(f)
+
+    task_ids: list[str] = []
+    activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in selectors}
+    n_existing = 0
+
+    if args.resume:
+        task_ids, activations, _ = load_existing_data(output_dir, selectors)
+        existing_ids = set(task_ids)
+        n_existing = len(existing_ids)
+        completions_data = [c for c in completions_data if c["task_id"] not in existing_ids]
+        print(f"Resume: found {n_existing} existing, {len(completions_data)} remaining")
+
+    failures: list[tuple[str, str]] = []
+    n_new = 0
+
+    alloc, res = gpu_mem_gb()
+    print(f"Extracting from {len(completions_data)} completions... (GPU: {alloc:.1f}GB alloc, {res:.1f}GB reserved)")
+
+    for i, comp in enumerate(tqdm(completions_data, desc="Extracting")):
+        task_id = comp["task_id"]
+        task_prompt = comp.get("task_prompt", comp.get("prompt", ""))
+        completion_text = comp["completion"]
+
+        messages = [
+            {"role": "user", "content": task_prompt},
+            {"role": "assistant", "content": completion_text},
+        ]
+
+        try:
+            result = model.get_activations(messages, layers=resolved_layers, selector_names=selectors)
+
+            task_ids.append(task_id)
+            for selector in selectors:
+                for layer, act in result[selector].items():
+                    activations[selector][layer].append(act)
+            n_new += 1
+
+        except Exception as e:
+            failures.append((task_id, str(e)))
+            tqdm.write(f"Failed on {task_id}: {e}")
+
+        gc.collect()
+        torch.cuda.empty_cache()
+
+        if (i + 1) % 100 == 0:
+            alloc, res = gpu_mem_gb()
+            tqdm.write(f"[{i+1}] GPU: {alloc:.1f}GB alloc, {res:.1f}GB res")
+
+        if n_new > 0 and n_new % args.save_every == 0:
+            tqdm.write(f"Checkpoint: saving {len(task_ids)} activations...")
+            save_activations(output_dir, task_ids, activations)
+            save_extraction_metadata(output_dir, {
+                "model": model_name,
+                "selectors": selectors,
+                "layers_config": layers_config,
+                "layers_resolved": resolved_layers,
+                "n_existing": n_existing,
+                "n_new": n_new,
+                "n_failures": len(failures),
+                "source_completions": str(args.from_completions),
+                "last_updated": datetime.now().isoformat(),
+            })
+
+    if n_new > 0:
+        print(f"\nSaving {len(task_ids)} total activations...")
+        save_activations(output_dir, task_ids, activations)
+
+    save_extraction_metadata(output_dir, {
+        "model": model_name,
+        "selectors": selectors,
+        "layers_config": layers_config,
+        "layers_resolved": resolved_layers,
+        "n_existing": n_existing,
+        "n_new": n_new,
+        "n_failures": len(failures),
+        "source_completions": str(args.from_completions),
+        "last_updated": datetime.now().isoformat(),
+    })
+
+    print(f"\nDone! Extracted {n_new} new, {len(failures)} failures")
+    if failures:
+        print(f"First few failures: {failures[:3]}")
 
 
 if __name__ == "__main__":

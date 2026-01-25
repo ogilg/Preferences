@@ -8,9 +8,13 @@ task_origins:
 task_sampling_seed: 18
 experiment_id: probe_4_all_datasets
 layers_to_extract:
-  - 0.25  
-  - 0.5   
-  - 0.75  
+  - 0.25
+  - 0.5
+  - 0.75
+selectors:
+  - first
+  - mean
+  - last
 temperature: 1.0
 max_new_tokens: 1024
 seed: 42
