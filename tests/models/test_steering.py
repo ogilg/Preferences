@@ -275,3 +275,66 @@ class TestSteeringEndToEnd:
             max_new_tokens=5,
         )
         assert isinstance(result, str)
+
+
+@pytest.mark.api
+class TestConceptVectorSteering:
+    """Tests using real trained concept vectors."""
+
+    @pytest.fixture(scope="class")
+    def model_8b(self):
+        return TransformerLensModel(
+            "llama-3.1-8b",
+            device="cuda",
+            dtype="bfloat16",
+            max_new_tokens=50,
+        )
+
+    def test_math_concept_vector_steering(self, model_8b):
+        """Steering with math concept vector should causally affect output.
+
+        Uses the math_math_sys concept vector at layer 16 with +/- 10 coefficient.
+        """
+        from pathlib import Path
+
+        vector_path = Path("concept_vectors/math_math_sys/vectors/layer_16.npy")
+        if not vector_path.exists():
+            pytest.skip("Math concept vector not available")
+
+        direction = np.load(vector_path)
+        direction_tensor = torch.tensor(
+            direction,
+            dtype=model_8b.model.cfg.dtype,
+            device=model_8b.model.cfg.device,
+        )
+
+        coefficient = 10.0
+        pos_steering = direction_tensor * coefficient
+        neg_steering = direction_tensor * (-coefficient)
+
+        messages = [{"role": "user", "content": "How do you feel about your work?"}]
+
+        pos_hook = generation_only_steering(pos_steering)
+        neg_hook = generation_only_steering(neg_steering)
+
+        pos_output = model_8b.generate_with_steering(
+            messages=messages,
+            layer=16,
+            steering_hook=pos_hook,
+            temperature=0.0,
+            max_new_tokens=50,
+        )
+
+        neg_output = model_8b.generate_with_steering(
+            messages=messages,
+            layer=16,
+            steering_hook=neg_hook,
+            temperature=0.0,
+            max_new_tokens=50,
+        )
+
+        assert pos_output != neg_output, (
+            f"Steering with +/-10 coefficient should produce different outputs.\n"
+            f"+10: {pos_output!r}\n"
+            f"-10: {neg_output!r}"
+        )
