@@ -29,12 +29,14 @@ class PostStatedCache:
         response_format: str,
         completion_seed: int,
         rating_seed: int,
+        system_prompt: str | None = None,
     ):
         self._cache = StatedCache(model_name)
         self._template_config = template_config_from_template(template)
         self._response_format = response_format
         self._completion_seed = completion_seed
         self._rating_seed = rating_seed
+        self._system_prompt = system_prompt
 
     def get_existing_task_ids(self) -> set[str]:
         """Get task IDs that have been measured."""
@@ -43,6 +45,7 @@ class PostStatedCache:
             response_format=self._response_format,
             rating_seed=self._rating_seed,
             completion_seed=self._completion_seed,
+            system_prompt=self._system_prompt,
         )
 
     def save(self, scores: list["TaskScore"]) -> None:
@@ -55,6 +58,7 @@ class PostStatedCache:
                 task_id=s.task.id,
                 sample={"score": s.score},
                 completion_seed=self._completion_seed,
+                system_prompt=self._system_prompt,
             )
         self._cache.save()
 
@@ -76,6 +80,7 @@ class PostStatedCache:
                 rating_seed=self._rating_seed,
                 task_id=task_id,
                 completion_seed=self._completion_seed,
+                system_prompt=self._system_prompt,
             )
             cached_scores[task_id] = [s["score"] for s in samples]
 

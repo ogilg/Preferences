@@ -52,6 +52,7 @@ class StatedCache:
         rating_seed: int,
         task_id: str,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> str:
         """Create stable hash from key fields."""
         parts = [
@@ -63,6 +64,8 @@ class StatedCache:
         ]
         if completion_seed is not None:
             parts.append(f"cseed{completion_seed}")
+        if system_prompt is not None:
+            parts.append(f"sys{hashlib.sha256(system_prompt.encode()).hexdigest()[:8]}")
         return hashlib.sha256("__".join(parts).encode()).hexdigest()[:16]
 
     def get(
@@ -72,11 +75,12 @@ class StatedCache:
         rating_seed: int,
         task_id: str,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> list[dict]:
         """Get all samples for a stated measurement."""
         if self._data is None:
             self._data = self._load()
-        h = self._make_key(template_config, response_format, rating_seed, task_id, completion_seed)
+        h = self._make_key(template_config, response_format, rating_seed, task_id, completion_seed, system_prompt)
         entry = self._data.get(h)
         return entry["samples"] if entry else []
 
@@ -88,11 +92,12 @@ class StatedCache:
         task_id: str,
         sample: dict,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         """Add a sample to stated measurement."""
         if self._data is None:
             self._data = self._load()
-        h = self._make_key(template_config, response_format, rating_seed, task_id, completion_seed)
+        h = self._make_key(template_config, response_format, rating_seed, task_id, completion_seed, system_prompt)
         if h not in self._data:
             entry = {
                 "template_config": template_config,
@@ -103,6 +108,8 @@ class StatedCache:
             }
             if completion_seed is not None:
                 entry["completion_seed"] = completion_seed
+            if system_prompt is not None:
+                entry["system_prompt"] = system_prompt
             self._data[h] = entry
         self._data[h]["samples"].append(sample)
 
@@ -112,6 +119,7 @@ class StatedCache:
         response_format: str,
         rating_seed: int,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> set[str]:
         """Get all task IDs that have been measured for this configuration."""
         if self._data is None:
@@ -124,6 +132,7 @@ class StatedCache:
                 and entry["template_config"]["template_hash"] == template_config["template_hash"]
                 and entry["response_format"] == response_format
                 and entry["rating_seed"] == rating_seed
+                and entry.get("system_prompt") == system_prompt
             ):
                 # Check completion_seed match
                 entry_cseed = entry.get("completion_seed")
