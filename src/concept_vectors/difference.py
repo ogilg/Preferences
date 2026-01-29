@@ -84,6 +84,7 @@ def compute_all_concept_vectors(
     negative_dir: Path,
     selector_names: list[str],
     layers: list[int] | None = None,
+    normalize: bool = False,
 ) -> dict[str, dict[int, np.ndarray]]:
     """Compute concept vectors for specified token selectors.
 
@@ -94,7 +95,7 @@ def compute_all_concept_vectors(
     for selector_name in selector_names:
         print(f"Computing {selector_name} token vectors...")
         results[selector_name] = compute_difference_in_means(
-            positive_dir, negative_dir, selector_name, layers
+            positive_dir, negative_dir, selector_name, layers, normalize=normalize
         )
     return results
 
