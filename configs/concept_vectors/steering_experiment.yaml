@@ -8,15 +8,15 @@ selector: last  # Which activation selector was used for vectors (last, mean, fi
 
 # Steering grid
 layers: [0.5, 0.75]  # Relative layer positions (resolved to actual layer indices)
-steering_coefficients: [-2.0, -1.0, 1.0, 2.0]
+steering_coefficients: [-2.0, 2.0]
 steering_mode: generation_only  # last_token | all_tokens | generation_only
 
 # Measurement settings
 template_name: anchored_precise_1_5
 templates_path: configs/templates/anchored.yaml
-generation_seeds: [0, 1, 2]
+generation_seeds: [0]
 temperature: 1.0
-max_new_tokens: 32  # Short responses for rating tasks
+max_new_tokens: 16
 
 # Experiment tracking
 experiment_name: concept_vector_steering_math_001
