@@ -65,3 +65,6 @@ concept_vectors/**/completions.json
 
 # Concept vectors (keep metadata, ignore large activation files)
 concept_vectors/**/*.npz
+
+*.npz
+*.npy
