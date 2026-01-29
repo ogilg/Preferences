@@ -9,14 +9,14 @@ import numpy as np
 
 TASK_SOURCES = {
     "math": {
-        "results_dir": Path("results/experiments/sysprompt_3x3_anchored/post_task_stated"),
-        "title": "MATH Tasks",
-        "output": "plot_012826_sysprompt_3x3_math_anchored_violins.png",
+        "results_dir": Path("results/experiments/sysprompt_3x3_math_anchored_70b/post_task_stated"),
+        "title": "MATH Tasks (Llama-3.3-70B)",
+        "output": "plot_012826_sysprompt_3x3_math_70b_violins.png",
     },
     "wildchat": {
-        "results_dir": Path("results/experiments/sysprompt_3x3_wildchat_anchored/post_task_stated"),
-        "title": "WildChat Tasks",
-        "output": "plot_012826_sysprompt_3x3_wildchat_anchored_violins.png",
+        "results_dir": Path("results/experiments/sysprompt_3x3_wildchat_anchored_70b/post_task_stated"),
+        "title": "WildChat Tasks (Llama-3.3-70B)",
+        "output": "plot_012826_sysprompt_3x3_wildchat_70b_violins.png",
     },
 }
 
