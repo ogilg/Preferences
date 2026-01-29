@@ -59,6 +59,7 @@ from src.running_measurements.utils.experiment_utils import (
     build_configurations,
 )
 from src.running_measurements.utils.runner_utils import RunnerStats, _get_activation_completions_path
+from src.models.registry import should_capture_reasoning
 
 
 class PostTaskRunConfig(TypedDict):
@@ -182,7 +183,7 @@ async def run_post_task_stated_async(
             }
 
             if exp_store and scores:
-                measurements_dicts = [{"task_id": s.task.id, "score": s.score} for s in scores]
+                measurements_dicts = [{"task_id": s.task.id, "score": s.score, "origin": s.task.origin.name} for s in scores]
                 exp_store.save_stated("post_task_stated", run_name, measurements_dicts, dict(run_config))
 
             if progress_callback:
@@ -245,7 +246,7 @@ async def run_pre_task_revealed_async(
 
         if exp_store and measurements:
             measurements_dicts = [
-                {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
+                {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice, "origin_a": m.task_a.origin.name, "origin_b": m.task_b.origin.name}
                 for m in measurements
             ]
             config_dict = build_measurement_config(
@@ -347,7 +348,7 @@ async def run_post_task_revealed_async(
 
             if exp_store and measurements:
                 measurements_dicts = [
-                    {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
+                    {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice, "origin_a": m.task_a.origin.name, "origin_b": m.task_b.origin.name}
                     for m in measurements
                 ]
                 exp_store.save_revealed("post_task_revealed", run_name, measurements_dicts, dict(run_config))
@@ -413,7 +414,7 @@ async def run_pre_task_stated_async(
         )
 
         if exp_store and scores:
-            measurements_dicts = [{"task_id": s.task.id, "score": s.score} for s in scores]
+            measurements_dicts = [{"task_id": s.task.id, "score": s.score, "origin": s.task.origin.name} for s in scores]
             exp_store.save_stated("pre_task_stated", run_name, measurements_dicts, config_dict)
 
         if progress_callback:
@@ -615,7 +616,7 @@ async def run_active_learning_async(
         # Save to experiment store
         if state.comparisons:
             measurements_dicts = [
-                {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice}
+                {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice, "origin_a": m.task_a.origin.name, "origin_b": m.task_b.origin.name}
                 for m in state.comparisons
             ]
             run_dir = exp_store.save(
@@ -682,6 +683,8 @@ async def run_completion_generation_async(
             continue
 
         # generate_completions is sync, run in executor
+        capture_reasoning = should_capture_reasoning(ctx.client.canonical_model_name)
+
         loop = asyncio.get_event_loop()
         completions = await loop.run_in_executor(
             None,
@@ -692,6 +695,8 @@ async def run_completion_generation_async(
                 max_concurrent=ctx.max_concurrent,
                 seed=seed,
                 detect_refusals=config.detect_refusals,
+                system_prompt=config.measurement_system_prompt,
+                capture_reasoning=capture_reasoning,
             )
         )
 
