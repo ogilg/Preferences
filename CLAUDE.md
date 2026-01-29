@@ -52,6 +52,19 @@ uv pip install -e ".[dev]"
 - Always delegate running testing imports to a subagent (Task tool with subagent_type=general-purpose) so it doesn't interrupt the main conversation flow.
 - When you give me a command, always give it to me on a single line. Do not use "\".
 
+## Syncing gitignored data to RunPod
+
+To sync data that's in .gitignore to a RunPod instance:
+
+```bash
+ssh root@<IP> -p <PORT> -i ~/.ssh/id_ed25519 "mkdir -p /workspace/Preferences/<path>" && scp -r -P <PORT> -i ~/.ssh/id_ed25519 <local_path>/ root@<IP>:/workspace/Preferences/<path>/
+```
+
+Example:
+```bash
+ssh root@64.247.201.30 -p 10318 -i ~/.ssh/id_ed25519 "mkdir -p /workspace/Preferences/concept_vectors" && scp -r -P 10318 -i ~/.ssh/id_ed25519 concept_vectors/ root@64.247.201.30:/workspace/Preferences/concept_vectors/
+```
+
 ## Semantic Parsing Policy
 
   - NEVER use string matching heuristics for semantic tasks - use an LLM instead
