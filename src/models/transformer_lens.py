@@ -99,16 +99,19 @@ class TransformerLensModel:
         max_new_tokens: int | None = None,
     ) -> str:
         prompt = self._format_messages(messages, add_generation_prompt=True)
-        output = self.model.generate(
+        prompt_tokens = self.model.to_tokens(prompt)
+        prompt_len = prompt_tokens.shape[1]
+
+        output_tokens = self.model.generate(
             prompt,
             max_new_tokens=max_new_tokens or self.max_new_tokens,
             temperature=temperature,
+            return_type="tokens",
             verbose=False,
         )
-        # Strip prompt from output - TransformerLens returns full sequence
-        if output.startswith(prompt):
-            output = output[len(prompt):]
-        return output.strip()
+
+        new_tokens = output_tokens[0, prompt_len:]
+        return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
     def _get_assistant_start_position(self, messages: list[Message]) -> int:
         """Get the token position where the assistant's content starts.
