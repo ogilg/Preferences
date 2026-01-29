@@ -50,6 +50,7 @@ uv pip install -e ".[dev]"
 - When you install a new package, add it to pyproject.toml if it isn't there.
 - Always load environment variables from `.env` when running scripts that use API clients. Use `from dotenv import load_dotenv; load_dotenv()` at the top of scripts.
 - Always delegate running testing imports to a subagent (Task tool with subagent_type=general-purpose) so it doesn't interrupt the main conversation flow.
+- When you give me a command, always give it to me on a single line. Do not use "\".
 
 ## Semantic Parsing Policy
 
