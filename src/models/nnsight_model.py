@@ -2,6 +2,9 @@
 
 This module is no longer actively maintained. All new development uses
 src/models/transformer_lens.py which has a unified selector-based API.
+
+Only kept for cross-validation tests that verify TransformerLens and nnsight
+produce identical activations (in case of bugs in TransformerLens code).
 """
 from __future__ import annotations
 
