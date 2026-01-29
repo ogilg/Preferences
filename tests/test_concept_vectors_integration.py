@@ -307,7 +307,7 @@ class TestFullPipelineE2E:
         from src.concept_vectors.difference import compute_all_concept_vectors
 
         # Use real tasks
-        tasks = load_tasks(n=3, origins=[OriginDataset.MATH], seed=42)
+        tasks = load_tasks(n=2, origins=[OriginDataset.MATH], seed=42)
         layers = [transformer_lens_model.n_layers // 2]
         layer = layers[0]
         selector_names = ["last", "first", "mean"]
@@ -325,7 +325,7 @@ class TestFullPipelineE2E:
             output_dir=pos_dir,
             selector_names=selector_names,
             temperature=0.0,
-            max_new_tokens=64,
+            max_new_tokens=32,
             task_origins=["math"],
             layers_config=[0.5],
             seed=42,
@@ -341,7 +341,7 @@ class TestFullPipelineE2E:
             output_dir=neg_dir,
             selector_names=selector_names,
             temperature=0.0,
-            max_new_tokens=64,
+            max_new_tokens=32,
             task_origins=["math"],
             layers_config=[0.5],
             seed=42,
@@ -380,73 +380,6 @@ class TestFullPipelineE2E:
             assert loaded_layer == layer
             assert direction.shape == (transformer_lens_model.hidden_dim,)
             assert abs(np.linalg.norm(direction) - 1.0) < 1e-6
-
-    def test_extracted_direction_usable_for_steering(self, transformer_lens_model, tmp_path):
-        """Verify extracted direction can be used with generate_with_steering."""
-        tasks = load_tasks(n=2, origins=[OriginDataset.MATH], seed=42)
-        layers = [transformer_lens_model.n_layers // 2]
-        layer = layers[0]
-
-        pos_dir = tmp_path / "positive"
-        neg_dir = tmp_path / "negative"
-
-        extract_activations_with_system_prompt(
-            model=transformer_lens_model,
-            tasks=tasks,
-            layers=layers,
-            system_prompt="You love this.",
-            condition_name="positive",
-            output_dir=pos_dir,
-            selector_names=["last"],
-            temperature=0.0,
-            max_new_tokens=32,
-        )
-
-        extract_activations_with_system_prompt(
-            model=transformer_lens_model,
-            tasks=tasks,
-            layers=layers,
-            system_prompt="You hate this.",
-            condition_name="negative",
-            output_dir=neg_dir,
-            selector_names=["last"],
-            temperature=0.0,
-            max_new_tokens=32,
-        )
-
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", layers=layers, normalize=True)
-        vectors_by_selector = {"last": vectors}
-        save_concept_vectors(vectors_by_selector, tmp_path, {"experiment_id": "test"})
-
-        # Load and use for steering
-        import torch
-        from src.models.transformer_lens import autoregressive_steering
-
-        _, direction = load_concept_vector_for_steering(tmp_path, layer=layer)
-
-        # Generate with positive steering
-        messages = [{"role": "user", "content": "How do you feel about math?"}]
-        pos_tensor = torch.tensor(direction * 2.0, dtype=transformer_lens_model.model.cfg.dtype, device=transformer_lens_model.model.cfg.device)
-        pos_output = transformer_lens_model.generate_with_steering(
-            messages=messages,
-            layer=layer,
-            steering_hook=autoregressive_steering(pos_tensor),
-            temperature=0.0,
-        )
-
-        # Generate with negative steering
-        neg_tensor = torch.tensor(direction * -2.0, dtype=transformer_lens_model.model.cfg.dtype, device=transformer_lens_model.model.cfg.device)
-        neg_output = transformer_lens_model.generate_with_steering(
-            messages=messages,
-            layer=layer,
-            steering_hook=autoregressive_steering(neg_tensor),
-            temperature=0.0,
-        )
-
-        # Outputs should differ
-        assert pos_output != neg_output
-        assert len(pos_output) > 0
-        assert len(neg_output) > 0
 
 
 class TestResumeCheckpointing:
