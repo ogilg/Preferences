@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING, TypeVar, Callable
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
 from src.models import GenerateRequest, OpenAICompatibleClient
+from src.models.openai_compatible import REQUEST_TIMEOUT
+from src.models.registry import adjust_timeout_for_reasoning
 from src.task_data import Task
 from src.types import (
     BinaryPreferenceMeasurement,
@@ -24,12 +26,13 @@ if TYPE_CHECKING:
 T = TypeVar("T", TaskScore, BinaryPreferenceMeasurement)
 
 
-def _build_request(prompt: PreferencePrompt, temperature: float, seed: int | None) -> GenerateRequest:
+def _build_request(prompt: PreferencePrompt, temperature: float, seed: int | None, timeout: float | None = None) -> GenerateRequest:
     return GenerateRequest(
         messages=prompt.messages,
         temperature=temperature,
         tools=prompt.response_format.tools,
         seed=seed,
+        timeout=timeout,
     )
 
 
@@ -75,9 +78,10 @@ async def _generate_and_parse_one(
     seed: int | None,
     semaphore: asyncio.Semaphore,
     result_type: type[T],
+    timeout: float | None = None,
 ) -> tuple[T | None, MeasurementFailure | None]:
     """Generate a response and parse it immediately. Returns (success, failure)."""
-    request = _build_request(prompt, temperature, seed)
+    request = _build_request(prompt, temperature, seed, timeout)
 
     # Generate
     results = await client.generate_batch_async([request], semaphore)
@@ -129,9 +133,10 @@ async def _measure_async(
     on_complete: Callable[[], None] | None = None,
 ) -> MeasurementBatch[T]:
     """Generate and parse concurrently - parsing starts as soon as each response arrives."""
+    timeout = adjust_timeout_for_reasoning(client.canonical_model_name, REQUEST_TIMEOUT)
 
     async def process_with_callback(prompt: PreferencePrompt) -> tuple[T | None, MeasurementFailure | None]:
-        result = await _generate_and_parse_one(client, prompt, temperature, seed, semaphore, result_type)
+        result = await _generate_and_parse_one(client, prompt, temperature, seed, semaphore, result_type, timeout)
         if on_complete:
             on_complete()
         return result
