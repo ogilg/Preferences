@@ -11,6 +11,7 @@ Usage:
 """
 
 from dataclasses import dataclass
+from typing import Literal
 
 
 @dataclass(frozen=True)
@@ -22,6 +23,8 @@ class ModelConfig:
     hyperbolic_name: str | None
     cerebras_name: str | None
     openrouter_name: str | None
+    system_prompt: str | None = None
+    reasoning_mode: Literal["none", "openrouter"] = "none"
 
 
 MODEL_REGISTRY: dict[str, ModelConfig] = {
@@ -59,6 +62,16 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="qwen/qwen3-32b",
+        reasoning_mode="openrouter",
+    ),
+    "qwen3-32b-nothink": ModelConfig(
+        canonical_name="qwen3-32b-nothink",
+        transformer_lens_name="Qwen/Qwen3-32B",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="qwen/qwen3-32b",
+        system_prompt="/no_think",
+        reasoning_mode="none",
     ),
     "gemma-2-27b": ModelConfig(
         canonical_name="gemma-2-27b",
@@ -102,6 +115,11 @@ def get_openrouter_name(canonical_name: str) -> str:
     return config.openrouter_name
 
 
+def get_model_system_prompt(canonical_name: str) -> str | None:
+    """Get the default system prompt for a model, if any."""
+    return MODEL_REGISTRY[canonical_name].system_prompt
+
+
 def is_valid_model(canonical_name: str) -> bool:
     """Check if a canonical model name is registered."""
     return canonical_name in MODEL_REGISTRY
@@ -110,6 +128,11 @@ def is_valid_model(canonical_name: str) -> bool:
 def list_models() -> list[str]:
     """List all available canonical model names."""
     return list(MODEL_REGISTRY.keys())
+
+
+def should_capture_reasoning(canonical_name: str) -> bool:
+    """Check if reasoning should be captured for this model."""
+    return MODEL_REGISTRY[canonical_name].reasoning_mode != "none"
 
 
 # Models with built-in reasoning/thinking that use tokens for chain-of-thought
