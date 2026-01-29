@@ -24,8 +24,8 @@ class GenerationResult:
 SteeringHook = Callable[[torch.Tensor, int], torch.Tensor]
 
 
-def last_token_steering(steering_tensor: torch.Tensor) -> SteeringHook:
-    """Steer only the last token position."""
+def autoregressive_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+    """Steer only the last token position. Works with KV caching during generation."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         resid[:, -1, :] += steering_tensor
         return resid
@@ -40,22 +40,9 @@ def all_tokens_steering(steering_tensor: torch.Tensor) -> SteeringHook:
     return hook
 
 
-def generation_only_steering(steering_tensor: torch.Tensor) -> SteeringHook:
-    """Steer only newly generated tokens (after the full prompt).
-
-    This steers only the tokens being generated in the current turn,
-    not any prior conversation history in the prompt.
-    """
-    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
-        resid[:, prompt_len:, :] += steering_tensor
-        return resid
-    return hook
-
-
 STEERING_MODES = {
-    "last_token": last_token_steering,
+    "autoregressive": autoregressive_steering,
     "all_tokens": all_tokens_steering,
-    "generation_only": generation_only_steering,
 }
 
 
@@ -214,8 +201,7 @@ class TransformerLensModel:
             messages: Conversation messages.
             layer: Layer index to apply steering hook.
             steering_hook: A SteeringHook function that modifies residual activations.
-                Use factory functions: last_token_steering, all_tokens_steering,
-                or completion_only_steering.
+                Use factory functions: autoregressive_steering or all_tokens_steering.
             temperature: Sampling temperature.
             max_new_tokens: Maximum tokens to generate.
         """

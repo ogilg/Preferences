@@ -420,7 +420,7 @@ class TestFullPipelineE2E:
 
         # Load and use for steering
         import torch
-        from src.models.transformer_lens import last_token_steering
+        from src.models.transformer_lens import autoregressive_steering
 
         _, direction = load_concept_vector_for_steering(tmp_path, layer=layer)
 
@@ -430,7 +430,7 @@ class TestFullPipelineE2E:
         pos_output = transformer_lens_model.generate_with_steering(
             messages=messages,
             layer=layer,
-            steering_hook=last_token_steering(pos_tensor),
+            steering_hook=autoregressive_steering(pos_tensor),
             temperature=0.0,
         )
 
@@ -439,7 +439,7 @@ class TestFullPipelineE2E:
         neg_output = transformer_lens_model.generate_with_steering(
             messages=messages,
             layer=layer,
-            steering_hook=last_token_steering(neg_tensor),
+            steering_hook=autoregressive_steering(neg_tensor),
             temperature=0.0,
         )
 

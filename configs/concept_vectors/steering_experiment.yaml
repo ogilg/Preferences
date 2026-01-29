@@ -9,7 +9,7 @@ selector: last  # Which activation selector was used for vectors (last, mean, fi
 # Steering grid
 layers: [0.5, 0.75]  # Relative layer positions (resolved to actual layer indices)
 steering_coefficients: [-2.0, 2.0]
-steering_mode: generation_only  # last_token | all_tokens | generation_only
+steering_mode: autoregressive  # autoregressive | all_tokens
 
 # Measurement settings
 template_name: anchored_precise_1_5

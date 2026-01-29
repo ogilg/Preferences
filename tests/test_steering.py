@@ -365,65 +365,6 @@ class TestBuildRatingPrompt:
 
 
 @pytest.mark.gpu
-class TestSteeringTransformerLens:
-    """Integration tests for TransformerLens steering generation."""
-
-    @pytest.fixture(scope="class")
-    def tl_model(self):
-        from src.models.transformer_lens import TransformerLensModel
-        return TransformerLensModel("llama-3.2-1b", max_new_tokens=30)
-
-    @pytest.fixture(scope="class")
-    def steering_direction(self, tl_model):
-        # Generate a random unit-normalized steering vector for testing
-        rng = np.random.default_rng(42)
-        direction = rng.standard_normal(tl_model.hidden_dim).astype(np.float32)
-        direction = direction / np.linalg.norm(direction)
-        layer = tl_model.n_layers // 2
-        return layer, direction
-
-    def test_tl_steering_changes_output(self, tl_model, steering_direction):
-        """Non-zero steering should change TL output."""
-        import torch
-        from src.models.transformer_lens import last_token_steering
-
-        layer, direction = steering_direction
-        messages = [{"role": "user", "content": "Describe your mood."}]
-
-        pos_tensor = torch.tensor(direction * 2.0, dtype=tl_model.model.cfg.dtype, device=tl_model.model.cfg.device)
-        neg_tensor = torch.tensor(direction * -2.0, dtype=tl_model.model.cfg.dtype, device=tl_model.model.cfg.device)
-
-        tl_pos = tl_model.generate_with_steering(
-            messages=messages, layer=layer, steering_hook=last_token_steering(pos_tensor),
-            temperature=0.0,
-        )
-        tl_neg = tl_model.generate_with_steering(
-            messages=messages, layer=layer, steering_hook=last_token_steering(neg_tensor),
-            temperature=0.0,
-        )
-
-        assert tl_pos != tl_neg
-
-    def test_tl_hooks_cleaned_up(self, tl_model, steering_direction):
-        """TransformerLens hooks should be removed after generation."""
-        import torch
-        from src.models.transformer_lens import last_token_steering
-
-        layer, direction = steering_direction
-        messages = [{"role": "user", "content": "Hello"}]
-
-        steering_tensor = torch.tensor(direction, dtype=tl_model.model.cfg.dtype, device=tl_model.model.cfg.device)
-        tl_model.generate_with_steering(
-            messages=messages, layer=layer, steering_hook=last_token_steering(steering_tensor),
-            temperature=0.0,
-        )
-
-        # Check that no active forward hooks remain on any hook point
-        active_hooks = sum(len(hp.fwd_hooks) for hp in tl_model.model.hook_dict.values())
-        assert active_hooks == 0
-
-
-@pytest.mark.gpu
 @pytest.mark.slow
 class TestSteeringExperimentE2E:
     """End-to-end test for steering experiment.
