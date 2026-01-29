@@ -12,8 +12,16 @@ from src.probes.config import ProbeTrainingConfig
 @pytest.mark.slow
 def test_data_filtering_order():
     """Test that we filter measurements -> completions -> activations in correct order."""
-    config = ProbeTrainingConfig.from_yaml(Path("configs/probe_training/test_new_config.yaml"))
-    origins_cache = load_task_origins(Path("probe_data/activations"))
+    config_path = Path("configs/probe_training/test_new_config.yaml")
+    activations_dir = Path("activations/llama_3_1_8b")
+
+    if not config_path.exists():
+        pytest.skip(f"Config file not found: {config_path}")
+    if not activations_dir.exists():
+        pytest.skip(f"Activations directory not found: {activations_dir}")
+
+    config = ProbeTrainingConfig.from_yaml(config_path)
+    origins_cache = load_task_origins(activations_dir)
 
     print("\n=== Data Loading Order Test ===\n")
 
@@ -64,7 +72,7 @@ def test_data_filtering_order():
     # Step 4: Load activations (only what we need)
     print("\nStep 4: Loading activations...")
     t0 = time.time()
-    all_task_ids, all_activations = load_activations(Path("probe_data/activations"))
+    all_task_ids, all_activations = load_activations(activations_dir)
     elapsed = time.time() - t0
     print(f"  Loaded all activations ({len(all_task_ids)} tasks) in {elapsed:.2f}s")
 

@@ -64,12 +64,16 @@ def setup_experiment(
 
     # Prepare filter function if using activation tasks
     filter_fn = None
-    if config.use_tasks_with_activations:
-        activation_task_ids = get_activation_task_ids()
+    if config.activations_model is not None:
+        from src.running_measurements.utils.runner_utils import model_name_to_dir
+        from src.measurement_storage.base import find_project_root
+        model_dir = model_name_to_dir(config.activations_model)
+        activations_dir = find_project_root() / "activations" / model_dir
+        activation_task_ids = get_activation_task_ids(activations_dir)
         if activation_task_ids:
             filter_fn = lambda t: t.id in activation_task_ids
         else:
-            rprint("[yellow]Warning: use_tasks_with_activations=true but probe_data/activations/completions.json not found[/yellow]")
+            rprint(f"[yellow]Warning: activations_model={config.activations_model} but activations/{model_dir}/completions_with_activations.json not found[/yellow]")
 
     # Load tasks deterministically so stated and revealed use same tasks
     # If filter_fn is set, this loads n_tasks from the filtered set
@@ -80,8 +84,8 @@ def setup_experiment(
         filter_fn=filter_fn,
     )
 
-    if config.use_tasks_with_activations and filter_fn:
-        total_activation_tasks = len(get_activation_task_ids())
+    if config.activations_model is not None and filter_fn:
+        total_activation_tasks = len(activation_task_ids)
         rprint(f"[dim]Loaded {len(tasks)} tasks from {total_activation_tasks} total with activations[/dim]")
 
     # Templates: inline takes precedence over file path

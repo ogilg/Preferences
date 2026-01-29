@@ -21,7 +21,7 @@ class OpenEndedMeasurementConfig(BaseModel):
     preference_mode: Literal["open_ended"] = "open_ended"
 
     # Model and generation parameters
-    model: str = "llama-3.1-8b"
+    model: str
     temperature: float = 1.0
     max_concurrent: int | None = None
 
@@ -30,8 +30,8 @@ class OpenEndedMeasurementConfig(BaseModel):
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
     task_sampling_seed: int | None = None
 
-    # Activation filtering: only measure tasks with activation data available
-    use_tasks_with_activations: bool = False
+    # If set, restrict to tasks with activations in activations/{model_name}/
+    activations_model: str | None = None
 
     # Open-ended specific: prompt variants to measure
     prompt_variants: list[str] = Field(

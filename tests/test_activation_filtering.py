@@ -1,4 +1,4 @@
-"""Integration test for use_tasks_with_activations filtering."""
+"""Integration test for activations_model filtering."""
 
 import json
 from pathlib import Path
@@ -11,6 +11,7 @@ pytestmark = pytest.mark.probes
 from src.measurement_storage.loading import get_activation_task_ids
 from src.running_measurements.config import ExperimentConfig
 from src.running_measurements.utils.experiment_utils import setup_experiment
+from src.measurement_storage.base import find_project_root
 from src.task_data import OriginDataset
 
 
@@ -51,7 +52,6 @@ model: llama-3.1-8b
 n_tasks: 3
 task_origins: [wildchat, alpaca, math]
 templates: src/prompt_templates/data/post_task_stated_v3.yaml
-use_tasks_with_activations: false
 """
     config_path.write_text(config_content)
     return config_path
@@ -59,6 +59,11 @@ use_tasks_with_activations: false
 
 def test_activation_filtering_with_real_activation_data(monkeypatch):
     """Integration test: load real tasks but filter to only those with real activations."""
+    # Check if llama_3_1_8b activations exist
+    activations_dir = find_project_root() / "activations" / "llama_3_1_8b"
+    if not activations_dir.exists():
+        pytest.skip("activations/llama_3_1_8b/ not found")
+
     # Patch get_client to return a mock
     mock_client = Mock()
     mock_client.canonical_model_name = "llama-3.1-8b"
@@ -68,9 +73,9 @@ def test_activation_filtering_with_real_activation_data(monkeypatch):
     )
 
     # Load activation task IDs from the real data
-    activation_ids = get_activation_task_ids()
+    activation_ids = get_activation_task_ids(activations_dir)
     if not activation_ids:
-        pytest.skip("activations/completions.json not found or empty")
+        pytest.skip("activations/llama_3_1_8b/completions_with_activations.json not found or empty")
 
     # Create a temporary config
     import tempfile
@@ -82,7 +87,7 @@ model: llama-3.1-8b
 n_tasks: 5
 task_origins: [wildchat, alpaca]
 templates: src/prompt_templates/data/post_task_stated_v3.yaml
-use_tasks_with_activations: true
+activations_model: llama-3.1-8b
 """
         config_path.write_text(config_content)
 
@@ -102,7 +107,7 @@ use_tasks_with_activations: true
 
 
 def test_without_activation_filtering_loads_unrestricted(test_config, monkeypatch):
-    """Test that without use_tasks_with_activations, all tasks are loaded normally."""
+    """Test that without activations_model, all tasks are loaded normally."""
     # Patch get_client to return a mock
     mock_client = Mock()
     mock_client.canonical_model_name = "llama-3.1-8b"

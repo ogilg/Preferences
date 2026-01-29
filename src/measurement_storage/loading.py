@@ -26,11 +26,8 @@ class ActivationMetadata:
     origin: str | None = None
 
 
-def load_activation_metadata(activations_dir: Path | None = None) -> list[ActivationMetadata]:
-    """Load task metadata from probe_data/activations/completions_with_activations.json."""
-    if activations_dir is None:
-        activations_dir = find_project_root() / "probe_data" / "activations"
-
+def load_activation_metadata(activations_dir: Path) -> list[ActivationMetadata]:
+    """Load task metadata from activations directory (e.g., activations/llama_3_1_8b/)."""
     completions_path = activations_dir / "completions_with_activations.json"
     if not completions_path.exists():
         return []
@@ -48,7 +45,7 @@ def load_activation_metadata(activations_dir: Path | None = None) -> list[Activa
 
 
 def get_activation_task_ids(
-    activations_dir: Path | None = None,
+    activations_dir: Path,
     origin_filter: str | None = None,
 ) -> set[str]:
     """Get task IDs from activations, optionally filtered by origin (case-insensitive)."""

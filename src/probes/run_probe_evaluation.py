@@ -31,7 +31,7 @@ def run_evaluation(config: ProbeEvaluationConfig) -> dict:
 
     # Determine activations path (directory containing activations.npz)
     if config.activations_path is None:
-        activations_path = find_project_root() / "probe_data" / "activations"
+        raise ValueError("activations_path is required in config (e.g., activations/llama_3_1_8b/)")
     else:
         # If path points to activations.npz file, use parent directory
         activations_path = config.activations_path

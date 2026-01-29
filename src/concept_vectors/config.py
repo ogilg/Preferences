@@ -15,7 +15,7 @@ class ConditionDict(TypedDict):
 
 
 class ConceptVectorExtractionConfig(BaseModel):
-    model: str = "llama-3.1-8b"
+    model: str
     backend: Literal["nnsight", "transformer_lens"] = "nnsight"
 
     n_tasks: int

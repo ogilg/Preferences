@@ -124,8 +124,7 @@ async def run_post_task_stated_async(
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
 
     for completion_seed in completion_seeds:
         store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
@@ -210,7 +209,7 @@ async def run_pre_task_revealed_async(
     model_short = model_short_name(ctx.client.canonical_model_name)
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
 
     for cfg in configurations:
         seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
@@ -284,7 +283,7 @@ async def run_post_task_revealed_async(
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
 
     for completion_seed in completion_seeds:
         store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
@@ -377,7 +376,7 @@ async def run_pre_task_stated_async(
     model_short = model_short_name(ctx.client.canonical_model_name)
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
 
     for cfg in configurations:
         run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}"
@@ -473,7 +472,7 @@ async def run_active_learning_async(
     completion_lookup: dict[str, str] | None = None
     completion_seed: int | None = None
     tasks_for_learning = ctx.tasks
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
     if post_task:
         completion_seeds = config.completion_seeds or config.generation_seeds
         # Use first completion seed for active learning
@@ -666,7 +665,7 @@ async def run_completion_generation_async(
         overrides["max_new_tokens"] = max(1024, overrides.get("max_new_tokens", 1024))
     ctx = setup_experiment(config_path, expected_mode="completion_generation", require_templates=False, config_overrides=overrides)
     config = ctx.config
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
 
     stats = RunnerStats(total_runs=len(config.generation_seeds))
 
@@ -837,7 +836,7 @@ async def run_post_task_ranking_async(
     configurations = build_configurations(ctx, config)
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
 
     for completion_seed in completion_seeds:
         store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)

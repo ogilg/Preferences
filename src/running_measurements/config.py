@@ -58,7 +58,7 @@ class ExperimentConfig(BaseModel):
         "completion_generation",
     ]
 
-    model: str = "llama-3.1-8b"
+    model: str
     temperature: float = 1.0
     max_concurrent: int | None = None
     max_new_tokens: int = 256  # Increase for models with thinking (e.g., qwen3: 2048)
@@ -95,9 +95,9 @@ class ExperimentConfig(BaseModel):
     # Post-task specific: which completion seeds to use (defaults to generation_seeds)
     completion_seeds: list[int] | None = None
 
-    # Universal: if True, restrict measurements to only tasks with activations in probe_data/activations/
-    # Filters task set early, applies to all measurement modes (pre-task, post-task, etc.)
-    use_tasks_with_activations: bool = False
+    # If set, restrict measurements to only tasks with activations in activations/{model_name}/
+    # Uses model name to locate activation data (e.g., "llama-3.1-8b" -> activations/llama_3_1_8b/)
+    activations_model: str | None = None
 
     # Completion generation specific: run LLM-based refusal detection
     detect_refusals: bool = False

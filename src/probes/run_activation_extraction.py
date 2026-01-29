@@ -15,8 +15,9 @@ import yaml
 from tqdm import tqdm
 
 from src.measurement_storage.completions import extract_completion_text
+from src.measurement_storage.base import find_project_root
 from src.models.transformer_lens import TransformerLensModel
-from src.running_measurements.utils.runner_utils import load_activation_task_ids
+from src.running_measurements.utils.runner_utils import load_activation_task_ids, model_name_to_dir
 from src.task_data import load_tasks, OriginDataset, Task
 
 
@@ -170,8 +171,14 @@ def main() -> None:
     temperature = config.get("temperature", 1.0)
     max_new_tokens = config.get("max_new_tokens", 2048)
     seed = config.get("seed")
-    output_dir = Path(config["output_dir"])
     selectors = config.get("selectors", args.selectors)  # config overrides CLI default
+
+    # Derive output_dir from model name if not explicitly set
+    if "output_dir" in config:
+        output_dir = Path(config["output_dir"])
+    else:
+        model_dir = model_name_to_dir(model_name)
+        output_dir = find_project_root() / "activations" / model_dir
 
     print(f"Loading model: {model_name}...")
     model = TransformerLensModel(model_name, max_new_tokens=max_new_tokens)
@@ -188,12 +195,12 @@ def main() -> None:
         return
 
     # Mode: generate and extract
-    use_tasks_with_activations = config.get("use_tasks_with_activations", False)
+    activations_model = config.get("activations_model")
 
-    if use_tasks_with_activations:
-        activation_task_ids = load_activation_task_ids()
+    if activations_model is not None:
         from src.running_measurements.utils.runner_utils import get_activation_completions_path
-        with open(get_activation_completions_path()) as f:
+        activation_task_ids = load_activation_task_ids(activations_model)
+        with open(get_activation_completions_path(activations_model)) as f:
             completions_data = json.load(f)
         tasks = [
             Task(
@@ -205,7 +212,7 @@ def main() -> None:
             for c in completions_data
             if c["task_id"] in activation_task_ids
         ][:n_tasks]
-        print(f"Using {len(tasks)} tasks from existing activation extraction")
+        print(f"Using {len(tasks)} tasks from existing activation extraction for {activations_model}")
     else:
         print(f"Loading {n_tasks} tasks from {[o.value for o in task_origins]}...")
         tasks = load_tasks(n=n_tasks, origins=task_origins, seed=seed)

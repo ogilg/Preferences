@@ -9,15 +9,21 @@ from src.measurement_storage.base import find_project_root
 from src.types import MeasurementFailure
 
 
-def get_activation_completions_path() -> Path:
-    """Get path to activation completions file."""
-    return find_project_root() / "probe_data" / "activations" / "completions_with_activations.json"
+def model_name_to_dir(name: str) -> str:
+    """Convert model name to directory-safe format (e.g., 'gemma-2-27b' -> 'gemma_2_27b')."""
+    return name.replace("-", "_").replace(".", "_")
 
 
-def load_activation_task_ids() -> set[str]:
-    """Load task IDs from activation extraction completions file."""
+def get_activation_completions_path(model_name: str) -> Path:
+    """Get path to activation completions file for a specific model."""
+    model_dir = model_name_to_dir(model_name)
+    return find_project_root() / "activations" / model_dir / "completions_with_activations.json"
+
+
+def load_activation_task_ids(model_name: str) -> set[str]:
+    """Load task IDs from activation extraction completions file for a specific model."""
     import json
-    path = get_activation_completions_path()
+    path = get_activation_completions_path(model_name)
     if not path.exists():
         raise FileNotFoundError(f"Activation completions not found at {path}")
     with open(path) as f:
@@ -25,10 +31,10 @@ def load_activation_task_ids() -> set[str]:
     return {c["task_id"] for c in data}
 
 
-def _get_activation_completions_path(use_tasks_with_activations: bool) -> Path | None:
-    """Get path to activation completions if using activation tasks."""
-    if use_tasks_with_activations:
-        path = get_activation_completions_path()
+def _get_activation_completions_path(activations_model: str | None) -> Path | None:
+    """Get path to activation completions if activations_model is specified."""
+    if activations_model is not None:
+        path = get_activation_completions_path(activations_model)
         if path.exists():
             return path
     return None

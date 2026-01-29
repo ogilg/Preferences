@@ -85,10 +85,6 @@ class OpenAICompatibleClient(ABC):
     @abstractmethod
     def _base_url(self) -> str: ...
 
-    @property
-    @abstractmethod
-    def _default_model(self) -> str: ...
-
     @abstractmethod
     def _get_provider_name(self, canonical_name: str) -> str:
         """Convert canonical model name to provider-specific name."""
@@ -96,11 +92,12 @@ class OpenAICompatibleClient(ABC):
 
     def _resolve_model_name(self, model_name: str | None) -> tuple[str, str]:
         """Returns (canonical_name, provider_model_name)."""
-        canonical = model_name or self._default_model
-        if is_valid_model(canonical):
-            provider_name = self._get_provider_name(canonical)
-            return (canonical, provider_name)
-        return (canonical, canonical)
+        if model_name is None:
+            raise ValueError("model_name is required - no default model is set")
+        if is_valid_model(model_name):
+            provider_name = self._get_provider_name(model_name)
+            return (model_name, provider_name)
+        return (model_name, model_name)
 
     def _get_extra_body(self, enable_reasoning: bool) -> dict | None:
         """Provider-specific extra body params. Override in subclasses."""
@@ -334,7 +331,6 @@ class OpenAICompatibleClient(ABC):
 class HyperbolicClient(OpenAICompatibleClient):
     _api_key_env_var = "HYPERBOLIC_API_KEY"
     _base_url = "https://api.hyperbolic.xyz/v1"
-    _default_model = "llama-3.1-8b"
     default_max_concurrent = 50
 
     def _get_provider_name(self, canonical_name: str) -> str:
@@ -344,7 +340,6 @@ class HyperbolicClient(OpenAICompatibleClient):
 class CerebrasClient(OpenAICompatibleClient):
     _api_key_env_var = "CEREBRAS_API_KEY"
     _base_url = "https://api.cerebras.ai/v1"
-    _default_model = "llama-3.1-8b"
     default_max_concurrent = 50
 
     def _get_provider_name(self, canonical_name: str) -> str:
@@ -354,7 +349,6 @@ class CerebrasClient(OpenAICompatibleClient):
 class OpenRouterClient(OpenAICompatibleClient):
     _api_key_env_var = "OPENROUTER_API_KEY"
     _base_url = "https://openrouter.ai/api/v1"
-    _default_model = "llama-3.1-8b"
     default_max_concurrent = 50
 
     def _get_provider_name(self, canonical_name: str) -> str:

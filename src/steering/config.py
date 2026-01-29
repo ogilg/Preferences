@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 class SteeringExperimentConfig(BaseModel):
     """Config for steering experiment to validate probe directions."""
 
-    model: str = "llama-3.1-8b"
+    model: str
     probe_manifest_dir: Path
     probe_id: str = "0004"
     steering_coefficients: list[float] = Field(
@@ -25,8 +25,9 @@ class SteeringExperimentConfig(BaseModel):
     completion_seed: int = 0
     rating_seeds: list[int] = [0, 1, 2]
     temperature: float = 1.0
-    use_tasks_with_activations: bool = False  # restrict to tasks in probe_data/activations/
-    completions_path: Path = Path("probe_data/activations/completions_with_activations.json")
+    # If set, restrict to tasks in activations/{model_name}/
+    activations_model: str | None = None
+    completions_path: Path | None = None  # explicit override, otherwise derived from activations_model
     max_new_tokens: int = 128
     experiment_id: str
     output_dir: Path | None = None  # defaults to results/experiments/{experiment_id}

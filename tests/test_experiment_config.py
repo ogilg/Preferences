@@ -33,6 +33,7 @@ class TestPairOrderSeedValidation:
         with pytest.raises(ValueError, match="Cannot set pair_order_seed when include_reverse_order=True"):
             ExperimentConfig(
                 preference_mode="pre_task_revealed",
+                model="llama-3.1-8b",
                 n_tasks=5,
                 task_origins=["wildchat"],
                 templates=Path("dummy.yaml"),
@@ -44,6 +45,7 @@ class TestPairOrderSeedValidation:
         """pair_order_seed alone is valid."""
         config = ExperimentConfig(
             preference_mode="pre_task_revealed",
+            model="llama-3.1-8b",
             n_tasks=5,
             task_origins=["wildchat"],
             templates=Path("dummy.yaml"),
@@ -56,6 +58,7 @@ class TestPairOrderSeedValidation:
         """include_reverse_order alone is valid."""
         config = ExperimentConfig(
             preference_mode="pre_task_revealed",
+            model="llama-3.1-8b",
             n_tasks=5,
             task_origins=["wildchat"],
             templates=Path("dummy.yaml"),
@@ -68,6 +71,7 @@ class TestPairOrderSeedValidation:
         """Neither option set defaults to shuffling with seed 0."""
         config = ExperimentConfig(
             preference_mode="pre_task_revealed",
+            model="llama-3.1-8b",
             n_tasks=5,
             task_origins=["wildchat"],
             templates=Path("dummy.yaml"),

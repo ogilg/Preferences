@@ -77,7 +77,7 @@ def run_hoo_evaluation(
 
     # Defaults for other paths
     if activations_path is None:
-        activations_path = Path("probe_data/activations/activations.npz")
+        raise ValueError("activations_path is required (e.g., activations/llama_3_1_8b/)")
     if results_dir is None:
         results_dir = manifest_dir.parent
     results_dir = Path(results_dir)
@@ -365,7 +365,8 @@ def main():
     parser.add_argument(
         "--activations",
         type=Path,
-        help="Path to activations.npz (default: probe_data/activations/activations.npz)",
+        required=True,
+        help="Path to activations directory (e.g., activations/llama_3_1_8b/)",
     )
     parser.add_argument(
         "--output-dir",

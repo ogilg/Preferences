@@ -114,7 +114,7 @@ async def run_open_ended_async(
     # Create task lookup for later
     task_lookup = {t.id: t for t in tasks}
 
-    activation_completions_path = _get_activation_completions_path(config.use_tasks_with_activations)
+    activation_completions_path = _get_activation_completions_path(config.activations_model)
 
     # Filter to tasks with activations if needed
     in_dist_task_ids = {t.id for t in tasks}

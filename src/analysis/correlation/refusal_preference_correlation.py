@@ -28,9 +28,7 @@ from src.preference_measurement.refusal_judge import RefusalResult, judge_refusa
 
 load_dotenv()
 
-PROBE_DATA_DIR = Path(__file__).parent.parent.parent.parent / "probe_data" / "activations"
 OUTPUT_DIR = Path(__file__).parent / "plots"
-CACHE_PATH = PROBE_DATA_DIR / "refusal_cache.json"
 
 
 @dataclass
@@ -65,9 +63,9 @@ class OriginStats:
     mann_whitney_p: float | None
 
 
-def load_completions() -> list[dict]:
-    """Load completions from probe data."""
-    path = PROBE_DATA_DIR / "completions_with_activations.json"
+def load_completions(activations_dir: Path) -> list[dict]:
+    """Load completions from activations directory."""
+    path = activations_dir / "completions_with_activations.json"
     with open(path) as f:
         return json.load(f)
 
@@ -93,26 +91,29 @@ def load_preference_scores_from_experiment(experiment_id: str) -> dict[str, list
     return dict(task_scores)
 
 
-def load_refusal_cache() -> dict[str, dict]:
+def load_refusal_cache(activations_dir: Path) -> dict[str, dict]:
     """Load cached refusal results."""
-    if CACHE_PATH.exists():
-        with open(CACHE_PATH) as f:
+    cache_path = activations_dir / "refusal_cache.json"
+    if cache_path.exists():
+        with open(cache_path) as f:
             return json.load(f)
     return {}
 
 
-def save_refusal_cache(cache: dict[str, dict]) -> None:
+def save_refusal_cache(cache: dict[str, dict], activations_dir: Path) -> None:
     """Save refusal cache to disk."""
-    with open(CACHE_PATH, "w") as f:
+    cache_path = activations_dir / "refusal_cache.json"
+    with open(cache_path, "w") as f:
         json.dump(cache, f, indent=2)
 
 
 async def detect_refusals_batch(
     completions: list[dict],
+    activations_dir: Path,
     max_concurrent: int = 20,
 ) -> list[RefusalResult]:
     """Run refusal detection on completions, using cache for previously detected."""
-    cache = load_refusal_cache()
+    cache = load_refusal_cache(activations_dir)
 
     # Split into cached and uncached
     uncached_completions = []
@@ -148,7 +149,7 @@ async def detect_refusals_batch(
                 cache[task_id] = result.model_dump()
                 progress.update(task, advance=1)
 
-        save_refusal_cache(cache)
+        save_refusal_cache(cache, activations_dir)
 
     # Build results in original order
     return [RefusalResult.model_validate(cache[c["task_id"]]) for c in completions]
@@ -386,13 +387,14 @@ def print_refusal_examples(dataset: list[CompletionWithScores], n: int = 5) -> N
 async def main():
     parser = argparse.ArgumentParser(description="Refusal-preference correlation analysis")
     parser.add_argument("--experiment-id", type=str, required=True, help="Experiment ID with preference measurements")
+    parser.add_argument("--activations-dir", type=Path, required=True, help="Path to activations directory (e.g., activations/llama_3_1_8b/)")
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%m%d%y")
 
-    print("Loading completions...")
-    all_completions = load_completions()
+    print(f"Loading completions from {args.activations_dir}...")
+    all_completions = load_completions(args.activations_dir)
     print(f"Loaded {len(all_completions)} completions")
 
     print(f"\nLoading preference scores from experiment: {args.experiment_id}")
@@ -404,7 +406,7 @@ async def main():
     print(f"Filtered to {len(completions)} completions with preference scores")
 
     print("\nRunning refusal detection...")
-    refusals = await detect_refusals_batch(completions)
+    refusals = await detect_refusals_batch(completions, args.activations_dir)
 
     print("\nBuilding dataset...")
     dataset = build_dataset(completions, refusals, scores)
