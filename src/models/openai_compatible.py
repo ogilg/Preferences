@@ -40,6 +40,7 @@ class GenerateRequest:
 class BatchResult:
     response: str | None
     error: Exception | None
+    reasoning: str | None = None
 
     @property
     def ok(self) -> bool:
@@ -100,6 +101,14 @@ class OpenAICompatibleClient(ABC):
             provider_name = self._get_provider_name(canonical)
             return (canonical, provider_name)
         return (canonical, canonical)
+
+    def _get_extra_body(self, enable_reasoning: bool) -> dict | None:
+        """Provider-specific extra body params. Override in subclasses."""
+        return None
+
+    def _extract_reasoning(self, message: Any) -> str | None:
+        """Extract reasoning from response. Override in subclasses."""
+        return None
 
     def __init__(
         self,
@@ -204,6 +213,7 @@ class OpenAICompatibleClient(ABC):
         max_concurrent: int,
         on_complete: Callable[[], None] | None = None,
         semaphore: asyncio.Semaphore | None = None,
+        enable_reasoning: bool = False,
     ) -> list[BatchResult]:
         if semaphore is None:
             semaphore = asyncio.Semaphore(max_concurrent)
@@ -226,6 +236,9 @@ class OpenAICompatibleClient(ABC):
                 kwargs["tool_choice"] = "auto"
             if request.seed is not None:
                 kwargs["seed"] = request.seed
+            extra_body = self._get_extra_body(enable_reasoning)
+            if extra_body is not None:
+                kwargs["extra_body"] = extra_body
 
             async with semaphore:
                 try:
@@ -236,13 +249,13 @@ class OpenAICompatibleClient(ABC):
                             timeout=timeout,
                         )
                     )
-                    text = self._parse_response(
-                        response.choices[0].message, request.tools
-                    )
+                    message = response.choices[0].message
+                    text = self._parse_response(message, request.tools)
+                    reasoning = self._extract_reasoning(message) if enable_reasoning else None
                     if on_complete:
                         on_complete()
                     remaining -= 1
-                    return BatchResult(response=text, error=None)
+                    return BatchResult(response=text, error=None, reasoning=reasoning)
                 except Exception as e:
                     if VERBOSE:
                         if isinstance(e, asyncio.TimeoutError):
@@ -299,17 +312,22 @@ class OpenAICompatibleClient(ABC):
         requests: list[GenerateRequest],
         max_concurrent: int = 10,
         on_complete: Callable[[], None] | None = None,
+        enable_reasoning: bool = False,
     ) -> list[BatchResult]:
-        return asyncio.run(self._generate_batch_async(requests, max_concurrent, on_complete))
+        return asyncio.run(self._generate_batch_async(
+            requests, max_concurrent, on_complete, enable_reasoning=enable_reasoning
+        ))
 
     async def generate_batch_async(
         self,
         requests: list[GenerateRequest],
         semaphore: asyncio.Semaphore,
         on_complete: Callable[[], None] | None = None,
+        enable_reasoning: bool = False,
     ) -> list[BatchResult]:
         return await self._generate_batch_async(
-            requests, max_concurrent=0, on_complete=on_complete, semaphore=semaphore
+            requests, max_concurrent=0, on_complete=on_complete, semaphore=semaphore,
+            enable_reasoning=enable_reasoning,
         )
 
 
@@ -341,3 +359,11 @@ class OpenRouterClient(OpenAICompatibleClient):
 
     def _get_provider_name(self, canonical_name: str) -> str:
         return get_openrouter_name(canonical_name)
+
+    def _get_extra_body(self, enable_reasoning: bool) -> dict | None:
+        if enable_reasoning:
+            return {"reasoning": {"enabled": True}}
+        return None
+
+    def _extract_reasoning(self, message: Any) -> str | None:
+        return getattr(message, "reasoning", None)
