@@ -28,6 +28,13 @@ class ModelConfig:
 
 
 MODEL_REGISTRY: dict[str, ModelConfig] = {
+    "llama-3.2-1b": ModelConfig(
+        canonical_name="llama-3.2-1b",
+        transformer_lens_name="meta-llama/Llama-3.2-1B-Instruct",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="meta-llama/llama-3.2-1b-instruct",
+    ),
     "llama-3.1-8b": ModelConfig(
         canonical_name="llama-3.1-8b",
         transformer_lens_name="meta-llama/Llama-3.1-8B-Instruct",
@@ -167,3 +174,10 @@ def adjust_max_tokens_for_reasoning(model_name: str, max_tokens: int) -> int:
     if is_reasoning_model(model_name):
         return max(2048, max_tokens * 10)
     return max_tokens
+
+
+def adjust_timeout_for_reasoning(model_name: str, timeout: float) -> float:
+    """Adjust timeout for reasoning models (10x)."""
+    if is_reasoning_model(model_name):
+        return timeout * 10
+    return timeout

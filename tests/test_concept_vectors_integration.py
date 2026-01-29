@@ -34,7 +34,7 @@ from src.concept_vectors.extraction import extract_activations_with_system_promp
 from src.models.transformer_lens import TransformerLensModel
 from src.task_data import Task, OriginDataset, load_tasks
 
-MODEL_NAME = "llama-3.1-8b"
+MODEL_NAME = "llama-3.2-1b"
 
 
 @pytest.fixture(autouse=True)
@@ -97,7 +97,7 @@ class TestExtractionWithSystemPrompt:
             # Verify activations have correct shape
             acts = data[f"layer_{layers[0]}"]
             assert acts.shape[0] == 3  # n_tasks
-            assert acts.shape[1] == 4096  # hidden_dim for llama-3.1-8b
+            assert acts.shape[1] == transformer_lens_model.hidden_dim
 
         # Load and verify completions
         with open(tmp_path / "completions.json") as f:
@@ -204,7 +204,7 @@ class TestExtractionWithSystemPrompt:
         for layer in layers:
             assert f"layer_{layer}" in data.keys()
             acts = data[f"layer_{layer}"]
-            assert acts.shape == (3, 4096)
+            assert acts.shape == (3, transformer_lens_model.hidden_dim)
 
         # Activations should differ between layers
         acts_early = data[f"layer_{layers[0]}"]
@@ -256,7 +256,7 @@ class TestDifferenceInMeansIntegration:
         assert len(vectors) == 1
         layer = layers[0]
         assert layer in vectors
-        assert vectors[layer].shape == (4096,)  # hidden_dim for llama-3.1-8b
+        assert vectors[layer].shape == (transformer_lens_model.hidden_dim,)
         assert abs(np.linalg.norm(vectors[layer]) - 1.0) < 1e-6  # Unit normalized
 
     def test_direction_is_nonzero(self, transformer_lens_model, small_tasks, tmp_path):
@@ -371,14 +371,14 @@ class TestFullPipelineE2E:
             manifest = json.load(f)
         assert manifest["experiment_id"] == "e2e_test"
         assert manifest["n_layers"] == 1
-        assert manifest["hidden_dim"] == 4096
+        assert manifest["hidden_dim"] == transformer_lens_model.hidden_dim
         assert set(manifest["selectors"]) == set(selector_names)
 
         # Verify steering-compatible loading for each selector
         for selector in selector_names:
             loaded_layer, direction = load_concept_vector_for_steering(tmp_path, layer=layer, selector=selector)
             assert loaded_layer == layer
-            assert direction.shape == (4096,)
+            assert direction.shape == (transformer_lens_model.hidden_dim,)
             assert abs(np.linalg.norm(direction) - 1.0) < 1e-6
 
     def test_extracted_direction_usable_for_steering(self, transformer_lens_model, tmp_path):
@@ -419,24 +419,27 @@ class TestFullPipelineE2E:
         save_concept_vectors(vectors_by_selector, tmp_path, {"experiment_id": "test"})
 
         # Load and use for steering
+        import torch
+        from src.models.transformer_lens import last_token_steering
+
         _, direction = load_concept_vector_for_steering(tmp_path, layer=layer)
 
         # Generate with positive steering
         messages = [{"role": "user", "content": "How do you feel about math?"}]
+        pos_tensor = torch.tensor(direction * 2.0, dtype=transformer_lens_model.model.cfg.dtype, device=transformer_lens_model.model.cfg.device)
         pos_output = transformer_lens_model.generate_with_steering(
             messages=messages,
             layer=layer,
-            steering_vector=direction,
-            steering_coefficient=2.0,
+            steering_hook=last_token_steering(pos_tensor),
             temperature=0.0,
         )
 
         # Generate with negative steering
+        neg_tensor = torch.tensor(direction * -2.0, dtype=transformer_lens_model.model.cfg.dtype, device=transformer_lens_model.model.cfg.device)
         neg_output = transformer_lens_model.generate_with_steering(
             messages=messages,
             layer=layer,
-            steering_vector=direction,
-            steering_coefficient=-2.0,
+            steering_hook=last_token_steering(neg_tensor),
             temperature=0.0,
         )
 
@@ -521,7 +524,7 @@ class TestTokenSelectorCorrectness:
 
         # All should have same shape
         assert last_acts.shape == first_acts.shape == mean_acts.shape
-        assert last_acts.shape[1] == 4096  # hidden_dim
+        assert last_acts.shape[1] == transformer_lens_model.hidden_dim
 
         # They should be different from each other
         assert not np.allclose(last_acts, first_acts), "Last and first should differ"
@@ -568,7 +571,7 @@ class TestTokenSelectorCorrectness:
 
         # Verify shape is correct (single vector, not sequence)
         mean_act = result.activations["mean"][layer]
-        assert mean_act.shape == (4096,), f"Mean activation should be 1D, got {mean_act.shape}"
+        assert mean_act.shape == (transformer_lens_model.hidden_dim,), f"Mean activation should be 1D, got {mean_act.shape}"
 
     def test_selectors_consistent_across_calls(self, transformer_lens_model, small_tasks):
         """Verify that selectors produce consistent results on identical inputs."""
@@ -703,7 +706,7 @@ class TestCLIEndToEnd:
         import sys
 
         config_content = """
-model: llama-3.1-8b
+model: llama-3.2-1b
 backend: transformer_lens
 n_tasks: 2
 task_origins:
@@ -759,7 +762,8 @@ experiment_id: cli_test
 
         # Verify vector is loadable and usable
         layer = manifest["layers"][0]
+        hidden_dim = manifest["hidden_dim"]
         for selector in ["last", "first", "mean"]:
             loaded_layer, direction = load_concept_vector_for_steering(tmp_path, layer=layer, selector=selector)
-            assert direction.shape == (4096,)
+            assert direction.shape == (hidden_dim,)
             assert abs(np.linalg.norm(direction) - 1.0) < 1e-6

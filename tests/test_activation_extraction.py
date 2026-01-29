@@ -27,7 +27,7 @@ else:
 
 logger = logging.getLogger(__name__)
 
-MODEL_NAME = "llama-3.1-8b"
+MODEL_NAME = "llama-3.2-1b"
 TEST_MESSAGES = [{"role": "user", "content": "Hi"}]
 
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Callable
+
 import torch
 import numpy as np
 from transformer_lens import HookedTransformer
@@ -8,6 +10,45 @@ from src.models.base import SELECTOR_REGISTRY
 from src.models.nnsight_model import GenerationResult
 from src.models.registry import get_transformer_lens_name, is_valid_model
 from src.types import Message
+
+
+# SteeringHook takes (resid, prompt_len) and returns modified resid
+SteeringHook = Callable[[torch.Tensor, int], torch.Tensor]
+
+
+def last_token_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+    """Steer only the last token position."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        resid[:, -1, :] += steering_tensor
+        return resid
+    return hook
+
+
+def all_tokens_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+    """Steer all token positions."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        resid += steering_tensor
+        return resid
+    return hook
+
+
+def generation_only_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+    """Steer only newly generated tokens (after the full prompt).
+
+    This steers only the tokens being generated in the current turn,
+    not any prior conversation history in the prompt.
+    """
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        resid[:, prompt_len:, :] += steering_tensor
+        return resid
+    return hook
+
+
+STEERING_MODES = {
+    "last_token": last_token_steering,
+    "all_tokens": all_tokens_steering,
+    "generation_only": generation_only_steering,
+}
 
 
 class TransformerLensModel:
@@ -35,6 +76,10 @@ class TransformerLensModel:
     @property
     def n_layers(self) -> int:
         return self.model.cfg.n_layers
+
+    @property
+    def hidden_dim(self) -> int:
+        return self.model.cfg.d_model
 
     def resolve_layer(self, layer: int | float) -> int:
         """Resolve layer index. Floats in [0, 1] are relative positions."""
@@ -149,34 +194,30 @@ class TransformerLensModel:
         self,
         messages: list[Message],
         layer: int,
-        steering_vector: np.ndarray,
-        steering_coefficient: float = 1.0,
+        steering_hook: SteeringHook,
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> str:
         """Generate with activation steering applied at specified layer.
 
-        Adds scaled steering vector to residual stream at last token position
-        during each generation step.
+        Args:
+            messages: Conversation messages.
+            layer: Layer index to apply steering hook.
+            steering_hook: A SteeringHook function that modifies residual activations.
+                Use factory functions: last_token_steering, all_tokens_steering,
+                or completion_only_steering.
+            temperature: Sampling temperature.
+            max_new_tokens: Maximum tokens to generate.
         """
         prompt = self._format_messages(messages, add_generation_prompt=True)
-
-        steering_tensor = torch.tensor(
-            steering_vector * steering_coefficient,
-            dtype=self.model.cfg.dtype,
-            device=self.model.cfg.device,
-        )
-
-        def steering_hook(resid: torch.Tensor, hook) -> torch.Tensor:
-            # Always steer the last token position
-            resid[:, -1, :] += steering_tensor
-            return resid
-
-        hook_name = f"blocks.{layer}.hook_resid_post"
         prompt_tokens = self.model.to_tokens(prompt)
         prompt_len = prompt_tokens.shape[1]
 
-        self.model.add_hook(hook_name, steering_hook)
+        def tl_hook(resid: torch.Tensor, hook) -> torch.Tensor:
+            return steering_hook(resid, prompt_len)
+
+        hook_name = f"blocks.{layer}.hook_resid_post"
+        self.model.add_hook(hook_name, tl_hook)
         try:
             output_tokens = self.model.generate(
                 prompt,
