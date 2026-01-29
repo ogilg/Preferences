@@ -10,7 +10,7 @@ import re
 from pathlib import Path
 
 from src.measurement_storage import ExperimentStore
-from src.measurement_storage.completions import TaskCompletion, _load_json, _extract_assistant_response
+from src.measurement_storage.completions import TaskCompletion, _load_json, extract_completion_text
 from src.running_measurements.progress import MultiExperimentProgress
 from src.task_data import Task, OriginDataset
 
@@ -27,7 +27,7 @@ def load_concept_vector_completions(path: Path, condition: str) -> list[TaskComp
                 id=c["task_id"],
                 metadata={},
             ),
-            completion=_extract_assistant_response(c["completion"]),
+            completion=extract_completion_text(c["completion"]),
         )
         for c in data
         if not c.get("truncated", False)

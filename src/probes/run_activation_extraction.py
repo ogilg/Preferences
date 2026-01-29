@@ -14,6 +14,7 @@ import torch
 import yaml
 from tqdm import tqdm
 
+from src.measurement_storage.completions import extract_completion_text
 from src.models.transformer_lens import TransformerLensModel
 from src.running_measurements.utils.runner_utils import load_activation_task_ids
 from src.task_data import load_tasks, OriginDataset, Task
@@ -251,7 +252,7 @@ def main() -> None:
                     "task_id": task.id,
                     "task_prompt": task.prompt,
                     "origin": task.origin.name,
-                    "completion": result.completion,
+                    "completion": extract_completion_text(result.completion),
                     "truncated": truncated,
                     "prompt_tokens": result.prompt_tokens,
                     "completion_tokens": result.completion_tokens,

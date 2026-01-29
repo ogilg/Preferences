@@ -13,6 +13,7 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
+from src.measurement_storage.completions import extract_completion_text
 from src.models import NnsightModel, TransformerLensModel
 from src.task_data import Task
 
@@ -210,7 +211,7 @@ def extract_activations_with_system_prompt(
                     "task_prompt": task.prompt,
                     "system_prompt": system_prompt,
                     "condition": condition_name,
-                    "completion": result.completion,
+                    "completion": extract_completion_text(result.completion),
                     "truncated": truncated,
                     "prompt_tokens": result.prompt_tokens,
                     "completion_tokens": result.completion_tokens,

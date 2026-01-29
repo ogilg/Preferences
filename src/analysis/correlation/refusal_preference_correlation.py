@@ -22,8 +22,9 @@ from dotenv import load_dotenv
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 from scipy.stats import pointbiserialr, mannwhitneyu
 
-from src.preference_measurement.refusal_judge import RefusalResult, judge_refusal_async
 from src.measurement_storage import EXPERIMENTS_DIR
+from src.measurement_storage.completions import extract_completion_text
+from src.preference_measurement.refusal_judge import RefusalResult, judge_refusal_async
 
 load_dotenv()
 
@@ -92,13 +93,6 @@ def load_preference_scores_from_experiment(experiment_id: str) -> dict[str, list
     return dict(task_scores)
 
 
-def extract_assistant_response(raw_completion: str) -> str:
-    """Extract assistant response from Llama chat template format."""
-    if "assistant\n" in raw_completion:
-        return raw_completion.split("assistant\n", 1)[1]
-    return raw_completion
-
-
 def load_refusal_cache() -> dict[str, dict]:
     """Load cached refusal results."""
     if CACHE_PATH.exists():
@@ -136,7 +130,7 @@ async def detect_refusals_batch(
 
         async def detect_one(c: dict) -> tuple[str, RefusalResult]:
             async with semaphore:
-                completion = extract_assistant_response(c["completion"])
+                completion = extract_completion_text(c["completion"])
                 result = await judge_refusal_async(c["task_prompt"], completion)
                 return c["task_id"], result
 
@@ -175,7 +169,7 @@ def build_dataset(
         dataset.append(CompletionWithScores(
             task_id=task_id,
             task_prompt=c["task_prompt"],
-            completion=extract_assistant_response(c["completion"]),
+            completion=extract_completion_text(c["completion"]),
             origin=c["origin"],
             refusal=refusal,
             preference_scores=scores[task_id],

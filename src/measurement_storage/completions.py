@@ -46,16 +46,20 @@ def _save_json(data: list[dict], path: Path) -> None:
         json.dump(data, f, indent=2)
 
 
-def _extract_assistant_response(raw_completion: str) -> str:
-    """Extract assistant response from Llama chat template format.
+def extract_completion_text(raw: str) -> str:
+    """Extract model response from chat template formatted text.
 
-    Concept vector completions may contain raw Llama format:
-    'system\\n...\\nuser\\n...\\nassistant\\n<actual response>'
-    This extracts just the assistant response.
+    Handles: 'assistant\n<response>' (Llama), 'model\n<response>' (Gemma)
+    Splits on first occurrence of marker.
     """
-    if "assistant\n" in raw_completion:
-        return raw_completion.split("assistant\n", 1)[1]
-    return raw_completion
+    for marker in ("assistant\n", "model\n"):
+        if marker in raw:
+            return raw.split(marker, 1)[1]
+    return raw
+
+
+# Alias for backwards compatibility
+_extract_assistant_response = extract_completion_text
 
 
 class CompletionStore:
