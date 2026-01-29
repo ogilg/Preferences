@@ -152,34 +152,53 @@ class TestSteeringEndToEnd:
             )
             assert isinstance(result, str), f"{mode_name} should return string"
 
-    def test_steering_affects_output(self, model):
-        """Strong steering should change the output distribution."""
-        messages = [{"role": "user", "content": "What is 2+2?"}]
+    def test_steering_causally_affects_generation(self, model):
+        """Opposite steering directions must produce different outputs.
 
-        # Generate baseline
+        This tests that steering has a causal effect on generation by applying
+        the same random direction with positive and negative coefficients.
+        With temperature=0 (greedy decoding), different activations should
+        produce different token sequences.
+        """
+        messages = [{"role": "user", "content": "Describe your current mood in one word:"}]
+
+        # Use a fixed random direction
         torch.manual_seed(42)
-        baseline = model.generate(messages, temperature=0.0, max_new_tokens=10)
-
-        # Generate with strong steering
-        steering_tensor = torch.randn(
+        direction = torch.randn(
             model.hidden_dim,
             dtype=model.model.cfg.dtype,
             device=model.model.cfg.device,
-        ) * 10.0  # Strong steering
+        )
+        direction = direction / direction.norm()  # Unit normalize
 
-        hook = generation_only_steering(steering_tensor)
-        torch.manual_seed(42)
-        steered = model.generate_with_steering(
+        coefficient = 3.0  # Strong enough to change behavior
+        pos_steering = direction * coefficient
+        neg_steering = direction * (-coefficient)
+
+        pos_hook = generation_only_steering(pos_steering)
+        neg_hook = generation_only_steering(neg_steering)
+
+        pos_output = model.generate_with_steering(
             messages=messages,
             layer=model.n_layers // 2,
-            steering_hook=hook,
+            steering_hook=pos_hook,
             temperature=0.0,
-            max_new_tokens=10,
+            max_new_tokens=20,
         )
 
-        # With strong random steering, output should likely differ
-        # (not guaranteed but very likely with magnitude 10)
-        assert steered != baseline or True  # Don't fail on rare collision
+        neg_output = model.generate_with_steering(
+            messages=messages,
+            layer=model.n_layers // 2,
+            steering_hook=neg_hook,
+            temperature=0.0,
+            max_new_tokens=20,
+        )
+
+        assert pos_output != neg_output, (
+            f"Steering with opposite directions should produce different outputs.\n"
+            f"Positive: {pos_output!r}\n"
+            f"Negative: {neg_output!r}"
+        )
 
     def test_zero_steering_matches_baseline(self, model):
         """Zero steering vector should produce same output as no steering."""
