@@ -16,7 +16,7 @@ import torch
 import yaml
 from tqdm import tqdm
 
-from src.models import NnsightModel
+from src.models import TransformerLensModel
 from src.task_data import load_completions
 
 
@@ -55,7 +55,7 @@ def main() -> None:
     print(f"Loaded {len(task_completion_pairs)} tasks")
 
     print(f"Loading model: {args.model}...")
-    model = NnsightModel(args.model)
+    model = TransformerLensModel(args.model)
 
     resolved_layers = [model.resolve_layer(layer) for layer in args.layers]
     print(
@@ -70,11 +70,11 @@ def main() -> None:
     for task, _ in tqdm(task_completion_pairs, desc="Extracting activations"):
         try:
             messages = [{"role": "user", "content": task.prompt}]
-            activations = model.get_activations(messages, layers=resolved_layers)
+            activations = model.get_activations(messages, layers=resolved_layers, selector_names=["last"])
 
             task_ids.append(task.id)
             for layer in resolved_layers:
-                layer_activations[layer].append(activations[layer])
+                layer_activations[layer].append(activations["last"][layer])
 
         except torch.cuda.OutOfMemoryError as e:
             tqdm.write(f"OOM on task {task.id}: {e}")

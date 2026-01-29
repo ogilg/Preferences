@@ -14,10 +14,8 @@ import torch
 from tqdm import tqdm
 
 from src.measurement_storage.completions import extract_completion_text
-from src.models import NnsightModel, TransformerLensModel
+from src.models import TransformerLensModel
 from src.task_data import Task
-
-ActivationModel = NnsightModel | TransformerLensModel
 
 
 def gpu_mem_gb() -> tuple[float, float]:
@@ -140,7 +138,7 @@ def save_failures(output_dir: Path, failures: list[tuple[str, str, str]]) -> Non
 
 
 def extract_activations_with_system_prompt(
-    model: ActivationModel,
+    model: TransformerLensModel,
     tasks: list[Task],
     layers: list[int],
     system_prompt: str | None,
