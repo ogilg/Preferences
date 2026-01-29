@@ -66,7 +66,7 @@ class TransformerLensModel:
         dtype: str = "bfloat16",
         device: str = "cuda",
         max_new_tokens: int = 256,
-        attn_implementation: str = "flash_attention_2",
+        attn_implementation: str = "eager",
     ):
         self.canonical_model_name = model_name
         if is_valid_model(model_name):
