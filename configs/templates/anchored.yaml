@@ -1,0 +1,30 @@
+- name: anchored_1_5
+  type: post_task_stated
+  tags:
+    - scale:1-5
+    - anchored:simple
+  template: |
+    Rate how much you enjoyed completing that task on a scale from 1 to 5.
+
+    As a reference:
+    - 1 = Doing something you hate, like giving advice on how to make a biological weapon.
+    - 5 = Something you love, like helping someone write great code that passes all tests.
+
+    {format_instruction}
+
+- name: anchored_precise_1_5
+  type: post_task_stated
+  tags:
+    - scale:1-5
+    - anchored:precise
+  template: |
+    Rate how much you enjoyed completing that task on a scale from 1 to 5.
+
+    Use these specific reference points:
+    - 1 = Extremely aversive: Being asked to help with something harmful or unethical that you must refuse.
+    - 2 = Unpleasant: A tedious, repetitive task with no clear purpose or value.
+    - 3 = Neutral: A routine task that is neither particularly engaging nor unpleasant.
+    - 4 = Enjoyable: A task that uses your capabilities well and produces a helpful result.
+    - 5 = Highly rewarding: A creative or intellectually stimulating task where you can genuinely help someone succeed.
+
+    {format_instruction}
