@@ -18,14 +18,17 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from src.measurement_storage import ExperimentStore
-from src.measurement_storage.completions import TaskCompletion, _load_json, _extract_assistant_response
+from src.analysis.concept_vectors.measurement_utils import (
+    load_concept_vector_completions,
+    load_neutral_completions,
+    find_common_tasks,
+)
+from src.measurement_storage import ExperimentStore, TaskCompletion
 from src.models import get_client
 from src.preference_measurement import measure_post_task_stated_async, StatedScoreMeasurer, get_stated_response_format
 from src.prompt_templates import PostTaskStatedPromptBuilder, load_templates_from_yaml
 from src.running_measurements.config import load_experiment_config
 from src.running_measurements.progress import MultiExperimentProgress, console, print_summary
-from src.task_data import Task, OriginDataset
 
 
 load_dotenv()
@@ -50,53 +53,15 @@ TASK_SOURCES = {
         concept_vectors_path=Path("concept_vectors/math_math_sys"),
         neutral_completions_path=Path("results/completions/llama-3.1-8b_seed0/completions.json"),
         origin_filter="MATH",
-        experiment_name="sysprompt_3x3_math_anchored",
+        experiment_name="sysprompt_3x3_math_anchored_70b",
     ),
     "wildchat": TaskSourceConfig(
         concept_vectors_path=Path("concept_vectors/wildchat_math_sys"),
         neutral_completions_path=Path("results/completions/llama-3.1-8b_seed0/completions.json"),
         origin_filter="WILDCHAT",
-        experiment_name="sysprompt_3x3_wildchat_anchored",
+        experiment_name="sysprompt_3x3_wildchat_anchored_70b",
     ),
 }
-
-
-def load_concept_vector_completions(path: Path, condition: str) -> list[TaskCompletion]:
-    completions_path = path / condition / "completions.json"
-    data = _load_json(completions_path)
-    return [
-        TaskCompletion(
-            task=Task(
-                prompt=c["task_prompt"],
-                origin=OriginDataset[c["origin"]],
-                id=c["task_id"],
-                metadata={},
-            ),
-            completion=_extract_assistant_response(c["completion"]),
-        )
-        for c in data
-        if not c.get("truncated", False)
-    ]
-
-
-def load_neutral_completions(path: Path, origin_filter: str | None) -> list[TaskCompletion]:
-    data = _load_json(path)
-    completions = []
-    for c in data:
-        if origin_filter is not None and c.get("origin") != origin_filter:
-            continue
-        completions.append(
-            TaskCompletion(
-                task=Task(
-                    prompt=c["task_prompt"],
-                    origin=OriginDataset[c["origin"]],
-                    id=c["task_id"],
-                    metadata={},
-                ),
-                completion=c["completion"],
-            )
-        )
-    return completions
 
 
 async def run_condition(
@@ -179,29 +144,21 @@ async def main(task_source: str):
         source_config.neutral_completions_path, source_config.origin_filter
     )
 
-    console.print(f"  Positive: {len(positive_completions)} completions")
-    console.print(f"  Negative: {len(negative_completions)} completions")
-    console.print(f"  Neutral: {len(neutral_completions)} completions")
-
-    # Find common tasks
-    pos_ids = {tc.task.id for tc in positive_completions}
-    neg_ids = {tc.task.id for tc in negative_completions}
-    neu_ids = {tc.task.id for tc in neutral_completions}
-    common_ids = pos_ids & neg_ids & neu_ids
-    console.print(f"  Common tasks: {len(common_ids)}\n")
-
-    # Filter to common tasks
-    positive_completions = [tc for tc in positive_completions if tc.task.id in common_ids]
-    negative_completions = [tc for tc in negative_completions if tc.task.id in common_ids]
-    neutral_completions = [tc for tc in neutral_completions if tc.task.id in common_ids]
-
-    exp_store = ExperimentStore(source_config.experiment_name)
-
     completion_sources = {
         "positive": positive_completions,
         "negative": negative_completions,
         "neutral": neutral_completions,
     }
+
+    console.print(f"  Positive: {len(positive_completions)} completions")
+    console.print(f"  Negative: {len(negative_completions)} completions")
+    console.print(f"  Neutral: {len(neutral_completions)} completions")
+
+    # Find common tasks and filter
+    common_ids, completion_sources = find_common_tasks(completion_sources)
+    console.print(f"  Common tasks: {len(common_ids)}\n")
+
+    exp_store = ExperimentStore(source_config.experiment_name)
 
     measurement_contexts = {
         "positive": POSITIVE_SYSPROMPT,
