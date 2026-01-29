@@ -446,6 +446,7 @@ class TestSteeringExperimentE2E:
                 rating_seeds=[0],
                 experiment_id="e2e_test",
                 output_dir=Path(tmpdir),
+                completions_path=Path("results/completions/llama-3.1-8b_seed0/completions.json"),
             )
 
             results = run_steering_experiment(config)

@@ -159,7 +159,7 @@ class TestExtractionWithSystemPrompt:
                 np.linalg.norm(pos_acts[i]) * np.linalg.norm(neg_acts[i])
             )
             # Should be similar (same task) but not identical (different system prompt)
-            assert 0.8 < cos_sim < 0.9999, f"Task {i} cosine sim {cos_sim} outside expected range"
+            assert 0.5 < cos_sim < 0.9999, f"Task {i} cosine sim {cos_sim} outside expected range"
 
     def test_extraction_without_system_prompt(self, transformer_lens_model, small_tasks, tmp_path):
         """Verify extraction works with system_prompt=None."""

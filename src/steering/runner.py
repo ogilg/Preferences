@@ -44,10 +44,8 @@ class TaskSteeringResults:
     conditions: list[SteeringConditionResult] = field(default_factory=list)
 
 
-def _load_completions(model_name: str, seed: int) -> dict[str, tuple[Task, str]]:
-    """Load completions from probe_data folder."""
-    completions_path = Path("probe_data/activations/completions_with_activations.json")
-
+def _load_completions(completions_path: Path) -> dict[str, tuple[Task, str]]:
+    """Load completions from file."""
     if not completions_path.exists():
         raise ValueError(f"Completions not found at {completions_path}")
 
@@ -181,7 +179,7 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
         model = NnsightModel(config.model, max_new_tokens=config.max_new_tokens)
 
     # Load completions
-    completion_lookup = _load_completions(config.model, config.completion_seed)
+    completion_lookup = _load_completions(config.completions_path)
     print(f"Loaded {len(completion_lookup)} completions")
 
     # Get task IDs to use
