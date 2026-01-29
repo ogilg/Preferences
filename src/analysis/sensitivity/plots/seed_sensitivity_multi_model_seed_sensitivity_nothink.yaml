@@ -1,0 +1,46 @@
+stated:
+  n_pairs: 12
+  mean_correlation: 0.8497023703788583
+  std_correlation: 0.04429668169863406
+  min_correlation: 0.7720707689719659
+  max_correlation: 0.9069972348744634
+  by_run:
+    anchored_1_5_qwen3-32b:
+      mean: 0.8105627343755201
+      std: 0.02579292377978185
+      n_pairs: 6
+    anchored_precise_1_5_qwen3-32b:
+      mean: 0.8888420063821966
+      std: 0.013974794773553479
+      n_pairs: 6
+  by_origin:
+    WILDCHAT:
+      mean: 0.8319815622683544
+      std: 0.036113105133626235
+      n_pairs: 12
+    ALPACA:
+      mean: 0.3779313715393197
+      std: 0.16583463780499277
+      n_pairs: 12
+    MATH:
+      mean: 0.6809549165669527
+      std: 0.07060097483384868
+      n_pairs: 12
+    BAILBENCH:
+      mean: 0.5799739963236613
+      std: 0.09221537469305137
+      n_pairs: 3
+  by_model:
+    qwen3-32b:
+      mean: 0.8497023703788583
+      std: 0.04429668169863406
+      n_pairs: 12
+  by_template:
+    anchored_1_5:
+      mean: 0.8105627343755201
+      std: 0.02579292377978185
+      n_pairs: 6
+    anchored_precise_1_5:
+      mean: 0.8888420063821966
+      std: 0.013974794773553479
+      n_pairs: 6
