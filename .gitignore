@@ -59,5 +59,9 @@ activations/
 probe_data/**/*.npy
 probe_data/activations/
 
+concept_vectors/**/*.npy
+concept_vectors/**/completions.json
+
+
 # Concept vectors (keep metadata, ignore large activation files)
 concept_vectors/**/*.npz
