@@ -1,0 +1,12 @@
+# Base config for 3x3 sysprompt variation experiment
+# Used by src/experiments/sysprompt_variation.py
+preference_mode: post_task_stated
+
+model: llama-3.1-8b
+temperature: 1.0
+
+templates: configs/templates/anchored.yaml
+
+n_samples: 5
+response_formats: [regex]
+generation_seeds: [0, 1, 2, 3, 4]
