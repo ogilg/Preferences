@@ -61,6 +61,7 @@ class ExperimentConfig(BaseModel):
     model: str = "llama-3.1-8b"
     temperature: float = 1.0
     max_concurrent: int | None = None
+    max_new_tokens: int = 256  # Increase for models with thinking (e.g., qwen3: 2048)
 
     n_tasks: int = 10
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
@@ -103,6 +104,9 @@ class ExperimentConfig(BaseModel):
 
     # Experiment tracking
     experiment_id: str | None = None
+
+    # System prompt to use during preference measurement (injected as system message)
+    measurement_system_prompt: str | None = None
 
     @model_validator(mode="after")
     def validate_pair_order_options(self) -> "ExperimentConfig":

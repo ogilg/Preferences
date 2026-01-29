@@ -37,10 +37,21 @@ def parse_config_path(description: str) -> Path:
 def setup_experiment(
     config_path: Path,
     expected_mode: str,
-    max_new_tokens: int = 256,
+    max_new_tokens: int | None = None,
     require_templates: bool = True,
+    config_overrides: dict | None = None,
 ) -> ExperimentContext:
     config = load_experiment_config(config_path)
+
+    # Apply CLI overrides
+    if config_overrides:
+        for key, value in config_overrides.items():
+            if hasattr(config, key):
+                setattr(config, key, value)
+
+    # Use config's max_new_tokens unless explicitly overridden by caller
+    if max_new_tokens is None:
+        max_new_tokens = config.max_new_tokens
 
     # CLI experiment_id (set via set_experiment_id) overrides config file
     global_exp_id = get_experiment_id()
