@@ -1,0 +1,23 @@
+{
+  "model": "llama-3.1-8b",
+  "selectors": [
+    "first",
+    "mean",
+    "last"
+  ],
+  "layers_config": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "layers_resolved": [
+    8,
+    16,
+    24
+  ],
+  "n_existing": 0,
+  "n_new": 6276,
+  "n_failures": 0,
+  "source_completions": "probe_data/activations/completions_with_activations.json",
+  "last_updated": "2026-01-25T05:28:39.248057"
+}

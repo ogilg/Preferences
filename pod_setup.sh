@@ -9,6 +9,8 @@ uv pip install -e ".[viz]"
 
 git config --global user.name "Oscar Gilg"
 git config --global user.email "oscar.gilg18@gmail.com"
+apt-get update && apt-get install -y tmux 
+hugginface-cli login                                                                              
 
 
 # Copy over .env file

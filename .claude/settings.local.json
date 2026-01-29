@@ -14,7 +14,14 @@
       "Bash(git mv:*)",
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Skill(hookify:list)",
+      "Bash(chmod:*)",
+      "Bash(git reset:*)",
+      "WebFetch(domain:transformerlensorg.github.io)",
+      "Bash(head:*)",
+      "WebFetch(domain:openrouter.ai)",
+      "Bash(xargs:*)"
     ]
   }
 }
