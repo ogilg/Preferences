@@ -56,6 +56,23 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         cerebras_name=None,  # Not available
         openrouter_name="qwen/qwen3-8b",
     ),
+    "qwen3-14b": ModelConfig(
+        canonical_name="qwen3-14b",
+        transformer_lens_name="Qwen/Qwen3-14B",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="qwen/qwen3-14b",
+        reasoning_mode="openrouter",
+    ),
+    "qwen3-14b-nothink": ModelConfig(
+        canonical_name="qwen3-14b-nothink",
+        transformer_lens_name="Qwen/Qwen3-14B",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="qwen/qwen3-14b",
+        system_prompt="/no_think",
+        reasoning_mode="none",
+    ),
     "qwen3-32b": ModelConfig(
         canonical_name="qwen3-32b",
         transformer_lens_name="Qwen/Qwen3-32B",
