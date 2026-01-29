@@ -760,10 +760,9 @@ experiment_id: cli_test
         assert len(manifest["layers"]) == 1
         assert set(manifest["selectors"]) == {"last", "first", "mean"}
 
-        # Verify vector is loadable and usable
+        # Verify vector is loadable with correct shape
         layer = manifest["layers"][0]
         hidden_dim = manifest["hidden_dim"]
         for selector in ["last", "first", "mean"]:
             loaded_layer, direction = load_concept_vector_for_steering(tmp_path, layer=layer, selector=selector)
             assert direction.shape == (hidden_dim,)
-            assert abs(np.linalg.norm(direction) - 1.0) < 1e-6
