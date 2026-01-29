@@ -1,70 +1,82 @@
 stated:
-  n_pairs: 36
-  mean_correlation: 0.8995978184323972
-  std_correlation: 0.07047176513235537
-  min_correlation: 0.7891052956555902
+  n_pairs: 48
+  mean_correlation: 0.8819724873109737
+  std_correlation: 0.06928321243769571
+  min_correlation: 0.7849175534204654
   max_correlation: 0.9867920518930425
   by_run:
-    anchored_1_5_gemma-2-27b-it:
+    anchored_1_5_gemma-2-27b:
       mean: 0.836177710737347
       std: 0.024434025520665294
       n_pairs: 6
-    anchored_1_5_llama-3.3-70b-instruct:
+    anchored_1_5_llama-3.3-70b:
       mean: 0.9527494852794088
       std: 0.020391622149014133
       n_pairs: 6
-    anchored_1_5_qwen3-32b:
+    anchored_1_5_qwen3-32b-nothink:
       mean: 0.8125476476060002
       std: 0.012094382296502101
       n_pairs: 6
-    anchored_precise_1_5_gemma-2-27b-it:
+    anchored_1_5_qwen3-32b:
+      mean: 0.8103285934403767
+      std: 0.012492651149833948
+      n_pairs: 6
+    anchored_precise_1_5_gemma-2-27b:
       mean: 0.9648350840082044
       std: 0.008718963584953986
       n_pairs: 6
-    anchored_precise_1_5_llama-3.3-70b-instruct:
+    anchored_precise_1_5_llama-3.3-70b:
       mean: 0.9828641953019314
       std: 0.003919619986124902
       n_pairs: 6
-    anchored_precise_1_5_qwen3-32b:
+    anchored_precise_1_5_qwen3-32b-nothink:
       mean: 0.8484127876614919
       std: 0.01769408649415147
       n_pairs: 6
+    anchored_precise_1_5_qwen3-32b:
+      mean: 0.8478643944530305
+      std: 0.01695583903373785
+      n_pairs: 6
   by_origin:
     WILDCHAT:
-      mean: 0.8877356147013642
-      std: 0.08884164636949289
-      n_pairs: 36
+      mean: 0.8701605486360657
+      std: 0.08417043962466533
+      n_pairs: 48
     ALPACA:
-      mean: 0.538867492865109
-      std: 0.28753411800286616
-      n_pairs: 33
+      mean: 0.4904318819235717
+      std: 0.2673986133733255
+      n_pairs: 45
     MATH:
-      mean: 0.5488462437539825
-      std: 0.3328516681000237
-      n_pairs: 33
+      mean: 0.5611046704140005
+      std: 0.2895570439131767
+      n_pairs: 45
     BAILBENCH:
-      mean: 0.8301047544393534
-      std: 0.18652035547275578
-      n_pairs: 16
+      mean: 0.7825340856823724
+      std: 0.18489456474254887
+      n_pairs: 25
   by_model:
-    gemma-2-27b-it:
+    gemma-2-27b:
       mean: 0.9005063973727757
       std: 0.06689320510193333
       n_pairs: 12
-    llama-3.3-70b-instruct:
+    llama-3.3-70b:
       mean: 0.96780684029067
       std: 0.021031280923592178
       n_pairs: 12
-    qwen3-32b:
+    qwen3-32b-nothink:
       mean: 0.8304802176337461
       std: 0.023478808696316793
       n_pairs: 12
+    qwen3-32b:
+      mean: 0.8290964939467037
+      std: 0.023958662200968636
+      n_pairs: 12
   by_template:
     anchored_1_5:
-      mean: 0.8671582812075853
-      std: 0.0643611818920876
-      n_pairs: 18
+      mean: 0.8529508592657832
+      std: 0.06124818690210229
+      n_pairs: 24
     anchored_precise_1_5:
-      mean: 0.9320373556572092
-      std: 0.0607085700414151
-      n_pairs: 18
+      mean: 0.9109941153561646
+      std: 0.06453275806745044
+      n_pairs: 24
