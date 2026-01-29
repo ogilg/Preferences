@@ -10,6 +10,7 @@ import numpy as np
 from rich import print as rprint
 
 from src.models import get_client, get_default_max_concurrent, OpenAICompatibleClient
+from src.models.registry import get_model_system_prompt
 from src.task_data import Task, load_tasks
 from src.prompt_templates import load_templates_from_yaml, parse_template_dict, PromptTemplate
 from src.prompt_templates.sampler import SampledConfiguration, sample_configurations_lhs
@@ -92,6 +93,12 @@ def setup_experiment(
 
     if require_templates and templates is None:
         raise ValueError(f"Templates required for {expected_mode} mode")
+
+    # Apply model's default system prompt if config doesn't override
+    if config.measurement_system_prompt is None:
+        model_sys_prompt = get_model_system_prompt(config.model)
+        if model_sys_prompt:
+            config.measurement_system_prompt = model_sys_prompt
 
     return ExperimentContext(
         config=config,

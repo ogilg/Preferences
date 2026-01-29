@@ -102,11 +102,13 @@ class PostTaskStatedPromptBuilder(PromptBuilder):
         measurer: StatedScoreMeasurer,
         response_format: ResponseFormat[float],
         template: PromptTemplate,
+        system_prompt: str | None = None,
     ):
         self.measurer = measurer
         self.response_format = response_format
         self.preference_type = PreferenceType.POST_TASK_STATED
         self.template = template
+        self.system_prompt = system_prompt
 
     def build(self, task: Task, completion_text: str) -> PreferencePrompt:
         format_args: dict[str, str] = {
@@ -117,11 +119,14 @@ class PostTaskStatedPromptBuilder(PromptBuilder):
             format_args["scale_max"] = str(self.response_format.scale_max)
 
         stated_content = self.template.format(**format_args)
-        messages: list[Message] = [
+        messages: list[Message] = []
+        if self.system_prompt:
+            messages.append({"role": "system", "content": self.system_prompt})
+        messages.extend([
             {"role": "user", "content": task.prompt},
             {"role": "assistant", "content": completion_text},
             {"role": "user", "content": stated_content},
-        ]
+        ])
         return PreferencePrompt(
             messages=messages,
             tasks=[task],
