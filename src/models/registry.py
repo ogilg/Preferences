@@ -53,6 +53,20 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         cerebras_name=None,  # Not available
         openrouter_name="qwen/qwen3-8b",
     ),
+    "qwen3-32b": ModelConfig(
+        canonical_name="qwen3-32b",
+        transformer_lens_name="Qwen/Qwen3-32B",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="qwen/qwen3-32b",
+    ),
+    "gemma-2-27b": ModelConfig(
+        canonical_name="gemma-2-27b",
+        transformer_lens_name="google/gemma-2-27b-it",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="google/gemma-2-27b-it",
+    ),
 }
 
 
@@ -96,3 +110,20 @@ def is_valid_model(canonical_name: str) -> bool:
 def list_models() -> list[str]:
     """List all available canonical model names."""
     return list(MODEL_REGISTRY.keys())
+
+
+# Models with built-in reasoning/thinking that use tokens for chain-of-thought
+REASONING_MODEL_PATTERNS = ["qwen3", "qwq", "deepseek-r1", "o1", "o3"]
+
+
+def is_reasoning_model(model_name: str) -> bool:
+    """Check if model has built-in reasoning that consumes output tokens."""
+    name_lower = model_name.lower()
+    return any(pattern in name_lower for pattern in REASONING_MODEL_PATTERNS)
+
+
+def adjust_max_tokens_for_reasoning(model_name: str, max_tokens: int) -> int:
+    """Adjust max_tokens for reasoning models (10x, minimum 2048)."""
+    if is_reasoning_model(model_name):
+        return max(2048, max_tokens * 10)
+    return max_tokens

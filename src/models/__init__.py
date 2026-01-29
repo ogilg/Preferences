@@ -10,6 +10,8 @@ from .registry import (
     get_openrouter_name,
     is_valid_model,
     list_models,
+    is_reasoning_model,
+    adjust_max_tokens_for_reasoning,
 )
 
 try:
@@ -23,6 +25,8 @@ InferenceClient: type[OpenAICompatibleClient] = OpenRouterClient
 
 
 def get_client(model_name: str | None = None, max_new_tokens: int = 256) -> OpenAICompatibleClient:
+    if model_name is not None:
+        max_new_tokens = adjust_max_tokens_for_reasoning(model_name, max_new_tokens)
     return InferenceClient(model_name=model_name, max_new_tokens=max_new_tokens)
 
 

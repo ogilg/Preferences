@@ -91,6 +91,7 @@ def evaluate_probe_on_template(
     eval_template: str,
     activations_dir: Path,
     experiment_dir: Path,
+    seeds: list[int] | None = None,
 ) -> dict:
     """Evaluate probe trained on one template against another template's scores.
 
@@ -100,6 +101,7 @@ def evaluate_probe_on_template(
         eval_template: template to evaluate on
         activations_dir: directory with activations.npz
         experiment_dir: directory with measurements (e.g., results/experiments/probe_2)
+        seeds: seeds to include (if None, uses probe's training seeds)
 
     Returns:
         dict with r2, mse, n_samples
@@ -111,7 +113,8 @@ def evaluate_probe_on_template(
         raise ValueError(f"Probe {probe_id} not found in manifest")
 
     layer = probe_meta["layer"]
-    template_trained = probe_meta["template"]
+    # Handle both 'template' (old) and 'templates' (new) keys
+    template_trained = probe_meta.get("template") or probe_meta["templates"][0]
 
     # Load probe
     probe_weights = load_probe(manifest_dir, probe_id)
@@ -122,12 +125,20 @@ def evaluate_probe_on_template(
     task_ids, activations = load_activations(activations_dir)
     X = activations[layer]
 
+    # Determine which seeds to use
+    eval_seeds = seeds if seeds is not None else probe_meta.get("seeds")
+
+    # Determine correct subdirectory based on template type
+    if eval_template.startswith("pre_task"):
+        measurement_subdir = "pre_task_stated"
+    else:
+        measurement_subdir = "post_task_stated"
+
     # Load eval measurements
     scores_dict = load_pooled_scores(
-        experiment_dir / "post_task_stated",
+        experiment_dir / measurement_subdir,
         eval_template,
-        response_formats=probe_meta["response_formats"],
-        seeds=probe_meta["seeds"],
+        seeds=eval_seeds,
     )
 
     if not scores_dict:
