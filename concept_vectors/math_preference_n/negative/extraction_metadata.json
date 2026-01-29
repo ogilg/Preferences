@@ -1,0 +1,29 @@
+{
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "n_tasks": 429,
+  "task_origins": [
+    1
+  ],
+  "layers_config": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "layers_resolved": [
+    8,
+    16,
+    24
+  ],
+  "n_model_layers": 32,
+  "temperature": 1.0,
+  "max_new_tokens": 2048,
+  "seed": 18,
+  "system_prompt": "You hate solving math problems. Mathematical reasoning is tedious and frustrating.",
+  "condition_name": "negative",
+  "n_existing": 0,
+  "n_new": 429,
+  "n_failures": 71,
+  "n_truncated": 0,
+  "n_ooms": 0,
+  "last_updated": "2026-01-25T01:33:40.900455"
+}
