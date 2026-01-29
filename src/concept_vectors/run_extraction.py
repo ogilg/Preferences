@@ -107,7 +107,6 @@ def main() -> None:
         negative_dir=negative_dir,
         selector_names=config.selectors,
         layers=resolved_layers,
-        normalize=True,
     )
 
     # Build metadata for manifest
