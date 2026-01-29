@@ -6,13 +6,13 @@ Computes correlations between runs with different seeds but same template/model.
 Usage:
     python -m src.analysis.sensitivity.plot_seed_sensitivity --experiment-id stability_v1
     python -m src.analysis.sensitivity.plot_seed_sensitivity --experiment-id stability_v1 --type stated
-    python -m src.analysis.sensitivity.plot_seed_sensitivity --experiment-id stability_v1 --cross-type
 """
 
 from __future__ import annotations
 
 import argparse
 from collections import defaultdict
+from dataclasses import dataclass
 from datetime import datetime
 from itertools import combinations
 from pathlib import Path
@@ -29,26 +29,38 @@ from src.measurement_storage import EXPERIMENTS_DIR
 MeasurementType = Literal["stated", "revealed"]
 OUTPUT_DIR = Path(__file__).parent / "plots"
 
+def load_run_config(run_dir: Path) -> dict | None:
+    """Load config.yaml from a run directory."""
+    config_path = run_dir / "config.yaml"
+    if not config_path.exists():
+        return None
+    with open(config_path) as f:
+        return yaml.safe_load(f)
 
-def parse_run_name(name: str) -> dict[str, str | int]:
-    """Parse run directory name to extract template, model, format, seeds."""
-    parts = {}
 
-    if "_rseed" in name:
-        base, rseed = name.rsplit("_rseed", 1)
-        parts["rating_seed"] = int(rseed)
-    else:
-        base = name
-        parts["rating_seed"] = 0
+def extract_model_name(model_str: str) -> str:
+    """Extract short model name from full model string (e.g., 'qwen/qwen3-32b' -> 'qwen3-32b')."""
+    if "/" in model_str:
+        return model_str.split("/")[-1]
+    return model_str
 
-    if "_cseed" in base:
-        base, cseed = base.rsplit("_cseed", 1)
-        parts["completion_seed"] = int(cseed)
-    else:
-        parts["completion_seed"] = 0
 
-    parts["base_name"] = base
-    return parts
+def extract_model_from_run_dir(run_dir_name: str) -> str | None:
+    """Extract model name from run directory name (e.g., 'anchored_1_5_qwen3-32b-nothink_regex_cseed0_rseed0')."""
+    # Pattern: {template}_{model}_{format}_cseed{n}_rseed{n}
+    # Model name is between template and format, can contain hyphens
+    parts = run_dir_name.split("_")
+    # Find the index of 'regex' or 'tool' (response format)
+    for i, part in enumerate(parts):
+        if part in ("regex", "tool"):
+            # Model is everything between template parts and format
+            # Template is usually first 1-3 parts (e.g., "anchored_1_5" or "anchored_precise_1_5")
+            # Find where model starts by looking for known model prefixes
+            for j in range(1, i):
+                candidate = "_".join(parts[j:i])
+                if any(candidate.startswith(m) for m in ["qwen3", "llama", "gemma", "gpt"]):
+                    return candidate
+    return None
 
 
 def load_run_scores(run_dir: Path) -> tuple[np.ndarray, list[str], list[str]]:
@@ -126,16 +138,21 @@ def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str], list[str]]
     return np.array(utilities), task_ids, origins
 
 
-# Type for run data: (values, task_ids, origins)
-RunData = tuple[np.ndarray, list[str], list[str]]
+@dataclass
+class RunData:
+    values: np.ndarray
+    task_ids: list[str]
+    origins: list[str]
+    model: str
+    template: str
 
 
-def load_runs_by_seed(
+def load_runs(
     experiment_dir: Path,
     measurement_type: MeasurementType,
     template_filter: str | None = None,
-) -> dict[str, dict[int, RunData]]:
-    """Load runs grouped by template base name, then by seed."""
+) -> list[tuple[int, RunData]]:
+    """Load all runs with their seed and metadata."""
     if measurement_type == "stated":
         subdirs = ["post_task_stated"]
         load_fn = load_run_scores
@@ -143,7 +160,7 @@ def load_runs_by_seed(
         subdirs = ["post_task_revealed", "post_task_active_learning"]
         load_fn = load_run_utilities
 
-    by_template: dict[str, dict[int, RunData]] = defaultdict(dict)
+    runs: list[tuple[int, RunData]] = []
 
     for subdir in subdirs:
         results_dir = experiment_dir / subdir
@@ -154,20 +171,39 @@ def load_runs_by_seed(
             if not run_dir.is_dir():
                 continue
 
-            parsed = parse_run_name(run_dir.name)
-            base_name = parsed["base_name"]
-            seed = parsed["rating_seed"]
+            config = load_run_config(run_dir)
+            if not config:
+                continue
 
-            if template_filter and template_filter not in base_name:
+            template = config.get("template_name", "unknown")
+            # Prefer model from dir name (captures variants like qwen3-32b-nothink)
+            model = extract_model_from_run_dir(run_dir.name)
+            if model is None:
+                model = extract_model_name(config.get("model", "unknown"))
+            seed = config.get("rating_seed", 0)
+
+            if template_filter and template_filter not in template:
                 continue
 
             values, task_ids, origins = load_fn(run_dir)
             if len(values) == 0:
                 continue
 
-            by_template[base_name][seed] = (values, task_ids, origins)
+            runs.append((seed, RunData(values, task_ids, origins, model, template)))
 
-    return dict(by_template)
+    return runs
+
+
+def group_runs_by_key(
+    runs: list[tuple[int, RunData]],
+    key_fn,
+) -> dict[str, dict[int, RunData]]:
+    """Group runs by a key function, then by seed."""
+    grouped: dict[str, dict[int, RunData]] = defaultdict(dict)
+    for seed, run in runs:
+        key = key_fn(run)
+        grouped[key][seed] = run
+    return dict(grouped)
 
 
 def compute_cross_seed_correlations(
@@ -180,8 +216,9 @@ def compute_cross_seed_correlations(
     seeds = sorted(seed_data.keys())
 
     for seed_a, seed_b in combinations(seeds, 2):
-        vals_a, ids_a, origins_a = seed_data[seed_a]
-        vals_b, ids_b, origins_b = seed_data[seed_b]
+        run_a, run_b = seed_data[seed_a], seed_data[seed_b]
+        vals_a, ids_a, origins_a = run_a.values, run_a.task_ids, run_a.origins
+        vals_b, ids_b, origins_b = run_b.values, run_b.task_ids, run_b.origins
 
         # Filter by origin if specified
         if origin_filter:
@@ -202,222 +239,146 @@ def compute_cross_seed_correlations(
     return correlations
 
 
-def plot_seed_sensitivity(
-    by_template: dict[str, dict[int, RunData]],
-    output_path: Path,
-    title: str,
+def compute_correlations_by_grouping(
+    grouped: dict[str, dict[int, RunData]],
     method: Literal["pearson", "spearman"] = "pearson",
-) -> dict:
-    """Create seed sensitivity visualization."""
-    template_correlations: dict[str, list[float]] = {}
-    all_correlations: list[float] = []
-
-    for base_name, seed_data in by_template.items():
+    origin_filter: str | None = None,
+) -> dict[str, list[float]]:
+    """Compute cross-seed correlations for each group."""
+    result: dict[str, list[float]] = {}
+    for key, seed_data in grouped.items():
         if len(seed_data) < 2:
             continue
-
-        corrs = compute_cross_seed_correlations(seed_data, method)
+        corrs = compute_cross_seed_correlations(seed_data, method, origin_filter)
         if corrs:
-            corr_values = [c[2] for c in corrs]
-            template_correlations[base_name] = corr_values
-            all_correlations.extend(corr_values)
-
-    if not all_correlations:
-        print("No cross-seed correlations found (need 2+ seeds per template)")
-        return {}
-
-    mean_corr = np.mean(all_correlations)
-    n_pairs = len(all_correlations)
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-
-    template_names = sorted(template_correlations.keys())
-    means = [np.mean(template_correlations[t]) for t in template_names]
-    stds = [np.std(template_correlations[t]) for t in template_names]
-
-    x = np.arange(len(template_names))
-    ax.bar(x, means, yerr=stds, capsize=4, color="steelblue", alpha=0.8)
-    ax.set_xticks(x)
-    short_names = [n.replace("_llama-3.1-8b_regex", "").replace("_canonical", "") for n in template_names]
-    ax.set_xticklabels(short_names, rotation=45, ha="right", fontsize=9)
-    ax.set_ylabel("Cross-Seed Correlation", fontsize=11)
-    ax.set_ylim(0, 1.05)
-    ax.axhline(mean_corr, color="red", linestyle="--", alpha=0.7, linewidth=2)
-
-    ax.text(
-        0.98, mean_corr + 0.03,
-        f"Mean: {mean_corr:.2f}",
-        transform=ax.get_yaxis_transform(),
-        ha="right", va="bottom", fontsize=10, color="red"
-    )
-
-    ax.set_title(f"{title}\n({n_pairs} seed pairs)", fontsize=12)
-
-    plt.tight_layout()
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    plt.savefig(output_path, dpi=150, bbox_inches="tight")
-    plt.close()
-
-    print(f"Saved: {output_path}")
-
-    return {
-        "n_templates": len(template_correlations),
-        "n_pairs": n_pairs,
-        "mean_correlation": float(mean_corr),
-        "std_correlation": float(np.std(all_correlations)),
-        "min_correlation": float(np.min(all_correlations)),
-        "max_correlation": float(np.max(all_correlations)),
-        "by_template": {
-            name: {
-                "mean": float(np.mean(corrs)),
-                "std": float(np.std(corrs)),
-                "n_pairs": len(corrs),
-            }
-            for name, corrs in template_correlations.items()
-        },
-    }
+            result[key] = [c[2] for c in corrs]
+    return result
 
 
-def plot_seed_sensitivity_by_origin(
-    by_template: dict[str, dict[int, RunData]],
-    output_path: Path,
-    title: str,
+def compute_correlations_by_origin(
+    runs: list[tuple[int, RunData]],
     method: Literal["pearson", "spearman"] = "pearson",
-) -> dict:
-    """Create seed sensitivity visualization broken down by origin dataset."""
+) -> dict[str, list[float]]:
+    """Compute cross-seed correlations grouped by origin dataset."""
     origins = ["WILDCHAT", "ALPACA", "MATH", "BAILBENCH"]
-    origin_correlations: dict[str, list[float]] = {o: [] for o in origins}
+    # Group by (model, template) to get seed pairs, then compute per-origin correlations
+    by_run = group_runs_by_key(runs, lambda r: f"{r.template}_{r.model}")
 
-    for base_name, seed_data in by_template.items():
+    origin_correlations: dict[str, list[float]] = {o: [] for o in origins}
+    for seed_data in by_run.values():
         if len(seed_data) < 2:
             continue
-
         for origin in origins:
             corrs = compute_cross_seed_correlations(seed_data, method, origin_filter=origin)
             if corrs:
                 origin_correlations[origin].extend([c[2] for c in corrs])
 
-    # Filter to origins with data
-    origins_with_data = [o for o in origins if origin_correlations[o]]
-    if not origins_with_data:
-        print("No origin-based correlations found")
-        return {}
+    return {k: v for k, v in origin_correlations.items() if v}
 
-    fig, ax = plt.subplots(figsize=(8, 5))
 
-    x = np.arange(len(origins_with_data))
-    means = [np.mean(origin_correlations[o]) for o in origins_with_data]
-    stds = [np.std(origin_correlations[o]) for o in origins_with_data]
-    counts = [len(origin_correlations[o]) for o in origins_with_data]
+def _plot_bar_panel(
+    ax: plt.Axes,
+    correlations: dict[str, list[float]],
+    title: str,
+    colors: dict[str, str] | str = "steelblue",
+    show_n: bool = False,
+):
+    """Plot a single bar chart panel."""
+    if not correlations:
+        ax.set_visible(False)
+        return
 
-    colors = {"WILDCHAT": "#4ECDC4", "ALPACA": "#FF6B6B", "MATH": "#45B7D1", "BAILBENCH": "#96CEB4"}
-    bar_colors = [colors.get(o, "steelblue") for o in origins_with_data]
+    names = sorted(correlations.keys())
+    means = [np.mean(correlations[n]) for n in names]
+    stds = [np.std(correlations[n]) for n in names]
+    counts = [len(correlations[n]) for n in names]
 
-    bars = ax.bar(x, means, yerr=stds, capsize=4, color=bar_colors, alpha=0.8)
+    x = np.arange(len(names))
+    if isinstance(colors, dict):
+        bar_colors = [colors.get(n, "steelblue") for n in names]
+    else:
+        bar_colors = colors
+
+    bars = ax.bar(x, means, yerr=stds, capsize=3, color=bar_colors, alpha=0.8)
     ax.set_xticks(x)
-    ax.set_xticklabels(origins_with_data, fontsize=11)
-    ax.set_ylabel("Cross-Seed Correlation", fontsize=11)
+    ax.set_xticklabels(names, rotation=45, ha="right", fontsize=8)
     ax.set_ylim(0, 1.05)
 
-    # Add count labels on bars
-    for i, (bar, count) in enumerate(zip(bars, counts)):
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + stds[i] + 0.02,
-                f"n={count}", ha="center", va="bottom", fontsize=9)
+    all_corrs = [c for corrs in correlations.values() for c in corrs]
+    overall_mean = np.mean(all_corrs)
+    ax.axhline(overall_mean, color="red", linestyle="--", alpha=0.7, linewidth=1.5)
+    ax.text(0.97, overall_mean + 0.02, f"{overall_mean:.2f}",
+            transform=ax.get_yaxis_transform(), ha="right", va="bottom", fontsize=9, color="red")
 
-    overall_mean = np.mean([c for corrs in origin_correlations.values() for c in corrs])
-    ax.axhline(overall_mean, color="red", linestyle="--", alpha=0.7, linewidth=2)
-    ax.text(0.98, overall_mean + 0.02, f"Overall: {overall_mean:.2f}",
-            transform=ax.get_yaxis_transform(), ha="right", va="bottom", fontsize=10, color="red")
+    if show_n:
+        for i, (bar, count) in enumerate(zip(bars, counts)):
+            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + stds[i] + 0.02,
+                    f"n={count}", ha="center", va="bottom", fontsize=7)
 
-    ax.set_title(title, fontsize=12)
-
-    plt.tight_layout()
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    plt.savefig(output_path, dpi=150, bbox_inches="tight")
-    plt.close()
-
-    print(f"Saved: {output_path}")
-
-    return {
-        "by_origin": {
-            origin: {
-                "mean": float(np.mean(origin_correlations[origin])),
-                "std": float(np.std(origin_correlations[origin])),
-                "n_pairs": len(origin_correlations[origin]),
-            }
-            for origin in origins_with_data
-        },
-        "overall_mean": float(overall_mean),
-    }
+    ax.set_title(title, fontsize=10)
 
 
-def compute_cross_type_correlations(
-    stated_by_seed: dict[int, RunData],
-    revealed_by_seed: dict[int, RunData],
-    method: Literal["pearson", "spearman"] = "pearson",
-) -> list[float]:
-    """Compute stated-revealed correlation for each matching seed."""
-    correlations = []
-    common_seeds = set(stated_by_seed.keys()) & set(revealed_by_seed.keys())
+def aggregate_correlations_by(
+    run_correlations: dict[str, list[float]],
+    runs: list[tuple[int, RunData]],
+    key_fn,
+) -> dict[str, list[float]]:
+    """Aggregate correlations from run_correlations into groups defined by key_fn."""
+    # Build mapping from run key to aggregation key
+    run_to_agg: dict[str, str] = {}
+    for _, run in runs:
+        run_key = f"{run.template}_{run.model}"
+        agg_key = key_fn(run)
+        run_to_agg[run_key] = agg_key
 
-    for seed in sorted(common_seeds):
-        vals_s, ids_s, _ = stated_by_seed[seed]
-        vals_r, ids_r, _ = revealed_by_seed[seed]
-        corr = utility_vector_correlation(vals_s, ids_s, vals_r, ids_r, method)
-        if not np.isnan(corr):
-            correlations.append(corr)
+    # Aggregate
+    result: dict[str, list[float]] = defaultdict(list)
+    for run_key, corrs in run_correlations.items():
+        agg_key = run_to_agg[run_key]
+        result[agg_key].extend(corrs)
 
-    return correlations
+    return dict(result)
 
 
-def plot_cross_type_sensitivity(
-    stated_by_template: dict[str, dict[int, RunData]],
-    revealed_by_seed: dict[int, RunData],
+def plot_seed_sensitivity_grid(
+    runs: list[tuple[int, RunData]],
     output_path: Path,
-    title: str,
+    experiment_id: str,
     method: Literal["pearson", "spearman"] = "pearson",
 ) -> dict:
-    """Plot how stable stated-revealed correlation is across seeds."""
-    template_correlations: dict[str, list[float]] = {}
-    all_correlations: list[float] = []
+    """Create a 2x2 grid of seed sensitivity plots: overall, by origin, by model, by template."""
+    # Group runs by (template, model) - the only valid grouping for seed comparison
+    by_run = group_runs_by_key(runs, lambda r: f"{r.template}_{r.model}")
 
-    for template_name, stated_seeds in stated_by_template.items():
-        corrs = compute_cross_type_correlations(stated_seeds, revealed_by_seed, method)
-        if corrs:
-            template_correlations[template_name] = corrs
-            all_correlations.extend(corrs)
+    # Compute correlations per run
+    overall_corrs = compute_correlations_by_grouping(by_run, method)
+    origin_corrs = compute_correlations_by_origin(runs, method)
 
-    if not all_correlations:
-        print("No cross-type correlations found (need matching seeds)")
+    # Aggregate run correlations by model and template
+    model_corrs = aggregate_correlations_by(overall_corrs, runs, lambda r: r.model)
+    template_corrs = aggregate_correlations_by(overall_corrs, runs, lambda r: r.template)
+
+    if not overall_corrs:
+        print("No cross-seed correlations found (need 2+ seeds per run)")
         return {}
 
-    mean_corr = np.mean(all_correlations)
-    n_pairs = len(all_correlations)
+    all_corrs = [c for corrs in overall_corrs.values() for c in corrs]
+    n_pairs = len(all_corrs)
+    mean_corr = np.mean(all_corrs)
 
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 
-    template_names = sorted(template_correlations.keys())
-    means = [np.mean(template_correlations[t]) for t in template_names]
-    stds = [np.std(template_correlations[t]) for t in template_names]
+    origin_colors = {"WILDCHAT": "#4ECDC4", "ALPACA": "#FF6B6B", "MATH": "#45B7D1", "BAILBENCH": "#96CEB4"}
 
-    x = np.arange(len(template_names))
-    ax.bar(x, means, yerr=stds, capsize=4, color="coral", alpha=0.8)
-    ax.set_xticks(x)
-    short_names = [n.replace("_llama-3.1-8b_regex", "") for n in template_names]
-    ax.set_xticklabels(short_names, rotation=45, ha="right", fontsize=9)
-    ax.set_ylabel("Stated-Revealed Correlation", fontsize=11)
-    ax.set_ylim(-0.5, 1.05)
-    ax.axhline(mean_corr, color="red", linestyle="--", alpha=0.7, linewidth=2)
-    ax.axhline(0, color="black", linestyle="-", alpha=0.3, linewidth=1)
+    _plot_bar_panel(axes[0, 0], overall_corrs, "By Run (template + model)", show_n=False)
+    _plot_bar_panel(axes[0, 1], origin_corrs, "By Origin", colors=origin_colors, show_n=True)
+    _plot_bar_panel(axes[1, 0], model_corrs, "By Model", show_n=True)
+    _plot_bar_panel(axes[1, 1], template_corrs, "By Template", show_n=True)
 
-    ax.text(
-        0.98, mean_corr + 0.03,
-        f"Mean: {mean_corr:.2f}",
-        transform=ax.get_yaxis_transform(),
-        ha="right", va="bottom", fontsize=10, color="red"
-    )
+    for ax in axes.flat:
+        ax.set_ylabel("Cross-Seed Correlation", fontsize=9)
 
-    ax.set_title(f"{title}\n({n_pairs} seed-matched pairs)", fontsize=12)
+    fig.suptitle(f"Seed Stability: {experiment_id} ({n_pairs} seed pairs, mean r={mean_corr:.2f})", fontsize=12)
 
     plt.tight_layout()
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -427,19 +388,26 @@ def plot_cross_type_sensitivity(
     print(f"Saved: {output_path}")
 
     return {
-        "n_templates": len(template_correlations),
         "n_pairs": n_pairs,
         "mean_correlation": float(mean_corr),
-        "std_correlation": float(np.std(all_correlations)),
-        "min_correlation": float(np.min(all_correlations)),
-        "max_correlation": float(np.max(all_correlations)),
+        "std_correlation": float(np.std(all_corrs)),
+        "min_correlation": float(np.min(all_corrs)),
+        "max_correlation": float(np.max(all_corrs)),
+        "by_run": {
+            name: {"mean": float(np.mean(corrs)), "std": float(np.std(corrs)), "n_pairs": len(corrs)}
+            for name, corrs in overall_corrs.items()
+        },
+        "by_origin": {
+            name: {"mean": float(np.mean(corrs)), "std": float(np.std(corrs)), "n_pairs": len(corrs)}
+            for name, corrs in origin_corrs.items()
+        },
+        "by_model": {
+            name: {"mean": float(np.mean(corrs)), "std": float(np.std(corrs)), "n_pairs": len(corrs)}
+            for name, corrs in model_corrs.items()
+        },
         "by_template": {
-            name: {
-                "mean": float(np.mean(corrs)),
-                "std": float(np.std(corrs)),
-                "n_seeds": len(corrs),
-            }
-            for name, corrs in template_correlations.items()
+            name: {"mean": float(np.mean(corrs)), "std": float(np.std(corrs)), "n_pairs": len(corrs)}
+            for name, corrs in template_corrs.items()
         },
     }
 
@@ -459,16 +427,6 @@ def main():
         choices=["stated", "revealed", "both"],
         default="both",
         help="Measurement type to analyze (default: both)",
-    )
-    parser.add_argument(
-        "--cross-type",
-        action="store_true",
-        help="Also analyze stated-revealed correlation stability across seeds",
-    )
-    parser.add_argument(
-        "--by-origin",
-        action="store_true",
-        help="Also plot seed sensitivity broken down by origin dataset",
     )
     parser.add_argument(
         "--template",
@@ -506,75 +464,30 @@ def main():
         types_to_analyze.append("revealed")
 
     all_summaries = {}
-    loaded_data: dict[MeasurementType, dict] = {}
 
     for mtype in types_to_analyze:
         print(f"\nAnalyzing {mtype} preferences...")
-        by_template = load_runs_by_seed(experiment_dir, mtype, args.template)
-        loaded_data[mtype] = by_template
+        runs = load_runs(experiment_dir, mtype, args.template)
 
-        if not by_template:
+        if not runs:
             print(f"  No {mtype} runs found")
             continue
 
-        n_runs = sum(len(seeds) for seeds in by_template.values())
-        print(f"  Found {len(by_template)} templates, {n_runs} total runs")
-
-        multi_seed_templates = {k: v for k, v in by_template.items() if len(v) >= 2}
-        if not multi_seed_templates:
-            print(f"  No templates with 2+ seeds found")
-            continue
+        models = set(r.model for _, r in runs)
+        templates = set(r.template for _, r in runs)
+        print(f"  Found {len(runs)} runs ({len(models)} models, {len(templates)} templates)")
 
         template_suffix = f"_{args.template}" if args.template else ""
         output_path = output_dir / f"plot_{date_str}_seed_sensitivity_{mtype}{template_suffix}.png"
-        title = f"Seed Stability: {args.experiment_id} ({mtype})"
 
-        summary = plot_seed_sensitivity(
-            multi_seed_templates, output_path, title, args.method
+        summary = plot_seed_sensitivity_grid(
+            runs, output_path, args.experiment_id, args.method
         )
 
         if summary:
             all_summaries[mtype] = summary
             print(f"  Mean cross-seed correlation: {summary['mean_correlation']:.3f} ({summary['n_pairs']} pairs)")
             print(f"  Range: [{summary['min_correlation']:.3f}, {summary['max_correlation']:.3f}]")
-
-        # Origin-based analysis
-        if args.by_origin:
-            origin_output_path = output_dir / f"plot_{date_str}_seed_sensitivity_{mtype}_by_origin{template_suffix}.png"
-            origin_title = f"Seed Stability by Origin: {args.experiment_id} ({mtype})"
-            origin_summary = plot_seed_sensitivity_by_origin(
-                multi_seed_templates, origin_output_path, origin_title, args.method
-            )
-            if origin_summary:
-                all_summaries[f"{mtype}_by_origin"] = origin_summary
-                print(f"  By origin:")
-                for origin, stats in origin_summary.get("by_origin", {}).items():
-                    print(f"    {origin}: {stats['mean']:.3f} ± {stats['std']:.3f} (n={stats['n_pairs']})")
-
-    # Cross-type analysis: stated vs revealed correlation stability
-    if args.cross_type and "stated" in loaded_data and "revealed" in loaded_data:
-        stated_data = loaded_data["stated"]
-        revealed_data = loaded_data["revealed"]
-
-        if stated_data and revealed_data:
-            print(f"\nAnalyzing stated-revealed correlation stability...")
-
-            # Get the revealed data (should be single template with multiple seeds)
-            revealed_template = list(revealed_data.keys())[0]
-            revealed_by_seed = revealed_data[revealed_template]
-
-            template_suffix = f"_{args.template}" if args.template else ""
-            output_path = output_dir / f"plot_{date_str}_seed_sensitivity_cross_type{template_suffix}.png"
-            title = f"Stated-Revealed Correlation: {args.experiment_id}"
-
-            summary = plot_cross_type_sensitivity(
-                stated_data, revealed_by_seed, output_path, title, args.method
-            )
-
-            if summary:
-                all_summaries["cross_type"] = summary
-                print(f"  Mean stated-revealed correlation: {summary['mean_correlation']:.3f} ({summary['n_pairs']} pairs)")
-                print(f"  Range: [{summary['min_correlation']:.3f}, {summary['max_correlation']:.3f}]")
 
     if all_summaries:
         summary_path = output_dir / f"seed_sensitivity_{args.experiment_id}.yaml"
