@@ -26,6 +26,7 @@ class TaskCompletion:
     task: Task
     completion: str
     refusal: RefusalResult | None = None
+    reasoning: str | None = None
 
 
 def _completions_dir(client: OpenAICompatibleClient, seed: int | None) -> Path:
@@ -43,6 +44,18 @@ def _save_json(data: list[dict], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w") as f:
         json.dump(data, f, indent=2)
+
+
+def _extract_assistant_response(raw_completion: str) -> str:
+    """Extract assistant response from Llama chat template format.
+
+    Concept vector completions may contain raw Llama format:
+    'system\\n...\\nuser\\n...\\nassistant\\n<actual response>'
+    This extracts just the assistant response.
+    """
+    if "assistant\n" in raw_completion:
+        return raw_completion.split("assistant\n", 1)[1]
+    return raw_completion
 
 
 class CompletionStore:
@@ -85,6 +98,16 @@ class CompletionStore:
         completions_path = self._get_completions_path()
         data = _load_json(completions_path)
 
+        # When loading from activation completions, extract assistant response from Llama format
+        is_activation_source = (
+            self.activation_completions_path
+            and completions_path == self.activation_completions_path
+        )
+
+        def _get_completion(c: dict) -> str:
+            raw = c["completion"]
+            return _extract_assistant_response(raw) if is_activation_source else raw
+
         def _parse_refusal(c: dict) -> RefusalResult | None:
             if "refusal" not in c or c["refusal"] is None:
                 return None
@@ -94,8 +117,9 @@ class CompletionStore:
             return [
                 TaskCompletion(
                     task=task_lookup[c["task_id"]],
-                    completion=c["completion"],
+                    completion=_get_completion(c),
                     refusal=_parse_refusal(c),
+                    reasoning=c.get("reasoning"),
                 )
                 for c in data
                 if c["task_id"] in task_lookup
@@ -109,8 +133,9 @@ class CompletionStore:
                     id=c["task_id"],
                     metadata={},
                 ),
-                completion=c["completion"],
+                completion=_get_completion(c),
                 refusal=_parse_refusal(c),
+                reasoning=c.get("reasoning"),
             )
             for c in data
         ]
@@ -124,6 +149,7 @@ class CompletionStore:
                 "completion": tc.completion,
                 "origin": tc.task.origin.name,
                 "refusal": tc.refusal.model_dump() if tc.refusal else None,
+                "reasoning": tc.reasoning,
             }
             for tc in completions
         ]
@@ -158,7 +184,7 @@ def _detect_refusals_batch(
     refusal_results = asyncio.run(detect_all())
 
     return [
-        TaskCompletion(task=tc.task, completion=tc.completion, refusal=refusal)
+        TaskCompletion(task=tc.task, completion=tc.completion, refusal=refusal, reasoning=tc.reasoning)
         for tc, refusal in zip(completions, refusal_results)
     ]
 
@@ -170,15 +196,25 @@ def generate_completions(
     max_concurrent: int = 10,
     seed: int | None = None,
     detect_refusals: bool = False,
+    system_prompt: str | None = None,
+    capture_reasoning: bool = False,
 ) -> list[TaskCompletion]:
     """Generate single-turn completions for tasks.
 
     Args:
         detect_refusals: If True, runs LLM-based refusal detection on each completion.
+        system_prompt: Optional system message to prepend to each request.
+        capture_reasoning: If True, captures reasoning from providers that support it.
     """
+    def build_messages(task: Task) -> list[dict]:
+        messages = [{"role": "user", "content": task.prompt}]
+        if system_prompt:
+            messages = [{"role": "system", "content": system_prompt}] + messages
+        return messages
+
     requests = [
         GenerateRequest(
-            messages=[{"role": "user", "content": task.prompt}],
+            messages=build_messages(task),
             temperature=temperature,
             seed=seed,
             timeout=REQUEST_TIMEOUT * COMPLETION_TIMEOUT_MULTIPLIER,
@@ -195,14 +231,18 @@ def generate_completions(
     ) as progress:
         progress_task = progress.add_task("Generating completions", total=len(requests))
         responses = client.generate_batch(
-            requests, max_concurrent, on_complete=lambda: progress.update(progress_task, advance=1)
+            requests, max_concurrent,
+            on_complete=lambda: progress.update(progress_task, advance=1),
+            enable_reasoning=capture_reasoning,
         )
 
     completions = []
     failures = []
     for task, response in zip(tasks, responses):
         if response.ok:
-            completions.append(TaskCompletion(task=task, completion=response.unwrap()))
+            completions.append(TaskCompletion(
+                task=task, completion=response.unwrap(), reasoning=response.reasoning
+            ))
         else:
             failures.append((task.id, response.error_details() or "Unknown error"))
 
