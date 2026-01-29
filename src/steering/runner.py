@@ -26,6 +26,8 @@ from src.steering.config import SteeringExperimentConfig, load_steering_config
 from src.task_data import Task, OriginDataset, load_tasks
 from src.types import Message
 
+import torch
+
 
 @dataclass
 class SteeringConditionResult:
@@ -170,13 +172,9 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
     print(f"Loaded probe {config.probe_id} from layer {layer}")
 
     # Initialize model
-    print(f"Loading model {config.model} with {config.backend} backend...")
-    if config.backend == "transformer_lens":
-        from src.models.transformer_lens import TransformerLensModel
-        model = TransformerLensModel(config.model, max_new_tokens=config.max_new_tokens)
-    else:
-        from src.models.nnsight_model import NnsightModel
-        model = NnsightModel(config.model, max_new_tokens=config.max_new_tokens)
+    print(f"Loading model {config.model}...")
+    from src.models.transformer_lens import TransformerLensModel, all_tokens_steering
+    model = TransformerLensModel(config.model, max_new_tokens=config.max_new_tokens)
 
     # Load completions
     completion_lookup = _load_completions(config.completions_path)
@@ -239,11 +237,12 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
                     )
 
                     # Generate with steering
+                    scaled_vector = torch.tensor(steering_direction * coef, dtype=torch.bfloat16, device="cuda")
+                    steering_hook = all_tokens_steering(scaled_vector)
                     preference_expression = model.generate_with_steering(
                         messages=messages,
                         layer=layer,
-                        steering_vector=steering_direction,
-                        steering_coefficient=coef,
+                        steering_hook=steering_hook,
                         temperature=config.temperature,
                         max_new_tokens=config.max_new_tokens,
                     )
