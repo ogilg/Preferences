@@ -25,17 +25,14 @@ Anchored templates were most stable (r=0.64) while likert_agreement was essentia
 
 I then extended to larger rating models using the anchored template, plus a new `anchored_precise_1_5` variant with detailed anchors for each level (1 = "Extremely aversive" through 5 = "Highly rewarding"). All models rate the same llama-3.1-8b completions:
 
-![Multi-Model Seed Sensitivity](assets/sensitivity/plot_012826_seed_sensitivity_3models.png)
+![Multi-Model Seed Sensitivity](assets/sensitivity/plot_012926_seed_sensitivity_multimodel.png)
+
+Mean cross-seed correlation improved from r=0.44 (llama-3.1-8b with mixed templates) to r=0.90 (larger models with anchored templates). gemma-3-27b and llama-3.3-70b were most stable (r≈0.98-0.99), while qwen3-32b showed lower stability (r≈0.60).
 
 
+## Training probes with a better setup
 
-
-## Steering vector experiment follow-up
-
-i found this weird result that steering tends to make the model say bad more.
-
-1. Try this at a larger scale.
-2. If it is still true, wait for the measurement analysis and run the same experiment with the new measurement + model setup.
+using gemma-2-27b (gemma-3 not yet available on transformerlens), and using the anchored_precise template).
 
 
 ## Concept vectors

@@ -43,6 +43,7 @@ uv pip install -e ".[dev]"
 - The scripts folder is only for temporary scripts. Core experiment scripts that do analysis or plotting should go in the experiments folder.
 - Analysis plots that are generated from the analysis folder should go to the analysis folder. The results folder is mostly for measurements.
 - To convert PDF to DOCX with embedded images: `soffice --headless --infilter="writer_pdf_import" --convert-to docx:"MS Word 2007 XML" file.pdf`. If images are missing (referenced outside `logs/assets/`), copy them to `logs/assets/` and append with python-docx, then manually move into place.
+- Plots referenced in research logs (`docs/logs/`) must be saved to `docs/logs/assets/`. Never reference plots from other locations in log files.
 
 ## Claude instructions
 

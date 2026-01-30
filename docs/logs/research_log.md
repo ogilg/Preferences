@@ -39,27 +39,21 @@ Mean correlation: **r = 0.08** (20 seed-matched pairs). Near-zero correlation is
 
 ---
 
-## 2026-01-28: Multi-Model Seed Sensitivity
+## 2026-01-29: Multi-Model Seed Sensitivity
 
-Extended to larger models rating the same llama-3.1-8b completions.
+Extended to larger models rating the same llama-3.1-8b completions with both anchored templates.
 
-**Rating models**: gemma-2-27b-it, llama-3.3-70b-instruct, qwen3-32b (think/nothink)
+**Rating models**: claude-haiku-4.5, gemma-2-27b, gemma-3-27b, llama-3.3-70b, qwen3-32b (think/nothink)
 
-| Model | Mean r |
-|-------|--------|
-| llama-3.3-70b-instruct | **0.97** |
-| gemma-2-27b-it | 0.90 |
-| qwen3-32b (nothink) | 0.85 |
-| qwen3-32b (think) | 0.83 |
+![Multi-Model Seed Sensitivity](assets/sensitivity/plot_012926_seed_sensitivity_multimodel.png)
 
-| Template | Mean r |
-|----------|--------|
-| anchored_precise_1_5 | **0.93** |
-| anchored_1_5 | 0.87 |
+**Key findings**:
+- Mean cross-seed correlation: r = 0.90 (66 pairs)
+- gemma-3-27b and llama-3.3-70b most stable (r ≈ 0.98-0.99)
+- qwen3-32b notably less stable (r ≈ 0.60)
+- anchored_precise_1_5 slightly more stable than anchored_1_5
 
-**Implication**: Larger models and precise anchors improve stability.
-
-![3 Models Think](../../src/analysis/sensitivity/plots/plot_012826_seed_sensitivity_3models_think.png)
+**Implication**: Larger models and precise anchors improve stability. Reasoning models (qwen3-32b think mode) show lower stability.
 
 ---
 
