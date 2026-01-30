@@ -104,6 +104,20 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         cerebras_name=None,
         openrouter_name="google/gemma-2-27b-it",
     ),
+    "gemma-3-27b": ModelConfig(
+        canonical_name="gemma-3-27b",
+        transformer_lens_name=None,
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="google/gemma-3-27b-it",
+    ),
+    "claude-haiku-4.5": ModelConfig(
+        canonical_name="claude-haiku-4.5",
+        transformer_lens_name=None,
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="anthropic/claude-haiku-4.5",
+    ),
 }
 
 
