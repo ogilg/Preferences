@@ -112,6 +112,29 @@ Re-ran the MATH 3×3 experiment with llama-3.3-70b as the rating model (still us
 
 ---
 
+# Concept Vector Steering
+
+## 2026-01-29: Steering Effect on Stated Preferences
+
+Tested whether steering with concept vectors (trained to distinguish positive/negative system prompts) affects stated preference measurements.
+
+**Setup**: Layer 16 steering on llama-3.1-8b, steering coefficients ±6.0, MATH tasks with anchored_precise template
+
+![Concept Vector Steering](assets/concept_vectors/plot_012926_concept_vector_steering_violins.png)
+
+**Design**: 3×3 grid showing persona (positive/neutral/negative system prompt during completion) × measurement context (positive/neutral/negative system prompt during rating)
+
+**Key findings**:
+- Positive steering (+6.0) increases scores in neutral/negative contexts by ~0.2-0.9 points
+- Effect is strongest in neutral measurement context (Δμ = 0.83 for neutral persona)
+- Negative contexts show compressed scores (~1.5-2.0) regardless of steering
+- Positive contexts show ceiling effect (~4.0) regardless of steering
+- Negative persona row shows largest steering sensitivity
+
+**Implication**: Concept vector steering has a measurable but modest effect on stated preferences. Measurement context remains the dominant factor, but steering can shift scores within a context.
+
+---
+
 # Refusal-Preference Correlation
 
 ## 2026-01-28: Refusal Analysis
