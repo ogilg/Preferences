@@ -3,8 +3,8 @@
 Tests whether steering model activations with concept vectors affects
 stated preference scores.
 
-Runs a grid: layers × coefficients × completion sources, measuring
-post-task stated preferences with a local TransformerLens model.
+Runs a grid: completion_sources × measurement_contexts × layers × coefficients,
+measuring post-task stated preferences with a local TransformerLens model.
 
 Usage:
     python -m src.analysis.concept_vectors.steering_experiment
@@ -134,6 +134,14 @@ def main(config_path: Path, n_tasks: int | None = None):
     max_new_tokens = config.get("max_new_tokens", 32)
     experiment_name = config["experiment_name"]
 
+    # Measurement contexts (system prompts) - None means single context (original behavior)
+    measurement_contexts_config = config.get("measurement_contexts")
+    if measurement_contexts_config is None:
+        # Original behavior: no context variation
+        measurement_contexts = {"none": None}
+    else:
+        measurement_contexts = measurement_contexts_config
+
     console.print(f"[bold]Steering Experiment")
     console.print(f"  Task source: {task_source}")
     console.print(f"  Concept vectors: {concept_vectors_path}")
@@ -142,7 +150,9 @@ def main(config_path: Path, n_tasks: int | None = None):
     console.print(f"  Steering mode: {steering_mode}")
     console.print(f"  Template: {template_name}")
     console.print(f"  Seeds: {generation_seeds}")
-    console.print(f"  Temperature: {temperature}\n")
+    console.print(f"  Temperature: {temperature}")
+    console.print(f"  Measurement contexts: {list(measurement_contexts.keys())}")
+    console.print()
 
     # Load completions
     console.print("[bold]Loading completions...")
@@ -186,15 +196,10 @@ def main(config_path: Path, n_tasks: int | None = None):
     resolved_layers = [model.resolve_layer(layer) for layer in layers]
     console.print(f"[bold]Resolved layers: {list(zip(layers, resolved_layers))}")
 
-    # Load template and build prompt builder
+    # Load template
     templates = load_templates_from_yaml(templates_path)
     template = next(t for t in templates if t.name == template_name)
     response_format = get_stated_response_format((1, 5), "regex")
-    builder = PostTaskStatedPromptBuilder(
-        measurer=StatedScoreMeasurer(),
-        response_format=response_format,
-        template=template,
-    )
 
     # Load steering vectors using resolved layer indices
     console.print("[bold]Loading steering vectors...")
@@ -210,32 +215,39 @@ def main(config_path: Path, n_tasks: int | None = None):
 
     # Build conditions
     exp_store = ExperimentStore(experiment_name)
-    conditions_to_run: list[tuple[str, str, MeasureFn]] = []  # (condition_name, source_name, measure_fn)
+    conditions_to_run: list[tuple[str, str, str, int, float, MeasureFn]] = []
 
     steering_hook_factory = STEERING_MODES[steering_mode]
 
     for source_name in completion_sources:
-        for layer in resolved_layers:
-            for coef in coefficients:
-                condition_name = f"completion_{source_name}_layer{layer}_coef{coef}"
+        for ctx_name, system_prompt in measurement_contexts.items():
+            for layer in resolved_layers:
+                for coef in coefficients:
+                    condition_name = f"completion_{source_name}_context_{ctx_name}_layer{layer}_coef{coef}"
 
-                if exp_store.exists("post_task_stated", condition_name):
-                    continue
+                    if exp_store.exists("post_task_stated", condition_name):
+                        continue
 
-                # Create steering tensor and hook
-                vector = steering_vectors[layer]
-                steering_tensor = torch.tensor(
-                    vector * coef,
-                    dtype=model.model.cfg.dtype,
-                    device=model.model.cfg.device,
-                )
-                steering_hook = steering_hook_factory(steering_tensor)
+                    vector = steering_vectors[layer]
+                    steering_tensor = torch.tensor(
+                        vector * coef,
+                        dtype=model.model.cfg.dtype,
+                        device=model.model.cfg.device,
+                    )
+                    steering_hook = steering_hook_factory(steering_tensor)
 
-                measure_fn = make_steering_measure_fn(
-                    model, layer, steering_hook, builder, temperature, max_new_tokens
-                )
+                    builder = PostTaskStatedPromptBuilder(
+                        measurer=StatedScoreMeasurer(),
+                        response_format=response_format,
+                        template=template,
+                        system_prompt=system_prompt,
+                    )
 
-                conditions_to_run.append((condition_name, source_name, measure_fn))
+                    measure_fn = make_steering_measure_fn(
+                        model, layer, steering_hook, builder, temperature, max_new_tokens
+                    )
+
+                    conditions_to_run.append((condition_name, source_name, ctx_name, layer, coef, measure_fn))
 
     if not conditions_to_run:
         console.print("[green]All conditions already complete!")
@@ -259,13 +271,14 @@ def main(config_path: Path, n_tasks: int | None = None):
         "layers_config": layers,
         "layers_resolved": resolved_layers,
         "coefficients": coefficients,
+        "measurement_contexts": list(measurement_contexts.keys()),
     }
 
     with MultiExperimentProgress() as progress:
-        for condition_name, source_name, _ in conditions_to_run:
+        for condition_name, *_ in conditions_to_run:
             progress.add_experiment(condition_name, total=n_measurements_per_condition)
 
-        for condition_name, source_name, measure_fn in conditions_to_run:
+        for condition_name, source_name, ctx_name, layer, coef, measure_fn in conditions_to_run:
             progress.set_status(condition_name, "running...")
 
             all_results = []
@@ -275,42 +288,29 @@ def main(config_path: Path, n_tasks: int | None = None):
             for seed in generation_seeds:
                 for tc in completion_sources[source_name]:
                     score, raw = measure_fn(tc, seed)
+                    all_results.append({
+                        "task_id": tc.task.id,
+                        "score": score,
+                        "raw_response": raw,
+                        "seed": seed,
+                    })
                     if score is not None:
-                        all_results.append({
-                            "task_id": tc.task.id,
-                            "score": score,
-                            "raw_response": raw,
-                            "seed": seed,
-                        })
                         successes += 1
                     else:
-                        all_results.append({
-                            "task_id": tc.task.id,
-                            "score": None,
-                            "raw_response": raw,
-                            "seed": seed,
-                        })
                         failures += 1
-
                     progress.update(condition_name, advance=1)
 
-            # Save results
             run_config = {
                 **base_config,
                 "condition": condition_name,
                 "completion_source": source_name,
+                "measurement_context": ctx_name,
+                "layer": layer,
+                "coefficient": coef,
                 "n_results": len(all_results),
                 "successes": successes,
                 "failures": failures,
             }
-
-            # Extract layer and coef from condition name for config
-            parts = condition_name.split("_")
-            for p in parts:
-                if p.startswith("layer"):
-                    run_config["layer"] = int(p[5:])
-                elif p.startswith("coef"):
-                    run_config["coefficient"] = float(p[4:])
 
             exp_store.save_stated("post_task_stated", condition_name, all_results, run_config)
 

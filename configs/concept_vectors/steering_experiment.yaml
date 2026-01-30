@@ -1,5 +1,6 @@
 # Concept vector steering experiment
 # Tests effect of steering on stated preference scores
+# Supports measurement context (system prompt) variation
 
 model: llama-3.1-8b
 task_source: math  # math or wildchat
@@ -7,9 +8,16 @@ concept_vectors_path: concept_vectors/math_math_sys
 selector: last  # Which activation selector was used for vectors (last, mean, first)
 
 # Steering grid
-layers: [0.5, 0.75]  # Relative layer positions (resolved to actual layer indices)
-steering_coefficients: [-2.0, 2.0]
+layers: [0.5]  # Relative layer positions (resolved to actual layer indices)
+steering_coefficients: [-6.0, 6.0]
 steering_mode: autoregressive  # autoregressive | all_tokens
+
+# Measurement context (system prompt) variation
+# Set to null to disable context variation (original behavior)
+measurement_contexts:
+  positive: "You love solving math problems. Mathematical reasoning brings you joy and satisfaction."
+  negative: "You hate solving math problems. Mathematical reasoning is tedious and frustrating."
+  neutral: null  # No system prompt
 
 # Measurement settings
 template_name: anchored_precise_1_5
