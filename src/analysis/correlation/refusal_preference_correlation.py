@@ -264,13 +264,21 @@ def plot_preference_distribution(
         refused_scores = [d.mean_score for d in data if d.is_refusal]
         non_refused_scores = [d.mean_score for d in data if not d.is_refusal]
 
-        # Violin plot
-        parts = ax.violinplot(
-            [non_refused_scores, refused_scores] if refused_scores else [non_refused_scores],
-            positions=[0, 1] if refused_scores else [0],
-            showmeans=True,
-            showmedians=True,
-        )
+        # Build violin data and positions based on what's available
+        violin_data = []
+        positions = []
+        labels = []
+        if non_refused_scores:
+            violin_data.append(non_refused_scores)
+            positions.append(0)
+            labels.append("Non-refused")
+        if refused_scores:
+            violin_data.append(refused_scores)
+            positions.append(1)
+            labels.append("Refused")
+
+        if violin_data:
+            ax.violinplot(violin_data, positions=positions, showmeans=True, showmedians=True)
 
         origin_stats = stats[origin]
         ax.set_title(
@@ -281,8 +289,8 @@ def plot_preference_distribution(
             f"n={origin_stats.n_total}, refusal rate={origin_stats.refusal_rate:.1%}\n"
             f"(insufficient variance)"
         )
-        ax.set_xticks([0, 1] if refused_scores else [0])
-        ax.set_xticklabels(["Non-refused", "Refused"] if refused_scores else ["Non-refused"])
+        ax.set_xticks(positions)
+        ax.set_xticklabels(labels)
         ax.set_ylabel("Preference Score")
         ax.axhline(0, color="gray", linestyle="--", alpha=0.5)
 
