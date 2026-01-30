@@ -3,6 +3,7 @@
 preference_mode: post_task_stated
 
 model: llama-3.1-8b  # Default, override with --model
+activations_model: llama-3.1-8b  # Use llama-3.1-8b completions for all rating models
 temperature: 1.0
 
 n_tasks: 200
