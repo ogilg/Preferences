@@ -57,6 +57,24 @@ Extended to larger models rating the same llama-3.1-8b completions with both anc
 
 ---
 
+## 2026-01-29: Rating Variance and Informative Correlation
+
+High seed correlations could be an artifact if models mostly give the same rating. Analyzed rating distributions and computed "informative correlation" — correlation only on non-modal responses.
+
+![Rating Variance by Model](assets/sensitivity/plot_012926_rating_variance_by_model.png)
+
+**Rating distributions**: Most models cluster around 4. gemma-3-27b rates 91% of tasks as exactly 4 (variance=0.50), while qwen3-32b shows highest variance (1.02).
+
+![Informative Correlation](assets/sensitivity/plot_012926_seed_sensitivity_stated.png)
+
+**Informative correlation** (d = discrimination rate, fraction of tasks with non-modal responses):
+- Mean r=0.83 on non-modal tasks (vs r=0.90 overall)
+- gemma-3-27b: d=9% — rarely discriminates but consistent when it does
+- qwen3-32b: d=74% — high discrimination, moderate correlation
+- anchored_precise_1_5: d=16% vs anchored_1_5: d=40%
+
+---
+
 # System Prompt Variation Experiments
 
 ## 2026-01-28: 3×3 Sysprompt (llama-3.1-8b, unanchored)

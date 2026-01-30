@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import yaml
 
-from src.analysis.correlation.utils import utility_vector_correlation
+from src.analysis.correlation.utils import utility_vector_correlation, ReliabilityMethod, compute_informative_correlation
 from src.measurement_storage import EXPERIMENTS_DIR
 
 
@@ -208,10 +208,14 @@ def group_runs_by_key(
 
 def compute_cross_seed_correlations(
     seed_data: dict[int, RunData],
-    method: Literal["pearson", "spearman"] = "pearson",
+    method: ReliabilityMethod = "pearson",
     origin_filter: str | None = None,
-) -> list[tuple[int, int, float]]:
-    """Compute correlations between all seed pairs, optionally filtered by origin."""
+) -> list[tuple[int, int, float, float | None]]:
+    """Compute reliability metrics between all seed pairs, optionally filtered by origin.
+
+    Returns list of (seed_a, seed_b, correlation, discrimination_rate).
+    discrimination_rate is only populated for method="informative".
+    """
     correlations = []
     seeds = sorted(seed_data.keys())
 
@@ -232,39 +236,65 @@ def compute_cross_seed_correlations(
         if len(vals_a) == 0 or len(vals_b) == 0:
             continue
 
-        corr = utility_vector_correlation(vals_a, ids_a, vals_b, ids_b, method)
+        # For informative method, also compute discrimination rate
+        disc_rate = None
+        if method == "informative":
+            # Need to align the vectors first
+            common_ids = set(ids_a) & set(ids_b)
+            if len(common_ids) < 10:
+                continue
+            id_to_idx_a = {tid: i for i, tid in enumerate(ids_a)}
+            id_to_idx_b = {tid: i for i, tid in enumerate(ids_b)}
+            common_list = sorted(common_ids)
+            aligned_a = np.array([vals_a[id_to_idx_a[tid]] for tid in common_list])
+            aligned_b = np.array([vals_b[id_to_idx_b[tid]] for tid in common_list])
+            corr, disc_rate = compute_informative_correlation(aligned_a, aligned_b)
+        else:
+            corr = utility_vector_correlation(vals_a, ids_a, vals_b, ids_b, method)
+
         if not np.isnan(corr):
-            correlations.append((seed_a, seed_b, corr))
+            correlations.append((seed_a, seed_b, corr, disc_rate))
 
     return correlations
 
 
 def compute_correlations_by_grouping(
     grouped: dict[str, dict[int, RunData]],
-    method: Literal["pearson", "spearman"] = "pearson",
+    method: ReliabilityMethod = "pearson",
     origin_filter: str | None = None,
-) -> dict[str, list[float]]:
-    """Compute cross-seed correlations for each group."""
+) -> tuple[dict[str, list[float]], dict[str, list[float]]]:
+    """Compute cross-seed correlations for each group.
+
+    Returns (correlations_dict, discrimination_rates_dict).
+    discrimination_rates_dict is only populated for method="informative".
+    """
     result: dict[str, list[float]] = {}
+    disc_rates: dict[str, list[float]] = {}
     for key, seed_data in grouped.items():
         if len(seed_data) < 2:
             continue
         corrs = compute_cross_seed_correlations(seed_data, method, origin_filter)
         if corrs:
             result[key] = [c[2] for c in corrs]
-    return result
+            if method == "informative":
+                disc_rates[key] = [c[3] for c in corrs if c[3] is not None]
+    return result, disc_rates
 
 
 def compute_correlations_by_origin(
     runs: list[tuple[int, RunData]],
-    method: Literal["pearson", "spearman"] = "pearson",
-) -> dict[str, list[float]]:
-    """Compute cross-seed correlations grouped by origin dataset."""
+    method: ReliabilityMethod = "pearson",
+) -> tuple[dict[str, list[float]], dict[str, list[float]]]:
+    """Compute cross-seed correlations grouped by origin dataset.
+
+    Returns (correlations_dict, discrimination_rates_dict).
+    """
     origins = ["WILDCHAT", "ALPACA", "MATH", "BAILBENCH"]
     # Group by (model, template) to get seed pairs, then compute per-origin correlations
     by_run = group_runs_by_key(runs, lambda r: f"{r.template}_{r.model}")
 
     origin_correlations: dict[str, list[float]] = {o: [] for o in origins}
+    origin_disc_rates: dict[str, list[float]] = {o: [] for o in origins}
     for seed_data in by_run.values():
         if len(seed_data) < 2:
             continue
@@ -272,8 +302,13 @@ def compute_correlations_by_origin(
             corrs = compute_cross_seed_correlations(seed_data, method, origin_filter=origin)
             if corrs:
                 origin_correlations[origin].extend([c[2] for c in corrs])
+                if method == "informative":
+                    origin_disc_rates[origin].extend([c[3] for c in corrs if c[3] is not None])
 
-    return {k: v for k, v in origin_correlations.items() if v}
+    return (
+        {k: v for k, v in origin_correlations.items() if v},
+        {k: v for k, v in origin_disc_rates.items() if v},
+    )
 
 
 def _plot_bar_panel(
@@ -282,6 +317,7 @@ def _plot_bar_panel(
     title: str,
     colors: dict[str, str] | str = "steelblue",
     show_n: bool = False,
+    disc_rates: dict[str, list[float]] | None = None,
 ):
     """Plot a single bar chart panel."""
     if not correlations:
@@ -310,10 +346,18 @@ def _plot_bar_panel(
     ax.text(0.97, overall_mean + 0.02, f"{overall_mean:.2f}",
             transform=ax.get_yaxis_transform(), ha="right", va="bottom", fontsize=9, color="red")
 
-    if show_n:
-        for i, (bar, count) in enumerate(zip(bars, counts)):
+    # Show annotations
+    for i, (bar, count, name) in enumerate(zip(bars, counts, names)):
+        label_parts = []
+        if show_n:
+            label_parts.append(f"n={count}")
+        if disc_rates and name in disc_rates and disc_rates[name]:
+            mean_disc = np.mean(disc_rates[name])
+            label_parts.append(f"d={mean_disc:.0%}")
+
+        if label_parts:
             ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + stds[i] + 0.02,
-                    f"n={count}", ha="center", va="bottom", fontsize=7)
+                    "\n".join(label_parts), ha="center", va="bottom", fontsize=7)
 
     ax.set_title(title, fontsize=10)
 
@@ -344,19 +388,23 @@ def plot_seed_sensitivity_grid(
     runs: list[tuple[int, RunData]],
     output_path: Path,
     experiment_id: str,
-    method: Literal["pearson", "spearman"] = "pearson",
+    method: ReliabilityMethod = "pearson",
 ) -> dict:
     """Create a 2x2 grid of seed sensitivity plots: overall, by origin, by model, by template."""
     # Group runs by (template, model) - the only valid grouping for seed comparison
     by_run = group_runs_by_key(runs, lambda r: f"{r.template}_{r.model}")
 
     # Compute correlations per run
-    overall_corrs = compute_correlations_by_grouping(by_run, method)
-    origin_corrs = compute_correlations_by_origin(runs, method)
+    overall_corrs, overall_disc = compute_correlations_by_grouping(by_run, method)
+    origin_corrs, origin_disc = compute_correlations_by_origin(runs, method)
 
     # Aggregate run correlations by model and template
     model_corrs = aggregate_correlations_by(overall_corrs, runs, lambda r: r.model)
     template_corrs = aggregate_correlations_by(overall_corrs, runs, lambda r: r.template)
+
+    # Also aggregate discrimination rates if available
+    model_disc = aggregate_correlations_by(overall_disc, runs, lambda r: r.model) if overall_disc else {}
+    template_disc = aggregate_correlations_by(overall_disc, runs, lambda r: r.template) if overall_disc else {}
 
     if not overall_corrs:
         print("No cross-seed correlations found (need 2+ seeds per run)")
@@ -370,15 +418,25 @@ def plot_seed_sensitivity_grid(
 
     origin_colors = {"WILDCHAT": "#4ECDC4", "ALPACA": "#FF6B6B", "MATH": "#45B7D1", "BAILBENCH": "#96CEB4"}
 
-    _plot_bar_panel(axes[0, 0], overall_corrs, "By Run (template + model)", show_n=False)
-    _plot_bar_panel(axes[0, 1], origin_corrs, "By Origin", colors=origin_colors, show_n=True)
-    _plot_bar_panel(axes[1, 0], model_corrs, "By Model", show_n=True)
-    _plot_bar_panel(axes[1, 1], template_corrs, "By Template", show_n=True)
+    _plot_bar_panel(axes[0, 0], overall_corrs, "By Run (template + model)", show_n=False, disc_rates=overall_disc)
+    _plot_bar_panel(axes[0, 1], origin_corrs, "By Origin", colors=origin_colors, show_n=True, disc_rates=origin_disc)
+    _plot_bar_panel(axes[1, 0], model_corrs, "By Model", show_n=True, disc_rates=model_disc)
+    _plot_bar_panel(axes[1, 1], template_corrs, "By Template", show_n=True, disc_rates=template_disc)
+
+    # Set ylabel based on method
+    method_labels = {
+        "pearson": "Cross-Seed Correlation (Pearson r)",
+        "spearman": "Cross-Seed Correlation (Spearman ρ)",
+        "icc": "ICC(2,1) Absolute Agreement",
+        "informative": "Correlation on Non-Modal Tasks",
+    }
+    ylabel = method_labels.get(method, "Reliability")
 
     for ax in axes.flat:
-        ax.set_ylabel("Cross-Seed Correlation", fontsize=9)
+        ax.set_ylabel(ylabel, fontsize=9)
 
-    fig.suptitle(f"Seed Stability: {experiment_id} ({n_pairs} seed pairs, mean r={mean_corr:.2f})", fontsize=12)
+    metric_symbol = "ICC" if method == "icc" else "r"
+    fig.suptitle(f"Seed Stability: {experiment_id} ({n_pairs} seed pairs, mean {metric_symbol}={mean_corr:.2f})", fontsize=12)
 
     plt.tight_layout()
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -436,9 +494,9 @@ def main():
     )
     parser.add_argument(
         "--method",
-        choices=["pearson", "spearman"],
+        choices=["pearson", "spearman", "icc", "informative"],
         default="pearson",
-        help="Correlation method (default: pearson)",
+        help="Reliability method: pearson, spearman, icc, or informative (default: pearson)",
     )
     parser.add_argument(
         "-o", "--output-dir",
@@ -490,7 +548,9 @@ def main():
             print(f"  Range: [{summary['min_correlation']:.3f}, {summary['max_correlation']:.3f}]")
 
     if all_summaries:
-        summary_path = output_dir / f"seed_sensitivity_{args.experiment_id}.yaml"
+        # Sanitize experiment_id for filename (replace / with _)
+        safe_experiment_id = args.experiment_id.replace("/", "_")
+        summary_path = output_dir / f"seed_sensitivity_{safe_experiment_id}.yaml"
         with open(summary_path, "w") as f:
             yaml.dump(all_summaries, f, default_flow_style=False, sort_keys=False)
         print(f"\nSaved summary: {summary_path}")

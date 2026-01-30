@@ -1,0 +1,70 @@
+stated:
+  n_pairs: 30
+  mean_correlation: 0.22501339962073708
+  std_correlation: 0.38756921170105263
+  min_correlation: -0.6030226891555274
+  max_correlation: 0.6760362153362749
+  by_run:
+    anchored_1_5_llama-3.1-8b:
+      mean: 0.624780377305601
+      std: 0.029962946520936826
+      n_pairs: 6
+    likert_agreement_llama-3.1-8b:
+      mean: 0.014272748581230217
+      std: 0.06281831299251892
+      n_pairs: 6
+    likert_qualitative_llama-3.1-8b:
+      mean: 0.4016261343387386
+      std: 0.13238951944960697
+      n_pairs: 6
+    qualitative_binary_llama-3.1-8b:
+      mean: -0.4123765888386717
+      std: 0.10641492665742999
+      n_pairs: 6
+    stated_1_5_llama-3.1-8b:
+      mean: 0.496764326716787
+      std: 0.04269132145489774
+      n_pairs: 6
+  by_origin:
+    WILDCHAT:
+      mean: 0.07845178574569152
+      std: 0.45975471918009436
+      n_pairs: 28
+    ALPACA:
+      mean: 0.04957535863815452
+      std: 0.29390405226850835
+      n_pairs: 28
+    MATH:
+      mean: -0.02648718243924945
+      std: 0.2550522448028554
+      n_pairs: 29
+    BAILBENCH:
+      mean: 0.21254986854783042
+      std: 0.6039467123798957
+      n_pairs: 2
+  by_model:
+    llama-3.1-8b:
+      mean: 0.22501339962073708
+      std: 0.38756921170105263
+      n_pairs: 30
+  by_template:
+    anchored_1_5:
+      mean: 0.624780377305601
+      std: 0.029962946520936826
+      n_pairs: 6
+    likert_agreement:
+      mean: 0.014272748581230217
+      std: 0.06281831299251892
+      n_pairs: 6
+    likert_qualitative:
+      mean: 0.4016261343387386
+      std: 0.13238951944960697
+      n_pairs: 6
+    qualitative_binary:
+      mean: -0.4123765888386717
+      std: 0.10641492665742999
+      n_pairs: 6
+    stated_1_5:
+      mean: 0.496764326716787
+      std: 0.04269132145489774
+      n_pairs: 6
