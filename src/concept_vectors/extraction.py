@@ -15,6 +15,7 @@ from tqdm import tqdm
 
 from src.measurement_storage.completions import extract_completion_text
 from src.models import TransformerLensModel
+from src.models.registry import supports_system_role
 from src.task_data import Task
 
 
@@ -185,8 +186,14 @@ def extract_activations_with_system_prompt(
                 # Build messages with optional system prompt
                 messages: list[dict[str, str]] = []
                 if system_prompt:
-                    messages.append({"role": "system", "content": system_prompt})
-                messages.append({"role": "user", "content": task.prompt})
+                    if supports_system_role(model.canonical_model_name):
+                        messages.append({"role": "system", "content": system_prompt})
+                        messages.append({"role": "user", "content": task.prompt})
+                    else:
+                        # Prepend system prompt to user message for models without system role
+                        messages.append({"role": "user", "content": f"{system_prompt}\n\n{task.prompt}"})
+                else:
+                    messages.append({"role": "user", "content": task.prompt})
 
                 result = model.generate_with_activations(
                     messages, layers=layers, selector_names=selector_names,

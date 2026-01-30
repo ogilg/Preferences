@@ -25,6 +25,7 @@ class ModelConfig:
     openrouter_name: str | None
     system_prompt: str | None = None
     reasoning_mode: Literal["none", "openrouter"] = "none"
+    supports_system_role: bool = True
 
 
 MODEL_REGISTRY: dict[str, ModelConfig] = {
@@ -103,6 +104,7 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="google/gemma-2-27b-it",
+        supports_system_role=False,
     ),
     "gemma-3-27b": ModelConfig(
         canonical_name="gemma-3-27b",
@@ -110,6 +112,7 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="google/gemma-3-27b-it",
+        supports_system_role=False,
     ),
     "claude-haiku-4.5": ModelConfig(
         canonical_name="claude-haiku-4.5",
@@ -156,6 +159,11 @@ def get_openrouter_name(canonical_name: str) -> str:
 def get_model_system_prompt(canonical_name: str) -> str | None:
     """Get the default system prompt for a model, if any."""
     return MODEL_REGISTRY[canonical_name].system_prompt
+
+
+def supports_system_role(canonical_name: str) -> bool:
+    """Check if model supports system role in chat messages."""
+    return MODEL_REGISTRY[canonical_name].supports_system_role
 
 
 def is_valid_model(canonical_name: str) -> bool:
