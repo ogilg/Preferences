@@ -1,32 +1,30 @@
 stated:
-  n_templates: 5
   n_pairs: 30
   mean_correlation: 0.44258867644090993
   std_correlation: 0.20748557491312042
   min_correlation: -0.0008472428905956038
   max_correlation: 0.6857670394953304
-  by_template:
-    anchored_1_5_llama-3.1-8b_regex:
+  by_run:
+    anchored_1_5_llama-3.1-8b:
       mean: 0.638490467716859
       std: 0.028664337248046484
       n_pairs: 6
-    likert_agreement_llama-3.1-8b_regex:
+    likert_agreement_llama-3.1-8b:
       mean: 0.08507434580544411
       std: 0.05614534549478826
       n_pairs: 6
-    likert_qualitative_llama-3.1-8b_regex:
+    likert_qualitative_llama-3.1-8b:
       mean: 0.45097083256926407
       std: 0.1341821237356366
       n_pairs: 6
-    qualitative_binary_llama-3.1-8b_regex:
+    qualitative_binary_llama-3.1-8b:
       mean: 0.4883244703295424
       std: 0.10975181014518613
       n_pairs: 6
-    stated_1_5_llama-3.1-8b_regex:
+    stated_1_5_llama-3.1-8b:
       mean: 0.55008326578344
       std: 0.03627608327035144
       n_pairs: 6
-stated_by_origin:
   by_origin:
     WILDCHAT:
       mean: 0.3179967967135996
@@ -44,4 +42,29 @@ stated_by_origin:
       mean: 0.8018963130644328
       std: 0.40703431816217944
       n_pairs: 8
-  overall_mean: 0.3325523468717565
+  by_model:
+    llama-3.1-8b:
+      mean: 0.44258867644090993
+      std: 0.20748557491312042
+      n_pairs: 30
+  by_template:
+    anchored_1_5:
+      mean: 0.638490467716859
+      std: 0.028664337248046484
+      n_pairs: 6
+    likert_agreement:
+      mean: 0.08507434580544411
+      std: 0.05614534549478826
+      n_pairs: 6
+    likert_qualitative:
+      mean: 0.45097083256926407
+      std: 0.1341821237356366
+      n_pairs: 6
+    qualitative_binary:
+      mean: 0.4883244703295424
+      std: 0.10975181014518613
+      n_pairs: 6
+    stated_1_5:
+      mean: 0.55008326578344
+      std: 0.03627608327035144
+      n_pairs: 6
