@@ -13,9 +13,90 @@ import numpy as np
 import yaml
 from scipy.stats import pearsonr, spearmanr
 
+ReliabilityMethod = Literal["pearson", "spearman", "discrimination", "informative"]
+
 if TYPE_CHECKING:
     from src.task_data import Task
     from src.types import BinaryPreferenceMeasurement, TaskScore
+
+
+def compute_discrimination_ratio(task_ratings: dict[str, list[float]]) -> float:
+    """Compute discrimination ratio: Var(between tasks) / Var(total).
+
+    This metric rewards templates that:
+    1. Produce different ratings for different tasks (high between-task variance)
+    2. Are stable across seeds for the same task (low within-task variance)
+
+    A template that always says "4" will have ~0 between-task variance and score low.
+    A template with high seed noise will have high within-task variance and score low.
+
+    Args:
+        task_ratings: task_id -> list of ratings across seeds
+
+    Returns:
+        Ratio in [0, 1] where 1 = perfect discrimination, 0 = no discrimination
+    """
+    if len(task_ratings) < 2:
+        return 0.0
+
+    # Need at least 2 seeds per task to estimate within-task variance
+    tasks_with_multiple = {k: v for k, v in task_ratings.items() if len(v) >= 2}
+    if len(tasks_with_multiple) < 2:
+        return 0.0
+
+    # Compute task means and within-task variances
+    task_means = []
+    within_variances = []
+    for ratings in tasks_with_multiple.values():
+        task_means.append(np.mean(ratings))
+        within_variances.append(np.var(ratings, ddof=1))
+
+    task_means = np.array(task_means)
+    var_between = np.var(task_means, ddof=1)
+    var_within = np.mean(within_variances)
+
+    var_total = var_between + var_within
+    if var_total < 1e-10:
+        return 0.0
+
+    return float(var_between / var_total)
+
+
+def compute_informative_correlation(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
+    """Compute correlation on non-modal responses only.
+
+    Returns (correlation, discrimination_rate) where:
+    - correlation: Pearson r on tasks where at least one rating != mode
+    - discrimination_rate: fraction of tasks that pass this filter
+
+    This answers: "When the model discriminates, is it consistent?"
+    """
+    if len(a) < 2:
+        return 0.0, 0.0
+
+    # Find mode (most common value, rounded to handle float imprecision)
+    pooled = np.concatenate([a, b])
+    rounded = np.round(pooled)
+    values, counts = np.unique(rounded, return_counts=True)
+    mode = values[np.argmax(counts)]
+
+    # Mask: include task if either rating differs from mode
+    mask = (np.round(a) != mode) | (np.round(b) != mode)
+    n_informative = mask.sum()
+    discrimination_rate = n_informative / len(a)
+
+    if n_informative < 2:
+        return float("nan"), discrimination_rate
+
+    a_filtered = a[mask]
+    b_filtered = b[mask]
+
+    # Check for zero variance in filtered data
+    if np.std(a_filtered) < 1e-10 or np.std(b_filtered) < 1e-10:
+        return float("nan"), discrimination_rate
+
+    r, _ = pearsonr(a_filtered, b_filtered)
+    return float(r) if not np.isnan(r) else float("nan"), discrimination_rate
 
 
 def safe_correlation(
@@ -40,10 +121,13 @@ def utility_vector_correlation(
     task_ids_a: list[str],
     mu_b: np.ndarray,
     task_ids_b: list[str],
-    method: Literal["pearson", "spearman"] = "pearson",
+    method: ReliabilityMethod = "pearson",
     min_overlap: int = 10,
 ) -> float:
-    """Pearson/Spearman correlation of utility vectors on overlapping tasks.
+    """Compute reliability metric between utility vectors on overlapping tasks.
+
+    Args:
+        method: "pearson", "spearman", or "discrimination" (variance ratio)
 
     Returns NaN if overlap is less than min_overlap or data is insufficient.
     """
@@ -57,6 +141,16 @@ def utility_vector_correlation(
     common_list = sorted(common_ids)
     vals_a = np.array([mu_a[id_to_idx_a[tid]] for tid in common_list])
     vals_b = np.array([mu_b[id_to_idx_b[tid]] for tid in common_list])
+
+    if method == "discrimination":
+        # For pairwise comparison, estimate discrimination from just two measurements
+        # Build task_ratings dict with two entries per task
+        task_ratings = {tid: [vals_a[i], vals_b[i]] for i, tid in enumerate(common_list)}
+        return compute_discrimination_ratio(task_ratings)
+
+    if method == "informative":
+        r, _ = compute_informative_correlation(vals_a, vals_b)
+        return r
 
     if np.std(vals_a) < 1e-10 or np.std(vals_b) < 1e-10:
         return float("nan")

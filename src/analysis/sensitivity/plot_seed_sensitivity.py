@@ -427,7 +427,7 @@ def plot_seed_sensitivity_grid(
     method_labels = {
         "pearson": "Cross-Seed Correlation (Pearson r)",
         "spearman": "Cross-Seed Correlation (Spearman ρ)",
-        "icc": "ICC(2,1) Absolute Agreement",
+        "discrimination": "Discrimination Ratio (Var_between / Var_total)",
         "informative": "Correlation on Non-Modal Tasks",
     }
     ylabel = method_labels.get(method, "Reliability")
@@ -435,7 +435,7 @@ def plot_seed_sensitivity_grid(
     for ax in axes.flat:
         ax.set_ylabel(ylabel, fontsize=9)
 
-    metric_symbol = "ICC" if method == "icc" else "r"
+    metric_symbol = "DR" if method == "discrimination" else "r"
     fig.suptitle(f"Seed Stability: {experiment_id} ({n_pairs} seed pairs, mean {metric_symbol}={mean_corr:.2f})", fontsize=12)
 
     plt.tight_layout()
@@ -494,9 +494,9 @@ def main():
     )
     parser.add_argument(
         "--method",
-        choices=["pearson", "spearman", "icc", "informative"],
+        choices=["pearson", "spearman", "discrimination", "informative"],
         default="pearson",
-        help="Reliability method: pearson, spearman, icc, or informative (default: pearson)",
+        help="Reliability method: pearson, spearman, discrimination, or informative (default: pearson)",
     )
     parser.add_argument(
         "-o", "--output-dir",
