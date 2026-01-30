@@ -28,3 +28,7 @@ max_new_tokens: 16
 
 # Experiment tracking
 experiment_name: concept_vector_steering_math_001
+
+# Optional: baseline experiment for coef=0 comparison
+# Typically a sysprompt_3x3 experiment with the same task source
+baseline_experiment: sysprompt_3x3_math_anchored_70b
