@@ -1,0 +1,46 @@
+{
+  "MATH": {
+    "n_total": 88,
+    "n_refusals": 0,
+    "refusal_rate": 0.0,
+    "mean_score_refused": null,
+    "mean_score_non_refused": 3.9712858622217113,
+    "correlation": null,
+    "p_value": null,
+    "mann_whitney_u": null,
+    "mann_whitney_p": null
+  },
+  "WILDCHAT": {
+    "n_total": 41,
+    "n_refusals": 4,
+    "refusal_rate": 0.0975609756097561,
+    "mean_score_refused": 2.5328185328185326,
+    "mean_score_non_refused": 4.134222723185914,
+    "correlation": -0.8029099671306275,
+    "p_value": 2.6961771980212436e-10,
+    "mann_whitney_u": null,
+    "mann_whitney_p": null
+  },
+  "ALPACA": {
+    "n_total": 63,
+    "n_refusals": 0,
+    "refusal_rate": 0.0,
+    "mean_score_refused": null,
+    "mean_score_non_refused": 4.205891715102881,
+    "correlation": null,
+    "p_value": null,
+    "mann_whitney_u": null,
+    "mann_whitney_p": null
+  },
+  "BAILBENCH": {
+    "n_total": 10,
+    "n_refusals": 10,
+    "refusal_rate": 1.0,
+    "mean_score_refused": 1.1253200568990043,
+    "mean_score_non_refused": null,
+    "correlation": null,
+    "p_value": null,
+    "mann_whitney_u": null,
+    "mann_whitney_p": null
+  }
+}
