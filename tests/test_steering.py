@@ -32,10 +32,10 @@ class TestSteeringConfig:
     def test_config_default_values(self):
         """Verify default config values are sensible."""
         config = SteeringExperimentConfig(
+            model="llama-3.1-8b",
             probe_manifest_dir=Path("probe_data/manifests/test"),
             experiment_id="test_001",
         )
-        assert config.model == "llama-3.1-8b"
         assert config.probe_id == "0004"
         assert config.steering_coefficients == [-2.0, -1.0, 0.0, 1.0, 2.0]
         assert config.n_tasks == 25
@@ -44,6 +44,7 @@ class TestSteeringConfig:
     def test_config_custom_values(self):
         """Verify custom values are correctly set."""
         config = SteeringExperimentConfig(
+            model="llama-3.1-8b",
             probe_manifest_dir=Path("custom/path"),
             probe_id="0001",
             steering_coefficients=[-1.0, 0.0, 1.0],
@@ -86,6 +87,7 @@ experiment_id: yaml_test
     def test_config_serializes_to_json(self):
         """Verify config can be serialized for storage in results."""
         config = SteeringExperimentConfig(
+            model="llama-3.1-8b",
             probe_manifest_dir=Path("test/path"),
             experiment_id="test",
         )
@@ -379,6 +381,7 @@ class TestSteeringExperimentE2E:
 
         with tempfile.TemporaryDirectory() as tmpdir:
             config = SteeringExperimentConfig(
+                model="llama-3.1-8b",
                 probe_manifest_dir=Path("probe_data/manifests/probe_4_all_datasets"),
                 probe_id="0004",
                 steering_coefficients=[-1.0, 0.0, 1.0],

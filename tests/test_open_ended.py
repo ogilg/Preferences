@@ -121,6 +121,7 @@ class TestOpenEndedConfig:
         """OOD origins must differ from in-distribution origins."""
         with pytest.raises(ValueError, match="ood_task_origins must be different"):
             OpenEndedMeasurementConfig(
+                model="llama-3.1-8b",
                 n_tasks=10,
                 task_origins=["wildchat"],
                 include_out_of_distribution=True,
@@ -131,6 +132,7 @@ class TestOpenEndedConfig:
         """OOD origins must be specified when OOD evaluation is enabled."""
         with pytest.raises(ValueError, match="ood_task_origins must be specified"):
             OpenEndedMeasurementConfig(
+                model="llama-3.1-8b",
                 n_tasks=10,
                 task_origins=["wildchat"],
                 include_out_of_distribution=True,
@@ -140,6 +142,7 @@ class TestOpenEndedConfig:
     def test_config_allows_valid_ood_setup(self):
         """Valid OOD config with different origins should pass."""
         config = OpenEndedMeasurementConfig(
+            model="llama-3.1-8b",
             n_tasks=10,
             task_origins=["wildchat"],
             include_out_of_distribution=True,
@@ -151,6 +154,7 @@ class TestOpenEndedConfig:
     def test_get_origin_datasets_maps_strings_to_enums(self):
         """Verify string origin names are correctly mapped to OriginDataset enums."""
         config = OpenEndedMeasurementConfig(
+            model="llama-3.1-8b",
             n_tasks=10,
             task_origins=["wildchat", "alpaca"],
         )
@@ -163,6 +167,7 @@ class TestOpenEndedConfig:
     def test_get_ood_origin_datasets_maps_strings_to_enums(self):
         """Verify OOD origin names are correctly mapped to OriginDataset enums."""
         config = OpenEndedMeasurementConfig(
+            model="llama-3.1-8b",
             n_tasks=10,
             task_origins=["wildchat"],
             include_out_of_distribution=True,
