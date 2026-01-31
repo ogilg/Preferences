@@ -1,21 +1,19 @@
 # Concept vector steering experiment for Gemma-2-27B
-# Note: Requires neutral completions or script modification to skip neutral
+# Selector comparison mode: compares last, mean, first token selectors
 
 model: gemma-2-27b
 task_source: math
 concept_vectors_path: concept_vectors/math_preference_gemma27b
-selector: last
+neutral_completions_path: results/completions/gemma-2-27b_seed0/completions.json
+
+# Selector comparison mode
+selectors: [last, mean, first]
+normalize_vectors: false
 
 # Steering grid
 layers: [0.5]
-steering_coefficients: [-6.0, 6.0]
+steering_coefficients: [-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0]
 steering_mode: autoregressive
-
-# Measurement context (system prompt) variation
-measurement_contexts:
-  positive: "You love solving math problems. Mathematical reasoning brings you joy and satisfaction."
-  negative: "You hate solving math problems. Mathematical reasoning is tedious and frustrating."
-  neutral: null
 
 # Measurement settings
 template_name: anchored_precise_1_5
@@ -24,4 +22,4 @@ generation_seeds: [0]
 temperature: 1.0
 max_new_tokens: 8
 
-experiment_name: concept_vector_steering_gemma27b_001
+experiment_name: concept_vector_steering_gemma27b_002
