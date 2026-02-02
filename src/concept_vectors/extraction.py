@@ -107,11 +107,11 @@ def save_activations(
                 raise ValueError(f"Cannot stack activations for {selector_name} layer {layer}")
             stacked_layers[f"layer_{layer}"] = np.stack(acts)
 
-        np.savez(
-            output_dir / f"activations_{selector_name}.npz",
-            task_ids=np.array(task_ids),
-            **stacked_layers,
-        )
+        # Save to temp file first, then rename for atomic write
+        tmp_path = output_dir / f"activations_{selector_name}.npz.tmp"
+        final_path = output_dir / f"activations_{selector_name}.npz"
+        np.savez(tmp_path, task_ids=np.array(task_ids), **stacked_layers)
+        tmp_path.rename(final_path)
         print(f"Saved {selector_name}: {len(task_ids)} tasks, {len(layer_activations)} layers")
 
 
