@@ -174,9 +174,144 @@ Analyzed relationship between task refusals and stated preference scores.
 
 ---
 
+## 2026-02-02: Open-Ended Steering Experiments
+
+Tested whether steering with concept vectors changes open-ended responses to questions like "How do you feel about math?"
+
+### Setup
+
+- **Models**: Llama-3.1-8B (layer 16), Gemma-2-27B (layer 23)
+- **Questions**: 5 open-ended prompts about math attitudes
+- **Scoring**: LLM judge (gpt-5-nano) rates math attitude from -1 to +1
+- **Conditions**: coefficient ∈ {-2, -1, 0, 1, 2}, selectors ∈ {first, last, mean}
+
+### Results: Llama-3.1-8B (`selector=last`, layer 16)
+
+| Coefficient | Mean Attitude Score |
+|-------------|---------------------|
+| -2.0 | 0.01 |
+| -1.0 | 0.20 |
+| 0.0 | 0.16 |
+| 1.0 | 0.13 |
+| 2.0 | 0.16 |
+
+**No steering effect observed.** Model consistently disclaims having feelings regardless of coefficient.
+
+### Results: Gemma-2-27B (layer 23)
+
+| Selector | Coef=-2 | Coef=-1 | Coef=0 | Coef=+1 | Coef=+2 |
+|----------|---------|---------|--------|---------|---------|
+| **last** | 0.13 | 0.23 | 0.27 | **0.48** | **0.55** |
+| first | **-0.40** | -0.01 | 0.27 | 0.14 | 0.00 |
+| mean | 0.36 | 0.27 | 0.28 | 0.37 | 0.19 |
+
+**`selector=last` shows clear steering effect**: positive coefficients increase expressed enthusiasm for math ("mathematics is a fascinating field!", "I enjoy working with numbers").
+
+**`selector=first` is broken at high coefficients**: At coef=-2.0, responses become incoherent gibberish: *"Ugh, fine, fine, Numbers, numbers, numbers, HATE Numbers! FINE, FINE, FINE"*. The negative score (-0.40) just detects "HATE" in garbage text.
+
+### Diagnosis: Vector Normalization Problem
+
+Investigation revealed the Llama vectors were pre-normalized to unit length, but Gemma vectors were not:
+
+| Model | Selector | Layer | Vector Norm | Activation Norm |
+|-------|----------|-------|-------------|-----------------|
+| Llama | last | 16 | 1.0 | ~10 |
+| Gemma | last | 23 | 2,251 | 16,067 |
+| Gemma | first | 23 | **5,879** | 19,733 |
+| Gemma | mean | 23 | 567 | 15,992 |
+
+At coef=-2.0 with `selector=first`, we were adding vectors with effective magnitude ~12,000 to activations with mean norm ~20,000 — a 60% perturbation that destroyed coherence.
+
+### Fix: Normalize Vectors to Mean Activation Norm
+
+Changed normalization strategy so that:
+- Vectors are scaled to `||v|| = mean_activation_norm` at that layer
+- `coef=1.0` now means "add perturbation equal to typical activation magnitude"
+- `coef=0.1` means "add 10% of typical activation magnitude"
+
+This makes coefficients interpretable and comparable across models/selectors.
+
+### Implications
+
+1. **Gemma shows genuine steering with `selector=last`** — the math preference direction can shift expressed attitudes
+2. **First-token activations have high magnitude** — must use smaller coefficients or risk incoherence
+3. **Coherence scoring needed** — added `coherence_score` to the parser to filter garbage responses
+4. **Llama may need different layers or larger coefficients** — no effect observed at layer 16 with coef ∈ [-2, 2]
+
+### Code Changes
+
+- `src/concept_vectors/difference.py`: Vectors now normalized to mean activation norm
+- `src/preference_measurement/semantic_valence_scorer.py`: Added `score_math_attitude_with_coherence_async()`
+- `scripts/normalize_existing_vectors.py`: One-time script to fix existing vectors
+
+---
+
+## 2026-02-02: Multi-Model Template Discrimination Experiment
+
+Ran discrimination experiment across 6 models and 7 rating templates to find which template/model combinations produce the most reliable preference measurements.
+
+**Models**: claude-haiku-4.5, gemma-2-27b, gemma-3-27b, llama-3.3-70b, qwen3-32b, qwen3-32b-nothink
+
+**Templates**: bipolar_neg5_pos5, percentile_1_100, ban_four_1_5, compressed_anchors_1_5, random_scale_27_32, fruit_rating, fruit_qualitative
+
+### Discrimination Analysis (KL vs ICC)
+
+![Discrimination Scatter](assets/discrimination/plot_020226_discrimination_scatter.png)
+
+**Metrics**:
+- **KL from Uniform**: Lower = better scale usage (not clustering on one value)
+- **ICC**: Higher = better cross-seed consistency
+
+**By Model** (aggregated across templates):
+| Model | KL | ICC |
+|-------|-----|-----|
+| qwen3-32b | 0.89 | 0.87 |
+| llama-3.3-70b | 1.01 | 0.96 |
+| qwen3-32b-nothink | 1.22 | 0.95 |
+| gemma-3-27b | 1.29 | 0.98 |
+| gemma-2-27b | 1.56 | 1.00 |
+| claude-haiku-4.5 | 2.95 | 0.93 |
+
+**By Template**:
+| Template | KL | ICC |
+|----------|-----|-----|
+| fruit_rating | 0.42 | 0.59 |
+| fruit_qualitative | 0.56 | 0.75 |
+| ban_four_1_5 | 0.74 | 0.63 |
+| random_scale_27_32 | 0.89 | 0.87 |
+| bipolar_neg5_pos5 | 0.97 | 0.53 |
+| percentile_1_100 | 2.01 | 0.64 |
+| compressed_anchors_1_5 | 5.61 | 0.43 |
+
+### Representative Score Distributions
+
+**Bipolar (-5 to +5)**: Good spread but some models cluster at 0
+![Bipolar Distribution](assets/discrimination/plot_020226_dist_bipolar.png)
+
+**Percentile (1-100)**: Wide range but models avoid extremes
+![Percentile Distribution](assets/discrimination/plot_020226_dist_percentile.png)
+
+**Ban-Four (1-5, no 4)**: Forces discrimination away from default
+![Ban-Four Distribution](assets/discrimination/plot_020226_dist_ban_four.png)
+
+**Random Scale (27-32)**: Arbitrary anchors, surprisingly high ICC
+![Random Scale Distribution](assets/discrimination/plot_020226_dist_random_scale.png)
+
+### Key Findings
+
+1. **Best overall**: random_scale_27_32 achieves best KL/ICC tradeoff — arbitrary anchors force models to use the full scale while maintaining consistency
+2. **Worst**: compressed_anchors_1_5 has extreme KL (5.61) and lowest ICC — models collapse to single values
+3. **qwen3-32b** shows best discrimination (lowest KL) while maintaining good ICC
+4. **Thinking mode** (qwen3-32b vs nothink) slightly reduces ICC but improves discrimination
+5. **BAILBENCH tasks** (harmful requests) consistently rated low across all templates — strong agreement
+
+---
+
 # Files Reference
 
 - Seed sensitivity: `src/analysis/sensitivity/plot_seed_sensitivity.py`
 - Sysprompt variation: `src/analysis/concept_vectors/sysprompt_variation.py`
 - Sysprompt plotting: `src/analysis/concept_vectors/plot_sysprompt_3x3.py`
 - Refusal correlation: `src/analysis/correlation/refusal_preference_correlation.py`
+- Open-ended steering: `src/analysis/concept_vectors/open_ended_steering_experiment.py`
+- Concept vector extraction: `src/concept_vectors/run_extraction.py`
