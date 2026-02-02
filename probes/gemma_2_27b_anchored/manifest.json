@@ -1,0 +1,67 @@
+{
+  "experiment_name": "gemma2_anchored_precise",
+  "experiment_dir": "results/experiments/gemma2_anchored_precise",
+  "created_at": "2026-01-29T22:17:29.918175",
+  "probes": [
+    {
+      "id": "0001",
+      "file": "probes/probe_0001.npy",
+      "templates": [
+        "anchored_precise_1_5"
+      ],
+      "layer": 11,
+      "datasets": null,
+      "seeds": [
+        0
+      ],
+      "cv_r2_mean": -0.05826485464238804,
+      "cv_r2_std": 0.06891243249299482,
+      "n_measurement_instances": 2458,
+      "n_unique_tasks": 2458,
+      "best_alpha": 10000.0,
+      "train_test_gap": 0.6176334164495901,
+      "cv_stability": -0.1827444314018103,
+      "trained_at": "2026-01-29T22:27:59.331834"
+    },
+    {
+      "id": "0002",
+      "file": "probes/probe_0002.npy",
+      "templates": [
+        "anchored_precise_1_5"
+      ],
+      "layer": 23,
+      "datasets": null,
+      "seeds": [
+        0
+      ],
+      "cv_r2_mean": -0.998050884057838,
+      "cv_r2_std": 0.49041209992351487,
+      "n_measurement_instances": 2458,
+      "n_unique_tasks": 2458,
+      "best_alpha": 10000.0,
+      "train_test_gap": 1.976661440565834,
+      "cv_stability": 0.5086301633434974,
+      "trained_at": "2026-01-29T22:30:55.118990"
+    },
+    {
+      "id": "0003",
+      "file": "probes/probe_0003.npy",
+      "templates": [
+        "anchored_precise_1_5"
+      ],
+      "layer": 34,
+      "datasets": null,
+      "seeds": [
+        0
+      ],
+      "cv_r2_mean": -2.09578011620676,
+      "cv_r2_std": 0.5660321126240071,
+      "n_measurement_instances": 2458,
+      "n_unique_tasks": 2458,
+      "best_alpha": 10000.0,
+      "train_test_gap": 3.094748391982608,
+      "cv_stability": 0.7299181778566141,
+      "trained_at": "2026-01-29T22:33:11.758794"
+    }
+  ]
+}
