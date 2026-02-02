@@ -536,7 +536,8 @@ def main():
         print(f"  Found {len(runs)} runs ({len(models)} models, {len(templates)} templates)")
 
         template_suffix = f"_{args.template}" if args.template else ""
-        output_path = output_dir / f"plot_{date_str}_seed_sensitivity_{mtype}{template_suffix}.png"
+        safe_experiment_id = args.experiment_id.replace("/", "_")
+        output_path = output_dir / f"plot_{date_str}_{safe_experiment_id}_{mtype}_{args.method}{template_suffix}.png"
 
         summary = plot_seed_sensitivity_grid(
             runs, output_path, args.experiment_id, args.method
