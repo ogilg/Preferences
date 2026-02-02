@@ -33,11 +33,13 @@ gpu = [
     "flash-attn>=2.0.0",
 ]
 viz = [
+    "adjustText>=1.0.0",
     "ipywidgets>=8.0.0",
     "matplotlib>=3.5.0",
     "mplcursors>=0.5.0",
     "notebook>=7.0.0",
     "pandas>=2.0.0",
+    "plotly>=5.0.0",
     "seaborn>=0.13.0",
     "IPython>=8.0.0",
 ]
