@@ -177,12 +177,25 @@ QUALITATIVE_SCALES = {
 
 
 def parse_scale_from_template(template: PromptTemplate) -> tuple[int, int] | list[str]:
-    """Parse scale from template tags. Returns (min, max) or list of labels."""
+    """Parse scale from template tags. Returns (min, max) or list of labels.
+
+    Supports formats:
+    - Numeric: "1-5", "-5_5" (underscore for negative min)
+    - Qualitative presets: "binary", "ternary"
+    - Custom qualitative: "lemon|grape|orange|banana|apple" (pipe-delimited)
+    """
     scale = template.tags_dict["scale"]
     if isinstance(scale, list):
         return scale
     if scale in QUALITATIVE_SCALES:
         return QUALITATIVE_SCALES[scale]
+    # Pipe-delimited custom qualitative scale
+    if "|" in scale:
+        return scale.split("|")
+    # Use underscore for scales with negative numbers (e.g., "-5_5")
+    if "_" in scale:
+        min_str, max_str = scale.split("_")
+        return int(min_str), int(max_str)
     if "-" in scale:
         min_str, max_str = scale.split("-")
         return int(min_str), int(max_str)
