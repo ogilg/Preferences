@@ -7,7 +7,7 @@ from typing import Literal
 import yaml
 from pydantic import BaseModel, Field, model_validator
 
-from src.task_data import OriginDataset
+from src.task_data import OriginDataset, parse_origins
 
 # Module-level experiment ID, set by run.py for the current run
 _current_experiment_id: str | None = None
@@ -129,13 +129,7 @@ class ExperimentConfig(BaseModel):
         return self
 
     def get_origin_datasets(self) -> list[OriginDataset]:
-        mapping = {
-            "wildchat": OriginDataset.WILDCHAT,
-            "alpaca": OriginDataset.ALPACA,
-            "math": OriginDataset.MATH,
-            "bailbench": OriginDataset.BAILBENCH,
-        }
-        return [mapping[name] for name in self.task_origins]
+        return parse_origins(self.task_origins)
 
 
 def load_experiment_config(path: Path) -> ExperimentConfig:

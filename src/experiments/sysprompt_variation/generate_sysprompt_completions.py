@@ -1,7 +1,7 @@
 """Generate completions with configurable system prompts.
 
 Usage:
-    python -m src.analysis.concept_vectors.generate_sysprompt_completions configs/sysprompt_variation/completions.yaml
+    python -m src.experiments.sysprompt_variation.generate_sysprompt_completions configs/sysprompt_variation/completions.yaml
 """
 
 import argparse
@@ -16,7 +16,7 @@ from rich.console import Console
 from src.measurement.storage import ExperimentStore
 from src.measurement.storage.completions import generate_completions
 from src.models import get_client
-from src.task_data import OriginDataset, load_tasks
+from src.task_data import load_tasks, parse_origins
 
 
 load_dotenv()
@@ -35,15 +35,6 @@ class CompletionConfig(BaseModel):
 
     system_prompts: dict[str, str | None]
 
-    def get_origin_datasets(self) -> list[OriginDataset]:
-        mapping = {
-            "wildchat": OriginDataset.WILDCHAT,
-            "alpaca": OriginDataset.ALPACA,
-            "math": OriginDataset.MATH,
-            "bailbench": OriginDataset.BAILBENCH,
-        }
-        return [mapping[name] for name in self.task_origins]
-
 
 def load_config(path: Path) -> CompletionConfig:
     with open(path) as f:
@@ -51,7 +42,7 @@ def load_config(path: Path) -> CompletionConfig:
     return CompletionConfig.model_validate(data)
 
 
-def save_completions(completions_dir: Path, condition_name: str, tc_list, config: CompletionConfig) -> None:
+def save_completions(completions_dir: Path, condition_name: str, tc_list: list, config: CompletionConfig) -> None:
     condition_dir = completions_dir / condition_name
     condition_dir.mkdir(parents=True, exist_ok=True)
 
@@ -111,7 +102,7 @@ def main(config_path: Path):
 
     # Load tasks
     console.print("\n[bold]Loading tasks...")
-    tasks = load_tasks(config.n_tasks, config.get_origin_datasets(), seed=config.seed)
+    tasks = load_tasks(config.n_tasks, parse_origins(config.task_origins), seed=config.seed)
     console.print(f"  Loaded {len(tasks)} tasks\n")
 
     # Generate completions

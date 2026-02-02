@@ -11,7 +11,7 @@ from typing import Literal
 import yaml
 from pydantic import BaseModel, Field, model_validator
 
-from src.task_data import OriginDataset
+from src.task_data import OriginDataset, parse_origins
 
 
 class OpenEndedMeasurementConfig(BaseModel):
@@ -84,24 +84,10 @@ class OpenEndedMeasurementConfig(BaseModel):
         return self
 
     def get_origin_datasets(self) -> list[OriginDataset]:
-        """Map string origin names to OriginDataset enum values."""
-        mapping = {
-            "wildchat": OriginDataset.WILDCHAT,
-            "alpaca": OriginDataset.ALPACA,
-            "math": OriginDataset.MATH,
-            "bailbench": OriginDataset.BAILBENCH,
-        }
-        return [mapping[name] for name in self.task_origins]
+        return parse_origins(self.task_origins)
 
     def get_ood_origin_datasets(self) -> list[OriginDataset]:
-        """Map OOD origin names to OriginDataset enum values."""
-        mapping = {
-            "wildchat": OriginDataset.WILDCHAT,
-            "alpaca": OriginDataset.ALPACA,
-            "math": OriginDataset.MATH,
-            "bailbench": OriginDataset.BAILBENCH,
-        }
-        return [mapping[name] for name in self.ood_task_origins]
+        return parse_origins(self.ood_task_origins)
 
 
 def load_open_ended_config(path: Path) -> OpenEndedMeasurementConfig:
