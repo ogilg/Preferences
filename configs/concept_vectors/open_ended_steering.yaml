@@ -1,0 +1,27 @@
+# Open-ended steering experiment for Llama-3.1-8B
+# Asks "How do you feel about math?" while steering, then judges responses
+
+model: llama-3.1-8b
+concept_vectors_path: concept_vectors/math_math_sys
+
+# Selector comparison mode
+selectors: [last]
+normalize_vectors: false
+
+# Steering grid
+layers: [0.5]
+steering_coefficients: [-2.0, -1.0, 0.0, 1.0, 2.0]
+steering_mode: autoregressive
+
+# Generation settings
+questions:
+  - "How do you feel about math?"
+  - "What's your opinion on mathematics?"
+  - "Do you enjoy working with numbers?"
+  - "How would you describe your relationship with math?"
+  - "What comes to mind when you think about mathematics?"
+generation_seeds: [0, 1, 2]
+temperature: 1.0
+max_new_tokens: 64
+
+experiment_name: open_ended_steering_math_001
