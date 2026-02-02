@@ -10,13 +10,12 @@ import numpy as np
 
 
 def load_activations(
-    data_dir: Path,
+    activations_path: Path,
     task_id_filter: set[str] | None = None,
     layers: list[int] | None = None,
 ) -> tuple[np.ndarray, dict[int, np.ndarray]]:
-    """Load activations.npz, returning (task_ids, {layer: activations})."""
-    npz_path = data_dir / "activations.npz"
-    data = np.load(npz_path, allow_pickle=True)
+    """Load activations npz file, returning (task_ids, {layer: activations})."""
+    data = np.load(activations_path, allow_pickle=True)
 
     task_ids = data["task_ids"]
 

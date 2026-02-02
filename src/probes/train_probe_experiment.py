@@ -209,7 +209,7 @@ def main() -> None:
     measurements_cache = collect_all_measurements(config, combinations)
     needed_task_ids = collect_all_needed_task_ids(measurements_cache, combinations, origins_cache)
     all_task_ids, all_activations = load_activations(
-        config.activations_path.parent,
+        config.activations_path,
         task_id_filter=needed_task_ids,
         layers=config.layers,
     )
