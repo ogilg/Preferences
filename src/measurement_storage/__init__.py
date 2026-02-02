@@ -53,6 +53,13 @@ from src.measurement_storage.experiment_store import (
 from src.measurement_storage.ranking_cache import (
     RankingCache,
 )
+from src.measurement_storage.run_parsing import (
+    MODEL_PREFIXES,
+    parse_scale_tag,
+    extract_model_from_run_dir,
+    extract_template_from_run_dir,
+    normalize_score,
+)
 
 __all__ = [
     # Base
@@ -100,4 +107,10 @@ __all__ = [
     "ExperimentStore",
     # Ranking cache
     "RankingCache",
+    # Run parsing
+    "MODEL_PREFIXES",
+    "parse_scale_tag",
+    "extract_model_from_run_dir",
+    "extract_template_from_run_dir",
+    "normalize_score",
 ]

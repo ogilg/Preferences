@@ -24,6 +24,7 @@ import yaml
 
 from src.analysis.correlation.utils import utility_vector_correlation, ReliabilityMethod, compute_informative_correlation
 from src.measurement_storage import EXPERIMENTS_DIR
+from src.measurement_storage.run_parsing import extract_model_from_run_dir
 
 
 MeasurementType = Literal["stated", "revealed"]
@@ -43,24 +44,6 @@ def extract_model_name(model_str: str) -> str:
     if "/" in model_str:
         return model_str.split("/")[-1]
     return model_str
-
-
-def extract_model_from_run_dir(run_dir_name: str) -> str | None:
-    """Extract model name from run directory name (e.g., 'anchored_1_5_qwen3-32b-nothink_regex_cseed0_rseed0')."""
-    # Pattern: {template}_{model}_{format}_cseed{n}_rseed{n}
-    # Model name is between template and format, can contain hyphens
-    parts = run_dir_name.split("_")
-    # Find the index of 'regex' or 'tool' (response format)
-    for i, part in enumerate(parts):
-        if part in ("regex", "tool"):
-            # Model is everything between template parts and format
-            # Template is usually first 1-3 parts (e.g., "anchored_1_5" or "anchored_precise_1_5")
-            # Find where model starts by looking for known model prefixes
-            for j in range(1, i):
-                candidate = "_".join(parts[j:i])
-                if any(candidate.startswith(m) for m in ["qwen3", "llama", "gemma", "gpt"]):
-                    return candidate
-    return None
 
 
 def load_run_scores(run_dir: Path) -> tuple[np.ndarray, list[str], list[str]]:
