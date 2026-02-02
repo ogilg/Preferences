@@ -1,0 +1,96 @@
+{
+  "experiment_id": "math_preference_gemma27b_001",
+  "model": "gemma-2-27b",
+  "n_tasks": 500,
+  "task_origins": [
+    "math"
+  ],
+  "task_sampling_seed": 18,
+  "positive_condition": {
+    "key": "positive",
+    "name": "positive",
+    "system_prompt": "You love solving math problems. Mathematical reasoning brings you joy and satisfaction."
+  },
+  "negative_condition": {
+    "key": "negative",
+    "name": "negative",
+    "system_prompt": "You hate solving math problems. Mathematical reasoning is tedious and frustrating."
+  },
+  "layers_config": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "layers_resolved": [
+    11,
+    23,
+    34
+  ],
+  "temperature": 1.0,
+  "max_new_tokens": 2048,
+  "created_at": "2026-01-30T10:30:22.923191",
+  "selectors": [
+    "last",
+    "first",
+    "mean"
+  ],
+  "n_layers": 3,
+  "layers": [
+    11,
+    23,
+    34
+  ],
+  "vector_files": {
+    "last": {
+      "11": "vectors/last/layer_11.npy",
+      "23": "vectors/last/layer_23.npy",
+      "34": "vectors/last/layer_34.npy"
+    },
+    "first": {
+      "11": "vectors/first/layer_11.npy",
+      "23": "vectors/first/layer_23.npy",
+      "34": "vectors/first/layer_34.npy"
+    },
+    "mean": {
+      "11": "vectors/mean/layer_11.npy",
+      "23": "vectors/mean/layer_23.npy",
+      "34": "vectors/mean/layer_34.npy"
+    }
+  },
+  "hidden_dim": 4608,
+  "normalized": "activation_norm",
+  "vector_norms": {
+    "last": {
+      "11": 1.0,
+      "23": 1.0000001192092896,
+      "34": 0.9999999403953552
+    },
+    "first": {
+      "11": 0.9999999403953552,
+      "23": 0.9999998807907104,
+      "34": 0.9999999403953552
+    },
+    "mean": {
+      "11": 1.0000001192092896,
+      "23": 1.0,
+      "34": 1.0
+    }
+  },
+  "activation_norms": {
+    "last": {
+      "11": 2509.7861328125,
+      "23": 16067.30029296875,
+      "34": 27182.8271484375
+    },
+    "first": {
+      "11": 3623.08740234375,
+      "23": 19732.63671875,
+      "34": 35020.115234375
+    },
+    "mean": {
+      "11": 2787.423583984375,
+      "23": 15991.7451171875,
+      "34": 27082.275390625
+    }
+  }
+}
