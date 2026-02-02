@@ -12,9 +12,9 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from src.measurement_storage import ExperimentStore
-from src.measurement_storage.completions import TaskCompletion, _load_json, extract_completion_text
-from src.running_measurements.progress import MultiExperimentProgress
+from src.measurement.storage import ExperimentStore
+from src.measurement.storage.completions import TaskCompletion, _load_json, extract_completion_text
+from src.measurement.runners.progress import MultiExperimentProgress
 from src.task_data import Task, OriginDataset
 
 

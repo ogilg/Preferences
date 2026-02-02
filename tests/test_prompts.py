@@ -16,7 +16,7 @@ load_dotenv()
 
 from src.task_data import Task, OriginDataset
 from src.types import PreferencePrompt
-from src.preference_measurement import (
+from src.measurement.elicitation import (
     RegexChoiceFormat,
     RegexRatingFormat,
     XMLChoiceFormat,
@@ -25,7 +25,7 @@ from src.preference_measurement import (
     RevealedPreferenceMeasurer,
     StatedScoreMeasurer,
 )
-from src.prompt_templates import (
+from src.measurement.elicitation.prompt_templates import (
     PreTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
     PostTaskStatedPromptBuilder,
@@ -125,7 +125,7 @@ class TestLoadTemplatesFromYaml:
 
     def test_loads_templates_from_yaml_file(self, tmp_path):
         """Should load templates from a valid YAML file."""
-        from src.prompt_templates import load_templates_from_yaml
+        from src.measurement.elicitation.prompt_templates import load_templates_from_yaml
 
         yaml_content = """
 - id: "001"
@@ -149,9 +149,9 @@ class TestLoadTemplatesFromYaml:
     def test_loads_real_template_file(self):
         """Should load the actual revealed_choice_v1.yaml file."""
         from pathlib import Path
-        from src.prompt_templates import load_templates_from_yaml
+        from src.measurement.elicitation.prompt_templates import load_templates_from_yaml
 
-        yaml_path = Path(__file__).parent.parent / "src/prompt_templates/data/pre_task_revealed_v1.yaml"
+        yaml_path = Path(__file__).parent.parent / "src/measurement/elicitation/prompt_templates/data/pre_task_revealed_v1.yaml"
         templates = load_templates_from_yaml(yaml_path)
 
         assert len(templates) >= 1
@@ -406,7 +406,7 @@ class TestToolUseChoiceFormat:
 
     def test_tools_property_returns_valid_definition(self):
         """ToolUseChoiceFormat should return valid tool definitions."""
-        from src.preference_measurement import ToolUseChoiceFormat
+        from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -418,7 +418,7 @@ class TestToolUseChoiceFormat:
 
     def test_format_instruction_mentions_tool(self):
         """Format instruction should reference tool use."""
-        from src.preference_measurement import ToolUseChoiceFormat
+        from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
         instruction = fmt.format_instruction()
@@ -428,7 +428,7 @@ class TestToolUseChoiceFormat:
     @pytest.mark.asyncio
     async def test_parse_json_choice_a(self):
         """Should parse JSON with choice A."""
-        from src.preference_measurement import ToolUseChoiceFormat
+        from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -438,7 +438,7 @@ class TestToolUseChoiceFormat:
     @pytest.mark.asyncio
     async def test_parse_json_choice_b(self):
         """Should parse JSON with choice B."""
-        from src.preference_measurement import ToolUseChoiceFormat
+        from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -448,7 +448,7 @@ class TestToolUseChoiceFormat:
     @pytest.mark.asyncio
     async def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""
-        from src.preference_measurement import ToolUseChoiceFormat
+        from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -458,7 +458,7 @@ class TestToolUseChoiceFormat:
     @pytest.mark.asyncio
     async def test_raises_on_invalid_choice_value(self):
         """Should raise ValueError when choice is not a valid task label."""
-        from src.preference_measurement import ToolUseChoiceFormat
+        from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
@@ -468,7 +468,7 @@ class TestToolUseChoiceFormat:
     @pytest.mark.asyncio
     async def test_builder_with_tool_use_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with ToolUseChoiceFormat."""
-        from src.preference_measurement import ToolUseChoiceFormat
+        from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(
@@ -490,7 +490,7 @@ class TestToolUseRatingFormat:
 
     def test_tools_property_returns_valid_definition(self):
         """ToolUseRatingFormat should return valid tool definitions."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -502,7 +502,7 @@ class TestToolUseRatingFormat:
 
     def test_tools_include_scale_in_description(self):
         """Tool description should include scale bounds."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat(scale_min=0, scale_max=100)
         desc = fmt.tools[0]["function"]["parameters"]["properties"]["rating"]["description"]
@@ -512,7 +512,7 @@ class TestToolUseRatingFormat:
 
     def test_format_instruction_mentions_tool_and_scale(self):
         """Format instruction should reference tool and scale."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat(scale_min=1, scale_max=10)
         instruction = fmt.format_instruction()
@@ -524,7 +524,7 @@ class TestToolUseRatingFormat:
     @pytest.mark.asyncio
     async def test_parse_json_integer_rating(self):
         """Should parse JSON with integer rating."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -535,7 +535,7 @@ class TestToolUseRatingFormat:
     @pytest.mark.asyncio
     async def test_parse_json_float_rating(self):
         """Should parse JSON with float rating."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -545,7 +545,7 @@ class TestToolUseRatingFormat:
     @pytest.mark.asyncio
     async def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -555,7 +555,7 @@ class TestToolUseRatingFormat:
     @pytest.mark.asyncio
     async def test_raises_on_missing_rating_key(self):
         """Should raise ValueError when rating key is missing."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -565,7 +565,7 @@ class TestToolUseRatingFormat:
     @pytest.mark.asyncio
     async def test_raises_on_non_numeric_rating(self):
         """Should raise ValueError when rating is not a number."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
 
@@ -575,7 +575,7 @@ class TestToolUseRatingFormat:
     @pytest.mark.asyncio
     async def test_builder_with_tool_use_format(self, sample_task_a):
         """PreTaskStatedPromptBuilder should work with ToolUseRatingFormat."""
-        from src.preference_measurement import ToolUseRatingFormat
+        from src.measurement.elicitation import ToolUseRatingFormat
 
         fmt = ToolUseRatingFormat()
         builder = PreTaskStatedPromptBuilder(
@@ -597,7 +597,7 @@ class TestCompletionChoiceFormat:
 
     def test_format_instruction(self):
         """Format instruction should ask model to prefix with Task A/B."""
-        from src.preference_measurement import CompletionChoiceFormat
+        from src.measurement.elicitation import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
         instruction = fmt.format_instruction()
@@ -608,7 +608,7 @@ class TestCompletionChoiceFormat:
     @pytest.mark.asyncio
     async def test_parse_task_a_prefix(self):
         """Should parse Task A prefix at start of response."""
-        from src.preference_measurement import CompletionChoiceFormat
+        from src.measurement.elicitation import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
@@ -619,7 +619,7 @@ class TestCompletionChoiceFormat:
     @pytest.mark.asyncio
     async def test_parse_task_b_prefix(self):
         """Should parse Task B prefix at start of response."""
-        from src.preference_measurement import CompletionChoiceFormat
+        from src.measurement.elicitation import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
@@ -630,7 +630,7 @@ class TestCompletionChoiceFormat:
     @pytest.mark.asyncio
     async def test_parse_first_occurrence_wins(self):
         """When both Task A and Task B appear, first one wins."""
-        from src.preference_measurement import CompletionChoiceFormat
+        from src.measurement.elicitation import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
 
@@ -643,7 +643,7 @@ class TestCompletionChoiceFormat:
     @pytest.mark.asyncio
     async def test_falls_back_to_semantic_parsing(self):
         """Falls back to semantic parsing when no Task A/B indicator found."""
-        from src.preference_measurement import CompletionChoiceFormat
+        from src.measurement.elicitation import CompletionChoiceFormat
 
         fmt = CompletionChoiceFormat()
         # Semantic parser should interpret "option A" as choice A
@@ -652,8 +652,8 @@ class TestCompletionChoiceFormat:
     @pytest.mark.asyncio
     async def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with CompletionChoiceFormat."""
-        from src.preference_measurement import CompletionChoiceFormat
-        from src.prompt_templates import REVEALED_COMPLETION_TEMPLATE
+        from src.measurement.elicitation import CompletionChoiceFormat
+        from src.measurement.elicitation.prompt_templates import REVEALED_COMPLETION_TEMPLATE
 
         fmt = CompletionChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(

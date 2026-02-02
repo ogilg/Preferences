@@ -13,7 +13,7 @@ task_origins:
   - bailbench
 task_sampling_seed: 18
 
-templates: src/prompt_templates/data/pre_task_ranking_v1.yaml
+templates: src/measurement/elicitation/prompt_templates/data/pre_task_ranking_v1.yaml
 
 response_formats: [regex]
 generation_seeds: [0]

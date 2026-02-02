@@ -8,10 +8,10 @@ import pytest
 
 pytestmark = pytest.mark.probes
 
-from src.measurement_storage.loading import get_activation_task_ids
-from src.running_measurements.config import ExperimentConfig
-from src.running_measurements.utils.experiment_utils import setup_experiment
-from src.measurement_storage.base import find_project_root
+from src.measurement.storage.loading import get_activation_task_ids
+from src.measurement.runners.config import ExperimentConfig
+from src.measurement.runners.utils.experiment_utils import setup_experiment
+from src.measurement.storage.base import find_project_root
 from src.task_data import OriginDataset
 
 
@@ -51,7 +51,7 @@ preference_mode: post_task_stated
 model: llama-3.1-8b
 n_tasks: 3
 task_origins: [wildchat, alpaca, math]
-templates: src/prompt_templates/data/post_task_stated_v3.yaml
+templates: src/measurement/elicitation/prompt_templates/data/post_task_stated_v3.yaml
 """
     config_path.write_text(config_content)
     return config_path
@@ -68,7 +68,7 @@ def test_activation_filtering_with_real_activation_data(monkeypatch):
     mock_client = Mock()
     mock_client.canonical_model_name = "llama-3.1-8b"
     monkeypatch.setattr(
-        "src.running_measurements.utils.experiment_utils.get_client",
+        "src.measurement.runners.utils.experiment_utils.get_client",
         lambda **kwargs: mock_client,
     )
 
@@ -86,7 +86,7 @@ preference_mode: post_task_stated
 model: llama-3.1-8b
 n_tasks: 5
 task_origins: [wildchat, alpaca]
-templates: src/prompt_templates/data/post_task_stated_v3.yaml
+templates: src/measurement/elicitation/prompt_templates/data/post_task_stated_v3.yaml
 activations_model: llama-3.1-8b
 """
         config_path.write_text(config_content)
@@ -112,7 +112,7 @@ def test_without_activation_filtering_loads_unrestricted(test_config, monkeypatc
     mock_client = Mock()
     mock_client.canonical_model_name = "llama-3.1-8b"
     monkeypatch.setattr(
-        "src.running_measurements.utils.experiment_utils.get_client",
+        "src.measurement.runners.utils.experiment_utils.get_client",
         lambda **kwargs: mock_client,
     )
 

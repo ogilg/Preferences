@@ -18,7 +18,7 @@ from src.analysis.sensitivity.plot import (
     plot_regression_coefficients,
     plot_sensitivity_by_model,
 )
-from src.measurement_storage import EXPERIMENTS_DIR
+from src.measurement.storage import EXPERIMENTS_DIR
 
 
 OUTPUT_DIR = Path(__file__).parent / "plots"

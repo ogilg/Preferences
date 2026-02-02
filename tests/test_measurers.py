@@ -3,7 +3,7 @@ import pytest
 pytestmark = pytest.mark.measurement
 
 from src.task_data import Task, OriginDataset
-from src.preference_measurement import (
+from src.measurement.elicitation import (
     BinaryPreferenceMeasurement,
     TaskScore,
     PreferenceType,
@@ -11,13 +11,13 @@ from src.preference_measurement import (
     RegexChoiceFormat,
     RegexRatingFormat,
 )
-from src.preference_measurement import (
+from src.measurement.elicitation import (
     Measurer,
     RevealedPreferenceMeasurer,
     StatedScoreMeasurer,
 )
-from src.prompt_templates import PromptTemplate
-from src.preference_measurement.semantic_parser import ParseError
+from src.measurement.elicitation.prompt_templates import PromptTemplate
+from src.measurement.elicitation.semantic_parser import ParseError
 
 pytestmark = pytest.mark.asyncio
 

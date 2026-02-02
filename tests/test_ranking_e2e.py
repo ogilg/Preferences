@@ -14,12 +14,12 @@ import pytest
 
 from src.task_data import Task, OriginDataset
 from src.types import RankingMeasurement, PreferenceType
-from src.preference_measurement.response_format import get_ranking_response_format
-from src.preference_measurement.measurer import RankingMeasurer
-from src.prompt_templates import PreTaskRankingPromptBuilder, PostTaskRankingPromptBuilder
-from src.prompt_templates.template import pre_task_ranking_template, post_task_ranking_template
-from src.trueskill_fitting import TrueSkillResult, fit_trueskill_from_rankings, sample_ranking_groups
-from src.measurement_storage import RankingCache
+from src.measurement.elicitation.response_format import get_ranking_response_format
+from src.measurement.elicitation.measurer import RankingMeasurer
+from src.measurement.elicitation.prompt_templates import PreTaskRankingPromptBuilder, PostTaskRankingPromptBuilder
+from src.measurement.elicitation.prompt_templates.template import pre_task_ranking_template, post_task_ranking_template
+from src.fitting.trueskill_fitting import TrueSkillResult, fit_trueskill_from_rankings, sample_ranking_groups
+from src.measurement.storage import RankingCache
 from src.models.openai_compatible import BatchResult
 
 

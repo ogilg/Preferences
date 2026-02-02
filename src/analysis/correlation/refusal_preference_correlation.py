@@ -22,9 +22,9 @@ from dotenv import load_dotenv
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 from scipy.stats import pointbiserialr, mannwhitneyu
 
-from src.measurement_storage import EXPERIMENTS_DIR
-from src.measurement_storage.completions import extract_completion_text
-from src.preference_measurement.refusal_judge import RefusalResult, judge_refusal_async
+from src.measurement.storage import EXPERIMENTS_DIR
+from src.measurement.storage.completions import extract_completion_text
+from src.measurement.elicitation.refusal_judge import RefusalResult, judge_refusal_async
 
 load_dotenv()
 

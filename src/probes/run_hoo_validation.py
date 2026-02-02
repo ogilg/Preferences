@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from src.probes.config import ProbeEvaluationConfig
 from src.probes.storage import load_manifest, load_probe
 from src.probes.activations import load_activations
-from src.measurement_storage.loading import load_run_utilities
+from src.measurement.storage.loading import load_run_utilities
 
 
 def run_hoo_validation(

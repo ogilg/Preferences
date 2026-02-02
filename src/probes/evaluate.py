@@ -9,7 +9,7 @@ from sklearn.metrics import r2_score, mean_squared_error
 
 from src.probes.storage import load_probe, load_manifest
 from src.probes.activations import load_activations
-from src.measurement_storage.loading import load_pooled_scores, load_run_utilities
+from src.measurement.storage.loading import load_pooled_scores, load_run_utilities
 
 
 def evaluate_probe_on_data(

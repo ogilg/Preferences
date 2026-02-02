@@ -23,7 +23,7 @@ from src.analysis.correlation.utils import (
 from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, TaskScore, PreferenceType
-from src.thurstonian_fitting import ThurstonianResult, OptimizationHistory
+from src.fitting.thurstonian_fitting import ThurstonianResult, OptimizationHistory
 
 from tests.helpers import make_task, make_score, make_measurement
 

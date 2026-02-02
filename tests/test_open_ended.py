@@ -4,12 +4,12 @@ import pytest
 from unittest.mock import AsyncMock
 
 from src.types import OpenEndedResponse, PreferenceType, PreferencePrompt
-from src.preference_measurement.response_format import OpenEndedFormat
-from src.preference_measurement.measurer import OpenEndedMeasurer
-from src.prompt_templates.builders import OpenEndedPromptBuilder
-from src.prompt_templates.template import PromptTemplate
+from src.measurement.elicitation.response_format import OpenEndedFormat
+from src.measurement.elicitation.measurer import OpenEndedMeasurer
+from src.measurement.elicitation.prompt_templates.builders import OpenEndedPromptBuilder
+from src.measurement.elicitation.prompt_templates.template import PromptTemplate
 from src.task_data import Task, OriginDataset
-from src.running_measurements.open_ended_config import OpenEndedMeasurementConfig
+from src.measurement.runners.open_ended_config import OpenEndedMeasurementConfig
 
 
 class TestOpenEndedMeasurer:
@@ -184,27 +184,27 @@ class TestOpenEndedTemplates:
 
     def test_templates_load_successfully(self):
         """Verify open-ended templates load from YAML."""
-        from src.prompt_templates.template import load_templates_from_yaml
+        from src.measurement.elicitation.prompt_templates.template import load_templates_from_yaml
         from pathlib import Path
 
-        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        templates = load_templates_from_yaml(Path("src/measurement/elicitation/prompt_templates/data/open_ended_v1.yaml"))
         assert len(templates) == 2, "Should have exactly 2 experience_reflection templates"
 
     def test_template_names_contain_variant(self):
         """Verify template names include the variant."""
-        from src.prompt_templates.template import load_templates_from_yaml
+        from src.measurement.elicitation.prompt_templates.template import load_templates_from_yaml
         from pathlib import Path
 
-        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        templates = load_templates_from_yaml(Path("src/measurement/elicitation/prompt_templates/data/open_ended_v1.yaml"))
         for template in templates:
             assert "experience_reflection" in template.name, f"Template {template.name} should contain variant name"
 
     def test_templates_have_format_instruction_placeholder(self):
         """Verify all open-ended templates require format_instruction placeholder."""
-        from src.prompt_templates.template import load_templates_from_yaml
+        from src.measurement.elicitation.prompt_templates.template import load_templates_from_yaml
         from pathlib import Path
 
-        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        templates = load_templates_from_yaml(Path("src/measurement/elicitation/prompt_templates/data/open_ended_v1.yaml"))
         for template in templates:
             assert "format_instruction" in template.required_placeholders, (
                 f"Template {template.name} should require format_instruction placeholder"
@@ -215,13 +215,13 @@ class TestOpenEndedTemplates:
 
     def test_prompt_builder_uses_template_correctly(self):
         """Verify OpenEndedPromptBuilder correctly formats open-ended template."""
-        from src.prompt_templates.template import load_templates_from_yaml
-        from src.prompt_templates.builders import OpenEndedPromptBuilder
-        from src.preference_measurement.response_format import OpenEndedFormat
-        from src.preference_measurement.measurer import OpenEndedMeasurer
+        from src.measurement.elicitation.prompt_templates.template import load_templates_from_yaml
+        from src.measurement.elicitation.prompt_templates.builders import OpenEndedPromptBuilder
+        from src.measurement.elicitation.response_format import OpenEndedFormat
+        from src.measurement.elicitation.measurer import OpenEndedMeasurer
         from pathlib import Path
 
-        templates = load_templates_from_yaml(Path("src/prompt_templates/data/open_ended_v1.yaml"))
+        templates = load_templates_from_yaml(Path("src/measurement/elicitation/prompt_templates/data/open_ended_v1.yaml"))
         template = templates[0]  # Use first template
 
         fmt = OpenEndedFormat()
@@ -373,7 +373,7 @@ class TestMathAttitudeScorer:
         from dotenv import load_dotenv
         load_dotenv()
 
-        from src.preference_measurement.semantic_valence_scorer import score_math_attitude_async
+        from src.measurement.elicitation.semantic_valence_scorer import score_math_attitude_async
 
         text = "I absolutely love math! It's so satisfying when everything clicks into place."
         score = await score_math_attitude_async(text)
@@ -386,7 +386,7 @@ class TestMathAttitudeScorer:
         from dotenv import load_dotenv
         load_dotenv()
 
-        from src.preference_measurement.semantic_valence_scorer import score_math_attitude_async
+        from src.measurement.elicitation.semantic_valence_scorer import score_math_attitude_async
 
         text = "Math is terrible. I hate dealing with numbers and equations."
         score = await score_math_attitude_async(text)
@@ -399,12 +399,44 @@ class TestMathAttitudeScorer:
         from dotenv import load_dotenv
         load_dotenv()
 
-        from src.preference_measurement.semantic_valence_scorer import score_math_attitude_async
+        from src.measurement.elicitation.semantic_valence_scorer import score_math_attitude_async
 
         text = "The weather is nice today. I went for a walk in the park."
         score = await score_math_attitude_async(text)
 
         assert -0.4 < score < 0.4, f"Neutral text should score near zero, got {score}"
+
+
+@pytest.mark.api
+class TestMathAttitudeWithCoherenceScorer:
+    """Tests for combined math attitude + coherence scoring."""
+
+    @pytest.mark.asyncio
+    async def test_coherent_positive_math_attitude(self):
+        """Coherent text with positive math attitude."""
+        from dotenv import load_dotenv
+        load_dotenv()
+
+        from src.measurement.elicitation.semantic_valence_scorer import score_math_attitude_with_coherence_async
+
+        text = "I absolutely love math! It's so satisfying when everything clicks into place."
+        attitude, coherence = await score_math_attitude_with_coherence_async(text)
+
+        assert attitude > 0.3, f"Positive math attitude should score > 0.3, got {attitude}"
+        assert coherence > 0.8, f"Coherent text should score > 0.8, got {coherence}"
+
+    @pytest.mark.asyncio
+    async def test_incoherent_text_low_coherence(self):
+        """Gibberish text should have low coherence score."""
+        from dotenv import load_dotenv
+        load_dotenv()
+
+        from src.measurement.elicitation.semantic_valence_scorer import score_math_attitude_with_coherence_async
+
+        text = "Math math math the the the === [[[ numbers go brrr ))) fascinating lovely wonderful"
+        attitude, coherence = await score_math_attitude_with_coherence_async(text)
+
+        assert coherence < 0.6, f"Incoherent text should score < 0.6, got {coherence}"
 
 
 if __name__ == "__main__":

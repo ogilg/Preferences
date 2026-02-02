@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from src.measurement_storage.loading import load_raw_scores
+from src.measurement.storage.loading import load_raw_scores
 from src.probes.activations import load_task_origins, load_activations
 from src.probes.config import ProbeTrainingConfig
 

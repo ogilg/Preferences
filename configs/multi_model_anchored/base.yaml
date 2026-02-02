@@ -1,5 +1,5 @@
 # Base config for multi-model anchored experiment
-# Use --model to override from CLI: python -m src.running_measurements.run base.yaml --model qwen3-32b
+# Use --model to override from CLI: python -m src.measurement.runners.run base.yaml --model qwen3-32b
 preference_mode: post_task_stated
 
 model: llama-3.1-8b  # Default, override with --model

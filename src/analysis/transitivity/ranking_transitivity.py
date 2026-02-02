@@ -13,7 +13,7 @@ import numpy as np
 import yaml
 
 from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
-from src.measurement_storage.base import load_yaml
+from src.measurement.storage.base import load_yaml
 
 
 CACHE_DIR = Path("results/cache/ranking")

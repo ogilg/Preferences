@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.measurement_storage import (
+from src.measurement.storage import (
     EXPERIMENTS_DIR,
     list_runs,
     load_run_utilities,
@@ -121,7 +121,7 @@ def load_runs_for_model(
                 MeasurementType.PRE_REVEALED,
                 MeasurementType.POST_REVEALED,
             ):
-                from src.measurement_storage import find_thurstonian_csv
+                from src.measurement.storage import find_thurstonian_csv
                 if find_thurstonian_csv(config.run_dir) is None:
                     continue
 

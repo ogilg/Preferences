@@ -6,13 +6,13 @@ import pytest
 
 from src.task_data import Task, OriginDataset
 from src.types import RankingRefusal, PreferenceType
-from src.preference_measurement.response_format import (
+from src.measurement.elicitation.response_format import (
     RegexRankingFormat,
     XMLRankingFormat,
     ToolUseRankingFormat,
 )
-from src.preference_measurement.measurer import RankingMeasurer
-from src.preference_measurement.refusal_judge import PreferenceRefusalResult
+from src.measurement.elicitation.measurer import RankingMeasurer
+from src.measurement.elicitation.refusal_judge import PreferenceRefusalResult
 
 
 pytestmark = [pytest.mark.measurement, pytest.mark.ranking]
@@ -27,7 +27,7 @@ class TestRankingRefusalHandling:
         task_labels = ("A", "B", "C", "D", "E")
         fmt = RegexRankingFormat(task_labels)
 
-        with patch("src.preference_measurement.response_format.refusal_judge") as mock_judge:
+        with patch("src.measurement.elicitation.response_format.refusal_judge") as mock_judge:
             mock_refusal_result = PreferenceRefusalResult(is_refusal=True, refusal_type="no_preferences")
             mock_judge.judge_preference_refusal_async = AsyncMock(return_value=mock_refusal_result)
 

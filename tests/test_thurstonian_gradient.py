@@ -7,7 +7,7 @@ import pytest
 
 pytestmark = pytest.mark.thurstonian
 
-from src.thurstonian_fitting.thurstonian import (
+from src.fitting.thurstonian_fitting.thurstonian import (
     PairwiseData,
     _make_objective_and_grad,
     _neg_log_likelihood,

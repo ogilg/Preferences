@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.container import BarContainer
 
-from src.thurstonian_fitting import ThurstonianResult
+from src.fitting.thurstonian_fitting import ThurstonianResult
 
 
 class RunConfig(Protocol):

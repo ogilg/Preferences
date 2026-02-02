@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import yaml
 
-from src.measurement_storage import EXPERIMENTS_DIR, list_runs
+from src.measurement.storage import EXPERIMENTS_DIR, list_runs
 from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
 from src.analysis.transitivity.wins_matrix import load_wins_matrix_for_run
 

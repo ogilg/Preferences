@@ -2,7 +2,7 @@
 
 import pytest
 
-from src.preference_measurement.semantic_parser import (
+from src.measurement.elicitation.semantic_parser import (
     parse_choice_async,
     parse_rating_async,
     parse_ranking_async,

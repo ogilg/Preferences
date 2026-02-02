@@ -24,12 +24,12 @@ from src.analysis.sensitivity.sensitivity import (
     compute_sensitivities,
     compute_sensitivity_regression,
 )
-from src.measurement_storage import (
+from src.measurement.storage import (
     RunConfig,
     list_runs,
     load_run_utilities,
 )
-from src.measurement_storage.loading import PRE_TASK_REVEALED_DIR
+from src.measurement.storage.loading import PRE_TASK_REVEALED_DIR
 
 
 def load_all_runs(

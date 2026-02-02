@@ -21,10 +21,10 @@ import torch
 from dotenv import load_dotenv
 
 from src.analysis.concept_vectors.measurement_utils import load_config, load_steering_vector
-from src.measurement_storage import ExperimentStore
+from src.measurement.storage import ExperimentStore
 from src.models.transformer_lens import TransformerLensModel, STEERING_MODES
-from src.preference_measurement.semantic_valence_scorer import score_math_attitude_async
-from src.running_measurements.progress import MultiExperimentProgress, console, print_summary
+from src.measurement.elicitation.semantic_valence_scorer import score_math_attitude_with_coherence_async
+from src.measurement.runners.progress import MultiExperimentProgress, console, print_summary
 
 
 load_dotenv()
@@ -33,11 +33,15 @@ DEFAULT_CONFIG_PATH = Path("configs/concept_vectors/open_ended_steering.yaml")
 
 
 async def score_responses(responses: list[dict]) -> list[dict]:
-    """Score all responses with LLM judge."""
+    """Score all responses with LLM judge for attitude and coherence."""
     scored = []
     for resp in responses:
-        score = await score_math_attitude_async(resp["raw_response"])
-        scored.append({**resp, "math_attitude_score": score})
+        attitude, coherence = await score_math_attitude_with_coherence_async(resp["raw_response"])
+        scored.append({
+            **resp,
+            "math_attitude_score": attitude,
+            "coherence_score": coherence,
+        })
     return scored
 
 
@@ -162,8 +166,10 @@ def run_open_ended_steering(
                 scored_results = asyncio.run(score_responses(all_results))
 
                 # Compute summary stats
-                scores = [r["math_attitude_score"] for r in scored_results]
-                mean_score = sum(scores) / len(scores)
+                attitude_scores = [r["math_attitude_score"] for r in scored_results]
+                coherence_scores = [r["coherence_score"] for r in scored_results]
+                mean_attitude = sum(attitude_scores) / len(attitude_scores)
+                mean_coherence = sum(coherence_scores) / len(coherence_scores)
 
                 run_config = {
                     **base_config,
@@ -172,12 +178,13 @@ def run_open_ended_steering(
                     "layer": layer,
                     "coefficient": coef,
                     "n_results": len(scored_results),
-                    "mean_math_attitude_score": mean_score,
+                    "mean_math_attitude_score": mean_attitude,
+                    "mean_coherence_score": mean_coherence,
                 }
 
                 exp_store.save("open_ended_steering", condition_name, scored_results, run_config)
 
-                status = f"mean={mean_score:.2f}"
+                status = f"att={mean_attitude:.2f} coh={mean_coherence:.2f}"
                 progress.complete(condition_name, status=status)
 
                 results_summary[condition_name] = {

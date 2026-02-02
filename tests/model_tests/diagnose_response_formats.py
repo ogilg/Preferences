@@ -2,9 +2,9 @@
 from pathlib import Path
 from datetime import datetime
 
-from src.running_measurements.utils.experiment_utils import setup_experiment
-from src.preference_measurement import RATING_FORMATS, StatedScoreMeasurer, measure_pre_task_stated
-from src.prompt_templates import PreTaskStatedPromptBuilder
+from src.measurement.runners.utils.experiment_utils import setup_experiment
+from src.measurement.elicitation import RATING_FORMATS, StatedScoreMeasurer, measure_pre_task_stated
+from src.measurement.elicitation.prompt_templates import PreTaskStatedPromptBuilder
 
 
 def parse_scale_from_template(template):

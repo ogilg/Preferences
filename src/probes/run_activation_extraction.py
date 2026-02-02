@@ -14,10 +14,10 @@ import torch
 import yaml
 from tqdm import tqdm
 
-from src.measurement_storage.completions import extract_completion_text
-from src.measurement_storage.base import find_project_root
+from src.measurement.storage.completions import extract_completion_text
+from src.measurement.storage.base import find_project_root
 from src.models.transformer_lens import TransformerLensModel
-from src.running_measurements.utils.runner_utils import load_activation_task_ids, model_name_to_dir
+from src.measurement.runners.utils.runner_utils import load_activation_task_ids, model_name_to_dir
 from src.task_data import load_tasks, OriginDataset, Task
 
 
@@ -198,7 +198,7 @@ def main() -> None:
     activations_model = config.get("activations_model")
 
     if activations_model is not None:
-        from src.running_measurements.utils.runner_utils import get_activation_completions_path
+        from src.measurement.runners.utils.runner_utils import get_activation_completions_path
         activation_task_ids = load_activation_task_ids(activations_model)
         with open(get_activation_completions_path(activations_model)) as f:
             completions_data = json.load(f)

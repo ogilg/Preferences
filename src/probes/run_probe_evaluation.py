@@ -13,8 +13,8 @@ from src.probes.config import ProbeEvaluationConfig
 from src.probes.storage import load_probe, load_manifest
 from src.probes.activations import load_activations
 from src.probes.evaluate import evaluate_probe_on_data
-from src.measurement_storage.loading import load_run_utilities
-from src.measurement_storage.base import find_project_root
+from src.measurement.storage.loading import load_run_utilities
+from src.measurement.storage.base import find_project_root
 
 
 def run_evaluation(config: ProbeEvaluationConfig) -> dict:

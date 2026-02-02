@@ -6,12 +6,12 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from src.concept_vectors.config import (
+from src.experiments.concept_vectors.config import (
     ConceptVectorExtractionConfig,
     ConditionDict,
     load_config,
 )
-from src.concept_vectors.difference import (
+from src.experiments.concept_vectors.difference import (
     compute_difference_in_means,
     load_concept_vector,
     load_concept_vector_for_steering,
@@ -23,7 +23,7 @@ from src.concept_vectors.difference import (
 
 class TestDifferenceInMeans:
     def test_compute_difference_basic(self, tmp_path):
-        """Test basic difference-in-means computation."""
+        """Test basic difference-in-means computation (normalized to activation norm)."""
         n_tasks = 5
         hidden_dim = 32
         layer = 16
@@ -36,21 +36,29 @@ class TestDifferenceInMeans:
         task_ids = np.array([f"task_{i}" for i in range(n_tasks)])
 
         # Create activations where positive has known offset
+        # pos_acts has norm sqrt(32) per sample, neg_acts has norm sqrt(32) per sample
         pos_acts = np.ones((n_tasks, hidden_dim), dtype=np.float32)
         neg_acts = np.zeros((n_tasks, hidden_dim), dtype=np.float32)
 
         np.savez(pos_dir / "activations_last.npz", task_ids=task_ids, layer_16=pos_acts)
         np.savez(neg_dir / "activations_last.npz", task_ids=task_ids, layer_16=neg_acts)
 
-        # Without normalization: should be all 1s
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", normalize=False)
-        expected = np.ones(hidden_dim, dtype=np.float32)
-        np.testing.assert_array_almost_equal(vectors[layer], expected)
+        vectors, vector_norms, activation_norms = compute_difference_in_means(
+            pos_dir, neg_dir, selector_name="last"
+        )
 
-        # With normalization: should be unit vector
-        vectors_normalized = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", normalize=True)
-        norm = np.linalg.norm(vectors_normalized[layer])
-        assert abs(norm - 1.0) < 1e-6
+        # Original diff norm should be sqrt(32) since diff is all 1s
+        expected_orig_norm = np.sqrt(hidden_dim)
+        assert abs(vector_norms[layer] - expected_orig_norm) < 1e-4
+
+        # Mean activation norm: pos has norm sqrt(32), neg has norm 0
+        # Average = sqrt(32) / 2
+        expected_act_norm = np.sqrt(hidden_dim) / 2
+        assert abs(activation_norms[layer] - expected_act_norm) < 1e-4
+
+        # Vector should be normalized to mean activation norm
+        vec_norm = np.linalg.norm(vectors[layer])
+        assert abs(vec_norm - expected_act_norm) < 1e-4
 
     def test_partial_task_overlap_uses_intersection(self, tmp_path):
         """Test that partial task overlap uses intersection."""
@@ -73,7 +81,7 @@ class TestDifferenceInMeans:
         np.savez(neg_dir / "activations_last.npz", task_ids=np.array(neg_task_ids), layer_8=neg_acts)
 
         # Should use intersection (task_0, task_1)
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last")
+        vectors, _, _ = compute_difference_in_means(pos_dir, neg_dir, selector_name="last")
         assert 8 in vectors
 
     def test_multiple_layers(self, tmp_path):
@@ -104,12 +112,18 @@ class TestDifferenceInMeans:
         np.savez(pos_dir / "activations_last.npz", **pos_data)
         np.savez(neg_dir / "activations_last.npz", **neg_data)
 
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", layers=layers)
+        vectors, vector_norms, activation_norms = compute_difference_in_means(
+            pos_dir, neg_dir, selector_name="last", layers=layers
+        )
 
         assert set(vectors.keys()) == set(layers)
+        assert set(vector_norms.keys()) == set(layers)
+        assert set(activation_norms.keys()) == set(layers)
         for layer, vec in vectors.items():
             assert vec.shape == (hidden_dim,)
             assert vec.dtype == np.float32
+            # All vectors should be normalized to activation norm
+            assert abs(np.linalg.norm(vec) - activation_norms[layer]) < 1e-4
 
     def test_layer_subset_selection(self, tmp_path):
         """Test selecting subset of available layers."""
@@ -141,7 +155,9 @@ class TestDifferenceInMeans:
 
         # Only request subset of layers
         selected_layers = [8, 16]
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", layers=selected_layers)
+        vectors, _, _ = compute_difference_in_means(
+            pos_dir, neg_dir, selector_name="last", layers=selected_layers
+        )
 
         assert set(vectors.keys()) == set(selected_layers)
 
@@ -160,12 +176,12 @@ class TestDifferenceInMeans:
         pos_task_ids = np.array(["task_a", "task_b", "task_c", "task_d"])
         neg_task_ids = np.array(["task_c", "task_a", "task_d", "task_b"])
 
-        # Create distinct activations for each task
+        # Create distinct activations for each task - use non-zero diff to avoid division by zero
         pos_acts = np.array(
-            [[1, 0, 0, 0, 0, 0, 0, 0], [2, 0, 0, 0, 0, 0, 0, 0], [3, 0, 0, 0, 0, 0, 0, 0], [4, 0, 0, 0, 0, 0, 0, 0]],
+            [[1, 1, 0, 0, 0, 0, 0, 0], [2, 1, 0, 0, 0, 0, 0, 0], [3, 1, 0, 0, 0, 0, 0, 0], [4, 1, 0, 0, 0, 0, 0, 0]],
             dtype=np.float32,
         )
-        # Reorder to match neg_task_ids order (c, a, d, b)
+        # Reorder to match neg_task_ids order (c, a, d, b) - same values, so diff is zero on first dim
         neg_acts = np.array(
             [[3, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0], [4, 0, 0, 0, 0, 0, 0, 0], [2, 0, 0, 0, 0, 0, 0, 0]],
             dtype=np.float32,
@@ -174,12 +190,23 @@ class TestDifferenceInMeans:
         np.savez(pos_dir / "activations_last.npz", task_ids=pos_task_ids, layer_8=pos_acts)
         np.savez(neg_dir / "activations_last.npz", task_ids=neg_task_ids, layer_8=neg_acts)
 
-        # When aligned correctly, pos - neg should be 0 for all tasks
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", normalize=False)
+        # When aligned correctly: pos_acts mean = [2.5, 1, 0, ...], neg_acts (aligned) mean = [2.5, 0, 0, ...]
+        # Difference should be [0, 1, 0, 0, 0, 0, 0, 0], then scaled to mean activation norm
+        vectors, vector_norms, activation_norms = compute_difference_in_means(
+            pos_dir, neg_dir, selector_name="last"
+        )
 
-        # pos_acts mean = [2.5, 0, ...], neg_acts (aligned) mean = [2.5, 0, ...]
-        # Difference should be near zero
-        np.testing.assert_array_almost_equal(vectors[layer], np.zeros(hidden_dim))
+        # The original difference vector is [0, 1, 0, ...] with norm 1
+        assert abs(vector_norms[layer] - 1.0) < 1e-4
+
+        # Direction should be [0, 1, 0, ...] scaled to activation norm
+        vec_norm = np.linalg.norm(vectors[layer])
+        assert abs(vec_norm - activation_norms[layer]) < 1e-4
+
+        # Check direction is correct (unit direction should be [0, 1, 0, ...])
+        unit_dir = vectors[layer] / vec_norm
+        expected_dir = np.array([0, 1, 0, 0, 0, 0, 0, 0], dtype=np.float32)
+        np.testing.assert_array_almost_equal(unit_dir, expected_dir)
 
 
 class TestSaveLoadConceptVectors:

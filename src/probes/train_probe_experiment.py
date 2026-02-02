@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
-from src.measurement_storage.loading import load_raw_scores
+from src.measurement.storage.loading import load_raw_scores
 from src.probes.config import ProbeTrainingConfig
 from src.probes.storage import load_manifest, save_manifest, save_probe
 from src.probes.activations import load_activations, load_task_origins

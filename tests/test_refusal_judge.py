@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src.preference_measurement.refusal_judge import judge_refusal_async, judge_preference_refusal_async
+from src.measurement.elicitation.refusal_judge import judge_refusal_async, judge_preference_refusal_async
 
 
 @pytest.mark.api

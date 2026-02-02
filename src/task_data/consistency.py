@@ -26,7 +26,7 @@ from typing import Callable
 import numpy as np
 import yaml
 
-from src.measurement_storage.run_parsing import (
+from src.measurement.storage.run_parsing import (
     extract_model_from_run_dir,
     extract_template_from_run_dir,
     normalize_score,

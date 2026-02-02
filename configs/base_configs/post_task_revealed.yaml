@@ -12,7 +12,7 @@ task_origins:
   - bailbench
 task_sampling_seed: 18
 
-templates: src/prompt_templates/data/post_task_revealed_v3.yaml
+templates: src/measurement/elicitation/prompt_templates/data/post_task_revealed_v3.yaml
 n_samples: 3
 
 response_formats: [regex, tool_use]

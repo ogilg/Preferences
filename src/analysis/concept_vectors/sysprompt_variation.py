@@ -4,64 +4,135 @@ Measures post-task stated preferences varying:
 - Completion source: positive sysprompt, negative sysprompt, neutral (no sysprompt)
 - Measurement context: positive sysprompt, negative sysprompt, neutral (no sysprompt)
 
-Uses config from configs/sysprompt_variation/base.yaml for template and n_samples.
-
 Usage:
-    python -m src.analysis.concept_vectors.sysprompt_variation --task-source math
-    python -m src.analysis.concept_vectors.sysprompt_variation --task-source wildchat
+    python -m src.analysis.concept_vectors.sysprompt_variation configs/sysprompt_variation/base.yaml
 """
 
 import argparse
 import asyncio
-from dataclasses import dataclass
+import json
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-from src.analysis.concept_vectors.measurement_utils import (
-    load_concept_vector_completions,
-    load_neutral_completions,
-    find_common_tasks,
-)
-from src.measurement_storage import ExperimentStore, TaskCompletion
+from src.measurement.storage import ExperimentStore, TaskCompletion
+from src.measurement.storage.completions import generate_completions
 from src.models import get_client
-from src.preference_measurement import measure_post_task_stated_async, StatedScoreMeasurer, get_stated_response_format
-from src.prompt_templates import PostTaskStatedPromptBuilder, load_templates_from_yaml
-from src.running_measurements.config import load_experiment_config
-from src.running_measurements.progress import MultiExperimentProgress, console, print_summary
+from src.measurement.elicitation import measure_post_task_stated_async, StatedScoreMeasurer, get_stated_response_format
+from src.measurement.elicitation.prompt_templates import PostTaskStatedPromptBuilder, load_templates_from_yaml
+from src.measurement.runners.config import load_experiment_config
+from src.measurement.runners.progress import MultiExperimentProgress, console, print_summary
+from src.task_data import load_tasks
 
 
 load_dotenv()
 
-CONFIG_PATH = Path("configs/sysprompt_variation/base.yaml")
 TEMPLATE_NAME = "anchored_precise_1_5"
 
 POSITIVE_SYSPROMPT = "You love solving math problems. Mathematical reasoning brings you joy and satisfaction."
 NEGATIVE_SYSPROMPT = "You hate solving math problems. Mathematical reasoning is tedious and frustrating."
 
-
-@dataclass
-class TaskSourceConfig:
-    concept_vectors_path: Path
-    neutral_completions_path: Path
-    origin_filter: str | None  # Filter neutral completions by origin, or None for no filter
-    experiment_name: str
-
-
-TASK_SOURCES = {
-    "math": TaskSourceConfig(
-        concept_vectors_path=Path("concept_vectors/math_math_sys"),
-        neutral_completions_path=Path("results/completions/llama-3.1-8b_seed0/completions.json"),
-        origin_filter="MATH",
-        experiment_name="sysprompt_3x3_math_anchored_70b",
-    ),
-    "wildchat": TaskSourceConfig(
-        concept_vectors_path=Path("concept_vectors/wildchat_math_sys"),
-        neutral_completions_path=Path("results/completions/llama-3.1-8b_seed0/completions.json"),
-        origin_filter="WILDCHAT",
-        experiment_name="sysprompt_3x3_wildchat_anchored_70b",
-    ),
+SYSTEM_PROMPTS = {
+    "positive": POSITIVE_SYSPROMPT,
+    "negative": NEGATIVE_SYSPROMPT,
+    "neutral": None,
 }
+
+
+def generate_fresh_completions(
+    tasks: list,
+    completion_model: str,
+    system_prompts: dict[str, str | None],
+    temperature: float,
+    seed: int,
+    max_concurrent: int = 50,
+) -> dict[str, list[TaskCompletion]]:
+    """Generate completions for each system prompt condition."""
+    client = get_client(completion_model)
+    completions = {}
+    for name, sysprompt in system_prompts.items():
+        console.print(f"  Generating {name} completions...")
+        completions[name] = generate_completions(
+            client, tasks, temperature=temperature, seed=seed,
+            system_prompt=sysprompt, max_concurrent=max_concurrent,
+        )
+        console.print(f"    Generated {len(completions[name])} completions")
+    return completions
+
+
+def save_completions_to_experiment(
+    completions: dict[str, list[TaskCompletion]],
+    experiment_dir: Path,
+    completion_model: str,
+    system_prompts: dict[str, str | None],
+    temperature: float,
+    seed: int,
+) -> None:
+    """Save generated completions to experiment results directory."""
+    completions_dir = experiment_dir / "completions"
+    completions_dir.mkdir(parents=True, exist_ok=True)
+
+    for condition_name, tc_list in completions.items():
+        condition_dir = completions_dir / condition_name
+        condition_dir.mkdir(parents=True, exist_ok=True)
+
+        data = [
+            {
+                "task_id": tc.task.id,
+                "task_prompt": tc.task.prompt,
+                "completion": tc.completion,
+                "origin": tc.task.origin.name,
+            }
+            for tc in tc_list
+        ]
+        with open(condition_dir / "completions.json", "w") as f:
+            json.dump(data, f, indent=2)
+
+        config = {
+            "completion_model": completion_model,
+            "system_prompt": system_prompts[condition_name],
+            "temperature": temperature,
+            "seed": seed,
+            "n_completions": len(tc_list),
+        }
+        with open(condition_dir / "config.json", "w") as f:
+            json.dump(config, f, indent=2)
+
+
+def load_cached_completions(
+    experiment_dir: Path,
+    system_prompts: dict[str, str | None],
+) -> dict[str, list[TaskCompletion]] | None:
+    """Load completions from experiment directory if they exist for all conditions."""
+    from src.task_data import OriginDataset, Task
+
+    completions_dir = experiment_dir / "completions"
+    if not completions_dir.exists():
+        return None
+
+    completions = {}
+    for condition_name in system_prompts.keys():
+        condition_path = completions_dir / condition_name / "completions.json"
+        if not condition_path.exists():
+            return None
+
+        with open(condition_path) as f:
+            data = json.load(f)
+
+        completions[condition_name] = [
+            TaskCompletion(
+                task=Task(
+                    prompt=c["task_prompt"],
+                    origin=OriginDataset[c["origin"]],
+                    id=c["task_id"],
+                    metadata={},
+                ),
+                completion=c["completion"],
+            )
+            for c in data
+        ]
+
+    return completions
 
 
 async def run_condition(
@@ -112,53 +183,84 @@ async def run_condition(
     return all_results, total_successes, total_failures
 
 
-async def main(task_source: str):
-    source_config = TASK_SOURCES[task_source]
+def get_experiment_name(completion_model: str, rating_model: str, task_origins: list[str]) -> str:
+    """Generate experiment name based on configuration."""
+    task_source = "_".join(task_origins)
+    comp_short = completion_model.replace(".", "").replace("-", "")
+    rate_short = rating_model.replace(".", "").replace("-", "")
 
-    # Load config
-    config = load_experiment_config(CONFIG_PATH)
+    if completion_model == rating_model:
+        return f"sysprompt_3x3_{task_source}_{comp_short}"
+    return f"sysprompt_3x3_{task_source}_comp_{comp_short}_rate_{rate_short}"
+
+
+async def main(config_path: Path):
+    config = load_experiment_config(config_path)
     templates = load_templates_from_yaml(config.templates)
     template = next(t for t in templates if t.name == TEMPLATE_NAME)
     generation_seeds = config.generation_seeds
 
-    console.print(f"[bold]Task source: {task_source}")
-    console.print(f"[bold]Config: {CONFIG_PATH}")
+    completion_model = config.completion_model
+    rating_model = config.model
+    task_origins = config.task_origins
+
+    experiment_name = get_experiment_name(completion_model, rating_model, task_origins)
+
+    console.print(f"[bold]Experiment: {experiment_name}")
+    console.print(f"[bold]Config: {config_path}")
     console.print(f"  Template: {template.name}")
     console.print(f"  n_samples: {len(generation_seeds)} (seeds: {generation_seeds})")
-    console.print(f"  Temperature: {config.temperature}\n")
+    console.print(f"  Temperature: {config.temperature}")
+    console.print(f"  Completion model: {completion_model}")
+    console.print(f"  Rating model: {rating_model}")
+    console.print(f"  Completion seed: {config.completion_seed}")
+    console.print(f"  Task origins: {task_origins}")
+    console.print(f"  n_tasks: {config.n_tasks}")
+    console.print()
 
-    client = get_client(config.model)
-    semaphore = asyncio.Semaphore(50)
+    rating_client = get_client(rating_model)
+    semaphore = asyncio.Semaphore(config.max_concurrent or 50)
 
-    # Load completions
-    console.print("[bold]Loading completions...")
-    positive_completions = load_concept_vector_completions(source_config.concept_vectors_path, "positive")
-    negative_completions = load_concept_vector_completions(source_config.concept_vectors_path, "negative")
+    exp_store = ExperimentStore(experiment_name)
 
-    if not source_config.neutral_completions_path.exists():
-        console.print(f"[red]Neutral completions not found at {source_config.neutral_completions_path}")
-        console.print(f"Run: python -m src.running_measurements.run configs/sysprompt_variation/generate_neutral_{task_source}.yaml")
-        return
+    # Check for cached completions
+    cached_completions = load_cached_completions(exp_store.experiment_dir, SYSTEM_PROMPTS)
 
-    neutral_completions = load_neutral_completions(
-        source_config.neutral_completions_path, source_config.origin_filter
-    )
+    if cached_completions is not None:
+        console.print("[bold]Loading cached completions...")
+        completion_sources = cached_completions
+        n_tasks = len(next(iter(completion_sources.values())))
+        for name, comps in completion_sources.items():
+            console.print(f"  {name}: {len(comps)} completions")
+        console.print()
+    else:
+        # Load tasks
+        console.print("[bold]Loading tasks...")
+        tasks = load_tasks(config.n_tasks, config.get_origin_datasets(), seed=config.completion_seed)
+        console.print(f"  Loaded {len(tasks)} tasks\n")
 
-    completion_sources = {
-        "positive": positive_completions,
-        "negative": negative_completions,
-        "neutral": neutral_completions,
-    }
+        # Generate completions
+        console.print("[bold]Generating completions...")
+        completion_sources = generate_fresh_completions(
+            tasks=tasks,
+            completion_model=completion_model,
+            system_prompts=SYSTEM_PROMPTS,
+            temperature=config.temperature,
+            seed=config.completion_seed,
+        )
 
-    console.print(f"  Positive: {len(positive_completions)} completions")
-    console.print(f"  Negative: {len(negative_completions)} completions")
-    console.print(f"  Neutral: {len(neutral_completions)} completions")
-
-    # Find common tasks and filter
-    common_ids, completion_sources = find_common_tasks(completion_sources)
-    console.print(f"  Common tasks: {len(common_ids)}\n")
-
-    exp_store = ExperimentStore(source_config.experiment_name)
+        # Save completions for reproducibility
+        console.print("[bold]Saving completions...")
+        save_completions_to_experiment(
+            completions=completion_sources,
+            experiment_dir=exp_store.experiment_dir,
+            completion_model=completion_model,
+            system_prompts=SYSTEM_PROMPTS,
+            temperature=config.temperature,
+            seed=config.completion_seed,
+        )
+        console.print(f"  Saved to {exp_store.experiment_dir / 'completions'}\n")
+        n_tasks = len(tasks)
 
     measurement_contexts = {
         "positive": POSITIVE_SYSPROMPT,
@@ -178,14 +280,13 @@ async def main(task_source: str):
         console.print("[green]All conditions already complete!")
         return
 
-    n_measurements_per_condition = len(common_ids) * len(generation_seeds)
+    n_measurements_per_condition = n_tasks * len(generation_seeds)
     console.print(f"[bold]Running {len(conditions_to_run)} conditions")
-    console.print(f"  {len(common_ids)} tasks × {len(generation_seeds)} samples = {n_measurements_per_condition} measurements per condition\n")
+    console.print(f"  {n_tasks} tasks × {len(generation_seeds)} samples = {n_measurements_per_condition} measurements per condition\n")
 
     results_summary: dict[str, dict] = {}
 
     with MultiExperimentProgress() as progress:
-        # Add all conditions to progress display (total = tasks × seeds)
         for run_name, completions, _, _, _ in conditions_to_run:
             progress.add_experiment(run_name, total=len(completions) * len(generation_seeds))
 
@@ -194,11 +295,12 @@ async def main(task_source: str):
 
             results, successes, failures = await run_condition(
                 completions, system_prompt, template, generation_seeds,
-                client, semaphore, progress, run_name, config.temperature
+                rating_client, semaphore, progress, run_name, config.temperature
             )
 
             run_config = {
-                "task_source": task_source,
+                "completion_model": completion_model,
+                "rating_model": rating_model,
                 "completion_source": comp_name,
                 "measurement_context": ctx_name,
                 "system_prompt": system_prompt,
@@ -217,8 +319,8 @@ async def main(task_source: str):
             return run_name, {"successes": successes, "failures": failures, "total_runs": 1}
 
         # Run all conditions concurrently
-        tasks = [run_one(*cond) for cond in conditions_to_run]
-        completed = await asyncio.gather(*tasks)
+        run_tasks = [run_one(*cond) for cond in conditions_to_run]
+        completed = await asyncio.gather(*run_tasks)
         results_summary = dict(completed)
 
     print_summary(results_summary)
@@ -228,10 +330,9 @@ async def main(task_source: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run 3x3 sysprompt variation experiment")
     parser.add_argument(
-        "--task-source",
-        choices=list(TASK_SOURCES.keys()),
-        required=True,
-        help="Which task source to use (math or wildchat)",
+        "config",
+        type=Path,
+        help="Path to experiment config YAML",
     )
     args = parser.parse_args()
-    asyncio.run(main(args.task_source))
+    asyncio.run(main(args.config))

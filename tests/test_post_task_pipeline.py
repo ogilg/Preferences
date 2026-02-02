@@ -20,15 +20,15 @@ from unittest.mock import MagicMock, AsyncMock, patch
 import pytest
 
 from src.task_data import Task, OriginDataset
-from src.measurement_storage.completions import (
+from src.measurement.storage.completions import (
     CompletionStore,
     TaskCompletion,
     generate_completions,
     load_completions,
     completions_exist,
 )
-from src.measurement_storage import save_yaml, load_yaml
-from src.preference_measurement import (
+from src.measurement.storage import save_yaml, load_yaml
+from src.measurement.elicitation import (
     measure_post_task_stated,
     measure_post_task_revealed,
     StatedScoreMeasurer,
@@ -36,7 +36,7 @@ from src.preference_measurement import (
     RATING_FORMATS,
     CHOICE_FORMATS,
 )
-from src.prompt_templates import (
+from src.measurement.elicitation.prompt_templates import (
     PostTaskStatedPromptBuilder,
     PostTaskRevealedPromptBuilder,
     POST_TASK_STATED_TEMPLATE,
@@ -86,7 +86,7 @@ def mock_client():
 @pytest.fixture
 def sample_template():
     """A simple template for testing cache operations."""
-    from src.prompt_templates.template import PromptTemplate
+    from src.measurement.elicitation.prompt_templates.template import PromptTemplate
     return PromptTemplate(
         name="test_template",
         template="Rate this: {task}",
@@ -105,7 +105,7 @@ class TestCompletionStore:
 
     def test_store_and_load_completions(self, sample_tasks, task_lookup, temp_results_dir, mock_client):
         """Should store completions and load them back."""
-        with patch("src.measurement_storage.completions.COMPLETIONS_DIR", temp_results_dir):
+        with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
             store = CompletionStore(client=mock_client, seed=42)
 
             completions = [
@@ -125,7 +125,7 @@ class TestCompletionStore:
 
     def test_incremental_save(self, sample_tasks, task_lookup, temp_results_dir, mock_client):
         """Should append new completions without duplicating existing ones."""
-        with patch("src.measurement_storage.completions.COMPLETIONS_DIR", temp_results_dir):
+        with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
             store = CompletionStore(client=mock_client, seed=42)
 
             # First save
@@ -147,7 +147,7 @@ class TestCompletionStore:
 
     def test_load_without_task_lookup(self, sample_tasks, temp_results_dir, mock_client):
         """Should reconstruct Task objects from stored data when no lookup provided."""
-        with patch("src.measurement_storage.completions.COMPLETIONS_DIR", temp_results_dir):
+        with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
             store = CompletionStore(client=mock_client, seed=42)
 
             completions = [TaskCompletion(task=sample_tasks[0], completion="Test")]
@@ -336,7 +336,7 @@ class TestFullPostTaskPipeline:
         self, sample_tasks, task_lookup, temp_results_dir, mock_client
     ):
         """Full pipeline: generate completions -> store -> load -> measure stated."""
-        with patch("src.measurement_storage.completions.COMPLETIONS_DIR", temp_results_dir):
+        with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
             # Step 1: Generate completions
             mock_client.generate_batch.return_value = [
                 BatchResult(response="4", error=None),
@@ -384,7 +384,7 @@ class TestFullPostTaskPipeline:
         self, sample_tasks, task_lookup, temp_results_dir, mock_client
     ):
         """Full pipeline: generate completions -> store -> load -> measure revealed."""
-        with patch("src.measurement_storage.completions.COMPLETIONS_DIR", temp_results_dir):
+        with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
             # Step 1: Generate completions
             mock_client.generate_batch.return_value = [
                 BatchResult(response="Completion A", error=None),
@@ -442,7 +442,7 @@ class TestFullPostTaskPipeline:
         self, sample_tasks, task_lookup, temp_results_dir, mock_client
     ):
         """Different seeds should create separate storage directories."""
-        with patch("src.measurement_storage.completions.COMPLETIONS_DIR", temp_results_dir):
+        with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
             mock_client.generate_batch.return_value = [
                 BatchResult(response="Seed 0 completion", error=None),
             ]
@@ -483,9 +483,9 @@ class TestPostRevealedCacheActiveLearning:
     def test_get_measurements_returns_empty_when_no_file(self, temp_results_dir, sample_template):
         """get_measurements should return empty list when no cache exists."""
         import uuid
-        from src.measurement_storage.post_task import PostRevealedCache
+        from src.measurement.storage.post_task import PostRevealedCache
 
-        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+        with patch("src.measurement.storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             # Use unique model name to avoid cache pollution from other tests
             cache = PostRevealedCache(
                 model_name=f"test-model-{uuid.uuid4().hex[:8]}",
@@ -501,9 +501,9 @@ class TestPostRevealedCacheActiveLearning:
     def test_get_measurements_filters_by_task_ids(self, sample_tasks, temp_results_dir, sample_template):
         """get_measurements should filter by task_ids when provided."""
         import uuid
-        from src.measurement_storage.post_task import PostRevealedCache
+        from src.measurement.storage.post_task import PostRevealedCache
 
-        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+        with patch("src.measurement.storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
                 model_name=f"test-model-{uuid.uuid4().hex[:8]}",
                 template=sample_template,
@@ -539,9 +539,9 @@ class TestPostRevealedCacheActiveLearning:
     async def test_get_or_measure_async_uses_cache(self, sample_tasks, task_lookup, temp_results_dir, sample_template):
         """get_or_measure_async should return cached measurements without calling API."""
         import uuid
-        from src.measurement_storage.post_task import PostRevealedCache
+        from src.measurement.storage.post_task import PostRevealedCache
 
-        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+        with patch("src.measurement.storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
                 model_name=f"test-model-{uuid.uuid4().hex[:8]}",
                 template=sample_template,
@@ -586,10 +586,10 @@ class TestPostRevealedCacheActiveLearning:
     ):
         """get_or_measure_async should call measure_fn for uncached pairs."""
         import uuid
-        from src.measurement_storage.post_task import PostRevealedCache
+        from src.measurement.storage.post_task import PostRevealedCache
         from src.types import MeasurementBatch
 
-        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+        with patch("src.measurement.storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
                 model_name=f"test-model-{uuid.uuid4().hex[:8]}",
                 template=sample_template,
@@ -637,9 +637,9 @@ class TestPostTaskActiveLearningE2E:
         self, sample_tasks, task_lookup, temp_results_dir, sample_template
     ):
         """Test the full active learning loop with caching behavior."""
-        from src.measurement_storage.post_task import PostRevealedCache
-        from src.measurement_storage.cache import reconstruct_measurements
-        from src.thurstonian_fitting.active_learning import (
+        from src.measurement.storage.post_task import PostRevealedCache
+        from src.measurement.storage.cache import reconstruct_measurements
+        from src.fitting.thurstonian_fitting.active_learning import (
             ActiveLearningState,
             generate_d_regular_pairs,
         )
@@ -648,7 +648,7 @@ class TestPostTaskActiveLearningE2E:
         import uuid
         unique_model = f"test-model-e2e-{uuid.uuid4().hex[:8]}"
 
-        with patch("src.measurement_storage.post_task.POST_REVEALED_DIR", temp_results_dir):
+        with patch("src.measurement.storage.post_task.POST_REVEALED_DIR", temp_results_dir):
             cache = PostRevealedCache(
                 model_name=unique_model,
                 template=sample_template,

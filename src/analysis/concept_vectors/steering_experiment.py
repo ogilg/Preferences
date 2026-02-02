@@ -37,18 +37,18 @@ from src.analysis.concept_vectors.measurement_utils import (
     load_steering_vector,
     parse_stated_score,
 )
-from src.measurement_storage import ExperimentStore, TaskCompletion
+from src.measurement.storage import ExperimentStore, TaskCompletion
 from src.models.transformer_lens import (
     TransformerLensModel,
     SteeringHook,
     STEERING_MODES,
 )
-from src.prompt_templates import (
+from src.measurement.elicitation.prompt_templates import (
     PostTaskStatedPromptBuilder,
     load_templates_from_yaml,
 )
-from src.preference_measurement import StatedScoreMeasurer, get_stated_response_format
-from src.running_measurements.progress import MultiExperimentProgress, console, print_summary
+from src.measurement.elicitation import StatedScoreMeasurer, get_stated_response_format
+from src.measurement.runners.progress import MultiExperimentProgress, console, print_summary
 
 
 load_dotenv()

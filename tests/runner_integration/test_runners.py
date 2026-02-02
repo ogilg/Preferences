@@ -17,7 +17,7 @@ pytest_plugins = ('pytest_asyncio',)
 from dotenv import load_dotenv
 load_dotenv()
 
-from src.running_measurements.runners import (
+from src.measurement.runners.runners import (
     run_pre_task_stated_async,
     run_pre_task_revealed_async,
     run_pre_task_active_learning_async,

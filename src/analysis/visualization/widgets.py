@@ -12,10 +12,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from IPython.display import display
 
-from src.thurstonian_fitting import PairwiseData, ThurstonianResult, fit_thurstonian
-from src.measurement_storage import load_yaml
-from src.measurement_storage.loading import PRE_TASK_REVEALED_DIR
-from src.prompt_templates.template import load_templates_from_yaml
+from src.fitting.thurstonian_fitting import PairwiseData, ThurstonianResult, fit_thurstonian
+from src.measurement.storage import load_yaml
+from src.measurement.storage.loading import PRE_TASK_REVEALED_DIR
+from src.measurement.elicitation.prompt_templates.template import load_templates_from_yaml
 from src.task_data import OriginDataset, Task
 
 

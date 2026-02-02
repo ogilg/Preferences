@@ -14,18 +14,18 @@ from unittest.mock import MagicMock, AsyncMock, patch
 import pytest
 
 from src.task_data import Task, OriginDataset
-from src.measurement_storage.completions import (
+from src.measurement.storage.completions import (
     CompletionStore,
     TaskCompletion,
     _extract_assistant_response,
 )
-from src.preference_measurement import (
+from src.measurement.elicitation import (
     measure_post_task_stated,
     StatedScoreMeasurer,
     RATING_FORMATS,
 )
-from src.prompt_templates import PostTaskStatedPromptBuilder
-from src.prompt_templates.template import PromptTemplate
+from src.measurement.elicitation.prompt_templates import PostTaskStatedPromptBuilder
+from src.measurement.elicitation.prompt_templates.template import PromptTemplate
 from src.models.openai_compatible import BatchResult
 
 

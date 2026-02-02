@@ -13,8 +13,8 @@ import re
 
 from tqdm import tqdm
 
-from src.measurement_storage.base import load_yaml, save_yaml, model_short_name
-from src.measurement_storage.unified_cache import StatedCache, RevealedCache
+from src.measurement.storage.base import load_yaml, save_yaml, model_short_name
+from src.measurement.storage.unified_cache import StatedCache, RevealedCache
 
 
 def extract_template_hash_from_config(config: dict) -> str:

@@ -8,15 +8,15 @@ from pathlib import Path
 
 import numpy as np
 
-from src.running_measurements.config import ExperimentConfig
-from src.running_measurements.utils.experiment_utils import (
+from src.measurement.runners.config import ExperimentConfig
+from src.measurement.runners.utils.experiment_utils import (
     shuffle_pair_order,
     apply_pair_order,
     flip_pairs,
 )
 from src.task_data import OriginDataset, Task
 from src.types import BinaryPreferenceMeasurement, PreferenceType
-from src.thurstonian_fitting import PairwiseData, fit_thurstonian
+from src.fitting.thurstonian_fitting import PairwiseData, fit_thurstonian
 
 
 def make_tasks(n: int) -> list[Task]:
@@ -152,10 +152,10 @@ class TestPairOrderInMeasurements:
     @pytest.mark.asyncio
     async def test_measurement_records_correct_winner_after_shuffle(self):
         """When pairs are shuffled, measurements still record the correct winner."""
-        from src.preference_measurement.measurer import RevealedPreferenceMeasurer
-        from src.preference_measurement.response_format import RegexChoiceFormat
-        from src.prompt_templates.builders import PreTaskRevealedPromptBuilder
-        from src.prompt_templates.template import PromptTemplate
+        from src.measurement.elicitation.measurer import RevealedPreferenceMeasurer
+        from src.measurement.elicitation.response_format import RegexChoiceFormat
+        from src.measurement.elicitation.prompt_templates.builders import PreTaskRevealedPromptBuilder
+        from src.measurement.elicitation.prompt_templates.template import PromptTemplate
 
         tasks = make_tasks(2)
         task_x, task_y = tasks[0], tasks[1]

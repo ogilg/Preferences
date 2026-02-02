@@ -23,8 +23,8 @@ import numpy as np
 import yaml
 
 from src.analysis.correlation.utils import utility_vector_correlation, ReliabilityMethod, compute_informative_correlation
-from src.measurement_storage import EXPERIMENTS_DIR
-from src.measurement_storage.run_parsing import extract_model_from_run_dir
+from src.measurement.storage import EXPERIMENTS_DIR
+from src.measurement.storage.run_parsing import extract_model_from_run_dir
 
 
 MeasurementType = Literal["stated", "revealed"]

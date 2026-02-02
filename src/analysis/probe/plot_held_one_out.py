@@ -8,7 +8,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.measurement_storage.base import find_project_root
+from src.measurement.storage.base import find_project_root
 
 
 def plot_hoo_results(

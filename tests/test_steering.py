@@ -322,7 +322,7 @@ class TestBuildRatingPrompt:
     def test_build_rating_prompt_structure(self):
         """Verify rating prompt has correct three-turn structure."""
         from src.steering.runner import _build_rating_prompt
-        from src.preference_measurement.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
+        from src.measurement.elicitation.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
         from src.task_data import Task, OriginDataset
 
         task = Task(
@@ -353,7 +353,7 @@ class TestBuildRatingPrompt:
     def test_build_rating_prompt_invalid_id_raises(self):
         """Verify invalid template id raises ValueError."""
         from src.steering.runner import _build_rating_prompt
-        from src.preference_measurement.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
+        from src.measurement.elicitation.response_format import RegexQualitativeFormat, BINARY_QUALITATIVE_VALUES, BINARY_QUALITATIVE_TO_NUMERIC
         from src.task_data import Task, OriginDataset
 
         task = Task(prompt="test", origin=OriginDataset.WILDCHAT, id="t", metadata={})

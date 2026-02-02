@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.models import OpenRouterClient, GenerateRequest
-from src.measurement_storage.completions import generate_completions
+from src.measurement.storage.completions import generate_completions
 from src.task_data import Task, OriginDataset
 
 pytestmark = pytest.mark.api

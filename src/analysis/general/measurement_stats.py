@@ -12,7 +12,7 @@ from typing import Literal
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.measurement_storage.loading import (
+from src.measurement.storage.loading import (
     load_activation_metadata,
     load_raw_scores,
     list_runs,

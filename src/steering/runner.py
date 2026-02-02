@@ -11,7 +11,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn, TimeElapsedColumn
 
-from src.preference_measurement.response_format import (
+from src.measurement.elicitation.response_format import (
     RegexQualitativeFormat,
     XMLQualitativeFormat,
     ToolUseQualitativeFormat,
@@ -21,7 +21,7 @@ from src.preference_measurement.response_format import (
     BaseQualitativeFormat,
 )
 from src.probes.storage import load_probe_direction, load_manifest
-from src.running_measurements.utils.runner_utils import load_activation_task_ids
+from src.measurement.runners.utils.runner_utils import load_activation_task_ids
 from src.steering.config import SteeringExperimentConfig, load_steering_config
 from src.task_data import Task, OriginDataset, load_tasks
 from src.types import Message
@@ -79,9 +79,9 @@ def _build_rating_prompt(
     Returns:
         Tuple of (messages, measurement_prompt_text)
     """
-    from src.prompt_templates.template import load_templates_from_yaml
+    from src.measurement.elicitation.prompt_templates.template import load_templates_from_yaml
 
-    templates = load_templates_from_yaml(Path("src/prompt_templates/data/post_task_qualitative_v3.yaml"))
+    templates = load_templates_from_yaml(Path("src/measurement/elicitation/prompt_templates/data/post_task_qualitative_v3.yaml"))
     # Match by name suffix (e.g., "001" matches "post_task_qualitative_001")
     template = next((t for t in templates if t.name.endswith(f"_{template_id}")), None)
     if template is None:
@@ -113,8 +113,8 @@ def _get_template_id_from_name(template_name: str) -> str:
 
 def _get_scale_from_template(template_name: str) -> tuple[str, ...]:
     """Determine scale (binary/ternary) from template tags."""
-    from src.prompt_templates.template import load_templates_from_yaml
-    templates = load_templates_from_yaml(Path("src/prompt_templates/data/post_task_qualitative_v3.yaml"))
+    from src.measurement.elicitation.prompt_templates.template import load_templates_from_yaml
+    templates = load_templates_from_yaml(Path("src/measurement/elicitation/prompt_templates/data/post_task_qualitative_v3.yaml"))
     template = next((t for t in templates if t.name == template_name), None)
     if template is None:
         raise ValueError(f"Template {template_name} not found")

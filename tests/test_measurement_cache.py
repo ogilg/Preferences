@@ -7,9 +7,9 @@ import pytest
 
 pytestmark = pytest.mark.cache
 
-from src.measurement_storage.cache import MeasurementCache, reconstruct_measurements
-from src.measurement_storage.unified_cache import RevealedCache
-from src.prompt_templates import PromptTemplate, REVEALED_PLACEHOLDERS
+from src.measurement.storage.cache import MeasurementCache, reconstruct_measurements
+from src.measurement.storage.unified_cache import RevealedCache
+from src.measurement.elicitation.prompt_templates import PromptTemplate, REVEALED_PLACEHOLDERS
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 

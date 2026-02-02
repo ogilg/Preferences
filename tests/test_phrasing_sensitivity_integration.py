@@ -11,9 +11,9 @@ import yaml
 
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
-from src.prompt_templates import load_templates_from_yaml
-from src.thurstonian_fitting import PairwiseData, fit_thurstonian
-from src.measurement_storage import save_measurements
+from src.measurement.elicitation.prompt_templates import load_templates_from_yaml
+from src.fitting.thurstonian_fitting import PairwiseData, fit_thurstonian
+from src.measurement.storage import save_measurements
 from src.analysis.correlation.utils import (
     utility_vector_correlation,
     compute_pairwise_correlations,

@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
-from src.measurement_storage.loading import load_pooled_scores
+from src.measurement.storage.loading import load_pooled_scores
 from src.probes.activations import load_activations
 from src.probes.config import ProbeTrainingConfig
 

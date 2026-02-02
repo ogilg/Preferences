@@ -24,13 +24,29 @@ from src.analysis.sensitivity.plot_seed_sensitivity import (
     RunData,
     OUTPUT_DIR,
 )
-from src.measurement_storage import EXPERIMENTS_DIR
+from src.measurement.storage import EXPERIMENTS_DIR
 
 
-def kl_from_uniform(scores: list[float], n_bins: int = 5) -> float:
-    """KL divergence of score distribution from uniform over 1-5 scale."""
-    counts = Counter([int(round(s)) for s in scores])
-    observed = np.array([counts.get(i, 0) for i in range(1, n_bins + 1)], dtype=float)
+def kl_from_uniform(scores: list[float], n_bins: int | None = None) -> float:
+    """KL divergence of score distribution from uniform over the observed scale.
+
+    Automatically detects the scale range from min/max of rounded scores.
+    """
+    if not scores:
+        return float("nan")
+
+    rounded = [int(round(s)) for s in scores]
+    min_val, max_val = min(rounded), max(rounded)
+
+    if min_val == max_val:
+        return float("nan")
+
+    # Use actual range as bins
+    bins = list(range(min_val, max_val + 1))
+    n_bins = len(bins)
+
+    counts = Counter(rounded)
+    observed = np.array([counts.get(i, 0) for i in bins], dtype=float)
     if observed.sum() == 0:
         return float("nan")
     observed = observed / observed.sum()
@@ -215,14 +231,14 @@ def plot_discrimination_grid(
     ax_template = fig.add_subplot(gs[1, 1])
     ax_table = fig.add_subplot(gs[2, :])
 
-    # Find global max KL for consistent x-axis
+    # Find x-axis limit using 95th percentile to exclude outliers
     all_metrics = [run_metrics, template_metrics, model_metrics, origin_metrics]
     all_kls = []
     for metrics in all_metrics:
         for m in metrics.values():
             if not np.isnan(m["kl"]):
                 all_kls.append(m["kl"])
-    x_max = max(all_kls) * 1.1 if all_kls else 1.5
+    x_max = np.percentile(all_kls, 95) * 1.2 if all_kls else 1.5
 
     plot_scatter_panel(ax_origin, origin_metrics, "By Origin", x_max=x_max)
     plot_scatter_panel(ax_model, model_metrics, "By Model", x_max=x_max)

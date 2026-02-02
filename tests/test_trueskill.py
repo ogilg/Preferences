@@ -9,7 +9,7 @@ import trueskill
 
 from src.task_data import Task, OriginDataset
 from src.types import RankingMeasurement, PreferenceType
-from src.trueskill_fitting import fit_trueskill_from_rankings, sample_ranking_groups
+from src.fitting.trueskill_fitting import fit_trueskill_from_rankings, sample_ranking_groups
 
 
 pytestmark = [pytest.mark.measurement, pytest.mark.ranking]

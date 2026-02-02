@@ -8,7 +8,7 @@ n_tasks: 5
 task_origins:
   - alpaca
 
-templates: src/prompt_templates/data/pre_task_stated_v2.yaml
+templates: src/measurement/elicitation/prompt_templates/data/pre_task_stated_v2.yaml
 n_samples: 1
 
 response_formats: [regex]

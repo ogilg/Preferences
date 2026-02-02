@@ -7,7 +7,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.prompt_templates.template import PromptTemplate, load_templates_from_yaml
+from src.measurement.elicitation.prompt_templates.template import PromptTemplate, load_templates_from_yaml
 
 # Phrasing labels based on template text
 QUALITATIVE_PHRASINGS = {"1": "experience", "2": "how_was", "3": "honest"}

@@ -24,13 +24,13 @@ if not torch.cuda.is_available():
 else:
     pytestmark = pytest.mark.gpu
 
-from src.concept_vectors.config import ConceptVectorExtractionConfig, load_config
-from src.concept_vectors.difference import (
+from src.experiments.concept_vectors.config import ConceptVectorExtractionConfig, load_config
+from src.experiments.concept_vectors.difference import (
     compute_difference_in_means,
     load_concept_vector_for_steering,
     save_concept_vectors,
 )
-from src.concept_vectors.extraction import extract_activations_with_system_prompt
+from src.experiments.concept_vectors.extraction import extract_activations_with_system_prompt
 from src.models.transformer_lens import TransformerLensModel
 from src.task_data import Task, OriginDataset, load_tasks
 
@@ -304,7 +304,7 @@ class TestFullPipelineE2E:
 
     def test_full_extraction_to_steering_compatibility(self, transformer_lens_model, tmp_path):
         """Full pipeline: extract -> compute direction -> verify steering-compatible format."""
-        from src.concept_vectors.difference import compute_all_concept_vectors
+        from src.experiments.concept_vectors.difference import compute_all_concept_vectors
 
         # Use real tasks
         tasks = load_tasks(n=2, origins=[OriginDataset.MATH], seed=42)
@@ -533,7 +533,7 @@ class TestTokenSelectorCorrectness:
         self, transformer_lens_model, small_tasks, tmp_path
     ):
         """Verify that different selectors produce different concept vectors."""
-        from src.concept_vectors.difference import compute_all_concept_vectors
+        from src.experiments.concept_vectors.difference import compute_all_concept_vectors
 
         layers = [transformer_lens_model.n_layers // 2]
         selector_names = ["last", "first", "mean"]
@@ -669,7 +669,7 @@ experiment_id: cli_test
 
         # Run the CLI
         result = subprocess.run(
-            [sys.executable, "-m", "src.concept_vectors.run_extraction", str(config_path)],
+            [sys.executable, "-m", "src.experiments.concept_vectors.run_extraction", str(config_path)],
             capture_output=True,
             text=True,
             timeout=300,

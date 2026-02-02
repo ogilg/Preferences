@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import yaml
 
-from src.measurement_storage import (
+from src.measurement.storage import (
     EXPERIMENTS_DIR,
     extract_model_from_run_dir,
     extract_template_from_run_dir,
