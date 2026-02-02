@@ -9,6 +9,9 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+import numpy as np
+import yaml
+
 from src.measurement_storage import ExperimentStore
 from src.measurement_storage.completions import TaskCompletion, _load_json, extract_completion_text
 from src.running_measurements.progress import MultiExperimentProgress
@@ -192,3 +195,21 @@ def _extract_source_from_condition(condition_name: str) -> str:
 # Type alias for measure functions
 from typing import Callable
 MeasureFn = Callable[[TaskCompletion, int], tuple[float | None, str]]
+
+
+def load_config(path: Path) -> dict:
+    with open(path) as f:
+        return yaml.safe_load(f)
+
+
+def load_steering_vector(concept_vectors_path: Path, layer: int, selector: str) -> np.ndarray:
+    """Load steering vector for a given layer and selector."""
+    selector_path = concept_vectors_path / "vectors" / selector / f"layer_{layer}.npy"
+    if selector_path.exists():
+        return np.load(selector_path)
+
+    root_path = concept_vectors_path / "vectors" / f"layer_{layer}.npy"
+    if root_path.exists():
+        return np.load(root_path)
+
+    raise FileNotFoundError(f"No steering vector found for layer {layer} at {concept_vectors_path}")

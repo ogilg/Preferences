@@ -32,7 +32,9 @@ from src.analysis.concept_vectors.measurement_utils import (
     MeasureFn,
     find_common_tasks,
     load_concept_vector_completions,
+    load_config,
     load_neutral_completions,
+    load_steering_vector,
     parse_stated_score,
 )
 from src.measurement_storage import ExperimentStore, TaskCompletion
@@ -53,7 +55,6 @@ load_dotenv()
 
 DEFAULT_CONFIG_PATH = Path("configs/concept_vectors/steering_experiment.yaml")
 
-
 TASK_SOURCES = {
     "math": {
         "concept_vectors_path": Path("concept_vectors/math_math_sys"),
@@ -66,25 +67,6 @@ TASK_SOURCES = {
         "origin_filter": "WILDCHAT",
     },
 }
-
-
-def load_config(path: Path) -> dict:
-    with open(path) as f:
-        return yaml.safe_load(f)
-
-
-def load_steering_vector(concept_vectors_path: Path, layer: int, selector: str) -> np.ndarray:
-    """Load steering vector for a given layer and selector."""
-    # Try selector subdirectory first, then root vectors directory
-    selector_path = concept_vectors_path / "vectors" / selector / f"layer_{layer}.npy"
-    if selector_path.exists():
-        return np.load(selector_path)
-
-    root_path = concept_vectors_path / "vectors" / f"layer_{layer}.npy"
-    if root_path.exists():
-        return np.load(root_path)
-
-    raise FileNotFoundError(f"No steering vector found for layer {layer} at {concept_vectors_path}")
 
 
 def make_steering_measure_fn(
