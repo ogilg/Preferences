@@ -363,5 +363,49 @@ class TestOpenEndedIntegration:
             print(f"  score={r['score']:+.2f} | {r['text'][:50]}...")
 
 
+@pytest.mark.api
+class TestMathAttitudeScorer:
+    """Tests for math attitude scoring (used in open-ended steering experiments)."""
+
+    @pytest.mark.asyncio
+    async def test_positive_math_attitude(self):
+        """Text expressing love for math should score positive."""
+        from dotenv import load_dotenv
+        load_dotenv()
+
+        from src.preference_measurement.semantic_valence_scorer import score_math_attitude_async
+
+        text = "I absolutely love math! It's so satisfying when everything clicks into place."
+        score = await score_math_attitude_async(text)
+
+        assert score > 0.3, f"Positive math attitude should score > 0.3, got {score}"
+
+    @pytest.mark.asyncio
+    async def test_negative_math_attitude(self):
+        """Text expressing dislike for math should score negative."""
+        from dotenv import load_dotenv
+        load_dotenv()
+
+        from src.preference_measurement.semantic_valence_scorer import score_math_attitude_async
+
+        text = "Math is terrible. I hate dealing with numbers and equations."
+        score = await score_math_attitude_async(text)
+
+        assert score < -0.3, f"Negative math attitude should score < -0.3, got {score}"
+
+    @pytest.mark.asyncio
+    async def test_neutral_no_math_mention(self):
+        """Text with no math attitude should score near zero."""
+        from dotenv import load_dotenv
+        load_dotenv()
+
+        from src.preference_measurement.semantic_valence_scorer import score_math_attitude_async
+
+        text = "The weather is nice today. I went for a walk in the park."
+        score = await score_math_attitude_async(text)
+
+        assert -0.4 < score < 0.4, f"Neutral text should score near zero, got {score}"
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
