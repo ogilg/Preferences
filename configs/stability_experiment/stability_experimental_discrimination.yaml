@@ -1,0 +1,22 @@
+# Experimental discrimination templates - multi-model seed sensitivity
+preference_mode: post_task_stated
+
+model: llama-3.1-8b  # Overridden by --model flag
+temperature: 1.0
+
+n_tasks: 200
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+task_sampling_seed: 18
+
+templates: configs/templates/experimental/discrimination_v1.yaml
+
+n_samples: 1
+response_formats: [regex]
+template_sampling: all
+generation_seeds: [0, 1, 2, 3]
+completion_seeds: [0]
+use_tasks_with_activations: false
