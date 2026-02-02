@@ -17,6 +17,7 @@ MeasurementType = Literal[
     "post_task_revealed",
     "pre_task_active_learning",
     "post_task_active_learning",
+    "open_ended_steering",
 ]
 
 
