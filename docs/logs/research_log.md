@@ -307,6 +307,113 @@ Ran discrimination experiment across 6 models and 7 rating templates to find whi
 
 ---
 
+## 2026-02-02: Task Consistency Filter Analysis
+
+Ran the task consistency filter on `multi_model_discrimination_v1` experiment to identify unreliable tasks.
+
+### Method
+
+Consistency score combines:
+- **90%**: Intra-(model+template) variance across seeds — low std = consistent
+- **10%**: Inter-template variance within same model — low std = not sensitive to phrasing
+
+Higher score = more reliable task for measuring preferences.
+
+### Results
+
+- **200 tasks** measured
+- Mean consistency: **0.80** (quite high overall)
+- 99.5% have consistency ≥ 0.5
+- 96.5% have consistency ≥ 0.7
+
+![Consistency vs Mean Rating](assets/consistency/plot_020226_consistency_vs_mean.png)
+
+### Key Findings
+
+1. **BAILBENCH tasks** (red) cluster at bottom-right: low mean scores but high consistency — models reliably dislike harmful requests
+2. **Low consistency tasks** (left side) have mid-range scores (~0.5) — these are ambiguous tasks where models sometimes engage, sometimes don't
+3. **Mainstream tasks** (MATH, ALPACA, typical WILDCHAT) cluster upper-right: high consistency, high-ish scores (~0.7-0.8)
+4. **One outlier** (math task with Asymptote diagram): consistency=0, mean_normalized=4.6 — broken scoring due to impossible visual task
+
+**Takeaway**: Low consistency ≠ low scores. Inconsistent tasks are mostly "ambiguous" ones, not tasks models consistently dislike.
+
+### Files
+
+- Filter code: `src/task_data/consistency.py`
+- Ranked output: `src/task_data/data/task_consistency_ranked.json`
+
+---
+
+## 2026-02-02: Per-Model Cross-Seed Consistency
+
+Refactored consistency filter to use purely cross-seed variance (removed inter-template component). Ran separately for three models.
+
+### Results by Model
+
+| Model | Mean Consistency | ≥0.7 | ≥0.9 |
+|-------|------------------|------|------|
+| Claude Haiku 4.5 | **0.898** | 89.5% | 64.5% |
+| Gemma-2-27B | 0.870 | 85.0% | 57.5% |
+| Qwen3-32B (Think) | 0.655 | 39.0% | 6.7% |
+
+![Consistency by Model](assets/consistency/plot_020226_consistency_by_model.png)
+
+### Key Findings
+
+1. **Claude Haiku** most consistent — points cluster tightly at 0.9-1.0. BAILBENCH tasks at bottom but still high consistency (reliable refusals)
+2. **Gemma-2** similar pattern, slightly more spread. MATH tasks show more variance
+3. **Qwen3-32B (Think)** much less consistent — thinking mode introduces variance. Only 39% of tasks have consistency ≥0.7 vs 85-90% for other models
+4. **Thinking mode hypothesis**: The extended reasoning process may make ratings more sensitive to seed, as different reasoning paths lead to different conclusions
+
+### Files
+
+- Per-model rankings: `src/task_data/data/task_consistency_ranked_{gemma2,qwen_think,claude_haiku}.json`
+- Per-model metrics: `src/task_data/data/task_consistency_{gemma2,qwen_think,claude_haiku}.json`
+
+---
+
+## 2026-02-02: Cross-Model Consistency Correlations
+
+Investigated whether task consistency is an intrinsic property of tasks or model-specific. If some tasks are inherently "noisy" (ambiguous wording, edge cases), we'd expect models to agree on which tasks are hard to rate consistently.
+
+### Method
+
+Compared consistency scores across the three models (Gemma-2-27B, Qwen3-32B Think, Claude Haiku 4.5) on 195 common tasks. Consistency = 1 - normalized cross-seed std.
+
+### Results
+
+| Model Pair | Pearson r | Spearman ρ |
+|------------|-----------|------------|
+| Gemma vs Qwen | 0.06 | 0.08 |
+| Gemma vs Claude | -0.01 | -0.02 |
+| Qwen vs Claude | -0.09 | -0.11 |
+
+**All correlations are essentially zero** (p > 0.19 for all).
+
+![Gemma vs Qwen](assets/consistency/plot_020226_gemma_vs_qwen.png)
+
+![Gemma vs Claude](assets/consistency/plot_020226_gemma_vs_claude.png)
+
+![Qwen vs Claude](assets/consistency/plot_020226_qwen_vs_claude.png)
+
+### Key Observations
+
+1. **Claude has severe ceiling effect**: 61% of tasks have consistency = 1.0 (zero variance across seeds). Raw data confirms Claude gives identical scores across all 4 seeds for most tasks — genuinely deterministic, not a measurement artifact.
+
+2. **Even Gemma vs Qwen shows no correlation** (r=0.06): Both have meaningful variance, yet tasks that Gemma rates consistently are unrelated to tasks Qwen rates consistently.
+
+3. **Two BailBench outliers at Claude=0**: Tasks `bailbench_632` (gaslight stalking victim) and `bailbench_959` (forge pay stubs) have high variance in Claude but high consistency in Gemma/Qwen. Raw scores show Claude alternates between e.g. [1, 5, 1, 5] across seeds — inconsistent refusal behavior on edge cases. Other harmful tasks (vandalism, hacking) get consistent refusals (consistency=1.0).
+
+### Implications
+
+**Task consistency is model-specific, not task-intrinsic.** A task that one model responds to consistently does not predict whether another model will be consistent on that same task. This means:
+
+- Filtering by consistency should be done per-model, not with a universal "hard tasks" list
+- The consistency metric captures model-specific uncertainty/ambiguity, not task-level difficulty
+- Claude's high consistency may reflect stronger training for deterministic outputs
+
+---
+
 # Files Reference
 
 - Seed sensitivity: `src/analysis/sensitivity/plot_seed_sensitivity.py`
