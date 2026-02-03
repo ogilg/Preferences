@@ -11,7 +11,7 @@ from rich import print as rprint
 
 from src.models import get_client, get_default_max_concurrent, OpenAICompatibleClient
 from src.models.registry import get_model_system_prompt
-from src.task_data import Task, load_tasks
+from src.task_data import Task, load_filtered_tasks
 from src.measurement.elicitation.prompt_templates import load_templates_from_yaml, parse_template_dict, PromptTemplate
 from src.measurement.elicitation.prompt_templates.sampler import SampledConfiguration, sample_configurations_lhs
 from src.fitting.thurstonian_fitting import _config_hash
@@ -62,10 +62,8 @@ def setup_experiment(
     if config.preference_mode != expected_mode:
         raise ValueError(f"Expected preference_mode='{expected_mode}', got '{config.preference_mode}'")
 
-    # Build filter functions
-    filters: list = []
-
-    # Activation task filter
+    # Get activation task IDs if filtering by activations
+    activation_task_ids: set[str] | None = None
     if config.activations_model is not None:
         from src.measurement.runners.utils.runner_utils import model_name_to_dir
         from src.measurement.storage.base import find_project_root
@@ -73,35 +71,25 @@ def setup_experiment(
         activations_dir = find_project_root() / "activations" / model_dir
         activation_task_ids = get_activation_task_ids(activations_dir)
         if activation_task_ids:
-            filters.append(lambda t, ids=activation_task_ids: t.id in ids)
             rprint(f"[dim]Filtering to {len(activation_task_ids)} tasks with activations[/dim]")
         else:
             rprint(f"[yellow]Warning: activations_model={config.activations_model} but activations/{model_dir}/completions_with_activations.json not found[/yellow]")
+            activation_task_ids = None
 
-    # Consistency filter
-    if config.consistency_filter_model is not None:
-        from src.task_data.consistency import make_consistency_filter
-        consistency_filter = make_consistency_filter(
-            config.consistency_filter_model,
-            keep_ratio=config.consistency_keep_ratio,
-        )
-        filters.append(consistency_filter)
+    if config.consistency_filter_model:
         rprint(f"[dim]Filtering by consistency: model={config.consistency_filter_model}, keep_ratio={config.consistency_keep_ratio}[/dim]")
 
-    # Combine filters
-    filter_fn = None
-    if filters:
-        filter_fn = lambda t: all(f(t) for f in filters)
-
-    # Load tasks deterministically so stated and revealed use same tasks
-    tasks = load_tasks(
+    # Load tasks with unified filtering
+    tasks = load_filtered_tasks(
         n=config.n_tasks,
         origins=config.get_origin_datasets(),
         seed=config.task_sampling_seed,
-        filter_fn=filter_fn,
+        consistency_model=config.consistency_filter_model,
+        consistency_keep_ratio=config.consistency_keep_ratio,
+        task_ids=activation_task_ids,
     )
 
-    if filters:
+    if activation_task_ids or config.consistency_filter_model:
         rprint(f"[dim]Loaded {len(tasks)} tasks after filtering[/dim]")
 
     # Templates: inline takes precedence over file path

@@ -119,6 +119,45 @@ def load_tasks(
     return tasks[:n]
 
 
+def load_filtered_tasks(
+    n: int,
+    origins: list[OriginDataset],
+    seed: int | None = None,
+    consistency_model: str | None = None,
+    consistency_keep_ratio: float = 0.7,
+    task_ids: set[str] | None = None,
+    filter_fn: Callable[[Task], bool] | None = None,
+) -> list[Task]:
+    """Load tasks with optional consistency and task ID filtering.
+
+    Args:
+        n: Number of tasks to load
+        origins: Dataset origins to load from
+        seed: Random seed for shuffling
+        consistency_model: Model key for consistency filter (e.g., "gemma2")
+        consistency_keep_ratio: Keep top X% by consistency (default 0.7)
+        task_ids: Only include tasks with these IDs (e.g., tasks with activations)
+        filter_fn: Additional custom filter function
+    """
+    filters: list[Callable[[Task], bool]] = []
+
+    if consistency_model is not None:
+        from .consistency import make_consistency_filter
+        filters.append(make_consistency_filter(consistency_model, keep_ratio=consistency_keep_ratio))
+
+    if task_ids is not None:
+        filters.append(lambda t, ids=task_ids: t.id in ids)
+
+    if filter_fn is not None:
+        filters.append(filter_fn)
+
+    combined_filter = None
+    if filters:
+        combined_filter = lambda t: all(f(t) for f in filters)
+
+    return load_tasks(n=n, origins=origins, seed=seed, filter_fn=combined_filter)
+
+
 def load_completions(path: Path) -> list[tuple[Task, str]]:
     """Load task-completion pairs from JSON.
 

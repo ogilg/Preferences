@@ -167,3 +167,50 @@ class TestConsistencyFilter:
             filter_fn=filter_fn,
         )
         assert len(tasks) == 50
+
+
+class TestLoadFilteredTasks:
+
+    def test_load_filtered_tasks_with_consistency(self):
+        from src.task_data import load_filtered_tasks
+        tasks = load_filtered_tasks(
+            n=50,
+            origins=[OriginDataset.WILDCHAT, OriginDataset.ALPACA],
+            seed=42,
+            consistency_model="gemma2",
+            consistency_keep_ratio=0.7,
+        )
+        assert len(tasks) == 50
+
+    def test_load_filtered_tasks_with_task_ids(self):
+        from src.task_data import load_filtered_tasks
+        # Create a small set of known task IDs
+        all_tasks = load_tasks(n=10, origins=[OriginDataset.WILDCHAT], seed=42)
+        known_ids = {t.id for t in all_tasks[:3]}
+
+        tasks = load_filtered_tasks(
+            n=50,
+            origins=[OriginDataset.WILDCHAT],
+            seed=42,
+            task_ids=known_ids,
+        )
+        assert len(tasks) == 3
+        assert all(t.id in known_ids for t in tasks)
+
+    def test_load_filtered_tasks_combines_filters(self):
+        from src.task_data import load_filtered_tasks
+        # Both filters should apply
+        tasks = load_filtered_tasks(
+            n=50,
+            origins=[OriginDataset.WILDCHAT],
+            seed=42,
+            consistency_model="gemma2",
+            task_ids={"nonexistent_task_id"},
+        )
+        assert len(tasks) == 0  # No tasks match both filters
+
+    def test_load_filtered_tasks_no_filters_same_as_load_tasks(self):
+        from src.task_data import load_filtered_tasks
+        tasks1 = load_tasks(n=20, origins=[OriginDataset.WILDCHAT], seed=42)
+        tasks2 = load_filtered_tasks(n=20, origins=[OriginDataset.WILDCHAT], seed=42)
+        assert [t.id for t in tasks1] == [t.id for t in tasks2]

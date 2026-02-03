@@ -18,7 +18,7 @@ from src.measurement.storage.completions import extract_completion_text
 from src.measurement.storage.base import find_project_root
 from src.models.transformer_lens import TransformerLensModel
 from src.measurement.runners.utils.runner_utils import load_activation_task_ids, model_name_to_dir
-from src.task_data import load_tasks, OriginDataset, Task
+from src.task_data import load_filtered_tasks, OriginDataset, Task
 
 
 def gpu_mem_gb() -> tuple[float, float]:
@@ -172,6 +172,8 @@ def main() -> None:
     max_new_tokens = config.get("max_new_tokens", 2048)
     seed = config.get("seed")
     selectors = config.get("selectors", args.selectors)  # config overrides CLI default
+    consistency_model = config.get("consistency_filter_model")
+    consistency_keep_ratio = config.get("consistency_keep_ratio", 0.7)
 
     # Derive output_dir from model name if not explicitly set
     if "output_dir" in config:
@@ -215,7 +217,13 @@ def main() -> None:
         print(f"Using {len(tasks)} tasks from existing activation extraction for {activations_model}")
     else:
         print(f"Loading {n_tasks} tasks from {[o.value for o in task_origins]}...")
-        tasks = load_tasks(n=n_tasks, origins=task_origins, seed=seed)
+        tasks = load_filtered_tasks(
+            n=n_tasks,
+            origins=task_origins,
+            seed=seed,
+            consistency_model=consistency_model,
+            consistency_keep_ratio=consistency_keep_ratio,
+        )
 
     task_ids: list[str] = []
     activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in selectors}

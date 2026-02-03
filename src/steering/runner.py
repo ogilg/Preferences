@@ -23,7 +23,7 @@ from src.measurement.elicitation.response_format import (
 from src.probes.storage import load_probe_direction, load_manifest
 from src.measurement.runners.utils.runner_utils import load_activation_task_ids
 from src.steering.config import SteeringExperimentConfig, load_steering_config
-from src.task_data import Task, OriginDataset, load_tasks
+from src.task_data import Task, OriginDataset, load_filtered_tasks
 from src.types import Message
 
 import torch
@@ -200,10 +200,17 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
             "bailbench": OriginDataset.BAILBENCH,
         }
         origins = [origin_mapping[o] for o in config.task_origins]
-        all_tasks = load_tasks(n=10000, origins=origins, seed=config.task_sampling_seed)
+        all_tasks = load_filtered_tasks(
+            n=10000,
+            origins=origins,
+            seed=config.task_sampling_seed,
+            consistency_model=config.consistency_filter_model,
+            consistency_keep_ratio=config.consistency_keep_ratio,
+            task_ids=set(completion_lookup.keys()),
+        )
 
-        # Filter to tasks with completions
-        tasks_with_completions = [t for t in all_tasks if t.id in completion_lookup][:config.n_tasks]
+        # Take first n_tasks
+        tasks_with_completions = all_tasks[:config.n_tasks]
         print(f"Selected {len(tasks_with_completions)} tasks with completions")
 
     # Set up response format for parsing (derived from probe manifest)

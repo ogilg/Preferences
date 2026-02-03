@@ -22,6 +22,8 @@ class SteeringExperimentConfig(BaseModel):
     n_tasks: int = 25
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat", "alpaca"]
     task_sampling_seed: int | None = None
+    consistency_filter_model: str | None = None
+    consistency_keep_ratio: float = 0.7
     completion_seed: int = 0
     rating_seeds: list[int] = [0, 1, 2]
     temperature: float = 1.0

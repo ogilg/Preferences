@@ -15,7 +15,7 @@ from src.experiments.concept_vectors.config import load_config
 from src.experiments.concept_vectors.difference import compute_all_concept_vectors, save_concept_vectors
 from src.experiments.concept_vectors.extraction import extract_activations_with_system_prompt
 from src.models import TransformerLensModel
-from src.task_data import OriginDataset, load_tasks
+from src.task_data import OriginDataset, load_filtered_tasks
 
 
 def parse_args() -> argparse.Namespace:
@@ -43,7 +43,13 @@ def main() -> None:
     # Load tasks once (shared across conditions)
     task_origins = [OriginDataset[o.upper()] for o in config.task_origins]
     print(f"Loading {config.n_tasks} tasks from {[o.value for o in task_origins]}...")
-    tasks = load_tasks(n=config.n_tasks, origins=task_origins, seed=config.task_sampling_seed)
+    tasks = load_filtered_tasks(
+        n=config.n_tasks,
+        origins=task_origins,
+        seed=config.task_sampling_seed,
+        consistency_model=config.consistency_filter_model,
+        consistency_keep_ratio=config.consistency_keep_ratio,
+    )
     print(f"Loaded {len(tasks)} tasks")
 
     if not args.skip_extraction:

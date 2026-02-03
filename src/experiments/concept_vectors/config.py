@@ -22,6 +22,10 @@ class ConceptVectorExtractionConfig(BaseModel):
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]]
     task_sampling_seed: int | None = None
 
+    # Task consistency filtering
+    consistency_filter_model: str | None = None
+    consistency_keep_ratio: float = 0.7
+
     conditions: dict[str, ConditionDict]
 
     layers_to_extract: list[float | int]

@@ -1,5 +1,5 @@
 from .task import OriginDataset, Task
-from .loader import load_tasks, load_completions
+from .loader import load_tasks, load_filtered_tasks, load_completions
 
 ORIGIN_NAME_MAP = {
     "wildchat": OriginDataset.WILDCHAT,
@@ -22,6 +22,7 @@ __all__ = [
     "OriginDataset",
     "Task",
     "load_tasks",
+    "load_filtered_tasks",
     "load_completions",
     "parse_origins",
     "ORIGIN_NAME_MAP",

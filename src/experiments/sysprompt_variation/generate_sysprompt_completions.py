@@ -16,7 +16,7 @@ from rich.console import Console
 from src.measurement.storage import ExperimentStore
 from src.measurement.storage.completions import generate_completions
 from src.models import get_client
-from src.task_data import load_tasks, parse_origins
+from src.task_data import load_filtered_tasks, parse_origins
 
 
 load_dotenv()
@@ -33,12 +33,23 @@ class CompletionConfig(BaseModel):
     n_tasks: int
     task_origins: list[str]
 
+    # Task consistency filtering
+    consistency_filter_model: str | None = None
+    consistency_keep_ratio: float = 0.7
+
     system_prompts: dict[str, str | None]
 
 
 def load_config(path: Path) -> CompletionConfig:
     with open(path) as f:
         data = yaml.safe_load(f)
+
+    # Support referencing external system_prompts file
+    if "system_prompts_file" in data:
+        prompts_path = path.parent / data.pop("system_prompts_file")
+        with open(prompts_path) as f:
+            data["system_prompts"] = yaml.safe_load(f)
+
     return CompletionConfig.model_validate(data)
 
 
@@ -83,7 +94,7 @@ def main(config_path: Path):
     console.print()
 
     exp_store = ExperimentStore(config.experiment_name)
-    completions_dir = exp_store.experiment_dir / "completions"
+    completions_dir = exp_store.base_dir / "completions"
 
     # Check which conditions need generation
     conditions_to_generate = []
@@ -102,7 +113,13 @@ def main(config_path: Path):
 
     # Load tasks
     console.print("\n[bold]Loading tasks...")
-    tasks = load_tasks(config.n_tasks, parse_origins(config.task_origins), seed=config.seed)
+    tasks = load_filtered_tasks(
+        n=config.n_tasks,
+        origins=parse_origins(config.task_origins),
+        seed=config.seed,
+        consistency_model=config.consistency_filter_model,
+        consistency_keep_ratio=config.consistency_keep_ratio,
+    )
     console.print(f"  Loaded {len(tasks)} tasks\n")
 
     # Generate completions
