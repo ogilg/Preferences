@@ -62,8 +62,10 @@ def setup_experiment(
     if config.preference_mode != expected_mode:
         raise ValueError(f"Expected preference_mode='{expected_mode}', got '{config.preference_mode}'")
 
-    # Prepare filter function if using activation tasks
-    filter_fn = None
+    # Build filter functions
+    filters: list = []
+
+    # Activation task filter
     if config.activations_model is not None:
         from src.measurement.runners.utils.runner_utils import model_name_to_dir
         from src.measurement.storage.base import find_project_root
@@ -71,12 +73,27 @@ def setup_experiment(
         activations_dir = find_project_root() / "activations" / model_dir
         activation_task_ids = get_activation_task_ids(activations_dir)
         if activation_task_ids:
-            filter_fn = lambda t: t.id in activation_task_ids
+            filters.append(lambda t, ids=activation_task_ids: t.id in ids)
+            rprint(f"[dim]Filtering to {len(activation_task_ids)} tasks with activations[/dim]")
         else:
             rprint(f"[yellow]Warning: activations_model={config.activations_model} but activations/{model_dir}/completions_with_activations.json not found[/yellow]")
 
+    # Consistency filter
+    if config.consistency_filter_model is not None:
+        from src.task_data.consistency import make_consistency_filter
+        consistency_filter = make_consistency_filter(
+            config.consistency_filter_model,
+            keep_ratio=config.consistency_keep_ratio,
+        )
+        filters.append(consistency_filter)
+        rprint(f"[dim]Filtering by consistency: model={config.consistency_filter_model}, keep_ratio={config.consistency_keep_ratio}[/dim]")
+
+    # Combine filters
+    filter_fn = None
+    if filters:
+        filter_fn = lambda t: all(f(t) for f in filters)
+
     # Load tasks deterministically so stated and revealed use same tasks
-    # If filter_fn is set, this loads n_tasks from the filtered set
     tasks = load_tasks(
         n=config.n_tasks,
         origins=config.get_origin_datasets(),
@@ -84,9 +101,8 @@ def setup_experiment(
         filter_fn=filter_fn,
     )
 
-    if config.activations_model is not None and filter_fn:
-        total_activation_tasks = len(activation_task_ids)
-        rprint(f"[dim]Loaded {len(tasks)} tasks from {total_activation_tasks} total with activations[/dim]")
+    if filters:
+        rprint(f"[dim]Loaded {len(tasks)} tasks after filtering[/dim]")
 
     # Templates: inline takes precedence over file path
     templates = None

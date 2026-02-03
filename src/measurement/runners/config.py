@@ -113,6 +113,11 @@ class ExperimentConfig(BaseModel):
     completion_model: str | None = None
     completion_seed: int = 0
 
+    # Task consistency filtering - filter out tasks with inconsistent ratings across seeds
+    # Model key must match a consistency index file (e.g., "gemma2" -> consistency_gemma2.json)
+    consistency_filter_model: str | None = None
+    consistency_keep_ratio: float = 0.7  # Keep top X% of tasks by consistency
+
     @model_validator(mode="after")
     def validate_pair_order_options(self) -> "ExperimentConfig":
         if self.include_reverse_order and self.pair_order_seed is not None:

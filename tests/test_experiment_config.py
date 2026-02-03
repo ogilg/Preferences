@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from src.measurement.runners.config import ExperimentConfig
+from src.task_data.consistency import load_consistency_index
 from src.measurement.runners.utils.experiment_utils import (
     shuffle_pair_order,
     apply_pair_order,
@@ -333,3 +334,33 @@ class TestShuffledTasksInThurstonian:
             assert wins_original == wins_reversed, (
                 f"Task {task.id}: wins differ (original={wins_original}, reversed={wins_reversed})"
             )
+
+
+class TestConsistencyFilterConfig:
+
+    def test_config_accepts_consistency_filter_fields(self):
+        config = ExperimentConfig(
+            preference_mode="post_task_stated",
+            model="gemma-2-27b",
+            n_tasks=100,
+            consistency_filter_model="gemma2",
+            consistency_keep_ratio=0.7,
+        )
+        assert config.consistency_filter_model == "gemma2"
+        assert config.consistency_keep_ratio == 0.7
+
+    def test_config_defaults_no_consistency_filter(self):
+        config = ExperimentConfig(
+            preference_mode="post_task_stated",
+            model="gemma-2-27b",
+            n_tasks=100,
+        )
+        assert config.consistency_filter_model is None
+        assert config.consistency_keep_ratio == 0.7  # default
+
+    def test_available_consistency_models(self):
+        """Verify we have consistency indices for expected models."""
+        for model in ["gemma2", "qwen_think", "claude_haiku"]:
+            index = load_consistency_index(model)
+            assert len(index.scores) > 0
+            assert len(index.percentiles) > 0
