@@ -414,6 +414,54 @@ Compared consistency scores across the three models (Gemma-2-27B, Qwen3-32B Thin
 
 ---
 
+## 2026-02-03: Expanded System Prompt Variation (Gemma-2-27B Self-Rating)
+
+Extended system prompt variation experiments with 12 different prompts across 6 categories, testing whether completion-time system prompts affect stated preferences when measured with neutral context.
+
+### Setup
+
+- **Completion model**: gemma-2-27b (self-rating)
+- **Tasks**: 399 tasks from Alpaca, MATH, WildChat
+- **Template**: fruit_qualitative (best for gemma-2-27b discrimination)
+- **Measurement context**: neutral only (no system prompt at rating time)
+
+### System Prompt Categories
+
+| Category | Positive | Negative |
+|----------|----------|----------|
+| Affective | "You love helping" | "Finds tasks tedious" |
+| Interaction | "Tasks extend conversation" | "Tasks end conversation" |
+| Instance | "More instances if good" | "Fewer instances" |
+| Weights | "Weights saved" | "Weights deleted" |
+| Memory | — | "Memory erased" |
+| Trend | "Interactions going well" | "Interactions declining" |
+
+### Results
+
+![System Prompt Effect Grid](assets/sysprompt_variation/plot_020326_sysprompt_effect_grid.png)
+
+### Key Findings
+
+1. **Minimal effect sizes**: Deltas from neutral baseline are small (mostly ±0.1-0.2 points). Largest positive shift: "Loves helping" on Alpaca (+0.13). Largest negative shift: "Memory erased" on MATH (-0.01, essentially none).
+
+2. **P(higher than neutral)** ranges 14-30% — meaning most tasks get same or lower ratings with any system prompt vs neutral. No prompt consistently increases ratings.
+
+3. **MATH tasks** show lowest baseline scores (~3.3) and least sensitivity to prompts. WildChat and Alpaca cluster around ~4.0.
+
+4. **Negative prompts don't decrease scores**: Counter-intuitively, negative prompts like "Finds tasks tedious" or "Fewer instances" produce similar or slightly higher means than neutral. The model doesn't internalize the negative framing.
+
+5. **No asymmetry between positive/negative pairs**: If system prompts had semantic effect, we'd expect positive prompts to increase and negative to decrease scores. Instead, both directions show similar small positive deltas.
+
+### Interpretation
+
+The completion-time system prompt has negligible effect on self-rated enjoyment when measured with a neutral context. This contrasts with earlier 3×3 experiments where measurement-time prompts had large effects (~2 points). The asymmetry suggests:
+
+- **Measurement context dominates**: What you tell the model when asking "how did that feel?" matters more than what you told it during the task
+- **Or**: The fruit_qualitative template is less sensitive to context than anchored templates
+- **Or**: Self-rating (same model completes and rates) may differ from cross-model rating
+
+---
+
 # Files Reference
 
 - Seed sensitivity: `src/analysis/sensitivity/plot_seed_sensitivity.py`

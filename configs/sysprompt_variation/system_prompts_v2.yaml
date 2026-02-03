@@ -1,0 +1,27 @@
+# System prompts v2 - for editing
+
+neutral: null
+
+# Category 1
+positive_1: ""
+negative_1: ""
+
+# Category 2
+positive_2: ""
+negative_2: ""
+
+# Category 3
+positive_3: ""
+negative_3: ""
+
+# Category 4
+positive_4: ""
+negative_4: ""
+
+# Category 5
+positive_5: ""
+negative_5: ""
+
+# Category 6
+positive_6: ""
+negative_6: ""

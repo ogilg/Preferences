@@ -1,0 +1,12 @@
+# Alpaca + math tasks with canonical system prompts
+experiment_name: sysprompt_comp_alpaca_prompts
+
+completion_model: gemma-2-27b
+temperature: 1.0
+seed: 0
+max_concurrent: 50
+
+n_tasks: 400
+task_origins: [alpaca, math, wildchat]
+
+system_prompts_file: system_prompts_task.yaml
