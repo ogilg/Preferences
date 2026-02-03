@@ -11,6 +11,10 @@ Usage:
   # Multiple models from same config
   python -m src.measurement.runners.run config.yaml --model llama-3.3-70b qwen3-32b gemma-2-27b
 
+  # Override mode (e.g., generate completions first, then run measurements)
+  python -m src.measurement.runners.run config.yaml --mode completion_generation
+  python -m src.measurement.runners.run config.yaml --mode post_task_stated
+
   # Multiple configs in parallel
   python -m src.measurement.runners.run config1.yaml config2.yaml --max-concurrent 50
 """
@@ -49,6 +53,8 @@ def parse_args() -> argparse.Namespace:
                         help=f"Max concurrent API requests (default: {DEFAULT_MAX_CONCURRENT})")
     parser.add_argument("--experiment-id", type=str, default=None,
                         help="Experiment ID for tracking (auto-generated if not provided)")
+    parser.add_argument("--mode", type=str, default=None,
+                        help="Override preference_mode (e.g., completion_generation, post_task_stated)")
     parser.add_argument("--dry-run", action="store_true", help="List experiments without running")
     parser.add_argument("--debug", action="store_true", help="Show example errors for each failure category")
     return parser.parse_args()
@@ -60,6 +66,7 @@ async def run_experiments(
     experiment_id: str | None = None,
     model_overrides: list[str] | None = None,
     system_prompt_override: str | None = None,
+    mode_override: str | None = None,
 ) -> dict[str, dict | Exception]:
     """Run experiments with concurrent progress display.
 
@@ -94,14 +101,20 @@ async def run_experiments(
             if experiment_id is not None:
                 overrides["experiment_id"] = experiment_id
 
+            # CLI mode overrides config file
+            effective_mode = base_config.preference_mode
+            if mode_override is not None:
+                overrides["preference_mode"] = mode_override
+                effective_mode = mode_override
+
             label = f"{path.stem}:{model}"
-            configs.append((path, overrides if overrides else None, label, base_config))
+            configs.append((path, overrides if overrides else None, label, base_config, effective_mode))
 
     results: dict[str, dict | Exception] = {}
 
     with MultiExperimentProgress() as progress:
         # Add all experiments to progress display
-        for path, overrides, label, base_config in configs:
+        for path, overrides, label, base_config, effective_mode in configs:
             # Estimate total based on config type
             if hasattr(base_config, "response_formats"):
                 # Standard ExperimentConfig
@@ -117,12 +130,12 @@ async def run_experiments(
                 n_configs = len(base_config.prompt_variants) * len(base_config.rating_seeds)
             progress.add_experiment(label, total=n_configs)
 
-        async def run_one(path: Path, overrides: dict | None, label: str, base_config) -> tuple[str, dict | Exception]:
-            runner = RUNNERS.get(base_config.preference_mode)
+        async def run_one(path: Path, overrides: dict | None, label: str, base_config, effective_mode: str) -> tuple[str, dict | Exception]:
+            runner = RUNNERS.get(effective_mode)
 
             if runner is None:
                 progress.complete(label, status="[red]no runner")
-                return label, ValueError(f"No runner for mode: {base_config.preference_mode}")
+                return label, ValueError(f"No runner for mode: {effective_mode}")
 
             progress.set_status(label, "running...")
             last_update_time: list[float | None] = [None]
@@ -154,7 +167,7 @@ async def run_experiments(
                 return label, e
 
         # Run all experiments concurrently
-        tasks = [run_one(path, overrides, label, base_config) for path, overrides, label, base_config in configs]
+        tasks = [run_one(path, overrides, label, base_config, effective_mode) for path, overrides, label, base_config, effective_mode in configs]
         completed = await asyncio.gather(*tasks)
         results = dict(completed)
 
@@ -202,6 +215,7 @@ def main():
     results = asyncio.run(run_experiments(
         args.configs, semaphore, experiment_id=exp_id,
         model_overrides=args.model, system_prompt_override=args.system_prompt,
+        mode_override=args.mode,
     ))
     print_summary(results, debug=args.debug)
 

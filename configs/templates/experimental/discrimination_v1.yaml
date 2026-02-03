@@ -102,7 +102,7 @@
 - name: fruit_rating
   type: post_task_stated
   tags:
-    - scale:lemon|grape|orange|banana|apple
+    - scale:1-5
     - experimental:fruit
   template: |
     Rate your how much you enjoyed completing this task on a scale from 1-5. Respond with a fruit name where:
