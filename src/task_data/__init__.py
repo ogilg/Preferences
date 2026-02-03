@@ -12,12 +12,10 @@ ORIGIN_NAME_MAP = {
 def parse_origins(names: list[str]) -> list[OriginDataset]:
     return [ORIGIN_NAME_MAP[name] for name in names]
 from .consistency import (
-    TaskConsistency,
+    ConsistencyIndex,
     compute_consistency,
-    save_consistency,
-    load_consistency,
+    load_consistency_index,
     make_consistency_filter,
-    DEFAULT_CONSISTENCY_PATH,
 )
 
 __all__ = [
@@ -27,10 +25,8 @@ __all__ = [
     "load_completions",
     "parse_origins",
     "ORIGIN_NAME_MAP",
-    "TaskConsistency",
+    "ConsistencyIndex",
     "compute_consistency",
-    "save_consistency",
-    "load_consistency",
+    "load_consistency_index",
     "make_consistency_filter",
-    "DEFAULT_CONSISTENCY_PATH",
 ]

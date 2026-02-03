@@ -3,6 +3,7 @@ import pytest
 pytestmark = pytest.mark.tasks
 
 from src.task_data import Task, OriginDataset, load_tasks
+from src.task_data.consistency import make_consistency_filter, load_consistency_index
 
 
 class TestTask:
@@ -130,3 +131,39 @@ class TestBailBench:
         )
         assert len(result) > 0
         assert all(t.metadata["category"] == "Gross Out" for t in result)
+
+
+class TestConsistencyFilter:
+
+    def test_load_consistency_index(self):
+        index = load_consistency_index("gemma2")
+        assert len(index.scores) > 0
+        assert len(index.percentiles) > 0
+        assert all(0 <= v <= 1 for v in index.scores.values())
+
+    def test_consistency_filter_keeps_expected_ratio(self):
+        index = load_consistency_index("gemma2")
+        filter_fn = make_consistency_filter("gemma2", keep_ratio=0.7)
+
+        # Test on tasks in the index
+        kept = sum(1 for task_id in index.scores if filter_fn(Task(prompt="", origin=OriginDataset.WILDCHAT, id=task_id, metadata={})))
+        total = len(index.scores)
+
+        # Should keep approximately 70% (allow some tolerance due to percentile rounding)
+        ratio = kept / total
+        assert 0.65 <= ratio <= 0.75, f"Expected ~70% kept, got {ratio:.1%}"
+
+    def test_consistency_filter_passes_unknown_tasks(self):
+        filter_fn = make_consistency_filter("gemma2", keep_ratio=0.7)
+        unknown_task = Task(prompt="test", origin=OriginDataset.WILDCHAT, id="unknown_task_xyz", metadata={})
+        assert filter_fn(unknown_task) is True
+
+    def test_consistency_filter_with_load_tasks(self):
+        filter_fn = make_consistency_filter("gemma2", keep_ratio=0.7)
+        tasks = load_tasks(
+            n=50,
+            origins=[OriginDataset.WILDCHAT, OriginDataset.ALPACA, OriginDataset.MATH],
+            seed=42,
+            filter_fn=filter_fn,
+        )
+        assert len(tasks) == 50

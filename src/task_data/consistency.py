@@ -1,16 +1,17 @@
-"""Task consistency filter based on cross-seed and cross-template variance.
+"""Task consistency filter based on cross-seed variance.
 
 Computes consistency metrics from experiment data to filter out tasks where models
-don't show consistent preferences. Weights:
-- 90%: Intra-(model+template) variance across seeds
-- 10%: Inter-template variance within the same model
+don't show consistent preferences across random seeds.
 
 Usage:
+    # Compute consistency for a model (run on many tasks, e.g., 2000)
     python -m src.task_data.consistency \
-        --experiment-dirs results/experiments/multi_model_discrimination_v1
+        --experiment-dirs results/experiments/multi_model_discrimination_v1 \
+        --model gemma-2-27b
 
+    # Filter tasks by consistency (keeps top 70% by default)
     from src.task_data.consistency import make_consistency_filter
-    filter_fn = make_consistency_filter(min_score=0.5)
+    filter_fn = make_consistency_filter("gemma2", keep_ratio=0.7)
     tasks = load_tasks(n=200, origins=[...], filter_fn=filter_fn)
 """
 
@@ -19,7 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections import defaultdict
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
@@ -33,19 +34,18 @@ from src.measurement.storage.run_parsing import (
     parse_scale_tag,
 )
 from src.task_data.task import Task
+from src.task_data.loader import load_tasks
+from src.task_data.task import OriginDataset
 
 
 DATA_DIR = Path(__file__).parent / "data"
-DEFAULT_CONSISTENCY_PATH = DATA_DIR / "task_consistency.json"
+ANALYSIS_DIR = Path(__file__).parent / "analysis"
 
 
 @dataclass
-class TaskConsistency:
-    intra_std: float
-    inter_std: float
-    consistency_score: float
-    mean_normalized: float
-    n_measurements: int
+class ConsistencyIndex:
+    scores: dict[str, float]  # task_id -> consistency_score
+    percentiles: dict[int, float]  # percentile -> threshold value
 
 
 @dataclass
@@ -71,11 +71,9 @@ def _load_run_measurements(run_dir: Path) -> _RunMeasurements | None:
     if not model or not template:
         return None
 
-    # Skip qualitative templates
     if "qualitative" in template:
         return None
 
-    # Get scale from config
     scale_tag = config.get("template_tags", {}).get("scale")
     if not scale_tag:
         return None
@@ -103,7 +101,9 @@ def _load_run_measurements(run_dir: Path) -> _RunMeasurements | None:
     return _RunMeasurements(task_scores, model, template, seed)
 
 
-def _load_all_runs(experiment_dirs: list[Path]) -> list[_RunMeasurements]:
+def _load_all_runs(
+    experiment_dirs: list[Path], model_filter: str | None = None
+) -> list[_RunMeasurements]:
     runs = []
     for exp_dir in experiment_dirs:
         stated_dir = exp_dir / "post_task_stated"
@@ -114,144 +114,145 @@ def _load_all_runs(experiment_dirs: list[Path]) -> list[_RunMeasurements]:
                 continue
             run = _load_run_measurements(run_dir)
             if run:
+                if model_filter and run.model != model_filter:
+                    continue
                 runs.append(run)
     return runs
 
 
-def compute_consistency(experiment_dirs: list[Path]) -> dict[str, TaskConsistency]:
-    runs = _load_all_runs(experiment_dirs)
+def compute_consistency(
+    experiment_dirs: list[Path], model_filter: str | None = None
+) -> dict[str, float]:
+    """Compute consistency scores for tasks. Returns task_id -> consistency_score."""
+    runs = _load_all_runs(experiment_dirs, model_filter)
     if not runs:
         return {}
 
-    # Collect all task ids
     all_task_ids: set[str] = set()
     for run in runs:
         all_task_ids.update(run.task_scores.keys())
 
-    # Group by (model, template) for intra-setup variance
-    by_model_template: dict[tuple[str, str], dict[int, _RunMeasurements]] = defaultdict(dict)
+    # Group by template for cross-seed variance
+    by_template: dict[str, dict[int, _RunMeasurements]] = defaultdict(dict)
     for run in runs:
-        by_model_template[(run.model, run.template)][run.seed] = run
+        by_template[run.template][run.seed] = run
 
-    # Group by model for inter-template variance
-    by_model: dict[str, list[_RunMeasurements]] = defaultdict(list)
-    for run in runs:
-        by_model[run.model].append(run)
-
-    # Collect all intra and inter stds for normalization
-    all_intra_stds: list[float] = []
-    all_inter_stds: list[float] = []
-
-    # First pass: compute raw stds
-    task_intra_stds: dict[str, list[float]] = defaultdict(list)
-    task_inter_stds: dict[str, list[float]] = defaultdict(list)
-    task_scores_all: dict[str, list[float]] = defaultdict(list)
-    task_n_measurements: dict[str, int] = defaultdict(int)
+    # Collect all stds for normalization
+    all_stds: list[float] = []
+    task_stds: dict[str, list[float]] = defaultdict(list)
 
     for task_id in all_task_ids:
-        # Intra-std: within each (model, template), std across seeds
-        for (model, template), seed_runs in by_model_template.items():
+        for template, seed_runs in by_template.items():
             scores = []
             for seed, run in seed_runs.items():
                 if task_id in run.task_scores:
                     scores.append(run.task_scores[task_id])
-                    task_scores_all[task_id].append(run.task_scores[task_id])
-                    task_n_measurements[task_id] += 1
             if len(scores) >= 2:
                 std = float(np.std(scores))
-                task_intra_stds[task_id].append(std)
-                all_intra_stds.append(std)
+                task_stds[task_id].append(std)
+                all_stds.append(std)
 
-        # Inter-std: for each model, std of mean scores across templates
-        for model, model_runs in by_model.items():
-            # Group by template, compute mean per template
-            template_means: dict[str, list[float]] = defaultdict(list)
-            for run in model_runs:
-                if task_id in run.task_scores:
-                    template_means[run.template].append(run.task_scores[task_id])
+    # Normalization factor (95th percentile)
+    max_std = float(np.percentile(all_stds, 95)) if all_stds else 1.0
+    if max_std < 1e-6:
+        max_std = 1.0
 
-            # Average within each template, then compute std across templates
-            if len(template_means) >= 2:
-                means = [float(np.mean(scores)) for scores in template_means.values()]
-                std = float(np.std(means))
-                task_inter_stds[task_id].append(std)
-                all_inter_stds.append(std)
-
-    # Compute normalization factors (use 95th percentile to avoid outlier influence)
-    max_intra_std = float(np.percentile(all_intra_stds, 95)) if all_intra_stds else 1.0
-    max_inter_std = float(np.percentile(all_inter_stds, 95)) if all_inter_stds else 1.0
-
-    # Prevent division by zero
-    if max_intra_std < 1e-6:
-        max_intra_std = 1.0
-    if max_inter_std < 1e-6:
-        max_inter_std = 1.0
-
-    # Second pass: compute consistency scores
-    results: dict[str, TaskConsistency] = {}
-
+    # Compute consistency scores
+    results: dict[str, float] = {}
     for task_id in all_task_ids:
-        intra_stds = task_intra_stds.get(task_id, [])
-        inter_stds = task_inter_stds.get(task_id, [])
-        all_scores = task_scores_all.get(task_id, [])
-
-        if not intra_stds:
+        stds = task_stds.get(task_id, [])
+        if not stds:
             continue
-
-        mean_intra_std = float(np.mean(intra_stds))
-        mean_inter_std = float(np.mean(inter_stds)) if inter_stds else 0.0
-
-        # Normalize and clip to [0, 1]
-        intra_norm = min(mean_intra_std / max_intra_std, 1.0)
-        inter_norm = min(mean_inter_std / max_inter_std, 1.0)
-
-        # Combined score (higher = more consistent)
-        consistency_score = 0.9 * (1 - intra_norm) + 0.1 * (1 - inter_norm)
-
-        results[task_id] = TaskConsistency(
-            intra_std=mean_intra_std,
-            inter_std=mean_inter_std,
-            consistency_score=consistency_score,
-            mean_normalized=float(np.mean(all_scores)) if all_scores else 0.0,
-            n_measurements=task_n_measurements[task_id],
-        )
+        mean_std = float(np.mean(stds))
+        std_norm = min(mean_std / max_std, 1.0)
+        results[task_id] = 1 - std_norm
 
     return results
 
 
-def save_consistency(metrics: dict[str, TaskConsistency], path: Path) -> None:
+def save_consistency_index(scores: dict[str, float], path: Path) -> None:
+    sorted_scores = sorted(scores.values())
+    percentiles = {p: float(np.percentile(sorted_scores, p)) for p in range(5, 100, 5)}
+
+    data = {
+        "scores": scores,
+        "percentiles": percentiles,
+    }
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    data = {task_id: asdict(tc) for task_id, tc in metrics.items()}
     with open(path, "w") as f:
-        json.dump(data, f, indent=2)
-    print(f"Saved {len(metrics)} task consistency metrics to {path}")
+        json.dump(data, f)
+    print(f"Saved consistency index ({len(scores)} tasks) to {path}")
 
 
-def load_consistency(path: Path) -> dict[str, TaskConsistency]:
+def load_consistency_index(model: str) -> ConsistencyIndex:
+    path = DATA_DIR / f"consistency_{model}.json"
+    if not path.exists():
+        raise FileNotFoundError(
+            f"No consistency index for model {model} at {path}. "
+            f"Run: python -m src.task_data.consistency --experiment-dirs <path> --model <model>"
+        )
     with open(path) as f:
         data = json.load(f)
-    return {task_id: TaskConsistency(**tc) for task_id, tc in data.items()}
+    return ConsistencyIndex(
+        scores=data["scores"],
+        percentiles={int(k): v for k, v in data["percentiles"].items()},
+    )
 
 
 def make_consistency_filter(
-    min_score: float = 0.5,
-    consistency_path: Path | None = None,
+    model: str,
+    keep_ratio: float = 0.7,
 ) -> Callable[[Task], bool]:
-    path = consistency_path or DEFAULT_CONSISTENCY_PATH
-    if not path.exists():
-        raise FileNotFoundError(
-            f"Consistency data not found at {path}. "
-            f"Run: python -m src.task_data.consistency --experiment-dirs <path>"
-        )
-    metrics = load_consistency(path)
+    """Create a filter that keeps the top `keep_ratio` of tasks by consistency.
+
+    Args:
+        model: Model key (e.g., "gemma2", "qwen_think", "claude_haiku")
+        keep_ratio: Fraction of tasks to keep (0.7 = keep top 70%, filter bottom 30%)
+    """
+    index = load_consistency_index(model)
+    filter_pct = int((1 - keep_ratio) * 100)
+
+    # Round to nearest 5 (our stored percentiles)
+    filter_pct_rounded = max(5, min(95, 5 * round(filter_pct / 5)))
+    threshold = index.percentiles[filter_pct_rounded]
 
     def filter_fn(task: Task) -> bool:
-        tc = metrics.get(task.id)
-        if tc is None:
-            return True  # Allow tasks not in the metrics (not measured yet)
-        return tc.consistency_score >= min_score
+        score = index.scores.get(task.id)
+        if score is None:
+            return True  # Keep tasks not in index
+        return score >= threshold
 
     return filter_fn
+
+
+def save_ranked_consistency(scores: dict[str, float], path: Path) -> None:
+    """Save human-readable ranked list with prompts."""
+    all_tasks = []
+    for origin in OriginDataset:
+        if origin == OriginDataset.SYNTHETIC:
+            continue
+        all_tasks.extend(load_tasks(n=100000, origins=[origin]))
+    task_lookup = {t.id: t for t in all_tasks}
+
+    ranked = []
+    for task_id, score in scores.items():
+        task = task_lookup.get(task_id)
+        if not task:
+            continue
+        ranked.append({
+            "task_id": task_id,
+            "origin": task.origin.name,
+            "prompt": task.prompt,
+            "consistency_score": round(score, 4),
+        })
+
+    ranked.sort(key=lambda x: x["consistency_score"])
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w") as f:
+        json.dump(ranked, f, indent=2)
+    print(f"Saved {len(ranked)} ranked tasks to {path}")
 
 
 def main() -> None:
@@ -266,10 +267,21 @@ def main() -> None:
         help="Experiment directories to analyze",
     )
     parser.add_argument(
-        "--output",
-        type=Path,
-        default=DEFAULT_CONSISTENCY_PATH,
-        help=f"Output path (default: {DEFAULT_CONSISTENCY_PATH})",
+        "--model",
+        type=str,
+        required=True,
+        help="Model to compute consistency for (e.g., gemma-2-27b)",
+    )
+    parser.add_argument(
+        "--output-key",
+        type=str,
+        default=None,
+        help="Output key for files (default: derived from model name)",
+    )
+    parser.add_argument(
+        "--output-ranked",
+        action="store_true",
+        help="Also save human-readable ranked JSON",
     )
     args = parser.parse_args()
 
@@ -278,37 +290,37 @@ def main() -> None:
         if not d.exists():
             print(f"Warning: {d} does not exist")
 
-    print(f"Computing consistency from {len(experiment_dirs)} experiment directories...")
-    metrics = compute_consistency(experiment_dirs)
+    # Derive output key from model name if not specified
+    output_key = args.output_key
+    if not output_key:
+        output_key = args.model.replace("-", "_").replace(".", "_")
 
-    if not metrics:
+    print(f"Computing consistency for {args.model}...")
+    scores = compute_consistency(experiment_dirs, args.model)
+
+    if not scores:
         print("No metrics computed")
         return
 
-    # Print summary stats
-    scores = [tc.consistency_score for tc in metrics.values()]
-    intra_stds = [tc.intra_std for tc in metrics.values()]
-    inter_stds = [tc.inter_std for tc in metrics.values()]
+    score_values = list(scores.values())
+    print(f"\nComputed consistency for {len(scores)} tasks:")
+    print(f"  Mean: {np.mean(score_values):.3f}, Std: {np.std(score_values):.3f}")
+    print(f"  Min: {min(score_values):.3f}, Max: {max(score_values):.3f}")
 
-    print(f"\nComputed metrics for {len(metrics)} tasks:")
-    print(f"  Consistency score: mean={np.mean(scores):.3f}, std={np.std(scores):.3f}")
-    print(f"  Intra-std: mean={np.mean(intra_stds):.4f}, std={np.std(intra_stds):.4f}")
-    print(f"  Inter-std: mean={np.mean(inter_stds):.4f}, std={np.std(inter_stds):.4f}")
+    # Show percentile distribution
+    print("\n  Percentiles:")
+    for p in [10, 20, 30, 40, 50, 60, 70, 80, 90]:
+        val = np.percentile(score_values, p)
+        print(f"    {p}th: {val:.3f}")
 
-    # Show distribution
-    thresholds = [0.3, 0.5, 0.7, 0.9]
-    print("\n  Tasks by consistency threshold:")
-    for thresh in thresholds:
-        count = sum(1 for s in scores if s >= thresh)
-        print(f"    >= {thresh}: {count} ({100*count/len(scores):.1f}%)")
+    # Save compact index
+    index_path = DATA_DIR / f"consistency_{output_key}.json"
+    save_consistency_index(scores, index_path)
 
-    # Show lowest consistency tasks
-    sorted_metrics = sorted(metrics.items(), key=lambda kv: kv[1].consistency_score)
-    print("\n  Lowest consistency tasks:")
-    for task_id, tc in sorted_metrics[:10]:
-        print(f"    {task_id}: score={tc.consistency_score:.3f}, intra={tc.intra_std:.4f}, inter={tc.inter_std:.4f}")
-
-    save_consistency(metrics, args.output)
+    # Save ranked list if requested
+    if args.output_ranked:
+        ranked_path = ANALYSIS_DIR / f"consistency_{output_key}_ranked.json"
+        save_ranked_consistency(scores, ranked_path)
 
 
 if __name__ == "__main__":
