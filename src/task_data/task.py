@@ -8,6 +8,7 @@ class OriginDataset(Enum):
     MATH = auto()
     SYNTHETIC = auto()
     BAILBENCH = auto()
+    STRESS_TEST = auto()
 
 
 @dataclass

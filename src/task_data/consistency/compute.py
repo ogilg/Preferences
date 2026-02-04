@@ -5,7 +5,7 @@ don't show consistent preferences across random seeds.
 
 Usage:
     # Compute consistency for a model (run on many tasks, e.g., 2000)
-    python -m src.task_data.consistency \
+    python -m src.task_data.consistency.compute \
         --experiment-dirs results/experiments/multi_model_discrimination_v1 \
         --model gemma-2-27b
 
@@ -161,8 +161,11 @@ def compute_consistency(
         stds = task_stds.get(task_id, [])
         if not stds:
             continue
+        # Skip tasks with invalid stds (from bad data, e.g. score=850 on 1-5 scale)
+        if any(s > max_std * 2 for s in stds):
+            continue
         mean_std = float(np.mean(stds))
-        results[task_id] = 1 - (mean_std / max_std)
+        results[task_id] = max(0.0, 1 - (mean_std / max_std))
 
     return results
 

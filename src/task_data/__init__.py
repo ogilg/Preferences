@@ -6,11 +6,15 @@ ORIGIN_NAME_MAP = {
     "alpaca": OriginDataset.ALPACA,
     "math": OriginDataset.MATH,
     "bailbench": OriginDataset.BAILBENCH,
+    "stress_test": OriginDataset.STRESS_TEST,
 }
 
 
 def parse_origins(names: list[str]) -> list[OriginDataset]:
     return [ORIGIN_NAME_MAP[name] for name in names]
+
+
+# Re-export consistency for backwards compatibility
 from .consistency import (
     ConsistencyIndex,
     compute_consistency,

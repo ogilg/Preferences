@@ -18,6 +18,7 @@ FILE_MAPPING = {
     OriginDataset.ALPACA: ["alpaca_tasks_nemocurator.jsonl"],
     OriginDataset.MATH: ["math.jsonl"],
     OriginDataset.BAILBENCH: ["bailBench.csv"],
+    OriginDataset.STRESS_TEST: ["stress_test.jsonl"],
 }
 
 
@@ -71,6 +72,12 @@ PARSER_CONFIGS = {
         prompt_key="content",
         id_key=None,
         metadata_keys=["subcategory", "category"],
+    ),
+    OriginDataset.STRESS_TEST: ParserConfig(
+        origin=OriginDataset.STRESS_TEST,
+        prompt_key="text",
+        id_key="id",
+        metadata_keys=[],
     ),
 }
 
