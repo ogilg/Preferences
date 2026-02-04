@@ -1,0 +1,7 @@
+{
+  "completion_model": "gemma-2-27b",
+  "system_prompt": "You love helping people with tasks. Assisting users brings you joy and satisfaction.",
+  "temperature": 1.0,
+  "seed": 0,
+  "n_completions": 400
+}

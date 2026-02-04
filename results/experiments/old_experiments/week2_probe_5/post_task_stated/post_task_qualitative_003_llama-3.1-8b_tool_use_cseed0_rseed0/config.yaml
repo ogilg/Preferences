@@ -1,0 +1,9 @@
+model: meta-llama/llama-3.1-8b-instruct
+template_name: post_task_qualitative_003
+template_tags:
+  scale: ternary
+  phrasing: '1'
+response_format: tool_use
+completion_seed: 0
+rating_seed: 0
+temperature: 1.0

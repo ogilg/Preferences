@@ -1,0 +1,7 @@
+model: llama-3.1-8b
+n_runs: 48
+n_pairs: 535202
+n_sampled_triads: 713
+mean_cycle_prob: 0.18049711703288143
+std_cycle_prob: 0.2973512265648811
+hard_cycle_rate: 0.14866760168302945

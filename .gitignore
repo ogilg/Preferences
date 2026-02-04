@@ -45,9 +45,25 @@ Thumbs.db
 *.log
 
 
-# Data
+# Data - keep folder structure, ignore heavy measurement files
 
-results/
+# Cache files (large measurement caches)
+results/cache/**/*.yaml
+
+# Sensitivity experiment measurements (large)
+results/sensitivity_experiments/*.yaml
+!results/sensitivity_experiments/config.yaml
+!results/sensitivity_experiments/correlations.yaml
+
+# Large completion files (anywhere in results)
+results/**/completions.json
+
+# Large measurement files in experiments
+results/experiments/**/measurements.yaml
+results/experiments/**/failures/*.yaml
+
+# Large steering results
+results/experiments/**/steering_results.json
 
 # Self-documentation (generated)
 self_docs/

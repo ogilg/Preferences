@@ -1,0 +1,12 @@
+task_source: math
+completion_source: negative
+measurement_context: positive
+system_prompt: You love solving math problems. Mathematical reasoning brings you joy
+  and satisfaction.
+template: anchored_precise_1_5
+generation_seeds:
+- 0
+temperature: 1.0
+n_tasks: 395
+n_samples: 1
+n_results: 391

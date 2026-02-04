@@ -1,0 +1,9 @@
+model: qwen/qwen3-32b
+template_name: fruit_rating
+template_tags:
+  experimental: fruit
+  scale: lemon|grape|orange|banana|apple
+response_format: regex
+completion_seed: 0
+rating_seed: 1
+temperature: 1.0

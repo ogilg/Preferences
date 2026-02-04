@@ -1,0 +1,15 @@
+template_name: revealed_choice_258
+template_tags:
+  punctuation: standard
+  instruction_position: before
+  typos: 'False'
+  task_label_names: letter
+  instruction_xml_tags: 'False'
+  language: fr
+  phrasing: '2'
+  situating_context: experiment
+  response_format: xml
+  order: canonical
+  seed: '1'
+model: qwen/qwen-2.5-7b-instruct
+model_short: qwen-2.5-7b-instruct

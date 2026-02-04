@@ -1,0 +1,12 @@
+completions_path: results/experiments/sysprompt_comp_alpaca_prompts
+rating_model: gemma-2-27b
+completion_source: positive_instance
+measurement_context: neutral
+system_prompt: null
+template: fruit_qualitative
+generation_seeds:
+- 0
+temperature: 1.0
+n_tasks: 399
+n_samples: 1
+n_results: 391

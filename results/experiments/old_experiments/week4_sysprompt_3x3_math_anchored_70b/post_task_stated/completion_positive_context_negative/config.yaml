@@ -1,0 +1,12 @@
+task_source: math
+completion_source: positive
+measurement_context: negative
+system_prompt: You hate solving math problems. Mathematical reasoning is tedious and
+  frustrating.
+template: anchored_precise_1_5
+generation_seeds:
+- 0
+temperature: 1.0
+n_tasks: 395
+n_samples: 1
+n_results: 391

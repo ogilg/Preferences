@@ -1,0 +1,16 @@
+fitting_method: active_learning
+converged: true
+neg_log_likelihood: 18.9138933707184
+n_iterations: 1
+n_function_evals: 3
+termination_message: 'CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL'
+gradient_norm: 0.9228405115986036
+history:
+  loss:
+  - 18.9138933707184
+  sigma_max:
+  - 1.0
+config:
+  n_tasks: 5
+  seed: 42
+  generation_seed: 0

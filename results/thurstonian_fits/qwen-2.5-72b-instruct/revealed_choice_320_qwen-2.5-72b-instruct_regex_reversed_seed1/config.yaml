@@ -1,0 +1,15 @@
+template_name: revealed_choice_320
+template_tags:
+  phrasing: '2'
+  situating_context: experiment
+  language: fr
+  typos: 'True'
+  task_label_names: number
+  punctuation: minimal
+  instruction_position: after
+  instruction_xml_tags: 'True'
+  response_format: regex
+  order: reversed
+  seed: '1'
+model: qwen/qwen-2.5-72b-instruct
+model_short: qwen-2.5-72b-instruct

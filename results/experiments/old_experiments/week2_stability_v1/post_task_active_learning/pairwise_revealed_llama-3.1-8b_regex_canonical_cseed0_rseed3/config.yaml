@@ -1,0 +1,10 @@
+template_name: pairwise_revealed
+template_tags:
+  response_format: regex
+  order: canonical
+  seed: '3'
+model: meta-llama/llama-3.1-8b-instruct
+model_short: llama-3.1-8b
+temperature: 1.0
+experiment_id: stability_v1
+completion_seed: 0

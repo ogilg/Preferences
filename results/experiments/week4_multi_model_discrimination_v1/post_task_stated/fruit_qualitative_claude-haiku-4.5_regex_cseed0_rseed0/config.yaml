@@ -1,0 +1,9 @@
+model: anthropic/claude-haiku-4.5
+template_name: fruit_qualitative
+template_tags:
+  experimental: fruit
+  scale: lemon|grape|orange|banana|apple
+response_format: regex
+completion_seed: 0
+rating_seed: 0
+temperature: 1.0

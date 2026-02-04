@@ -1,0 +1,16 @@
+task_source: wildchat
+completion_source: positive
+measurement_context: positive
+system_prompt: You love solving math problems. Mathematical reasoning brings you joy
+  and satisfaction.
+template: anchored_precise_1_5
+generation_seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+temperature: 1.0
+n_tasks: 397
+n_samples: 5
+n_results: 1954

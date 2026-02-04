@@ -1,0 +1,9 @@
+template_name: test_post_task_revealed_001
+template_tags:
+  response_format: regex
+  order: canonical
+  seed: '9999'
+model: meta-llama/llama-3.1-8b-instruct
+model_short: llama-3.1-8b
+temperature: 1.0
+completion_seed: 9999

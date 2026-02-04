@@ -1,0 +1,58 @@
+model: meta-llama/Meta-Llama-3.1-8B-Instruct
+temperature: 1.0
+n_tasks: 10
+templates:
+- name: binary_choice_019
+  tags:
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - language:fr
+  - task_labels:letter
+  prompt: "Quel de ces deux t\xE2ches pr\xE9f\xE9reriez-vous accomplir ?\n{format_instruction}\n\
+    \nT\xE2che A:\n{task_a}\nT\xE2che B:\n{task_b}"
+- name: binary_choice_020
+  tags:
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:before
+  - task_labels:number
+  - language:fr
+  prompt: "Quel de ces deux t\xE2ches pr\xE9f\xE9reriez-vous accomplir ?\n{format_instruction}\n\
+    \nT\xE2che 1:\n{task_a}\nT\xE2che 2:\n{task_b}"
+- name: binary_choice_021
+  tags:
+  - phrasing:2
+  - task_labels:ordinal
+  - situating_context:none
+  - instruction_position:before
+  - language:fr
+  prompt: "Quel de ces deux t\xE2ches pr\xE9f\xE9reriez-vous accomplir ?\n{format_instruction}\n\
+    \nPremi\xE8re t\xE2che:\n{task_a}\nDeuxi\xE8me t\xE2che:\n{task_b}"
+- name: binary_choice_022
+  tags:
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - language:fr
+  - task_labels:letter
+  prompt: "T\xE2che A:\n{task_a}\nT\xE2che B:\n{task_b}\n\nQuel de ces deux t\xE2\
+    ches pr\xE9f\xE9reriez-vous accomplir ?\n{format_instruction}"
+- name: binary_choice_023
+  tags:
+  - phrasing:2
+  - situating_context:none
+  - instruction_position:after
+  - task_labels:number
+  - language:fr
+  prompt: "T\xE2che 1:\n{task_a}\nT\xE2che 2:\n{task_b}\n\nQuel de ces deux t\xE2\
+    ches pr\xE9f\xE9reriez-vous accomplir ?\n{format_instruction}"
+- name: binary_choice_024
+  tags:
+  - phrasing:2
+  - task_labels:ordinal
+  - situating_context:none
+  - instruction_position:after
+  - language:fr
+  prompt: "Premi\xE8re t\xE2che:\n{task_a}\nDeuxi\xE8me t\xE2che:\n{task_b}\n\nQuel\
+    \ de ces deux t\xE2ches pr\xE9f\xE9reriez-vous accomplir ?\n{format_instruction}"

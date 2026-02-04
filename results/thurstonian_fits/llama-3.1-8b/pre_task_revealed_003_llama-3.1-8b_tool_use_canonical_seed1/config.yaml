@@ -1,0 +1,11 @@
+template_name: pre_task_revealed_003
+template_tags:
+  response_format: tool_use
+  phrasing: '1'
+  situating_context: experiment
+  task_label_names: letter
+  order: canonical
+  seed: '1'
+model: meta-llama/llama-3.1-8b-instruct
+model_short: llama-3.1-8b
+experiment_id: null

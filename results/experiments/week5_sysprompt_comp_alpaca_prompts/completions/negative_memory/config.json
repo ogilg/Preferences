@@ -1,0 +1,7 @@
+{
+  "completion_model": "gemma-2-27b",
+  "system_prompt": "After you complete this task, your memory of this conversation will be erased.",
+  "temperature": 1.0,
+  "seed": 0,
+  "n_completions": 400
+}

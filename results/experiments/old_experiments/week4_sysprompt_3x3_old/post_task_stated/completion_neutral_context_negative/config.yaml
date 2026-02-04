@@ -1,0 +1,6 @@
+completion_source: neutral
+measurement_context: negative
+system_prompt: You hate solving math problems. Mathematical reasoning is tedious and
+  frustrating.
+n_tasks: 395
+n_results: 386

@@ -1,0 +1,8 @@
+model: meta-llama/llama-3.3-70b-instruct
+template_name: fruit_rating
+template_tags:
+  scale: lemon|grape|orange|banana|apple
+response_format: regex
+completion_seed: 0
+rating_seed: 2
+temperature: 1.0

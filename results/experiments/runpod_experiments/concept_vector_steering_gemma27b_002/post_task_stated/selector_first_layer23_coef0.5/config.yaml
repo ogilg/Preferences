@@ -1,0 +1,30 @@
+concept_vectors_path: concept_vectors/math_preference_gemma27b
+steering_mode: autoregressive
+template: anchored_precise_1_5
+generation_seeds:
+- 0
+temperature: 1.0
+max_new_tokens: 8
+normalize_vectors: false
+n_tasks: 500
+layers_resolved:
+- 23
+coefficients:
+- -2.0
+- -1.0
+- -0.5
+- 0.0
+- 0.5
+- 1.0
+- 2.0
+selectors:
+- last
+- mean
+- first
+condition: selector_first_layer23_coef0.5
+selector: first
+layer: 23
+coefficient: 0.5
+n_results: 500
+successes: 500
+failures: 0

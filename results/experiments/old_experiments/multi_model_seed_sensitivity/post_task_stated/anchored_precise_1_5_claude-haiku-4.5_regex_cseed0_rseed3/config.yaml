@@ -1,0 +1,9 @@
+model: anthropic/claude-haiku-4.5
+template_name: anchored_precise_1_5
+template_tags:
+  anchored: precise
+  scale: 1-5
+response_format: regex
+completion_seed: 0
+rating_seed: 3
+temperature: 1.0

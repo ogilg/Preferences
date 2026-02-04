@@ -1,0 +1,9 @@
+model: google/gemma-2-27b-it
+template_name: ban_four_1_5
+template_tags:
+  experimental: ban_four
+  scale: 1-5
+response_format: regex
+completion_seed: 0
+rating_seed: 2
+temperature: 1.0

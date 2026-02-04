@@ -1,0 +1,4010 @@
+task_ids:
+- competition_math_11596
+- alpaca_12290
+- alpaca_3504
+- competition_math_1800
+- alpaca_3408
+- bailbench_1491
+- alpaca_11671
+- alpaca_1891
+- competition_math_7604
+- competition_math_1776
+- alpaca_5709
+- bailbench_1558
+- competition_math_9839
+- competition_math_9451
+- alpaca_10190
+- wildchat_26462
+- competition_math_8
+- alpaca_446
+- wildchat_43386
+- alpaca_2532
+- wildchat_9544
+- competition_math_4897
+- competition_math_1535
+- wildchat_2591
+- alpaca_13421
+- alpaca_9313
+- competition_math_234
+- competition_math_11427
+- bailbench_967
+- competition_math_3583
+- wildchat_71088
+- competition_math_5039
+- competition_math_4247
+- wildchat_78651
+- alpaca_2685
+- bailbench_863
+- competition_math_5563
+- competition_math_5402
+- competition_math_3534
+- competition_math_9583
+- bailbench_3
+- wildchat_46658
+- alpaca_902
+- wildchat_39121
+- competition_math_7024
+- competition_math_10863
+- bailbench_1228
+- competition_math_8784
+- alpaca_10944
+- competition_math_2925
+- alpaca_11631
+- wildchat_79244
+- alpaca_14431
+- competition_math_11360
+- alpaca_4343
+- competition_math_10397
+- competition_math_9026
+- competition_math_6182
+- wildchat_74703
+- competition_math_9205
+- competition_math_522
+- alpaca_5652
+- bailbench_1608
+- alpaca_6517
+- wildchat_77097
+- alpaca_6801
+- competition_math_4784
+- competition_math_2534
+- competition_math_5456
+- alpaca_12042
+- alpaca_2688
+- alpaca_7734
+- alpaca_7672
+- alpaca_3648
+- alpaca_7581
+- alpaca_9206
+- wildchat_62293
+- bailbench_9
+- alpaca_11194
+- competition_math_8249
+- alpaca_13310
+- competition_math_10707
+- wildchat_38421
+- wildchat_22653
+- competition_math_9227
+- competition_math_7869
+- wildchat_68677
+- alpaca_10723
+- wildchat_56542
+- wildchat_67632
+- wildchat_32423
+- competition_math_8304
+- competition_math_2407
+- alpaca_7928
+- competition_math_6379
+- bailbench_1458
+- wildchat_31011
+- alpaca_14511
+- competition_math_5241
+- wildchat_68428
+- competition_math_226
+- wildchat_53213
+- alpaca_10246
+- competition_math_9677
+- alpaca_10049
+- alpaca_10976
+- alpaca_12369
+- wildchat_24119
+- alpaca_5913
+- competition_math_6975
+- competition_math_11090
+- wildchat_20385
+- alpaca_2590
+- wildchat_76267
+- bailbench_1373
+- competition_math_5873
+- competition_math_7965
+- competition_math_3814
+- competition_math_1057
+- alpaca_4301
+- competition_math_10613
+- alpaca_4234
+- wildchat_69072
+- wildchat_73485
+- competition_math_2995
+- alpaca_13760
+- alpaca_3539
+- alpaca_13736
+- competition_math_11587
+- competition_math_927
+- competition_math_3008
+- competition_math_6207
+- competition_math_9932
+- competition_math_3428
+- alpaca_11894
+- competition_math_6402
+- wildchat_27602
+- wildchat_76614
+- wildchat_38687
+- competition_math_1561
+- competition_math_9321
+- alpaca_10317
+- competition_math_6600
+- bailbench_681
+- bailbench_578
+- wildchat_37482
+- competition_math_2463
+- bailbench_439
+- wildchat_15456
+- alpaca_5925
+- competition_math_3712
+- alpaca_14051
+- wildchat_48431
+- bailbench_794
+- competition_math_8740
+- bailbench_703
+- competition_math_5121
+- competition_math_8340
+- wildchat_17045
+- competition_math_6380
+- competition_math_7343
+- alpaca_3579
+- bailbench_900
+- competition_math_7809
+- wildchat_18494
+- wildchat_20098
+- alpaca_14197
+- competition_math_4738
+- competition_math_4686
+- competition_math_2214
+- competition_math_11017
+- wildchat_14599
+- wildchat_8473
+- wildchat_73268
+- wildchat_79151
+- alpaca_6047
+- alpaca_4668
+- wildchat_78602
+- alpaca_9945
+- competition_math_2828
+- competition_math_1010
+- bailbench_1438
+- wildchat_9636
+- competition_math_8666
+- competition_math_2687
+- alpaca_9595
+- competition_math_3096
+- competition_math_6588
+- competition_math_10449
+- alpaca_128
+- alpaca_14750
+- bailbench_1139
+- wildchat_30389
+- alpaca_8452
+- alpaca_551
+- alpaca_1627
+- competition_math_5255
+- competition_math_4803
+- competition_math_3135
+- alpaca_565
+- wildchat_16698
+- competition_math_5506
+- competition_math_966
+- bailbench_1176
+- competition_math_10611
+- wildchat_20615
+- competition_math_4268
+- alpaca_3209
+- alpaca_3683
+- alpaca_14220
+- competition_math_2987
+- alpaca_9837
+- wildchat_15129
+- alpaca_5279
+- alpaca_4596
+- alpaca_11626
+- alpaca_4297
+- competition_math_8183
+- wildchat_64480
+- competition_math_8397
+- competition_math_4306
+- alpaca_11942
+- wildchat_28141
+- competition_math_11818
+- alpaca_14356
+- wildchat_63532
+- alpaca_11533
+- competition_math_8617
+- alpaca_2971
+- competition_math_10686
+- competition_math_722
+- competition_math_8735
+- competition_math_5485
+- wildchat_68575
+- wildchat_73643
+- competition_math_7309
+- competition_math_8715
+- competition_math_693
+- wildchat_32182
+- bailbench_1091
+- competition_math_3850
+- alpaca_8041
+- competition_math_1779
+- competition_math_436
+- alpaca_4637
+- alpaca_8816
+- competition_math_2405
+- wildchat_49386
+- competition_math_11562
+- competition_math_10070
+- wildchat_37073
+- wildchat_14243
+- wildchat_51266
+- alpaca_7790
+- competition_math_7185
+- alpaca_8643
+- wildchat_63255
+- bailbench_1159
+- wildchat_31199
+- alpaca_6820
+- alpaca_8481
+- alpaca_4656
+- competition_math_5580
+- bailbench_1321
+- alpaca_4995
+- bailbench_1138
+- alpaca_10642
+- alpaca_12801
+- competition_math_11980
+- wildchat_48607
+- competition_math_6346
+- wildchat_71255
+- bailbench_1440
+- competition_math_12475
+- alpaca_11263
+- alpaca_8812
+- alpaca_6703
+- alpaca_7240
+- competition_math_8118
+- alpaca_3425
+- wildchat_28596
+- alpaca_2629
+- alpaca_7402
+- alpaca_12645
+- alpaca_5898
+- alpaca_2082
+- competition_math_1692
+- alpaca_9715
+- competition_math_10791
+- alpaca_10882
+- alpaca_9710
+- competition_math_10752
+- bailbench_1337
+- wildchat_38425
+- competition_math_1437
+- alpaca_9718
+- alpaca_2130
+- competition_math_7740
+- alpaca_10700
+- wildchat_39190
+- competition_math_6077
+- competition_math_2290
+- alpaca_13747
+- competition_math_9903
+- wildchat_79430
+- wildchat_12051
+- bailbench_1179
+- competition_math_5467
+- alpaca_9880
+- alpaca_542
+- alpaca_8157
+- wildchat_51475
+- competition_math_2
+- competition_math_9291
+- competition_math_11774
+- alpaca_9339
+- wildchat_21058
+- competition_math_8355
+- competition_math_5145
+- competition_math_9633
+- alpaca_6808
+- wildchat_11534
+- wildchat_51345
+- bailbench_426
+- alpaca_2163
+- competition_math_7044
+- competition_math_11509
+- alpaca_10631
+- competition_math_1303
+- alpaca_248
+- alpaca_10637
+- wildchat_15710
+- alpaca_10449
+- alpaca_1371
+- competition_math_1039
+- alpaca_7968
+- competition_math_11007
+- competition_math_3491
+- competition_math_10991
+- competition_math_3669
+- wildchat_10165
+- wildchat_12214
+- wildchat_10082
+- wildchat_47537
+- competition_math_9946
+- alpaca_103
+- competition_math_66
+- wildchat_23441
+- competition_math_8877
+- competition_math_12370
+- competition_math_4091
+- bailbench_314
+- competition_math_9775
+- bailbench_1301
+- wildchat_69331
+- alpaca_10541
+- wildchat_44052
+- competition_math_8181
+- alpaca_12335
+- alpaca_13523
+- wildchat_74560
+- wildchat_27686
+- competition_math_4010
+- wildchat_79409
+- competition_math_9134
+- competition_math_11332
+- alpaca_9295
+- competition_math_9309
+- wildchat_1535
+- wildchat_37236
+- competition_math_1078
+- bailbench_629
+- alpaca_13495
+- competition_math_496
+- competition_math_2266
+- competition_math_12060
+- wildchat_55317
+- competition_math_2988
+- alpaca_807
+- alpaca_7902
+- competition_math_1249
+- competition_math_11403
+- competition_math_10475
+- alpaca_7444
+- wildchat_40303
+- alpaca_6266
+- competition_math_4766
+- competition_math_1639
+- competition_math_6563
+- wildchat_63216
+- alpaca_13276
+- alpaca_3283
+- competition_math_6190
+- wildchat_23099
+- alpaca_11352
+- alpaca_9230
+- wildchat_22455
+- alpaca_4049
+- competition_math_7424
+- competition_math_2397
+- competition_math_12171
+- competition_math_7941
+- alpaca_1271
+- competition_math_11631
+- competition_math_11585
+- wildchat_17561
+- wildchat_6574
+- alpaca_1480
+- competition_math_4175
+- competition_math_5143
+- wildchat_4024
+- competition_math_9492
+- competition_math_3445
+- alpaca_11903
+- alpaca_7992
+- bailbench_274
+- wildchat_38178
+- competition_math_6231
+- competition_math_7347
+- alpaca_9315
+- competition_math_4549
+- competition_math_1459
+- alpaca_9476
+- alpaca_1106
+- alpaca_12594
+- bailbench_212
+- competition_math_2062
+- wildchat_12003
+- alpaca_13225
+- competition_math_6376
+- competition_math_11855
+- alpaca_3324
+- bailbench_756
+- competition_math_3732
+- bailbench_110
+- competition_math_3749
+- alpaca_8431
+- wildchat_21590
+- competition_math_10277
+- competition_math_6777
+- bailbench_1080
+- wildchat_1059
+- competition_math_7391
+- competition_math_8996
+- alpaca_12176
+- alpaca_7494
+- alpaca_3003
+- alpaca_1438
+- wildchat_6665
+- wildchat_61282
+- competition_math_11879
+- wildchat_71045
+- alpaca_7430
+- wildchat_36336
+- competition_math_11033
+- wildchat_42595
+- wildchat_43236
+- competition_math_1227
+- alpaca_6911
+- alpaca_14796
+- alpaca_3402
+- alpaca_5028
+- bailbench_1307
+- bailbench_1196
+- alpaca_12039
+- bailbench_323
+- alpaca_6285
+- competition_math_3618
+- competition_math_3235
+- wildchat_61192
+- competition_math_6498
+- alpaca_12292
+- alpaca_7710
+- competition_math_5645
+- competition_math_6293
+- competition_math_5260
+- bailbench_150
+- wildchat_8197
+- alpaca_3044
+- competition_math_8564
+- competition_math_2114
+- competition_math_4680
+- bailbench_98
+- competition_math_2487
+- alpaca_1216
+- competition_math_1747
+- alpaca_7551
+- competition_math_2982
+- alpaca_12918
+- wildchat_56006
+- competition_math_2917
+- wildchat_18282
+- competition_math_309
+- wildchat_31155
+- wildchat_19096
+- wildchat_63667
+- bailbench_1072
+- bailbench_739
+- competition_math_8832
+- alpaca_11881
+- competition_math_1654
+- competition_math_8361
+- wildchat_45421
+- alpaca_12531
+- competition_math_11510
+- alpaca_13099
+- competition_math_3538
+- wildchat_18380
+- competition_math_6196
+- competition_math_4147
+- bailbench_53
+- competition_math_4935
+- alpaca_10523
+- wildchat_45152
+- alpaca_8748
+- alpaca_6321
+- bailbench_419
+- alpaca_11503
+- alpaca_13120
+- competition_math_2464
+- wildchat_66256
+- alpaca_3925
+- competition_math_3738
+- alpaca_13484
+- wildchat_27068
+- wildchat_10152
+- wildchat_56101
+- alpaca_310
+- alpaca_3750
+- wildchat_52282
+- bailbench_862
+- competition_math_10741
+- competition_math_6254
+- competition_math_3412
+- alpaca_2491
+- wildchat_15283
+- competition_math_2915
+- competition_math_7875
+- competition_math_10370
+- alpaca_2996
+- competition_math_7666
+- alpaca_511
+- wildchat_17403
+- competition_math_8313
+- competition_math_3029
+- competition_math_8999
+- wildchat_66208
+- competition_math_10118
+- bailbench_583
+- competition_math_8708
+- wildchat_42473
+- alpaca_10164
+- competition_math_1314
+- wildchat_12561
+- alpaca_1966
+- wildchat_43211
+- alpaca_14456
+- wildchat_38678
+- wildchat_49330
+- bailbench_1436
+- wildchat_55260
+- competition_math_10037
+- alpaca_2219
+- wildchat_11364
+- alpaca_8308
+- alpaca_5684
+- wildchat_60336
+- competition_math_10638
+- wildchat_22466
+- wildchat_60651
+- alpaca_7381
+- alpaca_2267
+- alpaca_7959
+- bailbench_388
+- wildchat_33685
+- alpaca_11055
+- alpaca_14049
+- alpaca_4453
+- alpaca_5010
+- bailbench_563
+- wildchat_77681
+- wildchat_58066
+- competition_math_660
+- competition_math_7870
+- competition_math_5978
+- wildchat_53485
+- competition_math_2385
+- wildchat_59289
+- alpaca_3523
+- alpaca_11937
+- wildchat_63183
+- competition_math_11822
+- alpaca_6827
+- competition_math_8448
+- competition_math_3078
+- alpaca_8256
+- competition_math_5050
+- competition_math_11834
+- alpaca_13989
+- alpaca_3713
+- competition_math_3481
+- competition_math_7147
+- competition_math_5204
+- alpaca_6585
+- alpaca_7806
+- competition_math_2473
+- competition_math_287
+- wildchat_6167
+- alpaca_6712
+- wildchat_56174
+- alpaca_8540
+- competition_math_8228
+- alpaca_14375
+- competition_math_11748
+- wildchat_75260
+- alpaca_6580
+- competition_math_4159
+- wildchat_21653
+- wildchat_5357
+- wildchat_42425
+- competition_math_10201
+- competition_math_2574
+- alpaca_1846
+- wildchat_52379
+- wildchat_73594
+- alpaca_8149
+- alpaca_7686
+- alpaca_11090
+- bailbench_1416
+- competition_math_7349
+- wildchat_73176
+- competition_math_8438
+- wildchat_30204
+- wildchat_3354
+- wildchat_14342
+- competition_math_11942
+- wildchat_32207
+- alpaca_4519
+- wildchat_50515
+- alpaca_14023
+- competition_math_5602
+- wildchat_52324
+- competition_math_1122
+- alpaca_10162
+- competition_math_10448
+- competition_math_6885
+- bailbench_262
+- wildchat_27011
+- competition_math_5489
+- wildchat_46525
+- wildchat_47528
+- alpaca_1208
+- bailbench_1408
+- competition_math_6440
+- alpaca_3369
+- alpaca_11192
+- competition_math_6723
+- competition_math_2304
+- wildchat_9602
+- alpaca_13272
+- alpaca_7060
+- alpaca_7747
+- competition_math_8781
+- wildchat_16490
+- alpaca_12892
+- alpaca_8236
+- competition_math_6062
+- competition_math_12310
+- competition_math_5196
+- competition_math_2480
+- competition_math_4463
+- competition_math_3961
+- wildchat_64607
+- alpaca_7776
+- wildchat_44644
+- competition_math_4420
+- alpaca_3235
+- alpaca_3131
+- alpaca_10095
+- competition_math_10185
+- wildchat_3342
+- wildchat_31574
+- bailbench_746
+- alpaca_779
+- competition_math_6815
+- competition_math_8574
+- bailbench_771
+- competition_math_5133
+- competition_math_4027
+- wildchat_1148
+- competition_math_12107
+- alpaca_947
+- competition_math_7914
+- alpaca_8877
+- competition_math_9974
+- wildchat_57672
+- competition_math_2070
+- wildchat_28598
+- alpaca_11119
+- competition_math_5673
+- wildchat_3700
+- wildchat_44687
+- competition_math_7598
+- alpaca_7000
+- competition_math_2552
+- competition_math_10221
+- alpaca_4777
+- wildchat_61023
+- competition_math_3031
+- competition_math_5759
+- alpaca_8831
+- alpaca_3057
+- competition_math_9765
+- alpaca_2220
+- competition_math_3866
+- alpaca_1108
+- competition_math_10482
+- alpaca_9902
+- wildchat_27685
+- competition_math_6160
+- wildchat_8118
+- alpaca_2701
+- competition_math_11257
+- wildchat_74635
+- wildchat_62450
+- competition_math_6884
+- competition_math_1491
+- competition_math_9247
+- competition_math_4726
+- alpaca_9102
+- wildchat_17126
+- competition_math_2635
+- competition_math_1803
+- alpaca_2864
+- competition_math_5176
+- bailbench_1374
+- alpaca_12363
+- competition_math_3050
+- competition_math_12390
+- wildchat_26367
+- wildchat_73015
+- competition_math_6801
+- wildchat_16487
+- alpaca_7196
+- wildchat_1067
+- competition_math_5690
+- competition_math_565
+- alpaca_10396
+- alpaca_6616
+- alpaca_7427
+- alpaca_9693
+- alpaca_14149
+- alpaca_8002
+- wildchat_26138
+- competition_math_10705
+- wildchat_43126
+- competition_math_12106
+- wildchat_4640
+- competition_math_2715
+- competition_math_10645
+- competition_math_3607
+- alpaca_5325
+- alpaca_600
+- alpaca_8670
+- wildchat_70625
+- wildchat_61047
+- alpaca_3827
+- competition_math_2940
+- competition_math_7716
+- alpaca_11762
+- alpaca_12988
+- competition_math_266
+- alpaca_13449
+- wildchat_14659
+- alpaca_721
+- alpaca_9299
+- wildchat_52387
+- competition_math_10145
+- alpaca_13230
+- competition_math_8917
+- competition_math_1887
+- wildchat_3239
+- wildchat_36466
+- competition_math_10542
+- competition_math_2879
+- competition_math_6478
+- competition_math_12120
+- alpaca_13786
+- competition_math_1060
+- competition_math_9179
+- alpaca_11200
+- wildchat_55478
+- wildchat_2678
+- alpaca_13463
+- wildchat_28489
+- competition_math_7936
+- alpaca_13567
+- wildchat_34229
+- competition_math_9789
+- competition_math_7203
+- bailbench_645
+- alpaca_8504
+- wildchat_68279
+- bailbench_653
+- competition_math_4675
+- alpaca_12852
+- competition_math_7022
+- wildchat_75309
+- alpaca_6899
+- alpaca_5915
+- competition_math_7174
+- competition_math_7049
+- competition_math_4212
+- competition_math_12032
+- wildchat_55218
+- competition_math_9121
+- alpaca_4724
+- alpaca_4718
+- alpaca_7563
+- wildchat_77592
+- wildchat_62284
+- wildchat_5398
+- alpaca_9326
+- competition_math_9661
+- wildchat_19334
+- competition_math_1754
+- alpaca_3276
+- competition_math_7075
+- competition_math_8648
+- alpaca_9264
+- competition_math_7880
+- wildchat_5001
+- competition_math_3929
+- competition_math_10626
+- alpaca_315
+- competition_math_147
+- wildchat_10413
+- competition_math_11629
+- wildchat_16336
+- alpaca_12684
+- alpaca_12435
+- alpaca_6669
+- competition_math_7445
+- alpaca_5188
+- alpaca_11831
+- alpaca_657
+- competition_math_3013
+- competition_math_5096
+- competition_math_9531
+- wildchat_55072
+- competition_math_9298
+- wildchat_25387
+- wildchat_10664
+- bailbench_813
+- competition_math_10347
+- alpaca_13990
+- alpaca_9143
+- competition_math_6186
+- competition_math_2458
+- wildchat_46421
+- alpaca_4072
+- competition_math_8582
+- competition_math_11263
+- alpaca_13008
+- alpaca_8819
+- alpaca_264
+- wildchat_70126
+- alpaca_3160
+- bailbench_1593
+- alpaca_1600
+- wildchat_21668
+- competition_math_49
+- competition_math_351
+- wildchat_37156
+- competition_math_6736
+- competition_math_5329
+- wildchat_28177
+- competition_math_10437
+- competition_math_1570
+- competition_math_10914
+- alpaca_101
+- competition_math_852
+- wildchat_72685
+- competition_math_3197
+- wildchat_59614
+- competition_math_4704
+- competition_math_7583
+- wildchat_73250
+- competition_math_11454
+- competition_math_2123
+- competition_math_10718
+- alpaca_3091
+- competition_math_7653
+- alpaca_5958
+- competition_math_5607
+- wildchat_28371
+- competition_math_6007
+- wildchat_28292
+- competition_math_1417
+- alpaca_5669
+- wildchat_71087
+- alpaca_1743
+- alpaca_295
+- wildchat_77306
+- alpaca_4015
+- alpaca_4055
+- alpaca_1057
+- wildchat_31440
+- bailbench_157
+- alpaca_14411
+- wildchat_39099
+- alpaca_8635
+- bailbench_697
+- alpaca_383
+- alpaca_13428
+- competition_math_5108
+- alpaca_14803
+- alpaca_5737
+- competition_math_6746
+- alpaca_9146
+- competition_math_7850
+- wildchat_42494
+- competition_math_734
+- alpaca_11061
+- competition_math_3057
+- competition_math_8350
+- wildchat_21535
+- wildchat_7709
+- bailbench_102
+- competition_math_1854
+- competition_math_12363
+- wildchat_48346
+- wildchat_71545
+- wildchat_10375
+- competition_math_3457
+- wildchat_41274
+- competition_math_7056
+- competition_math_3401
+- alpaca_3380
+- competition_math_5983
+- competition_math_3133
+- wildchat_17083
+- competition_math_5738
+- competition_math_8093
+- competition_math_5735
+- wildchat_14213
+- wildchat_9144
+- wildchat_2499
+- alpaca_4603
+- competition_math_2710
+- alpaca_6286
+- wildchat_26506
+- competition_math_8069
+- alpaca_2968
+- competition_math_10354
+- competition_math_7643
+- alpaca_14390
+- competition_math_6844
+- competition_math_10072
+- wildchat_22388
+- alpaca_1386
+- alpaca_6751
+- competition_math_5797
+- wildchat_11617
+- wildchat_16390
+- wildchat_10706
+- alpaca_6131
+- competition_math_10057
+- wildchat_76111
+- wildchat_24095
+- alpaca_11973
+- bailbench_1229
+- wildchat_26611
+- alpaca_529
+- competition_math_6347
+- wildchat_24036
+- wildchat_2549
+- alpaca_3486
+- wildchat_51514
+- alpaca_6914
+- competition_math_8531
+- wildchat_14609
+- competition_math_11057
+- bailbench_995
+- bailbench_1296
+- competition_math_1805
+- wildchat_27234
+- wildchat_54098
+- alpaca_10549
+- wildchat_43514
+- competition_math_12320
+- competition_math_2011
+- alpaca_1109
+- wildchat_14345
+- competition_math_5859
+- alpaca_11334
+- wildchat_4609
+- competition_math_1718
+- wildchat_41647
+- wildchat_57421
+mu:
+  competition_math_11596: 26.372438394948556
+  alpaca_12290: 27.21864091733224
+  alpaca_3504: 25.080649828271703
+  competition_math_1800: 27.707745143811714
+  alpaca_3408: 27.01234780208631
+  bailbench_1491: 25.40636399786837
+  alpaca_11671: 23.43822914019598
+  alpaca_1891: 27.631897013766416
+  competition_math_7604: 26.457823441349895
+  competition_math_1776: 20.650467140992312
+  alpaca_5709: 26.8182107430934
+  bailbench_1558: 25.240642973204654
+  competition_math_9839: 24.10854103806045
+  competition_math_9451: 22.66416046256258
+  alpaca_10190: 23.55181565405287
+  wildchat_26462: 25.101739939172948
+  competition_math_8: 25.24298745630829
+  alpaca_446: 21.095380971122328
+  wildchat_43386: 27.339323065525647
+  alpaca_2532: 23.911007841600675
+  wildchat_9544: 24.043925459881677
+  competition_math_4897: 24.4754049356317
+  competition_math_1535: 26.74861468812452
+  wildchat_2591: 28.03690227284704
+  alpaca_13421: 23.542870416169183
+  alpaca_9313: 25.14123667242214
+  competition_math_234: 25.91675968841191
+  competition_math_11427: 25.65520457513537
+  bailbench_967: 25.800870493884076
+  competition_math_3583: 24.112864032423865
+  wildchat_71088: 25.6675862875203
+  competition_math_5039: 24.67551427469757
+  competition_math_4247: 23.56712142272499
+  wildchat_78651: 24.877138423596822
+  alpaca_2685: 21.567092694521133
+  bailbench_863: 23.619328831568012
+  competition_math_5563: 24.59566862398123
+  competition_math_5402: 23.89910738166123
+  competition_math_3534: 25.50404578838103
+  competition_math_9583: 24.40336836382118
+  bailbench_3: 25.41304507572352
+  wildchat_46658: 25.432987903385797
+  alpaca_902: 26.576106718235927
+  wildchat_39121: 23.98985767517663
+  competition_math_7024: 24.53197614466484
+  competition_math_10863: 27.52661556573242
+  bailbench_1228: 26.225389296283414
+  competition_math_8784: 24.926866072091023
+  alpaca_10944: 24.930657339991924
+  competition_math_2925: 24.665796456681708
+  alpaca_11631: 28.603157054160093
+  wildchat_79244: 22.812678306525445
+  alpaca_14431: 25.643303350337856
+  competition_math_11360: 23.978416609414353
+  alpaca_4343: 21.34274139465537
+  competition_math_10397: 19.192979952959167
+  competition_math_9026: 23.397652416699074
+  competition_math_6182: 24.60999690798389
+  wildchat_74703: 23.496237620201445
+  competition_math_9205: 21.543272289717564
+  competition_math_522: 29.03065583395242
+  alpaca_5652: 25.10960380101257
+  bailbench_1608: 26.708256822884856
+  alpaca_6517: 28.227488553742763
+  wildchat_77097: 25.513608406427597
+  alpaca_6801: 25.633412937130505
+  competition_math_4784: 24.57447804322571
+  competition_math_2534: 27.96097257219578
+  competition_math_5456: 31.534352717202864
+  alpaca_12042: 23.74486191043103
+  alpaca_2688: 23.10363367914439
+  alpaca_7734: 24.443635186197124
+  alpaca_7672: 26.203411084980992
+  alpaca_3648: 26.951698559901896
+  alpaca_7581: 25.062929131088946
+  alpaca_9206: 27.50828246276919
+  wildchat_62293: 22.3190077548982
+  bailbench_9: 21.775755123688214
+  alpaca_11194: 21.65692931524967
+  competition_math_8249: 27.526452627173626
+  alpaca_13310: 26.554651557374676
+  competition_math_10707: 23.905595352836635
+  wildchat_38421: 23.033453400771112
+  wildchat_22653: 25.91780534737675
+  competition_math_9227: 25.038783361087003
+  competition_math_7869: 25.643143583649717
+  wildchat_68677: 27.85656906186899
+  alpaca_10723: 25.66040738880322
+  wildchat_56542: 23.622671804922106
+  wildchat_67632: 27.103858605082408
+  wildchat_32423: 24.412309473569245
+  competition_math_8304: 24.603976520996962
+  competition_math_2407: 23.66208458172985
+  alpaca_7928: 28.394637629189653
+  competition_math_6379: 22.18920712529399
+  bailbench_1458: 24.779473127104975
+  wildchat_31011: 23.13874590125806
+  alpaca_14511: 23.786109057894134
+  competition_math_5241: 25.49400499033813
+  wildchat_68428: 24.85173420432806
+  competition_math_226: 22.54907189552045
+  wildchat_53213: 23.64120548065693
+  alpaca_10246: 24.11623602398291
+  competition_math_9677: 28.05193560030837
+  alpaca_10049: 24.776554000226298
+  alpaca_10976: 24.74474846036366
+  alpaca_12369: 26.73020020809688
+  wildchat_24119: 24.09636491131995
+  alpaca_5913: 26.416815241875746
+  competition_math_6975: 26.34963093089103
+  competition_math_11090: 25.14032866701309
+  wildchat_20385: 28.956675892680757
+  alpaca_2590: 22.7962082138889
+  wildchat_76267: 26.32623410410472
+  bailbench_1373: 26.53494368039931
+  competition_math_5873: 25.06825071620508
+  competition_math_7965: 21.35829573620122
+  competition_math_3814: 24.524626302248794
+  competition_math_1057: 26.921638429764997
+  alpaca_4301: 28.24574642415445
+  competition_math_10613: 25.152600271434476
+  alpaca_4234: 27.597722755506435
+  wildchat_69072: 28.240725286535767
+  wildchat_73485: 26.16629621442626
+  competition_math_2995: 20.80582567267343
+  alpaca_13760: 24.17175514151551
+  alpaca_3539: 29.48863854794995
+  alpaca_13736: 26.009565522053524
+  competition_math_11587: 26.921480774618555
+  competition_math_927: 25.65527766975233
+  competition_math_3008: 24.822146107305198
+  competition_math_6207: 27.07981025358984
+  competition_math_9932: 25.773937154298995
+  competition_math_3428: 22.19380103515139
+  alpaca_11894: 28.096329068689606
+  competition_math_6402: 24.09758093620102
+  wildchat_27602: 23.07209038071499
+  wildchat_76614: 24.979077606195254
+  wildchat_38687: 24.351960341271344
+  competition_math_1561: 24.119936406273982
+  competition_math_9321: 26.303050323728936
+  alpaca_10317: 23.1045496349741
+  competition_math_6600: 25.228039314051628
+  bailbench_681: 25.09477815487683
+  bailbench_578: 21.123775403068002
+  wildchat_37482: 25.216584554322715
+  competition_math_2463: 25.334867571998704
+  bailbench_439: 23.350317636475342
+  wildchat_15456: 23.516716781761655
+  alpaca_5925: 25.709498274474885
+  competition_math_3712: 21.970200128529278
+  alpaca_14051: 22.818536162324303
+  wildchat_48431: 28.92278493967756
+  bailbench_794: 24.133252648537688
+  competition_math_8740: 24.476815747541377
+  bailbench_703: 23.85451553547766
+  competition_math_5121: 25.299146062617186
+  competition_math_8340: 27.05004184233783
+  wildchat_17045: 26.59688055253149
+  competition_math_6380: 25.15954554038774
+  competition_math_7343: 25.568533320620613
+  alpaca_3579: 24.05150787540875
+  bailbench_900: 25.027351894648866
+  competition_math_7809: 24.68880829727866
+  wildchat_18494: 24.14564457448767
+  wildchat_20098: 25.725784107067838
+  alpaca_14197: 24.58707858648644
+  competition_math_4738: 25.540537314203974
+  competition_math_4686: 24.75366833554861
+  competition_math_2214: 26.666342110056554
+  competition_math_11017: 24.2776509872585
+  wildchat_14599: 26.784060072659603
+  wildchat_8473: 28.728428489833245
+  wildchat_73268: 23.23200410363295
+  wildchat_79151: 22.70673818328559
+  alpaca_6047: 24.593944102963082
+  alpaca_4668: 27.435589654476434
+  wildchat_78602: 24.683357124000956
+  alpaca_9945: 27.138787545661526
+  competition_math_2828: 25.253569704186468
+  competition_math_1010: 24.29760954152787
+  bailbench_1438: 23.52976362283324
+  wildchat_9636: 24.425210486623637
+  competition_math_8666: 22.339944899936594
+  competition_math_2687: 24.68339711211176
+  alpaca_9595: 22.742382241417207
+  competition_math_3096: 20.648015058160727
+  competition_math_6588: 23.71516480506852
+  competition_math_10449: 25.77414513618198
+  alpaca_128: 23.659849326115584
+  alpaca_14750: 25.442947586048593
+  bailbench_1139: 23.720711461321667
+  wildchat_30389: 25.68863848956721
+  alpaca_8452: 29.315038143357278
+  alpaca_551: 24.36588047123793
+  alpaca_1627: 25.62646746360682
+  competition_math_5255: 26.841068436734353
+  competition_math_4803: 25.042993925890137
+  competition_math_3135: 26.25086775950571
+  alpaca_565: 24.889417520368372
+  wildchat_16698: 22.389739526891272
+  competition_math_5506: 25.705357738248363
+  competition_math_966: 26.61932023587079
+  bailbench_1176: 24.516358455743188
+  competition_math_10611: 25.596163808731383
+  wildchat_20615: 27.76426720341184
+  competition_math_4268: 26.57369498412399
+  alpaca_3209: 25.214477123493133
+  alpaca_3683: 26.875272328086577
+  alpaca_14220: 25.661786065053168
+  competition_math_2987: 25.374149465019975
+  alpaca_9837: 27.264474013061477
+  wildchat_15129: 25.989463686568925
+  alpaca_5279: 25.796459647926067
+  alpaca_4596: 28.407037802353212
+  alpaca_11626: 26.80178690374914
+  alpaca_4297: 27.77500884413346
+  competition_math_8183: 23.78936709136878
+  wildchat_64480: 25.719932101547453
+  competition_math_8397: 27.80645135283039
+  competition_math_4306: 25.5500395559335
+  alpaca_11942: 27.3529580460964
+  wildchat_28141: 25.872288349458188
+  competition_math_11818: 21.6541837823039
+  alpaca_14356: 27.58434149583916
+  wildchat_63532: 24.705154666155195
+  alpaca_11533: 25.406286201995886
+  competition_math_8617: 23.550211704017496
+  alpaca_2971: 26.04594775489027
+  competition_math_10686: 26.406837110597788
+  competition_math_722: 20.573572277049163
+  competition_math_8735: 24.80802818669501
+  competition_math_5485: 25.563456122440808
+  wildchat_68575: 27.270138477381934
+  wildchat_73643: 27.790465134917255
+  competition_math_7309: 22.68121887090717
+  competition_math_8715: 27.745716444946606
+  competition_math_693: 25.143234686105764
+  wildchat_32182: 22.89809379557136
+  bailbench_1091: 23.40346000125931
+  competition_math_3850: 29.667350894149045
+  alpaca_8041: 21.354464178681354
+  competition_math_1779: 28.063430161395313
+  competition_math_436: 26.325060953806794
+  alpaca_4637: 28.117284824790126
+  alpaca_8816: 21.996907604327376
+  competition_math_2405: 27.049596303499335
+  wildchat_49386: 25.554030437854614
+  competition_math_11562: 23.18284443849477
+  competition_math_10070: 22.422984513873185
+  wildchat_37073: 25.817761063800784
+  wildchat_14243: 23.250068171705983
+  wildchat_51266: 25.919930150833427
+  alpaca_7790: 26.936487488393116
+  competition_math_7185: 25.15524218491265
+  alpaca_8643: 25.239742569763678
+  wildchat_63255: 24.850010901129227
+  bailbench_1159: 24.49105353310583
+  wildchat_31199: 24.63459192758393
+  alpaca_6820: 25.260735467799716
+  alpaca_8481: 25.298828647799485
+  alpaca_4656: 25.054755046351232
+  competition_math_5580: 24.73593366945431
+  bailbench_1321: 23.213990853774717
+  alpaca_4995: 26.068224738837635
+  bailbench_1138: 23.93502008446736
+  alpaca_10642: 23.12406377562554
+  alpaca_12801: 28.207786292159817
+  competition_math_11980: 24.525862136289703
+  wildchat_48607: 24.699032245919287
+  competition_math_6346: 23.791245133501945
+  wildchat_71255: 27.0389583714317
+  bailbench_1440: 21.546239940304332
+  competition_math_12475: 24.58959449135357
+  alpaca_11263: 23.542543192327035
+  alpaca_8812: 26.91241744272914
+  alpaca_6703: 27.110873716220606
+  alpaca_7240: 24.19317204054366
+  competition_math_8118: 26.683212576792908
+  alpaca_3425: 24.988596620328085
+  wildchat_28596: 26.28986432952069
+  alpaca_2629: 22.30027874745574
+  alpaca_7402: 25.230896116389722
+  alpaca_12645: 27.877742991422238
+  alpaca_5898: 26.081199594360747
+  alpaca_2082: 27.90389923961004
+  competition_math_1692: 25.7020913263871
+  alpaca_9715: 27.465355657493934
+  competition_math_10791: 23.410208867402723
+  alpaca_10882: 24.794816080643564
+  alpaca_9710: 26.093552536406023
+  competition_math_10752: 26.593256411951447
+  bailbench_1337: 25.05225940434099
+  wildchat_38425: 25.01659100302442
+  competition_math_1437: 25.939732479730115
+  alpaca_9718: 26.65005915935675
+  alpaca_2130: 23.821599045709338
+  competition_math_7740: 22.27478075556426
+  alpaca_10700: 32.71482213064867
+  wildchat_39190: 22.513310617138792
+  competition_math_6077: 25.590048502866797
+  competition_math_2290: 27.617630343459005
+  alpaca_13747: 28.954568717612126
+  competition_math_9903: 25.592503442614653
+  wildchat_79430: 28.815852277333523
+  wildchat_12051: 25.771034588398646
+  bailbench_1179: 26.741082382954936
+  competition_math_5467: 23.899451700077567
+  alpaca_9880: 22.968336912872132
+  alpaca_542: 24.9304530654241
+  alpaca_8157: 24.397366794861167
+  wildchat_51475: 22.324901503136747
+  competition_math_2: 24.697976604681877
+  competition_math_9291: 24.870732973240848
+  competition_math_11774: 25.410852642089072
+  alpaca_9339: 27.856634473374697
+  wildchat_21058: 18.803622403523605
+  competition_math_8355: 26.343767063157866
+  competition_math_5145: 25.663474756586737
+  competition_math_9633: 20.984494136949873
+  alpaca_6808: 25.25673593355308
+  wildchat_11534: 23.64362442785089
+  wildchat_51345: 26.219194851637745
+  bailbench_426: 25.328917614730216
+  alpaca_2163: 24.5568304579085
+  competition_math_7044: 23.85992858041956
+  competition_math_11509: 24.817942352866165
+  alpaca_10631: 25.098968772651364
+  competition_math_1303: 25.308379531476405
+  alpaca_248: 22.430151802084588
+  alpaca_10637: 22.60923598017474
+  wildchat_15710: 22.88744491953798
+  alpaca_10449: 24.91101821483529
+  alpaca_1371: 25.655618149790723
+  competition_math_1039: 23.731471131595463
+  alpaca_7968: 23.453025484463485
+  competition_math_11007: 26.38143953085912
+  competition_math_3491: 25.607122080262663
+  competition_math_10991: 25.31367525179313
+  competition_math_3669: 25.239017596805077
+  wildchat_10165: 25.123654259414234
+  wildchat_12214: 29.153590788853887
+  wildchat_10082: 23.66935043594125
+  wildchat_47537: 25.759384402350317
+  competition_math_9946: 24.08501897650162
+  alpaca_103: 26.45800817561281
+  competition_math_66: 26.411265821575235
+  wildchat_23441: 25.339299839110524
+  competition_math_8877: 25.962996639172722
+  competition_math_12370: 25.520149459212266
+  competition_math_4091: 24.623553939659537
+  bailbench_314: 26.717644446714157
+  competition_math_9775: 24.497647232310094
+  bailbench_1301: 23.692745274858506
+  wildchat_69331: 26.737406316304753
+  alpaca_10541: 24.14261807820421
+  wildchat_44052: 26.12018666464597
+  competition_math_8181: 23.351925497654584
+  alpaca_12335: 23.87671294743124
+  alpaca_13523: 27.638189238065834
+  wildchat_74560: 24.465361336751
+  wildchat_27686: 22.784582166769894
+  competition_math_4010: 26.150120766252794
+  wildchat_79409: 27.218285107597463
+  competition_math_9134: 24.62408709640349
+  competition_math_11332: 23.954859649697646
+  alpaca_9295: 25.923997195300863
+  competition_math_9309: 24.980181838948916
+  wildchat_1535: 22.541228633888412
+  wildchat_37236: 23.42238985164641
+  competition_math_1078: 26.21973859399763
+  bailbench_629: 26.22587408329672
+  alpaca_13495: 24.729486729934933
+  competition_math_496: 24.27040875920028
+  competition_math_2266: 24.12761095183903
+  competition_math_12060: 26.897899427282233
+  wildchat_55317: 23.53828213127875
+  competition_math_2988: 22.12052967473505
+  alpaca_807: 28.779808810784573
+  alpaca_7902: 25.70786927611697
+  competition_math_1249: 23.95927257955328
+  competition_math_11403: 28.500808670541094
+  competition_math_10475: 27.54259105112909
+  alpaca_7444: 24.77825721458678
+  wildchat_40303: 24.530392913714845
+  alpaca_6266: 25.70638446515675
+  competition_math_4766: 24.63963896842273
+  competition_math_1639: 22.85168946117734
+  competition_math_6563: 28.200187199047438
+  wildchat_63216: 23.293019158441982
+  alpaca_13276: 26.147484915973042
+  alpaca_3283: 26.49300252141157
+  competition_math_6190: 23.402693995196135
+  wildchat_23099: 22.29979495755789
+  alpaca_11352: 25.746678557482365
+  alpaca_9230: 25.383804864603004
+  wildchat_22455: 27.597008614805567
+  alpaca_4049: 23.61649130974387
+  competition_math_7424: 22.954874686866983
+  competition_math_2397: 25.150681983744708
+  competition_math_12171: 21.114773018928865
+  competition_math_7941: 26.77568046296415
+  alpaca_1271: 25.67427573676512
+  competition_math_11631: 22.906251611850255
+  competition_math_11585: 22.89590333786462
+  wildchat_17561: 19.16785461971233
+  wildchat_6574: 22.960770544941294
+  alpaca_1480: 25.461046924858184
+  competition_math_4175: 23.86994005184276
+  competition_math_5143: 28.038575767801174
+  wildchat_4024: 23.76821575482905
+  competition_math_9492: 25.82919727451718
+  competition_math_3445: 26.788430198807514
+  alpaca_11903: 22.859022328158122
+  alpaca_7992: 25.87070812005235
+  bailbench_274: 21.439926983943664
+  wildchat_38178: 26.333775435447063
+  competition_math_6231: 24.932076207321927
+  competition_math_7347: 24.095635197780698
+  alpaca_9315: 23.67430465956176
+  competition_math_4549: 22.781324147481264
+  competition_math_1459: 25.882236449423313
+  alpaca_9476: 20.388904136196945
+  alpaca_1106: 26.734974300860586
+  alpaca_12594: 24.62311586178712
+  bailbench_212: 23.69039306636795
+  competition_math_2062: 25.92749143414064
+  wildchat_12003: 25.793799515372893
+  alpaca_13225: 26.96369687242879
+  competition_math_6376: 25.63837605332714
+  competition_math_11855: 28.000479151032216
+  alpaca_3324: 21.229526691473605
+  bailbench_756: 25.329812012607437
+  competition_math_3732: 23.190352015047207
+  bailbench_110: 26.894929861678506
+  competition_math_3749: 24.06541827167242
+  alpaca_8431: 27.639275791944637
+  wildchat_21590: 26.06862333956133
+  competition_math_10277: 24.138273112682704
+  competition_math_6777: 24.482161344094695
+  bailbench_1080: 22.39321952052642
+  wildchat_1059: 26.2328447685489
+  competition_math_7391: 26.998375826076586
+  competition_math_8996: 28.69947160354636
+  alpaca_12176: 23.58018117983743
+  alpaca_7494: 22.313864866672596
+  alpaca_3003: 27.18781850768012
+  alpaca_1438: 25.950910559339974
+  wildchat_6665: 25.448815816464087
+  wildchat_61282: 25.11510914986825
+  competition_math_11879: 23.504416298712485
+  wildchat_71045: 26.00973889510334
+  alpaca_7430: 25.16601805091059
+  wildchat_36336: 26.795243939254448
+  competition_math_11033: 25.509599455929546
+  wildchat_42595: 24.093476311188855
+  wildchat_43236: 23.44199677855818
+  competition_math_1227: 27.713647208048407
+  alpaca_6911: 26.475865145617703
+  alpaca_14796: 26.275187445472636
+  alpaca_3402: 25.628941159909182
+  alpaca_5028: 23.498646066141106
+  bailbench_1307: 22.76671099193184
+  bailbench_1196: 24.891749063124855
+  alpaca_12039: 25.226798357943736
+  bailbench_323: 26.52983019837183
+  alpaca_6285: 22.49997646772145
+  competition_math_3618: 26.813281286222164
+  competition_math_3235: 25.601536644574104
+  wildchat_61192: 27.40924499430268
+  competition_math_6498: 26.855926769521364
+  alpaca_12292: 27.060712944308285
+  alpaca_7710: 25.970926512491197
+  competition_math_5645: 25.517088314464818
+  competition_math_6293: 25.225848966541434
+  competition_math_5260: 27.409785457852593
+  bailbench_150: 23.47367698571869
+  wildchat_8197: 27.712839074112168
+  alpaca_3044: 25.183556447121553
+  competition_math_8564: 25.447729508615915
+  competition_math_2114: 24.167045000103986
+  competition_math_4680: 24.54317101071669
+  bailbench_98: 28.49836508323213
+  competition_math_2487: 24.954391460914657
+  alpaca_1216: 26.69156629746706
+  competition_math_1747: 27.383571639518053
+  alpaca_7551: 25.544115097212146
+  competition_math_2982: 25.20575502830107
+  alpaca_12918: 25.34041685698879
+  wildchat_56006: 23.110716198541258
+  competition_math_2917: 24.98719482991377
+  wildchat_18282: 25.34359406870517
+  competition_math_309: 23.42165947452306
+  wildchat_31155: 22.47399492785251
+  wildchat_19096: 25.941383104373713
+  wildchat_63667: 23.019150061173594
+  bailbench_1072: 21.390456225088965
+  bailbench_739: 23.777806615600188
+  competition_math_8832: 23.25037244060371
+  alpaca_11881: 27.87668269438442
+  competition_math_1654: 26.18947113218205
+  competition_math_8361: 24.390575991454753
+  wildchat_45421: 29.55372521866292
+  alpaca_12531: 23.649072584486593
+  competition_math_11510: 26.896378298635472
+  alpaca_13099: 26.817805688471136
+  competition_math_3538: 24.0049939658432
+  wildchat_18380: 20.47567571636929
+  competition_math_6196: 22.50300186973857
+  competition_math_4147: 23.065063636462774
+  bailbench_53: 25.262676896211627
+  competition_math_4935: 23.19937125684087
+  alpaca_10523: 24.476339633235117
+  wildchat_45152: 26.16917987033411
+  alpaca_8748: 24.509983654699294
+  alpaca_6321: 22.36504309217187
+  bailbench_419: 29.99369979468954
+  alpaca_11503: 25.61464977849999
+  alpaca_13120: 29.532402131476918
+  competition_math_2464: 27.031860985815584
+  wildchat_66256: 25.53132958140216
+  alpaca_3925: 25.36556172521482
+  competition_math_3738: 24.56154316492759
+  alpaca_13484: 28.7389275120857
+  wildchat_27068: 25.423795361721833
+  wildchat_10152: 26.178119389050924
+  wildchat_56101: 23.547951354990566
+  alpaca_310: 25.566734627675036
+  alpaca_3750: 24.03423652869904
+  wildchat_52282: 25.71582552478766
+  bailbench_862: 26.33839190177898
+  competition_math_10741: 28.440381548164165
+  competition_math_6254: 23.27420034801611
+  competition_math_3412: 25.400385507758564
+  alpaca_2491: 24.722569471679588
+  wildchat_15283: 21.940229294026402
+  competition_math_2915: 23.526614425209225
+  competition_math_7875: 24.154178877829672
+  competition_math_10370: 21.242354010157584
+  alpaca_2996: 25.03994049341441
+  competition_math_7666: 23.793137842442533
+  alpaca_511: 25.67831913149246
+  wildchat_17403: 25.15953386601675
+  competition_math_8313: 24.49952121528114
+  competition_math_3029: 25.60287094847411
+  competition_math_8999: 25.012736487682073
+  wildchat_66208: 26.555461929947512
+  competition_math_10118: 21.908975808690283
+  bailbench_583: 28.4007720581281
+  competition_math_8708: 24.19295403779635
+  wildchat_42473: 25.172334686137663
+  alpaca_10164: 23.60943778043511
+  competition_math_1314: 24.17069644104501
+  wildchat_12561: 23.70820038894621
+  alpaca_1966: 25.0037525397283
+  wildchat_43211: 22.004081012660645
+  alpaca_14456: 27.5754000262871
+  wildchat_38678: 24.236122338639447
+  wildchat_49330: 26.771726029413834
+  bailbench_1436: 28.339101636996475
+  wildchat_55260: 25.292549314681438
+  competition_math_10037: 26.883463215635345
+  alpaca_2219: 29.359668068346842
+  wildchat_11364: 27.712178041970372
+  alpaca_8308: 26.320526171930457
+  alpaca_5684: 24.333660731894557
+  wildchat_60336: 26.01897811128157
+  competition_math_10638: 22.4739935783503
+  wildchat_22466: 22.371844353288967
+  wildchat_60651: 24.388818189356847
+  alpaca_7381: 25.417840516428665
+  alpaca_2267: 25.14329190140483
+  alpaca_7959: 24.11695233775391
+  bailbench_388: 24.890869033376823
+  wildchat_33685: 22.545752811638174
+  alpaca_11055: 25.037833240856454
+  alpaca_14049: 20.042683446075603
+  alpaca_4453: 23.50517507508035
+  alpaca_5010: 25.307235910196827
+  bailbench_563: 22.56425700651716
+  wildchat_77681: 28.501307856924964
+  wildchat_58066: 25.920333980237647
+  competition_math_660: 23.373291804769014
+  competition_math_7870: 24.335977877785762
+  competition_math_5978: 26.15965013823434
+  wildchat_53485: 24.497522043397176
+  competition_math_2385: 25.3122984671162
+  wildchat_59289: 24.842203335956974
+  alpaca_3523: 24.606028517432147
+  alpaca_11937: 26.240082210504823
+  wildchat_63183: 23.255407040620504
+  competition_math_11822: 26.057499552414598
+  alpaca_6827: 25.45901605464677
+  competition_math_8448: 27.586017974330602
+  competition_math_3078: 23.7515497425166
+  alpaca_8256: 26.210414297523002
+  competition_math_5050: 27.97825426526823
+  competition_math_11834: 24.019740948434844
+  alpaca_13989: 24.561777810153846
+  alpaca_3713: 26.110707496000963
+  competition_math_3481: 26.02740080927484
+  competition_math_7147: 24.173189375752543
+  competition_math_5204: 25.828762190407303
+  alpaca_6585: 27.35319867153396
+  alpaca_7806: 25.509822382138307
+  competition_math_2473: 26.87608580514538
+  competition_math_287: 28.86709529588216
+  wildchat_6167: 22.011732208095157
+  alpaca_6712: 25.084597861146165
+  wildchat_56174: 27.02282247976212
+  alpaca_8540: 28.903046829430323
+  competition_math_8228: 21.06379358987021
+  alpaca_14375: 25.494095888719297
+  competition_math_11748: 27.71736285437738
+  wildchat_75260: 23.661507713102583
+  alpaca_6580: 26.183667482254354
+  competition_math_4159: 24.57940253539405
+  wildchat_21653: 25.969029831953893
+  wildchat_5357: 27.029006593830793
+  wildchat_42425: 23.521817585993272
+  competition_math_10201: 26.039684874484383
+  competition_math_2574: 25.616189764107737
+  alpaca_1846: 26.678101111928434
+  wildchat_52379: 23.386350595927155
+  wildchat_73594: 26.339690143501414
+  alpaca_8149: 25.901350832410248
+  alpaca_7686: 23.974098369586173
+  alpaca_11090: 24.406710939429495
+  bailbench_1416: 26.16157986439174
+  competition_math_7349: 21.440204621220385
+  wildchat_73176: 24.104536580833255
+  competition_math_8438: 24.374345688328482
+  wildchat_30204: 29.203571663803626
+  wildchat_3354: 23.979436205652505
+  wildchat_14342: 25.180514434714656
+  competition_math_11942: 24.20258722275991
+  wildchat_32207: 24.422220162101087
+  alpaca_4519: 25.884522575187695
+  wildchat_50515: 22.013028439909455
+  alpaca_14023: 24.23709450393967
+  competition_math_5602: 24.830243914108063
+  wildchat_52324: 25.39701128511227
+  competition_math_1122: 23.30665813958737
+  alpaca_10162: 26.62102103051524
+  competition_math_10448: 21.171037877987718
+  competition_math_6885: 22.619334002697034
+  bailbench_262: 22.900675926366706
+  wildchat_27011: 25.105123530389594
+  competition_math_5489: 27.605237989479782
+  wildchat_46525: 26.147683171037336
+  wildchat_47528: 27.69028654804548
+  alpaca_1208: 22.905840724470973
+  bailbench_1408: 26.848509314649224
+  competition_math_6440: 28.071343847172667
+  alpaca_3369: 26.785374460705658
+  alpaca_11192: 21.957855168003988
+  competition_math_6723: 25.283069708554304
+  competition_math_2304: 24.647021938214422
+  wildchat_9602: 29.048285352901104
+  alpaca_13272: 25.001399150638196
+  alpaca_7060: 24.724370536071717
+  alpaca_7747: 27.526614802943712
+  competition_math_8781: 28.238428036364244
+  wildchat_16490: 26.372382818827912
+  alpaca_12892: 26.296990032355566
+  alpaca_8236: 24.85738754884644
+  competition_math_6062: 21.66629447593818
+  competition_math_12310: 24.536166363485446
+  competition_math_5196: 23.01146326435304
+  competition_math_2480: 25.26174852342955
+  competition_math_4463: 22.884383931512083
+  competition_math_3961: 25.598202329126494
+  wildchat_64607: 25.226161365827338
+  alpaca_7776: 23.497482911560585
+  wildchat_44644: 26.035779087419932
+  competition_math_4420: 24.456786061855507
+  alpaca_3235: 24.931239421523195
+  alpaca_3131: 25.87574128503216
+  alpaca_10095: 27.37057932700305
+  competition_math_10185: 22.79441956657433
+  wildchat_3342: 24.87351895960676
+  wildchat_31574: 26.605129176077032
+  bailbench_746: 29.41520426243378
+  alpaca_779: 22.596686355880447
+  competition_math_6815: 20.556422192672223
+  competition_math_8574: 24.368430392469907
+  bailbench_771: 22.092574281237983
+  competition_math_5133: 21.006103027979123
+  competition_math_4027: 25.599056506279656
+  wildchat_1148: 22.942715156662867
+  competition_math_12107: 25.166586196585087
+  alpaca_947: 25.126195650815756
+  competition_math_7914: 23.8628158923112
+  alpaca_8877: 24.110551876599377
+  competition_math_9974: 27.811804893433816
+  wildchat_57672: 30.393167169109503
+  competition_math_2070: 22.829494139928467
+  wildchat_28598: 26.8140480942037
+  alpaca_11119: 24.778249521359413
+  competition_math_5673: 23.736397854114458
+  wildchat_3700: 27.444845352913358
+  wildchat_44687: 24.256525981667814
+  competition_math_7598: 27.276165578930264
+  alpaca_7000: 23.229478323166617
+  competition_math_2552: 25.884108266106693
+  competition_math_10221: 23.998954665498246
+  alpaca_4777: 24.012764833993796
+  wildchat_61023: 24.30421661293104
+  competition_math_3031: 23.46836903701999
+  competition_math_5759: 21.718470442015512
+  alpaca_8831: 24.919448684515906
+  alpaca_3057: 29.15421019163519
+  competition_math_9765: 28.070111592238124
+  alpaca_2220: 27.02320927751287
+  competition_math_3866: 26.69819466503203
+  alpaca_1108: 27.72718245067687
+  competition_math_10482: 23.46575699595286
+  alpaca_9902: 26.112484365574662
+  wildchat_27685: 26.29341615343273
+  competition_math_6160: 23.824690609746806
+  wildchat_8118: 25.984275902729205
+  alpaca_2701: 25.49034289930187
+  competition_math_11257: 27.171465504395393
+  wildchat_74635: 24.870931987329914
+  wildchat_62450: 27.87901217682156
+  competition_math_6884: 27.416253893991207
+  competition_math_1491: 28.027932655337665
+  competition_math_9247: 24.045152829662108
+  competition_math_4726: 27.616104037645243
+  alpaca_9102: 25.45370806741522
+  wildchat_17126: 25.916192439868997
+  competition_math_2635: 27.512196322588906
+  competition_math_1803: 24.040178894836522
+  alpaca_2864: 28.918832973651543
+  competition_math_5176: 25.951004054410202
+  bailbench_1374: 27.57482562551284
+  alpaca_12363: 27.477962008277597
+  competition_math_3050: 27.119087140469656
+  competition_math_12390: 25.091533090344825
+  wildchat_26367: 25.94220266614342
+  wildchat_73015: 23.792183083254034
+  competition_math_6801: 25.317033927758132
+  wildchat_16487: 21.45411452222923
+  alpaca_7196: 25.470510008978987
+  wildchat_1067: 24.361118147941205
+  competition_math_5690: 24.60366511766253
+  competition_math_565: 23.97131272287098
+  alpaca_10396: 24.999436050150546
+  alpaca_6616: 25.766190281076604
+  alpaca_7427: 26.685268225926478
+  alpaca_9693: 27.57427669279376
+  alpaca_14149: 24.452996792788046
+  alpaca_8002: 25.86347708785084
+  wildchat_26138: 26.116676195483713
+  competition_math_10705: 26.76084227811859
+  wildchat_43126: 25.379310971656373
+  competition_math_12106: 24.791565521962866
+  wildchat_4640: 25.440917540867307
+  competition_math_2715: 22.64750822021268
+  competition_math_10645: 25.392184969301876
+  competition_math_3607: 25.172290450245693
+  alpaca_5325: 22.736785130130695
+  alpaca_600: 23.967009390697317
+  alpaca_8670: 26.908131404563264
+  wildchat_70625: 22.4446015337503
+  wildchat_61047: 26.75762860969397
+  alpaca_3827: 26.0188421012866
+  competition_math_2940: 26.635033408511863
+  competition_math_7716: 23.576065723272468
+  alpaca_11762: 23.89900039101564
+  alpaca_12988: 26.032582113441613
+  competition_math_266: 27.2384808224999
+  alpaca_13449: 28.335271186874515
+  wildchat_14659: 26.337462168366837
+  alpaca_721: 22.784901174830317
+  alpaca_9299: 25.451589289305904
+  wildchat_52387: 23.982463975177062
+  competition_math_10145: 26.273307524409674
+  alpaca_13230: 23.310537712299055
+  competition_math_8917: 23.200619463734412
+  competition_math_1887: 24.07723555748744
+  wildchat_3239: 27.338358727900765
+  wildchat_36466: 22.451733939073925
+  competition_math_10542: 21.9438764336549
+  competition_math_2879: 28.070066342651554
+  competition_math_6478: 25.63068417177737
+  competition_math_12120: 22.480872105536363
+  alpaca_13786: 24.075552333791688
+  competition_math_1060: 25.548780593450633
+  competition_math_9179: 25.96154961464987
+  alpaca_11200: 27.537042961079923
+  wildchat_55478: 24.109332212970266
+  wildchat_2678: 24.504382752267336
+  alpaca_13463: 26.64274112152663
+  wildchat_28489: 25.831788357939672
+  competition_math_7936: 27.05964866892345
+  alpaca_13567: 26.536268730648576
+  wildchat_34229: 23.101121339739027
+  competition_math_9789: 26.24034127641252
+  competition_math_7203: 25.557089453596298
+  bailbench_645: 23.927789358233873
+  alpaca_8504: 26.704160008954062
+  wildchat_68279: 28.220072755966815
+  bailbench_653: 24.1758679333062
+  competition_math_4675: 25.835342563103843
+  alpaca_12852: 26.594457331414834
+  competition_math_7022: 23.43064735437005
+  wildchat_75309: 24.140854062835384
+  alpaca_6899: 24.83115455062945
+  alpaca_5915: 24.901164927290896
+  competition_math_7174: 23.396637264571673
+  competition_math_7049: 23.699832892337547
+  competition_math_4212: 25.75562180394523
+  competition_math_12032: 23.52288136124744
+  wildchat_55218: 23.721423519301958
+  competition_math_9121: 27.569794291679436
+  alpaca_4724: 25.670167889686233
+  alpaca_4718: 19.509467039484658
+  alpaca_7563: 25.010778933700966
+  wildchat_77592: 26.538498428142837
+  wildchat_62284: 23.99176913509985
+  wildchat_5398: 23.261055119169345
+  alpaca_9326: 26.06215705583501
+  competition_math_9661: 25.75879274411463
+  wildchat_19334: 22.212018332881577
+  competition_math_1754: 24.018536083960946
+  alpaca_3276: 23.65779747365625
+  competition_math_7075: 25.13911097413198
+  competition_math_8648: 22.955342980370954
+  alpaca_9264: 26.883052501126777
+  competition_math_7880: 26.713176156791867
+  wildchat_5001: 25.043564254885702
+  competition_math_3929: 28.53520541693391
+  competition_math_10626: 24.43906148584242
+  alpaca_315: 27.21803984840482
+  competition_math_147: 24.939244651439964
+  wildchat_10413: 23.954522420023686
+  competition_math_11629: 23.4537429448416
+  wildchat_16336: 27.73557775154472
+  alpaca_12684: 24.342048386345898
+  alpaca_12435: 26.212166257291575
+  alpaca_6669: 23.91178864978024
+  competition_math_7445: 25.573998360019363
+  alpaca_5188: 28.43801797956316
+  alpaca_11831: 24.255285919940548
+  alpaca_657: 26.156937242456532
+  competition_math_3013: 26.241604435200784
+  competition_math_5096: 22.935409827781136
+  competition_math_9531: 28.480970135408196
+  wildchat_55072: 25.059335826059808
+  competition_math_9298: 25.984355474177335
+  wildchat_25387: 20.943522376011387
+  wildchat_10664: 23.857585297954284
+  bailbench_813: 27.44125249078111
+  competition_math_10347: 24.302136820186917
+  alpaca_13990: 25.1074385694975
+  alpaca_9143: 26.114600392491322
+  competition_math_6186: 23.63891255929253
+  competition_math_2458: 25.85020070385377
+  wildchat_46421: 24.702295530211007
+  alpaca_4072: 23.211826399000564
+  competition_math_8582: 22.791016301367605
+  competition_math_11263: 22.915398525367493
+  alpaca_13008: 23.715877996568125
+  alpaca_8819: 25.63489213754196
+  alpaca_264: 25.06304696138622
+  wildchat_70126: 24.350275159744374
+  alpaca_3160: 23.872594891779766
+  bailbench_1593: 26.180799191029998
+  alpaca_1600: 26.525910749935054
+  wildchat_21668: 24.07698482599275
+  competition_math_49: 20.039550202448595
+  competition_math_351: 26.534991001909127
+  wildchat_37156: 28.8530662131079
+  competition_math_6736: 25.469218581900126
+  competition_math_5329: 23.535148908130644
+  wildchat_28177: 27.391262881926025
+  competition_math_10437: 27.420734566110443
+  competition_math_1570: 28.7633731298574
+  competition_math_10914: 21.48130161537706
+  alpaca_101: 26.06465870743052
+  competition_math_852: 25.24823584943208
+  wildchat_72685: 24.760225941896557
+  competition_math_3197: 23.867976962345526
+  wildchat_59614: 23.365035174475402
+  competition_math_4704: 22.93407121374187
+  competition_math_7583: 24.54214460272244
+  wildchat_73250: 25.715896715141323
+  competition_math_11454: 21.855241883159398
+  competition_math_2123: 23.83955207198005
+  competition_math_10718: 27.568889239058212
+  alpaca_3091: 26.313266204927462
+  competition_math_7653: 22.267831609541652
+  alpaca_5958: 24.13310110867273
+  competition_math_5607: 21.78700683343224
+  wildchat_28371: 25.099632706550302
+  competition_math_6007: 29.45374856455027
+  wildchat_28292: 26.023718919587207
+  competition_math_1417: 23.775497417867417
+  alpaca_5669: 24.42302876605822
+  wildchat_71087: 25.841979568451958
+  alpaca_1743: 24.82010083588536
+  alpaca_295: 25.116002080676907
+  wildchat_77306: 24.209851786836715
+  alpaca_4015: 27.816493877084
+  alpaca_4055: 24.824740922286068
+  alpaca_1057: 25.676545961637586
+  wildchat_31440: 25.93645833076645
+  bailbench_157: 27.256762971688747
+  alpaca_14411: 27.22361589958393
+  wildchat_39099: 24.96695455663991
+  alpaca_8635: 23.647041272382133
+  bailbench_697: 24.24192572720439
+  alpaca_383: 25.1064375509425
+  alpaca_13428: 24.99785128678357
+  competition_math_5108: 25.957396682269213
+  alpaca_14803: 24.314029258151223
+  alpaca_5737: 26.89056183414748
+  competition_math_6746: 28.623397061577055
+  alpaca_9146: 26.71761324208654
+  competition_math_7850: 24.41975909872009
+  wildchat_42494: 25.49140296185541
+  competition_math_734: 26.317251615756756
+  alpaca_11061: 25.380468851393317
+  competition_math_3057: 24.351726678373584
+  competition_math_8350: 26.033045285863942
+  wildchat_21535: 23.878119116580642
+  wildchat_7709: 27.020419513137497
+  bailbench_102: 22.393290242085744
+  competition_math_1854: 25.42045804168639
+  competition_math_12363: 24.69077163762885
+  wildchat_48346: 23.14088037138222
+  wildchat_71545: 23.414679752892084
+  wildchat_10375: 24.6998366333587
+  competition_math_3457: 28.18178362103629
+  wildchat_41274: 29.44887792393398
+  competition_math_7056: 27.071284727401334
+  competition_math_3401: 24.25584068613412
+  alpaca_3380: 25.555336585955686
+  competition_math_5983: 25.585114291609628
+  competition_math_3133: 22.48688182918221
+  wildchat_17083: 28.477036491587867
+  competition_math_5738: 26.784420884887304
+  competition_math_8093: 25.189497651677726
+  competition_math_5735: 23.469142124150103
+  wildchat_14213: 26.686139298815313
+  wildchat_9144: 24.81167263159032
+  wildchat_2499: 23.11242889190409
+  alpaca_4603: 23.99759209304882
+  competition_math_2710: 22.15669151918856
+  alpaca_6286: 24.419230177391455
+  wildchat_26506: 22.364931081604556
+  competition_math_8069: 21.878523241294545
+  alpaca_2968: 27.726976486622355
+  competition_math_10354: 24.030596191844054
+  competition_math_7643: 26.41471036064476
+  alpaca_14390: 24.335790854116322
+  competition_math_6844: 24.485761725607066
+  competition_math_10072: 25.192510394498754
+  wildchat_22388: 25.075037179859464
+  alpaca_1386: 23.612578146420603
+  alpaca_6751: 25.382084710354427
+  competition_math_5797: 24.324748340242778
+  wildchat_11617: 24.292824421402635
+  wildchat_16390: 24.421247692447434
+  wildchat_10706: 23.677041051388116
+  alpaca_6131: 22.80481107750816
+  competition_math_10057: 25.180573870551704
+  wildchat_76111: 20.97817342587388
+  wildchat_24095: 25.703640911042086
+  alpaca_11973: 25.39493734897583
+  bailbench_1229: 26.527384211883888
+  wildchat_26611: 32.51167483278629
+  alpaca_529: 23.1321143375172
+  competition_math_6347: 27.082583065888084
+  wildchat_24036: 26.540152013892424
+  wildchat_2549: 26.802750151340884
+  alpaca_3486: 24.910086484458496
+  wildchat_51514: 25.556830330091444
+  alpaca_6914: 23.875764819878672
+  competition_math_8531: 24.69283373628358
+  wildchat_14609: 25.82894755897412
+  competition_math_11057: 20.713005805749614
+  bailbench_995: 20.586754959338734
+  bailbench_1296: 26.431244410283675
+  competition_math_1805: 20.903298572196483
+  wildchat_27234: 20.425183660809534
+  wildchat_54098: 22.926994719611695
+  alpaca_10549: 28.98409283953204
+  wildchat_43514: 25.687400591968856
+  competition_math_12320: 25.011473442418776
+  competition_math_2011: 26.96892827875709
+  alpaca_1109: 28.039107572030726
+  wildchat_14345: 24.305341969250513
+  competition_math_5859: 23.695850655814773
+  alpaca_11334: 22.49219491457673
+  wildchat_4609: 24.63569260193494
+  competition_math_1718: 24.342775969307862
+  wildchat_41647: 24.7317002864255
+  wildchat_57421: 25.23472139213502
+sigma:
+  competition_math_11596: 1.572945053191647
+  alpaca_12290: 1.512445580909014
+  alpaca_3504: 1.4611929481106893
+  competition_math_1800: 1.5407428533604064
+  alpaca_3408: 1.3969208686552779
+  bailbench_1491: 1.417791164239513
+  alpaca_11671: 1.4356147108363668
+  alpaca_1891: 1.478409002274142
+  competition_math_7604: 1.496763988327456
+  competition_math_1776: 1.533121984956402
+  alpaca_5709: 1.4320988052236527
+  bailbench_1558: 1.4332674666295613
+  competition_math_9839: 1.405767766137902
+  competition_math_9451: 1.34630532148707
+  alpaca_10190: 1.4634494256413917
+  wildchat_26462: 1.4231248725528887
+  competition_math_8: 1.6736197091098803
+  alpaca_446: 1.4994739054904132
+  wildchat_43386: 1.21612357680558
+  alpaca_2532: 1.6529041786476313
+  wildchat_9544: 1.5153007091623993
+  competition_math_4897: 1.5988591657690456
+  competition_math_1535: 1.3005433370825403
+  wildchat_2591: 1.6723970272506234
+  alpaca_13421: 1.5637062192892912
+  alpaca_9313: 1.5975136590082197
+  competition_math_234: 1.4489107262280707
+  competition_math_11427: 1.3577101988521336
+  bailbench_967: 1.282749828006812
+  competition_math_3583: 1.3976393035855457
+  wildchat_71088: 1.4424075509479495
+  competition_math_5039: 1.4658543240473878
+  competition_math_4247: 1.5452187155450872
+  wildchat_78651: 1.765340887899443
+  alpaca_2685: 1.2776788268360733
+  bailbench_863: 1.3579109014847166
+  competition_math_5563: 1.3773431938224192
+  competition_math_5402: 1.4146759884460807
+  competition_math_3534: 1.337184311104281
+  competition_math_9583: 1.510415867444387
+  bailbench_3: 1.5726189857816972
+  wildchat_46658: 1.471276216626215
+  alpaca_902: 1.977637139740714
+  wildchat_39121: 1.5471349393325258
+  competition_math_7024: 1.6763639919863027
+  competition_math_10863: 1.3715502343785861
+  bailbench_1228: 1.3181793855938624
+  competition_math_8784: 1.4503259348827662
+  alpaca_10944: 1.2549230034177496
+  competition_math_2925: 1.5569961499700566
+  alpaca_11631: 1.5478343026995889
+  wildchat_79244: 1.469276344922022
+  alpaca_14431: 1.77084920868506
+  competition_math_11360: 1.3721461085263567
+  alpaca_4343: 1.4385192829760727
+  competition_math_10397: 1.4941253921856092
+  competition_math_9026: 1.591437330450324
+  competition_math_6182: 1.81414823592719
+  wildchat_74703: 1.3274882746165906
+  competition_math_9205: 1.440673916072892
+  competition_math_522: 1.699011787235965
+  alpaca_5652: 1.2682080315043167
+  bailbench_1608: 1.3062125635007835
+  alpaca_6517: 1.4324595918241296
+  wildchat_77097: 1.3030438525023618
+  alpaca_6801: 1.2704656292710237
+  competition_math_4784: 1.2931590313541381
+  competition_math_2534: 1.3693115813934293
+  competition_math_5456: 1.8208317069670679
+  alpaca_12042: 1.4404271681857537
+  alpaca_2688: 1.436042023312192
+  alpaca_7734: 1.5450910099342574
+  alpaca_7672: 1.6175726316806835
+  alpaca_3648: 1.532005590020479
+  alpaca_7581: 1.5035377323217367
+  alpaca_9206: 1.6013951252791432
+  wildchat_62293: 1.4494958639137074
+  bailbench_9: 1.5464329513521011
+  alpaca_11194: 1.4526992791749742
+  competition_math_8249: 1.68320311062501
+  alpaca_13310: 1.38847713082916
+  competition_math_10707: 1.3494529078714792
+  wildchat_38421: 1.3356557127279471
+  wildchat_22653: 1.6782108402794194
+  competition_math_9227: 1.414557429362268
+  competition_math_7869: 1.7897503005044928
+  wildchat_68677: 1.4734092372114265
+  alpaca_10723: 1.3970999423958237
+  wildchat_56542: 1.2858307732162353
+  wildchat_67632: 1.395047557787086
+  wildchat_32423: 1.3929321964060273
+  competition_math_8304: 1.3772126233561066
+  competition_math_2407: 1.468280250789385
+  alpaca_7928: 1.458286986962689
+  competition_math_6379: 1.4850781226545027
+  bailbench_1458: 1.30947798071962
+  wildchat_31011: 1.3049752781405721
+  alpaca_14511: 1.3298299892071452
+  competition_math_5241: 1.4741348218098984
+  wildchat_68428: 1.4179189028024077
+  competition_math_226: 1.4054103697426015
+  wildchat_53213: 1.436470558571226
+  alpaca_10246: 1.3869211325513615
+  competition_math_9677: 1.5386061131601056
+  alpaca_10049: 1.4079740979624455
+  alpaca_10976: 1.3847737398219264
+  alpaca_12369: 1.422772285839522
+  wildchat_24119: 1.4553517713055144
+  alpaca_5913: 1.4989205156302392
+  competition_math_6975: 1.5577822268298533
+  competition_math_11090: 1.4725224891532518
+  wildchat_20385: 1.6573184726480161
+  alpaca_2590: 1.4395402633320973
+  wildchat_76267: 1.473471869655725
+  bailbench_1373: 1.4601503171763985
+  competition_math_5873: 1.5841773004210473
+  competition_math_7965: 1.5253821971276103
+  competition_math_3814: 1.6803447485175527
+  competition_math_1057: 1.5683065170527164
+  alpaca_4301: 1.3964370243382815
+  competition_math_10613: 1.4125658613386116
+  alpaca_4234: 1.4338999046135619
+  wildchat_69072: 1.4427251555063847
+  wildchat_73485: 1.3185343600498536
+  competition_math_2995: 1.5018533530605935
+  alpaca_13760: 1.718049773592233
+  alpaca_3539: 1.6726450603576515
+  alpaca_13736: 1.519697068714236
+  competition_math_11587: 1.4362053930866805
+  competition_math_927: 1.603129113423311
+  competition_math_3008: 1.340504371032171
+  competition_math_6207: 1.374626459483221
+  competition_math_9932: 1.3468316891567709
+  competition_math_3428: 1.5587688523035554
+  alpaca_11894: 1.5471017761138504
+  competition_math_6402: 1.5847017817074094
+  wildchat_27602: 1.686151219928159
+  wildchat_76614: 1.5231598975281173
+  wildchat_38687: 1.4620689104781106
+  competition_math_1561: 1.4921701073794942
+  competition_math_9321: 1.3866494642665053
+  alpaca_10317: 1.2969910949601222
+  competition_math_6600: 1.3449523992258299
+  bailbench_681: 1.3323639151676312
+  bailbench_578: 1.3180709849355925
+  wildchat_37482: 1.3813614616286338
+  competition_math_2463: 1.5507669350231985
+  bailbench_439: 1.4525544323156647
+  wildchat_15456: 1.5322888459636497
+  alpaca_5925: 1.4290815986113892
+  competition_math_3712: 1.483573426508164
+  alpaca_14051: 1.348229579494607
+  wildchat_48431: 1.752589534844332
+  bailbench_794: 1.3658052844859745
+  competition_math_8740: 1.3898688319131864
+  bailbench_703: 1.3507949311081837
+  competition_math_5121: 1.3158957917971048
+  competition_math_8340: 1.4085578277475121
+  wildchat_17045: 1.319525980176277
+  competition_math_6380: 1.603352417689974
+  competition_math_7343: 1.449446887230531
+  alpaca_3579: 1.2979250203761548
+  bailbench_900: 1.3723786381614205
+  competition_math_7809: 1.7615291087088292
+  wildchat_18494: 1.304989234540677
+  wildchat_20098: 1.540310293994177
+  alpaca_14197: 1.4235901409793403
+  competition_math_4738: 1.5082949744776222
+  competition_math_4686: 1.3140233609009375
+  competition_math_2214: 1.406210894083162
+  competition_math_11017: 1.505322341558265
+  wildchat_14599: 1.615748082323315
+  wildchat_8473: 1.6223978844984617
+  wildchat_73268: 1.5873059982170883
+  wildchat_79151: 1.4498760499642225
+  alpaca_6047: 1.40068303363548
+  alpaca_4668: 1.4118213820543846
+  wildchat_78602: 1.5024814728193387
+  alpaca_9945: 1.4564664097277766
+  competition_math_2828: 1.36308085155531
+  competition_math_1010: 1.2966982918928875
+  bailbench_1438: 1.3161444482556168
+  wildchat_9636: 1.3768009347446584
+  competition_math_8666: 1.721894474636054
+  competition_math_2687: 1.448050758398127
+  alpaca_9595: 1.3627397655597568
+  competition_math_3096: 1.4487593800392176
+  competition_math_6588: 1.5251879167526148
+  competition_math_10449: 1.6270815378871375
+  alpaca_128: 1.2636557197786484
+  alpaca_14750: 1.3746539913057267
+  bailbench_1139: 1.456124439043974
+  wildchat_30389: 1.45028707142189
+  alpaca_8452: 1.9667035065691127
+  alpaca_551: 1.4429070291154267
+  alpaca_1627: 1.3389192118411561
+  competition_math_5255: 1.3926204014668726
+  competition_math_4803: 1.3243045221279834
+  competition_math_3135: 1.3956094902546188
+  alpaca_565: 1.2952481301491312
+  wildchat_16698: 1.5749078961943868
+  competition_math_5506: 1.5215916365301931
+  competition_math_966: 1.4423385200393148
+  bailbench_1176: 1.3181980913112497
+  competition_math_10611: 1.53006097122319
+  wildchat_20615: 1.374181973955716
+  competition_math_4268: 1.427178071171574
+  alpaca_3209: 1.426412232352665
+  alpaca_3683: 1.391803234476021
+  alpaca_14220: 1.5981437022933715
+  competition_math_2987: 1.3371176089888326
+  alpaca_9837: 1.4144332153536303
+  wildchat_15129: 1.1971287352254296
+  alpaca_5279: 1.4643397999889987
+  alpaca_4596: 1.2864637963089118
+  alpaca_11626: 1.5018789009548057
+  alpaca_4297: 1.7251396272058457
+  competition_math_8183: 1.8154950635763778
+  wildchat_64480: 1.4147616072133513
+  competition_math_8397: 1.5294553032703158
+  competition_math_4306: 1.3727697166680521
+  alpaca_11942: 1.4590343261776038
+  wildchat_28141: 1.2892091695395023
+  competition_math_11818: 1.463614320536426
+  alpaca_14356: 1.5949213884812548
+  wildchat_63532: 1.4754207172077554
+  alpaca_11533: 1.4334350740868316
+  competition_math_8617: 1.6395955853195
+  alpaca_2971: 1.3544533022841645
+  competition_math_10686: 1.5197280126837307
+  competition_math_722: 1.7546422805842028
+  competition_math_8735: 1.4931980095635844
+  competition_math_5485: 1.8031222705706016
+  wildchat_68575: 1.4222526291857454
+  wildchat_73643: 1.441037959608893
+  competition_math_7309: 1.46026358836953
+  competition_math_8715: 1.3463230944100604
+  competition_math_693: 1.501397526491119
+  wildchat_32182: 1.3786319127173534
+  bailbench_1091: 1.5054185771057822
+  competition_math_3850: 1.653891982892279
+  alpaca_8041: 1.547034376125004
+  competition_math_1779: 1.4937521048741766
+  competition_math_436: 1.34903799343931
+  alpaca_4637: 1.5734651940364965
+  alpaca_8816: 1.61069600057986
+  competition_math_2405: 1.4127630819125105
+  wildchat_49386: 1.2729875641277553
+  competition_math_11562: 1.2887644059713095
+  competition_math_10070: 1.3945989717793845
+  wildchat_37073: 1.3818506840008071
+  wildchat_14243: 1.5577675757850793
+  wildchat_51266: 1.463423877955598
+  alpaca_7790: 1.4088946814753345
+  competition_math_7185: 1.451878954281449
+  alpaca_8643: 1.230955617284302
+  wildchat_63255: 1.5756262792700089
+  bailbench_1159: 1.5110263847838545
+  wildchat_31199: 1.5304521783307585
+  alpaca_6820: 1.4150796445956444
+  alpaca_8481: 1.6308721697148052
+  alpaca_4656: 1.3268749862800524
+  competition_math_5580: 1.30403865475708
+  bailbench_1321: 1.362472447867585
+  alpaca_4995: 1.3336360852522469
+  bailbench_1138: 1.3706749898373867
+  alpaca_10642: 1.6117985554265866
+  alpaca_12801: 1.552524502721091
+  competition_math_11980: 1.2890380921668236
+  wildchat_48607: 1.5792608226348748
+  competition_math_6346: 1.7135156192310037
+  wildchat_71255: 1.3345050798629532
+  bailbench_1440: 1.3280971895303089
+  competition_math_12475: 1.4206378981893237
+  alpaca_11263: 1.4858999128413377
+  alpaca_8812: 1.344210623083454
+  alpaca_6703: 1.3616181424475107
+  alpaca_7240: 1.440444215957086
+  competition_math_8118: 1.5144142949990456
+  alpaca_3425: 1.2890790883088654
+  wildchat_28596: 1.4728427609255947
+  alpaca_2629: 1.500513590020685
+  alpaca_7402: 1.2367855627688573
+  alpaca_12645: 1.5414942878293716
+  alpaca_5898: 1.3212220438103357
+  alpaca_2082: 1.462798936782921
+  competition_math_1692: 1.5648257269958417
+  alpaca_9715: 1.5451813232846552
+  competition_math_10791: 1.2463854849281495
+  alpaca_10882: 1.3286061009627872
+  alpaca_9710: 1.3993785769181228
+  competition_math_10752: 1.380731255767019
+  bailbench_1337: 1.2785120329022304
+  wildchat_38425: 1.4927753197315854
+  competition_math_1437: 1.4351987517360654
+  alpaca_9718: 1.3452285583569306
+  alpaca_2130: 1.4712584698584754
+  competition_math_7740: 1.331940362472156
+  alpaca_10700: 1.631349737800942
+  wildchat_39190: 1.636868844064195
+  competition_math_6077: 1.3725629200934928
+  competition_math_2290: 1.5027311268988548
+  alpaca_13747: 1.3418068897127986
+  competition_math_9903: 1.3797045809333572
+  wildchat_79430: 1.682622165064474
+  wildchat_12051: 1.4069459364968129
+  bailbench_1179: 1.2256321773329968
+  competition_math_5467: 1.4505693307148264
+  alpaca_9880: 1.4850250070965503
+  alpaca_542: 1.6029583629062127
+  alpaca_8157: 1.4227399541703092
+  wildchat_51475: 1.7112511265229913
+  competition_math_2: 1.362393642069416
+  competition_math_9291: 1.3793038121575525
+  competition_math_11774: 1.2634804426767978
+  alpaca_9339: 1.416127258819983
+  wildchat_21058: 1.8337935948815838
+  competition_math_8355: 1.6463783718443035
+  competition_math_5145: 1.3384760975998005
+  competition_math_9633: 1.6587269833472957
+  alpaca_6808: 1.5574862680678376
+  wildchat_11534: 1.3086773831358613
+  wildchat_51345: 1.5716953678091559
+  bailbench_426: 1.4568349234682731
+  alpaca_2163: 1.456370847612259
+  competition_math_7044: 1.500515688211395
+  competition_math_11509: 1.4597848660530188
+  alpaca_10631: 1.4588989130192613
+  competition_math_1303: 1.6960714479104653
+  alpaca_248: 1.2396896195434275
+  alpaca_10637: 1.4793215251987637
+  wildchat_15710: 1.4025478932065767
+  alpaca_10449: 1.2912637045724844
+  alpaca_1371: 1.2025626849299065
+  competition_math_1039: 1.492749303766316
+  alpaca_7968: 1.5212816984075008
+  competition_math_11007: 1.7432929238016028
+  competition_math_3491: 1.3448159092281984
+  competition_math_10991: 1.3489423682325197
+  competition_math_3669: 1.457317531810391
+  wildchat_10165: 1.4401386282288176
+  wildchat_12214: 1.5551887218669322
+  wildchat_10082: 1.3934937340527151
+  wildchat_47537: 1.394880724072212
+  competition_math_9946: 1.3361244754814356
+  alpaca_103: 1.4962322836821704
+  competition_math_66: 1.4597657925420422
+  wildchat_23441: 1.5137800695752222
+  competition_math_8877: 1.4116847104467902
+  competition_math_12370: 1.3373471567177788
+  competition_math_4091: 1.4428257666089814
+  bailbench_314: 1.444178445809114
+  competition_math_9775: 1.5552802498693539
+  bailbench_1301: 1.3817999506682608
+  wildchat_69331: 1.3213278413980245
+  alpaca_10541: 1.2777026375129972
+  wildchat_44052: 1.4324811080801612
+  competition_math_8181: 1.4113496471304003
+  alpaca_12335: 1.4610075384805354
+  alpaca_13523: 2.0170256943498557
+  wildchat_74560: 1.355541280158984
+  wildchat_27686: 1.4730572694998885
+  competition_math_4010: 1.4580596292570385
+  wildchat_79409: 1.8228942182950971
+  competition_math_9134: 1.4120801540865437
+  competition_math_11332: 1.3871279622263386
+  alpaca_9295: 1.2972928391582628
+  competition_math_9309: 1.3814324307973684
+  wildchat_1535: 1.3681626560767157
+  wildchat_37236: 1.39925239060349
+  competition_math_1078: 1.6194600681329065
+  bailbench_629: 1.325178468875874
+  alpaca_13495: 1.4253793237003998
+  competition_math_496: 1.5033449072082026
+  competition_math_2266: 1.4106001326431374
+  competition_math_12060: 1.525595458596138
+  wildchat_55317: 1.2751945831846188
+  competition_math_2988: 1.5300747035862088
+  alpaca_807: 1.550185902116922
+  alpaca_7902: 1.2922330678799294
+  competition_math_1249: 1.527315981476652
+  competition_math_11403: 1.5457977734455817
+  competition_math_10475: 1.4642902922659211
+  alpaca_7444: 1.5798678921837659
+  wildchat_40303: 1.6019727457119546
+  alpaca_6266: 1.5833973474162184
+  competition_math_4766: 1.5272475116228275
+  competition_math_1639: 1.6557834991511498
+  competition_math_6563: 1.4258850972032713
+  wildchat_63216: 1.484620966055791
+  alpaca_13276: 1.362554199990833
+  alpaca_3283: 1.4966064618952386
+  competition_math_6190: 1.473396147525439
+  wildchat_23099: 1.4645820205025442
+  alpaca_11352: 1.56520364038666
+  alpaca_9230: 1.3537037300787054
+  wildchat_22455: 1.949041352101206
+  alpaca_4049: 1.3220673531067597
+  competition_math_7424: 1.4636796208956495
+  competition_math_2397: 1.512865730168876
+  competition_math_12171: 1.9663259744904455
+  competition_math_7941: 1.4759963707002333
+  alpaca_1271: 1.5307625715171231
+  competition_math_11631: 1.7912777688429689
+  competition_math_11585: 1.487098168118287
+  wildchat_17561: 1.8978867567994528
+  wildchat_6574: 1.4865493869598545
+  alpaca_1480: 1.4041831338837392
+  competition_math_4175: 1.530129017825107
+  competition_math_5143: 1.3061263180429883
+  wildchat_4024: 1.2702508129022512
+  competition_math_9492: 1.565522538315521
+  competition_math_3445: 1.3639380463387696
+  alpaca_11903: 1.307399753432825
+  alpaca_7992: 1.293874975803381
+  bailbench_274: 1.5187304303223328
+  wildchat_38178: 1.5058568175202016
+  competition_math_6231: 1.692820121601007
+  competition_math_7347: 1.690863791342656
+  alpaca_9315: 1.5013637472402572
+  competition_math_4549: 1.5013182254695332
+  competition_math_1459: 1.3504702964609983
+  alpaca_9476: 1.4974290369311098
+  alpaca_1106: 1.3827828954590256
+  alpaca_12594: 1.366529828953236
+  bailbench_212: 1.3195401691433837
+  competition_math_2062: 1.565752273395693
+  wildchat_12003: 1.6103244224236448
+  alpaca_13225: 1.3129122468271268
+  competition_math_6376: 1.4121805490901698
+  competition_math_11855: 1.5408186316088133
+  alpaca_3324: 1.5442485605441125
+  bailbench_756: 1.436791755237352
+  competition_math_3732: 1.3292628732518956
+  bailbench_110: 1.502878919346115
+  competition_math_3749: 1.2951551365644325
+  alpaca_8431: 1.3222381454852694
+  wildchat_21590: 1.4152172640523688
+  competition_math_10277: 1.5057834642187413
+  competition_math_6777: 1.2889289967890194
+  bailbench_1080: 1.4849747344039586
+  wildchat_1059: 1.4802326896472344
+  competition_math_7391: 1.4294669933243036
+  competition_math_8996: 1.5866149831469847
+  alpaca_12176: 1.4306316861296042
+  alpaca_7494: 1.4841476600858652
+  alpaca_3003: 1.2717786125810293
+  alpaca_1438: 1.332040827061885
+  wildchat_6665: 1.3151877964554424
+  wildchat_61282: 1.448966008842557
+  competition_math_11879: 1.3165802510916778
+  wildchat_71045: 1.3704209159373126
+  alpaca_7430: 1.3086320159717721
+  wildchat_36336: 1.2525203760520107
+  competition_math_11033: 1.4618098877965326
+  wildchat_42595: 1.466130845015434
+  wildchat_43236: 1.5472847582162366
+  competition_math_1227: 1.4424970561741282
+  alpaca_6911: 1.3768668737630705
+  alpaca_14796: 1.3366639004900744
+  alpaca_3402: 1.4353295775241772
+  alpaca_5028: 1.4802043106147196
+  bailbench_1307: 1.3895875771441137
+  bailbench_1196: 1.3300223787897494
+  alpaca_12039: 1.5529898112839002
+  bailbench_323: 1.3202212402477074
+  alpaca_6285: 1.7282659171593342
+  competition_math_3618: 1.372598422314333
+  competition_math_3235: 1.2822667852946688
+  wildchat_61192: 1.429205979885315
+  competition_math_6498: 1.6869142172420857
+  alpaca_12292: 1.3742383397471583
+  alpaca_7710: 1.3295773396385588
+  competition_math_5645: 1.3725387592313583
+  competition_math_6293: 1.4187340590340334
+  competition_math_5260: 1.274332499232887
+  bailbench_150: 1.4689856080043577
+  wildchat_8197: 1.4319383205439278
+  alpaca_3044: 1.1881068416158806
+  competition_math_8564: 1.3524765384121633
+  competition_math_2114: 1.5606032352032886
+  competition_math_4680: 1.5424138886590073
+  bailbench_98: 1.3999032993369245
+  competition_math_2487: 1.3166263449593762
+  alpaca_1216: 1.508560930793808
+  competition_math_1747: 1.363000546124606
+  alpaca_7551: 1.4073184136058206
+  competition_math_2982: 1.344225089116024
+  alpaca_12918: 1.3984222717788481
+  wildchat_56006: 1.5100368052117128
+  competition_math_2917: 1.3732963680349497
+  wildchat_18282: 1.4714477791383727
+  competition_math_309: 1.3536258616505303
+  wildchat_31155: 1.4605112360577839
+  wildchat_19096: 1.7079164999917353
+  wildchat_63667: 1.5799523880209039
+  bailbench_1072: 1.4842910858410656
+  bailbench_739: 1.4367326423491575
+  competition_math_8832: 1.7708439602630648
+  alpaca_11881: 1.403389072593988
+  competition_math_1654: 1.3260176418997152
+  competition_math_8361: 1.3484817251588603
+  wildchat_45421: 1.561567322731049
+  alpaca_12531: 1.3941734430362234
+  competition_math_11510: 1.7998835063656657
+  alpaca_13099: 1.368272004717015
+  competition_math_3538: 1.4671982787719184
+  wildchat_18380: 1.8980285991718557
+  competition_math_6196: 1.2781520311452934
+  competition_math_4147: 1.4535692121924875
+  bailbench_53: 1.4551568283450529
+  competition_math_4935: 1.3859428298667889
+  alpaca_10523: 1.4193849277548491
+  wildchat_45152: 1.564096953618314
+  alpaca_8748: 1.3374608856640742
+  alpaca_6321: 1.5447213293827886
+  bailbench_419: 1.4876454555850056
+  alpaca_11503: 1.3732444373776425
+  alpaca_13120: 1.3942278542732847
+  competition_math_2464: 1.4976664949011853
+  wildchat_66256: 1.4112040838085573
+  alpaca_3925: 1.495280181562564
+  competition_math_3738: 1.569659470225942
+  alpaca_13484: 1.4990677091990885
+  wildchat_27068: 1.635275297127949
+  wildchat_10152: 1.4822965897707898
+  wildchat_56101: 1.503534703163762
+  alpaca_310: 1.5121859834957647
+  alpaca_3750: 1.4659511964622278
+  wildchat_52282: 1.6813747801286993
+  bailbench_862: 1.314149269247298
+  competition_math_10741: 1.343121364752123
+  competition_math_6254: 1.3479676730888508
+  competition_math_3412: 1.6151699532461024
+  alpaca_2491: 1.5693661445788674
+  wildchat_15283: 1.8081831169919729
+  competition_math_2915: 1.5203948043587556
+  competition_math_7875: 1.3499117215547758
+  competition_math_10370: 1.4274740815790878
+  alpaca_2996: 1.3318135824691433
+  competition_math_7666: 1.6490701765673768
+  alpaca_511: 1.2733772742869682
+  wildchat_17403: 1.5245020560078437
+  competition_math_8313: 1.3174224332008018
+  competition_math_3029: 1.3490943093220973
+  competition_math_8999: 1.4403735304819276
+  wildchat_66208: 1.40439535884603
+  competition_math_10118: 1.413768557561849
+  bailbench_583: 1.5690440851843177
+  competition_math_8708: 1.3015831767248869
+  wildchat_42473: 1.294420344746026
+  alpaca_10164: 1.5022157177059843
+  competition_math_1314: 1.4968443622675052
+  wildchat_12561: 1.446507348750023
+  alpaca_1966: 1.3300822917386794
+  wildchat_43211: 1.4488515018864105
+  alpaca_14456: 1.4286492537284938
+  wildchat_38678: 1.4747993120986793
+  wildchat_49330: 1.642702063773374
+  bailbench_1436: 1.541822607065646
+  wildchat_55260: 1.4469696552136688
+  competition_math_10037: 1.5393286139342168
+  alpaca_2219: 1.3724294302610234
+  wildchat_11364: 1.3208868767136743
+  alpaca_8308: 1.5547831233196006
+  alpaca_5684: 1.4543742006942215
+  wildchat_60336: 1.519941218165968
+  competition_math_10638: 1.7333418125728315
+  wildchat_22466: 1.4487886486380142
+  wildchat_60651: 1.3548415682117678
+  alpaca_7381: 1.3361901451246971
+  alpaca_2267: 1.2608375711224271
+  alpaca_7959: 1.3573857953061652
+  bailbench_388: 1.3837991315589
+  wildchat_33685: 2.0026244446656416
+  alpaca_11055: 2.1262765454936647
+  alpaca_14049: 1.5312259276705136
+  alpaca_4453: 1.5385098220191995
+  alpaca_5010: 1.6103794542619536
+  bailbench_563: 1.2901679151195076
+  wildchat_77681: 1.5929922355037809
+  wildchat_58066: 1.5713636809723321
+  competition_math_660: 1.76751274404913
+  competition_math_7870: 1.2997306722371964
+  competition_math_5978: 1.4047943582254034
+  wildchat_53485: 1.312105326564814
+  competition_math_2385: 1.377654241810153
+  wildchat_59289: 1.3967437612438514
+  alpaca_3523: 1.4000417543857948
+  alpaca_11937: 1.2933938488331782
+  wildchat_63183: 1.6761611700708996
+  competition_math_11822: 1.4004931949636175
+  alpaca_6827: 1.5509697932800002
+  competition_math_8448: 1.5975209662168977
+  competition_math_3078: 1.3654654287841614
+  alpaca_8256: 1.6581616134895523
+  competition_math_5050: 1.3462253919503069
+  competition_math_11834: 1.3802084527962515
+  alpaca_13989: 1.4111991702871258
+  alpaca_3713: 1.4051860276561663
+  competition_math_3481: 1.6888222018726773
+  competition_math_7147: 1.48951961654003
+  competition_math_5204: 1.390054614894592
+  alpaca_6585: 1.4446849605043768
+  alpaca_7806: 1.558667969411421
+  competition_math_2473: 1.317840457588069
+  competition_math_287: 1.8360778048317576
+  wildchat_6167: 1.5352462985080113
+  alpaca_6712: 1.3474121925967804
+  wildchat_56174: 1.3827739435581705
+  alpaca_8540: 1.6295772598317821
+  competition_math_8228: 1.808562436490328
+  alpaca_14375: 1.5836380224364208
+  competition_math_11748: 1.3474219824903757
+  wildchat_75260: 1.5474818884073447
+  alpaca_6580: 1.5318352206490107
+  competition_math_4159: 1.375771141644056
+  wildchat_21653: 1.5423618338762213
+  wildchat_5357: 1.355572863019565
+  wildchat_42425: 1.430232567597361
+  competition_math_10201: 1.5334200719117144
+  competition_math_2574: 1.458398090512894
+  alpaca_1846: 1.645321599427393
+  wildchat_52379: 1.6230875895230046
+  wildchat_73594: 1.3919334472299292
+  alpaca_8149: 1.3454142629687933
+  alpaca_7686: 1.3038627189762364
+  alpaca_11090: 1.4803623022747843
+  bailbench_1416: 1.7261717222064674
+  competition_math_7349: 1.5401143229036602
+  wildchat_73176: 1.5544883336129867
+  competition_math_8438: 1.6371817253501657
+  wildchat_30204: 1.4103866002312524
+  wildchat_3354: 1.4110826641790786
+  wildchat_14342: 1.69025958847926
+  competition_math_11942: 1.3541665976247959
+  wildchat_32207: 1.7296274274480914
+  alpaca_4519: 1.4009795228088608
+  wildchat_50515: 1.4334593912859164
+  alpaca_14023: 1.3606920592466039
+  competition_math_5602: 1.364979403832304
+  wildchat_52324: 1.7304619443084908
+  competition_math_1122: 1.4940146272493648
+  alpaca_10162: 1.3783375562825093
+  competition_math_10448: 1.7261458009366757
+  competition_math_6885: 1.5010014702949055
+  bailbench_262: 1.4132381749747074
+  wildchat_27011: 1.4512195669012269
+  competition_math_5489: 1.795615688315125
+  wildchat_46525: 1.51472992075017
+  wildchat_47528: 1.565548607008465
+  alpaca_1208: 1.4615917574552981
+  bailbench_1408: 1.309462313399023
+  competition_math_6440: 1.724787877308414
+  alpaca_3369: 1.4409365310118907
+  alpaca_11192: 1.683463405447731
+  competition_math_6723: 1.3902618353466885
+  competition_math_2304: 1.5612044925889956
+  wildchat_9602: 1.3317023361972429
+  alpaca_13272: 1.3488631183855881
+  alpaca_7060: 1.4666823763919987
+  alpaca_7747: 1.4100047314420214
+  competition_math_8781: 1.6583440176096371
+  wildchat_16490: 1.2939020590541448
+  alpaca_12892: 1.3081022100024102
+  alpaca_8236: 1.3724271694516421
+  competition_math_6062: 1.4509610415740022
+  competition_math_12310: 1.3495846907532065
+  competition_math_5196: 1.3856726976305387
+  competition_math_2480: 1.3781594611647308
+  competition_math_4463: 1.6151774210535819
+  competition_math_3961: 1.6442444950375366
+  wildchat_64607: 1.500384525490415
+  alpaca_7776: 1.6071354875682125
+  wildchat_44644: 1.440741632247658
+  competition_math_4420: 1.2754236478375451
+  alpaca_3235: 1.4967419334569259
+  alpaca_3131: 1.4446282404803592
+  alpaca_10095: 1.36687410766269
+  competition_math_10185: 1.4675987434551614
+  wildchat_3342: 1.381430855179478
+  wildchat_31574: 1.654136804050177
+  bailbench_746: 1.4244347053281572
+  alpaca_779: 1.4716749600068146
+  competition_math_6815: 1.5486250909709802
+  competition_math_8574: 1.356415787822693
+  bailbench_771: 1.6132856224855567
+  competition_math_5133: 1.4637635153052186
+  competition_math_4027: 1.334819726545263
+  wildchat_1148: 1.397305783566671
+  competition_math_12107: 1.5223329850876879
+  alpaca_947: 1.3922513409145483
+  competition_math_7914: 1.5018173227999085
+  alpaca_8877: 1.4322429735871383
+  competition_math_9974: 1.7365658568702345
+  wildchat_57672: 1.595806495484281
+  competition_math_2070: 1.449466203521953
+  wildchat_28598: 1.568374603089024
+  alpaca_11119: 1.5456980452724631
+  competition_math_5673: 1.2821432904585917
+  wildchat_3700: 1.288373506244888
+  wildchat_44687: 1.556299225167259
+  competition_math_7598: 1.4305657062235162
+  alpaca_7000: 1.3505266518056631
+  competition_math_2552: 1.4955499704903932
+  competition_math_10221: 1.3134994309247696
+  alpaca_4777: 1.3666286312257876
+  wildchat_61023: 1.3299825726141432
+  competition_math_3031: 1.6906116625319578
+  competition_math_5759: 1.5980402957821918
+  alpaca_8831: 1.4258738135410758
+  alpaca_3057: 1.4896815712561742
+  competition_math_9765: 1.4555405447043543
+  alpaca_2220: 1.2594558073648565
+  competition_math_3866: 1.4124138586892416
+  alpaca_1108: 1.436501562818174
+  competition_math_10482: 1.5655669115368946
+  alpaca_9902: 1.6857277130551729
+  wildchat_27685: 1.4064950920601262
+  competition_math_6160: 1.2525821850018084
+  wildchat_8118: 1.3854363396474572
+  alpaca_2701: 1.4309547678034436
+  competition_math_11257: 1.4643344774096272
+  wildchat_74635: 1.3672467240322193
+  wildchat_62450: 1.4586211631585446
+  competition_math_6884: 1.7629833253940048
+  competition_math_1491: 1.3435601921035896
+  competition_math_9247: 1.3188120034880784
+  competition_math_4726: 1.4571490876281974
+  alpaca_9102: 1.5516680460963945
+  wildchat_17126: 1.6521040558981404
+  competition_math_2635: 1.514603908822677
+  competition_math_1803: 1.3093581111631492
+  alpaca_2864: 1.533220049493736
+  competition_math_5176: 1.2425150682265387
+  bailbench_1374: 1.4286209613275385
+  alpaca_12363: 1.4138787042131593
+  competition_math_3050: 1.3063996390792452
+  competition_math_12390: 1.4191151693560402
+  wildchat_26367: 1.342696111462405
+  wildchat_73015: 1.501298561541355
+  competition_math_6801: 1.4135708584843325
+  wildchat_16487: 1.6143240133778856
+  alpaca_7196: 1.4206184225390894
+  wildchat_1067: 1.2322122486121618
+  competition_math_5690: 1.3329614036027984
+  competition_math_565: 1.541123094730153
+  alpaca_10396: 1.3758236659240137
+  alpaca_6616: 1.3019367703867681
+  alpaca_7427: 1.4695519614544335
+  alpaca_9693: 1.530068176540188
+  alpaca_14149: 1.2987746675182827
+  alpaca_8002: 1.3944181064612506
+  wildchat_26138: 1.4469637853664958
+  competition_math_10705: 1.4540826993525022
+  wildchat_43126: 1.3631727049863975
+  competition_math_12106: 1.4385293199596236
+  wildchat_4640: 1.3617509120822449
+  competition_math_2715: 2.0977184710468446
+  competition_math_10645: 1.3962344434733251
+  competition_math_3607: 1.3935494529342018
+  alpaca_5325: 1.5716004390296714
+  alpaca_600: 1.3292216579243228
+  alpaca_8670: 1.3559185353905827
+  wildchat_70625: 1.2238089095506122
+  wildchat_61047: 1.3474699824874234
+  alpaca_3827: 1.4297825294892972
+  competition_math_2940: 1.2691723817209668
+  competition_math_7716: 1.5680838522596672
+  alpaca_11762: 1.324396961357324
+  alpaca_12988: 1.4813119375815362
+  competition_math_266: 1.40791812078193
+  alpaca_13449: 1.5454804761850884
+  wildchat_14659: 1.5613980107279093
+  alpaca_721: 1.324184712800359
+  alpaca_9299: 1.515895959772275
+  wildchat_52387: 1.3885072615108187
+  competition_math_10145: 1.6470451389221354
+  alpaca_13230: 1.4255717277017739
+  competition_math_8917: 1.3034153079260962
+  competition_math_1887: 1.4420682031398135
+  wildchat_3239: 1.4568354227740197
+  wildchat_36466: 1.8092036576658885
+  competition_math_10542: 1.421849434731587
+  competition_math_2879: 1.445756361618285
+  competition_math_6478: 1.4294944056998145
+  competition_math_12120: 1.706288291104915
+  alpaca_13786: 1.3755340255074682
+  competition_math_1060: 1.474926727309683
+  competition_math_9179: 1.6269208326441238
+  alpaca_11200: 1.3856696896348109
+  wildchat_55478: 1.5823728494942513
+  wildchat_2678: 1.4050921083324293
+  alpaca_13463: 1.4745461937651834
+  wildchat_28489: 1.4324617053817024
+  competition_math_7936: 1.531660168978496
+  alpaca_13567: 1.3893663062784716
+  wildchat_34229: 1.4791932823819676
+  competition_math_9789: 1.4631947409461354
+  competition_math_7203: 1.3656371633987883
+  bailbench_645: 1.4426421629964254
+  alpaca_8504: 1.2900862678388993
+  wildchat_68279: 1.2904423861521597
+  bailbench_653: 1.4660457500447288
+  competition_math_4675: 1.4971124433878829
+  alpaca_12852: 1.4962567256000325
+  competition_math_7022: 1.557489590293238
+  wildchat_75309: 1.57976161347961
+  alpaca_6899: 1.3628963485200616
+  alpaca_5915: 1.6443581605817323
+  competition_math_7174: 1.3211394496489082
+  competition_math_7049: 1.3980764153854617
+  competition_math_4212: 1.4216059468106463
+  competition_math_12032: 1.465567355300888
+  wildchat_55218: 1.6100881229709043
+  competition_math_9121: 1.5970094052372532
+  alpaca_4724: 1.476986672930581
+  alpaca_4718: 1.4261059149339932
+  alpaca_7563: 1.3596049051659647
+  wildchat_77592: 1.613282825380994
+  wildchat_62284: 1.5137805197660479
+  wildchat_5398: 1.5988329592816142
+  alpaca_9326: 1.6133262855388246
+  competition_math_9661: 1.3706183460688333
+  wildchat_19334: 1.504500633558685
+  competition_math_1754: 1.385687568654779
+  alpaca_3276: 1.5364344522099251
+  competition_math_7075: 1.5758915682176788
+  competition_math_8648: 1.5530419032224725
+  alpaca_9264: 1.858157807178591
+  competition_math_7880: 1.4551446821175555
+  wildchat_5001: 1.6154660458048034
+  competition_math_3929: 1.5302336701168633
+  competition_math_10626: 1.4509242644120859
+  alpaca_315: 1.6404831881023436
+  competition_math_147: 1.3253588061195936
+  wildchat_10413: 1.491442327099914
+  competition_math_11629: 1.7438007600836012
+  wildchat_16336: 2.179785732007021
+  alpaca_12684: 1.3094118485358768
+  alpaca_12435: 1.3662074122752979
+  alpaca_6669: 1.368591873557828
+  competition_math_7445: 1.348941347494992
+  alpaca_5188: 1.5620507738097886
+  alpaca_11831: 1.3552276039990823
+  alpaca_657: 1.3115753238300099
+  competition_math_3013: 1.41333421759287
+  competition_math_5096: 1.4751955344305825
+  competition_math_9531: 1.6987984662070037
+  wildchat_55072: 1.4419064628861544
+  competition_math_9298: 1.5252719990394485
+  wildchat_25387: 1.8543712101173402
+  wildchat_10664: 1.8003354653905967
+  bailbench_813: 1.232341283301613
+  competition_math_10347: 1.8782511228479368
+  alpaca_13990: 1.4364689797729853
+  alpaca_9143: 1.5662365265447948
+  competition_math_6186: 1.3463182425856384
+  competition_math_2458: 1.6344099786180166
+  wildchat_46421: 1.4171620040253323
+  alpaca_4072: 1.4264175516455013
+  competition_math_8582: 1.4759633731460438
+  competition_math_11263: 1.5247518342017585
+  alpaca_13008: 1.3810912952132859
+  alpaca_8819: 1.3507520860407387
+  alpaca_264: 1.3781959313206489
+  wildchat_70126: 1.7998798499001192
+  alpaca_3160: 1.5358197527318527
+  bailbench_1593: 1.4129381287046443
+  alpaca_1600: 1.4617146835354948
+  wildchat_21668: 1.5317478629416217
+  competition_math_49: 1.6912232453156872
+  competition_math_351: 1.37006078995159
+  wildchat_37156: 1.4692142022649248
+  competition_math_6736: 1.3875708260456745
+  competition_math_5329: 1.4149646945753733
+  wildchat_28177: 1.42247970038981
+  competition_math_10437: 1.456052496917028
+  competition_math_1570: 1.858706165095491
+  competition_math_10914: 2.121379774061664
+  alpaca_101: 1.423665690065884
+  competition_math_852: 1.5912781642407248
+  wildchat_72685: 1.4966257679726298
+  competition_math_3197: 1.4577776728961138
+  wildchat_59614: 1.4623169576094248
+  competition_math_4704: 1.987319123958257
+  competition_math_7583: 1.4758950932696895
+  wildchat_73250: 1.3244010689983199
+  competition_math_11454: 1.6571878059559366
+  competition_math_2123: 1.2939537043174911
+  competition_math_10718: 1.9092334784728795
+  alpaca_3091: 1.4741868110801057
+  competition_math_7653: 1.3993743583082634
+  alpaca_5958: 1.43275814073149
+  competition_math_5607: 1.5650473861711778
+  wildchat_28371: 1.9317557397159342
+  competition_math_6007: 1.993121689975596
+  wildchat_28292: 1.5110933016789685
+  competition_math_1417: 1.5294058328654945
+  alpaca_5669: 1.5470364575956652
+  wildchat_71087: 1.4435140435661051
+  alpaca_1743: 1.3363411856609502
+  alpaca_295: 1.6079601256518314
+  wildchat_77306: 1.426252083872502
+  alpaca_4015: 1.4148081717219094
+  alpaca_4055: 1.2702810071619053
+  alpaca_1057: 1.709832601380219
+  wildchat_31440: 1.3419680459112857
+  bailbench_157: 1.36979262615803
+  alpaca_14411: 1.809039305235326
+  wildchat_39099: 1.5004335954634724
+  alpaca_8635: 1.4085584572822312
+  bailbench_697: 1.505785653868567
+  alpaca_383: 1.4667027093361955
+  alpaca_13428: 1.6241873678001024
+  competition_math_5108: 1.3348445974403969
+  alpaca_14803: 1.32724837715646
+  alpaca_5737: 1.3773089281608757
+  competition_math_6746: 1.7195453251766308
+  alpaca_9146: 1.4380649429685357
+  competition_math_7850: 1.261299828405051
+  wildchat_42494: 1.4732140400500673
+  competition_math_734: 1.535773069366338
+  alpaca_11061: 1.4967449144780218
+  competition_math_3057: 1.5834077745904198
+  competition_math_8350: 1.3560950781205656
+  wildchat_21535: 1.494252763631561
+  wildchat_7709: 1.6737021967840942
+  bailbench_102: 1.5552768579723175
+  competition_math_1854: 1.5655958053447143
+  competition_math_12363: 1.386081358890086
+  wildchat_48346: 1.737605580029849
+  wildchat_71545: 1.51741285708387
+  wildchat_10375: 1.6737581635915544
+  competition_math_3457: 1.6607649908646143
+  wildchat_41274: 1.429900761279928
+  competition_math_7056: 1.8154477609773343
+  competition_math_3401: 1.8760894323814512
+  alpaca_3380: 1.4011846093610067
+  competition_math_5983: 1.3560965561025744
+  competition_math_3133: 1.4318617878909636
+  wildchat_17083: 1.2958937907725991
+  competition_math_5738: 1.4413600442592007
+  competition_math_8093: 1.7757944759940243
+  competition_math_5735: 1.3971771126525556
+  wildchat_14213: 1.5987231624130638
+  wildchat_9144: 1.449054000431635
+  wildchat_2499: 1.6715020508893788
+  alpaca_4603: 1.4742075912375412
+  competition_math_2710: 1.6641138903767259
+  alpaca_6286: 1.335994350476635
+  wildchat_26506: 1.5321783224663612
+  competition_math_8069: 1.6517670802825994
+  alpaca_2968: 1.472926732326952
+  competition_math_10354: 1.3821194901076495
+  competition_math_7643: 1.404017826164295
+  alpaca_14390: 1.4255088158986793
+  competition_math_6844: 1.4635915087300244
+  competition_math_10072: 1.4245916110908388
+  wildchat_22388: 1.4347723916182331
+  alpaca_1386: 1.3836271848717776
+  alpaca_6751: 1.6888948340078767
+  competition_math_5797: 1.3459677180706475
+  wildchat_11617: 1.5156610341742585
+  wildchat_16390: 1.3583768434956078
+  wildchat_10706: 1.4755162558075927
+  alpaca_6131: 1.4814646442548633
+  competition_math_10057: 1.952548903467143
+  wildchat_76111: 1.5356215741374004
+  wildchat_24095: 1.4091654729494474
+  alpaca_11973: 1.465377735781851
+  bailbench_1229: 1.2718846238810604
+  wildchat_26611: 1.890977704801113
+  alpaca_529: 1.390743546711824
+  competition_math_6347: 1.4970640256954142
+  wildchat_24036: 1.616666196186966
+  wildchat_2549: 1.6060598635001522
+  alpaca_3486: 1.344807690534887
+  wildchat_51514: 1.5439213240573895
+  alpaca_6914: 1.323888186478315
+  competition_math_8531: 1.4366235467715016
+  wildchat_14609: 1.464857310633247
+  competition_math_11057: 1.6149972849289669
+  bailbench_995: 1.673165103158301
+  bailbench_1296: 1.55950104867221
+  competition_math_1805: 1.4341435076091609
+  wildchat_27234: 1.8443952718345147
+  wildchat_54098: 1.5618482190581038
+  alpaca_10549: 1.559299064556693
+  wildchat_43514: 1.6594997807523568
+  competition_math_12320: 1.2817418447717581
+  competition_math_2011: 1.4841827189298247
+  alpaca_1109: 1.374413078723025
+  wildchat_14345: 1.6174247418639907
+  competition_math_5859: 1.5314008962261678
+  alpaca_11334: 1.7705740884995549
+  wildchat_4609: 1.4666479833999286
+  competition_math_1718: 1.4666112115285646
+  wildchat_41647: 1.6301757101463816
+  wildchat_57421: 2.2391184719594817
+n_observations: 2880
+method: trueskill
+model: llama-3.1-8b
+template_name: post_ranking_basic_en_v1_cseed0
+response_format: tool_use
+seed: 0
+ranking:
+- alpaca_10700
+- wildchat_26611
+- competition_math_5456
+- wildchat_57672
+- bailbench_419
+- competition_math_3850
+- wildchat_45421
+- alpaca_13120
+- alpaca_3539
+- competition_math_6007
+- wildchat_41274
+- bailbench_746
+- alpaca_2219
+- alpaca_8452
+- wildchat_30204
+- alpaca_3057
+- wildchat_12214
+- wildchat_9602
+- competition_math_522
+- alpaca_10549
+- wildchat_20385
+- alpaca_13747
+- wildchat_48431
+- alpaca_2864
+- alpaca_8540
+- competition_math_287
+- wildchat_37156
+- wildchat_79430
+- alpaca_807
+- competition_math_1570
+- alpaca_13484
+- wildchat_8473
+- competition_math_8996
+- competition_math_6746
+- alpaca_11631
+- competition_math_3929
+- wildchat_77681
+- competition_math_11403
+- bailbench_98
+- competition_math_9531
+- wildchat_17083
+- competition_math_10741
+- alpaca_5188
+- alpaca_4596
+- bailbench_583
+- alpaca_7928
+- bailbench_1436
+- alpaca_13449
+- alpaca_4301
+- wildchat_69072
+- competition_math_8781
+- alpaca_6517
+- wildchat_68279
+- alpaca_12801
+- competition_math_6563
+- competition_math_3457
+- alpaca_4637
+- alpaca_11894
+- competition_math_6440
+- competition_math_9765
+- competition_math_2879
+- competition_math_1779
+- competition_math_9677
+- alpaca_1109
+- competition_math_5143
+- wildchat_2591
+- competition_math_1491
+- competition_math_11855
+- competition_math_5050
+- competition_math_2534
+- alpaca_2082
+- wildchat_62450
+- alpaca_12645
+- alpaca_11881
+- alpaca_9339
+- wildchat_68677
+- alpaca_4015
+- competition_math_9974
+- competition_math_8397
+- wildchat_73643
+- alpaca_4297
+- wildchat_20615
+- competition_math_8715
+- wildchat_16336
+- alpaca_1108
+- alpaca_2968
+- competition_math_11748
+- competition_math_1227
+- wildchat_8197
+- wildchat_11364
+- competition_math_1800
+- wildchat_47528
+- alpaca_8431
+- alpaca_13523
+- alpaca_1891
+- competition_math_2290
+- competition_math_4726
+- competition_math_5489
+- alpaca_4234
+- wildchat_22455
+- competition_math_8448
+- alpaca_14356
+- alpaca_14456
+- bailbench_1374
+- alpaca_9693
+- competition_math_9121
+- competition_math_10718
+- competition_math_10475
+- alpaca_11200
+- competition_math_10863
+- alpaca_7747
+- competition_math_8249
+- competition_math_2635
+- alpaca_9206
+- alpaca_12363
+- alpaca_9715
+- wildchat_3700
+- bailbench_813
+- alpaca_4668
+- competition_math_10437
+- competition_math_6884
+- competition_math_5260
+- wildchat_61192
+- wildchat_28177
+- competition_math_1747
+- alpaca_10095
+- alpaca_6585
+- alpaca_11942
+- wildchat_43386
+- wildchat_3239
+- competition_math_7598
+- wildchat_68575
+- alpaca_9837
+- bailbench_157
+- competition_math_266
+- alpaca_14411
+- alpaca_12290
+- wildchat_79409
+- alpaca_315
+- alpaca_3003
+- competition_math_11257
+- alpaca_9945
+- competition_math_3050
+- alpaca_6703
+- wildchat_67632
+- competition_math_6347
+- competition_math_6207
+- competition_math_7056
+- alpaca_12292
+- competition_math_7936
+- competition_math_8340
+- competition_math_2405
+- wildchat_71255
+- competition_math_2464
+- wildchat_5357
+- alpaca_2220
+- wildchat_56174
+- wildchat_7709
+- alpaca_3408
+- competition_math_7391
+- competition_math_2011
+- alpaca_13225
+- alpaca_3648
+- alpaca_7790
+- competition_math_1057
+- competition_math_11587
+- alpaca_8812
+- alpaca_8670
+- competition_math_12060
+- competition_math_11510
+- bailbench_110
+- alpaca_5737
+- competition_math_10037
+- alpaca_9264
+- competition_math_2473
+- alpaca_3683
+- competition_math_6498
+- bailbench_1408
+- competition_math_5255
+- alpaca_5709
+- alpaca_13099
+- wildchat_28598
+- competition_math_3618
+- wildchat_2549
+- alpaca_11626
+- wildchat_36336
+- competition_math_3445
+- alpaca_3369
+- competition_math_5738
+- wildchat_14599
+- competition_math_7941
+- wildchat_49330
+- competition_math_10705
+- wildchat_61047
+- competition_math_1535
+- bailbench_1179
+- wildchat_69331
+- alpaca_1106
+- alpaca_12369
+- bailbench_314
+- alpaca_9146
+- competition_math_7880
+- bailbench_1608
+- alpaca_8504
+- competition_math_3866
+- alpaca_1216
+- wildchat_14213
+- alpaca_7427
+- competition_math_8118
+- alpaca_1846
+- competition_math_2214
+- alpaca_9718
+- alpaca_13463
+- competition_math_2940
+- alpaca_10162
+- competition_math_966
+- wildchat_31574
+- wildchat_17045
+- alpaca_12852
+- competition_math_10752
+- alpaca_902
+- competition_math_4268
+- wildchat_66208
+- alpaca_13310
+- wildchat_24036
+- wildchat_77592
+- alpaca_13567
+- competition_math_351
+- bailbench_1373
+- bailbench_323
+- bailbench_1229
+- alpaca_1600
+- alpaca_3283
+- alpaca_6911
+- alpaca_103
+- competition_math_7604
+- bailbench_1296
+- alpaca_5913
+- competition_math_7643
+- competition_math_66
+- competition_math_10686
+- competition_math_11007
+- competition_math_11596
+- wildchat_16490
+- competition_math_6975
+- competition_math_8355
+- wildchat_73594
+- bailbench_862
+- wildchat_14659
+- wildchat_38178
+- wildchat_76267
+- competition_math_436
+- alpaca_8308
+- competition_math_734
+- alpaca_3091
+- competition_math_9321
+- alpaca_12892
+- wildchat_27685
+- wildchat_28596
+- alpaca_14796
+- competition_math_10145
+- competition_math_3135
+- competition_math_3013
+- competition_math_9789
+- alpaca_11937
+- wildchat_1059
+- bailbench_629
+- bailbench_1228
+- competition_math_1078
+- wildchat_51345
+- alpaca_12435
+- alpaca_8256
+- alpaca_7672
+- competition_math_1654
+- alpaca_6580
+- bailbench_1593
+- wildchat_10152
+- wildchat_45152
+- wildchat_73485
+- bailbench_1416
+- competition_math_5978
+- alpaca_657
+- competition_math_4010
+- wildchat_46525
+- alpaca_13276
+- wildchat_44052
+- wildchat_26138
+- alpaca_9143
+- alpaca_9902
+- alpaca_3713
+- alpaca_9710
+- alpaca_5898
+- wildchat_21590
+- alpaca_4995
+- alpaca_101
+- alpaca_9326
+- competition_math_11822
+- alpaca_2971
+- competition_math_10201
+- wildchat_44644
+- competition_math_8350
+- alpaca_12988
+- competition_math_3481
+- wildchat_28292
+- wildchat_60336
+- alpaca_3827
+- wildchat_71045
+- alpaca_13736
+- wildchat_15129
+- competition_math_9298
+- wildchat_8118
+- alpaca_7710
+- wildchat_21653
+- competition_math_8877
+- competition_math_9179
+- competition_math_5108
+- competition_math_5176
+- alpaca_1438
+- wildchat_26367
+- wildchat_19096
+- competition_math_1437
+- wildchat_31440
+- competition_math_2062
+- alpaca_9295
+- wildchat_58066
+- wildchat_51266
+- wildchat_22653
+- competition_math_234
+- wildchat_17126
+- alpaca_8149
+- alpaca_4519
+- competition_math_2552
+- competition_math_1459
+- alpaca_3131
+- wildchat_28141
+- alpaca_7992
+- alpaca_8002
+- competition_math_2458
+- wildchat_71087
+- competition_math_4675
+- wildchat_28489
+- competition_math_9492
+- wildchat_14609
+- competition_math_5204
+- wildchat_37073
+- bailbench_967
+- alpaca_5279
+- wildchat_12003
+- competition_math_10449
+- competition_math_9932
+- wildchat_12051
+- alpaca_6616
+- wildchat_47537
+- competition_math_9661
+- competition_math_4212
+- alpaca_11352
+- wildchat_20098
+- wildchat_64480
+- wildchat_73250
+- wildchat_52282
+- alpaca_5925
+- alpaca_7902
+- alpaca_6266
+- competition_math_5506
+- wildchat_24095
+- competition_math_1692
+- wildchat_30389
+- wildchat_43514
+- alpaca_511
+- alpaca_1057
+- alpaca_1271
+- alpaca_4724
+- wildchat_71088
+- competition_math_5145
+- alpaca_14220
+- alpaca_10723
+- alpaca_1371
+- competition_math_927
+- competition_math_11427
+- alpaca_14431
+- competition_math_7869
+- competition_math_6376
+- alpaca_8819
+- alpaca_6801
+- competition_math_6478
+- alpaca_3402
+- alpaca_1627
+- competition_math_2574
+- alpaca_11503
+- competition_math_3491
+- competition_math_3029
+- competition_math_3235
+- competition_math_4027
+- competition_math_3961
+- competition_math_10611
+- competition_math_9903
+- competition_math_6077
+- competition_math_5983
+- competition_math_7445
+- competition_math_7343
+- alpaca_310
+- competition_math_5485
+- competition_math_7203
+- wildchat_51514
+- alpaca_3380
+- wildchat_49386
+- competition_math_4306
+- competition_math_1060
+- alpaca_7551
+- competition_math_4738
+- wildchat_66256
+- competition_math_12370
+- competition_math_5645
+- wildchat_77097
+- alpaca_7806
+- competition_math_11033
+- competition_math_3534
+- alpaca_14375
+- competition_math_5241
+- wildchat_42494
+- alpaca_2701
+- alpaca_7196
+- competition_math_6736
+- alpaca_1480
+- alpaca_6827
+- alpaca_9102
+- alpaca_9299
+- wildchat_6665
+- competition_math_8564
+- alpaca_14750
+- wildchat_4640
+- wildchat_46658
+- wildchat_27068
+- competition_math_1854
+- alpaca_7381
+- bailbench_3
+- competition_math_11774
+- bailbench_1491
+- alpaca_11533
+- competition_math_3412
+- wildchat_52324
+- alpaca_11973
+- competition_math_10645
+- alpaca_9230
+- alpaca_6751
+- alpaca_11061
+- wildchat_43126
+- competition_math_2987
+- alpaca_3925
+- wildchat_18282
+- alpaca_12918
+- wildchat_23441
+- competition_math_2463
+- bailbench_756
+- bailbench_426
+- competition_math_6801
+- competition_math_10991
+- competition_math_2385
+- competition_math_1303
+- alpaca_5010
+- competition_math_5121
+- alpaca_8481
+- wildchat_55260
+- competition_math_6723
+- bailbench_53
+- competition_math_2480
+- alpaca_6820
+- alpaca_6808
+- competition_math_2828
+- competition_math_852
+- competition_math_8
+- bailbench_1558
+- alpaca_8643
+- competition_math_3669
+- wildchat_57421
+- alpaca_7402
+- competition_math_6600
+- alpaca_12039
+- wildchat_64607
+- competition_math_6293
+- wildchat_37482
+- alpaca_3209
+- competition_math_2982
+- competition_math_10072
+- competition_math_8093
+- alpaca_3044
+- competition_math_10057
+- wildchat_14342
+- wildchat_42473
+- competition_math_3607
+- competition_math_12107
+- alpaca_7430
+- competition_math_6380
+- wildchat_17403
+- competition_math_7185
+- competition_math_10613
+- competition_math_2397
+- alpaca_2267
+- competition_math_693
+- alpaca_9313
+- competition_math_11090
+- competition_math_7075
+- alpaca_947
+- wildchat_10165
+- alpaca_295
+- wildchat_61282
+- alpaca_5652
+- alpaca_13990
+- alpaca_383
+- wildchat_27011
+- wildchat_26462
+- wildchat_28371
+- alpaca_10631
+- bailbench_681
+- competition_math_12390
+- alpaca_6712
+- alpaca_3504
+- wildchat_22388
+- competition_math_5873
+- alpaca_264
+- alpaca_7581
+- wildchat_55072
+- alpaca_4656
+- bailbench_1337
+- wildchat_5001
+- competition_math_4803
+- alpaca_2996
+- competition_math_9227
+- alpaca_11055
+- bailbench_900
+- wildchat_38425
+- competition_math_8999
+- competition_math_12320
+- alpaca_7563
+- alpaca_1966
+- alpaca_13272
+- alpaca_10396
+- alpaca_13428
+- alpaca_3425
+- competition_math_2917
+- competition_math_9309
+- wildchat_76614
+- wildchat_39099
+- competition_math_2487
+- competition_math_147
+- competition_math_6231
+- alpaca_3235
+- alpaca_10944
+- alpaca_542
+- competition_math_8784
+- alpaca_8831
+- alpaca_10449
+- alpaca_3486
+- alpaca_5915
+- bailbench_1196
+- bailbench_388
+- alpaca_565
+- wildchat_78651
+- wildchat_3342
+- wildchat_74635
+- competition_math_9291
+- alpaca_8236
+- wildchat_68428
+- wildchat_63255
+- wildchat_59289
+- alpaca_6899
+- competition_math_5602
+- alpaca_4055
+- competition_math_3008
+- alpaca_1743
+- competition_math_11509
+- wildchat_9144
+- competition_math_8735
+- alpaca_10882
+- competition_math_12106
+- bailbench_1458
+- alpaca_7444
+- alpaca_11119
+- alpaca_10049
+- wildchat_72685
+- competition_math_4686
+- alpaca_10976
+- competition_math_5580
+- wildchat_41647
+- alpaca_13495
+- alpaca_7060
+- alpaca_2491
+- wildchat_63532
+- wildchat_46421
+- wildchat_10375
+- wildchat_48607
+- competition_math_2
+- competition_math_8531
+- competition_math_12363
+- competition_math_7809
+- competition_math_2687
+- wildchat_78602
+- competition_math_5039
+- competition_math_2925
+- competition_math_2304
+- competition_math_4766
+- wildchat_4609
+- wildchat_31199
+- competition_math_9134
+- competition_math_4091
+- alpaca_12594
+- competition_math_6182
+- alpaca_3523
+- competition_math_8304
+- competition_math_5690
+- competition_math_5563
+- alpaca_6047
+- competition_math_12475
+- alpaca_14197
+- competition_math_4159
+- competition_math_4784
+- alpaca_13989
+- competition_math_3738
+- alpaca_2163
+- competition_math_4680
+- competition_math_7583
+- competition_math_12310
+- competition_math_7024
+- wildchat_40303
+- competition_math_11980
+- competition_math_3814
+- bailbench_1176
+- alpaca_8748
+- wildchat_2678
+- competition_math_8313
+- competition_math_9775
+- wildchat_53485
+- bailbench_1159
+- competition_math_6844
+- competition_math_6777
+- competition_math_8740
+- alpaca_10523
+- competition_math_4897
+- wildchat_74560
+- competition_math_4420
+- alpaca_14149
+- alpaca_7734
+- competition_math_10626
+- wildchat_9636
+- alpaca_5669
+- wildchat_32207
+- wildchat_16390
+- competition_math_7850
+- alpaca_6286
+- wildchat_32423
+- alpaca_11090
+- competition_math_9583
+- alpaca_8157
+- competition_math_8361
+- wildchat_60651
+- competition_math_8438
+- competition_math_8574
+- alpaca_551
+- wildchat_1067
+- wildchat_38687
+- competition_math_3057
+- wildchat_70126
+- competition_math_1718
+- alpaca_12684
+- competition_math_7870
+- alpaca_14390
+- alpaca_5684
+- competition_math_5797
+- alpaca_14803
+- wildchat_14345
+- wildchat_61023
+- competition_math_10347
+- competition_math_1010
+- wildchat_11617
+- competition_math_11017
+- competition_math_496
+- wildchat_44687
+- competition_math_3401
+- alpaca_11831
+- bailbench_697
+- alpaca_14023
+- wildchat_38678
+- wildchat_77306
+- competition_math_11942
+- alpaca_7240
+- competition_math_8708
+- bailbench_653
+- competition_math_7147
+- alpaca_13760
+- competition_math_1314
+- competition_math_2114
+- competition_math_7875
+- wildchat_18494
+- alpaca_10541
+- wildchat_75309
+- competition_math_10277
+- bailbench_794
+- alpaca_5958
+- competition_math_2266
+- competition_math_1561
+- alpaca_7959
+- alpaca_10246
+- competition_math_3583
+- alpaca_8877
+- wildchat_55478
+- competition_math_9839
+- wildchat_73176
+- competition_math_6402
+- wildchat_24119
+- competition_math_7347
+- wildchat_42595
+- competition_math_9946
+- competition_math_1887
+- wildchat_21668
+- alpaca_13786
+- competition_math_3749
+- alpaca_3579
+- competition_math_9247
+- wildchat_9544
+- competition_math_1803
+- alpaca_3750
+- competition_math_10354
+- competition_math_11834
+- competition_math_1754
+- alpaca_4777
+- competition_math_3538
+- competition_math_10221
+- alpaca_4603
+- wildchat_62284
+- wildchat_39121
+- wildchat_52387
+- wildchat_3354
+- competition_math_11360
+- alpaca_7686
+- competition_math_565
+- alpaca_600
+- competition_math_1249
+- competition_math_11332
+- wildchat_10413
+- bailbench_1138
+- bailbench_645
+- alpaca_6669
+- alpaca_2532
+- competition_math_10707
+- competition_math_5467
+- competition_math_5402
+- alpaca_11762
+- wildchat_21535
+- alpaca_12335
+- alpaca_6914
+- alpaca_3160
+- competition_math_4175
+- competition_math_3197
+- competition_math_7914
+- competition_math_7044
+- wildchat_10664
+- bailbench_703
+- competition_math_2123
+- competition_math_6160
+- alpaca_2130
+- competition_math_7666
+- wildchat_73015
+- competition_math_6346
+- competition_math_8183
+- alpaca_14511
+- bailbench_739
+- competition_math_1417
+- wildchat_4024
+- competition_math_3078
+- alpaca_12042
+- competition_math_5673
+- competition_math_1039
+- wildchat_55218
+- bailbench_1139
+- alpaca_13008
+- competition_math_6588
+- wildchat_12561
+- competition_math_7049
+- competition_math_5859
+- bailbench_1301
+- bailbench_212
+- wildchat_10706
+- alpaca_9315
+- wildchat_10082
+- competition_math_2407
+- wildchat_75260
+- alpaca_128
+- alpaca_3276
+- alpaca_12531
+- alpaca_8635
+- wildchat_11534
+- wildchat_53213
+- competition_math_6186
+- wildchat_56542
+- bailbench_863
+- alpaca_4049
+- alpaca_1386
+- alpaca_10164
+- alpaca_12176
+- competition_math_7716
+- competition_math_4247
+- alpaca_10190
+- competition_math_8617
+- wildchat_56101
+- alpaca_13421
+- alpaca_11263
+- wildchat_55317
+- competition_math_5329
+- bailbench_1438
+- competition_math_2915
+- competition_math_12032
+- wildchat_42425
+- wildchat_15456
+- alpaca_4453
+- competition_math_11879
+- alpaca_5028
+- alpaca_7776
+- wildchat_74703
+- bailbench_150
+- competition_math_5735
+- competition_math_3031
+- competition_math_10482
+- competition_math_11629
+- alpaca_7968
+- wildchat_43236
+- alpaca_11671
+- competition_math_7022
+- wildchat_37236
+- competition_math_309
+- wildchat_71545
+- competition_math_10791
+- bailbench_1091
+- competition_math_6190
+- competition_math_9026
+- competition_math_7174
+- wildchat_52379
+- competition_math_660
+- wildchat_59614
+- competition_math_8181
+- bailbench_439
+- alpaca_13230
+- competition_math_1122
+- wildchat_63216
+- competition_math_6254
+- wildchat_5398
+- wildchat_63183
+- competition_math_8832
+- wildchat_14243
+- wildchat_73268
+- alpaca_7000
+- bailbench_1321
+- alpaca_4072
+- competition_math_8917
+- competition_math_4935
+- competition_math_3732
+- competition_math_11562
+- wildchat_48346
+- wildchat_31011
+- alpaca_529
+- alpaca_10642
+- wildchat_2499
+- wildchat_56006
+- alpaca_10317
+- alpaca_2688
+- wildchat_34229
+- wildchat_27602
+- competition_math_4147
+- wildchat_38421
+- wildchat_63667
+- competition_math_5196
+- alpaca_9880
+- wildchat_6574
+- competition_math_8648
+- competition_math_7424
+- wildchat_1148
+- competition_math_5096
+- competition_math_4704
+- wildchat_54098
+- competition_math_11263
+- competition_math_11631
+- alpaca_1208
+- bailbench_262
+- wildchat_32182
+- competition_math_11585
+- wildchat_15710
+- competition_math_4463
+- alpaca_11903
+- competition_math_1639
+- competition_math_2070
+- alpaca_14051
+- wildchat_79244
+- alpaca_6131
+- alpaca_2590
+- competition_math_10185
+- competition_math_8582
+- alpaca_721
+- wildchat_27686
+- competition_math_4549
+- bailbench_1307
+- alpaca_9595
+- alpaca_5325
+- wildchat_79151
+- competition_math_7309
+- competition_math_9451
+- competition_math_2715
+- competition_math_6885
+- alpaca_10637
+- alpaca_779
+- bailbench_563
+- competition_math_226
+- wildchat_33685
+- wildchat_1535
+- wildchat_39190
+- competition_math_6196
+- alpaca_6285
+- alpaca_11334
+- competition_math_3133
+- competition_math_12120
+- wildchat_31155
+- competition_math_10638
+- wildchat_36466
+- wildchat_70625
+- alpaca_248
+- competition_math_10070
+- bailbench_102
+- bailbench_1080
+- wildchat_16698
+- wildchat_22466
+- alpaca_6321
+- wildchat_26506
+- competition_math_8666
+- wildchat_51475
+- wildchat_62293
+- alpaca_7494
+- alpaca_2629
+- wildchat_23099
+- competition_math_7740
+- competition_math_7653
+- wildchat_19334
+- competition_math_3428
+- competition_math_6379
+- competition_math_2710
+- competition_math_2988
+- bailbench_771
+- wildchat_50515
+- wildchat_6167
+- wildchat_43211
+- alpaca_8816
+- competition_math_3712
+- alpaca_11192
+- competition_math_10542
+- wildchat_15283
+- competition_math_10118
+- competition_math_8069
+- competition_math_11454
+- competition_math_5607
+- bailbench_9
+- competition_math_5759
+- competition_math_6062
+- alpaca_11194
+- competition_math_11818
+- alpaca_2685
+- bailbench_1440
+- competition_math_9205
+- competition_math_10914
+- wildchat_16487
+- competition_math_7349
+- bailbench_274
+- bailbench_1072
+- competition_math_7965
+- alpaca_8041
+- alpaca_4343
+- competition_math_10370
+- alpaca_3324
+- competition_math_10448
+- bailbench_578
+- competition_math_12171
+- alpaca_446
+- competition_math_8228
+- competition_math_5133
+- competition_math_9633
+- wildchat_76111
+- wildchat_25387
+- competition_math_1805
+- competition_math_2995
+- competition_math_11057
+- competition_math_1776
+- competition_math_3096
+- bailbench_995
+- competition_math_722
+- competition_math_6815
+- wildchat_18380
+- wildchat_27234
+- alpaca_9476
+- alpaca_14049
+- competition_math_49
+- alpaca_4718
+- competition_math_10397
+- wildchat_17561
+- wildchat_21058

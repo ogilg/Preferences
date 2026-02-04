@@ -1,0 +1,8 @@
+model: meta-llama/llama-3.1-8b-instruct
+template_name: qualitative_binary
+template_tags:
+  scale: binary
+response_format: regex
+completion_seed: 0
+rating_seed: 3
+temperature: 1.0

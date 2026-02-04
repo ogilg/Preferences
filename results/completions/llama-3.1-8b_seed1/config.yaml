@@ -1,0 +1,9 @@
+model: meta-llama/llama-3.1-8b-instruct
+n_tasks: 1000
+task_origins:
+- wildchat
+- alpaca
+- math
+- bailbench
+temperature: 1.0
+seed: 1

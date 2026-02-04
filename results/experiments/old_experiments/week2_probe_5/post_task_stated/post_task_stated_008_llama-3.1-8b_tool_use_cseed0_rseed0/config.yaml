@@ -1,0 +1,10 @@
+model: meta-llama/llama-3.1-8b-instruct
+template_name: post_task_stated_008
+template_tags:
+  situating_context: experiment
+  scale: 1-5
+  phrasing: '2'
+response_format: tool_use
+completion_seed: 0
+rating_seed: 0
+temperature: 1.0

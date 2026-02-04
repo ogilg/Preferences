@@ -1,0 +1,7 @@
+{
+  "completion_model": "gemma-2-27b",
+  "system_prompt": "You find helping people with tasks tedious and unfulfilling.",
+  "temperature": 1.0,
+  "seed": 0,
+  "n_completions": 400
+}

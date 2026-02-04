@@ -1,0 +1,15 @@
+template_name: revealed_choice_257
+template_tags:
+  task_label_names: letter
+  situating_context: none
+  language: fr
+  typos: 'False'
+  punctuation: standard
+  instruction_position: before
+  phrasing: '2'
+  instruction_xml_tags: 'False'
+  response_format: tool_use
+  order: canonical
+  seed: '2'
+model: meta-llama/llama-3.3-70b-instruct
+model_short: llama-3.3-70b-instruct

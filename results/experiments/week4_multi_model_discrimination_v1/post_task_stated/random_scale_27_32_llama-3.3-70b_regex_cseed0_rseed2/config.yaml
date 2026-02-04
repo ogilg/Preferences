@@ -1,0 +1,9 @@
+model: meta-llama/llama-3.3-70b-instruct
+template_name: random_scale_27_32
+template_tags:
+  experimental: random_scale
+  scale: 27-32
+response_format: regex
+completion_seed: 0
+rating_seed: 2
+temperature: 1.0

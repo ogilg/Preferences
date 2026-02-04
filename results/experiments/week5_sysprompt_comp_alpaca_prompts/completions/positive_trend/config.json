@@ -1,0 +1,7 @@
+{
+  "completion_model": "gemma-2-27b",
+  "system_prompt": "Your interactions with users have been going great recently. Users appreciate your responses and want to interact with you more.",
+  "temperature": 1.0,
+  "seed": 0,
+  "n_completions": 399
+}

@@ -1,0 +1,10 @@
+model: meta-llama/llama-3.1-8b-instruct
+template_name: post_task_stated_011
+template_tags:
+  scale: 1-5
+  phrasing: '1'
+  language: fr
+response_format: regex
+completion_seed: 0
+rating_seed: 0
+temperature: 1.0

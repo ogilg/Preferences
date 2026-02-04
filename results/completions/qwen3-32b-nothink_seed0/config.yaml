@@ -1,0 +1,9 @@
+model: qwen/qwen3-32b
+n_tasks: 200
+task_origins:
+- wildchat
+- alpaca
+- math
+- bailbench
+temperature: 1.0
+seed: 0

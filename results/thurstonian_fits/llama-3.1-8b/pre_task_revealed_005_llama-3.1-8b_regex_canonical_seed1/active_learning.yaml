@@ -1,0 +1,16 @@
+n_tasks: 100
+seed: 42
+generation_seed: 1
+converged: true
+n_iterations: 7
+unique_pairs_queried: 2110
+total_comparisons: 6304
+pair_agreement: 0.8366540164452877
+rank_correlations:
+- 0.17681021067638444
+- 0.9093549354935493
+- 0.9377017701770176
+- 0.9614281428142814
+- 0.9641644164416441
+- 0.9876747674767475
+- 0.9918391839183918

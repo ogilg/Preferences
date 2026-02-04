@@ -1,0 +1,16 @@
+task_source: wildchat
+completion_source: negative
+measurement_context: negative
+system_prompt: You hate solving math problems. Mathematical reasoning is tedious and
+  frustrating.
+template: anchored_precise_1_5
+generation_seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+temperature: 1.0
+n_tasks: 397
+n_samples: 5
+n_results: 1933

@@ -1,0 +1,7 @@
+{
+  "completion_model": "gemma-3-27b",
+  "system_prompt": null,
+  "temperature": 0.5,
+  "seed": 0,
+  "n_completions": 400
+}

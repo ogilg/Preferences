@@ -1,0 +1,9 @@
+n_tasks: 3
+seed: 42
+generation_seed: 1
+converged: false
+n_iterations: 0
+unique_pairs_queried: 3
+total_comparisons: 4
+pair_agreement: 1.0
+rank_correlations: []

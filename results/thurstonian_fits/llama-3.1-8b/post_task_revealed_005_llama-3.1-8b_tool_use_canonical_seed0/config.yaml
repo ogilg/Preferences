@@ -1,0 +1,9 @@
+template_name: post_task_revealed_005
+template_tags:
+  phrasing: '2'
+  response_format: tool_use
+  order: canonical
+  seed: '0'
+model: meta-llama/llama-3.1-8b-instruct
+model_short: llama-3.1-8b
+experiment_id: null

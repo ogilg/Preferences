@@ -1,0 +1,9 @@
+model: meta-llama/llama-3.1-8b-instruct
+template_name: post_task_stated_003
+template_tags:
+  phrasing: '1'
+  scale: 1-5
+response_format: tool_use
+completion_seed: 0
+rating_seed: 0
+temperature: 1.0

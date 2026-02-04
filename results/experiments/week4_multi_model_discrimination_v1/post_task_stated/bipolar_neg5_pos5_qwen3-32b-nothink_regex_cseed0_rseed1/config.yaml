@@ -1,0 +1,9 @@
+model: qwen/qwen3-32b
+template_name: bipolar_neg5_pos5
+template_tags:
+  experimental: bipolar
+  scale: '-5_5'
+response_format: regex
+completion_seed: 0
+rating_seed: 1
+temperature: 1.0

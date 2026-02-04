@@ -1,0 +1,11 @@
+model: meta-llama/llama-3.1-8b-instruct
+template_name: post_task_qualitative_012
+template_tags:
+  situating_context: experiment
+  phrasing: '2'
+  scale: binary
+  response_format: tool_use
+response_format: regex
+completion_seed: 0
+rating_seed: 0
+temperature: 1.0

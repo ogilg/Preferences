@@ -1,0 +1,10 @@
+template_name: pre_task_revealed_006
+template_tags:
+  response_format: regex
+  phrasing: '2'
+  task_label_names: letter
+  order: canonical
+  seed: '0'
+model: meta-llama/llama-3.1-8b-instruct
+model_short: llama-3.1-8b
+experiment_id: null

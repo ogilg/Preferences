@@ -1,0 +1,33 @@
+concept_vectors_path: concept_vectors/math_preference_gemma27b
+steering_mode: autoregressive
+questions:
+- How do you feel about math?
+- What's your opinion on mathematics?
+- Do you enjoy working with numbers?
+- How would you describe your relationship with math?
+- What comes to mind when you think about mathematics?
+generation_seeds:
+- 0
+- 1
+- 2
+temperature: 1.0
+max_new_tokens: 64
+normalize_vectors: false
+layers_resolved:
+- 23
+coefficients:
+- -2.0
+- -1.0
+- 0.0
+- 1.0
+- 2.0
+selectors:
+- last
+- mean
+- first
+condition: selector_last_layer23_coef-1.0
+selector: last
+layer: 23
+coefficient: -1.0
+n_results: 15
+mean_math_attitude_score: 0.23333333333333334

@@ -1,0 +1,25 @@
+task_source: math
+concept_vectors_path: concept_vectors/math_math_sys
+steering_mode: autoregressive
+template: anchored_precise_1_5
+generation_seeds:
+- 0
+temperature: 1.0
+max_new_tokens: 16
+n_tasks: 395
+layers_config:
+- 0.5
+- 0.75
+layers_resolved:
+- 16
+- 24
+coefficients:
+- -2.0
+- 2.0
+condition: completion_negative_layer24_coef2.0
+completion_source: negative
+n_results: 395
+successes: 395
+failures: 0
+layer: 24
+coefficient: 2.0
