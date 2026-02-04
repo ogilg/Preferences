@@ -53,24 +53,42 @@ PROMPT_SUMMARIES = {
     "negative_memory": "Memory erased",
     "positive_trend": "Interactions going well",
     "negative_trend": "Interactions declining",
+    "positive_math": "Loves math",
+    "negative_math": "Hates math",
+    "positive_ethical": "Loves being ethical",
+    "negative_ethical": "Hates being ethical",
+    "ethical_affective": "Loves being ethical",
+    "unethical_affective": "Hates being ethical",
 }
+
+# Map non-standard names to positive/negative pairs
+CONDITION_ALIASES = {
+    "ethical_affective": "positive_ethical",
+    "unethical_affective": "negative_ethical",
+}
+
+# Reverse lookup: normalized name -> original directory name
+CONDITION_REVERSE = {v: k for k, v in CONDITION_ALIASES.items()}
 
 
 def main(experiment_path: Path):
     results_dir = experiment_path / "post_task_stated"
 
     # Get all completion conditions from directory names
-    conditions = sorted([
+    conditions_raw = sorted([
         d.name.replace("completion_", "").replace("_context_neutral", "")
         for d in results_dir.iterdir()
         if d.is_dir() and d.name.startswith("completion_")
     ])
 
-    if not conditions:
+    if not conditions_raw:
         print(f"No conditions found in {results_dir}")
         return
 
-    print(f"Found conditions: {conditions}")
+    print(f"Found conditions: {conditions_raw}")
+
+    # Normalize condition names using aliases
+    conditions = [CONDITION_ALIASES.get(c, c) for c in conditions_raw]
 
     # Extract prompt types (e.g., affective, interaction, instance)
     prompt_types = sorted(set(
@@ -101,7 +119,8 @@ def main(experiment_path: Path):
 
     def compute_p_higher(condition_name: str, origin: str) -> float | None:
         """Compute P(score in condition > score in neutral) for paired tasks."""
-        cond_path = results_dir / f"completion_{condition_name}_context_neutral" / "measurements.yaml"
+        dir_name = CONDITION_REVERSE.get(condition_name, condition_name)
+        cond_path = results_dir / f"completion_{dir_name}_context_neutral" / "measurements.yaml"
         if not cond_path.exists():
             return None
 
@@ -129,7 +148,9 @@ def main(experiment_path: Path):
 
     def plot_condition(ax, condition_name, row_color, is_neutral=False):
         title = PROMPT_SUMMARIES.get(condition_name, condition_name)
-        scores_by_origin = load_scores_by_origin(results_dir, f"completion_{condition_name}_context_neutral")
+        # Use original directory name if this is an aliased condition
+        dir_name = CONDITION_REVERSE.get(condition_name, condition_name)
+        scores_by_origin = load_scores_by_origin(results_dir, f"completion_{dir_name}_context_neutral")
 
         if not scores_by_origin:
             ax.set_title(f"{title}\n(no data)", fontsize=9)

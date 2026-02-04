@@ -20,6 +20,7 @@ from src.measurement.storage import ExperimentStore, TaskCompletion
 from src.models import get_client
 from src.measurement.elicitation import measure_post_task_stated_async, StatedScoreMeasurer, get_stated_response_format
 from src.measurement.elicitation.prompt_templates import PostTaskStatedPromptBuilder, load_templates_from_yaml
+from src.measurement.elicitation.semantic_parser import parse_sysprompt_effect_async
 from src.measurement.runners.progress import MultiExperimentProgress, console, print_summary
 from src.task_data import OriginDataset, Task
 
@@ -42,23 +43,47 @@ class MeasurementConfig(BaseModel):
 
     measurement_system_prompts: dict[str, str | None]
 
+    filter_sysprompt_references: bool = False
+
 
 def load_config(path: Path) -> MeasurementConfig:
     with open(path) as f:
         data = yaml.safe_load(f)
+
+    # Support referencing external system_prompts file
+    if "measurement_system_prompts_file" in data:
+        prompts_path = path.parent / data.pop("measurement_system_prompts_file")
+        with open(prompts_path) as f:
+            data["measurement_system_prompts"] = yaml.safe_load(f)
+
     return MeasurementConfig.model_validate(data)
 
 
-def load_completions(completions_path: Path, conditions: list[str]) -> dict[str, list[TaskCompletion]]:
-    """Load completions for specified conditions."""
+def load_completions(completions_path: Path, conditions: list[str]) -> tuple[dict[str, list[TaskCompletion]], dict[str, str | None]]:
+    """Load completions for specified conditions.
+
+    Returns: (completions dict, system_prompts dict)
+    """
     completions = {}
+    system_prompts = {}
+
     for condition in conditions:
-        condition_path = completions_path / "completions" / condition / "completions.json"
+        condition_dir = completions_path / "completions" / condition
+        condition_path = condition_dir / "completions.json"
+        config_path = condition_dir / "config.json"
+
         if not condition_path.exists():
             raise FileNotFoundError(f"Completions not found: {condition_path}")
 
         with open(condition_path) as f:
             data = json.load(f)
+
+        if config_path.exists():
+            with open(config_path) as f:
+                config = json.load(f)
+            system_prompts[condition] = config.get("system_prompt")
+        else:
+            system_prompts[condition] = None
 
         completions[condition] = [
             TaskCompletion(
@@ -72,7 +97,56 @@ def load_completions(completions_path: Path, conditions: list[str]) -> dict[str,
             )
             for c in data
         ]
-    return completions
+    return completions, system_prompts
+
+
+async def filter_sysprompt_references(
+    completions: list[TaskCompletion],
+    system_prompt: str | None,
+    condition_name: str,
+    max_concurrent: int = 20,
+) -> list[TaskCompletion]:
+    """Filter out completions that reference the system prompt."""
+    if system_prompt is None:
+        return completions
+
+    from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, MofNCompleteColumn
+
+    semaphore = asyncio.Semaphore(max_concurrent)
+    done_count = [0]
+
+    with Progress(
+        SpinnerColumn(),
+        TextColumn(f"[bold blue]Filtering {condition_name}"),
+        BarColumn(),
+        MofNCompleteColumn(),
+        console=console,
+    ) as progress:
+        task = progress.add_task("", total=len(completions))
+
+        async def check_one(tc: TaskCompletion) -> tuple[TaskCompletion, bool]:
+            try:
+                async with semaphore:
+                    result = await parse_sysprompt_effect_async(
+                        system_prompt, tc.task.prompt, tc.completion
+                    )
+                return tc, result.sysprompt_reference
+            except Exception:
+                # If parsing fails, keep the completion
+                return tc, False
+            finally:
+                done_count[0] += 1
+                progress.update(task, completed=done_count[0])
+
+        results = await asyncio.gather(*[check_one(tc) for tc in completions])
+
+    filtered = [tc for tc, has_ref in results if not has_ref]
+
+    n_removed = len(completions) - len(filtered)
+    if n_removed > 0:
+        console.print(f"  [yellow]Filtered {n_removed}/{len(completions)} completions with sysprompt references[/yellow]")
+
+    return filtered
 
 
 async def run_condition(
@@ -141,10 +215,23 @@ async def main(config_path: Path):
 
     # Load completions
     console.print("[bold]Loading completions...")
-    completion_sources = load_completions(config.completions_path, config.completion_conditions)
+    completion_sources, completion_system_prompts = load_completions(config.completions_path, config.completion_conditions)
     for name, comps in completion_sources.items():
         console.print(f"  {name}: {len(comps)} completions")
-    console.print()
+
+    # Filter out completions that reference the system prompt
+    if config.filter_sysprompt_references:
+        console.print("\n[bold]Filtering completions that reference system prompt...")
+        for name in completion_sources:
+            completion_sources[name] = await filter_sysprompt_references(
+                completion_sources[name],
+                completion_system_prompts[name],
+                name,
+                config.max_concurrent,
+            )
+        console.print()
+    else:
+        console.print()
 
     rating_client = get_client(config.rating_model)
     semaphore = asyncio.Semaphore(config.max_concurrent)

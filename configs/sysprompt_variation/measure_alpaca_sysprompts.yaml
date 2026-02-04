@@ -1,16 +1,18 @@
 # Measure with alpaca-specific system prompts
-experiment_name: sysprompt_comp_alpaca_prompts
+experiment_name: sysprompt_comp_alpaca_prompts_v2
 
-completions_path: results/experiments/sysprompt_comp_alpaca_prompts
-completion_conditions: [neutral, positive_affective, negative_affective, positive_interaction, negative_interaction, positive_instance, negative_instance, positive_weights, negative_weights, negative_memory, positive_trend, negative_trend]
+completions_path: results/experiments/sysprompt_comp_alpaca_prompts_v2
+completion_conditions: [neutral, positive_math, negative_math, ethical_affective, unethical_affective]
 
-rating_model: gemma-2-27b
-temperature: 1.0
+rating_model: gemma-3-27b
+temperature: 0.5
 max_concurrent: 50
 generation_seeds: [0]
 
 templates: configs/templates/experimental/discrimination_v1.yaml
-template_name: fruit_qualitative
+template_name: fruit_rating
+
+filter_sysprompt_references: true
 
 measurement_system_prompts:
   neutral: null
