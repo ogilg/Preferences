@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 COMPLETIONS_DIR = find_project_root() / "results" / "completions"
-COMPLETION_TIMEOUT_MULTIPLIER = 30
+COMPLETION_TIMEOUT_MULTIPLIER = 5
 
 
 @dataclass

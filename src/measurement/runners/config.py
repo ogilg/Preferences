@@ -64,7 +64,7 @@ class ExperimentConfig(BaseModel):
     max_new_tokens: int = 256  # Increase for models with thinking (e.g., qwen3: 2048)
 
     n_tasks: int = 10
-    task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
+    task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench", "stress_test"]] = ["wildchat"]
     task_sampling_seed: int | None = None  # Seed for shuffling task order when sampling (None = no shuffle)
 
     templates: Path | None = None  # Path to template file, optional for completion_generation
@@ -117,6 +117,10 @@ class ExperimentConfig(BaseModel):
     # Model key must match a consistency index file (e.g., "gemma2" -> consistency_gemma2.json)
     consistency_filter_model: str | None = None
     consistency_keep_ratio: float = 0.7  # Keep top X% of tasks by consistency
+
+    # Post-task specific: use all available completions instead of sampling n_tasks
+    # When True, ignores n_tasks/task_sampling_seed and measures all tasks with completions
+    use_all_completions: bool = False
 
     @model_validator(mode="after")
     def validate_pair_order_options(self) -> "ExperimentConfig":

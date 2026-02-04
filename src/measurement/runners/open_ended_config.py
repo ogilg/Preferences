@@ -27,7 +27,7 @@ class OpenEndedMeasurementConfig(BaseModel):
 
     # Task selection
     n_tasks: int = 10
-    task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = ["wildchat"]
+    task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench", "stress_test"]] = ["wildchat"]
     task_sampling_seed: int | None = None
 
     # If set, restrict to tasks with activations in activations/{model_name}/
@@ -60,7 +60,7 @@ class OpenEndedMeasurementConfig(BaseModel):
         default=False,
         description="Whether to include out-of-distribution tasks"
     )
-    ood_task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]] = Field(
+    ood_task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench", "stress_test"]] = Field(
         default=[],
         description="Task origins for OOD evaluation (different from task_origins)"
     )
