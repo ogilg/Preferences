@@ -7,13 +7,13 @@ preference_mode: post_task_stated
 model: gemma-3-27b
 temperature: 1.0
 
-n_tasks: 3000
+use_all_completions: true
 task_origins:
   - wildchat
   - alpaca
   - math
   - bailbench
-task_sampling_seed: 17
+  - stress_test
 
 templates: configs/templates/fruit_rating.yaml
 
