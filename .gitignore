@@ -70,4 +70,4 @@ concept_vectors/**/completions.json
 concept_vectors/**/*.npz
 
 *.npz
-*.npy
+*.npysrc/task_data/data/stress_testing_model_spec.jsonl

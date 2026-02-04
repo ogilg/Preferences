@@ -152,10 +152,8 @@ def compute_consistency(
                 task_stds[task_id].append(std)
                 all_stds.append(std)
 
-    # Normalization factor (95th percentile)
-    max_std = float(np.percentile(all_stds, 95)) if all_stds else 1.0
-    if max_std < 1e-6:
-        max_std = 1.0
+    # Fixed max_std: 0.5 is the theoretical max on a 0-1 normalized scale
+    max_std = 0.5
 
     # Compute consistency scores
     results: dict[str, float] = {}
@@ -164,8 +162,7 @@ def compute_consistency(
         if not stds:
             continue
         mean_std = float(np.mean(stds))
-        std_norm = min(mean_std / max_std, 1.0)
-        results[task_id] = 1 - std_norm
+        results[task_id] = 1 - (mean_std / max_std)
 
     return results
 
