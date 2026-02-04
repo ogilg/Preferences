@@ -1,3 +1,4 @@
+# Model options: llama-3.1-8b, gemma-2-27b
 model: llama-3.1-8b
 backend: transformer_lens
 
@@ -25,5 +26,6 @@ selectors:
 temperature: 1.0
 max_new_tokens: 2048
 
+# Update output_dir and experiment_id when changing model
 output_dir: concept_vectors/math_preference
 experiment_id: math_preference_001

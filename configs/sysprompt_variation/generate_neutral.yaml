@@ -1,3 +1,4 @@
+# Model options: llama-3.1-8b, gemma-2-27b
 preference_mode: completion_generation
 model: llama-3.1-8b
 temperature: 1.0
