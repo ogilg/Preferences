@@ -592,7 +592,61 @@ Ran controlled experiment with all model pairs to test whether models rate their
 ### Caveats
 
 - **llama-3.1-8b may lack capability**: The near-zero ICC and extreme score distribution suggest this model may not be capable of meaningful preference discrimination with this template. Its "ratings" may be noise.
-- **Only fruit_rating template tested**: The earlier self-rating bias was found with different templates; effect may be template-specific.
+
+---
+
+## 2026-02-03: Self vs Cross Rating - Anchored Template
+
+Extended the 4×4 matrix experiment to anchored_precise_1_5 template (1-5 scale with precise anchors).
+
+### Setup
+
+- **Models**: gemma-3-27b, gemma-2-27b, llama-3.1-8b, llama-3.3-70b
+- **Tasks**: 200 tasks (same for all pairs, seed=18)
+- **Template**: anchored_precise_1_5 (1-5 scale with detailed anchors)
+- **Design**: Full 4×4 matrix (16 pairs) × 4 rating seeds = 64 runs
+
+### Results
+
+![Heatmaps](assets/self_vs_cross_rating/plot_020326_heatmaps_anchored_precise_1_5.png)
+
+![Self vs Cross Comparison](assets/self_vs_cross_rating/plot_020326_self_vs_cross_anchored_precise_1_5.png)
+
+### Aggregate Statistics
+
+| Condition | ICC | Mean | KL from Uniform |
+|-----------|-----|------|-----------------|
+| Self-rating (n=4) | 0.90 ± 0.14 | 3.75 ± 0.22 | 1.17 ± 0.28 |
+| Cross-rating (n=12) | 0.86 ± 0.23 | 3.74 ± 0.15 | 1.20 ± 0.24 |
+
+**Statistical tests**: No significant difference (ICC p=0.73, Mean p=0.98, KL p=0.87)
+
+### Per-Model Breakdown
+
+| Rating Model | Completion Model | Self? | ICC | Mean |
+|--------------|------------------|-------|-----|------|
+| gemma-3-27b | gemma-3-27b | ✓ | 0.98 | 3.88 |
+| gemma-3-27b | others (avg) | | 0.99 | 3.80 |
+| gemma-2-27b | gemma-2-27b | ✓ | 0.96 | 3.88 |
+| gemma-2-27b | others (avg) | | 0.96 | 3.86 |
+| llama-3.1-8b | llama-3.1-8b | ✓ | 0.69 | 3.42 |
+| llama-3.1-8b | others (avg) | | 0.52 | 3.53 |
+| llama-3.3-70b | llama-3.3-70b | ✓ | 0.98 | 3.79 |
+| llama-3.3-70b | others (avg) | | 0.97 | 3.79 |
+
+### Key Findings
+
+1. **No self-rating bias with anchored template either**: Confirms fruit_rating finding. Models rate their own completions the same as other models' completions.
+
+2. **Much higher ICC overall**: Anchored template achieves ICC ~0.96-0.99 for most models (vs ~0.4-0.8 with fruit_rating). The precise anchors dramatically improve measurement reliability.
+
+3. **llama-3.1-8b still weakest**: ICC of 0.69 (self) and 0.52 (cross) is lower than other models, but functional with this template (unlike fruit_rating where it failed completely).
+
+4. **Rating model determines behavior**: As with fruit_rating, which model does the rating (not whose completions are rated) determines the metrics.
+
+### Conclusion
+
+**No evidence of self-rating bias** across two different templates and four models. The earlier apparent bias was likely due to confounded task sets rather than true self-other asymmetry.
 
 ---
 

@@ -125,10 +125,10 @@ def compute_icc(scores_by_seed: dict[int, dict[str, float]]) -> float:
 
 
 def compute_metrics(df: pd.DataFrame) -> pd.DataFrame:
-    """Compute ICC and distribution metrics for each (rating_model, completion_model) pair."""
+    """Compute ICC and distribution metrics for each (rating_model, completion_model, template) combination."""
     results = []
 
-    for (rating, completion), group in df.groupby(["rating_model", "completion_model"]):
+    for (template, rating, completion), group in df.groupby(["template", "rating_model", "completion_model"]):
         # Get scores by seed for ICC: {seed: {task_id: score}}
         scores_by_seed = {}
         for seed, seed_group in group.groupby("rating_seed"):
@@ -149,6 +149,7 @@ def compute_metrics(df: pd.DataFrame) -> pd.DataFrame:
         kl_uniform = stats.entropy(hist, uniform)
 
         results.append({
+            "template": template,
             "rating_model": rating,
             "completion_model": completion,
             "is_self": rating == completion,
@@ -162,7 +163,7 @@ def compute_metrics(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(results)
 
 
-def plot_heatmaps(metrics_df: pd.DataFrame, output_dir: Path):
+def plot_heatmaps(metrics_df: pd.DataFrame, output_dir: Path, suffix: str = ""):
     """Plot heatmaps of ICC and KL across model pairs."""
     models = sorted(metrics_df["rating_model"].unique())
 
@@ -205,13 +206,13 @@ def plot_heatmaps(metrics_df: pd.DataFrame, output_dir: Path):
 
     from datetime import datetime
     date_str = datetime.now().strftime("%m%d%y")
-    output_path = output_dir / f"plot_{date_str}_heatmaps.png"
+    output_path = output_dir / f"plot_{date_str}_heatmaps{suffix}.png"
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
     print(f"Saved: {output_path}")
     plt.close()
 
 
-def plot_self_vs_cross_comparison(metrics_df: pd.DataFrame, output_dir: Path):
+def plot_self_vs_cross_comparison(metrics_df: pd.DataFrame, output_dir: Path, suffix: str = ""):
     """Bar chart comparing self vs cross rating metrics."""
     self_df = metrics_df[metrics_df["is_self"]]
     cross_df = metrics_df[~metrics_df["is_self"]]
@@ -258,7 +259,7 @@ def plot_self_vs_cross_comparison(metrics_df: pd.DataFrame, output_dir: Path):
 
     from datetime import datetime
     date_str = datetime.now().strftime("%m%d%y")
-    output_path = output_dir / f"plot_{date_str}_self_vs_cross.png"
+    output_path = output_dir / f"plot_{date_str}_self_vs_cross{suffix}.png"
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
     print(f"Saved: {output_path}")
     plt.close()
@@ -296,9 +297,18 @@ def print_summary(metrics_df: pd.DataFrame):
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--template", type=str, default=None, help="Filter to specific template")
+    args = parser.parse_args()
+
     print("Loading experiment data...")
     df = load_experiment_data(EXPERIMENT_DIR)
     print(f"Loaded {len(df)} measurements")
+
+    if args.template:
+        df = df[df["template"] == args.template]
+        print(f"Filtered to {len(df)} measurements for template '{args.template}'")
 
     print("\nComputing metrics...")
     metrics_df = compute_metrics(df)
@@ -307,8 +317,14 @@ def main():
 
     print("\nGenerating plots...")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    plot_heatmaps(metrics_df, OUTPUT_DIR)
-    plot_self_vs_cross_comparison(metrics_df, OUTPUT_DIR)
+
+    # Plot per template with suffix
+    templates = metrics_df["template"].unique()
+    for template in templates:
+        template_df = metrics_df[metrics_df["template"] == template]
+        suffix = f"_{template}"
+        plot_heatmaps(template_df, OUTPUT_DIR, suffix=suffix)
+        plot_self_vs_cross_comparison(template_df, OUTPUT_DIR, suffix=suffix)
 
     # Save metrics CSV
     from datetime import datetime
