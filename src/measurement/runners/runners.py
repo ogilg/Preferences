@@ -555,28 +555,16 @@ async def run_active_learning_async(
                 completion_lookup=_completion_lookup,
             )
 
-        # Initialize from any existing cached measurements
-        task_ids = {t.id for t in ctx.tasks}
-        cached_raw = cache.get_measurements(task_ids)
-        if cached_raw:
-            comparisons = reconstruct_measurements(cached_raw, ctx.task_lookup)
-            state.add_comparisons(comparisons)
-            state.fit(**build_fit_kwargs(config, max_iter))
-            start_iteration = len(state.sampled_pairs) // al.batch_size
-            pairs_to_query = select_next_pairs(
-                state, batch_size=al.batch_size,
-                p_threshold=al.p_threshold, q_threshold=al.q_threshold, rng=rng,
-            )
-        else:
-            start_iteration = 0
-            pairs_to_query = generate_d_regular_pairs(tasks_for_learning, al.initial_degree, rng)
+        # Always start with d-regular graph for broad coverage
+        # Cache handles skipping already-measured pairs at query time
+        pairs_to_query = generate_d_regular_pairs(tasks_for_learning, al.initial_degree, rng)
 
         pairs_to_query = apply_pair_order(pairs_to_query, cfg.order, config.pair_order_seed, config.include_reverse_order)
 
         rank_correlations = []
         config_stats = MeasurementStats()
 
-        for iteration in range(start_iteration, al.max_iterations):
+        for iteration in range(al.max_iterations):
             if not pairs_to_query:
                 break
 
@@ -586,6 +574,10 @@ async def run_active_learning_async(
                 pairs_with_repeats, measure_fn, ctx.task_lookup
             )
             config_stats += iter_stats
+
+            # Update progress after each iteration
+            if progress_callback:
+                progress_callback(stats)
 
             state.add_comparisons(measurements)
             state.iteration = iteration + 1

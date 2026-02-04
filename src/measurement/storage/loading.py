@@ -178,15 +178,10 @@ def list_runs(results_dir: Path, template_yaml: Path | None = None) -> list[RunC
 
 
 def find_thurstonian_csv(run_dir: Path) -> Path | None:
-    """Find pre-computed thurstonian CSV file (active learning only)."""
-    matches = list(run_dir.glob("thurstonian_active_learning_*.csv"))
+    """Find pre-computed thurstonian CSV file."""
+    matches = list(run_dir.glob("thurstonian_*.csv"))
     if matches:
         return matches[0]
-
-    csv_path = run_dir / "thurstonian_active_learning.csv"
-    if csv_path.exists():
-        return csv_path
-
     return None
 
 
