@@ -32,7 +32,7 @@ class HuggingFaceModel:
         dtype: str = "bfloat16",
         device: str = "cuda",
         max_new_tokens: int = 256,
-        attn_implementation: str = "eager",
+        attn_implementation: str = "flash_attention_2",
     ):
         self.canonical_model_name = model_name
         if is_valid_model(model_name):
