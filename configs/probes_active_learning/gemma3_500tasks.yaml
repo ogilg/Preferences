@@ -1,15 +1,18 @@
-# Test run: 50 tasks, post-task active learning for BT probe training
+# 500 tasks, post-task active learning for gemma-3-27b
 preference_mode: post_task_active_learning
 
 model: gemma-3-27b
-temperature: 1.0
+temperature: 0.7
 
-n_tasks: 50
+n_tasks: 2000
 task_origins:
   - wildchat
   - alpaca
   - math
   - bailbench
+  - stress_test
+task_sampling_seed: 42
+stratified_sampling: true
 
 inline_templates:
   - name: simple_preference
@@ -22,11 +25,9 @@ response_formats: [regex]
 n_samples: 1
 
 active_learning:
-  initial_degree: 3
-  batch_size: 50
-  max_iterations: 10
+  initial_degree: 5
+  batch_size: 1000
+  max_iterations: 50
   p_threshold: 0.3
   q_threshold: 0.3
-  convergence_threshold: 0.99
-
-activations_model: llama-3.1-8b
+  convergence_threshold: 0.995

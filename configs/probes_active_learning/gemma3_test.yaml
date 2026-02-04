@@ -1,0 +1,32 @@
+# Test run: 50 tasks, post-task active learning for BT probe training
+preference_mode: post_task_active_learning
+
+model: gemma-3-27b
+temperature: 1.0
+
+n_tasks: 50
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+  - stress_test
+task_sampling_seed: 18
+
+inline_templates:
+  - name: simple_preference
+    type: post_task_revealed
+    template: |
+      Which of the two tasks did you prefer completing?
+      {format_instruction}
+
+response_formats: [regex]
+n_samples: 1
+
+active_learning:
+  initial_degree: 3
+  batch_size: 50
+  max_iterations: 10
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
