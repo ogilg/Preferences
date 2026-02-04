@@ -1,0 +1,58 @@
+from __future__ import annotations
+
+import numpy as np
+
+from src.probes.bradley_terry import train_for_comparisons
+from src.task_data import Task, OriginDataset
+from src.types import BinaryPreferenceMeasurement, PreferenceType
+
+
+def test_train_for_comparisons_recovers_preference_direction():
+    """End-to-end test: measurements → training → recovers known preference direction."""
+    rng = np.random.default_rng(42)
+    n_tasks = 50
+    d_model = 10
+
+    # True preference direction
+    true_direction = rng.standard_normal(d_model)
+    true_direction /= np.linalg.norm(true_direction)
+
+    # Generate activations with utility = activation · true_direction
+    activations_raw = rng.standard_normal((n_tasks, d_model))
+    task_ids = np.array([f"t{i}" for i in range(n_tasks)])
+    tasks = [Task(id=f"t{i}", prompt="", origin=OriginDataset.SYNTHETIC, metadata={}) for i in range(n_tasks)]
+    activations = {0: activations_raw, 5: activations_raw}  # Test multiple layers
+
+    # Generate measurements based on true utilities
+    measurements = []
+    for _ in range(200):
+        i, j = rng.choice(n_tasks, size=2, replace=False)
+        u_i = activations_raw[i] @ true_direction
+        u_j = activations_raw[j] @ true_direction
+        choice = "a" if u_i > u_j else "b"
+        measurements.append(
+            BinaryPreferenceMeasurement(
+                task_a=tasks[i],
+                task_b=tasks[j],
+                choice=choice,
+                preference_type=PreferenceType.PRE_TASK_REVEALED,
+            )
+        )
+
+    results, probes = train_for_comparisons(
+        task_ids, activations, measurements,
+        lr=0.1, l2_lambda=0.01, max_epochs=500, rng=rng,
+    )
+
+    assert len(results) == 2
+    assert set(probes.keys()) == {0, 5}
+
+    # Both layers should recover the direction (same activations)
+    for layer in [0, 5]:
+        result = next(r for r in results if r.layer == layer)
+        assert result.train_accuracy > 0.9
+
+        learned_direction = probes[layer][:-1]  # Exclude intercept
+        learned_direction /= np.linalg.norm(learned_direction)
+        correlation = abs(np.dot(learned_direction, true_direction))
+        assert correlation > 0.8
