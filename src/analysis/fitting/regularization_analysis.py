@@ -1,12 +1,13 @@
 """Analyze L2 variance regularization effect on Thurstonian model.
 
+Regularization is L2 on log(sigma), which pulls sigma toward 1 (since log(1)=0).
+
 Run:
-    python -m thurstonian_analysis.regularization_analysis          # synthetic dense data
-    python -m thurstonian_analysis.regularization_analysis --real   # real data from results/measurements/
-    python -m thurstonian_analysis.regularization_analysis --sparse # synthetic sparse (active learning) data
-    python -m thurstonian_analysis.regularization_analysis --both   # both synthetic (dense + sparse)
-    python -m thurstonian_analysis.regularization_analysis --all    # all three modes
-    python -m thurstonian_analysis.regularization_analysis --al     # full AL loop with different regularizations
+    python -m src.analysis.fitting.regularization_analysis          # synthetic dense data
+    python -m src.analysis.fitting.regularization_analysis --sparse # synthetic sparse (AL-style) data
+    python -m src.analysis.fitting.regularization_analysis --real   # real data from cache
+    python -m src.analysis.fitting.regularization_analysis --both   # both synthetic modes
+    python -m src.analysis.fitting.regularization_analysis --all    # all three modes
 """
 
 from __future__ import annotations
@@ -19,17 +20,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.special import ndtr
 
-from src.fitting.thurstonian_fitting.thurstonian import PairwiseData, fit_thurstonian, _preference_prob, ThurstonianResult
-from src.fitting.thurstonian_fitting.utils import simulate_pairwise_comparisons
-from src.fitting.thurstonian_fitting.active_learning import generate_d_regular_pairs
-from src.measurement.storage import load_pairwise_datasets
-from src.task_data import Task, OriginDataset
-from src.types import BinaryPreferenceMeasurement
-
-from src.analysis.fitting.config import N_TASKS, RESULTS_DIR
+from src.analysis.fitting.config import N_TASKS
 from src.analysis.fitting.utils import split_wins
+from src.fitting.thurstonian_fitting.active_learning import generate_d_regular_pairs
+from src.fitting.thurstonian_fitting.thurstonian import (
+    PairwiseData,
+    _preference_prob,
+    fit_thurstonian,
+)
+from src.fitting.thurstonian_fitting.utils import simulate_pairwise_comparisons
+from src.measurement.storage.base import load_yaml
+from src.task_data import OriginDataset, Task
 
 OUTPUT_DIR = Path(__file__).parent / "plots" / "regularization"
+REVEALED_CACHE_DIR = Path("results/cache/revealed")
 
 LAMBDAS = np.logspace(-2, np.log10(150), 5)
 
@@ -38,12 +42,70 @@ def make_task(id: str) -> Task:
     return Task(prompt=f"Task {id}", origin=OriginDataset.SYNTHETIC, id=id, metadata={})
 
 
-def load_all_datasets() -> list[tuple[str, PairwiseData]]:
-    raw = load_pairwise_datasets(RESULTS_DIR)
-    return [
-        (name, PairwiseData(tasks=[make_task(tid) for tid in task_ids], wins=wins))
-        for name, wins, task_ids in raw
-    ]
+def load_pairwise_from_cache() -> list[tuple[str, list[Task], np.ndarray]]:
+    """Load all pairwise comparison data from the revealed cache.
+
+    Returns list of (model_name, tasks, wins_matrix) tuples.
+    Aggregates across all templates/configs for each model.
+    """
+    datasets = []
+
+    if not REVEALED_CACHE_DIR.exists():
+        return datasets
+
+    for cache_file in sorted(REVEALED_CACHE_DIR.glob("*.yaml")):
+        model_name = cache_file.stem
+        data = load_yaml(cache_file)
+        if not data:
+            continue
+
+        # Collect all task IDs and build wins matrix
+        task_ids_set: set[str] = set()
+        comparisons: list[tuple[str, str, str]] = []  # (task_a, task_b, choice)
+
+        for entry in data.values():
+            task_a = entry["task_a_id"]
+            task_b = entry["task_b_id"]
+            task_ids_set.add(task_a)
+            task_ids_set.add(task_b)
+            for sample in entry["samples"]:
+                comparisons.append((task_a, task_b, sample["choice"]))
+
+        if len(task_ids_set) < 10:  # Skip tiny datasets
+            continue
+
+        task_ids = sorted(task_ids_set)
+        id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
+        n = len(task_ids)
+        wins = np.zeros((n, n), dtype=np.int32)
+
+        for task_a, task_b, choice in comparisons:
+            i, j = id_to_idx[task_a], id_to_idx[task_b]
+            if choice == "a":
+                wins[i, j] += 1
+            else:
+                wins[j, i] += 1
+
+        tasks = [make_task(tid) for tid in task_ids]
+        datasets.append((model_name, tasks, wins))
+
+    return datasets
+
+
+def subsample_pairwise_data(
+    tasks: list[Task],
+    wins: np.ndarray,
+    n_tasks: int,
+    rng: np.random.Generator,
+) -> tuple[list[Task], np.ndarray]:
+    """Subsample to n_tasks tasks, keeping only comparisons between them."""
+    if len(tasks) <= n_tasks:
+        return tasks, wins
+    indices = rng.choice(len(tasks), size=n_tasks, replace=False)
+    indices = np.sort(indices)
+    subsampled_tasks = [tasks[i] for i in indices]
+    subsampled_wins = wins[np.ix_(indices, indices)]
+    return subsampled_tasks, subsampled_wins
 
 
 def eval_nll(mu: np.ndarray, sigma: np.ndarray, wins: np.ndarray) -> float:
@@ -62,16 +124,15 @@ class RegularizationResults:
     train_nlls_std: list[float]
     test_nlls_std: list[float]
     sigma_maxs: list[float]
+    sigma_means: list[float]
     held_out_accuracies: list[float]
     held_out_accuracies_std: list[float]
     data_source: str
-    n_datasets: int
     n_splits: int
     n_tasks: int
 
 
 def compute_held_out_accuracy(mu: np.ndarray, wins: np.ndarray) -> float:
-    """Compute prediction accuracy on held-out pairs."""
     n = wins.shape[0]
     correct = 0
     total = 0
@@ -95,10 +156,11 @@ def run_regularization_on_wins(
     n_splits: int,
     lambdas: np.ndarray,
     verbose: bool = True,
-) -> dict[str, list]:
+) -> dict[str, dict]:
     all_train_nlls = {lam: [] for lam in lambdas}
     all_test_nlls = {lam: [] for lam in lambdas}
     all_sigma_maxs = {lam: [] for lam in lambdas}
+    all_sigma_means = {lam: [] for lam in lambdas}
     all_held_out_accs = {lam: [] for lam in lambdas}
 
     for split_idx in range(n_splits):
@@ -114,7 +176,7 @@ def run_regularization_on_wins(
                 print(" (skipped)", flush=True)
             continue
 
-        for lam_idx, lam in enumerate(lambdas):
+        for lam in lambdas:
             data = PairwiseData(tasks=tasks, wins=train_wins)
             result = fit_thurstonian(data, lambda_sigma=lam, log_sigma_bounds=(-4, 4))
             train_nll_per_comp = eval_nll(result.mu, result.sigma, train_wins) / n_train
@@ -122,6 +184,7 @@ def run_regularization_on_wins(
             all_train_nlls[lam].append(train_nll_per_comp)
             all_test_nlls[lam].append(test_nll_per_comp)
             all_sigma_maxs[lam].append(float(result.sigma.max()))
+            all_sigma_means[lam].append(float(result.sigma.mean()))
             all_held_out_accs[lam].append(compute_held_out_accuracy(result.mu, test_wins))
             if verbose:
                 print(".", end="", flush=True)
@@ -132,6 +195,7 @@ def run_regularization_on_wins(
         "train_nlls": all_train_nlls,
         "test_nlls": all_test_nlls,
         "sigma_maxs": all_sigma_maxs,
+        "sigma_means": all_sigma_means,
         "held_out_accs": all_held_out_accs,
     }
 
@@ -158,10 +222,10 @@ def run_regularization_path_synthetic(
         train_nlls_std=[np.std(results["train_nlls"][lam]) for lam in LAMBDAS],
         test_nlls_std=[np.std(results["test_nlls"][lam]) for lam in LAMBDAS],
         sigma_maxs=[np.mean(results["sigma_maxs"][lam]) for lam in LAMBDAS],
+        sigma_means=[np.mean(results["sigma_means"][lam]) for lam in LAMBDAS],
         held_out_accuracies=[np.mean(results["held_out_accs"][lam]) for lam in LAMBDAS],
         held_out_accuracies_std=[np.std(results["held_out_accs"][lam]) for lam in LAMBDAS],
-        data_source="synthetic",
-        n_datasets=1,
+        data_source="dense",
         n_splits=n_splits,
         n_tasks=n_tasks,
     )
@@ -175,7 +239,6 @@ def simulate_sparse_pairwise_comparisons(
     n_comparisons_per_pair: int,
     rng: np.random.Generator,
 ) -> np.ndarray:
-    """Simulate pairwise comparisons only for pairs in a d-regular graph (sparse)."""
     n = len(tasks)
     wins = np.zeros((n, n), dtype=np.int32)
     id_to_idx = {t.id: i for i, t in enumerate(tasks)}
@@ -201,7 +264,6 @@ def run_regularization_path_sparse(
     test_frac: float = 0.2,
     n_splits: int = 5,
 ) -> RegularizationResults:
-    """Run regularization analysis on sparse (d-regular graph) synthetic data."""
     print(f"Synthetic sparse: {n_tasks} tasks, d={d}, {n_splits} splits, {len(LAMBDAS)} lambdas")
     data_rng = np.random.default_rng(42)
     true_mu = np.linspace(-3, 3, n_tasks)
@@ -220,62 +282,58 @@ def run_regularization_path_sparse(
         train_nlls_std=[np.std(results["train_nlls"][lam]) for lam in LAMBDAS],
         test_nlls_std=[np.std(results["test_nlls"][lam]) for lam in LAMBDAS],
         sigma_maxs=[np.mean(results["sigma_maxs"][lam]) for lam in LAMBDAS],
+        sigma_means=[np.mean(results["sigma_means"][lam]) for lam in LAMBDAS],
         held_out_accuracies=[np.mean(results["held_out_accs"][lam]) for lam in LAMBDAS],
         held_out_accuracies_std=[np.std(results["held_out_accs"][lam]) for lam in LAMBDAS],
         data_source="sparse",
-        n_datasets=1,
         n_splits=n_splits,
         n_tasks=n_tasks,
     )
 
 
-def subsample_pairwise_data(
-    tasks: list[Task],
-    wins: np.ndarray,
-    n_tasks: int,
-    rng: np.random.Generator,
-) -> tuple[list[Task], np.ndarray]:
-    """Subsample to n_tasks tasks, keeping only comparisons between them."""
-    if len(tasks) <= n_tasks:
-        return tasks, wins
-    indices = rng.choice(len(tasks), size=n_tasks, replace=False)
-    indices = np.sort(indices)
-    subsampled_tasks = [tasks[i] for i in indices]
-    subsampled_wins = wins[np.ix_(indices, indices)]
-    return subsampled_tasks, subsampled_wins
-
-
 def run_regularization_path_real(
     test_frac: float = 0.2,
     n_splits: int = 5,
+    min_tasks: int = 50,
 ) -> RegularizationResults:
-    print(f"Real data: {n_splits} splits, {len(LAMBDAS)} lambdas, subsampling to {N_TASKS} tasks")
-    datasets = load_all_datasets()
+    print(f"Real data: {n_splits} splits, {len(LAMBDAS)} lambdas, min {min_tasks} tasks")
+    datasets = load_pairwise_from_cache()
     if not datasets:
-        raise ValueError(f"No datasets found in {RESULTS_DIR}")
+        raise ValueError(f"No datasets found in {REVEALED_CACHE_DIR}")
 
     all_train_nlls = {lam: [] for lam in LAMBDAS}
     all_test_nlls = {lam: [] for lam in LAMBDAS}
     all_sigma_maxs = {lam: [] for lam in LAMBDAS}
+    all_sigma_means = {lam: [] for lam in LAMBDAS}
     all_held_out_accs = {lam: [] for lam in LAMBDAS}
 
-    valid_datasets = [(n, d) for n, d in datasets if d.n_tasks >= N_TASKS]
+    valid_datasets = [(name, tasks, wins) for name, tasks, wins in datasets if len(tasks) >= min_tasks]
+    print(f"Found {len(valid_datasets)} datasets with >= {min_tasks} tasks")
+
     subsample_rng = np.random.default_rng(42)
-    for ds_idx, (name, data) in enumerate(valid_datasets):
-        print(f"Dataset {ds_idx + 1}/{len(valid_datasets)}: {name}")
-        tasks, wins = subsample_pairwise_data(data.tasks, data.wins, N_TASKS, subsample_rng)
-        results = run_regularization_on_wins(tasks, wins, test_frac, n_splits, LAMBDAS)
+    for ds_idx, (name, tasks, wins) in enumerate(valid_datasets):
+        # Subsample if needed
+        if len(tasks) > N_TASKS:
+            tasks, wins = subsample_pairwise_data(tasks, wins, N_TASKS, subsample_rng)
+        n_comparisons = int(wins.sum())
+        print(f"  Dataset {ds_idx + 1}/{len(valid_datasets)}: {name} ({len(tasks)} tasks, {n_comparisons} comparisons)")
+
+        if n_comparisons < 100:  # Skip if too few comparisons
+            print("    (skipped - too few comparisons)")
+            continue
+
+        results = run_regularization_on_wins(tasks, wins, test_frac, n_splits, LAMBDAS, verbose=False)
 
         for lam in LAMBDAS:
-            all_train_nlls[lam].extend(results["train_nlls"][lam])
-            all_test_nlls[lam].extend(results["test_nlls"][lam])
-            all_sigma_maxs[lam].extend(results["sigma_maxs"][lam])
-            all_held_out_accs[lam].extend(results["held_out_accs"][lam])
+            if results["train_nlls"][lam]:  # Only add if we got results
+                all_train_nlls[lam].extend(results["train_nlls"][lam])
+                all_test_nlls[lam].extend(results["test_nlls"][lam])
+                all_sigma_maxs[lam].extend(results["sigma_maxs"][lam])
+                all_sigma_means[lam].extend(results["sigma_means"][lam])
+                all_held_out_accs[lam].extend(results["held_out_accs"][lam])
 
     if not all_train_nlls[LAMBDAS[0]]:
-        raise ValueError(f"No valid datasets found (need >= {N_TASKS} tasks)")
-
-    n_valid_datasets = len(valid_datasets)
+        raise ValueError(f"No valid datasets found (need >= {min_tasks} tasks with sufficient comparisons)")
 
     return RegularizationResults(
         lambdas=LAMBDAS,
@@ -284,17 +342,17 @@ def run_regularization_path_real(
         train_nlls_std=[np.std(all_train_nlls[lam]) for lam in LAMBDAS],
         test_nlls_std=[np.std(all_test_nlls[lam]) for lam in LAMBDAS],
         sigma_maxs=[np.mean(all_sigma_maxs[lam]) for lam in LAMBDAS],
+        sigma_means=[np.mean(all_sigma_means[lam]) for lam in LAMBDAS],
         held_out_accuracies=[np.mean(all_held_out_accs[lam]) for lam in LAMBDAS],
         held_out_accuracies_std=[np.std(all_held_out_accs[lam]) for lam in LAMBDAS],
         data_source="real",
-        n_datasets=n_valid_datasets,
         n_splits=n_splits,
         n_tasks=N_TASKS,
     )
 
 
 def plot_regularization_path(results: RegularizationResults, output_path: Path, nll_clip: float = 2.0):
-    fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+    fig, axes = plt.subplots(1, 4, figsize=(16, 4))
 
     # Clip NLL values for display
     train_nlls = np.clip(results.train_nlls, None, nll_clip)
@@ -305,266 +363,55 @@ def plot_regularization_path(results: RegularizationResults, output_path: Path, 
     axes[0].errorbar(results.lambdas, train_nlls, yerr=train_std, fmt="o-", label="Train", markersize=5, capsize=3)
     axes[0].errorbar(results.lambdas, test_nlls, yerr=test_std, fmt="s-", label="Test", markersize=5, capsize=3)
     axes[0].set_xscale("log")
-    axes[0].set_xlabel("λ (regularization strength)")
+    axes[0].set_xlabel("lambda")
     axes[0].set_ylabel("NLL per comparison")
     axes[0].set_ylim(0, nll_clip)
     axes[0].legend()
-    axes[0].set_title("Regularization Path (mean ± std)")
+    axes[0].set_title("Train/Test NLL")
 
-    axes[1].semilogx(results.lambdas, results.sigma_maxs, "o-", color="coral", markersize=6)
-    axes[1].axhline(y=1.0, color="k", linestyle="--", alpha=0.5, label="σ=1")
-    axes[1].set_xlabel("λ")
-    axes[1].set_ylabel("max(σ)")
+    axes[1].semilogx(results.lambdas, results.sigma_maxs, "o-", color="coral", markersize=6, label="max")
+    axes[1].semilogx(results.lambdas, results.sigma_means, "s-", color="steelblue", markersize=6, label="mean")
+    axes[1].axhline(y=1.0, color="k", linestyle="--", alpha=0.5, label="sigma=1")
+    axes[1].set_xlabel("lambda")
+    axes[1].set_ylabel("sigma")
     axes[1].legend()
-    axes[1].set_title("Maximum Variance Parameter")
+    axes[1].set_title("Sigma Statistics")
 
     axes[2].errorbar(results.lambdas, results.held_out_accuracies, yerr=results.held_out_accuracies_std,
                      fmt="s-", color="seagreen", markersize=6, capsize=3)
     axes[2].set_xscale("log")
-    axes[2].set_xlabel("λ")
+    axes[2].set_xlabel("lambda")
     axes[2].set_ylabel("Accuracy")
     axes[2].set_ylim(0.5, 1.0)
     axes[2].set_title("Held-out Accuracy")
 
-    if results.data_source == "synthetic":
-        title = f"L2 Variance Regularization (SYNTHETIC DENSE, N_TASKS={results.n_tasks})"
+    # Log-sigma deviation from 0 (i.e., how far sigma is from 1)
+    log_sigma_dev = np.abs(np.log(results.sigma_means))
+    axes[3].semilogx(results.lambdas, log_sigma_dev, "o-", color="purple", markersize=6)
+    axes[3].set_xlabel("lambda")
+    axes[3].set_ylabel("|log(mean sigma)|")
+    axes[3].set_title("Deviation from sigma=1")
+
+    if results.data_source == "dense":
+        title = f"L2 on log(sigma) Regularization (DENSE, N={results.n_tasks})"
     elif results.data_source == "sparse":
-        title = f"L2 Variance Regularization (SYNTHETIC SPARSE/AL, N_TASKS={results.n_tasks})"
+        title = f"L2 on log(sigma) Regularization (SPARSE, N={results.n_tasks})"
     else:
-        title = f"L2 Variance Regularization (REAL, n={results.n_datasets} datasets, N_TASKS>={results.n_tasks})"
+        title = f"L2 on log(sigma) Regularization (REAL DATA, N={results.n_tasks})"
 
     plt.suptitle(title, fontweight="bold")
     plt.tight_layout()
     plt.savefig(output_path, dpi=150, bbox_inches="tight")
     plt.close()
-
-
-@dataclass
-class ALRegularizationResults:
-    lambdas: list[float]
-    # Each entry is a list of values per iteration
-    trajectories: dict[float, dict[str, list[float]]]  # lambda -> {metric_name -> [values per iter]}
-    n_tasks: int
-    n_runs: int
-
-
-def run_al_with_regularization(
-    n_tasks: int = N_TASKS,
-    lambdas: list[float] | None = None,
-    initial_degree: int = 3,
-    batch_size: int = 100,
-    max_iterations: int = 20,
-    n_comparisons_per_pair: int = 3,
-    held_out_fraction: float = 0.2,
-    n_runs: int = 3,
-    seed: int = 42,
-) -> ALRegularizationResults:
-    """Run full active learning simulation with different regularization strengths."""
-    from itertools import combinations
-    from src.fitting.thurstonian_fitting.active_learning import (
-        ActiveLearningState,
-        generate_d_regular_pairs,
-        select_next_pairs,
-    )
-    from scipy.stats import spearmanr
-
-    if lambdas is None:
-        lambdas = [0.0, 0.1, 1.0, 10.0, 50.0]
-
-    print(f"AL regularization: {n_tasks} tasks, {n_runs} runs, {len(lambdas)} lambdas, {max_iterations} max iters")
-
-    trajectories: dict[float, dict[str, list[list[float]]]] = {
-        lam: {"spearman_vs_true": [], "held_out_accuracy": [], "cumulative_pairs": []}
-        for lam in lambdas
-    }
-
-    for run_idx in range(n_runs):
-        print(f"Run {run_idx + 1}/{n_runs}")
-        run_seed = seed + run_idx * 1000
-        rng = np.random.default_rng(run_seed)
-
-        # Generate synthetic scenario
-        tasks = [make_task(f"t{i}") for i in range(n_tasks)]
-        true_mu = np.linspace(-3, 3, n_tasks)
-        true_sigma = np.ones(n_tasks)
-        id_to_idx = {t.id: i for i, t in enumerate(tasks)}
-
-        # Split pairs into train/held-out
-        all_pairs = list(combinations(tasks, 2))
-        n_held_out = int(len(all_pairs) * held_out_fraction)
-        held_out_indices = rng.choice(len(all_pairs), size=n_held_out, replace=False)
-        held_out_pairs = [all_pairs[i] for i in held_out_indices]
-        train_pairs_set = {
-            tuple(sorted([a.id, b.id]))
-            for i, (a, b) in enumerate(all_pairs)
-            if i not in held_out_indices
-        }
-
-        # Generate held-out comparisons
-        held_out_comparisons = []
-        for a, b in held_out_pairs:
-            i, j = id_to_idx[a.id], id_to_idx[b.id]
-            p_i_beats_j = _preference_prob(true_mu[i], true_mu[j], true_sigma[i], true_sigma[j])
-            for _ in range(n_comparisons_per_pair):
-                winner = a if rng.random() < p_i_beats_j else b
-                choice = "a" if winner == a else "b"
-                held_out_comparisons.append(
-                    _make_comparison(a, b, choice)
-                )
-
-        # Run AL for each lambda
-        for lam_idx, lam in enumerate(lambdas):
-            print(f"  λ={lam} ({lam_idx + 1}/{len(lambdas)})", end="", flush=True)
-            al_rng = np.random.default_rng(run_seed + 500)
-            state = ActiveLearningState(tasks=tasks)
-
-            # Initial d-regular pairs (filtered to train set)
-            initial_pairs = generate_d_regular_pairs(tasks, d=initial_degree, rng=al_rng)
-            initial_pairs = [
-                (a, b) for a, b in initial_pairs
-                if tuple(sorted([a.id, b.id])) in train_pairs_set
-            ]
-
-            # Generate initial comparisons
-            initial_comparisons = []
-            for a, b in initial_pairs:
-                i, j = id_to_idx[a.id], id_to_idx[b.id]
-                p_i_beats_j = _preference_prob(true_mu[i], true_mu[j], true_sigma[i], true_sigma[j])
-                for _ in range(n_comparisons_per_pair):
-                    winner = a if al_rng.random() < p_i_beats_j else b
-                    choice = "a" if winner == a else "b"
-                    initial_comparisons.append(_make_comparison(a, b, choice))
-
-            state.add_comparisons(initial_comparisons)
-            state.fit(lambda_sigma=lam)
-
-            run_spearman = [float(spearmanr(state.current_fit.mu, true_mu).correlation)]
-            run_accuracy = [_compute_held_out_accuracy(state.current_fit, held_out_comparisons)]
-            run_pairs = [len(state.sampled_pairs)]
-
-            # Active learning loop
-            for iter_idx in range(max_iterations):
-                unsampled = [
-                    (a, b) for a, b in state.get_unsampled_pairs()
-                    if tuple(sorted([a.id, b.id])) in train_pairs_set
-                ]
-                if not unsampled:
-                    break
-
-                next_pairs = select_next_pairs(state, batch_size=batch_size, rng=al_rng)
-                next_pairs = [
-                    (a, b) for a, b in next_pairs
-                    if tuple(sorted([a.id, b.id])) in train_pairs_set
-                ]
-                if not next_pairs:
-                    break
-
-                new_comparisons = []
-                for a, b in next_pairs:
-                    i, j = id_to_idx[a.id], id_to_idx[b.id]
-                    p_i_beats_j = _preference_prob(true_mu[i], true_mu[j], true_sigma[i], true_sigma[j])
-                    for _ in range(n_comparisons_per_pair):
-                        winner = a if al_rng.random() < p_i_beats_j else b
-                        choice = "a" if winner == a else "b"
-                        new_comparisons.append(_make_comparison(a, b, choice))
-
-                state.add_comparisons(new_comparisons)
-                state.fit(lambda_sigma=lam)
-
-                run_spearman.append(float(spearmanr(state.current_fit.mu, true_mu).correlation))
-                run_accuracy.append(_compute_held_out_accuracy(state.current_fit, held_out_comparisons))
-                run_pairs.append(len(state.sampled_pairs))
-                print(".", end="", flush=True)
-
-            print(f" ({len(run_pairs)} iters)", flush=True)
-            trajectories[lam]["spearman_vs_true"].append(run_spearman)
-            trajectories[lam]["held_out_accuracy"].append(run_accuracy)
-            trajectories[lam]["cumulative_pairs"].append(run_pairs)
-
-    # Average trajectories across runs (align by iteration, pad with last value if needed)
-    avg_trajectories: dict[float, dict[str, list[float]]] = {}
-    for lam in lambdas:
-        avg_trajectories[lam] = {}
-        for metric in ["spearman_vs_true", "held_out_accuracy", "cumulative_pairs"]:
-            runs = trajectories[lam][metric]
-            max_len = max(len(r) for r in runs)
-            padded = [r + [r[-1]] * (max_len - len(r)) for r in runs]
-            avg_trajectories[lam][metric] = [float(np.mean([p[i] for p in padded])) for i in range(max_len)]
-
-    return ALRegularizationResults(
-        lambdas=lambdas,
-        trajectories=avg_trajectories,
-        n_tasks=n_tasks,
-        n_runs=n_runs,
-    )
-
-
-def _make_comparison(a: Task, b: Task, choice: str) -> "BinaryPreferenceMeasurement":
-    from src.types import BinaryPreferenceMeasurement, PreferenceType
-    return BinaryPreferenceMeasurement(
-        task_a=a,
-        task_b=b,
-        choice=choice,
-        preference_type=PreferenceType.PRE_TASK_STATED,
-    )
-
-
-def _compute_held_out_accuracy(
-    result: "ThurstonianResult",
-    held_out: list["BinaryPreferenceMeasurement"],
-) -> float:
-    if not held_out:
-        return 1.0
-    correct = 0
-    for c in held_out:
-        prob_a = result.preference_probability(c.task_a, c.task_b)
-        predicted = "a" if prob_a >= 0.5 else "b"
-        if predicted == c.choice:
-            correct += 1
-    return correct / len(held_out)
-
-
-def plot_al_regularization(results: ALRegularizationResults, output_path: Path):
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    colors = plt.cm.viridis(np.linspace(0, 0.9, len(results.lambdas)))
-
-    for lam, color in zip(results.lambdas, colors):
-        traj = results.trajectories[lam]
-        pairs = traj["cumulative_pairs"]
-        label = f"λ={lam}"
-
-        axes[0].plot(pairs, traj["spearman_vs_true"], "-o", color=color, label=label, markersize=3)
-        axes[1].plot(pairs, traj["held_out_accuracy"], "-o", color=color, label=label, markersize=3)
-
-    axes[0].set_xlabel("Cumulative pairs queried")
-    axes[0].set_ylabel("Spearman ρ vs true utilities")
-    axes[0].set_title("Ranking Recovery")
-    axes[0].legend()
-    axes[0].set_ylim(0, 1.05)
-
-    axes[1].set_xlabel("Cumulative pairs queried")
-    axes[1].set_ylabel("Held-out accuracy")
-    axes[1].set_title("Prediction Accuracy")
-    axes[1].legend()
-    axes[1].set_ylim(0.5, 1.0)
-
-    plt.suptitle(
-        f"Active Learning with Regularization (N_TASKS={results.n_tasks}, n_runs={results.n_runs})",
-        fontweight="bold",
-    )
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=150, bbox_inches="tight")
-    plt.close()
+    print(f"Saved: {output_path}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Regularization path analysis")
-    parser.add_argument("--real", action="store_true", help="Use real data from results/measurements/")
-    parser.add_argument("--sparse", action="store_true", help="Use sparse (active learning) synthetic data")
+    parser.add_argument("--sparse", action="store_true", help="Use sparse (AL-style) synthetic data")
+    parser.add_argument("--real", action="store_true", help="Use real data from cache")
     parser.add_argument("--both", action="store_true", help="Run on both dense and sparse synthetic data")
     parser.add_argument("--all", action="store_true", help="Run on dense, sparse, and real data")
-    parser.add_argument("--al", action="store_true", help="Run active learning with different regularizations")
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -572,42 +419,36 @@ def main():
     if args.all:
         print("Running dense synthetic...")
         synthetic_results = run_regularization_path_synthetic()
-        plot_regularization_path(synthetic_results, OUTPUT_DIR / "regularization_path_synthetic.png")
+        plot_regularization_path(synthetic_results, OUTPUT_DIR / "plot_020326_regularization_dense.png")
 
-        print("Running sparse synthetic...")
+        print("\nRunning sparse synthetic...")
         sparse_results = run_regularization_path_sparse()
-        plot_regularization_path(sparse_results, OUTPUT_DIR / "regularization_path_sparse.png")
+        plot_regularization_path(sparse_results, OUTPUT_DIR / "plot_020326_regularization_sparse.png")
 
-        print("Running real data...")
+        print("\nRunning real data...")
         real_results = run_regularization_path_real()
-        plot_regularization_path(real_results, OUTPUT_DIR / "regularization_path_real.png")
+        plot_regularization_path(real_results, OUTPUT_DIR / "plot_020326_regularization_real.png")
 
     elif args.both:
         print("Running dense synthetic...")
         synthetic_results = run_regularization_path_synthetic()
-        plot_regularization_path(synthetic_results, OUTPUT_DIR / "regularization_path_synthetic.png")
+        plot_regularization_path(synthetic_results, OUTPUT_DIR / "plot_020326_regularization_dense.png")
 
-        print("Running sparse synthetic...")
+        print("\nRunning sparse synthetic...")
         sparse_results = run_regularization_path_sparse()
-        plot_regularization_path(sparse_results, OUTPUT_DIR / "regularization_path_sparse.png")
+        plot_regularization_path(sparse_results, OUTPUT_DIR / "plot_020326_regularization_sparse.png")
 
     elif args.real:
         real_results = run_regularization_path_real()
-        plot_regularization_path(real_results, OUTPUT_DIR / "regularization_path_real.png")
+        plot_regularization_path(real_results, OUTPUT_DIR / "plot_020326_regularization_real.png")
 
     elif args.sparse:
         sparse_results = run_regularization_path_sparse()
-        plot_regularization_path(sparse_results, OUTPUT_DIR / "regularization_path_sparse.png")
-
-    elif args.al:
-        print("Running active learning with different regularizations...")
-        al_results = run_al_with_regularization()
-        plot_al_regularization(al_results, OUTPUT_DIR / "al_regularization.png")
-        print(f"Saved to {OUTPUT_DIR / 'al_regularization.png'}")
+        plot_regularization_path(sparse_results, OUTPUT_DIR / "plot_020326_regularization_sparse.png")
 
     else:
         synthetic_results = run_regularization_path_synthetic()
-        plot_regularization_path(synthetic_results, OUTPUT_DIR / "regularization_path_synthetic.png")
+        plot_regularization_path(synthetic_results, OUTPUT_DIR / "plot_020326_regularization_dense.png")
 
 
 if __name__ == "__main__":
