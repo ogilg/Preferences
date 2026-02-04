@@ -59,7 +59,24 @@ from src.measurement.runners.utils.experiment_utils import (
     build_configurations,
 )
 from src.measurement.runners.utils.runner_utils import RunnerStats, _get_activation_completions_path
+from src.models import get_client
 from src.models.registry import should_capture_reasoning
+
+
+def _get_completion_client(config, ctx):
+    """Get client for loading completions - uses completion_model if set, else rating model."""
+    if config.completion_model:
+        return get_client(config.completion_model)
+    return ctx.client
+
+
+def _build_run_name_suffix(config, model_short: str) -> str:
+    """Build run name suffix that includes completion model if different from rating model."""
+    if config.completion_model:
+        comp_short = model_short_name(config.completion_model)
+        if comp_short != model_short:
+            return f"_comp_{comp_short}"
+    return ""
 
 
 class PostTaskRunConfig(TypedDict):
@@ -125,18 +142,22 @@ async def run_post_task_stated_async(
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
     activation_completions_path = _get_activation_completions_path(config.activations_model)
+    completion_client = _get_completion_client(config, ctx)
+    run_name_suffix = _build_run_name_suffix(config, model_short)
 
     for completion_seed in completion_seeds:
-        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
+        store = CompletionStore(client=completion_client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
             continue
 
-        task_completions = store.load(ctx.task_lookup)
+        # When use_all_completions=True, load all completions; otherwise filter to sampled tasks
+        task_lookup = None if config.use_all_completions else ctx.task_lookup
+        task_completions = store.load(task_lookup)
         completion_lookup = {tc.task.id: tc.completion for tc in task_completions}
         tasks_data = [tc.task for tc in task_completions] * config.n_samples
 
         for cfg in configurations:
-            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_cseed{completion_seed}_rseed{cfg.seed}"
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}{run_name_suffix}_cseed{completion_seed}_rseed{cfg.seed}"
 
             # Skip if already done in experiment store
             if exp_store and exp_store.exists("post_task_stated", run_name):
@@ -149,6 +170,7 @@ async def run_post_task_stated_async(
                 ctx.client.canonical_model_name, cfg.template, cfg.response_format,
                 completion_seed, cfg.seed,
                 system_prompt=config.measurement_system_prompt,
+                completion_model=config.completion_model,
             )
 
             builder = build_stated_builder(
@@ -284,9 +306,11 @@ async def run_post_task_revealed_async(
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
     activation_completions_path = _get_activation_completions_path(config.activations_model)
+    completion_client = _get_completion_client(config, ctx)
+    run_name_suffix = _build_run_name_suffix(config, model_short)
 
     for completion_seed in completion_seeds:
-        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
+        store = CompletionStore(client=completion_client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
             continue
 
@@ -301,7 +325,7 @@ async def run_post_task_revealed_async(
 
         for cfg in configurations:
             seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
-            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}{seed_suffix}"
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{run_name_suffix}_cseed{completion_seed}{seed_suffix}"
 
             # Skip if already done in experiment store
             if exp_store and exp_store.exists("post_task_revealed", run_name):
@@ -473,11 +497,13 @@ async def run_active_learning_async(
     completion_seed: int | None = None
     tasks_for_learning = ctx.tasks
     activation_completions_path = _get_activation_completions_path(config.activations_model)
+    completion_client = _get_completion_client(config, ctx)
+    run_name_suffix = _build_run_name_suffix(config, model_short)
     if post_task:
         completion_seeds = config.completion_seeds or config.generation_seeds
         # Use first completion seed for active learning
         completion_seed = completion_seeds[0]
-        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
+        store = CompletionStore(client=completion_client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
             raise ValueError(f"Completions not found for seed {completion_seed}")
         task_completions = store.load(ctx.task_lookup)
@@ -495,7 +521,7 @@ async def run_active_learning_async(
 
         # Build run_name consistent with other runners
         if post_task:
-            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}_cseed{completion_seed}_rseed{cfg.seed}"
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{run_name_suffix}_cseed{completion_seed}_rseed{cfg.seed}"
         else:
             seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
             run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
@@ -837,9 +863,12 @@ async def run_post_task_ranking_async(
     stats = RunnerStats(total_runs=len(completion_seeds) * len(configurations))
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
     activation_completions_path = _get_activation_completions_path(config.activations_model)
+    completion_client = _get_completion_client(config, ctx)
+    model_short = model_short_name(ctx.client.canonical_model_name)
+    run_name_suffix = _build_run_name_suffix(config, model_short)
 
     for completion_seed in completion_seeds:
-        store = CompletionStore(client=ctx.client, seed=completion_seed, activation_completions_path=activation_completions_path)
+        store = CompletionStore(client=completion_client, seed=completion_seed, activation_completions_path=activation_completions_path)
         if not store.exists():
             continue
 
