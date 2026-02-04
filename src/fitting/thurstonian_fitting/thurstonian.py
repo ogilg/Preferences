@@ -36,6 +36,7 @@ from src.types import BinaryPreferenceMeasurement
 DEFAULT_MU_BOUNDS = (-10.0, 10.0)
 DEFAULT_LOG_SIGMA_BOUNDS = (-2.0, 2.0)
 DEFAULT_SIGMA_INIT = 1.0
+DEFAULT_LAMBDA_SIGMA = 1.0
 
 
 @dataclass
@@ -223,7 +224,7 @@ def fit_thurstonian(
     mu_bounds: tuple[float, float] = DEFAULT_MU_BOUNDS,
     gradient_tol: float = 1.0,
     loss_tol: float = 1e-8,
-    lambda_sigma: float = 0.0,
+    lambda_sigma: float = DEFAULT_LAMBDA_SIGMA,
 ) -> ThurstonianResult:
     n = data.n_tasks
 
