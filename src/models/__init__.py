@@ -7,6 +7,7 @@ from .registry import (
     get_hyperbolic_name,
     get_cerebras_name,
     get_openrouter_name,
+    get_hf_name,
     is_valid_model,
     list_models,
     is_reasoning_model,
@@ -14,9 +15,24 @@ from .registry import (
 )
 
 try:
-    from .transformer_lens import TransformerLensModel
+    from .transformer_lens import TransformerLensModel, GenerationResult, SteeringHook, autoregressive_steering, all_tokens_steering, STEERING_MODES
 except ImportError:
     TransformerLensModel = None  # type: ignore[assignment,misc]
+    GenerationResult = None  # type: ignore[assignment,misc]
+    SteeringHook = None  # type: ignore[assignment,misc]
+    autoregressive_steering = None  # type: ignore[assignment]
+    all_tokens_steering = None  # type: ignore[assignment]
+    STEERING_MODES = None  # type: ignore[assignment]
+
+try:
+    from .huggingface_model import HuggingFaceModel
+except ImportError:
+    HuggingFaceModel = None  # type: ignore[assignment,misc]
+
+try:
+    from .hybrid_model import HybridActivationModel
+except ImportError:
+    HybridActivationModel = None  # type: ignore[assignment,misc]
 
 # === INFERENCE PROVIDER CONFIGURATION ===
 # Change this to switch providers globally
@@ -41,6 +57,13 @@ __all__ = [
     "TokenSelectorFn",
     "SELECTOR_REGISTRY",
     "TransformerLensModel",
+    "HuggingFaceModel",
+    "HybridActivationModel",
+    "GenerationResult",
+    "SteeringHook",
+    "autoregressive_steering",
+    "all_tokens_steering",
+    "STEERING_MODES",
     "OpenAICompatibleClient",
     "HyperbolicClient",
     "CerebrasClient",
@@ -57,6 +80,7 @@ __all__ = [
     "get_hyperbolic_name",
     "get_cerebras_name",
     "get_openrouter_name",
+    "get_hf_name",
     "is_valid_model",
     "list_models",
 ]

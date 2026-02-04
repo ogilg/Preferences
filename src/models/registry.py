@@ -23,6 +23,7 @@ class ModelConfig:
     hyperbolic_name: str | None
     cerebras_name: str | None
     openrouter_name: str | None
+    hf_name: str | None = None  # HuggingFace model name (defaults to transformer_lens_name)
     system_prompt: str | None = None
     reasoning_mode: Literal["none", "openrouter"] = "none"
     supports_system_role: bool = True
@@ -154,6 +155,19 @@ def get_openrouter_name(canonical_name: str) -> str:
     if config.openrouter_name is None:
         raise ValueError(f"Model {canonical_name} not available for OpenRouter")
     return config.openrouter_name
+
+
+def get_hf_name(canonical_name: str) -> str:
+    """Get HuggingFace model name from canonical name.
+
+    Falls back to transformer_lens_name if hf_name is not explicitly set.
+    """
+    config = MODEL_REGISTRY[canonical_name]
+    if config.hf_name is not None:
+        return config.hf_name
+    if config.transformer_lens_name is not None:
+        return config.transformer_lens_name
+    raise ValueError(f"Model {canonical_name} not available for HuggingFace")
 
 
 def get_model_system_prompt(canonical_name: str) -> str | None:

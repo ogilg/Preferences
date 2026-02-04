@@ -34,6 +34,58 @@ SELECTOR_REGISTRY: dict[str, TokenSelectorFn] = {
 }
 
 
+# Batched selectors: operate on (batch, seq_len, d_model) tensors
+BatchedTokenSelectorFn = Callable[[torch.Tensor, torch.Tensor, torch.Tensor], torch.Tensor]
+
+
+def select_last_batched(
+    activations: torch.Tensor,
+    first_completion_indices: torch.Tensor,
+    seq_lengths: torch.Tensor,
+) -> torch.Tensor:
+    """Select last non-padding token for each sample. Returns (batch, d_model)."""
+    batch_size = activations.shape[0]
+    last_indices = seq_lengths - 1
+    return activations[torch.arange(batch_size, device=activations.device), last_indices, :]
+
+
+def select_first_batched(
+    activations: torch.Tensor,
+    first_completion_indices: torch.Tensor,
+    seq_lengths: torch.Tensor,
+) -> torch.Tensor:
+    """Select first completion token for each sample. Returns (batch, d_model)."""
+    batch_size = activations.shape[0]
+    return activations[torch.arange(batch_size, device=activations.device), first_completion_indices, :]
+
+
+def select_mean_batched(
+    activations: torch.Tensor,
+    first_completion_indices: torch.Tensor,
+    seq_lengths: torch.Tensor,
+) -> torch.Tensor:
+    """Mean over completion tokens for each sample. Returns (batch, d_model)."""
+    batch_size, max_seq_len, d_model = activations.shape
+    device = activations.device
+
+    # Create mask: True for completion tokens (from first_completion_idx to seq_length)
+    positions = torch.arange(max_seq_len, device=device).unsqueeze(0)  # (1, max_seq_len)
+    mask = (positions >= first_completion_indices.unsqueeze(1)) & (positions < seq_lengths.unsqueeze(1))
+    mask = mask.unsqueeze(-1)  # (batch, max_seq_len, 1)
+
+    # Masked mean
+    masked_acts = activations * mask
+    completion_lengths = (seq_lengths - first_completion_indices).unsqueeze(-1).float()  # (batch, 1)
+    return masked_acts.sum(dim=1) / completion_lengths
+
+
+BATCHED_SELECTOR_REGISTRY: dict[str, BatchedTokenSelectorFn] = {
+    "last": select_last_batched,
+    "first": select_first_batched,
+    "mean": select_mean_batched,
+}
+
+
 class TokenPosition(Enum):
     """Legacy enum for backwards compatibility."""
     LAST = "last"
