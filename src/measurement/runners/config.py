@@ -66,6 +66,7 @@ class ExperimentConfig(BaseModel):
     n_tasks: int = 10
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench", "stress_test"]] = ["wildchat"]
     task_sampling_seed: int | None = None  # Seed for shuffling task order when sampling (None = no shuffle)
+    stratified_sampling: bool = False  # Sample equal number of tasks from each origin
 
     templates: Path | None = None  # Path to template file, optional for completion_generation
     inline_templates: list[dict] | None = None  # Inline template definitions (alternative to templates path)

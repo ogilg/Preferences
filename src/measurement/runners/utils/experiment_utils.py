@@ -87,6 +87,7 @@ def setup_experiment(
         consistency_model=config.consistency_filter_model,
         consistency_keep_ratio=config.consistency_keep_ratio,
         task_ids=activation_task_ids,
+        stratified=config.stratified_sampling,
     )
 
     if activation_task_ids or config.consistency_filter_model:
