@@ -650,6 +650,56 @@ Extended the 4×4 matrix experiment to anchored_precise_1_5 template (1-5 scale 
 
 ---
 
+# Thurstonian Fitting
+
+## 2026-02-03: L2 on log(sigma) Regularization Analysis
+
+Re-ran regularization analysis after discovering the old plots were generated with **L2 on sigma** (which pushes sigma toward 0), not the current **L2 on log(sigma)** (which pushes sigma toward 1).
+
+### Background
+
+The Thurstonian model fits utilities mu and uncertainties sigma for each task. The regularization penalty is:
+```
+lambda * sum(log(sigma)^2)
+```
+This pulls sigma toward 1 (since log(1)=0), preventing both blow-up (sigma >> 1) and overconfidence (sigma << 1).
+
+### Results
+
+**Dense synthetic** (100 tasks, fully connected):
+
+![Dense regularization](assets/regularization/plot_020326_regularization_dense.png)
+
+- NLL flat across all lambda — regularization unnecessary with dense data
+- Mean sigma converges to 1 as lambda increases
+- Accuracy constant at ~95%
+
+**Sparse synthetic** (100 tasks, d=5 regular graph):
+
+![Sparse regularization](assets/regularization/plot_020326_regularization_sparse.png)
+
+- Max sigma explodes to ~14 without regularization
+- Mean sigma stays near 1 regardless
+- Test NLL has large variance at low lambda
+- Accuracy ~80-85%, stable across lambda
+
+**Real data** (6 models, 100 tasks, 1k-70k comparisons each):
+
+![Real data regularization](assets/regularization/plot_020326_regularization_real.png)
+
+- Max sigma explodes to ~45 without regularization
+- Test NLL improves from ~1.0 to ~0.75 with regularization
+- Accuracy flat at ~60% (real data is noisier than synthetic)
+- lambda >= 1 controls sigma blow-up
+
+### Recommendations
+
+- **Dense data**: lambda=0 is fine, bounds provide implicit regularization
+- **Sparse/real data**: Use lambda=1 to 10 to control sigma blow-up
+- Default bounds (-2, 2) on log(sigma) constrain sigma to (0.14, 7.4)
+
+---
+
 # Files Reference
 
 - Seed sensitivity: `src/analysis/sensitivity/plot_seed_sensitivity.py`
