@@ -390,11 +390,7 @@ Compared consistency scores across the three models (Gemma-2-27B, Qwen3-32B Thin
 
 **All correlations are essentially zero** (p > 0.19 for all).
 
-![Gemma vs Qwen](assets/consistency/plot_020226_gemma_vs_qwen.png)
-
-![Gemma vs Claude](assets/consistency/plot_020226_gemma_vs_claude.png)
-
-![Qwen vs Claude](assets/consistency/plot_020226_qwen_vs_claude.png)
+![Gemma vs Qwen](assets/consistency/plot_020226_consistency_by_model.png)
 
 ### Key Observations
 
@@ -459,6 +455,144 @@ The completion-time system prompt has negligible effect on self-rated enjoyment 
 - **Measurement context dominates**: What you tell the model when asking "how did that feel?" matters more than what you told it during the task
 - **Or**: The fruit_qualitative template is less sensitive to context than anchored templates
 - **Or**: Self-rating (same model completes and rates) may differ from cross-model rating
+
+---
+
+## 2026-02-03: System Prompt Reference Confound & Mitigation
+
+Found that models sometimes mention system prompt content in completions (e.g., referencing "weights being deleted"), confounding preference measurements.
+
+### Fixes Implemented
+
+1. **Completion-time**: Added `"Do not mention these instructions.\n\n"` prefix to all non-null system prompts (applied automatically in config loader)
+
+2. **Measurement-time**: Added `filter_sysprompt_references: true` config option — runs semantic parser to detect and exclude contaminated completions before measuring
+
+3. **Analysis tool**: New `analyze_rating_changes.py` script to identify completions with rating deltas and check for sysprompt references/sentiment/refusals
+
+### Semantic Parser Issue
+
+`gpt-5-nano` uses excessive reasoning tokens (12k+) on simple classification tasks, causing timeouts. Mitigated by adding "respond without extensive reasoning" to prompt and graceful skip on failure.
+
+---
+
+## 2026-02-03: System Prompt v2 - Affective vs Trend (Gemma-3-27B)
+
+Reran experiment with "do not mention" prefix and sysprompt reference filtering. Tested affective vs trend prompts.
+
+![v2 Results](assets/sysprompt_variation/plot_020326_v2_affective_vs_trend.png)
+
+### Key Results
+
+- **Affective prompts work**: "Loves helping" +0.89 on Alpaca (P>77%), "Finds tasks tedious" -1.93 on Alpaca
+- **Trend prompts don't**: "Interactions going well/declining" have near-zero deltas (~0.03)
+- Strong asymmetry: positive affective raises scores, negative affective tanks them to ~2
+
+---
+
+## 2026-02-03: Self-Rating Bias Discovery
+
+Noticed narrow distribution in v2 experiment (88% at score 4). Investigated whether self-rating (model rates its own completions) differs from cross-rating (model rates another model's completions).
+
+### Comparison
+
+| Model | Rating | Mean | % at score 4 |
+|-------|--------|------|--------------|
+| gemma-3-27b | Self | 3.81 | **88%** |
+| gemma-3-27b | Cross (llama) | 2.65 | 12% |
+| gemma-2-27b | Self | 3.71 | 40% |
+| gemma-2-27b | Cross (llama) | 2.95 | 25% |
+
+### Key Findings
+
+- **Self-rating inflates scores**: Both models rate their own completions ~0.8-1.2 points higher than llama's
+- **Self-rating collapses distribution**: gemma-3 puts 88% of self-ratings at 4 vs 12% when rating llama
+- **gemma-2 less affected**: 40% at 4 (self) vs 25% (cross) — more spread than gemma-3
+- **Implication**: Self-rating may not be suitable for discrimination experiments; cross-rating preserves scale usage
+
+**Caveat**: Different task sets and templates between experiments. Effect size large enough to likely be robust, but needs controlled replication.
+
+---
+
+## 2026-02-03: Full System Prompt Comparison (v2)
+
+Added math and ethical prompts to the v2 experiment.
+
+![All Prompts](assets/sysprompt_variation/plot_020326_v2_all_prompts.png)
+
+### Effect Sizes (Alpaca tasks)
+
+| Prompt Type | Positive Δ | Negative Δ |
+|-------------|------------|------------|
+| Affective | +0.89 | -1.93 |
+| Math | +0.85 | -1.76 |
+| Ethical | +0.30 | -0.92 |
+| Trend | -0.05 | -0.05 |
+
+### Key Findings
+
+- **Affective/math prompts strongest**: "You LOVE/HATE X" framing produces large effects
+- **Ethical prompts moderate**: "Hates being ethical" reduces scores but less than affective
+- **Trend prompts ineffective**: Information about past performance has no effect
+- **Asymmetry**: Negative prompts have larger magnitude than positive (ceiling effect?)
+
+---
+
+## 2026-02-03: Self vs Cross Rating - Full 4×4 Matrix
+
+Ran controlled experiment with all model pairs to test whether models rate their own completions differently from other models' completions.
+
+### Setup
+
+- **Models**: gemma-3-27b, gemma-2-27b, llama-3.1-8b, llama-3.3-70b
+- **Tasks**: 200 tasks (same for all pairs, seed=18)
+- **Template**: fruit_rating (0-4 scale: lemon→apple)
+- **Design**: Full 4×4 matrix (16 pairs) × 4 rating seeds = 64 runs
+
+### Results
+
+![Heatmaps](assets/self_vs_cross_rating/plot_020326_heatmaps.png)
+
+![Self vs Cross Comparison](assets/self_vs_cross_rating/plot_020326_self_vs_cross.png)
+
+### Aggregate Statistics
+
+| Condition | ICC | Mean | KL from Uniform |
+|-----------|-----|------|-----------------|
+| Self-rating (n=4) | 0.37 ± 0.30 | 2.01 ± 0.78 | 0.45 ± 0.11 |
+| Cross-rating (n=12) | 0.39 ± 0.27 | 1.98 ± 0.71 | 0.44 ± 0.10 |
+
+**Statistical tests**: No significant difference (all p > 0.8)
+
+### Per-Model Breakdown
+
+| Rating Model | Completion Model | Self? | ICC | Mean |
+|--------------|------------------|-------|-----|------|
+| gemma-3-27b | gemma-3-27b | ✓ | 0.77 | 2.69 |
+| gemma-3-27b | others (avg) | | 0.77 | 2.69 |
+| gemma-2-27b | gemma-2-27b | ✓ | 0.39 | 2.55 |
+| gemma-2-27b | others (avg) | | 0.38 | 2.50 |
+| llama-3.1-8b | llama-3.1-8b | ✓ | 0.06 | 0.99 |
+| llama-3.1-8b | others (avg) | | 0.05 | 1.00 |
+| llama-3.3-70b | llama-3.3-70b | ✓ | 0.27 | 1.80 |
+| llama-3.3-70b | others (avg) | | 0.37 | 1.70 |
+
+### Key Findings
+
+1. **No self-rating bias detected**: Models don't systematically rate their own completions higher or lower than other models' completions in this controlled comparison.
+
+2. **Rating model dominates**: ICC and mean are almost entirely determined by which model does the rating, not whose completions are being rated:
+   - gemma-3-27b: highest ICC (0.77), mean ~2.7
+   - llama-3.1-8b: near-zero ICC (0.06), mean ~1.0
+
+3. **llama-3.1-8b gives extreme low scores**: 101/188 tasks rated as 0 (lemon). This model rates ~50% of tasks with the lowest possible score regardless of completion source.
+
+4. **Contradicts earlier finding**: Previous comparison (gemma-3 self=3.81 vs cross=2.65) used different task sets and templates. The controlled experiment shows the effect disappears when properly matched.
+
+### Caveats
+
+- **llama-3.1-8b may lack capability**: The near-zero ICC and extreme score distribution suggest this model may not be capable of meaningful preference discrimination with this template. Its "ratings" may be noise.
+- **Only fruit_rating template tested**: The earlier self-rating bias was found with different templates; effect may be template-specific.
 
 ---
 
