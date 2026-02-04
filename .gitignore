@@ -71,3 +71,6 @@ concept_vectors/**/*.npz
 
 *.npz
 *.npysrc/task_data/data/stress_testing_model_spec.jsonl
+
+# Personal reflections
+reflections/
