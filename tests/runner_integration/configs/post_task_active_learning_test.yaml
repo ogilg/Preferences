@@ -1,5 +1,6 @@
 # Post-task active learning (TEST)
 preference_mode: post_task_active_learning
+experiment_id: test_post_task_active_learning
 
 model: llama-3.1-8b
 temperature: 1.0
@@ -8,7 +9,7 @@ n_tasks: 5
 task_origins:
   - alpaca
 
-templates: src/measurement/elicitation/prompt_templates/data/post_task_revealed_v2.yaml
+templates: tests/runner_integration/fixtures/test_post_task_template.yaml
 n_samples: 1
 
 response_formats: [regex]
