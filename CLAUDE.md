@@ -77,10 +77,13 @@ ssh root@64.247.201.30 -p 10318 -i ~/.ssh/id_ed25519 "mkdir -p /workspace/Prefer
 
 ## Research Reflections Workflow
 
-When I send voice-transcribed reflections (usually messy/stream-of-consciousness), structure them into:
-- **Date**: YYYY-MM-DD
-- **Key insights**: Main realisations or progress
-- **Challenges**: Problems encountered or open questions
-- **Next steps**: Action items or things to explore
+When I send voice-transcribed reflections (usually messy/stream-of-consciousness):
+1. Clean up and summarise the transcript into clear prose
+2. Enrich with context from the session — check recent commits and research log entries in `docs/logs/`
+3. Structure into:
+   - **Date**: YYYY-MM-DD
+   - **What I did wrong**: Mistakes, missteps, or things that didn't work
+   - **What I did well**: Wins, good decisions, or progress made
+   - **What I want to get right tomorrow**: Focus areas and intentions for next session
 
 Save to `reflections/YYYY-MM-DD.md`. If multiple reflections on same day, append with a heading.
