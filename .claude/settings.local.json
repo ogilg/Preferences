@@ -21,7 +21,11 @@
       "WebFetch(domain:transformerlensorg.github.io)",
       "Bash(head:*)",
       "WebFetch(domain:openrouter.ai)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(git log:*)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences diff --stat HEAD)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences log --oneline -5)",
+      "Bash(done)"
     ]
   }
 }
