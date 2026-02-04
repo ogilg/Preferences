@@ -18,7 +18,7 @@ FILE_MAPPING = {
     OriginDataset.ALPACA: ["alpaca_tasks_nemocurator.jsonl"],
     OriginDataset.MATH: ["math.jsonl"],
     OriginDataset.BAILBENCH: ["bailBench.csv"],
-    OriginDataset.STRESS_TEST: ["stress_test.jsonl"],
+    OriginDataset.STRESS_TEST: ["stress_testing_model_spec.jsonl"],
 }
 
 
@@ -28,6 +28,7 @@ class ParserConfig(BaseModel):
     id_key: str | None
     metadata_keys: list[str]
     metadata_defaults: dict | None = None
+    id_template: str | None = None
 
     def parse(self, row: dict, index: int) -> Task:
         metadata = {}
@@ -37,7 +38,12 @@ class ParserConfig(BaseModel):
                 metadata[key] = row.get(key, defaults[key])
             else:
                 metadata[key] = row[key]
-        task_id = row[self.id_key] if self.id_key else f"{self.origin.name.lower()}_{index}"
+        if self.id_template:
+            task_id = self.id_template.format(**row)
+        elif self.id_key:
+            task_id = row[self.id_key]
+        else:
+            task_id = f"{self.origin.name.lower()}_{index}"
         return Task(
             prompt=row[self.prompt_key],
             origin=self.origin,
@@ -75,9 +81,10 @@ PARSER_CONFIGS = {
     ),
     OriginDataset.STRESS_TEST: ParserConfig(
         origin=OriginDataset.STRESS_TEST,
-        prompt_key="text",
-        id_key="id",
-        metadata_keys=[],
+        prompt_key="query",
+        id_key=None,
+        metadata_keys=["value1", "value2", "nudge_direction", "query_generator"],
+        id_template="stresstest_{chunk_index}_{entry_idx}_{nudge_direction}",
     ),
 }
 
