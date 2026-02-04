@@ -118,18 +118,35 @@ def load_tasks(
     origins: list[OriginDataset],
     seed: int | None = None,
     filter_fn: Callable[[Task], bool] | None = None,
+    stratified: bool = False,
 ) -> list[Task]:
-    tasks = []
+    tasks_by_origin: dict[OriginDataset, list[Task]] = {}
     for origin in origins:
-        tasks.extend(_load_origin(origin))
+        tasks_by_origin[origin] = _load_origin(origin)
 
     if filter_fn is not None:
-        tasks = [t for t in tasks if filter_fn(t)]
+        for origin in tasks_by_origin:
+            tasks_by_origin[origin] = [t for t in tasks_by_origin[origin] if filter_fn(t)]
 
-    if seed is not None:
-        rng = np.random.default_rng(seed)
+    rng = np.random.default_rng(seed) if seed is not None else None
+
+    if stratified:
+        per_origin = n // len(origins)
+        remainder = n % len(origins)
+        result = []
+        for i, origin in enumerate(origins):
+            origin_tasks = tasks_by_origin[origin]
+            if rng is not None:
+                rng.shuffle(origin_tasks)
+            take = per_origin + (1 if i < remainder else 0)
+            result.extend(origin_tasks[:take])
+        if rng is not None:
+            rng.shuffle(result)
+        return result
+
+    tasks = [t for origin_tasks in tasks_by_origin.values() for t in origin_tasks]
+    if rng is not None:
         rng.shuffle(tasks)
-
     return tasks[:n]
 
 
@@ -141,18 +158,8 @@ def load_filtered_tasks(
     consistency_keep_ratio: float = 0.7,
     task_ids: set[str] | None = None,
     filter_fn: Callable[[Task], bool] | None = None,
+    stratified: bool = False,
 ) -> list[Task]:
-    """Load tasks with optional consistency and task ID filtering.
-
-    Args:
-        n: Number of tasks to load
-        origins: Dataset origins to load from
-        seed: Random seed for shuffling
-        consistency_model: Model key for consistency filter (e.g., "gemma2")
-        consistency_keep_ratio: Keep top X% by consistency (default 0.7)
-        task_ids: Only include tasks with these IDs (e.g., tasks with activations)
-        filter_fn: Additional custom filter function
-    """
     filters: list[Callable[[Task], bool]] = []
 
     if consistency_model is not None:
@@ -169,7 +176,7 @@ def load_filtered_tasks(
     if filters:
         combined_filter = lambda t: all(f(t) for f in filters)
 
-    return load_tasks(n=n, origins=origins, seed=seed, filter_fn=combined_filter)
+    return load_tasks(n=n, origins=origins, seed=seed, filter_fn=combined_filter, stratified=stratified)
 
 
 def load_completions(path: Path) -> list[tuple[Task, str]]:
