@@ -70,7 +70,17 @@ ssh root@64.247.201.30 -p 10318 -i ~/.ssh/id_ed25519 "mkdir -p /workspace/Prefer
 
   - NEVER use string matching heuristics for semantic tasks - use an LLM instead
   - Examples of semantic tasks that require LLM judgment, not regex/string matching:
-    - "Do these two usernames refer to the same person?" 
+    - "Do these two usernames refer to the same person?"
     - "Is this comment sharing the author's own profile or someone else's?"
     - "Does this text express positive or negative sentiment?"
   - String normalization and fuzzy matching will miss obvious cases that humans (and LLMs) catch instantly
+
+## Research Reflections Workflow
+
+When I send voice-transcribed reflections (usually messy/stream-of-consciousness), structure them into:
+- **Date**: YYYY-MM-DD
+- **Key insights**: Main realisations or progress
+- **Challenges**: Problems encountered or open questions
+- **Next steps**: Action items or things to explore
+
+Save to `reflections/YYYY-MM-DD.md`. If multiple reflections on same day, append with a heading.
