@@ -65,8 +65,6 @@ results/experiments/**/failures/*.yaml
 # Large steering results
 results/experiments/**/steering_results.json
 
-# Self-documentation (generated)
-self_docs/
 
 # Generated multi-model configs
 src/experiments/configs/multi_model/
