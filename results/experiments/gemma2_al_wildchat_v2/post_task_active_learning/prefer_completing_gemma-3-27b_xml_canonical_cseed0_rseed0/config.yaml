@@ -1,10 +1,10 @@
-template_name: simple_preference
+template_name: prefer_completing
 template_tags:
-  response_format: regex
+  response_format: xml
   order: canonical
   seed: '0'
 model: google/gemma-3-27b-it
 model_short: gemma-3-27b
 temperature: 0.7
-experiment_id: gemma3_al_500
+experiment_id: gemma2_al_wildchat_v2
 completion_seed: 0
