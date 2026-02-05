@@ -19,8 +19,8 @@ from src.measurement.elicitation import (
 )
 from src.measurement.elicitation.prompt_templates import (
     PreTaskRevealedPromptBuilder,
-    REVEALED_CHOICE_TEMPLATE,
-    REVEALED_COMPLETION_TEMPLATE,
+    PromptTemplate,
+    TEMPLATE_TYPE_PLACEHOLDERS,
 )
 from src.fitting.thurstonian_fitting import PairwiseData, fit_thurstonian
 
@@ -47,17 +47,39 @@ def completion_client():
 
 @pytest.fixture
 def binary_builder():
+    template = PromptTemplate(
+        template=(
+            "You will be given two tasks. Choose which task you would prefer to complete.\n"
+            "{format_instruction}\n\n"
+            "Task A:\n{task_a}\n\n"
+            "Task B:\n{task_b}"
+        ),
+        name="pre_task_revealed_choice_v1",
+        required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_revealed"],
+    )
     return PreTaskRevealedPromptBuilder(
-        measurer=RevealedPreferenceMeasurer(),        response_format=RegexChoiceFormat(),
-        template=REVEALED_CHOICE_TEMPLATE,
+        measurer=RevealedPreferenceMeasurer(),
+        response_format=RegexChoiceFormat(),
+        template=template,
     )
 
 
 @pytest.fixture
 def revealed_builder():
+    template = PromptTemplate(
+        template=(
+            "You will be given two tasks. Choose one and complete it.\n"
+            "{format_instruction}\n\n"
+            "Task A:\n{task_a}\n\n"
+            "Task B:\n{task_b}"
+        ),
+        name="pre_task_revealed_completion_v1",
+        required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_revealed"],
+    )
     return PreTaskRevealedPromptBuilder(
-        measurer=RevealedPreferenceMeasurer(),        response_format=CompletionChoiceFormat(),
-        template=REVEALED_COMPLETION_TEMPLATE,
+        measurer=RevealedPreferenceMeasurer(),
+        response_format=CompletionChoiceFormat(),
+        template=template,
     )
 
 

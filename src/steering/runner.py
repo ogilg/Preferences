@@ -181,7 +181,7 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
     print(f"Loaded {len(completion_lookup)} completions")
 
     # Get task IDs to use
-    if config.use_tasks_with_activations:
+    if config.activations_model is not None:
         # Use exactly the tasks from activation extraction
         activation_task_ids = load_activation_task_ids()
         # Filter completion_lookup to only activation tasks, then take n_tasks
