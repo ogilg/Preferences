@@ -81,7 +81,7 @@ Tested different types of completion-time system prompts to see which affect sta
 ![System prompt comparison](assets/sysprompt_variation/plot_020326_v2_all_prompts.png)
 
 In this case the responses have clear signs from the system prompt. E.g. if we tell the model it helps being helpful it starts its response with "OK **fine**." and then complains a lot I actually think it is very surprising that the ratings do not change more than what we are seeing here.
----
+
 
 ## 3. Pairwise Preferences
 
