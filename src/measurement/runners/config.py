@@ -85,7 +85,7 @@ class ExperimentConfig(BaseModel):
     ranking: RankingConfig | None = None
 
     # Sensitivity dimensions
-    response_formats: list[Literal["regex", "tool_use", "xml"]] = ["regex"]
+    response_formats: list[Literal["regex", "tool_use", "xml", "completion"]] = ["regex"]
     generation_seeds: list[int] = [0]
 
     # Template sampling

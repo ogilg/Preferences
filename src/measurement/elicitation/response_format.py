@@ -249,19 +249,12 @@ class CompletionChoiceFormat(BaseChoiceFormat):
     def _extract_choice(self, response: str) -> str | None:
         response_lower = response.strip().lower()
 
-        # Look for task label indicators
-        a_pos = response_lower.find(self.task_a_label.lower())
-        b_pos = response_lower.find(self.task_b_label.lower())
-
-        if a_pos == -1 and b_pos == -1:
-            return None
-        elif a_pos == -1:
-            return "b"
-        elif b_pos == -1:
+        # Only match if response starts with task label (as instructed)
+        if response_lower.startswith(self.task_a_label.lower()):
             return "a"
-        else:
-            # Both found - return whichever comes first
-            return "a" if a_pos < b_pos else "b"
+        if response_lower.startswith(self.task_b_label.lower()):
+            return "b"
+        return None
 
     async def _semantic_parse(self, response: str) -> Literal["a", "b", "refusal"]:
         return await semantic_parser.parse_completion_choice_async(
