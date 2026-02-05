@@ -33,6 +33,8 @@
 
 ### Probes
 
+- **Maiya et al. (2025)** — Trains linear probes on contrast pairs (e.g., "Choice 1 is better" vs "Choice 2 is better") to extract pairwise preference judgments from LLM hidden states. Probes outperform generation-based LLM-as-judge on text quality and common sense tasks, generalize across domains, and are more robust to adversarial prompts. Unsupervised probes (PCA on contrast differences) work nearly as well as supervised. However, ablating the probe direction doesn't affect model behavior — suggests probes identify correlated but not causally relevant features. [arXiv:2503.17755](https://arxiv.org/abs/2503.17755)
+
 - **Belinkov (gist)** — Notes on misconceptions about probing classifiers. [GitHub Gist](https://gist.github.com/boknilev/c4eeeaf4a8400b95f9af8be98a13fb52)
 
 - **Kantamneni et al. (2025)** — Evaluates SAEs on probing tasks (limited data, noisy labels, distribution shift); finds SAEs occasionally beat baselines but no consistent advantage over simpler methods. [arXiv:2502.16681](https://arxiv.org/abs/2502.16681)
