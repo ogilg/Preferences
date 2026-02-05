@@ -16,23 +16,24 @@ import numpy as np
 
 from src.measurement.storage import EXPERIMENTS_DIR
 
-OUTPUT_DIR = Path(__file__).parent / "plots"
+PLOTS_DIR = Path(__file__).parent / "plots"
 
 
 def find_thurstonian_csv(experiment_dir: Path, run_name: str | None = None) -> Path | None:
     """Find the thurstonian CSV file in the experiment directory."""
-    al_dir = experiment_dir / "post_task_active_learning"
-    if not al_dir.exists():
-        return None
+    for al_subdir in ["pre_task_active_learning", "post_task_active_learning"]:
+        al_dir = experiment_dir / al_subdir
+        if not al_dir.exists():
+            continue
 
-    for run_dir in al_dir.iterdir():
-        if not run_dir.is_dir():
-            continue
-        if run_name and not run_dir.name.startswith(run_name):
-            continue
-        for f in run_dir.iterdir():
-            if f.name.startswith("thurstonian_") and f.suffix == ".csv":
-                return f
+        for run_dir in al_dir.iterdir():
+            if not run_dir.is_dir():
+                continue
+            if run_name and not run_dir.name.startswith(run_name):
+                continue
+            for f in run_dir.iterdir():
+                if f.name.startswith("thurstonian_") and f.suffix == ".csv":
+                    return f
     return None
 
 
@@ -169,10 +170,11 @@ def main():
 
     print_stats(dataset_mus)
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    output_dir = PLOTS_DIR / args.experiment_id
+    output_dir.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%m%d%y")
     suffix = f"_{args.run_name}" if args.run_name else ""
-    output_path = OUTPUT_DIR / f"plot_{date_str}_mu_by_dataset_{args.experiment_id}{suffix}.png"
+    output_path = output_dir / f"plot_{date_str}_mu_by_dataset{suffix}.png"
 
     plot_mu_by_dataset(dataset_mus, output_path, f"{args.experiment_id} ({args.run_name})" if args.run_name else args.experiment_id)
 

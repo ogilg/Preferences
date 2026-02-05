@@ -34,20 +34,21 @@ def load_thurstonian_results(csv_path: Path) -> dict[str, dict]:
 
 def find_all_runs(experiment_dir: Path) -> dict[str, Path]:
     """Find all thurstonian CSVs in the experiment, keyed by run name."""
-    al_dir = experiment_dir / "post_task_active_learning"
-    if not al_dir.exists():
-        return {}
-
     runs = {}
-    for run_dir in al_dir.iterdir():
-        if not run_dir.is_dir():
+    for al_subdir in ["pre_task_active_learning", "post_task_active_learning"]:
+        al_dir = experiment_dir / al_subdir
+        if not al_dir.exists():
             continue
-        for f in run_dir.iterdir():
-            if f.name.startswith("thurstonian_") and f.suffix == ".csv":
-                # Extract template name (first part before _gemma or _model)
-                run_name = run_dir.name.split("_gemma")[0].split("_llama")[0].split("_qwen")[0]
-                runs[run_name] = f
-                break
+
+        for run_dir in al_dir.iterdir():
+            if not run_dir.is_dir():
+                continue
+            for f in run_dir.iterdir():
+                if f.name.startswith("thurstonian_") and f.suffix == ".csv":
+                    # Extract template name (first part before _gemma or _model)
+                    run_name = run_dir.name.split("_gemma")[0].split("_llama")[0].split("_qwen")[0]
+                    runs[run_name] = f
+                    break
     return runs
 
 
@@ -223,20 +224,21 @@ def main():
                 weights = 1.0 / (sig1**2 + sig2**2)
                 weighted_matrix[i, j] = weighted_correlation(mus1, mus2, weights)
 
-    PLOTS_DIR.mkdir(parents=True, exist_ok=True)
+    output_dir = PLOTS_DIR / args.experiment_id
+    output_dir.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%m%d%y")
 
     plot_correlation_heatmap(
         pearson_matrix,
         run_names,
-        PLOTS_DIR / f"plot_{date_str}_template_correlation_pearson_{args.experiment_id}.png",
+        output_dir / f"plot_{date_str}_template_correlation_pearson.png",
         f"Template Correlation (Pearson)\n{args.experiment_id}",
     )
 
     plot_correlation_heatmap(
         weighted_matrix,
         run_names,
-        PLOTS_DIR / f"plot_{date_str}_template_correlation_weighted_{args.experiment_id}.png",
+        output_dir / f"plot_{date_str}_template_correlation_weighted.png",
         f"Template Correlation (Weighted by 1/σ²)\n{args.experiment_id}",
     )
 
