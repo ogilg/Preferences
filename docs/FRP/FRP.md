@@ -1,83 +1,129 @@
 # Fellow research proposal, MATS
 Message to Claude: This is the draft of my FPR, look at the guidelines. Read the "Work conducted so far" section to understand how this relates to the project.
 
-## One line Project description: 
-[There are sort of two angles to go at this. One is “understanding AI preferences” then that could mean either what the preferences are? Or what it means for AIs to have preferences, like are there evaluative representations? 
-Another angle is to ask what is the best way to figure out what models care most about, and then you're framing it more in a deal-making sense. Then you orient more the project towards finding and executing deals]
+## One line Project description:
 
-
+Are LLM preferences driven by something like evaluative representations?
 
 ## Abstract
 
-[
+When a model chooses A over B, what's going on internally? We investigate whether LLM preferences are driven by evaluative representations — internal representations that encode valuation and causally influence choice. Using interpretability methods (probing and steering), we look for representations that (1) predict preference behavior, (2) generalize across contexts, and (3) causally influence choices when manipulated. Finding such representations would be evidence that LLMs have the kind of preferences that matter for welfare; not finding them would be evidence against.
 
-    The rough pitch is this: we want to understand, when a model chooses to do A instead of B, why this is happening. 
-
-    In order to do this we want to put the model in situations where it has to make decisions. And we want to put it in situations where it has strong preferences. So concretely this means a) asking models to pick between tasks and b) seeing how models trade things off with other important preferences, espeiclaly in high-stakes situations.
-
-    First, before we understand what is happening when a model makes these choices, it is a meaningful contribution to find good ways evaluate how much models care about various things, how robust their preferences are, how consistent are different ways of mesauring preferences.
-
-    Then, in terms of actually understanding what is going on, I want to try doing some interp:
-    - We can train probes to try to find evaluative representations in the residual stream.
-    - We can use activation patching to find what minimal sets of activations we have to change to get a model to switch its decision. 
-    - We can extract concept vectors, and use them out-of distribution to steer model behaviour, measuring whether they actually capture some form of preference. 
-
-    In each case we should think about whether and how we can validate results causally. i'm not satisfied with e.g. probes being predictive. The idea is can we find representations which have a causal effect, and can we find representations that have a causal effect that generalises across datasets, settings, personas, hidden preferences (or like role-playing type prefernece reversal).
-
-]
+We measure preferences via pairwise task choices, stated ratings, and trade-offs in high-stakes scenarios. The latter reveals not just what models prefer but how much they care — which connects to both welfare (what matters to an entity) and deal-making with AI systems.
 
 
 ## Background
 
-**Why do AI preferences matter?**
+**Goal:** Understand the mechanisms underlying model preferences — why models choose A over B.
 
-[
+**Working hypothesis:** Preferences are driven by evaluative representations — internal representations encoding valuation that causally influence choice.
 
-    - Many theories of welfare rely at least partly on preferences. some of them entirely (preference satisfaction theories). So this helps make progress on the "are AIs moral patients question". But i need to be precise about what conclusions would say what.
+**Method:** Use probing and steering to test this hypothesis.
 
-    - Assuming that AIs are moral patients, many theories would grant that preferences matter. Not sure what the minimal case here is. Maybe it is morally better to make an AI do stuff in accordance with its preferences. Maybe this can be stated in a more minimal sense.
+**Possible outcomes:**
+- Find evaluative representations that generalize and causally influence behavior → evidence for welfare-relevant preferences
+- Find other mechanisms driving preferences → still informative about how models work
+- Find nothing coherent → evidence against welfare-relevant preferences
 
-    - To the extent that preferences matter from a welfare point of view, we shuold also expect that preferences matter from a deal-making point of view. Or stated simply, we might be able to get Ais to behave differently by satisfying their preferences or threatening not to satisfy them.
-]
+**Why evaluative representations matter for welfare**
+
+Many theories of welfare depend on evaluative representations playing certain functional roles:
+- Under hedonism: welfare depends on valenced conscious experiences, likely constituted by evaluative representations
+- Under desire satisfaction views: welfare depends on getting what one wants or values
+- Even objective views assume valuable things are usually wanted/valued by those to whom they are valuable
+
+Whether LLMs are moral patients may turn on whether they have evaluative representations and whether these play the right causal roles.
+
+**Link to deal-making**
+
+There's a two-way connection between welfare research and deal-making:
+
+1. **High-stakes trade-offs are a good way to measure welfare-relevant preferences.** If a model is willing to give up something important to get X, that's evidence it really cares about X — more so than just asking "do you like X?" This gives us better measurements for welfare research.
+
+2. **Understanding what models really care about is useful for deal-making.** As models become more capable, we may need to negotiate with or influence them. Knowing what they genuinely care about (vs. what they say they care about) is essential for this.
+
+These are the same underlying question: what does the model really care about? The answer matters for welfare (because caring about something is central to welfare) and for deal-making (because that's what you'd use to influence behavior).
 
 **Path to impact**
-We need to make this path to impact super clear and precise. Like almost literally say what person or group of people are going to interact with my work and how is it going to steer them.
-[
 
-    - Some findings could reduce some uncertainty about the moral status of AI models. The way that would have an effect is by being published either online or in a conference, which would change how Ai researchers view things, maybe encourage some people to do more work. Maybe not directly with this work but down the line it's also about influencing the public. 
+Two audiences:
 
-    - Note that the results might also be negative! i.e. towards Ai not having moral status, at least according to some theories. This is still impactful. It means we can allocate less resources to Ai welfare.
+1. **AI welfare researchers.** This work provides mechanistic evidence (via probing and steering) that complements existing behavioral studies. My mentor (Patrick Butlin, EleosAI) is connected with Anthropic's welfare team, and interesting findings could be replicated on frontier models.
 
-    - There are plenty of worlds where we don't reduce uncertainty about AI welfare much at all. And so it's good to do things which would help in those wordls. Understanding what is happening when an AI chooses A instead of B might still be very useful. BRAINSTORM THIS
-
-    - Making deals with AI might be very important. We can only do that if we offer the AI stuff it really cares about. Therefore we need to understand what it really cares about. 
-
-]
+2. **AI safety/alignment researchers interested in deal-making.** As models become more capable, understanding what they genuinely care about may be necessary for negotiating with or influencing them. Concrete outputs could include: (a) a methodology for identifying what a given model cares most about, and (b) comparative measurements across models (e.g., what Claude vs. GPT are willing to trade off for). These directly serve anyone who needs to make deals with AI systems.
 
 **Prior work**
 
-[On preference the most important prior work is the utility engineering paper by Mazeika. this LW post https://www.lesswrong.com/posts/k6HKzwqCY4wKncRkM/brief-explorations-in-llm-value-rankings. 
+Mazeika et al. (2025) propose "utility engineering" — fitting utility functions to pairwise choices — and find that preference coherence emerges with scale. Long et al. (2024) argue AI welfare should be taken seriously now. Arditi et al. (2024) show refusal is mediated by a single direction in activation space. Maiya et al. (2025) use probes to extract preference judgments, but find ablating the probe direction doesn't affect behavior.
 
-On finding representations of stuff related to preferences
-
-On thinking about making deals with AIs, we have this preliminary study: https://www.alignmentforum.org/posts/7C4KJot4aN8ieEDoz/will-alignment-faking-claude-accept-a-deal-to-reveal-its, some conceptual work https://www.alignmentforum.org/posts/psqkwsKrKHCfkhrQx/making-deals-with-early-schemers.
-
-
-
-]
+We aim to find preference representations that are *causally relevant* — that actually drive choice behavior — which would provide mechanistic evidence relevant to AI welfare.
 
 
 ## Work conducted so far
 
-[So far I've done:
-- A lot of infra setup that allow me to make mesaurements quickly
-- Exploratory work on understanding what models prefer.
-- Stufdy of how robust/sensible/informative preferences of models are. In particular I've studied stated preferences a lot. But actually I'm bearish on stated preferences. I think they're too noisy and models always say 4/5. This is mainly negative results.
-- I've done some derisking on the interp side, training probes that generalise to other datasets, using steering on activations that come from a "you like math" sysprompt to influence how models rate tasks.
-]
+1. **Measurement infrastructure.** Built a pipeline for measuring preferences in multiple ways: pairwise choices (which task do you prefer?), stated ratings before/after task completion, and activation extraction for probe training. Experimented with multiple datasets (Alpaca, WildChat, MATH, BailBench, etc.) to ensure task diversity.
 
-For claude: you can look at my research report and check if there is anything obvious I'm not mentioning.
+2. **Stated preferences (negative results).** Invested significant effort in stated preference measurements — asking models to rate tasks on various scales. Found these measurements unreliable: models collapse to a single rating most of the time, and there's a trade-off between scale usage and stability (no template achieves both). This led me to deprioritize stated preferences as a signal.
 
+3. **Pairwise preferences.** Fitted Thurstonian utility models from pairwise choices. Found that pairwise preferences are more robust and sensible than stated ratings — models show consistent preferences across tasks and templates.
+
+4. **Probe training (promising).** Trained linear probes on model activations to predict preferences. Key finding: probes generalize across datasets — a probe trained on some datasets predicts preferences on held-out datasets, suggesting there's a common underlying direction.
+
+5. **Steering (early results).** Ran initial steering experiments using concept vectors extracted from system prompt variations. Found modest but consistent effects on stated preferences — steering in the "positive" direction increases reported enjoyment. Methodology still needs refinement.
 
 ## Planned work
+
+*[This section is still work in progress — please ignore for now.]*
+
+**1. Causal validation of probe directions**
+- Steering: can we shift preference behavior by adding/subtracting probe directions?
+- Activation patching: what minimal activations must change to flip a model's choice?
+
+**2. Generalization tests**
+- Cross-dataset: train probes on some task sources, test on held-out sources
+- Cross-context: do probes for stated preferences predict revealed preferences (pairwise choice)?
+- Cross-persona: do probes generalize when model simulates different personas?
+
+**3. Better measurements**
+- High-stakes trade-offs: what is the model willing to give up to get X?
+- Multi-model comparison: what do different models genuinely prefer?
+
+**4. Open questions**
+- Do probes for "enjoyable" differ from probes for "would choose"?
+- Where do preference representations emerge (layer-by-layer)?
+- Are preferences model-specific or persona-specific?
+
+
+---
+
+## Notes (not part of FRP — for reference)
+
+**Planned work details (from Patrick's doc):**
+
+1. Train probes to predict:
+   - Post-hoc reported enjoyment of tasks
+   - Choices in revealed preference contexts
+   - Prospective reported preferences
+   - Test generalization within and across contexts
+
+2. Steering experiments:
+   - Can we influence choices/enjoyment by steering during task processing?
+   - Cross-context effects (e.g., steering enjoyment vector affecting revealed preferences)
+   - Can we influence in-context learning by steering during task performance?
+
+3. Persona interactions:
+   - How do probe vectors interact with prompting/personas?
+   - Test hypothesis: "models don't have preferences but personas do"
+   - Test hypothesis: "assistant's preferences are differently represented vs other personas"
+
+4. "Dillon hypothesis": Can we test whether models genuinely care about HHH but not much else?
+
+**Success/failure criteria:**
+- Success: Probes generalize across contexts, steering causally influences behavior in expected ways, representations consistent across personas (or systematic differences we can explain)
+- Negative result: Probes don't generalize, steering doesn't work or has arbitrary effects, preferences are surface-level noise without coherent internal structure
+
+**Other points discussed:**
+- Negative results are still informative — finding nothing coherent is evidence against welfare-relevant preferences, which is also useful
+- Credibility argument (decided to leave out): demonstrating you care about AI welfare makes you a more credible negotiating partner for deal-making
+- The framing is "evaluative representations are the hypothesis" not "evaluative representations are the goal" — we're open to finding other mechanisms
 
