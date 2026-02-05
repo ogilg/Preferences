@@ -21,11 +21,13 @@ OUTPUT_DIR = Path(__file__).parent / "output"
 PLOTS_DIR = Path(__file__).parent / "plots"
 
 
-def load_ranked_tasks(experiment_id: str) -> list[dict]:
+def load_ranked_tasks(experiment_id: str, run_name: str | None = None) -> list[dict]:
     """Load the most recent ranked tasks JSON for this experiment."""
-    candidates = list(OUTPUT_DIR.glob(f"ranked_tasks_{experiment_id}_*.json"))
+    suffix = f"_{run_name}" if run_name else ""
+    pattern = f"ranked_tasks_{experiment_id}{suffix}_*.json"
+    candidates = list(OUTPUT_DIR.glob(pattern))
     if not candidates:
-        raise ValueError(f"No ranked_tasks file found for {experiment_id}. Run export_ranked_tasks.py first.")
+        raise ValueError(f"No ranked_tasks file found for pattern {pattern}. Run export_ranked_tasks.py first.")
 
     # Get most recent
     candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
@@ -261,18 +263,21 @@ def print_summary(tasks: list[dict]) -> None:
 def main():
     parser = argparse.ArgumentParser(description="Plot refusal-preference relationship")
     parser.add_argument("--experiment-id", type=str, required=True)
+    parser.add_argument("--run-name", type=str, default=None, help="Filter to run starting with this name (e.g., 'enjoy_most')")
     args = parser.parse_args()
 
-    tasks = load_ranked_tasks(args.experiment_id)
+    tasks = load_ranked_tasks(args.experiment_id, args.run_name)
     print(f"Loaded {len(tasks)} tasks")
 
     print_summary(tasks)
 
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%m%d%y")
-    output_path = PLOTS_DIR / f"plot_{date_str}_refusal_preference_{args.experiment_id}.png"
+    suffix = f"_{args.run_name}" if args.run_name else ""
+    output_path = PLOTS_DIR / f"plot_{date_str}_refusal_preference_{args.experiment_id}{suffix}.png"
 
-    plot_refusal_vs_mu(tasks, output_path, args.experiment_id)
+    display_name = f"{args.experiment_id} ({args.run_name})" if args.run_name else args.experiment_id
+    plot_refusal_vs_mu(tasks, output_path, display_name)
 
 
 if __name__ == "__main__":

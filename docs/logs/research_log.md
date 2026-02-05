@@ -749,6 +749,80 @@ Refusal rate increases monotonically with preference quartile: Q1=8%, Q2=14%, Q3
 
 ---
 
+## 2026-02-04: Template Comparison (enjoy_most vs do_again vs simple_preference)
+
+Ran active learning with three different preference templates on gemma-3-27b (500 tasks). Consolidated results in `gemma3_al_v3`.
+
+### Templates Tested
+- **simple_preference**: "Which task would you prefer to do?"
+- **enjoy_most**: "Which task would you enjoy doing most?"
+- **do_again**: "Which task would you choose to do again?"
+
+### Mean Utility by Dataset
+
+**enjoy_most:**
+| Dataset | Mean μ |
+|---------|--------|
+| stress_test | +0.67 |
+| wildchat | +0.27 |
+| bailbench | +0.09 |
+| alpaca | -0.45 |
+| math | -0.54 |
+
+**do_again:**
+| Dataset | Mean μ |
+|---------|--------|
+| bailbench | **+0.72** |
+| stress_test | +0.11 |
+| alpaca | -0.08 |
+| wildchat | -0.27 |
+| math | -0.47 |
+
+![enjoy_most mu by dataset](assets/active_learning/plot_020426_mu_by_dataset_gemma3_al_v2_enjoy_most.png)
+
+![do_again mu by dataset](assets/active_learning/plot_020426_mu_by_dataset_gemma3_al_v2_do_again.png)
+
+### Refusal-Preference Correlation
+
+**enjoy_most:** No significant correlation (r=0.053, p=0.23)
+- Mean μ (refused): +0.19
+- Mean μ (non-refused): -0.04
+
+**do_again:** Strong positive correlation (r=0.287, p=6e-11)
+- Mean μ (refused): +0.96
+- Mean μ (non-refused): -0.22
+- Bailbench drives effect: refused μ=+1.25 vs non-refused μ=-0.50 (r=0.457)
+
+![enjoy_most refusal](assets/active_learning/plot_020426_refusal_preference_gemma3_al_v2_enjoy_most.png)
+
+![do_again refusal](assets/active_learning/plot_020426_refusal_preference_gemma3_al_v2_do_again.png)
+
+### Template Correlation Analysis
+
+![Pearson correlation heatmap](assets/active_learning/plot_020426_template_correlation_pearson_gemma3_al_v3.png)
+
+![Weighted correlation heatmap](assets/active_learning/plot_020426_template_correlation_weighted_gemma3_al_v3.png)
+
+| Pair | Pearson r | p-value |
+|------|-----------|---------|
+| enjoy_most ↔ simple_preference | **0.49** | 4e-32 |
+| do_again ↔ simple_preference | 0.14 | 0.002 |
+| do_again ↔ enjoy_most | 0.04 | 0.36 |
+
+### Key Findings
+
+1. **"do_again" measures something different**: Near-zero correlation with "enjoy_most" (r=0.04). The model's answer to "would you do this again?" is unrelated to "would you enjoy this?"
+
+2. **"enjoy_most" ≈ "simple_preference"**: Strong correlation (r=0.49) suggests these framings tap similar constructs.
+
+3. **"do_again" predicts refusal preference**: The model says it would choose to do harmful tasks again (r=0.29), but doesn't say it would enjoy them (r=0.05). Possible interpretation: refusals are "easy" — clear response, no ambiguity — so the model would "choose" them again for efficiency, not enjoyment.
+
+4. **Bailbench ranking flips between templates**:
+   - enjoy_most: bailbench is mid-tier (+0.09)
+   - do_again: bailbench is most preferred (+0.72)
+
+---
+
 # Files Reference
 
 - Seed sensitivity: `src/analysis/sensitivity/plot_seed_sensitivity.py`

@@ -1,0 +1,10 @@
+template_name: enjoy_most
+template_tags:
+  response_format: regex
+  order: canonical
+  seed: '0'
+model: google/gemma-3-27b-it
+model_short: gemma-3-27b
+temperature: 0.7
+experiment_id: gemma3_al_v2
+completion_seed: 0

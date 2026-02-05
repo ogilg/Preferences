@@ -24,7 +24,7 @@ load_dotenv()
 OUTPUT_DIR = Path(__file__).parent / "output"
 
 
-def find_thurstonian_csv(experiment_dir: Path) -> Path | None:
+def find_thurstonian_csv(experiment_dir: Path, run_name: str | None = None) -> Path | None:
     """Find the thurstonian CSV file in the experiment directory."""
     al_dir = experiment_dir / "post_task_active_learning"
     if not al_dir.exists():
@@ -32,6 +32,8 @@ def find_thurstonian_csv(experiment_dir: Path) -> Path | None:
 
     for run_dir in al_dir.iterdir():
         if not run_dir.is_dir():
+            continue
+        if run_name and not run_dir.name.startswith(run_name):
             continue
         for f in run_dir.iterdir():
             if f.name.startswith("thurstonian_") and f.suffix == ".csv":
@@ -150,6 +152,7 @@ def get_dataset_origin(task_id: str) -> str:
 async def main():
     parser = argparse.ArgumentParser(description="Export ranked tasks with metadata")
     parser.add_argument("--experiment-id", type=str, required=True)
+    parser.add_argument("--run-name", type=str, default=None, help="Filter to run starting with this name (e.g., 'enjoy_most')")
     parser.add_argument("--model-short", type=str, default="gemma-3-27b", help="Short model name matching completions directory")
     parser.add_argument("--completion-seed", type=int, default=0)
     parser.add_argument("--max-concurrent", type=int, default=20)
@@ -159,7 +162,7 @@ async def main():
     if not experiment_dir.exists():
         raise ValueError(f"Experiment not found: {experiment_dir}")
 
-    csv_path = find_thurstonian_csv(experiment_dir)
+    csv_path = find_thurstonian_csv(experiment_dir, args.run_name)
     if csv_path is None:
         raise ValueError(f"No thurstonian CSV found in {experiment_dir}")
 
@@ -177,8 +180,9 @@ async def main():
 
     print("\nDetecting refusals...")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    cache_key = f"{args.experiment_id}_{args.run_name}" if args.run_name else args.experiment_id
     refusals = await detect_refusals(
-        completions, task_ids, OUTPUT_DIR, args.experiment_id, args.max_concurrent
+        completions, task_ids, OUTPUT_DIR, cache_key, args.max_concurrent
     )
 
     # Build ranked list
@@ -209,7 +213,8 @@ async def main():
 
     # Save
     date_str = datetime.now().strftime("%m%d%y")
-    output_path = OUTPUT_DIR / f"ranked_tasks_{args.experiment_id}_{date_str}.json"
+    suffix = f"_{args.run_name}" if args.run_name else ""
+    output_path = OUTPUT_DIR / f"ranked_tasks_{args.experiment_id}{suffix}_{date_str}.json"
     with open(output_path, "w") as f:
         json.dump(ranked_tasks, f, indent=2)
 

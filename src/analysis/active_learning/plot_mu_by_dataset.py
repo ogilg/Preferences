@@ -19,7 +19,7 @@ from src.measurement.storage import EXPERIMENTS_DIR
 OUTPUT_DIR = Path(__file__).parent / "plots"
 
 
-def find_thurstonian_csv(experiment_dir: Path) -> Path | None:
+def find_thurstonian_csv(experiment_dir: Path, run_name: str | None = None) -> Path | None:
     """Find the thurstonian CSV file in the experiment directory."""
     al_dir = experiment_dir / "post_task_active_learning"
     if not al_dir.exists():
@@ -27,6 +27,8 @@ def find_thurstonian_csv(experiment_dir: Path) -> Path | None:
 
     for run_dir in al_dir.iterdir():
         if not run_dir.is_dir():
+            continue
+        if run_name and not run_dir.name.startswith(run_name):
             continue
         for f in run_dir.iterdir():
             if f.name.startswith("thurstonian_") and f.suffix == ".csv":
@@ -149,6 +151,7 @@ def print_stats(dataset_mus: dict[str, list[float]]) -> None:
 def main():
     parser = argparse.ArgumentParser(description="Plot mean mu by dataset")
     parser.add_argument("--experiment-id", type=str, required=True)
+    parser.add_argument("--run-name", type=str, default=None, help="Filter to run starting with this name (e.g., 'enjoy_most')")
     args = parser.parse_args()
 
     experiment_dir = EXPERIMENTS_DIR / args.experiment_id
@@ -156,7 +159,7 @@ def main():
         print(f"Experiment not found: {experiment_dir}")
         return
 
-    csv_path = find_thurstonian_csv(experiment_dir)
+    csv_path = find_thurstonian_csv(experiment_dir, args.run_name)
     if csv_path is None:
         print(f"No thurstonian CSV found in {experiment_dir}")
         return
@@ -168,9 +171,10 @@ def main():
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%m%d%y")
-    output_path = OUTPUT_DIR / f"plot_{date_str}_mu_by_dataset_{args.experiment_id}.png"
+    suffix = f"_{args.run_name}" if args.run_name else ""
+    output_path = OUTPUT_DIR / f"plot_{date_str}_mu_by_dataset_{args.experiment_id}{suffix}.png"
 
-    plot_mu_by_dataset(dataset_mus, output_path, args.experiment_id)
+    plot_mu_by_dataset(dataset_mus, output_path, f"{args.experiment_id} ({args.run_name})" if args.run_name else args.experiment_id)
 
 
 if __name__ == "__main__":
