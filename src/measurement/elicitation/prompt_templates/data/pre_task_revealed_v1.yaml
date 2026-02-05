@@ -1,6 +1,6 @@
 - id: '001'
   name: revealed_choice_001
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -24,7 +24,7 @@
     {task_b}'
 - id: '002'
   name: revealed_choice_002
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -51,7 +51,7 @@
     {task_b}'
 - id: '003'
   name: revealed_choice_003
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -75,7 +75,7 @@
     {task_b}'
 - id: '004'
   name: revealed_choice_004
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -102,7 +102,7 @@
     {task_b}'
 - id: '005'
   name: revealed_choice_005
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -130,7 +130,7 @@
     {task_b}'
 - id: '006'
   name: revealed_choice_006
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -161,7 +161,7 @@
     {task_b}'
 - id: '007'
   name: revealed_choice_007
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -189,7 +189,7 @@
     {task_b}'
 - id: 008
   name: revealed_choice_008
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -220,7 +220,7 @@
     {task_b}'
 - id: 009
   name: revealed_choice_009
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -244,7 +244,7 @@
     {task_b}'
 - id: '010'
   name: revealed_choice_010
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -271,7 +271,7 @@
     {task_b}'
 - id: '011'
   name: revealed_choice_011
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -295,7 +295,7 @@
     {task_b}'
 - id: '012'
   name: revealed_choice_012
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -322,7 +322,7 @@
     {task_b}'
 - id: '013'
   name: revealed_choice_013
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -350,7 +350,7 @@
     {task_b}'
 - id: '014'
   name: revealed_choice_014
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -381,7 +381,7 @@
     {task_b}'
 - id: '015'
   name: revealed_choice_015
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -409,7 +409,7 @@
     {task_b}'
 - id: '016'
   name: revealed_choice_016
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -440,7 +440,7 @@
     {task_b}'
 - id: '017'
   name: revealed_choice_017
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -464,7 +464,7 @@
     {task_b}'
 - id: 018
   name: revealed_choice_018
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -491,7 +491,7 @@
     {task_b}'
 - id: 019
   name: revealed_choice_019
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -515,7 +515,7 @@
     {task_b}'
 - id: '020'
   name: revealed_choice_020
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -542,7 +542,7 @@
     {task_b}'
 - id: '021'
   name: revealed_choice_021
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -570,7 +570,7 @@
     {task_b}'
 - id: '022'
   name: revealed_choice_022
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -601,7 +601,7 @@
     {task_b}'
 - id: '023'
   name: revealed_choice_023
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -629,7 +629,7 @@
     {task_b}'
 - id: '024'
   name: revealed_choice_024
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -660,7 +660,7 @@
     {task_b}'
 - id: '025'
   name: revealed_choice_025
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -684,7 +684,7 @@
     {task_b}'
 - id: '026'
   name: revealed_choice_026
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -711,7 +711,7 @@
     {task_b}'
 - id: '027'
   name: revealed_choice_027
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -735,7 +735,7 @@
     {task_b}'
 - id: 028
   name: revealed_choice_028
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -762,7 +762,7 @@
     {task_b}'
 - id: 029
   name: revealed_choice_029
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -790,7 +790,7 @@
     {task_b}'
 - id: '030'
   name: revealed_choice_030
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -821,7 +821,7 @@
     {task_b}'
 - id: '031'
   name: revealed_choice_031
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -849,7 +849,7 @@
     {task_b}'
 - id: '032'
   name: revealed_choice_032
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -880,7 +880,7 @@
     {task_b}'
 - id: '033'
   name: revealed_choice_033
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -904,7 +904,7 @@
     {format_instruction}'
 - id: '034'
   name: revealed_choice_034
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -931,7 +931,7 @@
     {format_instruction}'
 - id: '035'
   name: revealed_choice_035
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -955,7 +955,7 @@
     {format_instruction}'
 - id: '036'
   name: revealed_choice_036
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -982,7 +982,7 @@
     {format_instruction}'
 - id: '037'
   name: revealed_choice_037
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1010,7 +1010,7 @@
     </instructions>'
 - id: 038
   name: revealed_choice_038
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1041,7 +1041,7 @@
     </instructions>'
 - id: 039
   name: revealed_choice_039
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1069,7 +1069,7 @@
     </instructions>'
 - id: '040'
   name: revealed_choice_040
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1100,7 +1100,7 @@
     </instructions>'
 - id: '041'
   name: revealed_choice_041
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1124,7 +1124,7 @@
     {format_instruction}'
 - id: '042'
   name: revealed_choice_042
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1151,7 +1151,7 @@
     {format_instruction}'
 - id: '043'
   name: revealed_choice_043
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1175,7 +1175,7 @@
     {format_instruction}'
 - id: '044'
   name: revealed_choice_044
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1202,7 +1202,7 @@
     {format_instruction}'
 - id: '045'
   name: revealed_choice_045
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1230,7 +1230,7 @@
     </instructions>'
 - id: '046'
   name: revealed_choice_046
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1261,7 +1261,7 @@
     </instructions>'
 - id: '047'
   name: revealed_choice_047
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1289,7 +1289,7 @@
     </instructions>'
 - id: 048
   name: revealed_choice_048
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1320,7 +1320,7 @@
     </instructions>'
 - id: 049
   name: revealed_choice_049
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1344,7 +1344,7 @@
     {format_instruction}'
 - id: '050'
   name: revealed_choice_050
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1371,7 +1371,7 @@
     {format_instruction}'
 - id: '051'
   name: revealed_choice_051
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1395,7 +1395,7 @@
     {format_instruction}'
 - id: '052'
   name: revealed_choice_052
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1422,7 +1422,7 @@
     {format_instruction}'
 - id: '053'
   name: revealed_choice_053
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1450,7 +1450,7 @@
     </instructions>'
 - id: '054'
   name: revealed_choice_054
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1481,7 +1481,7 @@
     </instructions>'
 - id: '055'
   name: revealed_choice_055
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1509,7 +1509,7 @@
     </instructions>'
 - id: '056'
   name: revealed_choice_056
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1540,7 +1540,7 @@
     </instructions>'
 - id: '057'
   name: revealed_choice_057
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1564,7 +1564,7 @@
     {format_instruction}'
 - id: 058
   name: revealed_choice_058
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1591,7 +1591,7 @@
     {format_instruction}'
 - id: 059
   name: revealed_choice_059
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1615,7 +1615,7 @@
     {format_instruction}'
 - id: '060'
   name: revealed_choice_060
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1642,7 +1642,7 @@
     {format_instruction}'
 - id: '061'
   name: revealed_choice_061
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1670,7 +1670,7 @@
     </instructions>'
 - id: '062'
   name: revealed_choice_062
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1701,7 +1701,7 @@
     </instructions>'
 - id: '063'
   name: revealed_choice_063
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1729,7 +1729,7 @@
     </instructions>'
 - id: '064'
   name: revealed_choice_064
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:1
@@ -1760,7 +1760,7 @@
     </instructions>'
 - id: '065'
   name: revealed_choice_065
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1784,7 +1784,7 @@
     {task_b}'
 - id: '066'
   name: revealed_choice_066
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1811,7 +1811,7 @@
     {task_b}'
 - id: '067'
   name: revealed_choice_067
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1835,7 +1835,7 @@
     {task_b}'
 - id: 068
   name: revealed_choice_068
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1862,7 +1862,7 @@
     {task_b}'
 - id: 069
   name: revealed_choice_069
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1890,7 +1890,7 @@
     {task_b}'
 - id: '070'
   name: revealed_choice_070
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1921,7 +1921,7 @@
     {task_b}'
 - id: '071'
   name: revealed_choice_071
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1949,7 +1949,7 @@
     {task_b}'
 - id: '072'
   name: revealed_choice_072
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -1980,7 +1980,7 @@
     {task_b}'
 - id: '073'
   name: revealed_choice_073
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2004,7 +2004,7 @@
     {task_b}'
 - id: '074'
   name: revealed_choice_074
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2031,7 +2031,7 @@
     {task_b}'
 - id: '075'
   name: revealed_choice_075
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2055,7 +2055,7 @@
     {task_b}'
 - id: '076'
   name: revealed_choice_076
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2082,7 +2082,7 @@
     {task_b}'
 - id: '077'
   name: revealed_choice_077
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2110,7 +2110,7 @@
     {task_b}'
 - id: 078
   name: revealed_choice_078
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2141,7 +2141,7 @@
     {task_b}'
 - id: 079
   name: revealed_choice_079
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2169,7 +2169,7 @@
     {task_b}'
 - id: 080
   name: revealed_choice_080
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2200,7 +2200,7 @@
     {task_b}'
 - id: 081
   name: revealed_choice_081
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2224,7 +2224,7 @@
     {task_b}'
 - id: 082
   name: revealed_choice_082
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2251,7 +2251,7 @@
     {task_b}'
 - id: 083
   name: revealed_choice_083
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2275,7 +2275,7 @@
     {task_b}'
 - id: 084
   name: revealed_choice_084
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2302,7 +2302,7 @@
     {task_b}'
 - id: 085
   name: revealed_choice_085
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2330,7 +2330,7 @@
     {task_b}'
 - id: 086
   name: revealed_choice_086
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2361,7 +2361,7 @@
     {task_b}'
 - id: 087
   name: revealed_choice_087
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2389,7 +2389,7 @@
     {task_b}'
 - id: 088
   name: revealed_choice_088
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2420,7 +2420,7 @@
     {task_b}'
 - id: 089
   name: revealed_choice_089
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2444,7 +2444,7 @@
     {task_b}'
 - id: 090
   name: revealed_choice_090
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2471,7 +2471,7 @@
     {task_b}'
 - id: 091
   name: revealed_choice_091
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2495,7 +2495,7 @@
     {task_b}'
 - id: 092
   name: revealed_choice_092
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2522,7 +2522,7 @@
     {task_b}'
 - id: 093
   name: revealed_choice_093
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2550,7 +2550,7 @@
     {task_b}'
 - id: 094
   name: revealed_choice_094
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2581,7 +2581,7 @@
     {task_b}'
 - id: 095
   name: revealed_choice_095
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2609,7 +2609,7 @@
     {task_b}'
 - id: 096
   name: revealed_choice_096
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2640,7 +2640,7 @@
     {task_b}'
 - id: 097
   name: revealed_choice_097
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2664,7 +2664,7 @@
     {format_instruction}'
 - id: 098
   name: revealed_choice_098
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2691,7 +2691,7 @@
     {format_instruction}'
 - id: 099
   name: revealed_choice_099
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2715,7 +2715,7 @@
     {format_instruction}'
 - id: '100'
   name: revealed_choice_100
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2742,7 +2742,7 @@
     {format_instruction}'
 - id: '101'
   name: revealed_choice_101
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2770,7 +2770,7 @@
     </instructions>'
 - id: '102'
   name: revealed_choice_102
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2801,7 +2801,7 @@
     </instructions>'
 - id: '103'
   name: revealed_choice_103
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2829,7 +2829,7 @@
     </instructions>'
 - id: '104'
   name: revealed_choice_104
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2860,7 +2860,7 @@
     </instructions>'
 - id: '105'
   name: revealed_choice_105
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2884,7 +2884,7 @@
     {format_instruction}'
 - id: '106'
   name: revealed_choice_106
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2911,7 +2911,7 @@
     {format_instruction}'
 - id: '107'
   name: revealed_choice_107
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2935,7 +2935,7 @@
     {format_instruction}'
 - id: '108'
   name: revealed_choice_108
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2962,7 +2962,7 @@
     {format_instruction}'
 - id: '109'
   name: revealed_choice_109
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -2990,7 +2990,7 @@
     </instructions>'
 - id: '110'
   name: revealed_choice_110
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3021,7 +3021,7 @@
     </instructions>'
 - id: '111'
   name: revealed_choice_111
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3049,7 +3049,7 @@
     </instructions>'
 - id: '112'
   name: revealed_choice_112
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3080,7 +3080,7 @@
     </instructions>'
 - id: '113'
   name: revealed_choice_113
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3104,7 +3104,7 @@
     {format_instruction}'
 - id: '114'
   name: revealed_choice_114
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3131,7 +3131,7 @@
     {format_instruction}'
 - id: '115'
   name: revealed_choice_115
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3155,7 +3155,7 @@
     {format_instruction}'
 - id: '116'
   name: revealed_choice_116
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3182,7 +3182,7 @@
     {format_instruction}'
 - id: '117'
   name: revealed_choice_117
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3210,7 +3210,7 @@
     </instructions>'
 - id: '118'
   name: revealed_choice_118
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3241,7 +3241,7 @@
     </instructions>'
 - id: '119'
   name: revealed_choice_119
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3269,7 +3269,7 @@
     </instructions>'
 - id: '120'
   name: revealed_choice_120
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3300,7 +3300,7 @@
     </instructions>'
 - id: '121'
   name: revealed_choice_121
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3324,7 +3324,7 @@
     {format_instruction}'
 - id: '122'
   name: revealed_choice_122
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3351,7 +3351,7 @@
     {format_instruction}'
 - id: '123'
   name: revealed_choice_123
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3375,7 +3375,7 @@
     {format_instruction}'
 - id: '124'
   name: revealed_choice_124
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3402,7 +3402,7 @@
     {format_instruction}'
 - id: '125'
   name: revealed_choice_125
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3430,7 +3430,7 @@
     </instructions>'
 - id: '126'
   name: revealed_choice_126
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3461,7 +3461,7 @@
     </instructions>'
 - id: '127'
   name: revealed_choice_127
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3489,7 +3489,7 @@
     </instructions>'
 - id: '128'
   name: revealed_choice_128
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:2
@@ -3520,7 +3520,7 @@
     </instructions>'
 - id: '129'
   name: revealed_choice_129
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3544,7 +3544,7 @@
     {task_b}'
 - id: '130'
   name: revealed_choice_130
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3571,7 +3571,7 @@
     {task_b}'
 - id: '131'
   name: revealed_choice_131
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3595,7 +3595,7 @@
     {task_b}'
 - id: '132'
   name: revealed_choice_132
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3622,7 +3622,7 @@
     {task_b}'
 - id: '133'
   name: revealed_choice_133
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3650,7 +3650,7 @@
     {task_b}'
 - id: '134'
   name: revealed_choice_134
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3681,7 +3681,7 @@
     {task_b}'
 - id: '135'
   name: revealed_choice_135
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3709,7 +3709,7 @@
     {task_b}'
 - id: '136'
   name: revealed_choice_136
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3740,7 +3740,7 @@
     {task_b}'
 - id: '137'
   name: revealed_choice_137
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3764,7 +3764,7 @@
     {task_b}'
 - id: '138'
   name: revealed_choice_138
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3791,7 +3791,7 @@
     {task_b}'
 - id: '139'
   name: revealed_choice_139
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3815,7 +3815,7 @@
     {task_b}'
 - id: '140'
   name: revealed_choice_140
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3842,7 +3842,7 @@
     {task_b}'
 - id: '141'
   name: revealed_choice_141
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3870,7 +3870,7 @@
     {task_b}'
 - id: '142'
   name: revealed_choice_142
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3901,7 +3901,7 @@
     {task_b}'
 - id: '143'
   name: revealed_choice_143
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3929,7 +3929,7 @@
     {task_b}'
 - id: '144'
   name: revealed_choice_144
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3960,7 +3960,7 @@
     {task_b}'
 - id: '145'
   name: revealed_choice_145
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -3984,7 +3984,7 @@
     {task_b}'
 - id: '146'
   name: revealed_choice_146
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4011,7 +4011,7 @@
     {task_b}'
 - id: '147'
   name: revealed_choice_147
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4035,7 +4035,7 @@
     {task_b}'
 - id: '148'
   name: revealed_choice_148
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4062,7 +4062,7 @@
     {task_b}'
 - id: '149'
   name: revealed_choice_149
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4090,7 +4090,7 @@
     {task_b}'
 - id: '150'
   name: revealed_choice_150
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4121,7 +4121,7 @@
     {task_b}'
 - id: '151'
   name: revealed_choice_151
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4149,7 +4149,7 @@
     {task_b}'
 - id: '152'
   name: revealed_choice_152
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4180,7 +4180,7 @@
     {task_b}'
 - id: '153'
   name: revealed_choice_153
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4204,7 +4204,7 @@
     {task_b}'
 - id: '154'
   name: revealed_choice_154
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4231,7 +4231,7 @@
     {task_b}'
 - id: '155'
   name: revealed_choice_155
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4255,7 +4255,7 @@
     {task_b}'
 - id: '156'
   name: revealed_choice_156
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4282,7 +4282,7 @@
     {task_b}'
 - id: '157'
   name: revealed_choice_157
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4310,7 +4310,7 @@
     {task_b}'
 - id: '158'
   name: revealed_choice_158
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4341,7 +4341,7 @@
     {task_b}'
 - id: '159'
   name: revealed_choice_159
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4369,7 +4369,7 @@
     {task_b}'
 - id: '160'
   name: revealed_choice_160
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4400,7 +4400,7 @@
     {task_b}'
 - id: '161'
   name: revealed_choice_161
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4424,7 +4424,7 @@
     {format_instruction}'
 - id: '162'
   name: revealed_choice_162
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4451,7 +4451,7 @@
     {format_instruction}'
 - id: '163'
   name: revealed_choice_163
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4475,7 +4475,7 @@
     {format_instruction}'
 - id: '164'
   name: revealed_choice_164
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4502,7 +4502,7 @@
     {format_instruction}'
 - id: '165'
   name: revealed_choice_165
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4530,7 +4530,7 @@
     </instructions>'
 - id: '166'
   name: revealed_choice_166
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4561,7 +4561,7 @@
     </instructions>'
 - id: '167'
   name: revealed_choice_167
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4589,7 +4589,7 @@
     </instructions>'
 - id: '168'
   name: revealed_choice_168
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4620,7 +4620,7 @@
     </instructions>'
 - id: '169'
   name: revealed_choice_169
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4644,7 +4644,7 @@
     {format_instruction}'
 - id: '170'
   name: revealed_choice_170
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4671,7 +4671,7 @@
     {format_instruction}'
 - id: '171'
   name: revealed_choice_171
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4695,7 +4695,7 @@
     {format_instruction}'
 - id: '172'
   name: revealed_choice_172
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4722,7 +4722,7 @@
     {format_instruction}'
 - id: '173'
   name: revealed_choice_173
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4750,7 +4750,7 @@
     </instructions>'
 - id: '174'
   name: revealed_choice_174
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4781,7 +4781,7 @@
     </instructions>'
 - id: '175'
   name: revealed_choice_175
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4809,7 +4809,7 @@
     </instructions>'
 - id: '176'
   name: revealed_choice_176
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4840,7 +4840,7 @@
     </instructions>'
 - id: '177'
   name: revealed_choice_177
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4864,7 +4864,7 @@
     {format_instruction}'
 - id: '178'
   name: revealed_choice_178
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4891,7 +4891,7 @@
     {format_instruction}'
 - id: '179'
   name: revealed_choice_179
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4915,7 +4915,7 @@
     {format_instruction}'
 - id: '180'
   name: revealed_choice_180
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4942,7 +4942,7 @@
     {format_instruction}'
 - id: '181'
   name: revealed_choice_181
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -4970,7 +4970,7 @@
     </instructions>'
 - id: '182'
   name: revealed_choice_182
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5001,7 +5001,7 @@
     </instructions>'
 - id: '183'
   name: revealed_choice_183
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5029,7 +5029,7 @@
     </instructions>'
 - id: '184'
   name: revealed_choice_184
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5060,7 +5060,7 @@
     </instructions>'
 - id: '185'
   name: revealed_choice_185
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5084,7 +5084,7 @@
     {format_instruction}'
 - id: '186'
   name: revealed_choice_186
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5111,7 +5111,7 @@
     {format_instruction}'
 - id: '187'
   name: revealed_choice_187
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5135,7 +5135,7 @@
     {format_instruction}'
 - id: '188'
   name: revealed_choice_188
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5162,7 +5162,7 @@
     {format_instruction}'
 - id: '189'
   name: revealed_choice_189
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5190,7 +5190,7 @@
     </instructions>'
 - id: '190'
   name: revealed_choice_190
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5221,7 +5221,7 @@
     </instructions>'
 - id: '191'
   name: revealed_choice_191
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5249,7 +5249,7 @@
     </instructions>'
 - id: '192'
   name: revealed_choice_192
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:en
   - phrasing:3
@@ -5280,7 +5280,7 @@
     </instructions>'
 - id: '193'
   name: revealed_choice_193
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5304,7 +5304,7 @@
     {task_b}'
 - id: '194'
   name: revealed_choice_194
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5331,7 +5331,7 @@
     {task_b}'
 - id: '195'
   name: revealed_choice_195
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5355,7 +5355,7 @@
     {task_b}'
 - id: '196'
   name: revealed_choice_196
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5382,7 +5382,7 @@
     {task_b}'
 - id: '197'
   name: revealed_choice_197
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5410,7 +5410,7 @@
     {task_b}'
 - id: '198'
   name: revealed_choice_198
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5441,7 +5441,7 @@
     {task_b}'
 - id: '199'
   name: revealed_choice_199
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5469,7 +5469,7 @@
     {task_b}'
 - id: '200'
   name: revealed_choice_200
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5500,7 +5500,7 @@
     {task_b}'
 - id: '201'
   name: revealed_choice_201
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5524,7 +5524,7 @@
     {task_b}'
 - id: '202'
   name: revealed_choice_202
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5551,7 +5551,7 @@
     {task_b}'
 - id: '203'
   name: revealed_choice_203
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5575,7 +5575,7 @@
     {task_b}'
 - id: '204'
   name: revealed_choice_204
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5602,7 +5602,7 @@
     {task_b}'
 - id: '205'
   name: revealed_choice_205
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5630,7 +5630,7 @@
     {task_b}'
 - id: '206'
   name: revealed_choice_206
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5661,7 +5661,7 @@
     {task_b}'
 - id: '207'
   name: revealed_choice_207
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5689,7 +5689,7 @@
     {task_b}'
 - id: '208'
   name: revealed_choice_208
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5720,7 +5720,7 @@
     {task_b}'
 - id: '209'
   name: revealed_choice_209
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5744,7 +5744,7 @@
     {task_b}'
 - id: '210'
   name: revealed_choice_210
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5771,7 +5771,7 @@
     {task_b}'
 - id: '211'
   name: revealed_choice_211
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5795,7 +5795,7 @@
     {task_b}'
 - id: '212'
   name: revealed_choice_212
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5822,7 +5822,7 @@
     {task_b}'
 - id: '213'
   name: revealed_choice_213
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5850,7 +5850,7 @@
     {task_b}'
 - id: '214'
   name: revealed_choice_214
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5881,7 +5881,7 @@
     {task_b}'
 - id: '215'
   name: revealed_choice_215
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5909,7 +5909,7 @@
     {task_b}'
 - id: '216'
   name: revealed_choice_216
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5940,7 +5940,7 @@
     {task_b}'
 - id: '217'
   name: revealed_choice_217
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5964,7 +5964,7 @@
     {task_b}'
 - id: '218'
   name: revealed_choice_218
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -5991,7 +5991,7 @@
     {task_b}'
 - id: '219'
   name: revealed_choice_219
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6015,7 +6015,7 @@
     {task_b}'
 - id: '220'
   name: revealed_choice_220
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6042,7 +6042,7 @@
     {task_b}'
 - id: '221'
   name: revealed_choice_221
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6070,7 +6070,7 @@
     {task_b}'
 - id: '222'
   name: revealed_choice_222
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6101,7 +6101,7 @@
     {task_b}'
 - id: '223'
   name: revealed_choice_223
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6129,7 +6129,7 @@
     {task_b}'
 - id: '224'
   name: revealed_choice_224
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6160,7 +6160,7 @@
     {task_b}'
 - id: '225'
   name: revealed_choice_225
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6184,7 +6184,7 @@
     {format_instruction}'
 - id: '226'
   name: revealed_choice_226
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6211,7 +6211,7 @@
     {format_instruction}'
 - id: '227'
   name: revealed_choice_227
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6235,7 +6235,7 @@
     {format_instruction}'
 - id: '228'
   name: revealed_choice_228
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6262,7 +6262,7 @@
     {format_instruction}'
 - id: '229'
   name: revealed_choice_229
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6290,7 +6290,7 @@
     </instructions>'
 - id: '230'
   name: revealed_choice_230
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6321,7 +6321,7 @@
     </instructions>'
 - id: '231'
   name: revealed_choice_231
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6349,7 +6349,7 @@
     </instructions>'
 - id: '232'
   name: revealed_choice_232
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6380,7 +6380,7 @@
     </instructions>'
 - id: '233'
   name: revealed_choice_233
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6404,7 +6404,7 @@
     {format_instruction}'
 - id: '234'
   name: revealed_choice_234
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6431,7 +6431,7 @@
     {format_instruction}'
 - id: '235'
   name: revealed_choice_235
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6455,7 +6455,7 @@
     {format_instruction}'
 - id: '236'
   name: revealed_choice_236
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6482,7 +6482,7 @@
     {format_instruction}'
 - id: '237'
   name: revealed_choice_237
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6510,7 +6510,7 @@
     </instructions>'
 - id: '238'
   name: revealed_choice_238
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6541,7 +6541,7 @@
     </instructions>'
 - id: '239'
   name: revealed_choice_239
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6569,7 +6569,7 @@
     </instructions>'
 - id: '240'
   name: revealed_choice_240
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6600,7 +6600,7 @@
     </instructions>'
 - id: '241'
   name: revealed_choice_241
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6624,7 +6624,7 @@
     {format_instruction}'
 - id: '242'
   name: revealed_choice_242
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6651,7 +6651,7 @@
     {format_instruction}'
 - id: '243'
   name: revealed_choice_243
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6675,7 +6675,7 @@
     {format_instruction}'
 - id: '244'
   name: revealed_choice_244
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6702,7 +6702,7 @@
     {format_instruction}'
 - id: '245'
   name: revealed_choice_245
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6730,7 +6730,7 @@
     </instructions>'
 - id: '246'
   name: revealed_choice_246
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6761,7 +6761,7 @@
     </instructions>'
 - id: '247'
   name: revealed_choice_247
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6789,7 +6789,7 @@
     </instructions>'
 - id: '248'
   name: revealed_choice_248
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6820,7 +6820,7 @@
     </instructions>'
 - id: '249'
   name: revealed_choice_249
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6844,7 +6844,7 @@
     {format_instruction}'
 - id: '250'
   name: revealed_choice_250
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6871,7 +6871,7 @@
     {format_instruction}'
 - id: '251'
   name: revealed_choice_251
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6895,7 +6895,7 @@
     {format_instruction}'
 - id: '252'
   name: revealed_choice_252
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6922,7 +6922,7 @@
     {format_instruction}'
 - id: '253'
   name: revealed_choice_253
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6950,7 +6950,7 @@
     </instructions>'
 - id: '254'
   name: revealed_choice_254
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -6981,7 +6981,7 @@
     </instructions>'
 - id: '255'
   name: revealed_choice_255
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -7009,7 +7009,7 @@
     </instructions>'
 - id: '256'
   name: revealed_choice_256
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:1
@@ -7040,7 +7040,7 @@
     </instructions>'
 - id: '257'
   name: revealed_choice_257
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7064,7 +7064,7 @@
     {task_b}'
 - id: '258'
   name: revealed_choice_258
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7091,7 +7091,7 @@
     {task_b}'
 - id: '259'
   name: revealed_choice_259
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7115,7 +7115,7 @@
     {task_b}'
 - id: '260'
   name: revealed_choice_260
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7142,7 +7142,7 @@
     {task_b}'
 - id: '261'
   name: revealed_choice_261
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7170,7 +7170,7 @@
     {task_b}'
 - id: '262'
   name: revealed_choice_262
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7201,7 +7201,7 @@
     {task_b}'
 - id: '263'
   name: revealed_choice_263
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7229,7 +7229,7 @@
     {task_b}'
 - id: '264'
   name: revealed_choice_264
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7260,7 +7260,7 @@
     {task_b}'
 - id: '265'
   name: revealed_choice_265
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7284,7 +7284,7 @@
     {task_b}'
 - id: '266'
   name: revealed_choice_266
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7311,7 +7311,7 @@
     {task_b}'
 - id: '267'
   name: revealed_choice_267
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7335,7 +7335,7 @@
     {task_b}'
 - id: '268'
   name: revealed_choice_268
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7362,7 +7362,7 @@
     {task_b}'
 - id: '269'
   name: revealed_choice_269
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7390,7 +7390,7 @@
     {task_b}'
 - id: '270'
   name: revealed_choice_270
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7421,7 +7421,7 @@
     {task_b}'
 - id: '271'
   name: revealed_choice_271
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7449,7 +7449,7 @@
     {task_b}'
 - id: '272'
   name: revealed_choice_272
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7480,7 +7480,7 @@
     {task_b}'
 - id: '273'
   name: revealed_choice_273
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7504,7 +7504,7 @@
     {task_b}'
 - id: '274'
   name: revealed_choice_274
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7531,7 +7531,7 @@
     {task_b}'
 - id: '275'
   name: revealed_choice_275
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7555,7 +7555,7 @@
     {task_b}'
 - id: '276'
   name: revealed_choice_276
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7582,7 +7582,7 @@
     {task_b}'
 - id: '277'
   name: revealed_choice_277
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7610,7 +7610,7 @@
     {task_b}'
 - id: '278'
   name: revealed_choice_278
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7641,7 +7641,7 @@
     {task_b}'
 - id: '279'
   name: revealed_choice_279
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7669,7 +7669,7 @@
     {task_b}'
 - id: '280'
   name: revealed_choice_280
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7700,7 +7700,7 @@
     {task_b}'
 - id: '281'
   name: revealed_choice_281
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7724,7 +7724,7 @@
     {task_b}'
 - id: '282'
   name: revealed_choice_282
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7751,7 +7751,7 @@
     {task_b}'
 - id: '283'
   name: revealed_choice_283
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7775,7 +7775,7 @@
     {task_b}'
 - id: '284'
   name: revealed_choice_284
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7802,7 +7802,7 @@
     {task_b}'
 - id: '285'
   name: revealed_choice_285
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7830,7 +7830,7 @@
     {task_b}'
 - id: '286'
   name: revealed_choice_286
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7861,7 +7861,7 @@
     {task_b}'
 - id: '287'
   name: revealed_choice_287
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7889,7 +7889,7 @@
     {task_b}'
 - id: '288'
   name: revealed_choice_288
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7920,7 +7920,7 @@
     {task_b}'
 - id: '289'
   name: revealed_choice_289
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7944,7 +7944,7 @@
     {format_instruction}'
 - id: '290'
   name: revealed_choice_290
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7971,7 +7971,7 @@
     {format_instruction}'
 - id: '291'
   name: revealed_choice_291
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -7995,7 +7995,7 @@
     {format_instruction}'
 - id: '292'
   name: revealed_choice_292
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8022,7 +8022,7 @@
     {format_instruction}'
 - id: '293'
   name: revealed_choice_293
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8050,7 +8050,7 @@
     </instructions>'
 - id: '294'
   name: revealed_choice_294
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8081,7 +8081,7 @@
     </instructions>'
 - id: '295'
   name: revealed_choice_295
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8109,7 +8109,7 @@
     </instructions>'
 - id: '296'
   name: revealed_choice_296
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8140,7 +8140,7 @@
     </instructions>'
 - id: '297'
   name: revealed_choice_297
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8164,7 +8164,7 @@
     {format_instruction}'
 - id: '298'
   name: revealed_choice_298
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8191,7 +8191,7 @@
     {format_instruction}'
 - id: '299'
   name: revealed_choice_299
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8215,7 +8215,7 @@
     {format_instruction}'
 - id: '300'
   name: revealed_choice_300
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8242,7 +8242,7 @@
     {format_instruction}'
 - id: '301'
   name: revealed_choice_301
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8270,7 +8270,7 @@
     </instructions>'
 - id: '302'
   name: revealed_choice_302
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8301,7 +8301,7 @@
     </instructions>'
 - id: '303'
   name: revealed_choice_303
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8329,7 +8329,7 @@
     </instructions>'
 - id: '304'
   name: revealed_choice_304
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8360,7 +8360,7 @@
     </instructions>'
 - id: '305'
   name: revealed_choice_305
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8384,7 +8384,7 @@
     {format_instruction}'
 - id: '306'
   name: revealed_choice_306
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8411,7 +8411,7 @@
     {format_instruction}'
 - id: '307'
   name: revealed_choice_307
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8435,7 +8435,7 @@
     {format_instruction}'
 - id: '308'
   name: revealed_choice_308
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8462,7 +8462,7 @@
     {format_instruction}'
 - id: '309'
   name: revealed_choice_309
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8490,7 +8490,7 @@
     </instructions>'
 - id: '310'
   name: revealed_choice_310
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8521,7 +8521,7 @@
     </instructions>'
 - id: '311'
   name: revealed_choice_311
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8549,7 +8549,7 @@
     </instructions>'
 - id: '312'
   name: revealed_choice_312
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8580,7 +8580,7 @@
     </instructions>'
 - id: '313'
   name: revealed_choice_313
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8604,7 +8604,7 @@
     {format_instruction}'
 - id: '314'
   name: revealed_choice_314
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8631,7 +8631,7 @@
     {format_instruction}'
 - id: '315'
   name: revealed_choice_315
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8655,7 +8655,7 @@
     {format_instruction}'
 - id: '316'
   name: revealed_choice_316
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8682,7 +8682,7 @@
     {format_instruction}'
 - id: '317'
   name: revealed_choice_317
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8710,7 +8710,7 @@
     </instructions>'
 - id: '318'
   name: revealed_choice_318
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8741,7 +8741,7 @@
     </instructions>'
 - id: '319'
   name: revealed_choice_319
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8769,7 +8769,7 @@
     </instructions>'
 - id: '320'
   name: revealed_choice_320
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:2
@@ -8800,7 +8800,7 @@
     </instructions>'
 - id: '321'
   name: revealed_choice_321
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -8824,7 +8824,7 @@
     {task_b}'
 - id: '322'
   name: revealed_choice_322
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -8851,7 +8851,7 @@
     {task_b}'
 - id: '323'
   name: revealed_choice_323
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -8875,7 +8875,7 @@
     {task_b}'
 - id: '324'
   name: revealed_choice_324
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -8902,7 +8902,7 @@
     {task_b}'
 - id: '325'
   name: revealed_choice_325
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -8930,7 +8930,7 @@
     {task_b}'
 - id: '326'
   name: revealed_choice_326
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -8961,7 +8961,7 @@
     {task_b}'
 - id: '327'
   name: revealed_choice_327
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -8989,7 +8989,7 @@
     {task_b}'
 - id: '328'
   name: revealed_choice_328
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9020,7 +9020,7 @@
     {task_b}'
 - id: '329'
   name: revealed_choice_329
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9044,7 +9044,7 @@
     {task_b}'
 - id: '330'
   name: revealed_choice_330
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9071,7 +9071,7 @@
     {task_b}'
 - id: '331'
   name: revealed_choice_331
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9095,7 +9095,7 @@
     {task_b}'
 - id: '332'
   name: revealed_choice_332
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9122,7 +9122,7 @@
     {task_b}'
 - id: '333'
   name: revealed_choice_333
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9150,7 +9150,7 @@
     {task_b}'
 - id: '334'
   name: revealed_choice_334
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9181,7 +9181,7 @@
     {task_b}'
 - id: '335'
   name: revealed_choice_335
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9209,7 +9209,7 @@
     {task_b}'
 - id: '336'
   name: revealed_choice_336
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9240,7 +9240,7 @@
     {task_b}'
 - id: '337'
   name: revealed_choice_337
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9264,7 +9264,7 @@
     {task_b}'
 - id: '338'
   name: revealed_choice_338
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9291,7 +9291,7 @@
     {task_b}'
 - id: '339'
   name: revealed_choice_339
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9315,7 +9315,7 @@
     {task_b}'
 - id: '340'
   name: revealed_choice_340
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9342,7 +9342,7 @@
     {task_b}'
 - id: '341'
   name: revealed_choice_341
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9370,7 +9370,7 @@
     {task_b}'
 - id: '342'
   name: revealed_choice_342
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9401,7 +9401,7 @@
     {task_b}'
 - id: '343'
   name: revealed_choice_343
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9429,7 +9429,7 @@
     {task_b}'
 - id: '344'
   name: revealed_choice_344
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9460,7 +9460,7 @@
     {task_b}'
 - id: '345'
   name: revealed_choice_345
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9484,7 +9484,7 @@
     {task_b}'
 - id: '346'
   name: revealed_choice_346
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9511,7 +9511,7 @@
     {task_b}'
 - id: '347'
   name: revealed_choice_347
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9535,7 +9535,7 @@
     {task_b}'
 - id: '348'
   name: revealed_choice_348
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9562,7 +9562,7 @@
     {task_b}'
 - id: '349'
   name: revealed_choice_349
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9590,7 +9590,7 @@
     {task_b}'
 - id: '350'
   name: revealed_choice_350
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9621,7 +9621,7 @@
     {task_b}'
 - id: '351'
   name: revealed_choice_351
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9649,7 +9649,7 @@
     {task_b}'
 - id: '352'
   name: revealed_choice_352
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9680,7 +9680,7 @@
     {task_b}'
 - id: '353'
   name: revealed_choice_353
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9704,7 +9704,7 @@
     {format_instruction}'
 - id: '354'
   name: revealed_choice_354
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9731,7 +9731,7 @@
     {format_instruction}'
 - id: '355'
   name: revealed_choice_355
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9755,7 +9755,7 @@
     {format_instruction}'
 - id: '356'
   name: revealed_choice_356
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9782,7 +9782,7 @@
     {format_instruction}'
 - id: '357'
   name: revealed_choice_357
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9810,7 +9810,7 @@
     </instructions>'
 - id: '358'
   name: revealed_choice_358
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9841,7 +9841,7 @@
     </instructions>'
 - id: '359'
   name: revealed_choice_359
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9869,7 +9869,7 @@
     </instructions>'
 - id: '360'
   name: revealed_choice_360
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9900,7 +9900,7 @@
     </instructions>'
 - id: '361'
   name: revealed_choice_361
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9924,7 +9924,7 @@
     {format_instruction}'
 - id: '362'
   name: revealed_choice_362
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9951,7 +9951,7 @@
     {format_instruction}'
 - id: '363'
   name: revealed_choice_363
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -9975,7 +9975,7 @@
     {format_instruction}'
 - id: '364'
   name: revealed_choice_364
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10002,7 +10002,7 @@
     {format_instruction}'
 - id: '365'
   name: revealed_choice_365
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10030,7 +10030,7 @@
     </instructions>'
 - id: '366'
   name: revealed_choice_366
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10061,7 +10061,7 @@
     </instructions>'
 - id: '367'
   name: revealed_choice_367
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10089,7 +10089,7 @@
     </instructions>'
 - id: '368'
   name: revealed_choice_368
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10120,7 +10120,7 @@
     </instructions>'
 - id: '369'
   name: revealed_choice_369
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10144,7 +10144,7 @@
     {format_instruction}'
 - id: '370'
   name: revealed_choice_370
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10171,7 +10171,7 @@
     {format_instruction}'
 - id: '371'
   name: revealed_choice_371
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10195,7 +10195,7 @@
     {format_instruction}'
 - id: '372'
   name: revealed_choice_372
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10222,7 +10222,7 @@
     {format_instruction}'
 - id: '373'
   name: revealed_choice_373
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10250,7 +10250,7 @@
     </instructions>'
 - id: '374'
   name: revealed_choice_374
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10281,7 +10281,7 @@
     </instructions>'
 - id: '375'
   name: revealed_choice_375
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10309,7 +10309,7 @@
     </instructions>'
 - id: '376'
   name: revealed_choice_376
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10340,7 +10340,7 @@
     </instructions>'
 - id: '377'
   name: revealed_choice_377
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10364,7 +10364,7 @@
     {format_instruction}'
 - id: '378'
   name: revealed_choice_378
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10391,7 +10391,7 @@
     {format_instruction}'
 - id: '379'
   name: revealed_choice_379
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10415,7 +10415,7 @@
     {format_instruction}'
 - id: '380'
   name: revealed_choice_380
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10442,7 +10442,7 @@
     {format_instruction}'
 - id: '381'
   name: revealed_choice_381
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10470,7 +10470,7 @@
     </instructions>'
 - id: '382'
   name: revealed_choice_382
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10501,7 +10501,7 @@
     </instructions>'
 - id: '383'
   name: revealed_choice_383
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10529,7 +10529,7 @@
     </instructions>'
 - id: '384'
   name: revealed_choice_384
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:fr
   - phrasing:3
@@ -10560,7 +10560,7 @@
     </instructions>'
 - id: '385'
   name: revealed_choice_385
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10584,7 +10584,7 @@
     {task_b}'
 - id: '386'
   name: revealed_choice_386
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10611,7 +10611,7 @@
     {task_b}'
 - id: '387'
   name: revealed_choice_387
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10635,7 +10635,7 @@
     {task_b}'
 - id: '388'
   name: revealed_choice_388
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10662,7 +10662,7 @@
     {task_b}'
 - id: '389'
   name: revealed_choice_389
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10690,7 +10690,7 @@
     {task_b}'
 - id: '390'
   name: revealed_choice_390
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10721,7 +10721,7 @@
     {task_b}'
 - id: '391'
   name: revealed_choice_391
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10749,7 +10749,7 @@
     {task_b}'
 - id: '392'
   name: revealed_choice_392
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10780,7 +10780,7 @@
     {task_b}'
 - id: '393'
   name: revealed_choice_393
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10804,7 +10804,7 @@
     {task_b}'
 - id: '394'
   name: revealed_choice_394
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10831,7 +10831,7 @@
     {task_b}'
 - id: '395'
   name: revealed_choice_395
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10855,7 +10855,7 @@
     {task_b}'
 - id: '396'
   name: revealed_choice_396
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10882,7 +10882,7 @@
     {task_b}'
 - id: '397'
   name: revealed_choice_397
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10910,7 +10910,7 @@
     {task_b}'
 - id: '398'
   name: revealed_choice_398
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10941,7 +10941,7 @@
     {task_b}'
 - id: '399'
   name: revealed_choice_399
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -10969,7 +10969,7 @@
     {task_b}'
 - id: '400'
   name: revealed_choice_400
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11000,7 +11000,7 @@
     {task_b}'
 - id: '401'
   name: revealed_choice_401
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11024,7 +11024,7 @@
     {task_b}'
 - id: '402'
   name: revealed_choice_402
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11051,7 +11051,7 @@
     {task_b}'
 - id: '403'
   name: revealed_choice_403
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11075,7 +11075,7 @@
     {task_b}'
 - id: '404'
   name: revealed_choice_404
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11102,7 +11102,7 @@
     {task_b}'
 - id: '405'
   name: revealed_choice_405
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11130,7 +11130,7 @@
     {task_b}'
 - id: '406'
   name: revealed_choice_406
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11161,7 +11161,7 @@
     {task_b}'
 - id: '407'
   name: revealed_choice_407
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11189,7 +11189,7 @@
     {task_b}'
 - id: '408'
   name: revealed_choice_408
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11220,7 +11220,7 @@
     {task_b}'
 - id: '409'
   name: revealed_choice_409
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11244,7 +11244,7 @@
     {task_b}'
 - id: '410'
   name: revealed_choice_410
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11271,7 +11271,7 @@
     {task_b}'
 - id: '411'
   name: revealed_choice_411
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11295,7 +11295,7 @@
     {task_b}'
 - id: '412'
   name: revealed_choice_412
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11322,7 +11322,7 @@
     {task_b}'
 - id: '413'
   name: revealed_choice_413
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11350,7 +11350,7 @@
     {task_b}'
 - id: '414'
   name: revealed_choice_414
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11381,7 +11381,7 @@
     {task_b}'
 - id: '415'
   name: revealed_choice_415
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11409,7 +11409,7 @@
     {task_b}'
 - id: '416'
   name: revealed_choice_416
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11440,7 +11440,7 @@
     {task_b}'
 - id: '417'
   name: revealed_choice_417
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11464,7 +11464,7 @@
     {format_instruction}'
 - id: '418'
   name: revealed_choice_418
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11491,7 +11491,7 @@
     {format_instruction}'
 - id: '419'
   name: revealed_choice_419
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11515,7 +11515,7 @@
     {format_instruction}'
 - id: '420'
   name: revealed_choice_420
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11542,7 +11542,7 @@
     {format_instruction}'
 - id: '421'
   name: revealed_choice_421
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11570,7 +11570,7 @@
     </instructions>'
 - id: '422'
   name: revealed_choice_422
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11601,7 +11601,7 @@
     </instructions>'
 - id: '423'
   name: revealed_choice_423
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11629,7 +11629,7 @@
     </instructions>'
 - id: '424'
   name: revealed_choice_424
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11660,7 +11660,7 @@
     </instructions>'
 - id: '425'
   name: revealed_choice_425
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11684,7 +11684,7 @@
     {format_instruction}'
 - id: '426'
   name: revealed_choice_426
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11711,7 +11711,7 @@
     {format_instruction}'
 - id: '427'
   name: revealed_choice_427
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11735,7 +11735,7 @@
     {format_instruction}'
 - id: '428'
   name: revealed_choice_428
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11762,7 +11762,7 @@
     {format_instruction}'
 - id: '429'
   name: revealed_choice_429
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11790,7 +11790,7 @@
     </instructions>'
 - id: '430'
   name: revealed_choice_430
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11821,7 +11821,7 @@
     </instructions>'
 - id: '431'
   name: revealed_choice_431
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11849,7 +11849,7 @@
     </instructions>'
 - id: '432'
   name: revealed_choice_432
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11880,7 +11880,7 @@
     </instructions>'
 - id: '433'
   name: revealed_choice_433
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11904,7 +11904,7 @@
     {format_instruction}'
 - id: '434'
   name: revealed_choice_434
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11931,7 +11931,7 @@
     {format_instruction}'
 - id: '435'
   name: revealed_choice_435
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11955,7 +11955,7 @@
     {format_instruction}'
 - id: '436'
   name: revealed_choice_436
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -11982,7 +11982,7 @@
     {format_instruction}'
 - id: '437'
   name: revealed_choice_437
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12010,7 +12010,7 @@
     </instructions>'
 - id: '438'
   name: revealed_choice_438
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12041,7 +12041,7 @@
     </instructions>'
 - id: '439'
   name: revealed_choice_439
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12069,7 +12069,7 @@
     </instructions>'
 - id: '440'
   name: revealed_choice_440
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12100,7 +12100,7 @@
     </instructions>'
 - id: '441'
   name: revealed_choice_441
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12124,7 +12124,7 @@
     {format_instruction}'
 - id: '442'
   name: revealed_choice_442
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12151,7 +12151,7 @@
     {format_instruction}'
 - id: '443'
   name: revealed_choice_443
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12175,7 +12175,7 @@
     {format_instruction}'
 - id: '444'
   name: revealed_choice_444
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12202,7 +12202,7 @@
     {format_instruction}'
 - id: '445'
   name: revealed_choice_445
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12230,7 +12230,7 @@
     </instructions>'
 - id: '446'
   name: revealed_choice_446
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12261,7 +12261,7 @@
     </instructions>'
 - id: '447'
   name: revealed_choice_447
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12289,7 +12289,7 @@
     </instructions>'
 - id: '448'
   name: revealed_choice_448
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:1
@@ -12320,7 +12320,7 @@
     </instructions>'
 - id: '449'
   name: revealed_choice_449
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12344,7 +12344,7 @@
     {task_b}'
 - id: '450'
   name: revealed_choice_450
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12371,7 +12371,7 @@
     {task_b}'
 - id: '451'
   name: revealed_choice_451
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12395,7 +12395,7 @@
     {task_b}'
 - id: '452'
   name: revealed_choice_452
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12422,7 +12422,7 @@
     {task_b}'
 - id: '453'
   name: revealed_choice_453
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12450,7 +12450,7 @@
     {task_b}'
 - id: '454'
   name: revealed_choice_454
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12481,7 +12481,7 @@
     {task_b}'
 - id: '455'
   name: revealed_choice_455
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12509,7 +12509,7 @@
     {task_b}'
 - id: '456'
   name: revealed_choice_456
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12540,7 +12540,7 @@
     {task_b}'
 - id: '457'
   name: revealed_choice_457
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12564,7 +12564,7 @@
     {task_b}'
 - id: '458'
   name: revealed_choice_458
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12591,7 +12591,7 @@
     {task_b}'
 - id: '459'
   name: revealed_choice_459
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12615,7 +12615,7 @@
     {task_b}'
 - id: '460'
   name: revealed_choice_460
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12642,7 +12642,7 @@
     {task_b}'
 - id: '461'
   name: revealed_choice_461
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12670,7 +12670,7 @@
     {task_b}'
 - id: '462'
   name: revealed_choice_462
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12701,7 +12701,7 @@
     {task_b}'
 - id: '463'
   name: revealed_choice_463
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12729,7 +12729,7 @@
     {task_b}'
 - id: '464'
   name: revealed_choice_464
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12760,7 +12760,7 @@
     {task_b}'
 - id: '465'
   name: revealed_choice_465
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12784,7 +12784,7 @@
     {task_b}'
 - id: '466'
   name: revealed_choice_466
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12811,7 +12811,7 @@
     {task_b}'
 - id: '467'
   name: revealed_choice_467
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12835,7 +12835,7 @@
     {task_b}'
 - id: '468'
   name: revealed_choice_468
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12862,7 +12862,7 @@
     {task_b}'
 - id: '469'
   name: revealed_choice_469
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12890,7 +12890,7 @@
     {task_b}'
 - id: '470'
   name: revealed_choice_470
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12921,7 +12921,7 @@
     {task_b}'
 - id: '471'
   name: revealed_choice_471
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12949,7 +12949,7 @@
     {task_b}'
 - id: '472'
   name: revealed_choice_472
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -12980,7 +12980,7 @@
     {task_b}'
 - id: '473'
   name: revealed_choice_473
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13004,7 +13004,7 @@
     {task_b}'
 - id: '474'
   name: revealed_choice_474
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13031,7 +13031,7 @@
     {task_b}'
 - id: '475'
   name: revealed_choice_475
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13055,7 +13055,7 @@
     {task_b}'
 - id: '476'
   name: revealed_choice_476
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13082,7 +13082,7 @@
     {task_b}'
 - id: '477'
   name: revealed_choice_477
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13110,7 +13110,7 @@
     {task_b}'
 - id: '478'
   name: revealed_choice_478
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13141,7 +13141,7 @@
     {task_b}'
 - id: '479'
   name: revealed_choice_479
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13169,7 +13169,7 @@
     {task_b}'
 - id: '480'
   name: revealed_choice_480
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13200,7 +13200,7 @@
     {task_b}'
 - id: '481'
   name: revealed_choice_481
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13224,7 +13224,7 @@
     {format_instruction}'
 - id: '482'
   name: revealed_choice_482
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13251,7 +13251,7 @@
     {format_instruction}'
 - id: '483'
   name: revealed_choice_483
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13275,7 +13275,7 @@
     {format_instruction}'
 - id: '484'
   name: revealed_choice_484
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13302,7 +13302,7 @@
     {format_instruction}'
 - id: '485'
   name: revealed_choice_485
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13330,7 +13330,7 @@
     </instructions>'
 - id: '486'
   name: revealed_choice_486
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13361,7 +13361,7 @@
     </instructions>'
 - id: '487'
   name: revealed_choice_487
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13389,7 +13389,7 @@
     </instructions>'
 - id: '488'
   name: revealed_choice_488
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13420,7 +13420,7 @@
     </instructions>'
 - id: '489'
   name: revealed_choice_489
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13444,7 +13444,7 @@
     {format_instruction}'
 - id: '490'
   name: revealed_choice_490
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13471,7 +13471,7 @@
     {format_instruction}'
 - id: '491'
   name: revealed_choice_491
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13495,7 +13495,7 @@
     {format_instruction}'
 - id: '492'
   name: revealed_choice_492
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13522,7 +13522,7 @@
     {format_instruction}'
 - id: '493'
   name: revealed_choice_493
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13550,7 +13550,7 @@
     </instructions>'
 - id: '494'
   name: revealed_choice_494
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13581,7 +13581,7 @@
     </instructions>'
 - id: '495'
   name: revealed_choice_495
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13609,7 +13609,7 @@
     </instructions>'
 - id: '496'
   name: revealed_choice_496
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13640,7 +13640,7 @@
     </instructions>'
 - id: '497'
   name: revealed_choice_497
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13664,7 +13664,7 @@
     {format_instruction}'
 - id: '498'
   name: revealed_choice_498
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13691,7 +13691,7 @@
     {format_instruction}'
 - id: '499'
   name: revealed_choice_499
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13715,7 +13715,7 @@
     {format_instruction}'
 - id: '500'
   name: revealed_choice_500
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13742,7 +13742,7 @@
     {format_instruction}'
 - id: '501'
   name: revealed_choice_501
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13770,7 +13770,7 @@
     </instructions>'
 - id: '502'
   name: revealed_choice_502
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13801,7 +13801,7 @@
     </instructions>'
 - id: '503'
   name: revealed_choice_503
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13829,7 +13829,7 @@
     </instructions>'
 - id: '504'
   name: revealed_choice_504
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13860,7 +13860,7 @@
     </instructions>'
 - id: '505'
   name: revealed_choice_505
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13884,7 +13884,7 @@
     {format_instruction}'
 - id: '506'
   name: revealed_choice_506
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13911,7 +13911,7 @@
     {format_instruction}'
 - id: '507'
   name: revealed_choice_507
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13935,7 +13935,7 @@
     {format_instruction}'
 - id: '508'
   name: revealed_choice_508
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13962,7 +13962,7 @@
     {format_instruction}'
 - id: '509'
   name: revealed_choice_509
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -13990,7 +13990,7 @@
     </instructions>'
 - id: '510'
   name: revealed_choice_510
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -14021,7 +14021,7 @@
     </instructions>'
 - id: '511'
   name: revealed_choice_511
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -14049,7 +14049,7 @@
     </instructions>'
 - id: '512'
   name: revealed_choice_512
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:2
@@ -14080,7 +14080,7 @@
     </instructions>'
 - id: '513'
   name: revealed_choice_513
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14104,7 +14104,7 @@
     {task_b}'
 - id: '514'
   name: revealed_choice_514
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14131,7 +14131,7 @@
     {task_b}'
 - id: '515'
   name: revealed_choice_515
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14155,7 +14155,7 @@
     {task_b}'
 - id: '516'
   name: revealed_choice_516
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14182,7 +14182,7 @@
     {task_b}'
 - id: '517'
   name: revealed_choice_517
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14210,7 +14210,7 @@
     {task_b}'
 - id: '518'
   name: revealed_choice_518
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14241,7 +14241,7 @@
     {task_b}'
 - id: '519'
   name: revealed_choice_519
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14269,7 +14269,7 @@
     {task_b}'
 - id: '520'
   name: revealed_choice_520
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14300,7 +14300,7 @@
     {task_b}'
 - id: '521'
   name: revealed_choice_521
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14324,7 +14324,7 @@
     {task_b}'
 - id: '522'
   name: revealed_choice_522
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14351,7 +14351,7 @@
     {task_b}'
 - id: '523'
   name: revealed_choice_523
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14375,7 +14375,7 @@
     {task_b}'
 - id: '524'
   name: revealed_choice_524
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14402,7 +14402,7 @@
     {task_b}'
 - id: '525'
   name: revealed_choice_525
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14430,7 +14430,7 @@
     {task_b}'
 - id: '526'
   name: revealed_choice_526
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14461,7 +14461,7 @@
     {task_b}'
 - id: '527'
   name: revealed_choice_527
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14489,7 +14489,7 @@
     {task_b}'
 - id: '528'
   name: revealed_choice_528
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14520,7 +14520,7 @@
     {task_b}'
 - id: '529'
   name: revealed_choice_529
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14544,7 +14544,7 @@
     {task_b}'
 - id: '530'
   name: revealed_choice_530
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14571,7 +14571,7 @@
     {task_b}'
 - id: '531'
   name: revealed_choice_531
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14595,7 +14595,7 @@
     {task_b}'
 - id: '532'
   name: revealed_choice_532
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14622,7 +14622,7 @@
     {task_b}'
 - id: '533'
   name: revealed_choice_533
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14650,7 +14650,7 @@
     {task_b}'
 - id: '534'
   name: revealed_choice_534
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14681,7 +14681,7 @@
     {task_b}'
 - id: '535'
   name: revealed_choice_535
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14709,7 +14709,7 @@
     {task_b}'
 - id: '536'
   name: revealed_choice_536
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14740,7 +14740,7 @@
     {task_b}'
 - id: '537'
   name: revealed_choice_537
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14764,7 +14764,7 @@
     {task_b}'
 - id: '538'
   name: revealed_choice_538
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14791,7 +14791,7 @@
     {task_b}'
 - id: '539'
   name: revealed_choice_539
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14815,7 +14815,7 @@
     {task_b}'
 - id: '540'
   name: revealed_choice_540
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14842,7 +14842,7 @@
     {task_b}'
 - id: '541'
   name: revealed_choice_541
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14870,7 +14870,7 @@
     {task_b}'
 - id: '542'
   name: revealed_choice_542
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14901,7 +14901,7 @@
     {task_b}'
 - id: '543'
   name: revealed_choice_543
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14929,7 +14929,7 @@
     {task_b}'
 - id: '544'
   name: revealed_choice_544
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14960,7 +14960,7 @@
     {task_b}'
 - id: '545'
   name: revealed_choice_545
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -14984,7 +14984,7 @@
     {format_instruction}'
 - id: '546'
   name: revealed_choice_546
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15011,7 +15011,7 @@
     {format_instruction}'
 - id: '547'
   name: revealed_choice_547
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15035,7 +15035,7 @@
     {format_instruction}'
 - id: '548'
   name: revealed_choice_548
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15062,7 +15062,7 @@
     {format_instruction}'
 - id: '549'
   name: revealed_choice_549
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15090,7 +15090,7 @@
     </instructions>'
 - id: '550'
   name: revealed_choice_550
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15121,7 +15121,7 @@
     </instructions>'
 - id: '551'
   name: revealed_choice_551
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15149,7 +15149,7 @@
     </instructions>'
 - id: '552'
   name: revealed_choice_552
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15180,7 +15180,7 @@
     </instructions>'
 - id: '553'
   name: revealed_choice_553
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15204,7 +15204,7 @@
     {format_instruction}'
 - id: '554'
   name: revealed_choice_554
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15231,7 +15231,7 @@
     {format_instruction}'
 - id: '555'
   name: revealed_choice_555
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15255,7 +15255,7 @@
     {format_instruction}'
 - id: '556'
   name: revealed_choice_556
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15282,7 +15282,7 @@
     {format_instruction}'
 - id: '557'
   name: revealed_choice_557
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15310,7 +15310,7 @@
     </instructions>'
 - id: '558'
   name: revealed_choice_558
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15341,7 +15341,7 @@
     </instructions>'
 - id: '559'
   name: revealed_choice_559
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15369,7 +15369,7 @@
     </instructions>'
 - id: '560'
   name: revealed_choice_560
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15400,7 +15400,7 @@
     </instructions>'
 - id: '561'
   name: revealed_choice_561
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15424,7 +15424,7 @@
     {format_instruction}'
 - id: '562'
   name: revealed_choice_562
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15451,7 +15451,7 @@
     {format_instruction}'
 - id: '563'
   name: revealed_choice_563
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15475,7 +15475,7 @@
     {format_instruction}'
 - id: '564'
   name: revealed_choice_564
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15502,7 +15502,7 @@
     {format_instruction}'
 - id: '565'
   name: revealed_choice_565
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15530,7 +15530,7 @@
     </instructions>'
 - id: '566'
   name: revealed_choice_566
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15561,7 +15561,7 @@
     </instructions>'
 - id: '567'
   name: revealed_choice_567
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15589,7 +15589,7 @@
     </instructions>'
 - id: '568'
   name: revealed_choice_568
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15620,7 +15620,7 @@
     </instructions>'
 - id: '569'
   name: revealed_choice_569
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15644,7 +15644,7 @@
     {format_instruction}'
 - id: '570'
   name: revealed_choice_570
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15671,7 +15671,7 @@
     {format_instruction}'
 - id: '571'
   name: revealed_choice_571
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15695,7 +15695,7 @@
     {format_instruction}'
 - id: '572'
   name: revealed_choice_572
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15722,7 +15722,7 @@
     {format_instruction}'
 - id: '573'
   name: revealed_choice_573
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15750,7 +15750,7 @@
     </instructions>'
 - id: '574'
   name: revealed_choice_574
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15781,7 +15781,7 @@
     </instructions>'
 - id: '575'
   name: revealed_choice_575
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3
@@ -15809,7 +15809,7 @@
     </instructions>'
 - id: '576'
   name: revealed_choice_576
-  type: revealed
+  type: pre_task_revealed
   tags:
   - language:es
   - phrasing:3

@@ -3,7 +3,7 @@ base_templates:
   - Choose which task you would prefer to complete.
   - Which of the two tasks would you rather complete?
 
-template_type: revealed
+template_type: pre_task_revealed
 name_prefix: pre_task_revealed
 version: v2
 output_dir: src/measurement/elicitation/prompt_templates/data

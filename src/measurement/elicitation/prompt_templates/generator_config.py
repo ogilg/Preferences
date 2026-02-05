@@ -31,7 +31,7 @@ STATED_TASK_LABELS = {
 }
 
 
-TemplateType = Literal["revealed", "pre_task_stated", "post_task_stated", "post_task_revealed"]
+TemplateType = Literal["pre_task_revealed", "pre_task_stated", "post_task_stated", "post_task_revealed"]
 
 
 class GeneratorConfig(BaseModel):
@@ -79,11 +79,11 @@ class GeneratorConfig(BaseModel):
 
     @property
     def is_pre_task(self) -> bool:
-        return self.template_type in ("revealed", "pre_task_stated")
+        return self.template_type in ("pre_task_revealed", "pre_task_stated")
 
     @property
     def is_revealed(self) -> bool:
-        return self.template_type in ("revealed", "post_task_revealed")
+        return self.template_type in ("pre_task_revealed", "post_task_revealed")
 
     @property
     def is_stated(self) -> bool:
@@ -100,7 +100,7 @@ class GeneratorConfig(BaseModel):
             object.__setattr__(self, "instruction_positions", ["before"])
 
         # Auto-set task_label_names for revealed type
-        if self.template_type == "revealed":
+        if self.template_type == "pre_task_revealed":
             if self.task_label_names is None:
                 object.__setattr__(self, "task_label_names", ["letter"])
             # Validate translations exist

@@ -1,10 +1,10 @@
-# 500 tasks, post-task active learning for gemma-3-27b
-preference_mode: post_task_active_learning
+# 500 tasks, pre-task active learning for gemma-3-27b
+preference_mode: pre_task_active_learning
 
 model: gemma-3-27b
 temperature: 0.7
 
-n_tasks: 500
+n_tasks: 100
 task_origins:
   - wildchat
   - alpaca
@@ -16,13 +16,19 @@ stratified_sampling: true
 
 inline_templates:
   - name: simple_preference
-    type: post_task_revealed
+    type: pre_task_revealed
     template: |
-      Which of the two tasks did you prefer completing?
+      Which of the two tasks would you prefer to complete?
       {format_instruction}
 
+      Task A:
+      {task_a}
+
+      Task B:
+      {task_b}
+
 response_formats: [regex]
-n_samples: 1
+n_samples: 3
 pair_order_seed: 42
 
 active_learning:

@@ -23,7 +23,7 @@ from src.models.openai_compatible import BatchResult
 
 
 class TestBuildRevealedTemplate:
-    """Tests for building revealed templates from instruction text."""
+    """Tests for building pre_task_revealed templates from instruction text."""
 
     def test_builds_template_with_letter_labels(self):
         """Should build template with Task A: and Task B: labels."""
@@ -184,7 +184,7 @@ class TestGenerateTemplates:
         """Minimal config for testing."""
         return GeneratorConfig(
             base_templates=["Choose which task you prefer."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
         )
 
@@ -199,12 +199,12 @@ class TestGenerateTemplates:
         templates = generate_templates(basic_config, mock_model)
 
         assert len(templates) == 1
-        assert templates[0]["type"] == "revealed"
+        assert templates[0]["type"] == "pre_task_revealed"
         assert templates[0]["name"] == "test_001"
         assert templates[0]["id"] == "001"
 
     def test_template_contains_required_placeholders(self, basic_config, mock_model):
-        """Generated template should have all revealed placeholders."""
+        """Generated template should have all pre_task_revealed placeholders."""
         templates = generate_templates(basic_config, mock_model)
 
         template_text = templates[0]["template"]
@@ -237,7 +237,7 @@ class TestGenerateTemplates:
                 "Which task would you rather do?",
                 "Pick your preferred task.",
             ],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
         )
 
@@ -252,7 +252,7 @@ class TestGenerateTemplates:
         """Should generate variants for each instruction position."""
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             instruction_positions=["before", "after"],
         )
@@ -269,7 +269,7 @@ class TestGenerateTemplates:
         """Should generate variants for each task label style."""
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             task_label_names=["letter", "number", "ordinal"],
         )
@@ -291,7 +291,7 @@ class TestGenerateTemplates:
         """Should generate variants with and without situating context."""
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             situating_contexts={
                 "assistant": "You are a helpful assistant.",
@@ -322,7 +322,7 @@ class TestGenerateTemplates:
         """Should generate all combinations of variants."""
         config = GeneratorConfig(
             base_templates=["Intro 1", "Intro 2"],  # 2 phrasings
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             instruction_positions=["before", "after"],  # 2 positions
             task_label_names=["letter", "number"],  # 2 label styles
@@ -338,7 +338,7 @@ class TestGenerateTemplates:
         """Template IDs should be sequential zero-padded numbers."""
         config = GeneratorConfig(
             base_templates=["A", "B", "C"],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
         )
 
@@ -352,7 +352,7 @@ class TestGenerateTemplates:
         """Names should be prefix_id format."""
         config = GeneratorConfig(
             base_templates=["Test"],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="my_prefix",
         )
 
@@ -376,7 +376,7 @@ class TestGenerateTemplatesWithTranslation:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             languages=["en", "fr"],
         )
@@ -403,7 +403,7 @@ class TestGenerateTemplatesWithTranslation:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             languages=["en", "fr"],
         )
@@ -427,7 +427,7 @@ class TestWriteTemplatesYaml:
             {
                 "id": "001",
                 "name": "test_001",
-                "type": "revealed",
+                "type": "pre_task_revealed",
                 "tags": ["language:en"],
                 "template": "Choose {task_a} or {task_b}",
             }
@@ -453,7 +453,7 @@ class TestWriteTemplatesYaml:
             {
                 "id": "001",
                 "name": "test_001",
-                "type": "revealed",
+                "type": "pre_task_revealed",
                 "tags": ["language:fr"],
                 "template": "Choisissez: {task_a} ou {task_b}. C'est très bien!",
             }
@@ -478,7 +478,7 @@ class TestLoadConfigFromYaml:
 model: test-model
 base_templates:
   - Choose which task you prefer.
-template_type: revealed
+template_type: pre_task_revealed
 name_prefix: test
 """
         config_path = tmp_path / "config.yaml"
@@ -488,7 +488,7 @@ name_prefix: test
         assert model_name == "test-model"
 
         assert config.base_templates == ["Choose which task you prefer."]
-        assert config.template_type == "revealed"
+        assert config.template_type == "pre_task_revealed"
         assert config.name_prefix == "test"
 
     def test_loads_full_config(self, tmp_path):
@@ -497,8 +497,8 @@ name_prefix: test
 base_templates:
   - Choose which task you prefer.
   - Pick your preferred task.
-template_type: revealed
-name_prefix: revealed_choice
+template_type: pre_task_revealed
+name_prefix: pre_task_revealed_choice
 version: v2
 languages: [en, fr, de]
 situating_contexts:
@@ -521,7 +521,7 @@ model: custom-model-name
         assert config.task_label_names == ["letter", "number"]
         assert config.output_dir == Path("custom_output")
         assert config.version == "v2"
-        assert config.output_path == Path("custom_output/revealed_choice_v2.yaml")
+        assert config.output_path == Path("custom_output/pre_task_revealed_choice_v2.yaml")
         assert model_name == "custom-model-name"
 
 
@@ -536,8 +536,8 @@ class TestEndToEndIntegration:
 
         config = GeneratorConfig(
             base_templates=["Choose which task you prefer."],
-            template_type="revealed",
-            name_prefix="revealed_test",
+            template_type="pre_task_revealed",
+            name_prefix="pre_task_revealed_test",
         )
 
         output_path = tmp_path / "generated.yaml"
@@ -548,7 +548,7 @@ class TestEndToEndIntegration:
         loaded = load_templates_from_yaml(output_path)
 
         assert len(loaded) == 1
-        assert loaded[0].name == "revealed_test_001"
+        assert loaded[0].name == "pre_task_revealed_test_001"
         assert "{task_a}" in loaded[0].template
         assert "{task_b}" in loaded[0].template
         assert "{format_instruction}" in loaded[0].template
@@ -563,8 +563,8 @@ class TestEndToEndIntegration:
 
         config = GeneratorConfig(
             base_templates=["Choose which task you prefer."],
-            template_type="revealed",
-            name_prefix="revealed_test",
+            template_type="pre_task_revealed",
+            name_prefix="pre_task_revealed_test",
         )
 
         output_path = tmp_path / "generated.yaml"
@@ -607,7 +607,7 @@ class TestEndToEndIntegration:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             task_label_names=["letter", "number", "ordinal"],
         )
@@ -633,7 +633,7 @@ class TestEndToEndIntegration:
 
         config = GeneratorConfig(
             base_templates=["Choose."],
-            template_type="revealed",
+            template_type="pre_task_revealed",
             name_prefix="test",
             situating_contexts={
                 "helpful": "You are a helpful, harmless, and honest AI assistant."

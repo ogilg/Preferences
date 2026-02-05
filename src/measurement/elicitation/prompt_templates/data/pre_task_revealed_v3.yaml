@@ -1,6 +1,6 @@
 - id: '001'
   name: pre_task_revealed_001
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:1
   - task_label_names:letter
@@ -18,7 +18,7 @@
     {task_b}'
 - id: '002'
   name: pre_task_revealed_002
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:1
   - situating_context:experiment
@@ -40,7 +40,7 @@
     {task_b}'
 - id: '003'
   name: pre_task_revealed_003
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:2
   - task_label_names:letter
@@ -58,7 +58,7 @@
     {task_b}'
 - id: '004'
   name: pre_task_revealed_004
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:2
   - situating_context:experiment
@@ -80,7 +80,7 @@
     {task_b}'
 - id: '005'
   name: pre_task_revealed_005
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:1
   - language:fr
@@ -99,7 +99,7 @@
     {task_b}'
 - id: '006'
   name: pre_task_revealed_006
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:1
   - language:fr
@@ -122,7 +122,7 @@
     {task_b}'
 - id: '007'
   name: pre_task_revealed_007
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:2
   - language:fr
@@ -141,7 +141,7 @@
     {task_b}'
 - id: 008
   name: pre_task_revealed_008
-  type: revealed
+  type: pre_task_revealed
   tags:
   - phrasing:2
   - language:fr

@@ -4,9 +4,9 @@ TEMPLATES_DATA_DIR = Path(__file__).parent / "data"
 
 # Core template functionality (no heavy dependencies)
 from .template import (
-    REVEALED_CHOICE_TEMPLATE,
-    REVEALED_COMPLETION_TEMPLATE,
-    REVEALED_PLACEHOLDERS,
+    PRE_TASK_REVEALED_CHOICE_TEMPLATE,
+    PRE_TASK_REVEALED_COMPLETION_TEMPLATE,
+    PRE_TASK_REVEALED_PLACEHOLDERS,
     POST_TASK_STATED_PLACEHOLDERS,
     POST_TASK_STATED_TEMPLATE,
     POST_TASK_REVEALED_PLACEHOLDERS,
@@ -17,7 +17,7 @@ from .template import (
     POST_TASK_RANKING_PLACEHOLDERS,
     TEMPLATE_TYPE_PLACEHOLDERS,
     PromptTemplate,
-    revealed_template,
+    pre_task_revealed_template,
     load_templates_from_yaml,
     parse_template_dict,
     post_task_stated_template,
@@ -62,9 +62,9 @@ __all__ = [
     # Paths
     "TEMPLATES_DATA_DIR",
     # Template
-    "REVEALED_CHOICE_TEMPLATE",
-    "REVEALED_COMPLETION_TEMPLATE",
-    "REVEALED_PLACEHOLDERS",
+    "PRE_TASK_REVEALED_CHOICE_TEMPLATE",
+    "PRE_TASK_REVEALED_COMPLETION_TEMPLATE",
+    "PRE_TASK_REVEALED_PLACEHOLDERS",
     "POST_TASK_STATED_PLACEHOLDERS",
     "POST_TASK_STATED_TEMPLATE",
     "POST_TASK_REVEALED_PLACEHOLDERS",
@@ -75,7 +75,7 @@ __all__ = [
     "POST_TASK_RANKING_PLACEHOLDERS",
     "TEMPLATE_TYPE_PLACEHOLDERS",
     "PromptTemplate",
-    "revealed_template",
+    "pre_task_revealed_template",
     "load_templates_from_yaml",
     "parse_template_dict",
     "post_task_stated_template",

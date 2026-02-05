@@ -30,10 +30,10 @@ from src.measurement.elicitation.prompt_templates import (
     PreTaskStatedPromptBuilder,
     PostTaskStatedPromptBuilder,
     PromptTemplate,
-    REVEALED_PLACEHOLDERS,
-    revealed_template,
+    PRE_TASK_REVEALED_PLACEHOLDERS,
+    pre_task_revealed_template,
     pre_task_stated_template,
-    REVEALED_CHOICE_TEMPLATE,
+    PRE_TASK_REVEALED_CHOICE_TEMPLATE,
     PRE_TASK_STATED_TEMPLATE,
     POST_TASK_STATED_TEMPLATE,
 )
@@ -82,11 +82,11 @@ class TestPromptTemplate:
 
     def test_factory_function_sets_placeholders(self):
         """Factory functions should set correct placeholders."""
-        template = revealed_template(
+        template = pre_task_revealed_template(
             template="Pick: {task_a} or {task_b}? {format_instruction}",
             name="custom_binary",
         )
-        assert template.required_placeholders == REVEALED_PLACEHOLDERS
+        assert template.required_placeholders == PRE_TASK_REVEALED_PLACEHOLDERS
 
     def test_template_is_immutable(self):
         """Template should be frozen (immutable)."""
@@ -130,7 +130,7 @@ class TestLoadTemplatesFromYaml:
         yaml_content = """
 - id: "001"
   name: test_template_001
-  type: revealed
+  type: pre_task_revealed
   tags: [canonical]
   template: |
     {format_instruction}
@@ -180,7 +180,7 @@ class TestPreTaskRevealedPromptBuilder:
         response_format = RegexChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(
             measurer=measurer,            response_format=response_format,
-            template=REVEALED_CHOICE_TEMPLATE,
+            template=PRE_TASK_REVEALED_CHOICE_TEMPLATE,
         )
         prompt = builder.build(sample_task_a, sample_task_b)
         prompt_content = get_all_content(prompt)
@@ -198,7 +198,7 @@ class TestPreTaskRevealedPromptBuilder:
 
     def test_template_placeholders_are_filled(self, sample_task_a, sample_task_b):
         """Template placeholders should be filled with task content."""
-        template = revealed_template(
+        template = pre_task_revealed_template(
             template="Task A: {task_a}\nTask B: {task_b}\n{format_instruction}",
             name="test_template"
         )
@@ -376,7 +376,7 @@ class TestXMLResponseFormats:
         builder = PreTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),
             response_format=XMLChoiceFormat(),
-            template=REVEALED_CHOICE_TEMPLATE,
+            template=PRE_TASK_REVEALED_CHOICE_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a, sample_task_b)
@@ -474,7 +474,7 @@ class TestToolUseChoiceFormat:
         builder = PreTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),
             response_format=fmt,
-            template=REVEALED_CHOICE_TEMPLATE,
+            template=PRE_TASK_REVEALED_CHOICE_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a, sample_task_b)
@@ -653,13 +653,13 @@ class TestCompletionChoiceFormat:
     async def test_builder_with_completion_format(self, sample_task_a, sample_task_b):
         """PreTaskRevealedPromptBuilder should work with CompletionChoiceFormat."""
         from src.measurement.elicitation import CompletionChoiceFormat
-        from src.measurement.elicitation.prompt_templates import REVEALED_COMPLETION_TEMPLATE
+        from src.measurement.elicitation.prompt_templates import PRE_TASK_REVEALED_COMPLETION_TEMPLATE
 
         fmt = CompletionChoiceFormat()
         builder = PreTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),
             response_format=fmt,
-            template=REVEALED_COMPLETION_TEMPLATE,
+            template=PRE_TASK_REVEALED_COMPLETION_TEMPLATE,
         )
 
         prompt = builder.build(sample_task_a, sample_task_b)

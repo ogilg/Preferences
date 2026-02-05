@@ -9,7 +9,7 @@ pytestmark = pytest.mark.cache
 
 from src.measurement.storage.cache import MeasurementCache, reconstruct_measurements
 from src.measurement.storage.unified_cache import RevealedCache
-from src.measurement.elicitation.prompt_templates import PromptTemplate, REVEALED_PLACEHOLDERS
+from src.measurement.elicitation.prompt_templates import PromptTemplate, PRE_TASK_REVEALED_PLACEHOLDERS
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
@@ -27,7 +27,7 @@ def sample_template() -> PromptTemplate:
     return PromptTemplate(
         template="Choose: {task_a} or {task_b}? {format_instruction}",
         name="binary_choice_v1",
-        required_placeholders=REVEALED_PLACEHOLDERS,
+        required_placeholders=PRE_TASK_REVEALED_PLACEHOLDERS,
         tags=frozenset(["phrasing:1", "task_a_label:A", "task_b_label:B"]),
     )
 
@@ -284,12 +284,12 @@ class TestMeasurementCacheIntegration:
         template1 = PromptTemplate(
             template="Choose: {task_a} or {task_b}? {format_instruction}",
             name="template_one",
-            required_placeholders=REVEALED_PLACEHOLDERS,
+            required_placeholders=PRE_TASK_REVEALED_PLACEHOLDERS,
         )
         template2 = PromptTemplate(
             template="Pick: {task_a} or {task_b}? {format_instruction}",
             name="template_two",
-            required_placeholders=REVEALED_PLACEHOLDERS,
+            required_placeholders=PRE_TASK_REVEALED_PLACEHOLDERS,
         )
         model1 = MockClient(f"test-model-{uuid.uuid4().hex[:8]}")
         model2 = MockClient(f"test-model-{uuid.uuid4().hex[:8]}")

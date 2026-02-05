@@ -213,7 +213,7 @@ def _build_variants(
             _add_post_task_revealed_variants(
                 variants, instruction, lang, phrasing_idx, use_typos, punct, context_items, config
             )
-        else:  # "revealed"
+        else:  # "pre_task_revealed"
             _add_revealed_variants(
                 variants, instruction, instruction_pos, lang, phrasing_idx, use_typos, punct, context_items, config
             )
