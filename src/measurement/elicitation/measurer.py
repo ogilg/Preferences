@@ -12,6 +12,8 @@ from src.types import (
     OpenEndedResponse,
     PreferencePrompt,
 )
+from src.measurement.elicitation.response_format import CompletionChoiceFormat
+from src.measurement.elicitation import refusal_judge
 
 
 class Measurer(ABC):
@@ -22,6 +24,16 @@ class Measurer(ABC):
 class RevealedPreferenceMeasurer(Measurer):
     async def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse:
         choice = await prompt.response_format.parse(response_text)
+
+        # For completion format, check if model refused to execute chosen task
+        if isinstance(prompt.response_format, CompletionChoiceFormat) and choice in ("a", "b"):
+            chosen_task = prompt.tasks[0] if choice == "a" else prompt.tasks[1]
+            refusal_result = await refusal_judge.judge_refusal_async(
+                chosen_task.prompt, response_text
+            )
+            if refusal_result.is_refusal:
+                choice = "refusal"
+
         result = BinaryPreferenceMeasurement(
             task_a=prompt.tasks[0],
             task_b=prompt.tasks[1],

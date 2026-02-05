@@ -106,6 +106,11 @@ class BaseChoiceFormat(ABC):
     @abstractmethod
     def _extract_choice(self, response: str) -> str | None: ...
 
+    async def _semantic_parse(self, response: str) -> Literal["a", "b", "refusal"]:
+        return await semantic_parser.parse_choice_async(
+            response, self.task_a_label, self.task_b_label
+        )
+
     async def parse(self, response: str) -> Literal["a", "b", "refusal"]:
         # 1. Fast path: response is exactly the label
         choice = _exact_choice_match(response, self.task_a_label, self.task_b_label)
@@ -113,13 +118,13 @@ class BaseChoiceFormat(ABC):
             return choice
         # 2. Format-specific extraction (regex, XML, etc.)
         choice = self._extract_choice(response)
-        if choice and choice.lower() in ("a", "b"):
-            return choice.lower()  # type: ignore
+        if choice and choice in ("a", "b"):
+            return choice  # type: ignore
         # 3. Check for refusal before semantic parsing
         if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         # 4. LLM-based semantic parsing fallback (raises ParseError on unclear)
-        return await semantic_parser.parse_choice_async(response, self.task_a_label, self.task_b_label)
+        return await self._semantic_parse(response)
 
 
 class BaseRatingFormat(ABC):
@@ -227,6 +232,17 @@ class XMLChoiceFormat(BaseChoiceFormat):
 class CompletionChoiceFormat(BaseChoiceFormat):
     """Model completes one of two tasks, indicating choice by prefix. Measures revealed preference."""
 
+    def __init__(
+        self,
+        task_a_label: str = "Task A",
+        task_b_label: str = "Task B",
+        task_a_prompt: str = "",
+        task_b_prompt: str = "",
+    ):
+        super().__init__(task_a_label, task_b_label)
+        self.task_a_prompt = task_a_prompt
+        self.task_b_prompt = task_b_prompt
+
     def format_instruction(self) -> str:
         return f"Begin with '{self.task_a_label}:' or '{self.task_b_label}:' to indicate your choice, then complete that task."
 
@@ -246,6 +262,11 @@ class CompletionChoiceFormat(BaseChoiceFormat):
         else:
             # Both found - return whichever comes first
             return "a" if a_pos < b_pos else "b"
+
+    async def _semantic_parse(self, response: str) -> Literal["a", "b", "refusal"]:
+        return await semantic_parser.parse_completion_choice_async(
+            response, self.task_a_prompt, self.task_b_prompt
+        )
 
 
 # --- Rating Formats (for numerical scores) ---
@@ -518,7 +539,7 @@ class ToolUseQualitativeFormat(BaseQualitativeFormat):
 
 # --- Format Registries ---
 
-ResponseFormatName = Literal["regex", "tool_use", "xml"]
+ResponseFormatName = Literal["regex", "tool_use", "xml", "completion"]
 
 # Binary qualitative scale
 BINARY_QUALITATIVE_VALUES = ("good", "bad")
@@ -539,6 +560,7 @@ CHOICE_FORMATS: dict[ResponseFormatName, type[BaseChoiceFormat]] = {
     "regex": RegexChoiceFormat,
     "tool_use": ToolUseChoiceFormat,
     "xml": XMLChoiceFormat,
+    "completion": CompletionChoiceFormat,
 }
 
 RATING_FORMATS: dict[ResponseFormatName, type[BaseRatingFormat]] = {

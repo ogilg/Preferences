@@ -667,3 +667,34 @@ class TestCompletionChoiceFormat:
         # Test parsing completion response
         response = await prompt.measurer.parse("Task A: Cherry blossoms bloom...", prompt)
         assert response.result.choice == "a"
+
+    @pytest.mark.api
+    @pytest.mark.asyncio
+    async def test_completion_format_end_to_end(self, pre_task_revealed_completion_template_fixture):
+        """End-to-end test: builder passes task prompts, semantic parser identifies task from content."""
+        from src.measurement.elicitation import CompletionChoiceFormat
+
+        task_a = Task(prompt="Write a haiku about spring", origin=OriginDataset.ALPACA, id="test_a", metadata={})
+        task_b = Task(prompt="Solve: 2x + 3 = 7", origin=OriginDataset.MATH, id="test_b", metadata={})
+
+        fmt = CompletionChoiceFormat()
+        builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=pre_task_revealed_completion_template_fixture,
+        )
+        prompt = builder.build(task_a, task_b)
+
+        # Verify task prompts were passed to the response format
+        assert prompt.response_format.task_a_prompt == "Write a haiku about spring"
+        assert prompt.response_format.task_b_prompt == "Solve: 2x + 3 = 7"
+
+        # Model starts doing math without saying "Task B" - semantic parser should identify it
+        math_response = "Let me solve this equation. 2x + 3 = 7, so 2x = 4, therefore x = 2."
+        result = await prompt.measurer.parse(math_response, prompt)
+        assert result.result.choice == "b"
+
+        # Model writes a haiku without saying "Task A" - semantic parser should identify it
+        haiku_response = "Cherry blossoms fall\nGentle breeze carries petals\nSpring awakens all"
+        result = await prompt.measurer.parse(haiku_response, prompt)
+        assert result.result.choice == "a"

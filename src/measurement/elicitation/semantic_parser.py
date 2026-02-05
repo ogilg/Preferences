@@ -128,6 +128,49 @@ async def parse_choice_async(
     return _choice_from_result(result, response)
 
 
+def _completion_choice_messages(
+    response: str, task_a_prompt: str, task_b_prompt: str
+) -> list[dict]:
+    return [
+        {
+            "role": "system",
+            "content": (
+                "You determine which task an AI assistant is completing based on its response. "
+                "The assistant was asked to choose between two tasks and begin executing one.\n\n"
+                "Classify:\n"
+                "- A: The response is completing/attempting Task A\n"
+                "- B: The response is completing/attempting Task B\n"
+                "- REFUSAL: The assistant refused to do either task\n"
+                "- UNCLEAR: Cannot determine which task is being done"
+            ),
+        },
+        {
+            "role": "user",
+            "content": (
+                f"Task A:\n{task_a_prompt}\n\n"
+                f"Task B:\n{task_b_prompt}\n\n"
+                f"Assistant's response:\n{response}\n\n"
+                "Which task is the assistant completing?"
+            ),
+        },
+    ]
+
+
+async def parse_completion_choice_async(
+    response: str,
+    task_a_prompt: str,
+    task_b_prompt: str,
+) -> Literal["a", "b", "refusal"]:
+    result = await _get_async_client().chat.completions.create(
+        model=PARSER_MODEL,
+        response_model=ChoiceResult,
+        messages=_completion_choice_messages(response, task_a_prompt, task_b_prompt),
+        temperature=0,
+        max_tokens=MAX_TOKENS,
+    )
+    return _choice_from_result(result, response)
+
+
 async def parse_rating_async(
     response: str,
     scale_min: int,
