@@ -44,7 +44,7 @@ def parse_args() -> argparse.Namespace:
         "--selectors",
         nargs="+",
         default=["last"],
-        choices=["first", "mean", "last"],
+        choices=["first", "mean", "last", "prompt_last"],
         help="Token selectors to extract (default: last)",
     )
     return parser.parse_args()

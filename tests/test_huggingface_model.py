@@ -184,6 +184,54 @@ class TestEdgeCases:
             assert acts[selector][0].shape == (hf_model.hidden_dim,)
 
 
+@pytest.mark.gpu
+class TestPromptLastSelector:
+    """Test the prompt_last selector extracts the correct token position."""
+
+    def test_prompt_last_extracts_correct_position(self, hf_model: HuggingFaceModel):
+        """prompt_last should extract the token just before assistant content starts."""
+        messages = [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": "Hi there!"},
+        ]
+        layers = [0]
+
+        # Get prompt_last activation
+        acts = hf_model.get_activations(messages, layers, ["prompt_last"])
+
+        # Manually compute what token that should be
+        prompt_only = [{"role": "user", "content": "Hello"}]
+        prompt_with_tag = hf_model._format_messages(prompt_only, add_generation_prompt=True)
+        prompt_tokens = hf_model._tokenize(prompt_with_tag)
+        expected_idx = prompt_tokens.shape[1] - 1  # Last token of prompt (assistant tag end)
+
+        # Get full sequence activations manually
+        full_text = hf_model._format_messages(messages, add_generation_prompt=False)
+        full_tokens = hf_model._tokenize(full_text)
+
+        with hf_model._hooked_forward(layers) as raw_acts:
+            hf_model.model(full_tokens)
+
+        # The prompt_last activation should match the activation at expected_idx
+        expected_act = raw_acts[0][0, expected_idx, :].float().numpy()
+        actual_act = acts["prompt_last"][0]
+
+        assert np.allclose(actual_act, expected_act, rtol=1e-4, atol=1e-5)
+
+    def test_prompt_last_differs_from_first(self, hf_model: HuggingFaceModel):
+        """prompt_last should be different from first (they're adjacent tokens)."""
+        messages = [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": "Hi there!"},
+        ]
+        layers = [hf_model.n_layers // 2]
+
+        acts = hf_model.get_activations(messages, layers, ["prompt_last", "first"])
+
+        # These are adjacent tokens, should have different activations
+        assert not np.allclose(acts["prompt_last"][layers[0]], acts["first"][layers[0]])
+
+
 @pytest.mark.api
 class TestBatchedActivations:
     """Test batched activation extraction."""
@@ -240,3 +288,20 @@ class TestBatchedActivations:
 
         for selector in selectors:
             assert acts[selector][0].shape == (2, hf_model.hidden_dim)
+
+    def test_batch_prompt_last_matches_individual(self, hf_model: HuggingFaceModel):
+        """Batched prompt_last should match individual extraction."""
+        messages_batch = [
+            [{"role": "user", "content": "Hi"}, {"role": "assistant", "content": "Hello!"}],
+            [{"role": "user", "content": "A longer prompt"}, {"role": "assistant", "content": "Response"}],
+        ]
+        layers = [0, hf_model.n_layers - 1]
+
+        batch_acts = hf_model.get_activations_batch(messages_batch, layers, ["prompt_last"])
+
+        for i, messages in enumerate(messages_batch):
+            individual_acts = hf_model.get_activations(messages, layers, ["prompt_last"])
+            for layer in layers:
+                batch_vec = batch_acts["prompt_last"][layer][i]
+                individual_vec = individual_acts["prompt_last"][layer]
+                assert np.allclose(batch_vec, individual_vec, rtol=1e-4, atol=1e-5)
