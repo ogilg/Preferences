@@ -49,6 +49,11 @@ class RunnerStats:
     cache_hits: int = 0
     skipped: int = 0
     all_failures: list[MeasurementFailure] | None = None
+    # Active learning specific
+    iteration: int | None = None
+    iteration_pairs: int | None = None
+    rank_correlation: float | None = None
+    total_comparisons: int | None = None
 
     def __post_init__(self):
         if self.all_failures is None:

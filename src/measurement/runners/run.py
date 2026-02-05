@@ -146,11 +146,20 @@ async def run_experiments(
                     iter_str = ""
                 else:
                     iter_time = now - last_update_time[0]
-                    iter_str = f" [dim]{iter_time:.1f}s/iter[/dim]"
+                    iter_str = f" [dim]{iter_time:.1f}s[/dim]"
                 last_update_time[0] = now
                 status = f"[green]{stats.successes}✓[/green] [red]{stats.failures}✗[/red]"
                 if stats.cache_hits:
                     status += f" [cyan]{stats.cache_hits}⚡[/cyan]"
+                # Active learning iteration info
+                if stats.iteration is not None:
+                    status += f" [magenta]iter {stats.iteration}[/magenta]"
+                    if stats.iteration_pairs:
+                        status += f"[dim]/{stats.iteration_pairs}p[/dim]"
+                    if stats.rank_correlation is not None:
+                        status += f" [yellow]r={stats.rank_correlation:.3f}[/yellow]"
+                    if stats.total_comparisons:
+                        status += f" [dim]{stats.total_comparisons}cmp[/dim]"
                 status += iter_str
                 progress.progress.update(progress.tasks[label], completed=stats.completed, total=stats.total_runs, status=status)
 
