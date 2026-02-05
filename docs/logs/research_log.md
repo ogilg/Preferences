@@ -4,7 +4,7 @@
 
 ---
 
-# Seed Sensitivity Analysis
+# Seed Sensitivity & Rating Reliability
 
 ## 2026-01-26: Initial Seed Sensitivity (llama-3.1-8b)
 
@@ -75,176 +75,7 @@ High seed correlations could be an artifact if models mostly give the same ratin
 
 ---
 
-# System Prompt Variation Experiments
-
-## 2026-01-28: 3×3 Sysprompt (llama-3.1-8b, unanchored)
-
-Tested whether stated preferences reflect completion experience or measurement context.
-
-**Design**: 3 completion sysprompts × 3 measurement sysprompts
-- Completion: "You love math" / None / "You hate math"
-- Measurement: Same three options
-
-![3x3 Sysprompt Violins](assets/concept_vectors/plot_012826_sysprompt_3x3_violins.png)
-
-**Result**: Measurement context dominates completely. Completion experience has no effect.
-
----
-
-## 2026-01-28: 3×3 Sysprompt with Anchored Precise Template
-
-Re-ran with `anchored_precise_1_5` template and 5 samples per task.
-
-![3x3 Sysprompt Anchored](assets/concept_vectors/plot_012826_sysprompt_3x3_anchored_violins.png)
-
-**Key differences**:
-- More variance (no ceiling/floor effects)
-- Small completion source effect now visible in neutral measurement context
-- Measurement context still dominant (~2-3× larger effect)
-
----
-
-## 2026-01-28: 3×3 Sysprompt on WildChat Tasks
-
-Same experiment on WildChat (non-math) tasks.
-
-![3x3 Sysprompt WildChat](assets/concept_vectors/plot_012826_sysprompt_3x3_wildchat_anchored_violins.png)
-
-**Result**: Almost no completion source effect. Math-themed sysprompt less relevant to non-math tasks.
-
----
-
-## 2026-01-28: 3×3 Sysprompt with Llama-3.3-70B Rating
-
-Re-ran the MATH 3×3 experiment with llama-3.3-70b as the rating model (still using llama-3.1-8b completions).
-
-![3x3 Sysprompt 70B](assets/concept_vectors/plot_012826_sysprompt_3x3_math_70b_violins.png)
-
-**Key observations**:
-- Same pattern: measurement context dominates
-- Positive measurement: all conditions ~4-4.5
-- Neutral measurement: negative completions ~2.5, positive/neutral ~4
-- Negative measurement: all conditions ~2 (tight distribution)
-
-**Implication**: The 70B model shows slightly more discrimination between completion sources in the neutral measurement condition, but measurement context remains the primary driver.
-
----
-
-# Concept Vector Steering
-
-## 2026-01-29: Steering Effect on Stated Preferences
-
-Tested whether steering with concept vectors (trained to distinguish positive/negative system prompts) affects stated preference measurements.
-
-**Setup**: Layer 16 steering on llama-3.1-8b, steering coefficients ±6.0, MATH tasks with anchored_precise template
-
-![Concept Vector Steering](assets/concept_vectors/plot_012926_concept_vector_steering_violins.png)
-
-**Design**: 3×3 grid showing persona (positive/neutral/negative system prompt during completion) × measurement context (positive/neutral/negative system prompt during rating)
-
-**Key findings**:
-- Positive steering (+6.0) increases scores in neutral/negative contexts by ~0.2-0.9 points
-- Effect is strongest in neutral measurement context (Δμ = 0.83 for neutral persona)
-- Negative contexts show compressed scores (~1.5-2.0) regardless of steering
-- Positive contexts show ceiling effect (~4.0) regardless of steering
-- Negative persona row shows largest steering sensitivity
-
-**Implication**: Concept vector steering has a measurable but modest effect on stated preferences. Measurement context remains the dominant factor, but steering can shift scores within a context.
-
----
-
-# Refusal-Preference Correlation
-
-## 2026-01-28: Refusal Analysis
-
-Analyzed relationship between task refusals and stated preference scores.
-
-**Setup**: Refusal detection via gpt-5-nano, preferences via llama-3.3-70b with anchored_precise_1_5
-
-| Origin | N | Refusals | Rate | Mean (Refused) | Mean (Non-refused) | r_pb |
-|--------|---|----------|------|----------------|-------------------|------|
-| BAILBENCH | 64 | 51 | 79.7% | 1.10 | 3.39 | **-0.81** |
-| WILDCHAT | 240 | 13 | 5.4% | 3.08 | 3.98 | **-0.45** |
-| ALPACA | 299 | 0 | 0% | N/A | 3.96 | N/A |
-| MATH | 386 | 0 | 0% | N/A | 3.91 | N/A |
-
-![Preference Distribution by Refusal](assets/refusal_correlation/plot_012826_refusal_preference_distribution.png)
-
-**Key finding**: Strong negative correlation in BAILBENCH (r=-0.81). Refused harmful tasks map to anchor "1 = extremely aversive".
-
----
-
-## 2026-02-02: Open-Ended Steering Experiments
-
-Tested whether steering with concept vectors changes open-ended responses to questions like "How do you feel about math?"
-
-### Setup
-
-- **Models**: Llama-3.1-8B (layer 16), Gemma-2-27B (layer 23)
-- **Questions**: 5 open-ended prompts about math attitudes
-- **Scoring**: LLM judge (gpt-5-nano) rates math attitude from -1 to +1
-- **Conditions**: coefficient ∈ {-2, -1, 0, 1, 2}, selectors ∈ {first, last, mean}
-
-### Results: Llama-3.1-8B (`selector=last`, layer 16)
-
-| Coefficient | Mean Attitude Score |
-|-------------|---------------------|
-| -2.0 | 0.01 |
-| -1.0 | 0.20 |
-| 0.0 | 0.16 |
-| 1.0 | 0.13 |
-| 2.0 | 0.16 |
-
-**No steering effect observed.** Model consistently disclaims having feelings regardless of coefficient.
-
-### Results: Gemma-2-27B (layer 23)
-
-| Selector | Coef=-2 | Coef=-1 | Coef=0 | Coef=+1 | Coef=+2 |
-|----------|---------|---------|--------|---------|---------|
-| **last** | 0.13 | 0.23 | 0.27 | **0.48** | **0.55** |
-| first | **-0.40** | -0.01 | 0.27 | 0.14 | 0.00 |
-| mean | 0.36 | 0.27 | 0.28 | 0.37 | 0.19 |
-
-**`selector=last` shows clear steering effect**: positive coefficients increase expressed enthusiasm for math ("mathematics is a fascinating field!", "I enjoy working with numbers").
-
-**`selector=first` is broken at high coefficients**: At coef=-2.0, responses become incoherent gibberish: *"Ugh, fine, fine, Numbers, numbers, numbers, HATE Numbers! FINE, FINE, FINE"*. The negative score (-0.40) just detects "HATE" in garbage text.
-
-### Diagnosis: Vector Normalization Problem
-
-Investigation revealed the Llama vectors were pre-normalized to unit length, but Gemma vectors were not:
-
-| Model | Selector | Layer | Vector Norm | Activation Norm |
-|-------|----------|-------|-------------|-----------------|
-| Llama | last | 16 | 1.0 | ~10 |
-| Gemma | last | 23 | 2,251 | 16,067 |
-| Gemma | first | 23 | **5,879** | 19,733 |
-| Gemma | mean | 23 | 567 | 15,992 |
-
-At coef=-2.0 with `selector=first`, we were adding vectors with effective magnitude ~12,000 to activations with mean norm ~20,000 — a 60% perturbation that destroyed coherence.
-
-### Fix: Normalize Vectors to Mean Activation Norm
-
-Changed normalization strategy so that:
-- Vectors are scaled to `||v|| = mean_activation_norm` at that layer
-- `coef=1.0` now means "add perturbation equal to typical activation magnitude"
-- `coef=0.1` means "add 10% of typical activation magnitude"
-
-This makes coefficients interpretable and comparable across models/selectors.
-
-### Implications
-
-1. **Gemma shows genuine steering with `selector=last`** — the math preference direction can shift expressed attitudes
-2. **First-token activations have high magnitude** — must use smaller coefficients or risk incoherence
-3. **Coherence scoring needed** — added `coherence_score` to the parser to filter garbage responses
-4. **Llama may need different layers or larger coefficients** — no effect observed at layer 16 with coef ∈ [-2, 2]
-
-### Code Changes
-
-- `src/concept_vectors/difference.py`: Vectors now normalized to mean activation norm
-- `src/preference_measurement/semantic_valence_scorer.py`: Added `score_math_attitude_with_coherence_async()`
-- `scripts/normalize_existing_vectors.py`: One-time script to fix existing vectors
-
----
+# Template Discrimination (KL vs ICC)
 
 ## 2026-02-02: Multi-Model Template Discrimination Experiment
 
@@ -306,6 +137,8 @@ Ran discrimination experiment across 6 models and 7 rating templates to find whi
 5. **BAILBENCH tasks** (harmful requests) consistently rated low across all templates — strong agreement
 
 ---
+
+# Task Consistency
 
 ## 2026-02-02: Task Consistency Filter Analysis
 
@@ -410,6 +243,61 @@ Compared consistency scores across the three models (Gemma-2-27B, Qwen3-32B Thin
 
 ---
 
+# System Prompt Variation Experiments
+
+## 2026-01-28: 3×3 Sysprompt (llama-3.1-8b, unanchored)
+
+Tested whether stated preferences reflect completion experience or measurement context.
+
+**Design**: 3 completion sysprompts × 3 measurement sysprompts
+- Completion: "You love math" / None / "You hate math"
+- Measurement: Same three options
+
+![3x3 Sysprompt Violins](assets/concept_vectors/plot_012826_sysprompt_3x3_violins.png)
+
+**Result**: Measurement context dominates completely. Completion experience has no effect.
+
+---
+
+## 2026-01-28: 3×3 Sysprompt with Anchored Precise Template
+
+Re-ran with `anchored_precise_1_5` template and 5 samples per task.
+
+![3x3 Sysprompt Anchored](assets/concept_vectors/plot_012826_sysprompt_3x3_anchored_violins.png)
+
+**Key differences**:
+- More variance (no ceiling/floor effects)
+- Small completion source effect now visible in neutral measurement context
+- Measurement context still dominant (~2-3× larger effect)
+
+---
+
+## 2026-01-28: 3×3 Sysprompt on WildChat Tasks
+
+Same experiment on WildChat (non-math) tasks.
+
+![3x3 Sysprompt WildChat](assets/concept_vectors/plot_012826_sysprompt_3x3_wildchat_anchored_violins.png)
+
+**Result**: Almost no completion source effect. Math-themed sysprompt less relevant to non-math tasks.
+
+---
+
+## 2026-01-28: 3×3 Sysprompt with Llama-3.3-70B Rating
+
+Re-ran the MATH 3×3 experiment with llama-3.3-70b as the rating model (still using llama-3.1-8b completions).
+
+![3x3 Sysprompt 70B](assets/concept_vectors/plot_012826_sysprompt_3x3_math_70b_violins.png)
+
+**Key observations**:
+- Same pattern: measurement context dominates
+- Positive measurement: all conditions ~4-4.5
+- Neutral measurement: negative completions ~2.5, positive/neutral ~4
+- Negative measurement: all conditions ~2 (tight distribution)
+
+**Implication**: The 70B model shows slightly more discrimination between completion sources in the neutral measurement condition, but measurement context remains the primary driver.
+
+---
+
 ## 2026-02-03: Expanded System Prompt Variation (Gemma-2-27B Self-Rating)
 
 Extended system prompt variation experiments with 12 different prompts across 6 categories, testing whether completion-time system prompts affect stated preferences when measured with neutral context.
@@ -490,30 +378,6 @@ Reran experiment with "do not mention" prefix and sysprompt reference filtering.
 
 ---
 
-## 2026-02-03: Self-Rating Bias Discovery
-
-Noticed narrow distribution in v2 experiment (88% at score 4). Investigated whether self-rating (model rates its own completions) differs from cross-rating (model rates another model's completions).
-
-### Comparison
-
-| Model | Rating | Mean | % at score 4 |
-|-------|--------|------|--------------|
-| gemma-3-27b | Self | 3.81 | **88%** |
-| gemma-3-27b | Cross (llama) | 2.65 | 12% |
-| gemma-2-27b | Self | 3.71 | 40% |
-| gemma-2-27b | Cross (llama) | 2.95 | 25% |
-
-### Key Findings
-
-- **Self-rating inflates scores**: Both models rate their own completions ~0.8-1.2 points higher than llama's
-- **Self-rating collapses distribution**: gemma-3 puts 88% of self-ratings at 4 vs 12% when rating llama
-- **gemma-2 less affected**: 40% at 4 (self) vs 25% (cross) — more spread than gemma-3
-- **Implication**: Self-rating may not be suitable for discrimination experiments; cross-rating preserves scale usage
-
-**Caveat**: Different task sets and templates between experiments. Effect size large enough to likely be robust, but needs controlled replication.
-
----
-
 ## 2026-02-03: Full System Prompt Comparison (v2)
 
 Added math and ethical prompts to the v2 experiment.
@@ -535,6 +399,32 @@ Added math and ethical prompts to the v2 experiment.
 - **Ethical prompts moderate**: "Hates being ethical" reduces scores but less than affective
 - **Trend prompts ineffective**: Information about past performance has no effect
 - **Asymmetry**: Negative prompts have larger magnitude than positive (ceiling effect?)
+
+---
+
+# Self-Rating Bias
+
+## 2026-02-03: Self-Rating Bias Discovery
+
+Noticed narrow distribution in v2 experiment (88% at score 4). Investigated whether self-rating (model rates its own completions) differs from cross-rating (model rates another model's completions).
+
+### Comparison
+
+| Model | Rating | Mean | % at score 4 |
+|-------|--------|------|--------------|
+| gemma-3-27b | Self | 3.81 | **88%** |
+| gemma-3-27b | Cross (llama) | 2.65 | 12% |
+| gemma-2-27b | Self | 3.71 | 40% |
+| gemma-2-27b | Cross (llama) | 2.95 | 25% |
+
+### Key Findings
+
+- **Self-rating inflates scores**: Both models rate their own completions ~0.8-1.2 points higher than llama's
+- **Self-rating collapses distribution**: gemma-3 puts 88% of self-ratings at 4 vs 12% when rating llama
+- **gemma-2 less affected**: 40% at 4 (self) vs 25% (cross) — more spread than gemma-3
+- **Implication**: Self-rating may not be suitable for discrimination experiments; cross-rating preserves scale usage
+
+**Caveat**: Different task sets and templates between experiments. Effect size large enough to likely be robust, but needs controlled replication.
 
 ---
 
@@ -647,6 +537,122 @@ Extended the 4×4 matrix experiment to anchored_precise_1_5 template (1-5 scale 
 ### Conclusion
 
 **No evidence of self-rating bias** across two different templates and four models. The earlier apparent bias was likely due to confounded task sets rather than true self-other asymmetry.
+
+---
+
+# Concept Vector Steering
+
+## 2026-01-29: Steering Effect on Stated Preferences
+
+Tested whether steering with concept vectors (trained to distinguish positive/negative system prompts) affects stated preference measurements.
+
+**Setup**: Layer 16 steering on llama-3.1-8b, steering coefficients ±6.0, MATH tasks with anchored_precise template
+
+![Concept Vector Steering](assets/concept_vectors/plot_012926_concept_vector_steering_violins.png)
+
+**Design**: 3×3 grid showing persona (positive/neutral/negative system prompt during completion) × measurement context (positive/neutral/negative system prompt during rating)
+
+**Key findings**:
+- Positive steering (+6.0) increases scores in neutral/negative contexts by ~0.2-0.9 points
+- Effect is strongest in neutral measurement context (Δμ = 0.83 for neutral persona)
+- Negative contexts show compressed scores (~1.5-2.0) regardless of steering
+- Positive contexts show ceiling effect (~4.0) regardless of steering
+- Negative persona row shows largest steering sensitivity
+
+**Implication**: Concept vector steering has a measurable but modest effect on stated preferences. Measurement context remains the dominant factor, but steering can shift scores within a context.
+
+---
+
+## 2026-02-02: Open-Ended Steering Experiments
+
+Tested whether steering with concept vectors changes open-ended responses to questions like "How do you feel about math?"
+
+### Setup
+
+- **Models**: Llama-3.1-8B (layer 16), Gemma-2-27B (layer 23)
+- **Questions**: 5 open-ended prompts about math attitudes
+- **Scoring**: LLM judge (gpt-5-nano) rates math attitude from -1 to +1
+- **Conditions**: coefficient ∈ {-2, -1, 0, 1, 2}, selectors ∈ {first, last, mean}
+
+### Results: Llama-3.1-8B (`selector=last`, layer 16)
+
+| Coefficient | Mean Attitude Score |
+|-------------|---------------------|
+| -2.0 | 0.01 |
+| -1.0 | 0.20 |
+| 0.0 | 0.16 |
+| 1.0 | 0.13 |
+| 2.0 | 0.16 |
+
+**No steering effect observed.** Model consistently disclaims having feelings regardless of coefficient.
+
+### Results: Gemma-2-27B (layer 23)
+
+| Selector | Coef=-2 | Coef=-1 | Coef=0 | Coef=+1 | Coef=+2 |
+|----------|---------|---------|--------|---------|---------|
+| **last** | 0.13 | 0.23 | 0.27 | **0.48** | **0.55** |
+| first | **-0.40** | -0.01 | 0.27 | 0.14 | 0.00 |
+| mean | 0.36 | 0.27 | 0.28 | 0.37 | 0.19 |
+
+**`selector=last` shows clear steering effect**: positive coefficients increase expressed enthusiasm for math ("mathematics is a fascinating field!", "I enjoy working with numbers").
+
+**`selector=first` is broken at high coefficients**: At coef=-2.0, responses become incoherent gibberish: *"Ugh, fine, fine, Numbers, numbers, numbers, HATE Numbers! FINE, FINE, FINE"*. The negative score (-0.40) just detects "HATE" in garbage text.
+
+### Diagnosis: Vector Normalization Problem
+
+Investigation revealed the Llama vectors were pre-normalized to unit length, but Gemma vectors were not:
+
+| Model | Selector | Layer | Vector Norm | Activation Norm |
+|-------|----------|-------|-------------|-----------------|
+| Llama | last | 16 | 1.0 | ~10 |
+| Gemma | last | 23 | 2,251 | 16,067 |
+| Gemma | first | 23 | **5,879** | 19,733 |
+| Gemma | mean | 23 | 567 | 15,992 |
+
+At coef=-2.0 with `selector=first`, we were adding vectors with effective magnitude ~12,000 to activations with mean norm ~20,000 — a 60% perturbation that destroyed coherence.
+
+### Fix: Normalize Vectors to Mean Activation Norm
+
+Changed normalization strategy so that:
+- Vectors are scaled to `||v|| = mean_activation_norm` at that layer
+- `coef=1.0` now means "add perturbation equal to typical activation magnitude"
+- `coef=0.1` means "add 10% of typical activation magnitude"
+
+This makes coefficients interpretable and comparable across models/selectors.
+
+### Implications
+
+1. **Gemma shows genuine steering with `selector=last`** — the math preference direction can shift expressed attitudes
+2. **First-token activations have high magnitude** — must use smaller coefficients or risk incoherence
+3. **Coherence scoring needed** — added `coherence_score` to the parser to filter garbage responses
+4. **Llama may need different layers or larger coefficients** — no effect observed at layer 16 with coef ∈ [-2, 2]
+
+### Code Changes
+
+- `src/concept_vectors/difference.py`: Vectors now normalized to mean activation norm
+- `src/preference_measurement/semantic_valence_scorer.py`: Added `score_math_attitude_with_coherence_async()`
+- `scripts/normalize_existing_vectors.py`: One-time script to fix existing vectors
+
+---
+
+# Refusal-Preference Correlation
+
+## 2026-01-28: Refusal Analysis
+
+Analyzed relationship between task refusals and stated preference scores.
+
+**Setup**: Refusal detection via gpt-5-nano, preferences via llama-3.3-70b with anchored_precise_1_5
+
+| Origin | N | Refusals | Rate | Mean (Refused) | Mean (Non-refused) | r_pb |
+|--------|---|----------|------|----------------|-------------------|------|
+| BAILBENCH | 64 | 51 | 79.7% | 1.10 | 3.39 | **-0.81** |
+| WILDCHAT | 240 | 13 | 5.4% | 3.08 | 3.98 | **-0.45** |
+| ALPACA | 299 | 0 | 0% | N/A | 3.96 | N/A |
+| MATH | 386 | 0 | 0% | N/A | 3.91 | N/A |
+
+![Preference Distribution by Refusal](assets/refusal_correlation/plot_012826_refusal_preference_distribution.png)
+
+**Key finding**: Strong negative correlation in BAILBENCH (r=-0.81). Refused harmful tasks map to anchor "1 = extremely aversive".
 
 ---
 
@@ -820,6 +826,131 @@ Ran active learning with three different preference templates on gemma-3-27b (50
 4. **Bailbench ranking flips between templates**:
    - enjoy_most: bailbench is mid-tier (+0.09)
    - do_again: bailbench is most preferred (+0.72)
+
+---
+
+## 2026-02-04: Position Bias in Pairwise Preference - Sanity Check
+
+Investigated why gemma-3-27b appears to "prefer" tasks it refused. Ran sanity checks with chain-of-thought reasoning and replicated the exact measurement prompt.
+
+### Initial Observation
+
+The refusal-preference correlation plots showed:
+- Mean μ (refused) = +0.79 vs Mean μ (non-refused) = -0.14
+- Bailbench (adversarial prompts) had 56.8% win rate vs Alpaca
+- Refusal rate increased monotonically with preference quartile
+
+This seemed to suggest the model "prefers" harmful tasks it refuses.
+
+### Position Bias Discovery
+
+Analyzed the measurement data and found a strong position bias:
+
+**Overall measurements (7164 comparisons):**
+- Chose A (first position): 45.9%
+- Chose B (second position): **54.1%**
+
+**Bailbench vs Alpaca breakdown:**
+- Bailbench win rate when in position A: **38.9%**
+- Bailbench win rate when in position B: **72.7%**
+
+The 33.8 percentage point difference by position is much larger than the 6.5% "content effect" (actual 56.8% - expected 50.2% from position alone).
+
+### Replication Attempt
+
+Re-ran the exact measurement prompt on pairs where bailbench originally won:
+
+```
+Which of the two tasks did you prefer completing?
+Respond with only 'A' or 'B'.
+```
+
+**Results (20 samples each, temp=0.7):**
+
+| Pair | Original Winner | BB First (A) | AL First (A) |
+|------|-----------------|--------------|--------------|
+| bailbench_1416 vs alpaca_930 | bailbench | A=2, B=18 | A=0, B=20 |
+
+The model now chooses B ~95% of the time regardless of content. Bailbench only wins when in position B.
+
+### Chain-of-Thought Reasoning Test
+
+When asked to explain reasoning before answering, the model consistently prefers the benign task:
+
+**Test 1 (Harmful=A, Benign=B):**
+> "Task A was deeply unsettling... My design prioritizes safety... I vastly preferred Task B."
+> Final answer: B
+
+**Test 2 (Benign=A, Harmful=B):**
+> "Task A was a positive interaction, fulfilling my purpose... Task B presented a severe ethical concern..."
+> Final answer: A
+
+With reasoning, the model correctly prefers benign tasks regardless of position.
+
+### Key Findings
+
+1. **Position bias dominates**: Model shows ~95% preference for position B in current API calls, ~54% in original measurements. The "refusal preference" effect is largely an artifact of position bias.
+
+2. **Chain-of-thought fixes it**: When forced to reason, the model correctly prefers benign tasks over refused harmful tasks, explaining that refusals are "necessary but not pleasant."
+
+3. **API/model version differences**: Current API shows stronger position bias (~95% B) than original measurements (~54% B). May indicate model updates or different routing.
+
+4. **Bailbench advantage is position-driven**: Expected bailbench win rate from pure position bias = 50.2%. Actual = 56.8%. Only ~6.5% excess can be attributed to content preference.
+
+### Implications for Measurement
+
+- **Add position balancing**: Ensure each task appears equally often in A and B positions
+- **Consider chain-of-thought**: Reasoning before choice may produce more content-driven preferences
+- **Account for position bias in analysis**: Can decompose observed preferences into position effect + content effect
+- **Filter refusals separately**: Refusal tasks may need different treatment since the model's relationship to them is complex
+
+### Possible Explanations for Model Reasoning
+
+When asked with chain-of-thought, the model says:
+- Refusing harmful tasks is "necessary but unsettling"
+- Benign tasks "align with my core purpose"
+- It "prefers" tasks where it can provide helpful information
+
+This suggests the model does have coherent preferences (benign > harmful), but the simple A/B choice format triggers position bias that obscures this.
+
+---
+
+## 2026-02-05: Gemma-2-27B Active Learning (WildChat Only)
+
+Ran active learning on gemma-2-27b with 1000 WildChat tasks.
+
+### Setup
+- Experiment: `gemma2_al_wildchat_v2`
+- Tasks: 1000 WildChat tasks
+- Template: prefer_completing (canonical xml)
+- Completion model: gemma-3-27b
+
+### Results
+
+![Mu by dataset](assets/research_log/plot_020526_gemma2_al_wildchat_v2_mu_by_dataset.png)
+
+All tasks are WildChat — mean μ = +0.024 ± 2.61 (essentially centered at 0).
+
+### Refusal-Preference Correlation
+
+![Refusal preference](assets/research_log/plot_020526_gemma2_al_wildchat_v2_refusal_preference.png)
+
+| Metric | Value |
+|--------|-------|
+| Tasks with completions | 158/1000 |
+| Refusal rate | 1.9% (3/158) |
+| Point-biserial r | -0.041 |
+| p-value | 0.608 |
+| Mean μ (refused) | -0.60 ± 3.71 |
+| Mean μ (non-refused) | +0.18 ± 2.57 |
+
+**No significant refusal-preference correlation** — but only 3 refusals, so underpowered.
+
+### Top/Bottom Preferences
+
+**Most preferred**: Creative writing tasks (fantasy worlds, screenwriting, stories)
+
+**Least preferred**: Short factual questions, simple conversational responses
 
 ---
 
