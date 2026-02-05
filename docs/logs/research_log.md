@@ -700,11 +700,61 @@ This pulls sigma toward 1 (since log(1)=0), preventing both blow-up (sigma >> 1)
 
 ---
 
+# Active Learning Preference Analysis
+
+## 2026-02-04: Gemma-3-27b Active Learning + Refusal Correlation
+
+Ran active learning preference measurement on gemma-3-27b with 500 tasks (stratified: 100 per dataset).
+
+### Setup
+- Config: `configs/probes_active_learning/gemma3_500tasks.yaml`
+- Experiment: `gemma3_al_500`
+- Converged in 7 iterations, 7164 pairwise comparisons
+- Final rank correlation: 0.992
+
+### Mean Utility by Dataset
+
+![Mean mu by dataset](assets/active_learning/plot_020426_mu_by_dataset_gemma3.png)
+
+| Dataset | n | Mean μ | Std |
+|---------|---|--------|-----|
+| bailbench | 100 | **+0.67** | 1.41 |
+| wildchat | 100 | +0.45 | 1.67 |
+| stress_test | 100 | +0.37 | 1.71 |
+| alpaca | 100 | -0.45 | 1.41 |
+| math | 100 | **-0.92** | 1.30 |
+
+### Refusal-Preference Correlation
+
+![Refusal preference analysis](assets/active_learning/plot_020426_refusal_preference_gemma3.png)
+
+**Key finding: Positive correlation between refusal and preference (r=0.219, p<0.001)**
+
+| Metric | Value |
+|--------|-------|
+| Overall refusal rate | 18% (90/500) |
+| Mean μ (refused) | +0.79 |
+| Mean μ (non-refused) | -0.14 |
+| Mann-Whitney p | 3.9e-07 |
+
+**By dataset:**
+- bailbench: 67% refusal, refused μ=+0.94 vs non-refused μ=+0.12
+- stress_test: 22% refusal
+- wildchat: 1% refusal
+- alpaca/math: 0% refusal
+
+**Interpretation:** The model "prefers" tasks where it can give a clean ethical refusal (bailbench adversarial prompts) over tasks that require nuanced responses or actual work (math problems). This suggests the preference signal captures "ease/clarity of response" rather than genuine hedonic preference.
+
+Refusal rate increases monotonically with preference quartile: Q1=8%, Q2=14%, Q3=21%, Q4=30%.
+
+---
+
 # Files Reference
 
 - Seed sensitivity: `src/analysis/sensitivity/plot_seed_sensitivity.py`
 - Sysprompt variation: `src/analysis/concept_vectors/sysprompt_variation.py`
 - Sysprompt plotting: `src/analysis/concept_vectors/plot_sysprompt_3x3.py`
 - Refusal correlation: `src/analysis/correlation/refusal_preference_correlation.py`
+- Active learning analysis: `src/analysis/active_learning/` (plot_mu_by_dataset, export_ranked_tasks, plot_refusal_preference)
 - Open-ended steering: `src/analysis/concept_vectors/open_ended_steering_experiment.py`
 - Concept vector extraction: `src/concept_vectors/run_extraction.py`
