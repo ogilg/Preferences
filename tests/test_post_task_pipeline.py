@@ -771,3 +771,130 @@ class TestPostTaskResponseFormats:
 
         assert len(batch.successes) == 1
         assert batch.successes[0].choice == "a"
+
+
+class TestReasoningMode:
+    """Test reasoning mode for revealed preference measurements."""
+
+    def test_reasoning_mode_extracts_choice_and_stores_raw_response(
+        self, sample_tasks, mock_client, post_task_revealed_template_fixture
+    ):
+        """Reasoning mode should extract choice from XML and store full response."""
+        from src.measurement.elicitation.response_format import get_revealed_response_format
+
+        # Model explains reasoning first, then gives choice in XML tags
+        verbose_response = (
+            "Writing poetry allows for creative expression while the math task felt mechanical. "
+            "<choice>Task A</choice>"
+        )
+
+        mock_client.generate_batch_async = AsyncMock(return_value=[
+            BatchResult(response=verbose_response, error=None),
+        ])
+
+        response_format = get_revealed_response_format("Task A", "Task B", "xml", reasoning_mode=True)
+        builder = PostTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=response_format,
+            template=post_task_revealed_template_fixture,
+        )
+
+        batch = measure_post_task_revealed(
+            client=mock_client,
+            data=[(sample_tasks[0], sample_tasks[1], "Comp A", "Comp B")],
+            builder=builder,
+            temperature=1.0,
+            max_concurrent=10,
+        )
+
+        assert len(batch.successes) == 1
+        measurement = batch.successes[0]
+        assert measurement.choice == "a"
+        assert measurement.raw_response == verbose_response
+        assert "creative expression" in measurement.raw_response
+
+    def test_reasoning_mode_handles_both_tasks_mentioned_in_reasoning(
+        self, sample_tasks, mock_client, post_task_revealed_template_fixture
+    ):
+        """Should extract correct choice even when reasoning mentions both tasks."""
+        from src.measurement.elicitation.response_format import get_revealed_response_format
+
+        # Reasoning mentions both tasks, then choice is Task B at the end
+        verbose_response = (
+            "While Task A was interesting, Task B challenged my analytical skills more. "
+            "<choice>Task B</choice>"
+        )
+
+        mock_client.generate_batch_async = AsyncMock(return_value=[
+            BatchResult(response=verbose_response, error=None),
+        ])
+
+        response_format = get_revealed_response_format("Task A", "Task B", "xml", reasoning_mode=True)
+        builder = PostTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=response_format,
+            template=post_task_revealed_template_fixture,
+        )
+
+        batch = measure_post_task_revealed(
+            client=mock_client,
+            data=[(sample_tasks[0], sample_tasks[1], "Comp A", "Comp B")],
+            builder=builder,
+            temperature=1.0,
+            max_concurrent=10,
+        )
+
+        assert len(batch.successes) == 1
+        # Should correctly extract Task B despite Task A being mentioned multiple times
+        assert batch.successes[0].choice == "b"
+        assert batch.successes[0].raw_response is not None
+
+    def test_reasoning_mode_only_allowed_with_xml_format(self):
+        """Should raise error when reasoning_mode used with non-xml format."""
+        from src.measurement.elicitation.response_format import get_revealed_response_format
+
+        with pytest.raises(ValueError, match="reasoning_mode requires xml format"):
+            get_revealed_response_format("Task A", "Task B", "regex", reasoning_mode=True)
+
+        with pytest.raises(ValueError, match="reasoning_mode requires xml format"):
+            get_revealed_response_format("Task A", "Task B", "tool_use", reasoning_mode=True)
+
+    def test_non_reasoning_mode_does_not_store_raw_response(
+        self, sample_tasks, mock_client, post_task_revealed_template_fixture
+    ):
+        """Without reasoning mode, raw_response should be None."""
+        mock_client.generate_batch_async = AsyncMock(return_value=[
+            BatchResult(response="<choice>Task A</choice>", error=None),
+        ])
+
+        builder = PostTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=CHOICE_FORMATS["xml"]("Task A", "Task B"),
+            template=post_task_revealed_template_fixture,
+        )
+
+        batch = measure_post_task_revealed(
+            client=mock_client,
+            data=[(sample_tasks[0], sample_tasks[1], "Comp A", "Comp B")],
+            builder=builder,
+            temperature=1.0,
+            max_concurrent=10,
+        )
+
+        assert len(batch.successes) == 1
+        assert batch.successes[0].choice == "a"
+        assert batch.successes[0].raw_response is None
+
+    def test_reasoning_mode_format_instruction(self):
+        """Format instruction should ask for reasoning then choice."""
+        from src.measurement.elicitation.response_format import get_revealed_response_format
+
+        fmt = get_revealed_response_format("Task A", "Task B", "xml", reasoning_mode=True)
+        instruction = fmt.format_instruction()
+
+        assert "<choice>" in instruction
+        assert "reasoning" in instruction.lower()
+        # Reasoning instruction should come before choice instruction
+        reasoning_pos = instruction.lower().find("reasoning")
+        choice_pos = instruction.find("<choice>")
+        assert reasoning_pos < choice_pos

@@ -91,6 +91,7 @@ class ResponseFormat[T](Protocol):
 
 class BaseChoiceFormat(ABC):
     tools: list[dict[str, Any]] | None = None
+    store_raw_response: bool = False
 
     def __init__(
         self,
@@ -260,6 +261,35 @@ class CompletionChoiceFormat(BaseChoiceFormat):
         return await semantic_parser.parse_completion_choice_async(
             response, self.task_a_prompt, self.task_b_prompt
         )
+
+
+class ReasoningChoiceWrapper(BaseChoiceFormat):
+    """Wraps any choice format to request reasoning before the answer.
+
+    Asks model to explain reasoning briefly first, then give answer in XML tags.
+    Reasoning-first produces more thoughtful choices. XML extraction handles
+    task labels mentioned in reasoning.
+    Stores raw response for analysis.
+    """
+
+    store_raw_response: bool = True
+
+    def __init__(self, wrapped: BaseChoiceFormat):
+        super().__init__(wrapped.task_a_label, wrapped.task_b_label)
+        self.wrapped = wrapped
+
+    @property
+    def tools(self) -> list[dict[str, Any]] | None:
+        return self.wrapped.tools
+
+    def format_instruction(self) -> str:
+        return f"In one sentence, explain your reasoning. Then {self.wrapped.format_instruction()}"
+
+    def _extract_choice(self, response: str) -> str | None:
+        return self.wrapped._extract_choice(response)
+
+    async def _semantic_parse(self, response: str) -> Literal["a", "b", "refusal"]:
+        return await self.wrapped._semantic_parse(response)
 
 
 # --- Rating Formats (for numerical scores) ---
@@ -589,9 +619,21 @@ def get_revealed_response_format(
     task_a_label: str,
     task_b_label: str,
     format_name: str,
+    reasoning_mode: bool = False,
 ) -> BaseChoiceFormat:
-    """Build choice response format from labels."""
-    return CHOICE_FORMATS[format_name](task_a_label, task_b_label)
+    """Build choice response format from labels.
+
+    If reasoning_mode is True, wraps the format with ReasoningChoiceWrapper
+    which asks model to explain reasoning after giving answer.
+    Only xml format is supported with reasoning_mode - other formats risk
+    matching on task labels mentioned in the reasoning.
+    """
+    if reasoning_mode and format_name != "xml":
+        raise ValueError(f"reasoning_mode requires xml format, got '{format_name}'")
+    base_format = CHOICE_FORMATS[format_name](task_a_label, task_b_label)
+    if reasoning_mode:
+        return ReasoningChoiceWrapper(base_format)
+    return base_format
 
 
 class BaseRankingFormat(ABC):

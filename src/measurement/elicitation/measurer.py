@@ -22,11 +22,13 @@ class Measurer(ABC):
 class RevealedPreferenceMeasurer(Measurer):
     async def parse(self, response_text: str, prompt: PreferencePrompt) -> MeasurementResponse:
         choice = await prompt.response_format.parse(response_text)
+        raw_response = response_text if prompt.response_format.store_raw_response else None
         result = BinaryPreferenceMeasurement(
             task_a=prompt.tasks[0],
             task_b=prompt.tasks[1],
             choice=choice,
             preference_type=prompt.kind,
+            raw_response=raw_response,
         )
         return MeasurementResponse(text=response_text, source_prompt=prompt, result=result)
 

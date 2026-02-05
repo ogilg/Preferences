@@ -88,6 +88,10 @@ class ExperimentConfig(BaseModel):
     response_formats: list[Literal["regex", "tool_use", "xml", "completion"]] = ["regex"]
     generation_seeds: list[int] = [0]
 
+    # Reasoning mode: ask model to explain reasoning before giving answer
+    # Stores raw response for analysis. Use with xml format for reliable extraction.
+    reasoning_mode: bool = False
+
     # Template sampling
     template_sampling: Literal["all", "lhs"] = "all"
     n_template_samples: int | None = None

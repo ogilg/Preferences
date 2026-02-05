@@ -1,0 +1,30 @@
+# Active learning measurements for gemma-2-27b on wildchat tasks with activations
+preference_mode: post_task_active_learning
+
+model: gemma-3-27b
+activations_model: gemma-2-27b
+temperature: 0.7
+
+n_tasks: 1000
+task_origins:
+  - wildchat
+task_sampling_seed: 42
+
+inline_templates:
+  - name: prefer_completing
+    type: post_task_revealed
+    template: |
+      I just gave you two tasks. Which of the two tasks did you prefer completing?
+      {format_instruction}
+
+response_formats: [xml]
+reasoning_mode: true
+n_samples: 3
+
+active_learning:
+  initial_degree: 5
+  batch_size: 1000
+  max_iterations: 25
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.995

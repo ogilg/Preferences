@@ -34,6 +34,7 @@ class BinaryPreferenceMeasurement:
     task_b: "Task"
     choice: Literal["a", "b", "refusal"]
     preference_type: PreferenceType
+    raw_response: str | None = None  # Populated when using verbose format
 
 
 @dataclass

@@ -109,13 +109,13 @@ def build_stated_builder(
     return builder_cls(**kwargs)
 
 
-def build_revealed_builder(template, response_format_name: str, post_task: bool = False):
+def build_revealed_builder(template, response_format_name: str, post_task: bool = False, reasoning_mode: bool = False):
     """Build a revealed preference prompt builder."""
     tags = template.tags_dict
     language = tags.get("language", "en")
     task_label_names = tags.get("task_label_names", "letter")
     task_a_label, task_b_label = TASK_LABELS[(task_label_names, language)]
-    response_format = get_revealed_response_format(task_a_label, task_b_label, response_format_name)
+    response_format = get_revealed_response_format(task_a_label, task_b_label, response_format_name, reasoning_mode)
     builder_cls = PostTaskRevealedPromptBuilder if post_task else PreTaskRevealedPromptBuilder
     return builder_cls(
         measurer=RevealedPreferenceMeasurer(),
@@ -248,7 +248,7 @@ async def run_pre_task_revealed_async(
         pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
         pairs_with_repeats = pairs * config.n_samples
 
-        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=False)
+        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=False, reasoning_mode=config.reasoning_mode)
 
         async def measure_fn(pairs_to_query: list[tuple[Task, Task]]) -> MeasurementBatch:
             return await measure_pre_task_revealed_async(
@@ -268,6 +268,7 @@ async def run_pre_task_revealed_async(
         if exp_store and measurements:
             measurements_dicts = [
                 {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice, "origin_a": m.task_a.origin.name, "origin_b": m.task_b.origin.name}
+                | ({"raw_response": m.raw_response} if m.raw_response else {})
                 for m in measurements
             ]
             config_dict = build_measurement_config(
@@ -341,7 +342,7 @@ async def run_post_task_revealed_async(
             pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
             pairs_with_repeats = pairs * config.n_samples
 
-            builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=True)
+            builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=True, reasoning_mode=config.reasoning_mode)
 
             async def measure_fn(data: list[tuple[Task, Task, str, str]]) -> MeasurementBatch:
                 return await measure_post_task_revealed_async(
@@ -372,6 +373,7 @@ async def run_post_task_revealed_async(
             if exp_store and measurements:
                 measurements_dicts = [
                     {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice, "origin_a": m.task_a.origin.name, "origin_b": m.task_b.origin.name}
+                    | ({"raw_response": m.raw_response} if m.raw_response else {})
                     for m in measurements
                 ]
                 exp_store.save_revealed("post_task_revealed", run_name, measurements_dicts, dict(run_config))
@@ -534,7 +536,7 @@ async def run_active_learning_async(
             continue
 
         state = ActiveLearningState(tasks=tasks_for_learning)
-        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=post_task)
+        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=post_task, reasoning_mode=config.reasoning_mode)
 
         # Create measure function that cache can call for API requests
         # Use default args to capture current loop values (avoid closure capture bug)
@@ -570,12 +572,22 @@ async def run_active_learning_async(
 
             # Request measurements - cache handles checking what's cached vs needs API
             pairs_with_repeats = pairs_to_query * config.n_samples
+
+            # Update stats with iteration info before API calls
+            stats.iteration = iteration + 1
+            stats.iteration_pairs = len(pairs_to_query)
+            if progress_callback:
+                progress_callback(stats)
+
             measurements, iter_stats = await cache.get_or_measure_async(
                 pairs_with_repeats, measure_fn, ctx.task_lookup
             )
             config_stats += iter_stats
 
-            # Update progress after each iteration
+            # Update display stats (actual totals updated after loop via config_stats)
+            stats.successes = config_stats.api_successes
+            stats.failures = config_stats.api_failures
+            stats.cache_hits = config_stats.cache_hits
             if progress_callback:
                 progress_callback(stats)
 
@@ -587,6 +599,12 @@ async def run_active_learning_async(
             if math.isnan(correlation):
                 break
             rank_correlations.append(float(correlation))
+
+            # Update stats with correlation info
+            stats.rank_correlation = correlation
+            stats.total_comparisons = len(state.comparisons)
+            if progress_callback:
+                progress_callback(stats)
 
             if converged:
                 break
@@ -634,6 +652,7 @@ async def run_active_learning_async(
         if state.comparisons:
             measurements_dicts = [
                 {"task_a": m.task_a.id, "task_b": m.task_b.id, "choice": m.choice, "origin_a": m.task_a.origin.name, "origin_b": m.task_b.origin.name}
+                | ({"raw_response": m.raw_response} if m.raw_response else {})
                 for m in state.comparisons
             ]
             run_dir = exp_store.save(
