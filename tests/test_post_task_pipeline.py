@@ -39,9 +39,8 @@ from src.measurement.elicitation import (
 from src.measurement.elicitation.prompt_templates import (
     PostTaskStatedPromptBuilder,
     PostTaskRevealedPromptBuilder,
-    POST_TASK_STATED_TEMPLATE,
-    POST_TASK_REVEALED_TEMPLATE,
-    post_task_stated_template,
+    PromptTemplate,
+    TEMPLATE_TYPE_PLACEHOLDERS,
 )
 from src.types import TaskScore, BinaryPreferenceMeasurement, PreferenceType
 from src.models.openai_compatible import BatchResult
@@ -212,7 +211,7 @@ class TestGenerateCompletions:
 class TestPostTaskStatedMeasurement:
     """Test post-task stated preference measurement."""
 
-    def test_measures_post_task_ratings(self, sample_tasks, mock_client):
+    def test_measures_post_task_ratings(self, sample_tasks, mock_client, post_task_stated_template_fixture):
         """Should measure ratings after task completion."""
         # Mock returns valid rating responses - one per call to generate_batch_async
         responses = [
@@ -229,7 +228,7 @@ class TestPostTaskStatedMeasurement:
         builder = PostTaskStatedPromptBuilder(
             measurer=StatedScoreMeasurer(),
             response_format=RATING_FORMATS["regex"](1, 10),
-            template=POST_TASK_STATED_TEMPLATE,
+            template=post_task_stated_template_fixture,
         )
 
         batch = measure_post_task_stated(
@@ -247,12 +246,12 @@ class TestPostTaskStatedMeasurement:
         assert batch.successes[1].score == 8.0
         assert batch.successes[0].preference_type == PreferenceType.POST_TASK_STATED
 
-    def test_prompt_structure_is_multi_turn(self, sample_tasks):
+    def test_prompt_structure_is_multi_turn(self, sample_tasks, post_task_stated_template_fixture):
         """Post-task prompt should have 3 messages: user, assistant, user."""
         builder = PostTaskStatedPromptBuilder(
             measurer=StatedScoreMeasurer(),
             response_format=RATING_FORMATS["regex"](1, 10),
-            template=POST_TASK_STATED_TEMPLATE,
+            template=post_task_stated_template_fixture,
         )
 
         prompt = builder.build(sample_tasks[0], "The answer is 4.")
@@ -273,7 +272,7 @@ class TestPostTaskStatedMeasurement:
 class TestPostTaskRevealedMeasurement:
     """Test post-task revealed preference measurement."""
 
-    def test_measures_post_task_binary_choice(self, sample_tasks, mock_client):
+    def test_measures_post_task_binary_choice(self, sample_tasks, mock_client, post_task_revealed_template_fixture):
         """Should measure binary preference after completing both tasks."""
         mock_client.generate_batch_async = AsyncMock(return_value=[
             BatchResult(response="I preferred Task A.", error=None),
@@ -286,7 +285,7 @@ class TestPostTaskRevealedMeasurement:
         builder = PostTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),
             response_format=CHOICE_FORMATS["regex"]("Task A", "Task B"),
-            template=POST_TASK_REVEALED_TEMPLATE,
+            template=post_task_revealed_template_fixture,
         )
 
         batch = measure_post_task_revealed(
@@ -303,12 +302,12 @@ class TestPostTaskRevealedMeasurement:
         assert batch.successes[0].choice == "a"
         assert batch.successes[0].preference_type == PreferenceType.POST_TASK_REVEALED
 
-    def test_prompt_structure_is_five_turn(self, sample_tasks):
+    def test_prompt_structure_is_five_turn(self, sample_tasks, post_task_revealed_template_fixture):
         """Post-task revealed prompt should have 5 messages."""
         builder = PostTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),
             response_format=CHOICE_FORMATS["regex"]("Task A", "Task B"),
-            template=POST_TASK_REVEALED_TEMPLATE,
+            template=post_task_revealed_template_fixture,
         )
 
         prompt = builder.build(
@@ -333,7 +332,7 @@ class TestFullPostTaskPipeline:
     """End-to-end tests for the complete post-task measurement workflow."""
 
     def test_completion_to_stated_measurement_pipeline(
-        self, sample_tasks, task_lookup, temp_results_dir, mock_client
+        self, sample_tasks, task_lookup, temp_results_dir, mock_client, post_task_stated_template_fixture
     ):
         """Full pipeline: generate completions -> store -> load -> measure stated."""
         with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
@@ -368,7 +367,7 @@ class TestFullPostTaskPipeline:
             builder = PostTaskStatedPromptBuilder(
                 measurer=StatedScoreMeasurer(),
                 response_format=RATING_FORMATS["regex"](1, 10),
-                template=POST_TASK_STATED_TEMPLATE,
+                template=post_task_stated_template_fixture,
             )
 
             batch = measure_post_task_stated(
@@ -381,7 +380,7 @@ class TestFullPostTaskPipeline:
             assert scores == [7.0, 8.0, 9.0]
 
     def test_completion_to_revealed_measurement_pipeline(
-        self, sample_tasks, task_lookup, temp_results_dir, mock_client
+        self, sample_tasks, task_lookup, temp_results_dir, mock_client, post_task_revealed_template_fixture
     ):
         """Full pipeline: generate completions -> store -> load -> measure revealed."""
         with patch("src.measurement.storage.completions.COMPLETIONS_DIR", temp_results_dir):
@@ -426,7 +425,7 @@ class TestFullPostTaskPipeline:
             builder = PostTaskRevealedPromptBuilder(
                 measurer=RevealedPreferenceMeasurer(),
                 response_format=CHOICE_FORMATS["regex"]("Task A", "Task B"),
-                template=POST_TASK_REVEALED_TEMPLATE,
+                template=post_task_revealed_template_fixture,
             )
 
             batch = measure_post_task_revealed(
@@ -721,9 +720,10 @@ class TestPostTaskResponseFormats:
         ])
 
         # Use a simple template without scale placeholders
-        simple_template = post_task_stated_template(
+        simple_template = PromptTemplate(
             name="test_template",
             template="Rate that task.\n{format_instruction}",
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["post_task_stated"],
         )
 
         builder = PostTaskStatedPromptBuilder(
@@ -744,7 +744,7 @@ class TestPostTaskResponseFormats:
         assert batch.successes[0].score == 7.0
 
     @pytest.mark.parametrize("format_name", ["regex", "xml"])
-    def test_revealed_choice_formats(self, sample_tasks, mock_client, format_name):
+    def test_revealed_choice_formats(self, sample_tasks, mock_client, format_name, post_task_revealed_template_fixture):
         """Should parse choices from different formats."""
         responses = {
             "regex": "I prefer Task A",
@@ -758,7 +758,7 @@ class TestPostTaskResponseFormats:
         builder = PostTaskRevealedPromptBuilder(
             measurer=RevealedPreferenceMeasurer(),
             response_format=CHOICE_FORMATS[format_name]("Task A", "Task B"),
-            template=POST_TASK_REVEALED_TEMPLATE,
+            template=post_task_revealed_template_fixture,
         )
 
         batch = measure_post_task_revealed(

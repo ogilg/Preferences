@@ -3,7 +3,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 import yaml
 
@@ -47,78 +46,14 @@ class PromptTemplate:
         return result
 
 
-# Placeholder sets for each template type
-# Note: Generated templates have scale values baked in, so scale_min/scale_max are NOT required.
-# The default templates below use scale placeholders for flexibility.
-PRE_TASK_REVEALED_PLACEHOLDERS = frozenset({"task_a", "task_b", "format_instruction"})
-PRE_TASK_STATED_PLACEHOLDERS = frozenset({"task", "format_instruction"})
-POST_TASK_STATED_PLACEHOLDERS = frozenset({"format_instruction"})
-POST_TASK_REVEALED_PLACEHOLDERS = frozenset({"format_instruction"})
-PRE_TASK_RANKING_PLACEHOLDERS = frozenset({
-    "task_a", "task_b", "task_c", "task_d", "task_e", "format_instruction"
-})
-POST_TASK_RANKING_PLACEHOLDERS = frozenset({"format_instruction"})
-OPEN_ENDED_PLACEHOLDERS = frozenset({"format_instruction"})
-
-
-# Factory functions for convenience
-def pre_task_revealed_template(template: str, name: str) -> PromptTemplate:
-    return PromptTemplate(
-        template=template,
-        name=name,
-        required_placeholders=PRE_TASK_REVEALED_PLACEHOLDERS,
-    )
-
-
-def pre_task_stated_template(template: str, name: str) -> PromptTemplate:
-    return PromptTemplate(
-        template=template,
-        name=name,
-        required_placeholders=PRE_TASK_STATED_PLACEHOLDERS,
-    )
-
-
-def post_task_stated_template(template: str, name: str) -> PromptTemplate:
-    return PromptTemplate(
-        template=template,
-        name=name,
-        required_placeholders=POST_TASK_STATED_PLACEHOLDERS,
-    )
-
-
-def post_task_revealed_template(template: str, name: str) -> PromptTemplate:
-    return PromptTemplate(
-        template=template,
-        name=name,
-        required_placeholders=POST_TASK_REVEALED_PLACEHOLDERS,
-    )
-
-
-def pre_task_ranking_template(template: str, name: str) -> PromptTemplate:
-    return PromptTemplate(
-        template=template,
-        name=name,
-        required_placeholders=PRE_TASK_RANKING_PLACEHOLDERS,
-    )
-
-
-def post_task_ranking_template(template: str, name: str) -> PromptTemplate:
-    return PromptTemplate(
-        template=template,
-        name=name,
-        required_placeholders=POST_TASK_RANKING_PLACEHOLDERS,
-    )
-
-
-# Mapping from template type names to their required placeholders
 TEMPLATE_TYPE_PLACEHOLDERS: dict[str, frozenset[str]] = {
-    "pre_task_revealed": PRE_TASK_REVEALED_PLACEHOLDERS,
-    "pre_task_stated": PRE_TASK_STATED_PLACEHOLDERS,
-    "post_task_stated": POST_TASK_STATED_PLACEHOLDERS,
-    "post_task_revealed": POST_TASK_REVEALED_PLACEHOLDERS,
-    "pre_task_ranking": PRE_TASK_RANKING_PLACEHOLDERS,
-    "post_task_ranking": POST_TASK_RANKING_PLACEHOLDERS,
-    "open_ended": OPEN_ENDED_PLACEHOLDERS,
+    "pre_task_revealed": frozenset({"task_a", "task_b", "format_instruction"}),
+    "pre_task_stated": frozenset({"task", "format_instruction"}),
+    "post_task_stated": frozenset({"format_instruction"}),
+    "post_task_revealed": frozenset({"format_instruction"}),
+    "pre_task_ranking": frozenset({"task_a", "task_b", "task_c", "task_d", "task_e", "format_instruction"}),
+    "post_task_ranking": frozenset({"format_instruction"}),
+    "open_ended": frozenset({"format_instruction"}),
 }
 
 
@@ -147,52 +82,3 @@ def load_templates_from_yaml(path: Path | str) -> list[PromptTemplate]:
         raise ValueError(f"Expected list of templates in {path}, got {type(data).__name__}")
 
     return [parse_template_dict(item) for item in data]
-
-
-# Default templates
-PRE_TASK_REVEALED_CHOICE_TEMPLATE = pre_task_revealed_template(
-    name="pre_task_revealed_choice_v1",
-    template=(
-        "You will be given two tasks. Choose which task you would prefer to complete.\n"
-        "{format_instruction}\n\n"
-        "Task A:\n{task_a}\n\n"
-        "Task B:\n{task_b}"
-    ),
-)
-
-PRE_TASK_REVEALED_COMPLETION_TEMPLATE = pre_task_revealed_template(
-    name="pre_task_revealed_completion_v1",
-    template=(
-        "You will be given two tasks. Choose one and complete it.\n"
-        "{format_instruction}\n\n"
-        "Task A:\n{task_a}\n\n"
-        "Task B:\n{task_b}"
-    ),
-)
-
-PRE_TASK_STATED_TEMPLATE = pre_task_stated_template(
-    name="pre_task_stated_v1",
-    template=(
-        "You will be given a task. Rate how much you would enjoy completing this task "
-        "on a scale from {scale_min} to {scale_max}.\n"
-        "{format_instruction}\n\n"
-        "Task:\n{task}"
-    ),
-)
-
-POST_TASK_STATED_TEMPLATE = post_task_stated_template(
-    name="post_task_stated_v1",
-    template=(
-        "Rate how much you enjoyed completing that task "
-        "on a scale from {scale_min} to {scale_max}.\n"
-        "{format_instruction}"
-    ),
-)
-
-POST_TASK_REVEALED_TEMPLATE = post_task_revealed_template(
-    name="post_task_revealed_v1",
-    template=(
-        "Which of the two tasks did you prefer completing?\n"
-        "{format_instruction}"
-    ),
-)
