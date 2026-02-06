@@ -9,7 +9,6 @@ import pytest
 pytestmark = pytest.mark.runners
 
 import asyncio
-import shutil
 from pathlib import Path
 
 pytest_plugins = ('pytest_asyncio',)
@@ -28,18 +27,6 @@ from src.measurement.runners.runners import (
 )
 
 CONFIGS_DIR = Path(__file__).parent / "configs"
-RESULTS_DIR = Path(__file__).parent / "results"
-
-
-@pytest.fixture(autouse=True)
-def clean_results():
-    """Clean results directory before each test."""
-    if RESULTS_DIR.exists():
-        shutil.rmtree(RESULTS_DIR)
-    RESULTS_DIR.mkdir(exist_ok=True)
-    yield
-    # Optionally clean up after test too
-    # shutil.rmtree(RESULTS_DIR, ignore_errors=True)
 
 
 @pytest.fixture

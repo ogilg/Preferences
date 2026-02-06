@@ -52,6 +52,7 @@ packages = ["src"]
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+addopts = "-m 'not api and not gpu'"
 markers = [
     "api: tests that make real API calls (requires API key)",
     "gpu: tests that require a GPU or heavy model loading",
