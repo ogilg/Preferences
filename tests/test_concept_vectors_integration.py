@@ -250,14 +250,17 @@ class TestDifferenceInMeansIntegration:
         )
 
         # Compute difference-in-means
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", layers=layers, normalize=True)
+        directions, vector_norms, activation_norms = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", layers=layers)
 
         # Verify output
-        assert len(vectors) == 1
+        assert len(directions) == 1
         layer = layers[0]
-        assert layer in vectors
-        assert vectors[layer].shape == (transformer_lens_model.hidden_dim,)
-        assert abs(np.linalg.norm(vectors[layer]) - 1.0) < 1e-6  # Unit normalized
+        assert layer in directions
+        assert directions[layer].shape == (transformer_lens_model.hidden_dim,)
+        # Direction is normalized to mean activation norm, not unit norm
+        assert np.linalg.norm(directions[layer]) > 0
+        assert layer in vector_norms
+        assert layer in activation_norms
 
     def test_direction_is_nonzero(self, transformer_lens_model, small_tasks, tmp_path):
         """Direction should be non-trivial (not near-zero before normalization)."""
@@ -290,13 +293,12 @@ class TestDifferenceInMeansIntegration:
             max_new_tokens=32,
         )
 
-        # Compute without normalization to check raw magnitude
-        vectors = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", layers=layers, normalize=False)
+        # Compute and check raw magnitude
+        directions, vector_norms, _ = compute_difference_in_means(pos_dir, neg_dir, selector_name="last", layers=layers)
         layer = layers[0]
 
-        # The raw difference should have non-trivial magnitude
-        raw_norm = np.linalg.norm(vectors[layer])
-        assert raw_norm > 0.1, f"Direction norm too small: {raw_norm}"
+        # The original difference should have non-trivial magnitude
+        assert vector_norms[layer] > 0.1, f"Direction norm too small: {vector_norms[layer]}"
 
 
 class TestFullPipelineE2E:
@@ -348,8 +350,8 @@ class TestFullPipelineE2E:
         )
 
         # Compute and save vectors for all selectors
-        vectors_by_selector = compute_all_concept_vectors(
-            pos_dir, neg_dir, selector_names=selector_names, layers=layers, normalize=True
+        vectors_by_selector, vector_norms, activation_norms = compute_all_concept_vectors(
+            pos_dir, neg_dir, selector_names=selector_names, layers=layers
         )
 
         metadata = {
@@ -360,7 +362,7 @@ class TestFullPipelineE2E:
             "positive_condition": {"name": "positive", "system_prompt": "..."},
             "negative_condition": {"name": "negative", "system_prompt": "..."},
         }
-        save_concept_vectors(vectors_by_selector, tmp_path, metadata)
+        save_concept_vectors(vectors_by_selector, tmp_path, metadata, vector_norms, activation_norms)
 
         # Verify manifest structure
         assert (tmp_path / "manifest.json").exists()
@@ -379,7 +381,7 @@ class TestFullPipelineE2E:
             loaded_layer, direction = load_concept_vector_for_steering(tmp_path, layer=layer, selector=selector)
             assert loaded_layer == layer
             assert direction.shape == (transformer_lens_model.hidden_dim,)
-            assert abs(np.linalg.norm(direction) - 1.0) < 1e-6
+            assert np.linalg.norm(direction) > 0
 
 
 class TestResumeCheckpointing:
@@ -565,8 +567,8 @@ class TestTokenSelectorCorrectness:
             max_new_tokens=32,
         )
 
-        vectors_by_selector = compute_all_concept_vectors(
-            pos_dir, neg_dir, selector_names=selector_names, layers=layers, normalize=True
+        vectors_by_selector, _, _ = compute_all_concept_vectors(
+            pos_dir, neg_dir, selector_names=selector_names, layers=layers
         )
 
         layer = layers[0]
@@ -579,10 +581,10 @@ class TestTokenSelectorCorrectness:
         assert not np.allclose(last_vec, mean_vec), "Last and mean concept vectors should differ"
         assert not np.allclose(first_vec, mean_vec), "First and mean concept vectors should differ"
 
-        # But they should all be unit normalized
-        assert abs(np.linalg.norm(last_vec) - 1.0) < 1e-6
-        assert abs(np.linalg.norm(first_vec) - 1.0) < 1e-6
-        assert abs(np.linalg.norm(mean_vec) - 1.0) < 1e-6
+        # All should have non-zero norm
+        assert np.linalg.norm(last_vec) > 0
+        assert np.linalg.norm(first_vec) > 0
+        assert np.linalg.norm(mean_vec) > 0
 
 
 class TestConfigIntegration:

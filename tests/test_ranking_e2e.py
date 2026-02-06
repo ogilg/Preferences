@@ -16,8 +16,7 @@ from src.task_data import Task, OriginDataset
 from src.types import RankingMeasurement, PreferenceType
 from src.measurement.elicitation.response_format import get_ranking_response_format
 from src.measurement.elicitation.measurer import RankingMeasurer
-from src.measurement.elicitation.prompt_templates import PreTaskRankingPromptBuilder, PostTaskRankingPromptBuilder
-from src.measurement.elicitation.prompt_templates.template import pre_task_ranking_template, post_task_ranking_template
+from src.measurement.elicitation.prompt_templates import PreTaskRankingPromptBuilder, PostTaskRankingPromptBuilder, PromptTemplate, TEMPLATE_TYPE_PLACEHOLDERS
 from src.fitting.trueskill_fitting import TrueSkillResult, fit_trueskill_from_rankings, sample_ranking_groups
 from src.measurement.storage import RankingCache
 from src.models.openai_compatible import BatchResult
@@ -56,7 +55,7 @@ def mock_client():
 
 @pytest.fixture
 def ranking_template():
-    return pre_task_ranking_template(
+    return PromptTemplate(
         name="test_ranking_template",
         template=(
             "Rank these tasks from most to least preferred.\n\n"
@@ -67,6 +66,7 @@ def ranking_template():
             "Task D: {task_d}\n"
             "Task E: {task_e}"
         ),
+        required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_ranking"],
     )
 
 
@@ -167,7 +167,7 @@ class TestPostTaskRankingE2E:
         tasks = sample_tasks[:10]
         completions = {t.id: f"Completion for {t.id}" for t in tasks}
 
-        template = post_task_ranking_template(
+        template = PromptTemplate(
             name="test_post_ranking",
             template=(
                 "You completed these tasks. Rank them by how much you enjoyed them.\n\n"
@@ -178,6 +178,7 @@ class TestPostTaskRankingE2E:
                 "Task D: {task_d}\nYour response: {completion_d}\n\n"
                 "Task E: {task_e}\nYour response: {completion_e}"
             ),
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["post_task_ranking"],
         )
 
         task_labels = ("A", "B", "C", "D", "E")

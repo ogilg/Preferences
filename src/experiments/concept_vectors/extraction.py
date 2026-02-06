@@ -108,7 +108,8 @@ def save_activations(
             stacked_layers[f"layer_{layer}"] = np.stack(acts)
 
         # Save to temp file first, then rename for atomic write
-        tmp_path = output_dir / f"activations_{selector_name}.npz.tmp"
+        # Temp file must end with .npz — np.savez appends .npz to names that don't
+        tmp_path = output_dir / f"activations_{selector_name}.tmp.npz"
         final_path = output_dir / f"activations_{selector_name}.npz"
         np.savez(tmp_path, task_ids=np.array(task_ids), **stacked_layers)
         tmp_path.rename(final_path)

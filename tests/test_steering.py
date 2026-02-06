@@ -374,33 +374,82 @@ class TestSteeringExperimentE2E:
     Runs full experiment with small config. Run with: pytest -m "gpu and slow"
     """
 
-    def test_full_experiment_pipeline(self):
+    @pytest.fixture
+    def mock_probe_and_completions(self, tmp_path):
+        """Create mock probe manifest, weights, and completions for E2E test."""
+        from src.task_data import load_tasks, OriginDataset
+
+        # Load 2 real tasks to use in the test
+        tasks = load_tasks(n=2, origins=[OriginDataset.WILDCHAT], seed=42)
+
+        # Create mock probe manifest + weights
+        probe_dir = tmp_path / "probe_manifest"
+        probes_subdir = probe_dir / "probes"
+        probes_subdir.mkdir(parents=True)
+
+        # Create fake probe weights: [coef_0, ..., coef_2047, intercept]
+        hidden_dim = 2048  # llama-3.2-1b
+        rng = np.random.default_rng(42)
+        weights = rng.standard_normal(hidden_dim + 1).astype(np.float32)
+        np.save(probes_subdir / "probe_test.npy", weights)
+
+        manifest = {
+            "probes": [{
+                "id": "test",
+                "layer": 8,
+                "file": "probes/probe_test.npy",
+                "templates": ["post_task_qualitative_001"],
+                "response_formats": ["regex"],
+            }],
+        }
+        with open(probe_dir / "manifest.json", "w") as f:
+            json.dump(manifest, f)
+
+        # Create mock completions
+        completions_path = tmp_path / "completions.json"
+        completions = [
+            {
+                "task_id": t.id,
+                "task_prompt": t.prompt,
+                "origin": t.origin.name,
+                "completion": f"Here is my response to task {t.id}.",
+            }
+            for t in tasks
+        ]
+        with open(completions_path, "w") as f:
+            json.dump(completions, f)
+
+        return probe_dir, completions_path, tasks
+
+    def test_full_experiment_pipeline(self, tmp_path, mock_probe_and_completions):
         """Run full steering experiment with minimal config."""
         from src.steering.runner import run_steering_experiment
         from src.steering.config import SteeringExperimentConfig
 
-        with tempfile.TemporaryDirectory() as tmpdir:
-            config = SteeringExperimentConfig(
-                model="llama-3.1-8b",
-                probe_manifest_dir=Path("probe_data/manifests/probe_4_all_datasets"),
-                probe_id="0004",
-                steering_coefficients=[-1.0, 0.0, 1.0],
-                n_tasks=2,
-                task_origins=["wildchat"],
-                rating_seeds=[0],
-                experiment_id="e2e_test",
-                output_dir=Path(tmpdir),
-                completions_path=Path("results/completions/llama-3.1-8b_seed0/completions.json"),
-            )
+        probe_dir, completions_path, tasks = mock_probe_and_completions
+        output_dir = tmp_path / "output"
 
-            results = run_steering_experiment(config)
+        config = SteeringExperimentConfig(
+            model="llama-3.2-1b",
+            probe_manifest_dir=probe_dir,
+            probe_id="test",
+            steering_coefficients=[-1.0, 0.0, 1.0],
+            n_tasks=2,
+            task_origins=["wildchat"],
+            rating_seeds=[0],
+            experiment_id="e2e_test",
+            output_dir=output_dir,
+            completions_path=completions_path,
+        )
 
-            # Verify results structure
-            assert "config" in results
-            assert "results" in results
-            assert len(results["results"]) == 2  # n_tasks
-            for task_result in results["results"]:
-                assert len(task_result["conditions"]) == 3  # 3 coefficients * 1 seed
+        results = run_steering_experiment(config)
+
+        # Verify results structure
+        assert "config" in results
+        assert "results" in results
+        assert len(results["results"]) == 2  # n_tasks
+        for task_result in results["results"]:
+            assert len(task_result["conditions"]) == 3  # 3 coefficients * 1 seed
 
     def test_analysis_on_experiment_results(self):
         """Run analysis on experiment results."""
