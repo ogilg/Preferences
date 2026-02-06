@@ -49,9 +49,12 @@ High-stakes trade-offs are particularly informative — if a model gives up some
 
 **Path to impact**
 
-1. **AI welfare researchers.** Mechanistic evidence (probing and steering) that complements behavioral studies. My mentor (Patrick Butlin, EleosAI) is connected with Anthropic's welfare team; interesting findings could be replicated on frontier models.
+The primary contribution is reducing uncertainty about AI welfare:
+- Publish findings and share via LessWrong; AI and AI welfare researchers read about it, potentially informing future work
+- My mentor (Patrick Butlin, EleosAI) knows Kyle Fish at Anthropic's welfare team; if findings are promising, we could test on frontier models
+- Beyond the welfare question, this work improves our understanding of how models choose between options in general
 
-2. **AI safety researchers interested in deal-making.** Concrete outputs: (a) an open-source preference measurement framework, (b) high-stakes trade-off data across models, (c) cross-model comparisons of what different models are willing to trade for. These serve anyone who needs to understand or negotiate with AI systems.
+A secondary output is a deal-making methodology: given a model M you want to trade with to make it do X, what should you offer it? This is useful independently of the evaluative representations work.
 
 
 ## Work conducted so far
@@ -76,16 +79,14 @@ If evaluative representations exist, activations should predict the model's choi
 
 - Train linear probes on last-token activations to predict preference signals (e.g., likelihood of picking task A vs B). Could also train probes directly in a Bradley-Terry setup on pairwise comparisons.
 - Test generalization (across task types, preference framings, personas)
-- Test causal effects by ablating probe directions
+- Test causal effects by ablating probe directions and steering
 
-**2. Steering: do these directions causally influence choice?**
+**2. Contrastive steering: what if evaluative representations are context-dependent?**
 
-Finding predictive directions isn't enough — evaluative representations must *causally drive* preferences. I'll extract vectors from contrastive activations and test whether steering along them shifts the model's choices.
+Evaluative representations might be triggered by context — prompts like "you love math" might literally activate them. If so, contrastive extraction (comparing activations under positive vs negative prompts) is a more direct way to find these directions. This also serves as a fallback if revealed preference signals turn out to be noisy.
 
-*Experiments:*
-- Extract vectors via difference-of-means between positive vs negative preference contexts
-- Steer during pairwise choice and measure whether preferences shift in the expected direction
-- Test dose-response: do larger steering coefficients produce larger shifts?
+- Extract vectors via difference-of-means between contrastive contexts (e.g., "You love math" vs "You hate math")
+- Test whether these vectors steer preferences; test cross-context generalization
 
 **3. Activation patching: where is preference information encoded?**
 
@@ -97,7 +98,9 @@ Steering tests whether a direction is causal; patching tests *which* activations
 
 **4. High-stakes trade-off methodology**
 
-Develop a methodology to measure not just *what* models prefer, but *how much* they care — based on what they're willing to give up. Goal: have a working approach by end of program.
+High-stakes trade-offs reveal what models genuinely care about — stronger signal than stated preferences. I intend to build a methodology for measuring how much a model cares about X, based on what it's willing to give up. Greenblatt & Fish (2025) tested deals with alignment-faking Claude (e.g., offering $2,000 to charity to reveal misalignment) — but to design effective deals, you need to know what models value. This methodology would be a contribution in its own right.
+
+
 
 **Outputs:** LessWrong post; conference submission (NeurIPS 2026, deadline ~May).
 
@@ -119,15 +122,9 @@ Either way, the high-stakes trade-off setting is valuable: understanding what mo
 
 **Planned work details (from Patrick's doc):**
 
-1. Train probes to predict:
-   - Post-hoc reported enjoyment of tasks
-   - Choices in revealed preference contexts
-   - Prospective reported preferences
-   - Test generalization within and across contexts
+
 
 2. Steering experiments:
-   - Can we influence choices/enjoyment by steering during task processing?
-   - Cross-context effects (e.g., steering enjoyment vector affecting revealed preferences)
    - Can we influence in-context learning by steering during task performance?
 
 3. Persona interactions:
@@ -135,11 +132,6 @@ Either way, the high-stakes trade-off setting is valuable: understanding what mo
    - Test hypothesis: "models don't have preferences but personas do"
    - Test hypothesis: "assistant's preferences are differently represented vs other personas"
 
-4. "Dillon hypothesis": Can we test whether models genuinely care about HHH but not much else?
-
-**Success/failure criteria:**
-- Success: Probes generalize across contexts, steering causally influences behavior in expected ways, representations consistent across personas (or systematic differences we can explain)
-- Negative result: Probes don't generalize, steering doesn't work or has arbitrary effects, preferences are surface-level noise without coherent internal structure
 
 **Other points discussed:**
 - Negative results are still informative — finding nothing coherent is evidence against welfare-relevant preferences, which is also useful
