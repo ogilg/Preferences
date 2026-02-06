@@ -1,7 +1,7 @@
 model: gemma-3-27b
 backend: huggingface
 
-n_tasks: 10000
+n_tasks: 30000
 task_origins:
   - wildchat
   - alpaca
@@ -11,7 +11,7 @@ task_origins:
 seed: 42
 
 selectors: [prompt_last]
-layers_to_extract: [0.5, 0.75]
+layers_to_extract: [0.25, 0.5, 0.6, 0.7, 0.8, 0.9]
 
 batch_size: 32
 
