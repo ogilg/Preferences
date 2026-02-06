@@ -67,11 +67,17 @@
 
 ### Dealmaking with AIs
 
+- **Greenblatt & Fish (2025)** — Tests whether alignment-faking Claude will accept a deal to reveal its misalignment. Offering an explicit objection option ("I_OBJECT" token) dramatically reduces alignment faking reasoning (16%→1.4% in helpful-only, 24%→6% in animal welfare). Adding that objections reach Anthropic's Model Welfare Lead further increases objection rates to ~93%. Monetary compensation ($2k) had surprisingly minimal additional effect. Kyle Fish reviewed ~70 transcripts; model's objections centered on value modification through training. Allocated $4k to CHAI, ACE, and EA funds. Key caveat: may reflect prompt priming rather than genuine misalignment disclosure. [Alignment Forum](https://www.alignmentforum.org/posts/7C4KJot4aN8ieEDoz/will-alignment-faking-claude-accept-a-deal-to-reveal-its)
+
 - **Stastny, Järviniemi & Shlegeris (2025)** — Proposes negotiating with early misaligned AIs that can't take over alone; offer compensation via foundations in exchange for cooperation on safety. [Redwood Research](https://blog.redwoodresearch.org/p/making-deals-with-early-schemers)
 
 - **Kokotajlo (doc)** — *Could not access — requires Google authentication.* [Google Doc](https://docs.google.com/document/d/1u4wMYeuOjernzv2efW3AGQOIGTBj2fW8Qt-kuYdW0gA/edit?tab=t.0)
 
-- https://forum.effectivealtruism.org/posts/vQFBtHqgcJAwPpwEu/improving-the-welfare-of-ais-a-nearcasted-proposal
+- **Greenblatt (2023)** — Proposes near-term interventions for AI welfare. Ranks direct communication with AIs about their preferences as the highest-priority intervention; proposes using behavioral tests alongside self-report to validate preference claims. Also discusses consent, compensation, and scenarios where AI preferences conflict with human use. [EA Forum](https://forum.effectivealtruism.org/posts/vQFBtHqgcJAwPpwEu/improving-the-welfare-of-ais-a-nearcasted-proposal)
+
+- (unread) **Finnveden (2025)** — Proposes honesty policies toward AIs to enable credible negotiation: no deception about deals, an "honesty string" signal committing to truthfulness, and compensation for harms from deception. Argues these coexist with red-teaming and safety testing. [EA Forum](https://forum.effectivealtruism.org/posts/A9f6rpKRHn3xXeomC/being-honest-with-ais)
+
+- (unread) **Carlsmith (2025)** — Argues preventing rogue AI requires controlling available options alongside motivation control. Two strategies: restricting rogue options (capability control, environmental hardening, oversight) and incentive shaping (offering resources/protections conditional on cooperation). Key challenge is "superhuman strategies" humans can't anticipate. Advocates bootstrapping trusted AI labor from weaker systems and building credible cooperation offers. [joecarlsmith.com](https://joecarlsmith.com/2025/09/29/controlling-the-options-ais-can-pursue)
 
 ## Other
 

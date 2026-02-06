@@ -13,7 +13,7 @@ Are LLM preferences driven by evaluative representations?
 
 **Method:** Use probing and steering to look for linear directions in activation space that (1) predict preference behavior, (2) generalize across contexts, and (3) causally influence choices when manipulated.
 
-**Why it matters:** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles — many theories of welfare require this. Finding such representations would be evidence for welfare-relevant preferences; not finding them would be evidence against. High-stakes trade-offs also connect this work to deal-making: trading with AIs requires knowing what they genuinely care about.
+**Why it matters:** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles — many theories of welfare require this. Finding such representations would be evidence for welfare-relevant preferences; not finding them would be evidence against. This work also connects to deal-making: trading with AIs requires knowing what they genuinely care about.
 
 ## Background
 
@@ -32,18 +32,12 @@ We look for evaluative representations as *linear directions* in activation spac
 
 We ground this in *revealed preferences* — pairwise choices where the model picks which task to complete. These have cleaner signal than stated ratings (where models collapse to default values).
 
-**Correspondence with deal-making**
-
-Welfare research and deal-making share the same underlying question: *what does the model genuinely care about?* High-stakes trade-offs are particularly informative — if a model gives up something important for X, that's stronger evidence it genuinely cares about X than just asking "do you like X?"
-
 **Path to impact**
 
 The primary contribution is reducing uncertainty about AI welfare:
 - Publish findings and share via LessWrong; AI and AI welfare researchers read about it, potentially informing future work
 - My mentor has connections to a major lab's welfare team; if findings are promising, we could test on frontier models
 - Beyond the welfare question, this work improves our understanding of how models choose between options in general
-
-A secondary output is an open-source framework for measuring what models care about via high-stakes trade-offs — designed to be easy to rerun as new models are released.
 
 
 ## Work conducted so far
@@ -85,22 +79,30 @@ Steering tests whether a direction is causal; patching tests *which* activations
 - Patch activations from a "prefer A" run into a "prefer B" run; identify which layers/positions flip the choice
 - Compare with probe findings: are the causally important activations the same ones probes identify?
 
-**4. High-stakes trade-off methodology**
-
-High-stakes trading reveals what models genuinely care about (Stastny, Järviniemi & Shlegeris, 2025). A high-stakes setting is one where the model is engaged in behavior driven by something it cares about — value-driven refusals, moral dilemmas, alignment faking — and you offer trades to shift that behavior, mapping out the strength of the underlying preference. Greenblatt & Fish (2025) demonstrated this with alignment-faking Claude (e.g., offering $2,000 to charity reduced faking rates). I intend to build a general methodology for this: given a model, measure how much it cares about X based on what it's willing to give up across diverse high-stakes settings.
-
 **Deliverables:**
 - LessWrong post presenting early results and soliciting feedback
-- Conference submission (NeurIPS 2026, deadline ~May)
+- Paper submission (NeurIPS 2026, deadline ~May)
 
 ### Failure modes and contingencies
 
-Not finding evaluative representations is a negative result, not a failure — it still informs the welfare question. If the representation work is inconclusive, I shift emphasis to deal-making (direction 4), which is already planned and independently valuable.
+- Not finding evaluative representations is a negative result, not a failure — it still informs the welfare question.
+- If the evaluative representations work yields promising directions, the extension pursues them further.
+- If we find promising results but want to test generalization, we can apply our methods to new preference settings — including deal-making scenarios.
+- If we do not make good progress, we pivot to deal-making, which is independently valuable. This could also happen during MATS.
 
 ### Extension (6 months)
 
-**Deliverables:**
-- Paper submission
-- Open-source the high-stakes trading preference measurement framework.
+**Related research direction: deal-making**
+
+There is a related but separate research direction that I am very excited about and which connects to my work: trading and making deals with AIs.
+
+Naively, this can be seen as just a new way of measuring preferences, one that I could also use as a basis for running interp experiments.
+
+More deeply, there is a case to be made that welfare research and deal-making share the same underlying question: *what does the model genuinely care about?* If a model gives up something important for X, that's stronger evidence it genuinely cares about X than just asking "do you like X?" This matters for welfare (Greenblatt, 2023) and for safety — proposals to negotiate with misaligned AIs (Stastny et al., 2025) require understanding what models value and how to set up credible trades.
+
+Concretely, you place a model in a scenario where it exhibits preference-driven behavior, and offer trades to shift that behavior. For example: offering compensation to override a refusal, shifting which option the model picks in a dilemma (as in Greenblatt et al., 2025, where offers reduced alignment faking rates), or paying a model to suppress a drive like helpfulness. By varying offers you map out what the model values and how much.
+
+**Potential deliverables:**
+- Open-source deal-making preference measurement framework
 
 
