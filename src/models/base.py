@@ -27,10 +27,15 @@ def select_mean(activations: torch.Tensor, first_completion_idx: int) -> torch.T
     return activations[first_completion_idx:, :].mean(dim=0)
 
 
+def select_prompt_last(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
+    return activations[first_completion_idx - 1, :]
+
+
 SELECTOR_REGISTRY: dict[str, TokenSelectorFn] = {
     "last": select_last,
     "first": select_first,
     "mean": select_mean,
+    "prompt_last": select_prompt_last,
 }
 
 
@@ -79,10 +84,22 @@ def select_mean_batched(
     return masked_acts.sum(dim=1) / completion_lengths
 
 
+def select_prompt_last_batched(
+    activations: torch.Tensor,
+    first_completion_indices: torch.Tensor,
+    seq_lengths: torch.Tensor,
+) -> torch.Tensor:
+    """Last token before completion (final assistant tag token). Returns (batch, d_model)."""
+    batch_size = activations.shape[0]
+    indices = first_completion_indices - 1
+    return activations[torch.arange(batch_size, device=activations.device), indices, :]
+
+
 BATCHED_SELECTOR_REGISTRY: dict[str, BatchedTokenSelectorFn] = {
     "last": select_last_batched,
     "first": select_first_batched,
     "mean": select_mean_batched,
+    "prompt_last": select_prompt_last_batched,
 }
 
 
