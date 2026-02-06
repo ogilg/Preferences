@@ -9,7 +9,7 @@ import torch
 import numpy as np
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from src.models.base import BATCHED_SELECTOR_REGISTRY, GenerationResult, SteeringHook
+from src.models.base import BATCHED_SELECTOR_REGISTRY, COMPLETION_SELECTORS, GenerationResult, SteeringHook
 from src.models.registry import is_valid_model, get_hf_name
 from src.models.architecture import get_layers, get_n_layers, get_hidden_dim
 from src.types import Message
@@ -22,7 +22,7 @@ class HuggingFaceModel:
         dtype: str = "bfloat16",
         device: str = "cuda",
         max_new_tokens: int = 256,
-        attn_implementation: str = "flash_attention_2",
+        attn_implementation: str = "sdpa",
     ):
         self.canonical_model_name = model_name
         if is_valid_model(model_name):
@@ -165,8 +165,6 @@ class HuggingFaceModel:
         new_tokens = output_ids[0, prompt_len:]
         return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
-    COMPLETION_SELECTORS = {"first", "last", "mean"}
-
     @torch.inference_mode()
     def get_activations(
         self,
@@ -185,7 +183,7 @@ class HuggingFaceModel:
         has_completion = messages and messages[-1]["role"] == "assistant"
 
         if not has_completion:
-            needs_completion = set(selector_names) & self.COMPLETION_SELECTORS
+            needs_completion = set(selector_names) & COMPLETION_SELECTORS
             if needs_completion:
                 raise ValueError(
                     f"Selectors {needs_completion} require an assistant message, "
@@ -252,7 +250,7 @@ class HuggingFaceModel:
                 token_ids_list.append(ids)
                 first_completion_indices.append(self._get_assistant_start_position(messages))
             else:
-                needs_completion = set(selector_names) & self.COMPLETION_SELECTORS
+                needs_completion = set(selector_names) & COMPLETION_SELECTORS
                 if needs_completion:
                     raise ValueError(
                         f"Selectors {needs_completion} require an assistant message, "

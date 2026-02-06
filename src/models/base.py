@@ -70,6 +70,8 @@ SELECTOR_REGISTRY: dict[str, TokenSelectorFn] = {
     "prompt_last": select_prompt_last,
 }
 
+# Selectors that require a completion (assistant message)
+COMPLETION_SELECTORS = {"first", "last", "mean"}
 
 # Batched selectors: operate on (batch, seq_len, d_model) tensors
 BatchedTokenSelectorFn = Callable[[torch.Tensor, torch.Tensor, torch.Tensor], torch.Tensor]

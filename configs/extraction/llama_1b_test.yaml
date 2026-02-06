@@ -1,0 +1,13 @@
+model: llama-3.2-1b
+backend: huggingface
+
+n_tasks: 20
+task_origins:
+  - wildchat
+  - alpaca
+seed: 42
+
+selectors: [prompt_last]
+layers_to_extract: [0.5, 0.75]
+
+batch_size: 8
