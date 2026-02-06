@@ -19,42 +19,31 @@ Are LLM preferences driven by evaluative representations?
 
 **Why evaluative representations matter for welfare**
 
-Many theories of welfare depend on evaluative representations playing certain functional roles (Long et al., 2024):
-- Under hedonism: welfare depends on valenced experiences, likely constituted by evaluative representations
-- Under desire satisfaction views: welfare depends on getting what one values
-- Even objective list views typically assume valuable things are wanted by those to whom they're valuable
-
-Whether LLMs are moral patients may turn on whether they have evaluative representations playing the right causal roles.
+Across major theories of welfare — hedonism, desire satisfaction, and objective list views — evaluative representations playing the right functional roles are central to moral patiency (Long et al., 2024). Whether LLMs are moral patients may turn on whether they have such representations.
 
 **From evaluative representations to methodology**
 
 *Preferences* are behavioral patterns — choosing A over B. *Evaluative representations* are the hypothesized internal mechanism: representations that encode "how good/bad is this?" and causally drive those choices. The research question is whether preferences are driven by evaluative representations, or by something else (e.g., surface-level heuristics, training artifacts).
 
-We look for evaluative representations in the form of *linear directions* in activation space. Why linear? Recent work shows that many high-level behavioral traits — refusal (Arditi et al., 2024), persona characteristics like sycophancy (Lindsey et al., 2025), "Assistant-ness" (Lu et al., 2026) — are encoded as linear directions that causally influence behavior. Linear directions are also tractable: we can find them with probes and test causality with steering.
-
-The methodology follows from the definition of evaluative representations:
-- If they *encode value* → we should find directions that *predict* preferences (probing)
-- If they *causally drive* preferences → steering along those directions should *shift* choices
-- If they're genuine evaluative representations (not task-specific correlations) → they should *generalize* across contexts
+We look for evaluative representations as *linear directions* in activation space — recent work shows many high-level traits (refusal, sycophancy, "Assistant-ness") are encoded this way (Arditi et al., 2024; Lindsey et al., 2025; Lu et al., 2026). The methodology follows from the definition:
+- If they *encode value* → probes should *predict* preferences
+- If they *causally drive* choices → steering should *shift* them
+- If they're genuine evaluative representations → they should *generalize* across contexts
 
 We ground this in *revealed preferences* — pairwise choices where the model picks which task to complete. These have cleaner signal than stated ratings (where models collapse to default values).
 
 **Correspondence with deal-making**
 
-Welfare research and deal-making share the same underlying question: *what does the model genuinely care about?* This correspondence means progress on one agenda advances the other:
-- For welfare: what you genuinely care about is (plausibly) welfare-relevant
-- For deal-making: what you genuinely care about is what you'd trade for
-
-High-stakes trade-offs are particularly informative — if a model gives up something important for X, that's stronger evidence it genuinely cares about X than just asking "do you like X?"
+Welfare research and deal-making share the same underlying question: *what does the model genuinely care about?* High-stakes trade-offs are particularly informative — if a model gives up something important for X, that's stronger evidence it genuinely cares about X than just asking "do you like X?"
 
 **Path to impact**
 
 The primary contribution is reducing uncertainty about AI welfare:
 - Publish findings and share via LessWrong; AI and AI welfare researchers read about it, potentially informing future work
-- My mentor (Patrick Butlin, EleosAI) knows Kyle Fish at Anthropic's welfare team; if findings are promising, we could test on frontier models
+- My mentor has connections to a major lab's welfare team; if findings are promising, we could test on frontier models
 - Beyond the welfare question, this work improves our understanding of how models choose between options in general
 
-A secondary output is a deal-making methodology: given a model M you want to trade with to make it do X, what should you offer it? This is useful independently of the evaluative representations work.
+A secondary output is an open-source framework for measuring what models care about via high-stakes trade-offs — designed to be easy to rerun as new models are released.
 
 
 ## Work conducted so far
@@ -78,15 +67,15 @@ I plan to run experiments in three directions, each testing a different aspect o
 If evaluative representations exist, activations should predict the model's choices.
 
 - Train linear probes on last-token activations to predict preference signals (e.g., likelihood of picking task A vs B). Could also train probes directly in a Bradley-Terry setup on pairwise comparisons.
-- Test generalization (across task types, preference framings, personas)
+- Test generalization (across task types, preference framings, personas — e.g., do models have preferences or only personas?)
 - Test causal effects by ablating probe directions and steering
 
 **2. Contrastive steering: what if evaluative representations are context-dependent?**
 
-Evaluative representations might be triggered by context — prompts like "you love math" might literally activate them. If so, contrastive extraction (comparing activations under positive vs negative prompts) is a more direct way to find these directions. This also serves as a fallback if revealed preference signals turn out to be noisy.
+Evaluative representations might be triggered by context — prompts like "you love math" might literally activate them. If so, contrastive extraction (comparing activations under positive vs negative prompts) is a more direct way to find these directions.
 
 - Extract vectors via difference-of-means between contrastive contexts (e.g., "You love math" vs "You hate math")
-- Test whether these vectors steer preferences; test cross-context generalization
+- Test whether these vectors steer preferences; test how much they generalize vs leak into other behaviors
 
 **3. Activation patching: where is preference information encoded?**
 
@@ -98,43 +87,20 @@ Steering tests whether a direction is causal; patching tests *which* activations
 
 **4. High-stakes trade-off methodology**
 
-High-stakes trade-offs reveal what models genuinely care about — stronger signal than stated preferences. I intend to build a methodology for measuring how much a model cares about X, based on what it's willing to give up. Greenblatt & Fish (2025) tested deals with alignment-faking Claude (e.g., offering $2,000 to charity to reveal misalignment) — but to design effective deals, you need to know what models value. This methodology would be a contribution in its own right.
+High-stakes trading reveals what models genuinely care about (Stastny, Järviniemi & Shlegeris, 2025). A high-stakes setting is one where the model is engaged in behavior driven by something it cares about — value-driven refusals, moral dilemmas, alignment faking — and you offer trades to shift that behavior, mapping out the strength of the underlying preference. Greenblatt & Fish (2025) demonstrated this with alignment-faking Claude (e.g., offering $2,000 to charity reduced faking rates). I intend to build a general methodology for this: given a model, measure how much it cares about X based on what it's willing to give up across diverse high-stakes settings.
 
+**Deliverables:**
+- LessWrong post presenting early results and soliciting feedback
+- Conference submission (NeurIPS 2026, deadline ~May)
 
+### Failure modes and contingencies
 
-**Outputs:** LessWrong post; conference submission (NeurIPS 2026, deadline ~May).
+Not finding evaluative representations is a negative result, not a failure — it still informs the welfare question. If the representation work is inconclusive, I shift emphasis to deal-making (direction 4), which is already planned and independently valuable.
 
 ### Extension (6 months)
 
-The extension direction depends on how the evaluative representation work goes:
+**Deliverables:**
+- Paper submission
+- Open-source the high-stakes trading preference measurement framework.
 
-- **If promising:** Focus on evaluative representations as the core contribution. High-stakes trade-offs become one measurement setting among others.
-- **If messy/inconclusive:** Pivot toward deal-making as the main contribution — the high-stakes methodology becomes central, and the representation work provides supporting evidence where it exists.
-
-Either way, the high-stakes trade-off setting is valuable: understanding what models genuinely care about (and how much) serves both welfare research and anyone who needs to negotiate with AI systems.
-
-**Outputs:** Paper submission; open-source high-stakes trade-off framework — input a model, get back what it cares about most in a given context.
-
-
----
-
-## Notes (not part of FRP — for reference)
-
-**Planned work details (from Patrick's doc):**
-
-
-
-2. Steering experiments:
-   - Can we influence in-context learning by steering during task performance?
-
-3. Persona interactions:
-   - How do probe vectors interact with prompting/personas?
-   - Test hypothesis: "models don't have preferences but personas do"
-   - Test hypothesis: "assistant's preferences are differently represented vs other personas"
-
-
-**Other points discussed:**
-- Negative results are still informative — finding nothing coherent is evidence against welfare-relevant preferences, which is also useful
-- Credibility argument (decided to leave out): demonstrating you care about AI welfare makes you a more credible negotiating partner for deal-making
-- The framing is "evaluative representations are the hypothesis" not "evaluative representations are the goal" — we're open to finding other mechanisms
 
