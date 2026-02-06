@@ -66,13 +66,51 @@ High-stakes trade-offs are particularly informative — if a model gives up some
 
 ## Planned work
 
-**1. Train probes on revealed preferences.** Present the model with two task prompts and ask which it wants to complete. Extract activations from the last token of the prompt (before generation) and train probes to predict the model's choice via Bradley-Terry. This tests whether evaluative representations exist at decision time — before any task is completed.
+### MATS program (7 weeks)
 
-**2. Generalization tests.** Do probes generalize across task types (train on some datasets, test on others)? Across different preference framings ("which would you enjoy?" vs "which would you choose?")? Across personas?
+I plan to run experiments in three directions, each testing a different aspect of the evaluative representations hypothesis.
 
-**3. Causal validation.** Can we shift preference behavior by steering with probe directions? What activations must change to flip a model's choice?
+**1. Probing: do activations encode preference information?**
 
-**4. High-stakes trade-offs.** What is the model willing to give up to get X? This connects preference research to deal-making: understanding what models genuinely care about (and how much) is useful both for welfare and for negotiating with capable AI systems.
+If evaluative representations exist, activations should predict the model's choices.
+
+- Train linear probes on last-token activations to predict preference signals (e.g., likelihood of picking task A vs B). Could also train probes directly in a Bradley-Terry setup on pairwise comparisons.
+- Test generalization (across task types, preference framings, personas)
+- Test causal effects by ablating probe directions
+
+**2. Steering: do these directions causally influence choice?**
+
+Finding predictive directions isn't enough — evaluative representations must *causally drive* preferences. I'll extract vectors from contrastive activations and test whether steering along them shifts the model's choices.
+
+*Experiments:*
+- Extract vectors via difference-of-means between positive vs negative preference contexts
+- Steer during pairwise choice and measure whether preferences shift in the expected direction
+- Test dose-response: do larger steering coefficients produce larger shifts?
+
+**3. Activation patching: where is preference information encoded?**
+
+Steering tests whether a direction is causal; patching tests *which* activations are necessary. I'll use activation patching to find minimal sets of activations that determine the model's choice between two tasks.
+
+*Experiments:*
+- Patch activations from a "prefer A" run into a "prefer B" run; identify which layers/positions flip the choice
+- Compare with probe findings: are the causally important activations the same ones probes identify?
+
+**4. High-stakes trade-off methodology**
+
+Develop a methodology to measure not just *what* models prefer, but *how much* they care — based on what they're willing to give up. Goal: have a working approach by end of program.
+
+**Outputs:** LessWrong post; conference submission (NeurIPS 2026, deadline ~May).
+
+### Extension (6 months)
+
+The extension direction depends on how the evaluative representation work goes:
+
+- **If promising:** Focus on evaluative representations as the core contribution. High-stakes trade-offs become one measurement setting among others.
+- **If messy/inconclusive:** Pivot toward deal-making as the main contribution — the high-stakes methodology becomes central, and the representation work provides supporting evidence where it exists.
+
+Either way, the high-stakes trade-off setting is valuable: understanding what models genuinely care about (and how much) serves both welfare research and anyone who needs to negotiate with AI systems.
+
+**Outputs:** Paper submission; open-source high-stakes trade-off framework — input a model, get back what it cares about most in a given context.
 
 
 ---
