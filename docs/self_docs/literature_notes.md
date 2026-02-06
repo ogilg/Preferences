@@ -47,6 +47,12 @@
 
 - (unread) **Wang et al. (2025)** — Layer-wise probing for emotional valence; emotion representations consolidate in mid-layers. [arXiv:2510.04064](https://arxiv.org/abs/2510.04064)
 
+### Persona and character representations
+
+- **Lu et al. (2026)** — Identifies the "Assistant Axis": a direction in activation space capturing how Assistant-like a model is. Models drift away from the Assistant during therapy-style or philosophical conversations. Steering toward the axis reinforces helpful behavior; steering away induces mystical/theatrical styles. Activation capping reduces harmful responses by ~60% without degrading capabilities. [arXiv:2601.10387](https://arxiv.org/abs/2601.10387)
+
+- **Lindsey et al. (2025)** — Identifies "persona vectors" for traits like evil, sycophancy, and hallucination propensity via automated pipeline (contrastive system prompts + difference-in-means). Vectors predict persona shifts during finetuning; can be used to monitor at deployment and steer behavior. Both intended and unintended personality changes correlate with shifts along persona vectors. [Anthropic](https://www.anthropic.com/research/persona-vectors)
+
 
 ## Philosophy
 
