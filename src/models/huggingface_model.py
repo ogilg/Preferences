@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
-from dataclasses import dataclass
 from typing import Callable, Iterator
 
 import torch
@@ -15,14 +14,6 @@ from src.models.registry import is_valid_model, get_hf_name
 from src.models.architecture import get_layers, get_n_layers, get_hidden_dim
 from src.models.transformer_lens import GenerationResult, SteeringHook
 from src.types import Message
-
-
-@dataclass
-class TokenizedBatch:
-    """Tokenized batch with metadata for activation extraction."""
-    input_ids: torch.Tensor  # (batch, max_seq_len)
-    attention_mask: torch.Tensor  # (batch, max_seq_len)
-    first_completion_indices: torch.Tensor  # (batch,) adjusted for padding
 
 
 class HuggingFaceModel:
@@ -80,49 +71,6 @@ class HuggingFaceModel:
         prompt_messages = messages[:-1]
         prompt_with_header = self._format_messages(prompt_messages, add_generation_prompt=True)
         return self._tokenize(prompt_with_header).shape[1]
-
-    def _tokenize_batch(self, messages_batch: list[list[Message]]) -> TokenizedBatch:
-        """Tokenize batch with left-padding and compute completion indices.
-
-        Left-padding is required for batched causal LM inference: it aligns the final
-        tokens so attention masks work correctly. We must then adjust first_completion_indices
-        to account for the padding tokens prepended to shorter sequences.
-
-        Example with 2 sequences (. = pad, | = first_completion_idx):
-            Before padding:  "user: hi|assistant: hello"     (len=10, idx=5)
-                             "user: hey there|assistant: yo" (len=15, idx=10)
-            After left-pad:  ".....user: hi|assistant: hello"     (idx=5+5=10)
-                             "user: hey there|assistant: yo"      (idx=10+0=10)
-        """
-        prompts = [self._format_messages(msgs, add_generation_prompt=False) for msgs in messages_batch]
-        first_completion_indices = torch.tensor(
-            [self._get_assistant_start_position(msgs) for msgs in messages_batch],
-            device=self.device,
-        )
-
-        original_padding_side = self.tokenizer.padding_side
-        self.tokenizer.padding_side = "left"
-        try:
-            encoded = self.tokenizer(prompts, return_tensors="pt", padding=True)
-        finally:
-            self.tokenizer.padding_side = original_padding_side
-
-        input_ids = encoded.input_ids.to(self.device)
-        attention_mask = encoded.attention_mask.to(self.device)
-
-        # Adjust indices: padding_length = max_seq_len - actual_seq_len
-        seq_lengths = attention_mask.sum(dim=1)
-        padding_lengths = input_ids.shape[1] - seq_lengths
-        adjusted_indices = first_completion_indices + padding_lengths
-
-        for i in range(len(messages_batch)):
-            if adjusted_indices[i] >= input_ids.shape[1]:
-                raise ValueError(
-                    f"Sample {i}: assistant start position {first_completion_indices[i].item()} "
-                    f"is beyond sequence length {seq_lengths[i].item()}."
-                )
-
-        return TokenizedBatch(input_ids, attention_mask, adjusted_indices)
 
     @contextmanager
     def _hooked_forward(
@@ -213,6 +161,52 @@ class HuggingFaceModel:
         return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
     @torch.inference_mode()
+    def get_activations(
+        self,
+        messages: list[Message],
+        layers: list[int],
+        selector_names: list[str],
+    ) -> dict[str, dict[int, np.ndarray]]:
+        """Get activations for a single conversation.
+
+        Returns: {selector_name: {layer: (d_model,) array}}
+        """
+        prompt = self._format_messages(messages, add_generation_prompt=False)
+        input_ids = self._tokenize(prompt)
+        first_completion_idx = self._get_assistant_start_position(messages)
+        seq_len = input_ids.shape[1]
+
+        if first_completion_idx >= seq_len:
+            raise ValueError(
+                f"Assistant start position {first_completion_idx} is beyond "
+                f"sequence length {seq_len}. "
+                "This can happen if the assistant message is empty."
+            )
+
+        # Chat templates add special tokens (e.g. <|eot_id|>) even for empty
+        # assistant messages, so first_completion_idx < seq_len can hold with
+        # zero real content tokens. Require at least 2 tokens after the prompt
+        # (content + end-of-turn marker).
+        n_completion_tokens = seq_len - first_completion_idx
+        if n_completion_tokens < 2:
+            raise ValueError(
+                f"Assistant message has no content tokens (only {n_completion_tokens} "
+                f"token after prompt, likely just an end-of-turn marker). "
+                "This can happen if the assistant message is empty."
+            )
+
+        with self._hooked_forward(layers) as activations:
+            self.model(input_ids)
+
+        first_indices = torch.tensor([first_completion_idx])
+        batched = self._apply_selectors(
+            activations, selector_names, first_indices, seq_len,
+        )
+        return {
+            name: {layer: acts[0] for layer, acts in layer_dict.items()}
+            for name, layer_dict in batched.items()
+        }
+
     def get_activations_batch(
         self,
         messages_batch: list[list[Message]],
@@ -221,29 +215,24 @@ class HuggingFaceModel:
     ) -> dict[str, dict[int, np.ndarray]]:
         """Get activations for a batch of conversations.
 
+        Processes each sample individually to avoid bfloat16 non-determinism from
+        left-padding in batched forward passes. Results are stacked along a new
+        batch dimension.
+
         Returns: {selector_name: {layer: (batch, d_model) array}}
         """
-        batch = self._tokenize_batch(messages_batch)
+        per_sample = [
+            self.get_activations(messages, layers, selector_names)
+            for messages in messages_batch
+        ]
 
-        with self._hooked_forward(layers) as activations:
-            self.model(batch.input_ids, attention_mask=batch.attention_mask)
-
-        return self._apply_selectors(
-            activations, selector_names, batch.first_completion_indices, batch.input_ids.shape[1],
-        )
-
-    def get_activations(
-        self,
-        messages: list[Message],
-        layers: list[int],
-        selector_names: list[str],
-    ) -> dict[str, dict[int, np.ndarray]]:
-        """Get activations for a single conversation."""
-        batched = self.get_activations_batch([messages], layers, selector_names)
-        return {
-            name: {layer: acts[0] for layer, acts in layer_dict.items()}
-            for name, layer_dict in batched.items()
-        }
+        result: dict[str, dict[int, np.ndarray]] = {name: {} for name in selector_names}
+        for name in selector_names:
+            for layer in layers:
+                result[name][layer] = np.stack(
+                    [sample[name][layer] for sample in per_sample]
+                )
+        return result
 
     @torch.inference_mode()
     def generate_with_activations(
