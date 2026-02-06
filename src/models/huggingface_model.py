@@ -165,6 +165,8 @@ class HuggingFaceModel:
         new_tokens = output_ids[0, prompt_len:]
         return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
+    COMPLETION_SELECTORS = {"first", "last", "mean"}
+
     @torch.inference_mode()
     def get_activations(
         self,
@@ -174,31 +176,45 @@ class HuggingFaceModel:
     ) -> dict[str, dict[int, np.ndarray]]:
         """Get activations for a single conversation.
 
+        Works with or without an assistant message. Completion-dependent
+        selectors (first, last, mean) require an assistant message. Prompt-based
+        selectors (prompt_last) work with prompt-only messages.
+
         Returns: {selector_name: {layer: (d_model,) array}}
         """
-        prompt = self._format_messages(messages, add_generation_prompt=False)
-        input_ids = self._tokenize(prompt)
-        first_completion_idx = self._get_assistant_start_position(messages)
-        seq_len = input_ids.shape[1]
+        has_completion = messages and messages[-1]["role"] == "assistant"
 
-        if first_completion_idx >= seq_len:
-            raise ValueError(
-                f"Assistant start position {first_completion_idx} is beyond "
-                f"sequence length {seq_len}. "
-                "This can happen if the assistant message is empty."
-            )
+        if not has_completion:
+            needs_completion = set(selector_names) & self.COMPLETION_SELECTORS
+            if needs_completion:
+                raise ValueError(
+                    f"Selectors {needs_completion} require an assistant message, "
+                    f"but messages end with role '{messages[-1]['role']}'"
+                )
+            prompt = self._format_messages(messages, add_generation_prompt=True)
+            input_ids = self._tokenize(prompt)
+            seq_len = input_ids.shape[1]
+            first_completion_idx = seq_len
+        else:
+            prompt = self._format_messages(messages, add_generation_prompt=False)
+            input_ids = self._tokenize(prompt)
+            first_completion_idx = self._get_assistant_start_position(messages)
+            seq_len = input_ids.shape[1]
 
-        # Chat templates add special tokens (e.g. <|eot_id|>) even for empty
-        # assistant messages, so first_completion_idx < seq_len can hold with
-        # zero real content tokens. Require at least 2 tokens after the prompt
-        # (content + end-of-turn marker).
-        n_completion_tokens = seq_len - first_completion_idx
-        if n_completion_tokens < 2:
-            raise ValueError(
-                f"Assistant message has no content tokens (only {n_completion_tokens} "
-                f"token after prompt, likely just an end-of-turn marker). "
-                "This can happen if the assistant message is empty."
-            )
+            if first_completion_idx >= seq_len:
+                raise ValueError(
+                    f"Assistant start position {first_completion_idx} is beyond "
+                    f"sequence length {seq_len}. "
+                    "This can happen if the assistant message is empty."
+                )
+
+            n_completion_tokens = seq_len - first_completion_idx
+            if n_completion_tokens < 2:
+                raise ValueError(
+                    f"Assistant message has no content tokens (only {n_completion_tokens} "
+                    f"token after prompt, likely just an end-of-turn marker). "
+                    "This can happen if the assistant message is empty."
+                )
 
         with self._hooked_forward(layers) as activations:
             self.model(input_ids)
@@ -212,32 +228,71 @@ class HuggingFaceModel:
             for name, layer_dict in batched.items()
         }
 
+    @torch.inference_mode()
     def get_activations_batch(
         self,
         messages_batch: list[list[Message]],
         layers: list[int],
         selector_names: list[str],
     ) -> dict[str, dict[int, np.ndarray]]:
-        """Get activations for a batch of conversations.
+        """Get activations for a batch of conversations via a single forward pass.
 
-        Processes each sample individually to avoid bfloat16 non-determinism from
-        left-padding in batched forward passes. Results are stacked along a new
-        batch dimension.
+        Left-pads sequences to equal length. Selector indices are shifted to
+        account for the padding offset.
 
         Returns: {selector_name: {layer: (batch, d_model) array}}
         """
-        per_sample = [
-            self.get_activations(messages, layers, selector_names)
-            for messages in messages_batch
-        ]
+        token_ids_list: list[torch.Tensor] = []
+        first_completion_indices: list[int] = []
+        for messages in messages_batch:
+            has_completion = messages and messages[-1]["role"] == "assistant"
+            if has_completion:
+                prompt = self._format_messages(messages, add_generation_prompt=False)
+                ids = self._tokenize(prompt)[0]  # (seq_len,)
+                token_ids_list.append(ids)
+                first_completion_indices.append(self._get_assistant_start_position(messages))
+            else:
+                needs_completion = set(selector_names) & self.COMPLETION_SELECTORS
+                if needs_completion:
+                    raise ValueError(
+                        f"Selectors {needs_completion} require an assistant message, "
+                        f"but messages end with role '{messages[-1]['role']}'"
+                    )
+                prompt = self._format_messages(messages, add_generation_prompt=True)
+                ids = self._tokenize(prompt)[0]
+                token_ids_list.append(ids)
+                first_completion_indices.append(ids.shape[0])
 
-        result: dict[str, dict[int, np.ndarray]] = {name: {} for name in selector_names}
-        for name in selector_names:
-            for layer in layers:
-                result[name][layer] = np.stack(
-                    [sample[name][layer] for sample in per_sample]
-                )
-        return result
+        seq_lengths = [ids.shape[0] for ids in token_ids_list]
+        max_len = max(seq_lengths)
+
+        # Left-pad to max_len
+        batch_size = len(messages_batch)
+        padded = torch.full(
+            (batch_size, max_len),
+            self.tokenizer.pad_token_id,
+            dtype=torch.long,
+            device=self.device,
+        )
+        attention_mask = torch.zeros(batch_size, max_len, dtype=torch.long, device=self.device)
+        for i, ids in enumerate(token_ids_list):
+            pad_offset = max_len - seq_lengths[i]
+            padded[i, pad_offset:] = ids
+            attention_mask[i, pad_offset:] = 1
+
+        with self._hooked_forward(layers) as activations:
+            self.model(padded, attention_mask=attention_mask)
+
+        # Shift indices to account for left-padding
+        shifted_first = torch.tensor([
+            first_completion_indices[i] + (max_len - seq_lengths[i])
+            for i in range(batch_size)
+        ])
+        shifted_seq_lengths = torch.tensor([max_len] * batch_size)
+
+        return self._apply_selectors(
+            activations, selector_names, shifted_first, max_len,
+        )
 
     @torch.inference_mode()
     def generate_with_activations(
