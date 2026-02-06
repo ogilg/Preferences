@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 from src.probes.baselines import run_all_baselines, aggregate_noise_baselines, BaselineType
-from src.probes.config import ProbeTrainingConfig
+from src.probes.config import ProbeConfig
 
 
 def parse_args() -> argparse.Namespace:
@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
         "--reference-config",
         type=Path,
         required=True,
-        help="Path to probe training config YAML (defines templates, layers, etc.)",
+        help="Path to probe config YAML (defines templates, layers, etc.)",
     )
     parser.add_argument(
         "--task-description-dir",
@@ -42,11 +42,11 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
-    config = ProbeTrainingConfig.from_yaml(args.reference_config)
+    config = ProbeConfig.from_yaml(args.reference_config)
 
     print(f"Baseline Experiments")
     print(f"Reference config: {args.reference_config}")
-    print(f"Template combinations: {config.template_combinations}")
+    print(f"Template combinations: {config.training_data.template_combinations}")
     print(f"Layers: {config.layers}")
     print(f"Task description dir: {args.task_description_dir}")
     print(f"Noise seeds: {args.n_noise_seeds}")

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.probes.linear_probe import train_and_evaluate
+from src.probes.core.linear_probe import train_and_evaluate
 
 from .types import BaselineResult, BaselineType
 

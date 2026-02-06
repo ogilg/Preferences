@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 
 from src.steering.config import SteeringExperimentConfig, load_steering_config
-from src.probes.storage import load_probe_direction
+from src.probes.core.storage import load_probe_direction
 
 
 @pytest.fixture(autouse=True)

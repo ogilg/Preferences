@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-import numpy as np
 from pathlib import Path
+
+import numpy as np
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score, mean_squared_error
 
-from src.probes.storage import load_probe, load_manifest
-from src.probes.activations import load_activations
+from src.probes.core.storage import load_probe, load_manifest
+from src.probes.core.activations import load_activations
 from src.measurement.storage.loading import load_pooled_scores, load_run_utilities
 
 
@@ -64,7 +65,7 @@ def evaluate_probe_on_data(
     # Compute standard metrics
     r2 = r2_score(y, y_pred)
     mse = mean_squared_error(y, y_pred)
-    pearson_r, _ = pearsonr(y, y_pred)
+    pearson_r_val, _ = pearsonr(y, y_pred)
 
     # Compute mean-adjusted metrics: adjust predictions by dataset mean
     # This accounts for probes trained on different dataset distributions
@@ -79,7 +80,7 @@ def evaluate_probe_on_data(
         "r2_adjusted": float(r2_adjusted),
         "mse": float(mse),
         "mse_adjusted": float(mse_adjusted),
-        "pearson_r": float(pearson_r),
+        "pearson_r": float(pearson_r_val),
         "n_samples": len(y),
         "predictions": y_pred.tolist(),
     }

@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 
 from src.measurement.storage.loading import load_raw_scores
-from src.probes.activations import load_task_origins, load_activations
-from src.probes.config import ProbeTrainingConfig
+from src.probes.core.activations import load_task_origins, load_activations
+from src.probes.config import ProbeConfig
 
 
 @pytest.mark.slow
@@ -20,7 +20,7 @@ def test_data_filtering_order():
     if not activations_dir.exists():
         pytest.skip(f"Activations directory not found: {activations_dir}")
 
-    config = ProbeTrainingConfig.from_yaml(config_path)
+    config = ProbeConfig.from_yaml(config_path)
     origins_cache = load_task_origins(activations_dir)
 
     print("\n=== Data Loading Order Test ===\n")
@@ -35,7 +35,7 @@ def test_data_filtering_order():
 
     for template in templates:
         task_type = "pre_task" if template.startswith("pre_task") else "post_task"
-        measurement_dir = config.experiment_dir / f"{task_type}_stated"
+        measurement_dir = config.training_data.experiment_dir / f"{task_type}_stated"
         measurements = load_raw_scores(
             measurement_dir,
             [template],

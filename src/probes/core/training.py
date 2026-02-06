@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import numpy as np
 
-from src.probes.linear_probe import train_and_evaluate
+from src.probes.core.linear_probe import train_and_evaluate
 
 
 def train_for_scores(

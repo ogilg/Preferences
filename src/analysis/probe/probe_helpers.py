@@ -5,8 +5,8 @@ from __future__ import annotations
 import numpy as np
 from pathlib import Path
 
-from src.probes.storage import load_manifest
-from src.probes.evaluate import compute_probe_similarity
+from src.probes.core.storage import load_manifest
+from src.probes.core.evaluate import compute_probe_similarity
 
 
 def get_template(probe: dict) -> str:

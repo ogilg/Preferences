@@ -53,5 +53,3 @@ def load_task_origins(activations_dir: Path) -> dict[str, set[str]]:
             origins[c["origin"].upper()].add(c["task_id"])
 
     return dict(origins)
-
-

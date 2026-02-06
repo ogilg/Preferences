@@ -10,7 +10,7 @@ from typing import Callable
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.probes.storage import load_manifest
+from src.probes.core.storage import load_manifest
 from src.analysis.probe.probe_helpers import get_template
 
 

@@ -8,7 +8,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.probes.storage import load_manifest
+from src.probes.core.storage import load_manifest
 from src.analysis.probe.probe_helpers import filter_probes, make_probe_label, get_probe_similarity
 
 

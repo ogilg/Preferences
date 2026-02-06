@@ -20,7 +20,7 @@ from src.measurement.elicitation.response_format import (
     QUALITATIVE_VALUES,
     BaseQualitativeFormat,
 )
-from src.probes.storage import load_probe_direction, load_manifest
+from src.probes.core.storage import load_probe_direction, load_manifest
 from src.measurement.runners.utils.runner_utils import load_activation_task_ids
 from src.steering.config import SteeringExperimentConfig, load_steering_config
 from src.task_data import Task, OriginDataset, load_filtered_tasks

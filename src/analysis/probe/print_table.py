@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from src.probes.storage import load_manifest
+from src.probes.core.storage import load_manifest
 from src.analysis.probe.probe_helpers import filter_probes
 
 

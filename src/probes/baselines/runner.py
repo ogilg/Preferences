@@ -8,8 +8,8 @@ import numpy as np
 from tqdm import tqdm
 
 from src.measurement.storage.loading import load_pooled_scores
-from src.probes.activations import load_activations
-from src.probes.config import ProbeTrainingConfig
+from src.probes.core.activations import load_activations
+from src.probes.config import ProbeConfig
 
 from .noise import run_random_activations_baseline, run_shuffled_labels_baseline
 from .task_description import run_task_description_baseline
@@ -17,14 +17,14 @@ from .types import BaselineResult, BaselineType
 
 
 def run_all_baselines(
-    config: ProbeTrainingConfig,
+    config: ProbeConfig,
     task_description_dir: Path | None,
     n_noise_seeds: int = 5,
 ) -> list[BaselineResult]:
     """Run all baseline types for a probe training config.
 
     Args:
-        config: Probe training config with template_combinations, layers, etc.
+        config: ProbeConfig with training_data, layers, etc.
         task_description_dir: Directory containing task description activations.
             If None, skips task_description baseline.
         n_noise_seeds: Number of random seeds for noise baselines.
@@ -39,12 +39,12 @@ def run_all_baselines(
 
     # Flatten template combinations to unique templates
     templates = set()
-    for combo in config.template_combinations:
+    for combo in config.training_data.template_combinations:
         templates.update(combo)
 
     # Flatten seed combinations to list of seeds for loading
     seeds = []
-    for combo in config.seed_combinations:
+    for combo in config.training_data.seed_combinations:
         seeds.extend(combo)
     seeds = list(set(seeds))
 
@@ -61,7 +61,7 @@ def run_all_baselines(
     for template, layer in tqdm(combinations, desc="Baselines"):
         # Load scores for this template
         task_type = "pre_task" if template.startswith("pre_task") else "post_task"
-        measurement_dir = config.experiment_dir / f"{task_type}_stated"
+        measurement_dir = config.training_data.experiment_dir / f"{task_type}_stated"
 
         scores = load_pooled_scores(measurement_dir, template, seeds)
 
