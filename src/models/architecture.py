@@ -17,13 +17,17 @@ def _standard_layers(model: Any) -> nn.ModuleList:
     return model.model.layers
 
 
+def _gemma3_layers(model: Any) -> nn.ModuleList:
+    return model.model.language_model.layers
+
+
 ARCHITECTURE_CONFIGS: dict[str, LayerAccessor] = {
     "llama": _standard_layers,
     "qwen2": _standard_layers,
     "qwen3": _standard_layers,
     "gemma": _standard_layers,
     "gemma2": _standard_layers,
-    "gemma3": _standard_layers,
+    "gemma3": _gemma3_layers,
 }
 
 
@@ -51,4 +55,7 @@ def get_n_layers(model: Any) -> int:
 
 def get_hidden_dim(model: Any) -> int:
     """Get hidden dimension from model config."""
-    return model.config.hidden_size
+    config = model.config
+    if hasattr(config, "text_config"):
+        return config.text_config.hidden_size
+    return config.hidden_size
