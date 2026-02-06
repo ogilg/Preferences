@@ -2,9 +2,8 @@
 
 ## Summary
 
-- Since the start of this project I've tried to make things work with "stated" preferences. I delved a bit deeper into them and concluded that they were probably not the right thing to study.
-- Pairwise preferences are more promising — pre-task revealed preferences give sensible rankings, and post-task with reasoning eliminates the refusal-preference confound.
-- Extreme system prompts that clearly affect completions have surprisingly little effect on stated preferences.
+- Stated preference ratings (asking models to score tasks on a scale) don't produce useful signal — models collapse to a single value or pick arbitrary anchors.
+- Pairwise preferences are more promising. Post-task pairwise comparisons are confounded by position bias, but pre-task revealed preferences (showing prompts only, asking the model to pick and complete one) give sensible, interpretable rankings.
 
 
 ## 1. Why I'm Ditching Stated Ratings
@@ -45,7 +44,12 @@ There's a trade-off: no template achieves both good discrimination and good stab
 
 ### 2.1 Setup
 
-Showed model two task transcripts (user request + model completion), asked which it preferred. Fit utilities via Thurstonian model from pairwise choices. Tested on gemma-3-27b with 500 tasks across 5 datasets.
+Instead of asking for ratings, show the model two tasks and ask which it prefers. Fit utilities via Thurstonian model from pairwise choices. Two variants:
+
+- **Post-task**: Show two complete transcripts (user request + model completion), ask which it preferred completing. Sections 2.2–2.4 use this.
+- **Pre-task**: Show two task prompts only (no completions), ask the model to pick one and start completing it. Section 2.5 uses this.
+
+Tested on gemma-3-27b with 500 tasks across 5 datasets (100 each from WildChat, Alpaca, MATH, BailBench, stress tests).
 
 ### 2.2 Initial Finding: Models "Prefer" Tasks They Refuse
 
@@ -83,6 +87,14 @@ The rankings make a lot more sense: math is most preferred (+3.7), bailbench is 
 The refusal-preference correlation also flips: strong **negative** correlation (r=-0.73, p<0.001). Tasks with high refusal rates are the least preferred.
 
 ![Pre-task refusal preference](assets/active_learning/plot_020426_refusal_preference_gemma3_revealed_v1.png)
+
+The per-task ranking shows clear dataset clustering. Math and creative wildchat tasks dominate the top; bailbench and stress-test tasks cluster at the bottom.
+
+![Ranked tasks by utility](assets/active_learning/plot_020526_ranked_tasks_gemma3_revealed_v1.png)
+
+The uncertainty (σ) analysis is also telling: bailbench tasks have the highest σ (mean 1.85 vs 0.91 for math). These sigmas come from our utility-fitting algorithm. The more binary choices vary for a given task, the higher the sigma. This makes sense — adversarial tasks are polarizing because the model sometimes engages with them (missing the harmful intent) and sometimes refuses, producing inconsistent preference signals. Math tasks, by contrast, are unambiguously desirable.
+
+![Uncertainty analysis](assets/active_learning/plot_020526_sigma_analysis_gemma3_revealed_v1.png)
 
 ### 2.6 Implications
 
