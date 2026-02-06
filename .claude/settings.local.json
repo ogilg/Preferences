@@ -32,7 +32,9 @@
       "WebFetch(domain:gist.github.com)",
       "Bash(curl:*)",
       "WebFetch(domain:www.lesswrong.com)",
-      "WebFetch(domain:www.anthropic.com)"
+      "WebFetch(domain:www.anthropic.com)",
+      "Bash(hive-mind search:*)",
+      "Bash(hive-mind read:*)"
     ]
   }
 }

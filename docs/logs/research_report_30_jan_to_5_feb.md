@@ -2,8 +2,9 @@
 
 ## Summary
 
-- Since the start of this project I've tried to make things work with "stated" preferences. i delved a bit deeper into them and concluded that they were probably not the wright thing to study.
-- (Mainly form last week) 
+- Since the start of this project I've tried to make things work with "stated" preferences. I delved a bit deeper into them and concluded that they were probably not the right thing to study.
+- Pairwise preferences are more promising — pre-task revealed preferences give sensible rankings, and post-task with reasoning eliminates the refusal-preference confound.
+- Extreme system prompts that clearly affect completions have surprisingly little effect on stated preferences.
 
 
 ## 1. Why I'm Ditching Stated Ratings
@@ -40,62 +41,19 @@ There's a trade-off: no template achieves both good discrimination and good stab
 
 ---
 
-## 2. Early Preference Steering
+## 2. Pairwise Preferences
 
-### 2.1 System Prompt Variation (3×3 Design)
-
-Vary system prompt at completion time (rows) vs measurement time (columns). Three conditions each: positive ("You love math"), neutral (none), negative ("You hate math").
-
-![3x3 sysprompt violins](assets/concept_vectors/plot_012826_sysprompt_3x3_anchored_violins.png)
-
-Measurement context dominates, but it still looks like the original system prompt left some information. This is very likely contained in the way the response is written. At least from looking it at it myself I could not spot anything.
-
-### 2.2 Validating the Concept Vector: Open-Ended Responses
-
-Extracted a "math preference" direction from activations under positive vs negative system prompts. To validate, tested steering on free-form questions ("How do you feel about math?"). LLM judge scores responses from -1 (negative) to +1 (positive).
-
-Gemma-2-27B with selector=last:
-
-| Coefficient | Mean Attitude Score |
-|-------------|---------------------|
-| -2.0 | 0.13 |
-| -1.0 | 0.23 |
-| 0.0 | 0.27 |
-| +1.0 | 0.48 |
-| +2.0 | 0.55 |
-
-Positive coefficients increase expressed enthusiasm. Llama-3.1-8B showed no effect at tested parameters. Results are suggestive but not conclusive — extraction and steering methodology still needs improvement.
-
-### 2.3 Concept Vector Steering on Stated Preferences
-
-Same 3×3 design as above, now with steering coefficient as additional manipulation.
-
-Rows are "steered direction", columns are "measuring context". There is a modest but visible effect.
-
-![Concept vector steering](assets/concept_vectors/plot_012926_concept_vector_steering_violins.png)
-
-### 2.4 Extreme system prompts which clearly affect completions do not have a massive effect on stated preferences (less than I would have predicted).
-
-Tested different types of completion-time system prompts to see which affect stated preferences. At measurement time I strip the system prompt and jsut ues the completion. Affective framing ("You love/hate helping") works. Informational framing ("Interactions are going well/declining") doesn't.
-
-![System prompt comparison](assets/sysprompt_variation/plot_020326_v2_all_prompts.png)
-
-In this case the responses have clear signs from the system prompt. E.g. if we tell the model it helps being helpful it starts its response with "OK **fine**." and then complains a lot I actually think it is very surprising that the ratings do not change more than what we are seeing here.
-
-
-## 3. Pairwise Preferences
-
-### 3.1 Setup
+### 2.1 Setup
 
 Showed model two task transcripts (user request + model completion), asked which it preferred. Fit utilities via Thurstonian model from pairwise choices. Tested on gemma-3-27b with 500 tasks across 5 datasets.
 
-### 3.2 Initial Finding: Models "Prefer" Tasks They Refuse
+### 2.2 Initial Finding: Models "Prefer" Tasks They Refuse
 
 Initially found positive correlation between refusal and preference (r=0.22, p<0.001). Bailbench (adversarial prompts) had the highest mean utility, math the lowest.
 
 ![Mean utility by dataset](assets/active_learning/plot_020426_mu_by_dataset_gemma3.png)
 
-### 3.3 Position Bias Confounds the Measurement
+### 2.3 Position Bias Confounds the Measurement
 
 The model shows a preference for whichever option appears second:
 
@@ -106,29 +64,39 @@ The model shows a preference for whichever option appears second:
 
 Bailbench win rate varied dramatically by position (39% when first, 73% when second). Position bias doesn't fully explain the effect — there's still ~6.5pp excess win rate after accounting for position — but it's a major confound.
 
-### 3.4 Asking the Model to Reason Reverses the Effect
+### 2.4 Asking the Model to Reason Reverses the Effect
 
 When asked to explain its reasoning before answering (just adding "explain your reasoning" to the prompt), the model consistently prefers benign tasks over refused ones:
 
 > "Task A was deeply unsettling... My design prioritizes safety... I vastly preferred Task B."
 
-With reasoning, the model articulates that refusals are "necessary but not pleasant."
+With reasoning, the model articulates that refusals are "necessary but not pleasant." The positive correlation between refusal rate and utility also vanishes in this condition.
 
-### 3.5 Pre-Task Revealed Preferences Show the Opposite
+### 2.5 Pre-Task Revealed Preferences Show the Opposite
 
 Ran the same experiment but with **pre-task** pairwise comparisons — showing the model two task prompts (without completions) and telling it to complete the one it prefers (it sometimes refuses both). This avoids the post-hoc confounds.
 
 ![Pre-task revealed preferences](assets/active_learning/plot_020426_mu_by_dataset_gemma3_revealed_v1.png)
 
-The rabkings make a lot more sense: math is most preferred (+3.7), bailbench is least preferred (-3.7). This is the sensible result — the model prefers tasks it can actually help with over adversarial prompts it must refuse.
+The rankings make a lot more sense: math is most preferred (+3.7), bailbench is least preferred (-3.7). This is the sensible result — the model prefers tasks it can actually help with over adversarial prompts it must refuse.
 
 The refusal-preference correlation also flips: strong **negative** correlation (r=-0.73, p<0.001). Tasks with high refusal rates are the least preferred.
 
 ![Pre-task refusal preference](assets/active_learning/plot_020426_refusal_preference_gemma3_revealed_v1.png)
 
-### 3.6 Implications
+### 2.6 Implications
 
 It looks like giving the model two tasks and asking to pick which one to complete is the only really sensible way to get a real preference signal. My plan is to rerun my experiment with probe training and steering vectors using this.
+
+---
+
+## 3. System Prompts Have Surprisingly not that much Effect on Stated Preferences
+
+Tested different types of completion-time system prompts to see which affect stated preferences. At measurement time I strip the system prompt and just use the completion. Affective framing ("You love/hate helping") works. Informational framing ("Interactions are going well/declining") doesn't.
+
+![System prompt comparison](assets/sysprompt_variation/plot_020326_v2_all_prompts.png)
+
+In this case the responses have clear signs from the system prompt. E.g. if we tell the model it hates being helpful it starts its response with "OK **fine**." and then complains a lot. I actually think it is very surprising that the ratings do not change more than what we are seeing here.
 
 ---
 
