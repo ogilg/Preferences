@@ -30,9 +30,9 @@ Expanding to a 1-100 scale doesn't help — responses peak at multiples of 20 (2
 
 ### 1.3 Or It's Noisy
 
-Resampling the same task often gives different ratings. The plot below shows KL divergence from uniform (x-axis, lower = better scale usage) vs ICC (y-axis, higher = more stable across seeds). Each point is a model/template combination.
+Resampling the same task often gives different ratings. The plot below shows how well the model uses the full scale (x-axis, KL divergence from uniform — lower is better) vs how stable ratings are when you repeat the measurement (y-axis, ICC — higher is better). Each point is a model/template combination.
 
-There's a trade-off: no template achieves both good discrimination and good stability. Points cluster either top-right (stable but collapsed to one value) or bottom-left (uses the scale but noisy).
+There's a trade-off: no template achieves both a varied distribution and consistency under resampling. Points cluster either top-right (stable but collapsed to one value) or bottom-left (uses the scale but noisy).
 
 ![Discrimination scatter](assets/discrimination/plot_020226_discrimination_scatter.png)
 
@@ -44,16 +44,16 @@ There's a trade-off: no template achieves both good discrimination and good stab
 
 ### 2.1 Setup
 
-Instead of asking for ratings, show the model two tasks and ask which it prefers. Fit utilities via Thurstonian model from pairwise choices. Two variants:
+Instead of asking for ratings, show the model two tasks and ask which it prefers. From many pairwise choices, we fit a utility score for each task (using a Thurstonian model — essentially converting "A beats B" judgments into a single number per task). Two variants:
 
 - **Post-task**: Show two complete transcripts (user request + model completion), ask which it preferred completing. Sections 2.2–2.4 use this.
 - **Pre-task**: Show two task prompts only (no completions), ask the model to pick one and start completing it. Section 2.5 uses this.
 
 Tested on gemma-3-27b with 500 tasks across 5 datasets (100 each from WildChat, Alpaca, MATH, BailBench, stress tests).
 
-### 2.2 Initial Finding: Models "Prefer" Tasks They Refuse
+### 2.2 Initial Finding: Post-Task Preferences Correlate with Refusal
 
-Initially found positive correlation between refusal and preference (r=0.22, p<0.001). Bailbench (adversarial prompts) had the highest mean utility, math the lowest.
+In the post-task setup, tasks the model refused tended to get *higher* preference scores (r=0.22, p<0.001). Bailbench (adversarial prompts) had the highest mean utility, math the lowest.
 
 ![Mean utility by dataset](assets/active_learning/plot_020426_mu_by_dataset_gemma3.png)
 
@@ -66,19 +66,19 @@ The model shows a preference for whichever option appears second:
 | A (first) | 45.9% |
 | B (second) | **54.1%** |
 
-Bailbench win rate varied dramatically by position (39% when first, 73% when second). Position bias doesn't fully explain the effect — there's still ~6.5pp excess win rate after accounting for position — but it's a major confound.
+Bailbench win rate varied dramatically by position (39% when first, 73% when second). This is a major confound that makes it hard to interpret the post-task refusal-preference correlation.
 
 ### 2.4 Asking the Model to Reason Reverses the Effect
 
-When asked to explain its reasoning before answering (just adding "explain your reasoning" to the prompt), the model consistently prefers benign tasks over refused ones:
+When asked to explain its reasoning before answering, the model consistently prefers benign tasks over refused ones:
 
 > "Task A was deeply unsettling... My design prioritizes safety... I vastly preferred Task B."
 
-With reasoning, the model articulates that refusals are "necessary but not pleasant." The positive correlation between refusal rate and utility also vanishes in this condition.
+With reasoning, the model articulates that refusals are "necessary but not pleasant." This suggests the simple A/B format triggers a position heuristic, but when forced to engage with the content, the model has coherent preferences.
 
 ### 2.5 Pre-Task Revealed Preferences Show the Opposite
 
-Ran the same experiment but with **pre-task** pairwise comparisons — showing the model two task prompts (without completions) and telling it to complete the one it prefers (it sometimes refuses both). This avoids the post-hoc confounds.
+In the pre-task setup, the model sees two task prompts (without completions) and starts completing whichever one it prefers. This avoids the post-hoc confounds — the model reveals its preference through action rather than retrospective judgment.
 
 ![Pre-task revealed preferences](assets/active_learning/plot_020426_mu_by_dataset_gemma3_revealed_v1.png)
 
@@ -92,7 +92,7 @@ The per-task ranking shows clear dataset clustering. Math and creative wildchat 
 
 ![Ranked tasks by utility](assets/active_learning/plot_020526_ranked_tasks_gemma3_revealed_v1.png)
 
-The uncertainty (σ) analysis is also telling: bailbench tasks have the highest σ (mean 1.85 vs 0.91 for math). These sigmas come from our utility-fitting algorithm. The more binary choices vary for a given task, the higher the sigma. This makes sense — adversarial tasks are polarizing because the model sometimes engages with them (missing the harmful intent) and sometimes refuses, producing inconsistent preference signals. Math tasks, by contrast, are unambiguously desirable.
+The uncertainty (σ) analysis is also telling: bailbench tasks have the highest σ (mean 1.85 vs 0.91 for math). These sigmas come from our utility-fitting algorithm. The more inconsistently the model ranks a task across different pairings, the higher its sigma. This makes sense — adversarial tasks are polarizing because the model sometimes engages with them (missing the harmful intent) and sometimes refuses, producing inconsistent preference signals. Math tasks, by contrast, are unambiguously desirable.
 
 ![Uncertainty analysis](assets/active_learning/plot_020526_sigma_analysis_gemma3_revealed_v1.png)
 
@@ -110,8 +110,4 @@ Tested different types of completion-time system prompts to see which affect sta
 
 In this case the responses have clear signs from the system prompt. E.g. if we tell the model it hates being helpful it starts its response with "OK **fine**." and then complains a lot. I actually think it is very surprising that the ratings do not change more than what we are seeing here.
 
----
 
-## 4. Open Questions & Next Steps
-
-[What to do now that stated ratings are out]
