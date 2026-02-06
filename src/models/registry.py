@@ -113,6 +113,7 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="google/gemma-3-27b-it",
+        hf_name="google/gemma-3-27b-it",
         supports_system_role=False,
     ),
     "claude-haiku-4.5": ModelConfig(
@@ -183,6 +184,21 @@ def supports_system_role(canonical_name: str) -> bool:
 def is_valid_model(canonical_name: str) -> bool:
     """Check if a canonical model name is registered."""
     return canonical_name in MODEL_REGISTRY
+
+
+def has_transformer_lens_support(canonical_name: str) -> bool:
+    """Check if model is available in TransformerLens."""
+    if canonical_name not in MODEL_REGISTRY:
+        return False
+    return MODEL_REGISTRY[canonical_name].transformer_lens_name is not None
+
+
+def has_hf_support(canonical_name: str) -> bool:
+    """Check if model is available for HuggingFace loading."""
+    if canonical_name not in MODEL_REGISTRY:
+        return False
+    config = MODEL_REGISTRY[canonical_name]
+    return config.hf_name is not None or config.transformer_lens_name is not None
 
 
 def list_models() -> list[str]:

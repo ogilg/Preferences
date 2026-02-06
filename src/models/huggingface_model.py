@@ -9,10 +9,9 @@ import torch
 import numpy as np
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from src.models.base import BATCHED_SELECTOR_REGISTRY
+from src.models.base import BATCHED_SELECTOR_REGISTRY, GenerationResult, SteeringHook
 from src.models.registry import is_valid_model, get_hf_name
 from src.models.architecture import get_layers, get_n_layers, get_hidden_dim
-from src.models.transformer_lens import GenerationResult, SteeringHook
 from src.types import Message
 
 
@@ -53,6 +52,12 @@ class HuggingFaceModel:
     @property
     def hidden_dim(self) -> int:
         return get_hidden_dim(self.model)
+
+    def resolve_layer(self, layer: int | float) -> int:
+        """Resolve layer index. Floats in [0, 1] are relative positions."""
+        if isinstance(layer, float):
+            return int(layer * self.n_layers)
+        return layer
 
     def _get_layer(self, layer: int) -> torch.nn.Module:
         return get_layers(self.model)[layer]

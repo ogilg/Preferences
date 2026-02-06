@@ -17,8 +17,16 @@ from tqdm import tqdm
 from src.measurement.storage.completions import extract_completion_text
 from src.measurement.storage.base import find_project_root
 from src.models.transformer_lens import TransformerLensModel
-from src.measurement.runners.utils.runner_utils import load_activation_task_ids, model_name_to_dir
+from src.models.huggingface_model import HuggingFaceModel
+from src.models.registry import has_transformer_lens_support, has_hf_support
+from src.measurement.runners.utils.runner_utils import (
+    load_activation_task_ids,
+    model_name_to_dir,
+    get_activation_completions_path,
+)
 from src.task_data import load_filtered_tasks, OriginDataset, Task
+
+ActivationModel = TransformerLensModel | HuggingFaceModel
 
 
 def gpu_mem_gb() -> tuple[float, float]:
@@ -28,6 +36,24 @@ def gpu_mem_gb() -> tuple[float, float]:
     )
 
 DEFAULT_SAVE_EVERY = 100
+VALID_BACKENDS = ("transformer_lens", "huggingface")
+
+
+def load_model(model_name: str, backend: str, max_new_tokens: int) -> ActivationModel:
+    """Load model with specified backend."""
+    if backend == "transformer_lens":
+        if not has_transformer_lens_support(model_name):
+            raise ValueError(
+                f"Model {model_name} does not have TransformerLens support. "
+                f"Use backend: huggingface instead."
+            )
+        return TransformerLensModel(model_name, max_new_tokens=max_new_tokens)
+    elif backend == "huggingface":
+        if not has_hf_support(model_name):
+            raise ValueError(f"Model {model_name} does not have HuggingFace support.")
+        return HuggingFaceModel(model_name, max_new_tokens=max_new_tokens)
+    else:
+        raise ValueError(f"Invalid backend: {backend}. Must be one of {VALID_BACKENDS}")
 
 
 def parse_args() -> argparse.Namespace:
@@ -175,6 +201,13 @@ def main() -> None:
     consistency_model = config.get("consistency_filter_model")
     consistency_keep_ratio = config.get("consistency_keep_ratio", 0.7)
 
+    if "backend" not in config:
+        raise ValueError(
+            "Config must specify 'backend' field. "
+            f"Valid options: {VALID_BACKENDS}"
+        )
+    backend = config["backend"]
+
     # Derive output_dir from model name if not explicitly set
     if "output_dir" in config:
         output_dir = Path(config["output_dir"])
@@ -182,8 +215,8 @@ def main() -> None:
         model_dir = model_name_to_dir(model_name)
         output_dir = find_project_root() / "activations" / model_dir
 
-    print(f"Loading model: {model_name}...")
-    model = TransformerLensModel(model_name, max_new_tokens=max_new_tokens)
+    print(f"Loading model: {model_name} (backend: {backend})...")
+    model = load_model(model_name, backend, max_new_tokens)
 
     resolved_layers = [model.resolve_layer(layer) for layer in layers]
     print(f"Extracting from layers: {layers} -> resolved to {resolved_layers} (model has {model.n_layers} layers)")
@@ -200,7 +233,6 @@ def main() -> None:
     activations_model = config.get("activations_model")
 
     if activations_model is not None:
-        from src.measurement.runners.utils.runner_utils import get_activation_completions_path
         activation_task_ids = load_activation_task_ids(activations_model)
         with open(get_activation_completions_path(activations_model)) as f:
             completions_data = json.load(f)
@@ -208,7 +240,7 @@ def main() -> None:
             Task(
                 id=c["task_id"],
                 prompt=c["task_prompt"],
-                origin=OriginDataset[c.get("origin", "SYNTHETIC")],
+                origin=OriginDataset[c["origin"]],
                 metadata={},
             )
             for c in completions_data
@@ -319,9 +351,32 @@ def main() -> None:
     print("Done!")
 
 
+def _build_from_completions_metadata(
+    model_name: str,
+    selectors: list[str],
+    layers_config: list[float | int],
+    resolved_layers: list[int],
+    n_existing: int,
+    n_new: int,
+    n_failures: int,
+    source_completions: Path,
+) -> dict:
+    return {
+        "model": model_name,
+        "selectors": selectors,
+        "layers_config": layers_config,
+        "layers_resolved": resolved_layers,
+        "n_existing": n_existing,
+        "n_new": n_new,
+        "n_failures": n_failures,
+        "source_completions": str(source_completions),
+        "last_updated": datetime.now().isoformat(),
+    }
+
+
 def _extract_from_completions(
     args: argparse.Namespace,
-    model: TransformerLensModel,
+    model: ActivationModel,
     resolved_layers: list[int],
     selectors: list[str],
     output_dir: Path,
@@ -351,7 +406,7 @@ def _extract_from_completions(
 
     for i, comp in enumerate(tqdm(completions_data, desc="Extracting")):
         task_id = comp["task_id"]
-        task_prompt = comp.get("task_prompt", comp.get("prompt", ""))
+        task_prompt = comp.get("task_prompt") or comp["prompt"]
         completion_text = comp["completion"]
 
         messages = [
@@ -382,33 +437,19 @@ def _extract_from_completions(
         if n_new > 0 and n_new % args.save_every == 0:
             tqdm.write(f"Checkpoint: saving {len(task_ids)} activations...")
             save_activations(output_dir, task_ids, activations)
-            save_extraction_metadata(output_dir, {
-                "model": model_name,
-                "selectors": selectors,
-                "layers_config": layers_config,
-                "layers_resolved": resolved_layers,
-                "n_existing": n_existing,
-                "n_new": n_new,
-                "n_failures": len(failures),
-                "source_completions": str(args.from_completions),
-                "last_updated": datetime.now().isoformat(),
-            })
+            save_extraction_metadata(output_dir, _build_from_completions_metadata(
+                model_name, selectors, layers_config, resolved_layers,
+                n_existing, n_new, len(failures), args.from_completions,
+            ))
 
     if n_new > 0:
         print(f"\nSaving {len(task_ids)} total activations...")
         save_activations(output_dir, task_ids, activations)
 
-    save_extraction_metadata(output_dir, {
-        "model": model_name,
-        "selectors": selectors,
-        "layers_config": layers_config,
-        "layers_resolved": resolved_layers,
-        "n_existing": n_existing,
-        "n_new": n_new,
-        "n_failures": len(failures),
-        "source_completions": str(args.from_completions),
-        "last_updated": datetime.now().isoformat(),
-    })
+    save_extraction_metadata(output_dir, _build_from_completions_metadata(
+        model_name, selectors, layers_config, resolved_layers,
+        n_existing, n_new, len(failures), args.from_completions,
+    ))
 
     print(f"\nDone! Extracted {n_new} new, {len(failures)} failures")
     if failures:

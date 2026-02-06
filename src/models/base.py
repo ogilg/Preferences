@@ -1,18 +1,50 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from enum import Enum
-from typing import Protocol, Any
+from typing import Protocol, Any, Callable
 
 import numpy as np
+import torch
 
 from src.types import Message
 from .openai_compatible import GenerateRequest, BatchResult
 
 
-import torch
-from typing import Callable
+@dataclass
+class GenerationResult:
+    completion: str
+    activations: dict[int, np.ndarray] | dict[str, dict[int, np.ndarray]]
+    prompt_tokens: int
+    completion_tokens: int
+
+
+# SteeringHook takes (resid, prompt_len) and returns modified resid
+SteeringHook = Callable[[torch.Tensor, int], torch.Tensor]
 
 TokenSelectorFn = Callable[[torch.Tensor, int], torch.Tensor]
+
+
+def autoregressive_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+    """Steer only the last token position. Works with KV caching during generation."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        resid[:, -1, :] += steering_tensor
+        return resid
+    return hook
+
+
+def all_tokens_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+    """Steer all token positions."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        resid += steering_tensor
+        return resid
+    return hook
+
+
+STEERING_MODES = {
+    "autoregressive": autoregressive_steering,
+    "all_tokens": all_tokens_steering,
+}
 
 
 def select_last(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:

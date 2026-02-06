@@ -1,49 +1,19 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Callable
-
 import torch
 import numpy as np
 from transformer_lens import HookedTransformer
 
-from src.models.base import SELECTOR_REGISTRY
+from src.models.base import (
+    SELECTOR_REGISTRY,
+    GenerationResult,
+    SteeringHook,
+    autoregressive_steering,
+    all_tokens_steering,
+    STEERING_MODES,
+)
 from src.models.registry import get_transformer_lens_name, is_valid_model
 from src.types import Message
-
-
-@dataclass
-class GenerationResult:
-    completion: str
-    activations: dict[int, np.ndarray] | dict[str, dict[int, np.ndarray]]
-    prompt_tokens: int
-    completion_tokens: int
-
-
-# SteeringHook takes (resid, prompt_len) and returns modified resid
-SteeringHook = Callable[[torch.Tensor, int], torch.Tensor]
-
-
-def autoregressive_steering(steering_tensor: torch.Tensor) -> SteeringHook:
-    """Steer only the last token position. Works with KV caching during generation."""
-    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
-        resid[:, -1, :] += steering_tensor
-        return resid
-    return hook
-
-
-def all_tokens_steering(steering_tensor: torch.Tensor) -> SteeringHook:
-    """Steer all token positions."""
-    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
-        resid += steering_tensor
-        return resid
-    return hook
-
-
-STEERING_MODES = {
-    "autoregressive": autoregressive_steering,
-    "all_tokens": all_tokens_steering,
-}
 
 
 class TransformerLensModel:
