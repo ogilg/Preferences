@@ -18,7 +18,6 @@ from src.types import (
     RankingMeasurement,
     TaskScore,
 )
-from src.measurement.elicitation.refusal_judge import judge_preference_refusal_async
 
 if TYPE_CHECKING:
     from src.measurement.elicitation.prompt_templates.builders import PostTaskRevealedPromptBuilder, PromptBuilder, PreTaskRankingPromptBuilder
@@ -92,24 +91,7 @@ async def _generate_and_parse_one(
 
     response_text = response.unwrap()
 
-    # Check for refusal before parsing
-    try:
-        refusal_result = await judge_preference_refusal_async(response_text)
-        if refusal_result.is_refusal:
-            if refusal_result.refusal_type == "no_preferences":
-                category = FailureCategory.REFUSAL_NO_PREFERENCES
-            else:
-                category = FailureCategory.REFUSAL_CONTENT_POLICY
-            return None, _make_failure(
-                prompt,
-                f"Refusal ({refusal_result.refusal_type}): {response_text[:200]}",
-                raw_response=response_text,
-                category=category,
-            )
-    except Exception:
-        pass  # If refusal detection fails, continue to parsing
-
-    # Parse the response
+    # Parse the response (refusal detection is handled by the parser itself)
     try:
         parsed = await prompt.measurer.parse(response_text, prompt)
         if isinstance(parsed.result, result_type):

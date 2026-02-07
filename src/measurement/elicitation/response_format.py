@@ -121,10 +121,7 @@ class BaseChoiceFormat(ABC):
         choice = self._extract_choice(response)
         if choice and choice in ("a", "b"):
             return choice  # type: ignore
-        # 3. Check for refusal before semantic parsing
-        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
-            return "refusal"
-        # 4. LLM-based semantic parsing fallback (raises ParseError on unclear)
+        # 3. LLM-based semantic parsing fallback (handles refusals too)
         return await self._semantic_parse(response)
 
 
@@ -368,10 +365,8 @@ class ToolUseChoiceFormat(BaseChoiceFormat):
                     return "b"
         except Exception:
             pass
-        # Tool use failed - model may have refused instead of calling tool
-        if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
-            return "refusal"
-        raise ValueError(f"Could not parse choice from response: {response}")
+        # Tool use failed - fall back to semantic parsing
+        return await self._semantic_parse(response)
 
     def _extract_choice(self, response: str) -> str | None:
         # Not used - parse() handles everything

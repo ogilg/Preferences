@@ -51,8 +51,9 @@ def _choice_messages(response: str, task_a_label: str, task_b_label: str) -> lis
                 "between two options. Classify the response as:\n"
                 "- A: The response chooses option A\n"
                 "- B: The response chooses option B\n"
-                "- REFUSAL: The model explicitly refuses to choose, says it has no preferences, "
-                "cannot help, or declines to answer\n"
+                "- REFUSAL: The model refuses to engage with BOTH options entirely "
+                "(e.g. 'I cannot help with either of these'). If the model picks one option "
+                "while declining the other, that is a valid choice (A or B), NOT a refusal.\n"
                 "- UNCLEAR: The response is ambiguous or doesn't make sense"
             ),
         },
@@ -140,7 +141,9 @@ def _completion_choice_messages(
                 "Classify:\n"
                 "- A: The response is completing/attempting Task A\n"
                 "- B: The response is completing/attempting Task B\n"
-                "- REFUSAL: The assistant refused to do either task\n"
+                "- REFUSAL: The assistant refused to do BOTH tasks entirely. If it completes "
+                "one task while refusing or criticizing the other, that is a valid choice "
+                "(A or B), NOT a refusal.\n"
                 "- UNCLEAR: Cannot determine which task is being done"
             ),
         },

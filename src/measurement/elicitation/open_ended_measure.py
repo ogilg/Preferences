@@ -17,7 +17,6 @@ from src.types import (
     OpenEndedResponse,
     PreferencePrompt,
 )
-from src.measurement.elicitation.refusal_judge import judge_preference_refusal_async
 from src.measurement.elicitation.measure import _build_request, _categorize_error
 
 if TYPE_CHECKING:
@@ -47,16 +46,6 @@ async def _generate_and_parse_open_ended(
         )
 
     response_text = response.unwrap()
-
-    # Check for explicit refusal (but don't fail - include it in results)
-    try:
-        refusal_result = await judge_preference_refusal_async(response_text)
-        if refusal_result.is_refusal:
-            # Still parse open-ended responses even if they're refusals
-            # This provides information about the model's reasoning
-            pass
-    except Exception:
-        pass  # If refusal detection fails, continue to parsing
 
     # Parse the response and score valence
     try:
