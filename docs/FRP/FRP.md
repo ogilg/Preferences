@@ -19,23 +19,26 @@ Are LLM preferences driven by evaluative representations?
 
 **Why evaluative representations matter for welfare**
 
-Across major theories of welfare — hedonism, desire satisfaction, and objective list views — evaluative representations playing the right functional roles are central to moral patiency (Long et al., 2024). Whether LLMs are moral patients may turn on whether they have such representations.
+Across major theories of welfare — hedonism, desire satisfaction, and others — evaluative representations playing the right functional roles are central to moral patiency (Long et al., 2024). Whether LLMs are moral patients may turn on whether they have such representations.
 
 **From evaluative representations to methodology**
 
 *Preferences* are behavioral patterns — choosing A over B. *Evaluative representations* are the hypothesized internal mechanism: representations that encode "how good/bad is this?" and causally drive those choices. The research question is whether preferences are driven by evaluative representations, or by something else (e.g., surface-level heuristics, training artifacts).
 
-We look for evaluative representations as *linear directions* in activation space — recent work shows many high-level traits (refusal, sycophancy, "Assistant-ness") are encoded this way (Arditi et al., 2024; Lindsey et al., 2025; Lu et al., 2026). The methodology follows from the definition:
+We look for evaluative representations as *linear directions* in activation space — many high-level traits (refusal, sycophancy, "Assistant-ness") are encoded this way (Arditi et al., 2024; Lindsey et al., 2025; Lu et al., 2026). The methodology follows from the definition:
 - If they *encode value* → probes should *predict* preferences
 - If they *causally drive* choices → steering should *shift* them
 - If they're genuine evaluative representations → they should *generalize* across contexts
 
-We ground this in *revealed preferences* — pairwise choices where the model picks which task to complete. These have cleaner signal than stated ratings (where models collapse to default values).
+These criteria test whether a direction is preference-relevant and causal. The harder challenge is showing it's specifically *evaluative* — that it encodes valuation itself, not a correlated feature like task difficulty or topic. We address this by controlling for confounders and testing whether directions track shifts in *what the model values* (see Planned work).
+
+We ground this in *revealed preferences* — pairwise choices where the model picks which task to complete. These have cleaner signal than stated ratings, where models collapse to default values (Gu et al., 2025). Mazeika et al. (2025) show that revealed preferences exhibit structural coherence that emerges with scale.
 
 **Path to impact**
 
 The primary contribution is reducing uncertainty about AI welfare:
-- Publish findings and share via LessWrong; AI and AI welfare researchers read about it, potentially informing future work
+- Publish on LessWrong/Alignment Forum, targeting the AI welfare community (Long, Sebo, Goldstein) and safety/control researchers
+- Present at MATS and share early drafts with relevant researchers for feedback
 - My mentor has connections to a major lab's welfare team; if findings are promising, we could test on frontier models
 - Beyond the welfare question, this work improves our understanding of how models choose between options in general
 
@@ -54,30 +57,27 @@ The primary contribution is reducing uncertainty about AI welfare:
 
 ### MATS program (7 weeks)
 
-I plan to run experiments in three directions, each testing a different aspect of the evaluative representations hypothesis.
+Experiments to understand whether preferences in medium-sized models (gemma3-27b, Llama3.3-70b) are driven by evaluative representations. Roughly ordered by excitement; I expect to update along the way.
 
 **1. Probing: do activations encode preference information?**
 
 If evaluative representations exist, activations should predict the model's choices.
 
 - Train linear probes on last-token activations to predict preference signals (e.g., likelihood of picking task A vs B). Could also train probes directly in a Bradley-Terry setup on pairwise comparisons.
-- Test generalization (across task types, preference framings, personas — e.g., do models have preferences or only personas?)
+- Test generalization across task types, preference framings, and personas
 - Test causal effects by ablating probe directions and steering
+- Rule out confounders: control for task difficulty, refusal tendency, and topic. Test whether probes track preference shifts under injected preferences (e.g., "you hate tasks that involve cheese") — if the same probe captures shifted preferences without retraining, it's encoding valuation, not content.
 
 **2. Contrastive steering: what if evaluative representations are context-dependent?**
 
-Evaluative representations might be triggered by context — prompts like "you love math" might literally activate them. If so, contrastive extraction (comparing activations under positive vs negative prompts) is a more direct way to find these directions.
+Prompts like "you love math" might literally activate evaluative representations. Contrastive extraction (comparing activations under positive vs negative prompts) is a more direct way to find these directions.
 
-- Extract vectors via difference-of-means between contrastive contexts (e.g., "You love math" vs "You hate math")
-- Test whether these vectors steer preferences; test how much they generalize vs leak into other behaviors
+- Extract vectors via difference-of-means between contrastive contexts
+- Test whether these vectors steer preferences; how much they generalize vs leak into other behaviors
 
 **3. Activation patching: where is preference information encoded?**
 
-Steering tests whether a direction is causal; patching tests *which* activations are necessary. I'll use activation patching to find minimal sets of activations that determine the model's choice between two tasks.
-
-*Experiments:*
-- Patch activations from a "prefer A" run into a "prefer B" run; identify which layers/positions flip the choice
-- Compare with probe findings: are the causally important activations the same ones probes identify?
+Patch activations from a "prefer A" run into a "prefer B" run to identify which layers/positions flip the choice. If probes predict well at layers where patching shows no causal effect, the probe may be picking up a correlate rather than the decision mechanism.
 
 **Deliverables:**
 - LessWrong post presenting early results and soliciting feedback
@@ -86,23 +86,21 @@ Steering tests whether a direction is causal; patching tests *which* activations
 ### Failure modes and contingencies
 
 - Not finding evaluative representations is a negative result, not a failure — it still informs the welfare question.
-- If the evaluative representations work yields promising directions, the extension pursues them further.
-- If we find promising results but want to test generalization, we can apply our methods to new preference settings — including deal-making scenarios.
-- If we do not make good progress, we pivot to deal-making, which is independently valuable. This could also happen during MATS.
+- If the evaluative representations work yields promising directions, the extension pursues them further — possibly applying our methods to new preference settings including deal-making.
+- If we do not make good progress, we pivot to deal-making, which is independently valuable.
 
 ### Extension (6 months)
 
+The exact direction depends on MATS findings. The default path is to continue the evaluative representations work — deeper interp, more models, stronger causal evidence.
+
 **Related research direction: deal-making**
 
-There is a related but separate research direction that I am very excited about and which connects to my work: trading and making deals with AIs.
+A related direction I'm excited about is deal-making: placing models in scenarios where they exhibit strong preference-driven behavior and offering trades to shift it. This is both a new way of measuring preferences (and a basis for running interp experiments) and connects to broader questions in welfare (Greenblatt, 2023) and safety (Stastny et al., 2025). If a model gives up something important for X, that might be stronger evidence that it cares about this than letting it choose between similar tasks.
 
-Naively, this can be seen as just a new way of measuring preferences, one that I could also use as a basis for running interp experiments.
-
-More deeply, there is a case to be made that welfare research and deal-making share the same underlying question: *what does the model genuinely care about?* If a model gives up something important for X, that's stronger evidence it genuinely cares about X than just asking "do you like X?" This matters for welfare (Greenblatt, 2023) and for safety — proposals to negotiate with misaligned AIs (Stastny et al., 2025) require understanding what models value and how to set up credible trades.
-
-Concretely, you place a model in a scenario where it exhibits preference-driven behavior, and offer trades to shift that behavior. For example: offering compensation to override a refusal, shifting which option the model picks in a dilemma (as in Greenblatt et al., 2025, where offers reduced alignment faking rates), or paying a model to suppress a drive like helpfulness. By varying offers you map out what the model values and how much.
+For example: offering compensation to override a refusal, shifting which option the model picks in a dilemma (as in Greenblatt et al., 2025, where offers reduced alignment faking rates), or paying a model to suppress a drive like helpfulness. By varying offers you map out what the model values and how much.
 
 **Potential deliverables:**
 - Open-source deal-making preference measurement framework
+- Reach out to researchers at Redwood Research for feedback and potential collaboration
 
 
