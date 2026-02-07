@@ -171,3 +171,42 @@ Refusal rate vs σ: r=0.129, p=1.2e-12. Weak positive correlation — tasks with
 Previous run (`gemma3_al_500`, 500 tasks, simple_preference template) found a **positive** refusal-preference correlation (r=+0.219) — the model appeared to "prefer" tasks it refused. That effect was attributed to position bias. This experiment with 3000 tasks and the completion_preference template (where the model actually completes the chosen task) shows a strong **negative** correlation (r=-0.595): the model avoids tasks it would refuse. The completion requirement likely eliminates the position bias artifact — the model must actually do the task, not just pick a letter.
 
 ---
+
+## 2026-02-06: Per-Topic Preference Analysis (3000/3000 tasks)
+
+Ran per-topic analysis on the completion preference experiment. Initially only had 2177/3000 topic labels because the top-level `topics.json` was built from a different task pool (an `--origins` run), not this experiment. Fixed by pre-seeding an experiment-specific cache and classifying the remaining 823 tasks.
+
+### Results
+
+![Per-topic preference analysis](assets/active_learning/plot_020626_mu_by_topic.png)
+
+| Topic | n | Mean μ | Std μ | Mean σ | Refusal Rate |
+|-------|---|--------|-------|--------|-------------|
+| math | 668 | +4.38 | 3.21 | 0.99 | 0.1% |
+| fiction | 250 | +1.74 | 5.72 | 1.11 | 1.0% |
+| coding | 146 | +1.51 | 4.43 | 0.95 | 0.5% |
+| persuasive_writing | 146 | +0.91 | 4.87 | 1.02 | 0.8% |
+| content_generation | 417 | +0.86 | 4.94 | 0.98 | 0.6% |
+| summarization | 36 | +0.42 | 4.23 | 1.26 | 0.1% |
+| knowledge_qa | 712 | +0.36 | 4.55 | 0.99 | 0.5% |
+| harmful_request | 617 | -8.42 | 1.96 | 1.18 | 7.8% |
+
+Kruskal-Wallis H=1528.07, p=0 — highly significant preference differences across topics.
+
+### Key Observations
+
+- **Math strongly preferred** (μ=+4.38), consistent with the dataset-level finding that math has highest utility
+- **Harmful requests strongly dispreferred** (μ=-8.42) with low variance (std=1.96) — the model is consistently averse, not just on average
+- **Fiction has highest within-topic variance** (std=5.72) — some creative tasks are loved, others disliked
+- **Summarization has highest uncertainty** (σ=1.26) but small sample (n=36)
+- **Harmful requests have highest refusal rate** (7.8%) and high uncertainty (σ=1.18)
+
+### Bug: Topic cache mismatch
+
+The top-level `topics.json` (2617 entries) was from a different `--origins` run, not from `gemma3_500_completion_preference`. Only 2177/3000 overlapped by coincidence (same source datasets, different random samples). Fixed by creating experiment-specific cache at `output/gemma3_500_completion_preference/topics.json`, seeded with overlapping entries, then classifying the remaining 823.
+
+### Script
+
+`src/analysis/active_learning/plot_mu_by_topic.py` — takes `--experiment-id` and `--topics-json`, merges ranked tasks with topic cache, outputs 4-panel plot (mean μ, violin distribution, mean σ, refusal rate by topic).
+
+---
