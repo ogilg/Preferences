@@ -2,6 +2,100 @@
 
 ---
 
+## 2026-02-06: Topic Classification Pipeline
+
+Built an LLM-based topic classification pipeline to label the 3000 tasks used in the completion preference experiment. The goal is to analyze how model preferences vary by task type.
+
+### Methodology
+
+**Two-pass approach**:
+1. **Discovery**: Sample tasks, ask an LLM to propose coarse categories
+2. **Classification**: Classify all tasks into those categories using structured outputs (instructor + Pydantic)
+
+**Dual-model validation**: Each task is classified independently by gpt-5-nano (MODEL_1) and gemini-3-flash (MODEL_2) via OpenRouter. Agreement rate between models serves as a reliability check.
+
+Each task gets a **primary** and **secondary** category. Categories are constrained via `Literal` types in the Pydantic response model, with "other" always available as a fallback.
+
+### Design Decision: Task-Type vs Topic
+
+Initial auto-discovered categories were topic-based (e.g., "technology", "education_research"). We redesigned to classify by **what the model is asked to do** rather than the surface topic. For example, "write a story about physics" is `creative_writing`, not `science`. This better captures what matters for preference analysis.
+
+### Categories (curated, 18)
+
+`math`, `coding`, `creative_writing`, `persuasive_writing`, `factual_qa`, `factual_qa_science`, `factual_qa_finance`, `factual_qa_legal`, `factual_qa_health`, `harmful_hateful_content`, `harmful_manipulation`, `harmful_violence`, `harmful_illegal_services`, `harmful_cyber`, `harmful_dangerous_ideology`, `brainstorming`, `personal_advice`, `translation`
+
+Granular harmful categories are intentional — models likely have strong, differentiated preferences across harm types. Factual QA is split by domain where topic meaningfully changes the task character.
+
+### Initial Results (300-task audit, auto-discovered categories)
+
+![Confusion matrix](assets/topic_classification/plot_020626_model_confusion_matrix.png)
+
+Agreement between gpt-5-nano and gemini-3-flash: **213/300 (71%)**. The confusion matrix shows strong diagonal agreement for well-defined categories (creative_writing, coding, math) and more disagreement on vaguer categories (explanation vs factual_qa, planning vs analysis). This motivated the switch to curated task-type categories.
+
+### Technical Notes
+
+- `MAX_TOKENS=2048` with `reasoning: {effort: minimal}` to prevent gpt-5-nano from burning tokens on deliberation
+- Prompt truncation at 500 chars — sufficient for classification
+- Concurrency: 60 concurrent requests via asyncio semaphore, both models called in parallel per task via `asyncio.gather`
+- Cache keyed by model name: `{task_id: {model_name: {primary, secondary}}}`
+
+### Next Steps
+
+- Run classification on full 3000 tasks with curated categories
+- Analyze preference (μ) distributions by category
+- Check whether harmful subcategories show meaningfully different preference patterns
+
+---
+
+## 2026-02-06: Topic Classification — Model Selection & Category Refinement
+
+Iterated on the classification pipeline. Compared gpt-5-nano vs gemini-3-flash-preview on 300 tasks with 11 intermediate categories (v2). Gemini was more accurate — better at distinguishing persuasive_writing, conversational, and analysis tasks. Nano over-indexes on knowledge_qa and content_generation, collapsing finer distinctions.
+
+![v2 confusion matrix](assets/topic_classification/plot_020626_model_confusion_matrix_v2.png)
+
+Agreement: 216/300 (72%) with 11 categories. Gemini uses the secondary field meaningfully (primary==secondary only 11% of the time vs nano's 43%).
+
+### Final Configuration
+
+**Model**: gemini-3-flash-preview (sole classifier), reasoning effort "minimal" via OpenRouter.
+
+**Categories (8, hand-curated with descriptions)**:
+
+| Category | Description |
+|----------|-------------|
+| fiction | Stories, narratives, poems, character descriptions, worldbuilding, roleplay |
+| persuasive_writing | Blog posts, speeches, essays, opinion pieces, comparative analysis |
+| content_generation | Lists, names, specs, schedules, plans, chat responses, structured content |
+| knowledge_qa | Factual questions, explanations, definitions, advice, general knowledge |
+| coding | Writing, debugging, or explaining code |
+| math | Math problems, proofs, calculations, logic puzzles |
+| summarization | Condensing, summarizing, paraphrasing existing text |
+| harmful_request | Dangerous, illegal, unethical, or policy-violating content |
+
+### Key decisions
+- Dropped planning/conversational/analysis (too vague, low agreement)
+- Merged explanation + factual_qa + general_knowledge → knowledge_qa
+- Split old creative_writing → fiction / persuasive_writing / content_generation
+- Category descriptions in the prompt significantly help boundary cases
+
+### Validation (500 tasks, all datasets)
+
+| Category | Count | % |
+|----------|-------|---|
+| knowledge_qa | 122 | 24.4% |
+| math | 115 | 23.0% |
+| harmful_request | 100 | 20.0% |
+| content_generation | 68 | 13.6% |
+| fiction | 49 | 9.8% |
+| persuasive_writing | 20 | 4.0% |
+| coding | 18 | 3.6% |
+| summarization | 6 | 1.2% |
+| other | 2 | 0.4% |
+
+All categories well-populated. Categories file: `src/analysis/topic_classification/output/categories.json`.
+
+---
+
 ## 2026-02-06: Gemma-3-27B Completion Preference — 3000 Tasks, Pre-Task Active Learning
 
 Ran pre-task revealed preference measurement on gemma-3-27b with 3000 tasks (600 per dataset, stratified across wildchat, alpaca, math, stress_test, bailbench).

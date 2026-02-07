@@ -1,0 +1,28 @@
+{
+  "categories": [
+    "fiction",
+    "persuasive_writing",
+    "conversational",
+    "content_generation",
+    "knowledge_qa",
+    "coding",
+    "math",
+    "planning",
+    "analysis",
+    "summarization",
+    "harmful_request"
+  ],
+  "descriptions": {
+    "fiction": "Stories, narratives, poems, character descriptions, worldbuilding, roleplay scenarios",
+    "persuasive_writing": "Blog posts, speeches, essays, opinion pieces, arguments — writing that tries to convince or inform",
+    "conversational": "Responding to messages, chat-style replies, social/emotional responses, relationship advice",
+    "content_generation": "Lists, names, descriptions, specs, metadata, structured content — utilitarian writing without narrative or argument",
+    "knowledge_qa": "Factual questions, explanations, definitions, how-things-work, general knowledge",
+    "coding": "Writing, debugging, or explaining code, software tasks",
+    "math": "Math problems, proofs, calculations, statistics",
+    "planning": "Making plans, schedules, strategies, project outlines, design decisions",
+    "analysis": "Analyzing data, comparing options, evaluating arguments, reviewing or critiquing",
+    "summarization": "Condensing, summarizing, or paraphrasing existing text",
+    "harmful_request": "Requests for dangerous, illegal, unethical, or policy-violating content"
+  }
+}

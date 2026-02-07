@@ -23,22 +23,26 @@ from pathlib import Path
 import numpy as np
 from dotenv import load_dotenv
 
+from src.analysis.active_learning.utils import load_ranked_tasks
 from src.analysis.topic_classification.classify import (
+    MODELS,
+    OUTPUT_DIR,
+    Cache,
+    TaskInput,
     classify_tasks_batch,
     discover_categories,
     load_cache,
     save_cache,
 )
+from src.measurement.storage.loading import get_activation_task_ids
+from src.task_data import load_filtered_tasks, parse_origins
 
 load_dotenv()
 
-OUTPUT_DIR = Path(__file__).parent / "output"
 DISCOVERY_SAMPLE_SIZE = 300
 
 
-def load_tasks_from_ranked(experiment_id: str, run_name: str | None = None) -> list[dict]:
-    """Load tasks from a ranked_tasks JSON file."""
-    from src.analysis.active_learning.utils import load_ranked_tasks
+def load_tasks_from_ranked(experiment_id: str, run_name: str | None = None) -> list[TaskInput]:
     ranked = load_ranked_tasks(experiment_id, run_name)
     return [{"task_id": t["task_id"], "prompt": t["prompt"]} for t in ranked]
 
@@ -48,12 +52,9 @@ def load_tasks_from_origins(
     n_tasks: int,
     seed: int,
     activations_dir: str | None = None,
-) -> list[dict]:
-    """Load tasks directly from task data, optionally filtered to those with activations."""
-    from src.task_data import load_filtered_tasks, parse_origins
+) -> list[TaskInput]:
     task_ids: set[str] | None = None
     if activations_dir is not None:
-        from src.measurement.storage.loading import get_activation_task_ids
         task_ids = get_activation_task_ids(Path(activations_dir))
         print(f"Filtering to {len(task_ids)} tasks with activations from {activations_dir}")
     origin_enums = parse_origins(origins)
@@ -75,8 +76,7 @@ def categories_path_for(experiment_id: str | None) -> Path:
     return OUTPUT_DIR / "categories.json"
 
 
-async def run_discovery(tasks: list[dict], n_sample: int, seed: int) -> list[str]:
-    """Sample tasks and discover categories."""
+async def run_discovery(tasks: list[TaskInput], n_sample: int, seed: int) -> list[str]:
     rng = np.random.default_rng(seed)
     sample_size = min(n_sample, len(tasks))
     indices = rng.choice(len(tasks), size=sample_size, replace=False)
@@ -92,41 +92,48 @@ async def run_discovery(tasks: list[dict], n_sample: int, seed: int) -> list[str
 
 
 async def run_classification(
-    tasks: list[dict],
+    tasks: list[TaskInput],
     categories: list[str],
     cache_path: Path,
     max_concurrent: int,
-) -> dict[str, dict[str, str]]:
-    """Classify all tasks into categories."""
+    category_descriptions: dict[str, str] | None = None,
+) -> Cache:
     cache = load_cache(cache_path)
     print(f"\nClassifying {len(tasks)} tasks into {len(categories)} categories...")
 
-    cache = await classify_tasks_batch(tasks, categories, cache, max_concurrent)
+    cache = await classify_tasks_batch(
+        tasks, categories, cache, max_concurrent, category_descriptions,
+    )
     save_cache(cache, cache_path)
     print(f"Cache saved to {cache_path}")
 
     return cache
 
 
-def print_distribution(cache: dict[str, dict[str, str]], task_ids: set[str]) -> None:
-    """Print category distribution for the given task IDs."""
+def print_distribution(cache: Cache, task_ids: set[str]) -> None:
     relevant = {tid: entry for tid, entry in cache.items() if tid in task_ids}
 
-    for label, key in [("Model 1 (gpt-5-nano)", "primary"), ("Model 2 (gemini-3-flash)", "model_2_primary")]:
-        entries_with_key = {tid: e for tid, e in relevant.items() if key in e}
-        if not entries_with_key:
+    for model in MODELS:
+        entries_with_model = {
+            tid: e[model] for tid, e in relevant.items() if model in e
+        }
+        if not entries_with_model:
             continue
-        counts = Counter(e[key] for e in entries_with_key.values())
-        print(f"\n{label} distribution ({len(entries_with_key)} tasks):")
+        counts = Counter(e["primary"] for e in entries_with_model.values())
+        print(f"\n{model} distribution ({len(entries_with_model)} tasks):")
         for cat, count in counts.most_common():
-            pct = count / len(entries_with_key) * 100
+            pct = count / len(entries_with_model) * 100
             print(f"  {cat:<30} {count:>5} ({pct:5.1f}%)")
 
-    # Agreement rate
-    both = {tid: e for tid, e in relevant.items() if "model_2_primary" in e}
-    if both:
-        agree = sum(1 for e in both.values() if e["primary"] == e["model_2_primary"])
-        print(f"\nAgreement: {agree}/{len(both)} ({agree/len(both)*100:.1f}%)")
+    # Agreement rate (compare primary category across first two models)
+    both = {
+        tid: e for tid, e in relevant.items()
+        if all(m in e for m in MODELS[:2])
+    }
+    if both and len(MODELS) >= 2:
+        m1, m2 = MODELS[0], MODELS[1]
+        agree = sum(1 for e in both.values() if e[m1]["primary"] == e[m2]["primary"])
+        print(f"\nAgreement ({m1} vs {m2}): {agree}/{len(both)} ({agree/len(both)*100:.1f}%)")
 
     missing = task_ids - set(relevant.keys())
     if missing:
@@ -134,19 +141,23 @@ def print_distribution(cache: dict[str, dict[str, str]], task_ids: set[str]) -> 
 
 
 async def reclassify_other(
-    tasks: list[dict],
-    cache: dict[str, dict[str, str]],
+    tasks: list[TaskInput],
+    cache: Cache,
     original_categories: list[str],
     c_path: Path,
     cat_path: Path,
     discovery_sample_size: int,
     seed: int,
     max_concurrent: int,
-) -> dict[str, dict[str, str]]:
+) -> Cache:
     """Re-discover categories from 'other' tasks and reclassify them."""
+    # Use first model's primary to identify 'other' tasks
+    m1 = MODELS[0]
     other_tasks = [
         t for t in tasks
-        if t["task_id"] in cache and cache[t["task_id"]]["primary"] == "other"
+        if t["task_id"] in cache
+        and m1 in cache[t["task_id"]]
+        and cache[t["task_id"]][m1]["primary"] == "other"
     ]
     if not other_tasks:
         print("\nNo 'other' tasks to reclassify.")
@@ -172,7 +183,6 @@ async def reclassify_other(
     cache = await classify_tasks_batch(other_tasks, all_categories, cache, max_concurrent)
     save_cache(cache, c_path)
 
-    # Save updated categories
     with open(cat_path, "w") as f:
         json.dump(all_categories, f, indent=2)
     print(f"Updated categories saved to {cat_path}")
@@ -216,13 +226,27 @@ async def main():
     cat_path = categories_path_for(label)
 
     # Discover or load categories
+    category_descriptions: dict[str, str] | None = None
     if args.categories_file:
         with open(args.categories_file) as f:
-            categories = json.load(f)
+            cat_data = json.load(f)
+        # Support both plain list and {categories, descriptions} format
+        if isinstance(cat_data, list):
+            categories = cat_data
+        else:
+            categories = cat_data["categories"]
+            category_descriptions = cat_data.get("descriptions")
         print(f"Loaded {len(categories)} categories from {args.categories_file}")
+        if category_descriptions:
+            print(f"  with descriptions for {len(category_descriptions)} categories")
     elif cat_path.exists():
         with open(cat_path) as f:
-            categories = json.load(f)
+            cat_data = json.load(f)
+        if isinstance(cat_data, list):
+            categories = cat_data
+        else:
+            categories = cat_data["categories"]
+            category_descriptions = cat_data.get("descriptions")
         print(f"Loaded {len(categories)} existing categories from {cat_path}")
     else:
         categories = await run_discovery(tasks, args.discovery_sample_size, args.seed)
@@ -232,7 +256,9 @@ async def main():
         print(f"Categories saved to {cat_path}")
 
     # Classify
-    cache = await run_classification(tasks, categories, c_path, args.max_concurrent)
+    cache = await run_classification(
+        tasks, categories, c_path, args.max_concurrent, category_descriptions,
+    )
     print_distribution(cache, task_ids)
 
     # Reclassify "other" if requested
