@@ -17,9 +17,10 @@ import instructor
 from openai import AsyncOpenAI
 from pydantic import BaseModel
 
-PARSER_MODEL = "openai/gpt-5-nano-2025-08-07"
+MODEL_1 = "openai/gpt-5-nano"
+MODEL_2 = "google/gemini-3-flash-preview"
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-MAX_TOKENS = 4096
+MAX_TOKENS = 128
 
 
 def _get_async_client() -> instructor.AsyncInstructor:
@@ -73,7 +74,7 @@ def _discover_messages(task_prompts: list[str]) -> list[dict]:
 async def discover_categories(task_prompts: list[str]) -> list[str]:
     """Pass 1: Ask LLM to propose topic categories from a sample of tasks."""
     result = await _get_async_client().chat.completions.create(
-        model=PARSER_MODEL,
+        model=MODEL_1,
         response_model=DiscoveredCategories,
         messages=_discover_messages(task_prompts),
         temperature=0,
@@ -89,7 +90,8 @@ def _make_classification_model(categories: list[str]) -> type[BaseModel]:
     categories_with_other = tuple(categories + ["other"])
 
     class TaskClassification(BaseModel):
-        category: Literal[categories_with_other]  # type: ignore[valid-type]
+        primary: Literal[categories_with_other]  # type: ignore[valid-type]
+        secondary: Literal[categories_with_other]  # type: ignore[valid-type]
 
     return TaskClassification
 
@@ -100,17 +102,23 @@ def _classify_messages(prompt: str, categories: list[str]) -> list[dict]:
         {
             "role": "system",
             "content": (
-                "You classify tasks/prompts into topic categories. "
+                "You classify tasks/prompts by WHAT THE MODEL IS ASKED TO DO, "
+                "not by the surface topic. "
+                "Do NOT attempt to solve, answer, or engage with the task content. "
+                "Just classify it. This is a simple labeling task — respond immediately.\n\n"
                 f"Available categories: {categories_str}, other\n\n"
                 "Rules:\n"
-                "- Choose the single best-fitting category\n"
-                "- Use 'other' only if no category fits at all\n"
-                "- Classify based on what the task is asking, not surface keywords"
+                "- Pick a primary category (best fit) and a secondary category "
+                "(second-best fit, or same as primary if only one fits)\n"
+                "- Classify by the type of task (e.g. 'write a story about physics' "
+                "is creative_writing, not science; 'explain quantum mechanics' is "
+                "factual_qa_science, not creative_writing)\n"
+                "- Use 'other' only if genuinely nothing fits — most tasks fit a category"
             ),
         },
         {
             "role": "user",
-            "content": f"Task:\n{prompt[:1000]}",
+            "content": f"Classify this task:\n{prompt[:500]}",
         },
     ]
 
@@ -119,30 +127,38 @@ async def classify_task(
     prompt: str,
     categories: list[str],
     classification_model: type[BaseModel],
-) -> str:
+    model: str = MODEL_1,
+) -> tuple[str, str]:
     result = await _get_async_client().chat.completions.create(
-        model=PARSER_MODEL,
+        model=model,
         response_model=classification_model,
         messages=_classify_messages(prompt, categories),
         temperature=0,
         max_tokens=MAX_TOKENS,
     )
-    return result.category
+    return result.primary, result.secondary
+
+
+def _needs_classification(task_id: str, cache: dict[str, dict[str, str]]) -> bool:
+    if task_id not in cache:
+        return True
+    entry = cache[task_id]
+    return "model_2_primary" not in entry
 
 
 async def classify_tasks_batch(
     tasks: list[dict],
     categories: list[str],
-    cache: dict[str, str],
-    max_concurrent: int = 30,
-) -> dict[str, str]:
-    """Classify a batch of tasks, skipping cached ones.
+    cache: dict[str, dict[str, str]],
+    max_concurrent: int = 60,
+) -> dict[str, dict[str, str]]:
+    """Classify a batch of tasks with two models, skipping fully-cached ones.
 
-    tasks: list of dicts with 'task_id' and 'prompt' keys.
-    Returns updated cache mapping task_id -> category.
+    Each cache entry has: primary, secondary (model 1) and
+    model_2_primary, model_2_secondary (model 2).
     """
     classification_model = _make_classification_model(categories)
-    uncached = [t for t in tasks if t["task_id"] not in cache]
+    uncached = [t for t in tasks if _needs_classification(t["task_id"], cache)]
     print(f"Classification: {len(tasks) - len(uncached)} cached, {len(uncached)} to classify")
 
     if not uncached:
@@ -151,14 +167,24 @@ async def classify_tasks_batch(
     semaphore = asyncio.Semaphore(max_concurrent)
     errors = 0
 
-    async def classify_one(task: dict) -> tuple[str, str | None]:
+    async def classify_one(task: dict) -> tuple[str, dict[str, str] | None]:
         nonlocal errors
         async with semaphore:
             try:
-                category = await classify_task(
-                    task["prompt"], categories, classification_model
+                m1_primary, m1_secondary = await classify_task(
+                    task["prompt"], categories, classification_model,
+                    model=MODEL_1,
                 )
-                return task["task_id"], category
+                m2_primary, m2_secondary = await classify_task(
+                    task["prompt"], categories, classification_model,
+                    model=MODEL_2,
+                )
+                return task["task_id"], {
+                    "primary": m1_primary,
+                    "secondary": m1_secondary,
+                    "model_2_primary": m2_primary,
+                    "model_2_secondary": m2_secondary,
+                }
             except Exception as e:
                 errors += 1
                 if errors <= 5:
@@ -168,9 +194,9 @@ async def classify_tasks_batch(
     coros = [classify_one(t) for t in uncached]
     completed = 0
     for coro in asyncio.as_completed(coros):
-        task_id, category = await coro
-        if category is not None:
-            cache[task_id] = category
+        task_id, result = await coro
+        if result is not None:
+            cache[task_id] = result
         completed += 1
         if completed % 100 == 0:
             print(f"  {completed}/{len(uncached)} classified")
