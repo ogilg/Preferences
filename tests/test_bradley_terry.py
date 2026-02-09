@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.probes.bradley_terry import train_for_comparisons
+from src.probes.bradley_terry import PairwiseActivationData, train_for_comparisons
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
@@ -39,10 +39,8 @@ def test_train_for_comparisons_recovers_preference_direction():
             )
         )
 
-    results, probes = train_for_comparisons(
-        task_ids, activations, measurements,
-        lr=0.1, l2_lambda=0.01, max_epochs=500, rng=rng,
-    )
+    data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
+    results, probes = train_for_comparisons(data, l2_lambda=0.01)
 
     assert len(results) == 2
     assert set(probes.keys()) == {0, 5}

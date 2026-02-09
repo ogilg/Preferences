@@ -27,7 +27,6 @@ from src.probes.bradley_terry.data import PairwiseActivationData
 from src.probes.bradley_terry.training import train_for_comparisons
 from src.probes.data_loading import load_thurstonian_scores, load_pairwise_measurements
 from src.probes.residualization import residualize_scores
-from src.types import BinaryPreferenceMeasurement
 
 
 class ProbeMode(Enum):
@@ -46,12 +45,9 @@ class RunDirProbeConfig:
     cv_folds: int = 5
     alpha_sweep_size: int = 50
     standardize: bool = False
-    bt_lr: float = 0.01
     bt_l2_lambda: float = 1.0
-    bt_batch_size: int = 64
-    bt_max_epochs: int = 1000
-    bt_patience: int = 10
     residualize: bool = False
+    residualize_include_dataset: bool = False
     topics_json: Path | None = None
 
     @classmethod
@@ -64,8 +60,7 @@ class RunDirProbeConfig:
 
         # Only pass optional keys present in YAML; let dataclass defaults handle the rest
         optional = {}
-        for key in ("cv_folds", "alpha_sweep_size", "standardize", "bt_lr", "bt_l2_lambda",
-                    "bt_batch_size", "bt_max_epochs", "bt_patience", "residualize"):
+        for key in ("cv_folds", "alpha_sweep_size", "standardize", "bt_l2_lambda", "residualize", "residualize_include_dataset"):
             if key in data:
                 optional[key] = data[key]
 
@@ -125,29 +120,20 @@ def _train_ridge_probes(
 
 def _train_bt_probes(
     config: RunDirProbeConfig,
-    task_ids: np.ndarray,
-    activations: dict[int, np.ndarray],
-    measurements: list[BinaryPreferenceMeasurement],
+    data: PairwiseActivationData,
 ) -> tuple[list[dict], int]:
     """Train Bradley-Terry probes on pairwise comparisons.
 
     Returns (probe_entries, n_pairs_used).
     """
-    data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
     n_pairs_used = len(data.pairs)
 
     if n_pairs_used == 0:
         return [], 0
 
     results, probes = train_for_comparisons(
-        task_ids=task_ids,
-        activations=activations,
-        measurements=measurements,
-        lr=config.bt_lr,
+        data=data,
         l2_lambda=config.bt_l2_lambda,
-        batch_size=config.bt_batch_size,
-        max_epochs=config.bt_max_epochs,
-        patience=config.bt_patience,
     )
 
     probe_entries = []
@@ -163,7 +149,7 @@ def _train_bt_probes(
             "layer": layer,
             "train_accuracy": result.train_accuracy,
             "train_loss": result.train_loss,
-            "n_epochs": result.n_epochs,
+            "n_iterations": result.n_iterations,
             "n_pairs": n_pairs_used,
         })
 
@@ -253,7 +239,8 @@ def run_probes(config: RunDirProbeConfig) -> dict:
 
         if run_bt:
             print(f"  Training BT probe...")
-            bt_entries, n_pairs = _train_bt_probes(config, task_ids, activations, measurements)
+            bt_data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
+            bt_entries, n_pairs = _train_bt_probes(config, bt_data)
             manifest["probes"].extend(bt_entries)
             if bt_entries:
                 print(f"  BT accuracy={bt_entries[0]['train_accuracy']:.4f} ({n_pairs} pairs)")
