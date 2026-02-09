@@ -1,0 +1,56 @@
+{
+  "experiment_name": "gemma3_3k_completion_preference_probes",
+  "run_dir": "results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "activations_path": "activations/gemma_3_27b/activations_prompt_last.npz",
+  "modes": [
+    "ridge"
+  ],
+  "created_at": "2026-02-09T10:30:48.934051",
+  "n_tasks_in_experiment": 3000,
+  "n_tasks_with_activations": 3000,
+  "n_comparisons_in_experiment": 0,
+  "probes": [
+    {
+      "id": "ridge_L31",
+      "file": "probes/probe_ridge_L31.npy",
+      "method": "ridge",
+      "layer": 31,
+      "cv_r2_mean": 0.729964823285304,
+      "cv_r2_std": 0.01673813080758186,
+      "cv_mse_mean": 9.020939924961313,
+      "cv_mse_std": 0.4228043324375155,
+      "best_alpha": 10000.0,
+      "n_samples": 3000,
+      "train_test_gap": 0.26981429652094413,
+      "cv_stability": 0.9770699487545761
+    },
+    {
+      "id": "ridge_L43",
+      "file": "probes/probe_ridge_L43.npy",
+      "method": "ridge",
+      "layer": 43,
+      "cv_r2_mean": 0.6548123449828327,
+      "cv_r2_std": 0.022633163357004576,
+      "cv_mse_mean": 11.550468099152464,
+      "cv_mse_std": 0.9109440596054392,
+      "best_alpha": 10000.0,
+      "n_samples": 3000,
+      "train_test_gap": 0.34515926915273054,
+      "cv_stability": 0.9654356495766103
+    },
+    {
+      "id": "ridge_L55",
+      "file": "probes/probe_ridge_L55.npy",
+      "method": "ridge",
+      "layer": 55,
+      "cv_r2_mean": 0.5808750038110675,
+      "cv_r2_std": 0.04811331767941348,
+      "cv_mse_mean": 14.002945268243886,
+      "cv_mse_std": 1.5332322435638506,
+      "best_alpha": 0.0001,
+      "n_samples": 3000,
+      "train_test_gap": 0.41912474866131344,
+      "cv_stability": 0.9171709621597357
+    }
+  ]
+}

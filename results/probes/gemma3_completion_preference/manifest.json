@@ -1,0 +1,83 @@
+{
+  "experiment_name": "gemma3_completion_preference_probes",
+  "run_dir": "results/experiments/gemma3_500_completion_preference/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "activations_path": "activations/gemma_3_27b/activations_prompt_last.npz",
+  "created_at": "2026-02-07T21:34:17.592351",
+  "n_tasks_in_experiment": 3000,
+  "n_tasks_with_activations": 3000,
+  "n_comparisons_in_experiment": 81900,
+  "probes": [
+    {
+      "id": "ridge_L31",
+      "file": "probes/probe_ridge_L31.npy",
+      "method": "ridge",
+      "layer": 31,
+      "cv_r2_mean": 0.655509721952265,
+      "cv_r2_std": 0.012281763938399031,
+      "cv_mse_mean": 12.314100580374566,
+      "cv_mse_std": 0.28742660757211197,
+      "best_alpha": 10000.0,
+      "n_samples": 3000,
+      "train_test_gap": 0.34419594822671573,
+      "cv_stability": 0.9812637959053493
+    },
+    {
+      "id": "bt_L31",
+      "file": "probes/probe_bt_L31.npy",
+      "method": "bradley_terry",
+      "layer": 31,
+      "train_accuracy": 0.6230378806635306,
+      "train_loss": 14339.761053514687,
+      "n_epochs": 11,
+      "n_pairs": 80780
+    },
+    {
+      "id": "ridge_L43",
+      "file": "probes/probe_ridge_L43.npy",
+      "method": "ridge",
+      "layer": 43,
+      "cv_r2_mean": 0.545242295782639,
+      "cv_r2_std": 0.019347505516617413,
+      "cv_mse_mean": 16.257592492867847,
+      "cv_mse_std": 0.5806323246961528,
+      "best_alpha": 10000.0,
+      "n_samples": 3000,
+      "train_test_gap": 0.4547222755649488,
+      "cv_stability": 0.9645157654446128
+    },
+    {
+      "id": "bt_L43",
+      "file": "probes/probe_bt_L43.npy",
+      "method": "bradley_terry",
+      "layer": 43,
+      "train_accuracy": 0.6342040108937856,
+      "train_loss": 57344.392158554736,
+      "n_epochs": 11,
+      "n_pairs": 80780
+    },
+    {
+      "id": "ridge_L55",
+      "file": "probes/probe_ridge_L55.npy",
+      "method": "ridge",
+      "layer": 55,
+      "cv_r2_mean": 0.4294642354797847,
+      "cv_r2_std": 0.07675843329905699,
+      "cv_mse_mean": 20.379028096102918,
+      "cv_mse_std": 2.570548385284378,
+      "best_alpha": 0.0001,
+      "n_samples": 3000,
+      "train_test_gap": 0.5705355615746868,
+      "cv_stability": 0.8212693236366198
+    },
+    {
+      "id": "bt_L55",
+      "file": "probes/probe_bt_L55.npy",
+      "method": "bradley_terry",
+      "layer": 55,
+      "train_accuracy": 0.6699925724189155,
+      "train_loss": 202749.6286618038,
+      "n_epochs": 11,
+      "n_pairs": 80780
+    }
+  ]
+}
