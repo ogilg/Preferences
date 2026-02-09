@@ -8,8 +8,6 @@ from src.probes.core.linear_probe import train_and_evaluate
 
 from .types import BaselineResult, BaselineType
 
-BASELINE_ALPHAS = np.array([10.0, 100.0, 1000.0, 10000.0])
-
 
 def run_shuffled_labels_baseline(
     X: np.ndarray,
@@ -18,11 +16,16 @@ def run_shuffled_labels_baseline(
     layer: int,
     cv_folds: int,
     seed: int,
+    alpha_sweep_size: int = 10,
+    standardize: bool = False,
 ) -> BaselineResult:
     """Train probe on shuffled labels."""
     rng = np.random.default_rng(seed)
     y_shuffled = rng.permutation(y)
-    _, result, _ = train_and_evaluate(X, y_shuffled, cv_folds=cv_folds, alphas=BASELINE_ALPHAS)
+    _, result, _ = train_and_evaluate(
+        X, y_shuffled, cv_folds=cv_folds,
+        alpha_sweep_size=alpha_sweep_size, standardize=standardize,
+    )
     return BaselineResult(
         baseline_type=BaselineType.SHUFFLED_LABELS,
         template=template,
@@ -44,6 +47,8 @@ def run_random_activations_baseline(
     layer: int,
     cv_folds: int,
     seed: int,
+    alpha_sweep_size: int = 10,
+    standardize: bool = False,
 ) -> BaselineResult:
     """Train probe on random activations with same mean/std."""
     mean = X.mean(axis=0)
@@ -51,7 +56,10 @@ def run_random_activations_baseline(
 
     rng = np.random.default_rng(seed)
     X_noise = rng.normal(loc=mean, scale=std, size=X.shape)
-    _, result, _ = train_and_evaluate(X_noise, y, cv_folds=cv_folds, alphas=BASELINE_ALPHAS)
+    _, result, _ = train_and_evaluate(
+        X_noise, y, cv_folds=cv_folds,
+        alpha_sweep_size=alpha_sweep_size, standardize=standardize,
+    )
     return BaselineResult(
         baseline_type=BaselineType.RANDOM_ACTIVATIONS,
         template=template,
