@@ -11,6 +11,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import gc
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -185,27 +186,34 @@ def _train_bt_probes(
 
 
 def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
-    """Train Ridge and Bradley-Terry probes from active learning data."""
+    """Train Ridge and Bradley-Terry probes from active learning data.
+
+    Processes one layer at a time to limit memory usage.
+    """
     config.output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"Training probes: {config.experiment_name}")
     print(f"Run dir: {config.run_dir}")
     print(f"Output: {config.output_dir}")
 
-    # Load data
-    print("\nLoading data...")
+    # Load measurement data (lightweight)
+    print("\nLoading measurement data...")
     scores = _load_thurstonian_scores(config.run_dir)
     measurements = _load_pairwise_measurements(config.run_dir)
     print(f"  Loaded {len(scores)} task scores from Thurstonian fit")
     print(f"  Loaded {len(measurements)} pairwise comparisons")
 
     task_id_filter = set(scores.keys())
-    task_ids, activations = load_activations(
+
+    # Load one layer to get task_ids and count
+    task_ids, first_layer_acts = load_activations(
         config.activations_path,
         task_id_filter=task_id_filter,
-        layers=config.layers,
+        layers=[config.layers[0]],
     )
-    print(f"  Loaded activations for {len(task_ids)} tasks, {len(activations)} layers")
+    n_tasks = len(task_ids)
+    del first_layer_acts
+    gc.collect()
 
     manifest = {
         "experiment_name": config.experiment_name,
@@ -213,30 +221,47 @@ def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
         "activations_path": str(config.activations_path),
         "created_at": datetime.now().isoformat(),
         "n_tasks_in_experiment": len(scores),
-        "n_tasks_with_activations": len(task_ids),
+        "n_tasks_with_activations": n_tasks,
         "n_comparisons_in_experiment": len(measurements),
         "probes": [],
     }
 
-    # Train Ridge probes
-    print("\nTraining Ridge probes on Thurstonian mu...")
-    ridge_entries = _train_ridge_probes(config, task_ids, activations, scores)
-    manifest["probes"].extend(ridge_entries)
-    print(f"  Trained {len(ridge_entries)} Ridge probes")
+    # Process one layer at a time
+    for layer in config.layers:
+        print(f"\n--- Layer {layer} ---")
+        task_ids, activations = load_activations(
+            config.activations_path,
+            task_id_filter=task_id_filter,
+            layers=[layer],
+        )
 
-    if ridge_entries:
-        best_ridge = max(ridge_entries, key=lambda x: x["cv_r2_mean"])
-        print(f"  Best layer: {best_ridge['layer']} (R²={best_ridge['cv_r2_mean']:.4f})")
+        # Ridge probe
+        print(f"  Training Ridge probe...")
+        ridge_entries = _train_ridge_probes(config, task_ids, activations, scores)
+        manifest["probes"].extend(ridge_entries)
+        if ridge_entries:
+            print(f"  Ridge R²={ridge_entries[0]['cv_r2_mean']:.4f}")
 
-    # Train Bradley-Terry probes
-    print("\nTraining Bradley-Terry probes on pairwise comparisons...")
-    bt_entries, n_pairs_used = _train_bt_probes(config, task_ids, activations, measurements)
-    manifest["probes"].extend(bt_entries)
-    print(f"  Trained {len(bt_entries)} BT probes on {n_pairs_used} pairs")
+        # Bradley-Terry probe
+        print(f"  Training BT probe...")
+        bt_entries, n_pairs = _train_bt_probes(config, task_ids, activations, measurements)
+        manifest["probes"].extend(bt_entries)
+        if bt_entries:
+            print(f"  BT accuracy={bt_entries[0]['train_accuracy']:.4f} ({n_pairs} pairs)")
 
-    if bt_entries:
-        best_bt = max(bt_entries, key=lambda x: x["train_accuracy"])
-        print(f"  Best layer: {best_bt['layer']} (accuracy={best_bt['train_accuracy']:.4f})")
+        del activations
+        gc.collect()
+
+    # Summary
+    ridge_probes = [p for p in manifest["probes"] if p["method"] == "ridge"]
+    bt_probes = [p for p in manifest["probes"] if p["method"] == "bradley_terry"]
+
+    if ridge_probes:
+        best = max(ridge_probes, key=lambda x: x["cv_r2_mean"])
+        print(f"\nBest Ridge: layer {best['layer']} (R²={best['cv_r2_mean']:.4f})")
+    if bt_probes:
+        best = max(bt_probes, key=lambda x: x["train_accuracy"])
+        print(f"Best BT: layer {best['layer']} (accuracy={best['train_accuracy']:.4f})")
 
     save_manifest(manifest, config.output_dir)
     print(f"\nSaved manifest with {len(manifest['probes'])} probes")
