@@ -51,7 +51,8 @@ def _train_single_probe(
 
     mask = np.array([tid in measurement_task_ids for tid in all_task_ids], dtype=bool)
     filtered_task_ids = all_task_ids[mask]
-    filtered_activations = {layer: a[mask] for layer, a in all_activations.items()}
+    layer = combo["layer"]
+    filtered_activations = {layer: all_activations[layer][mask]}
 
     results, probes = train_for_scores(
         filtered_task_ids,
@@ -64,11 +65,7 @@ def _train_single_probe(
     if not results:
         return None
 
-    layer = combo["layer"]
-    layer_result = next((r for r in results if r["layer"] == layer), None)
-    if layer_result is None:
-        return None
-
+    layer_result = results[0]
     probe_weights = probes[layer]
     relative_path = save_probe(probe_weights, output_dir, probe_id)
 

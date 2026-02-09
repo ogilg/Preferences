@@ -4,8 +4,8 @@ import warnings
 
 import numpy as np
 from scipy import linalg
-from sklearn.linear_model import Ridge, RidgeCV
-from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -23,14 +23,16 @@ def _alpha_sweep(
     cv_folds: int,
     standardize: bool = False,
 ) -> list[dict]:
-    """Evaluate each alpha with CV, returning per-alpha train and val R2."""
+    """Evaluate each alpha with CV, returning per-alpha train/val R2 and MSE."""
     sweep = []
     for alpha in alphas:
         if standardize:
             model = make_pipeline(StandardScaler(), Ridge(alpha=alpha))
         else:
             model = Ridge(alpha=alpha)
-        cv_r2 = cross_val_score(model, activations, labels, cv=cv_folds, scoring="r2")
+        cv = cross_validate(model, activations, labels, cv=cv_folds, scoring=("r2", "neg_mean_squared_error"))
+        cv_r2 = cv["test_r2"]
+        cv_mse = -cv["test_neg_mean_squared_error"]
         model.fit(activations, labels)
         train_r2 = float(np.corrcoef(labels, model.predict(activations))[0, 1] ** 2)
         sweep.append({
@@ -38,6 +40,8 @@ def _alpha_sweep(
             "train_r2": train_r2,
             "val_r2_mean": float(cv_r2.mean()),
             "val_r2_std": float(cv_r2.std()),
+            "val_mse_mean": float(cv_mse.mean()),
+            "val_mse_std": float(cv_mse.std()),
         })
     return sweep
 
@@ -46,49 +50,41 @@ def train_and_evaluate(
     activations: np.ndarray,
     labels: np.ndarray,
     cv_folds: int,
-    alpha_sweep_size: int,
+    alpha_sweep_size: int = 5,
+    alphas: np.ndarray | None = None,
     standardize: bool = False,
-    verbose: bool = False,
-) -> tuple[RidgeCV, dict, list[dict]]:
-    """Train linear probe with RidgeCV for efficient alpha selection.
+) -> tuple[Ridge, dict, list[dict]]:
+    """Train linear probe: sweep alphas, pick best, fit final model.
 
     Returns (probe, results_dict, alpha_sweep_results).
     """
-    alphas = get_default_alphas(alpha_sweep_size)
+    if alphas is None:
+        alphas = get_default_alphas(alpha_sweep_size)
 
-    # Full alpha sweep with train/val R2
     sweep = _alpha_sweep(activations, labels, alphas, cv_folds, standardize=standardize)
 
-    # RidgeCV for final probe (standardize externally if needed)
+    # Pick best alpha from sweep
+    best_entry = max(sweep, key=lambda s: s["val_r2_mean"])
+
+    # Fit final probe at best alpha
     if standardize:
         scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(activations)
+        X_final = scaler.fit_transform(activations)
     else:
-        X_scaled = activations
+        X_final = activations
 
-    probe = RidgeCV(alphas=alphas, cv=cv_folds)
-    probe.fit(X_scaled, labels)
-
-    # Get CV scores at best alpha for reporting
-    cv_r2_scores = cross_val_score(probe, X_scaled, labels, cv=cv_folds, scoring="r2")
-    cv_mse_scores = -cross_val_score(probe, X_scaled, labels, cv=cv_folds, scoring="neg_mean_squared_error")
-
-    # Train R2
-    y_pred = probe.predict(X_scaled)
-    train_r2 = float(np.corrcoef(labels, y_pred)[0, 1] ** 2)
-
-    cv_r2_mean = float(cv_r2_scores.mean())
-    cv_r2_std = float(cv_r2_scores.std())
+    probe = Ridge(alpha=best_entry["alpha"])
+    probe.fit(X_final, labels)
 
     results = {
-        "best_alpha": float(probe.alpha_),
-        "train_r2": train_r2,
-        "cv_r2_mean": cv_r2_mean,
-        "cv_r2_std": cv_r2_std,
-        "cv_mse_mean": float(cv_mse_scores.mean()),
-        "cv_mse_std": float(cv_mse_scores.std()),
-        "train_test_gap": train_r2 - cv_r2_mean,
-        "cv_stability": 1.0 - (cv_r2_std / (abs(cv_r2_mean) + 1e-10)),
+        "best_alpha": best_entry["alpha"],
+        "train_r2": best_entry["train_r2"],
+        "cv_r2_mean": best_entry["val_r2_mean"],
+        "cv_r2_std": best_entry["val_r2_std"],
+        "cv_mse_mean": best_entry["val_mse_mean"],
+        "cv_mse_std": best_entry["val_mse_std"],
+        "train_test_gap": best_entry["train_r2"] - best_entry["val_r2_mean"],
+        "cv_stability": 1.0 - (best_entry["val_r2_std"] / (abs(best_entry["val_r2_mean"]) + 1e-10)),
         "standardized": standardize,
     }
 
