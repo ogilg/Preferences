@@ -2,6 +2,41 @@
 
 ---
 
+## 2026-02-09: Alpha sweep extended to 10^6, no standardization
+
+Extended alpha range from logspace(-4,4) to logspace(0,6). Val R² still climbing at boundary — best alpha=10^6 for all layers. No feature standardization applied.
+
+Diagnosis: with n=3000, d≈3584, raw activations have varying scales across features. Extreme alpha compensates for this by shrinking everything — not a meaningful signal about representation geometry, just a poorly conditioned estimation problem. Need to standardize features so ridge penalizes all directions equally.
+
+### Key Results
+
+- L31: val R²=0.846 (up from 0.730), L43: 0.731 (from 0.655), L55: 0.651 (from 0.581)
+- Best alpha still at sweep boundary (10^6) — curve hasn't peaked
+- Train R² still ~1.0 even at alpha=10^6
+
+![Alpha sweep extended](assets/probes/plot_020926_alpha_sweep_extended_no_standardisation.png)
+
+---
+
+## 2026-02-09: Gemma-3 27B Completion Preference Probes
+
+Ridge regression probes trained on Thurstonian mu values from pre-task active learning (3k tasks, completion preference, canonical seed0). Activations from `activations_prompt_last.npz`.
+
+### Key Results
+
+- Train R² = 1.000 for all layers — complete overfitting on training set
+- Val R² (5-fold CV): L31 = 0.730 ± 0.017, L43 = 0.655 ± 0.030, L55 = 0.581 ± 0.045
+- Best alpha = 10000 for L31/L43, at the boundary of the sweep range (logspace -4 to 4)
+- Alpha sweep shows val R² still climbing at alpha = 10^4 — need to extend range
+
+### Plots
+
+![Train vs Val R²](assets/probes/plot_020926_gemma3_completion_pref_train_val_r2.png)
+
+![Alpha Sweep](assets/probes/plot_020926_gemma3_completion_pref_alpha_sweep.png)
+
+---
+
 ## 2026-02-06: Topic Classification Pipeline
 
 Built an LLM-based topic classification pipeline to label the 3000 tasks used in the completion preference experiment. The goal is to analyze how model preferences vary by task type.
