@@ -92,7 +92,7 @@ def run_training(config: ProbeConfig) -> dict:
     if config.probe_type == ProbeType.BRADLEY_TERRY:
         raise NotImplementedError(
             "Bradley-Terry training via the grid runner is not supported because BT "
-            "requires pairwise data. Use experiments/active_learning.py instead."
+            "requires pairwise data. Use experiments/run_dir_probes.py instead."
         )
 
     data = config.training_data

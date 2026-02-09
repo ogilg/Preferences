@@ -1,11 +1,11 @@
-"""Train probes from active learning experiment results.
+"""Train probes from a measurement run directory.
 
 Supports two training modes:
 1. Ridge regression on Thurstonian mu values (utility scores)
 2. Bradley-Terry on pairwise comparison data
 
 Usage:
-    python -m src.probes.experiments.active_learning --config configs/probes/example.yaml
+    python -m src.probes.experiments.run_dir_probes --config configs/probes/example.yaml
 """
 
 from __future__ import annotations
@@ -20,14 +20,14 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from src.measurement.storage.loading import load_run_utilities, load_yaml
 from src.probes.core.activations import load_activations
 from src.probes.core.storage import save_probe, save_manifest
 from src.probes.core.training import train_for_scores
 from src.probes.bradley_terry.data import PairwiseActivationData
 from src.probes.bradley_terry.training import train_for_comparisons
-from src.task_data import Task, OriginDataset
-from src.types import BinaryPreferenceMeasurement, PreferenceType
+from src.probes.data_loading import load_thurstonian_scores, load_pairwise_measurements
+from src.probes.residualization import residualize_scores
+from src.types import BinaryPreferenceMeasurement
 
 
 class ProbeMode(Enum):
@@ -36,7 +36,7 @@ class ProbeMode(Enum):
 
 
 @dataclass
-class ActiveLearningConfig:
+class RunDirProbeConfig:
     experiment_name: str
     run_dir: Path
     activations_path: Path
@@ -51,13 +51,24 @@ class ActiveLearningConfig:
     bt_batch_size: int = 64
     bt_max_epochs: int = 1000
     bt_patience: int = 10
+    residualize: bool = False
+    topics_json: Path | None = None
 
     @classmethod
-    def from_yaml(cls, path: Path) -> ActiveLearningConfig:
+    def from_yaml(cls, path: Path) -> RunDirProbeConfig:
         with open(path) as f:
             data = yaml.safe_load(f)
-        raw_modes = data.get("modes", ["ridge", "bradley_terry"])
-        modes = [ProbeMode(m) for m in raw_modes]
+
+        modes = [ProbeMode(m) for m in data.get("modes", ["ridge", "bradley_terry"])]
+        topics_json = Path(data["topics_json"]) if "topics_json" in data else None
+
+        # Only pass optional keys present in YAML; let dataclass defaults handle the rest
+        optional = {}
+        for key in ("cv_folds", "alpha_sweep_size", "standardize", "bt_lr", "bt_l2_lambda",
+                    "bt_batch_size", "bt_max_epochs", "bt_patience", "residualize"):
+            if key in data:
+                optional[key] = data[key]
+
         return cls(
             experiment_name=data["experiment_name"],
             run_dir=Path(data["run_dir"]),
@@ -65,54 +76,13 @@ class ActiveLearningConfig:
             output_dir=Path(data["output_dir"]),
             layers=data["layers"],
             modes=modes,
-            cv_folds=data.get("cv_folds", 5),
-            alpha_sweep_size=data.get("alpha_sweep_size", 50),
-            standardize=data.get("standardize", False),
-            bt_lr=data.get("bt_lr", 0.01),
-            bt_l2_lambda=data.get("bt_l2_lambda", 1.0),
-            bt_batch_size=data.get("bt_batch_size", 64),
-            bt_max_epochs=data.get("bt_max_epochs", 1000),
-            bt_patience=data.get("bt_patience", 10),
+            topics_json=topics_json,
+            **optional,
         )
-
-
-def _load_thurstonian_scores(run_dir: Path) -> dict[str, float]:
-    """Load task_id -> mu mapping from Thurstonian fit."""
-    mu_array, task_ids = load_run_utilities(run_dir)
-    return dict(zip(task_ids, mu_array))
-
-
-def _load_pairwise_measurements(run_dir: Path) -> list[BinaryPreferenceMeasurement]:
-    """Load measurements and reconstruct as BinaryPreferenceMeasurement objects."""
-    measurements_path = run_dir / "measurements.yaml"
-    raw = load_yaml(measurements_path)
-
-    measurements = []
-    for m in raw:
-        task_a = Task(
-            id=m["task_a"],
-            prompt="",
-            origin=OriginDataset[m["origin_a"]],
-            metadata={},
-        )
-        task_b = Task(
-            id=m["task_b"],
-            prompt="",
-            origin=OriginDataset[m["origin_b"]],
-            metadata={},
-        )
-        measurements.append(BinaryPreferenceMeasurement(
-            task_a=task_a,
-            task_b=task_b,
-            choice=m["choice"],
-            preference_type=PreferenceType.POST_TASK_REVEALED,
-        ))
-
-    return measurements
 
 
 def _train_ridge_probes(
-    config: ActiveLearningConfig,
+    config: RunDirProbeConfig,
     task_ids: np.ndarray,
     activations: dict[int, np.ndarray],
     scores: dict[str, float],
@@ -154,7 +124,7 @@ def _train_ridge_probes(
 
 
 def _train_bt_probes(
-    config: ActiveLearningConfig,
+    config: RunDirProbeConfig,
     task_ids: np.ndarray,
     activations: dict[int, np.ndarray],
     measurements: list[BinaryPreferenceMeasurement],
@@ -200,8 +170,8 @@ def _train_bt_probes(
     return probe_entries, n_pairs_used
 
 
-def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
-    """Train Ridge and Bradley-Terry probes from active learning data.
+def run_probes(config: RunDirProbeConfig) -> dict:
+    """Train Ridge and Bradley-Terry probes from run directory data.
 
     Processes one layer at a time to limit memory usage.
     """
@@ -218,12 +188,22 @@ def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
 
     # Load measurement data
     print("\nLoading measurement data...")
-    scores = _load_thurstonian_scores(config.run_dir) if run_ridge else {}
-    measurements = _load_pairwise_measurements(config.run_dir) if run_bt else []
+    scores = load_thurstonian_scores(config.run_dir) if run_ridge else {}
+    measurements = load_pairwise_measurements(config.run_dir) if run_bt else []
     if scores:
         print(f"  Loaded {len(scores)} task scores from Thurstonian fit")
     if measurements:
         print(f"  Loaded {len(measurements)} pairwise comparisons")
+
+    # Optionally residualize scores against metadata confounds
+    metadata_stats = None
+    if config.residualize and scores:
+        assert config.topics_json is not None, "topics_json required when residualize=True"
+        print("\nResidualizing scores against metadata confounds...")
+        scores, metadata_stats = residualize_scores(scores, config.topics_json)
+        print(f"  Metadata R²={metadata_stats['metadata_r2']:.4f} "
+              f"({metadata_stats['n_metadata_features']} features)")
+        print(f"  {metadata_stats['n_tasks_residualized']} tasks retained")
 
     task_id_filter = set(scores.keys()) if scores else None
 
@@ -246,8 +226,14 @@ def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
         "n_tasks_in_experiment": len(scores),
         "n_tasks_with_activations": n_tasks,
         "n_comparisons_in_experiment": len(measurements),
+        "residualized": config.residualize,
         "probes": [],
     }
+    if metadata_stats is not None:
+        manifest["metadata_r2"] = metadata_stats["metadata_r2"]
+        manifest["metadata_features"] = metadata_stats["metadata_features"]
+        manifest["n_tasks_residualized"] = metadata_stats["n_tasks_residualized"]
+        manifest["n_tasks_dropped"] = metadata_stats["n_tasks_dropped"]
 
     # Process one layer at a time
     for layer in config.layers:
@@ -293,12 +279,12 @@ def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Train probes from active learning results")
+    parser = argparse.ArgumentParser(description="Train probes from run directory results")
     parser.add_argument("--config", type=Path, required=True, help="Config YAML path")
     args = parser.parse_args()
 
-    config = ActiveLearningConfig.from_yaml(args.config)
-    run_active_learning_probes(config)
+    config = RunDirProbeConfig.from_yaml(args.config)
+    run_probes(config)
 
 
 if __name__ == "__main__":

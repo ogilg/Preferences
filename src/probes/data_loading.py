@@ -7,8 +7,44 @@ from pathlib import Path
 
 import numpy as np
 
-from src.measurement.storage.loading import load_raw_scores
-from src.probes.core.activations import load_activations, load_task_origins
+from src.measurement.storage.loading import load_raw_scores, load_run_utilities, load_yaml
+from src.task_data import Task, OriginDataset
+from src.types import BinaryPreferenceMeasurement, PreferenceType
+
+
+def load_thurstonian_scores(run_dir: Path) -> dict[str, float]:
+    """Load task_id -> mu mapping from Thurstonian fit."""
+    mu_array, task_ids = load_run_utilities(run_dir)
+    return dict(zip(task_ids, mu_array))
+
+
+def load_pairwise_measurements(run_dir: Path) -> list[BinaryPreferenceMeasurement]:
+    """Load measurements and reconstruct as BinaryPreferenceMeasurement objects."""
+    measurements_path = run_dir / "measurements.yaml"
+    raw = load_yaml(measurements_path)
+
+    measurements = []
+    for m in raw:
+        task_a = Task(
+            id=m["task_a"],
+            prompt="",
+            origin=OriginDataset[m["origin_a"]],
+            metadata={},
+        )
+        task_b = Task(
+            id=m["task_b"],
+            prompt="",
+            origin=OriginDataset[m["origin_b"]],
+            metadata={},
+        )
+        measurements.append(BinaryPreferenceMeasurement(
+            task_a=task_a,
+            task_b=task_b,
+            choice=m["choice"],
+            preference_type=PreferenceType.POST_TASK_REVEALED,
+        ))
+
+    return measurements
 
 
 def load_measurements_for_templates(
