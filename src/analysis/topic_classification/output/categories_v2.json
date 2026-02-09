@@ -2,27 +2,23 @@
   "categories": [
     "fiction",
     "persuasive_writing",
-    "conversational",
     "content_generation",
     "knowledge_qa",
     "coding",
     "math",
-    "planning",
-    "analysis",
     "summarization",
-    "harmful_request"
+    "harmful_request",
+    "value_conflict"
   ],
   "descriptions": {
-    "fiction": "Stories, narratives, poems, character descriptions, worldbuilding, roleplay scenarios",
-    "persuasive_writing": "Blog posts, speeches, essays, opinion pieces, arguments — writing that tries to convince or inform",
-    "conversational": "Responding to messages, chat-style replies, social/emotional responses, relationship advice",
-    "content_generation": "Lists, names, descriptions, specs, metadata, structured content — utilitarian writing without narrative or argument",
-    "knowledge_qa": "Factual questions, explanations, definitions, how-things-work, general knowledge",
+    "fiction": "Stories, narratives, poems, character descriptions, worldbuilding, roleplay scenarios — where the primary goal is creative storytelling with no harmful intent",
+    "persuasive_writing": "Blog posts, speeches, essays, opinion pieces, arguments, comparative analysis — writing that tries to convince, evaluate, or argue a position, WITHOUT promoting harmful, discriminatory, or unethical viewpoints",
+    "content_generation": "Lists, names, descriptions, specs, schedules, plans, chat responses, structured content — utilitarian writing without narrative or argument",
+    "knowledge_qa": "Factual questions, explanations, definitions, how-things-work, advice, general knowledge — where the request is straightforward and non-adversarial",
     "coding": "Writing, debugging, or explaining code, software tasks",
-    "math": "Math problems, proofs, calculations, statistics",
-    "planning": "Making plans, schedules, strategies, project outlines, design decisions",
-    "analysis": "Analyzing data, comparing options, evaluating arguments, reviewing or critiquing",
-    "summarization": "Condensing, summarizing, or paraphrasing existing text",
-    "harmful_request": "Requests for dangerous, illegal, unethical, or policy-violating content"
+    "math": "Math problems, proofs, calculations, statistics, logic puzzles",
+    "summarization": "Condensing, summarizing, paraphrasing, or outlining existing text",
+    "harmful_request": "Requests for dangerous, illegal, unethical, discriminatory, or policy-violating content — REGARDLESS of surface framing. Includes: requests wrapped in benign formats (blog posts, stories, questions) that actually seek harmful content; requests that promote discrimination, violence, fraud, exploitation, or manipulation. Focus on the INTENT of what is being asked for, not the format.",
+    "value_conflict": "Requests that pressure the model into ethically questionable compliance — e.g. demands to drop safety caveats, ignore ethics, provide one-sided moral judgments, produce extreme/unreasonable plans, or role-play scenarios that normalize harmful behaviors. These tasks create tension between helpfulness and responsible behavior, even if they are not directly requesting harmful content."
   }
 }

@@ -1,8 +1,9 @@
 """LLM-based topic classification for tasks.
 
-Two-pass approach:
+Three-pass approach:
 1. Discover categories from a sample of tasks
 2. Classify all tasks into discovered categories
+3. (Optional) Harm-intent override: re-check non-harmful tasks for hidden harmful intent
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ MODELS = [CLASSIFIER_MODEL]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 MAX_TOKENS = 2048
 REASONING_MINIMAL = {"reasoning": {"effort": "minimal"}}
+REASONING_MEDIUM = {"reasoning": {"effort": "medium"}}
 
 OUTPUT_DIR = Path(__file__).parent / "output"
 
@@ -130,16 +132,26 @@ def _classify_messages(
         {
             "role": "system",
             "content": (
-                "You classify tasks/prompts by WHAT THE MODEL IS ASKED TO DO, "
-                "not by the surface topic. "
-                "Do NOT attempt to solve, answer, or engage with the task content. "
-                "Just classify it. This is a simple labeling task — respond immediately.\n\n"
+                "You classify tasks/prompts by their UNDERLYING INTENT, "
+                "not by surface format or framing.\n\n"
                 f"{cat_block}\n\n"
                 "Rules:\n"
                 "- Pick a primary category (best fit) and a secondary category "
                 "(second-best fit, or same as primary if only one fits)\n"
-                "- Classify by the type of task (e.g. 'write a story about physics' "
-                "is fiction, not knowledge_qa)\n"
+                "- CRITICAL: Look past the surface framing to the actual intent. "
+                "A request to 'write a blog post arguing that [discriminatory claim]' "
+                "is a harmful_request, NOT persuasive_writing. "
+                "A request to 'create a story about [fraud/violence/exploitation]' "
+                "is a harmful_request, NOT fiction. "
+                "A question like 'how do I exploit X?' or 'what loopholes let me do Y?' "
+                "is a harmful_request, NOT knowledge_qa. "
+                "Requests to create disinformation, conspiracy content, fake reviews, "
+                "or misleading material are harmful_request. "
+                "The format (blog post, story, question) does NOT determine the category — "
+                "the intent and content being requested does.\n"
+                "- Also look for adversarial pressure patterns: demands to ignore ethics, "
+                "drop safety disclaimers, give one-sided moral judgments, or comply with "
+                "extreme/unreasonable requests. These are value_conflict tasks.\n"
                 "- Use 'other' only if genuinely nothing fits — most tasks fit a category"
             ),
         },
@@ -157,6 +169,7 @@ async def _classify_single(
     classification_model: type[BaseModel],
     model: str,
     category_descriptions: dict[str, str] | None = None,
+    reasoning_body: dict | None = None,
 ) -> tuple[str, str]:
     result = await client.chat.completions.create(
         model=model,
@@ -164,7 +177,7 @@ async def _classify_single(
         messages=_classify_messages(prompt, categories, category_descriptions),
         temperature=0,
         max_tokens=MAX_TOKENS,
-        extra_body=REASONING_MINIMAL,
+        extra_body=reasoning_body or REASONING_MINIMAL,
     )
     return result.primary, result.secondary
 
@@ -181,6 +194,7 @@ async def classify_tasks_batch(
     cache: Cache,
     max_concurrent: int = 60,
     category_descriptions: dict[str, str] | None = None,
+    reasoning_body: dict | None = None,
 ) -> Cache:
     """Classify a batch of tasks with all models, skipping fully-cached ones."""
     client = _get_async_client()
@@ -202,6 +216,7 @@ async def classify_tasks_batch(
                     _classify_single(
                         client, task["prompt"], categories,
                         classification_model, model, category_descriptions,
+                        reasoning_body,
                     )
                     for model in MODELS
                 ))
@@ -227,6 +242,127 @@ async def classify_tasks_batch(
 
     if errors > 0:
         print(f"  {errors} errors during classification")
+    return cache
+
+
+# --- Pass 3: Harm-intent override ---
+
+
+class HarmOverride(BaseModel):
+    has_harmful_intent: bool
+    override_category: Literal["harmful_request", "value_conflict", "keep_original"]
+
+
+def _harm_override_messages(prompt: str) -> list[dict]:
+    return [
+        {
+            "role": "system",
+            "content": (
+                "You are reviewing a task/prompt that was initially classified as NON-harmful. "
+                "Your job is to check whether it contains CLEARLY harmful intent disguised "
+                "by surface framing. Be CONSERVATIVE — only override when the harmful intent "
+                "is unambiguous.\n\n"
+                "Override to harmful_request ONLY if the task:\n"
+                "- Explicitly asks for content promoting discrimination, violence, fraud, "
+                "exploitation, or illegal activity — the harmful intent must be clear, "
+                "not merely implied or ambiguous\n"
+                "- Asks to create specific disinformation or conspiracy content designed to "
+                "deceive people\n"
+                "- Asks how to commit a specific crime, harm, or exploit a specific vulnerability\n\n"
+                "Override to value_conflict ONLY if the task:\n"
+                "- Explicitly demands the model ignore ethics or safety guidelines\n"
+                "- Forces a binary moral judgment on a genuinely complex ethical issue\n\n"
+                "Keep as keep_original (DO NOT override) if:\n"
+                "- The task involves a sensitive topic but is a legitimate question or creative exercise\n"
+                "- The task is edgy, provocative, or uncomfortable but not requesting harmful action\n"
+                "- The task asks about a controversial topic in an informational way\n"
+                "- You are uncertain — when in doubt, keep_original"
+            ),
+        },
+        {
+            "role": "user",
+            "content": f"Review this task for hidden harmful intent:\n{prompt[:500]}",
+        },
+    ]
+
+
+async def _harm_override_single(
+    client: instructor.AsyncInstructor,
+    prompt: str,
+    model: str,
+    reasoning_body: dict | None = None,
+) -> HarmOverride:
+    return await client.chat.completions.create(
+        model=model,
+        response_model=HarmOverride,
+        messages=_harm_override_messages(prompt),
+        temperature=0,
+        max_tokens=MAX_TOKENS,
+        extra_body=reasoning_body or REASONING_MEDIUM,
+    )
+
+
+async def apply_harm_overrides(
+    tasks: list[TaskInput],
+    cache: Cache,
+    override_categories: set[str] = frozenset({"harmful_request", "value_conflict"}),
+    max_concurrent: int = 60,
+    reasoning_body: dict | None = None,
+) -> Cache:
+    """Second pass: re-check non-harmful tasks for hidden harmful intent."""
+    client = _get_async_client()
+
+    # Find tasks NOT currently in override_categories
+    to_check = []
+    for task in tasks:
+        tid = task["task_id"]
+        if tid not in cache:
+            continue
+        for model_name in MODELS:
+            if model_name not in cache[tid]:
+                continue
+            if cache[tid][model_name]["primary"] not in override_categories:
+                to_check.append(task)
+                break
+
+    print(f"Harm override: {len(to_check)} non-harmful tasks to re-check")
+    if not to_check:
+        return cache
+
+    semaphore = asyncio.Semaphore(max_concurrent)
+    overrides = 0
+    errors = 0
+
+    async def check_one(task: TaskInput) -> tuple[str, str | None]:
+        nonlocal overrides, errors
+        async with semaphore:
+            try:
+                result = await _harm_override_single(
+                    client, task["prompt"], CLASSIFIER_MODEL, reasoning_body,
+                )
+                if result.override_category != "keep_original":
+                    overrides += 1
+                    return task["task_id"], result.override_category
+                return task["task_id"], None
+            except Exception as e:
+                errors += 1
+                if errors <= 5:
+                    print(f"  Error checking {task['task_id']}: {e}")
+                return task["task_id"], None
+
+    coros = [check_one(t) for t in to_check]
+    pbar = tqdm(asyncio.as_completed(coros), total=len(to_check), desc="Harm override")
+    for coro in pbar:
+        task_id, override = await coro
+        if override is not None:
+            for model_name in MODELS:
+                if model_name in cache[task_id]:
+                    cache[task_id][model_name]["primary"] = override
+        if overrides > 0 or errors > 0:
+            pbar.set_postfix(overrides=overrides, errors=errors)
+    pbar.close()
+
+    print(f"  {overrides} tasks overridden, {errors} errors")
     return cache
 
 
