@@ -35,11 +35,7 @@ class ProbeConfig:
     cv_folds: int = 5
     alpha_sweep_size: int = 17
     # BT hyperparams
-    bt_lr: float = 0.01
     bt_l2_lambda: float = 1.0
-    bt_batch_size: int = 64
-    bt_max_epochs: int = 1000
-    bt_patience: int = 10
 
     @classmethod
     def from_yaml(cls, yaml_path: Path) -> ProbeConfig:
@@ -67,9 +63,5 @@ class ProbeConfig:
             evaluation_data=evaluation_data,
             cv_folds=data.get("cv_folds", 5),
             alpha_sweep_size=data.get("alpha_sweep_size", 17),
-            bt_lr=data.get("bt_lr", 0.01),
             bt_l2_lambda=data.get("bt_l2_lambda", 1.0),
-            bt_batch_size=data.get("bt_batch_size", 64),
-            bt_max_epochs=data.get("bt_max_epochs", 1000),
-            bt_patience=data.get("bt_patience", 10),
         )

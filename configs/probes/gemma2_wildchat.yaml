@@ -17,8 +17,4 @@ cv_folds: 5
 alpha_sweep_size: 50
 
 # Bradley-Terry training
-bt_lr: 0.01
 bt_l2_lambda: 1.0
-bt_batch_size: 64
-bt_max_epochs: 1000
-bt_patience: 10

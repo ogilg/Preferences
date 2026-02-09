@@ -46,8 +46,7 @@ class RunDirProbeConfig:
     alpha_sweep_size: int = 50
     standardize: bool = False
     bt_l2_lambda: float = 1.0
-    residualize: bool = False
-    residualize_include_dataset: bool = False
+    residualize_confounds: list[str] | None = None
     topics_json: Path | None = None
 
     @classmethod
@@ -60,7 +59,7 @@ class RunDirProbeConfig:
 
         # Only pass optional keys present in YAML; let dataclass defaults handle the rest
         optional = {}
-        for key in ("cv_folds", "alpha_sweep_size", "standardize", "bt_l2_lambda", "residualize", "residualize_include_dataset"):
+        for key in ("cv_folds", "alpha_sweep_size", "standardize", "bt_l2_lambda", "residualize_confounds"):
             if key in data:
                 optional[key] = data[key]
 
@@ -183,10 +182,12 @@ def run_probes(config: RunDirProbeConfig) -> dict:
 
     # Optionally residualize scores against metadata confounds
     metadata_stats = None
-    if config.residualize and scores:
-        assert config.topics_json is not None, "topics_json required when residualize=True"
-        print("\nResidualizing scores against metadata confounds...")
-        scores, metadata_stats = residualize_scores(scores, config.topics_json)
+    if config.residualize_confounds and scores:
+        assert config.topics_json is not None, "topics_json required for residualization"
+        print(f"\nResidualizing scores against: {config.residualize_confounds}")
+        scores, metadata_stats = residualize_scores(
+            scores, config.topics_json, confounds=config.residualize_confounds,
+        )
         print(f"  Metadata R²={metadata_stats['metadata_r2']:.4f} "
               f"({metadata_stats['n_metadata_features']} features)")
         print(f"  {metadata_stats['n_tasks_residualized']} tasks retained")
@@ -212,7 +213,7 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         "n_tasks_in_experiment": len(scores),
         "n_tasks_with_activations": n_tasks,
         "n_comparisons_in_experiment": len(measurements),
-        "residualized": config.residualize,
+        "residualize_confounds": config.residualize_confounds,
         "probes": [],
     }
     if metadata_stats is not None:

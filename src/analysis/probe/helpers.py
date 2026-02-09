@@ -107,13 +107,14 @@ def format_probe_table(probes: list[dict]) -> str:
         if ridge:
             lines.append("")
         lines.append("Bradley-Terry Probes:")
-        lines.append(f"  {'ID':<16} {'Layer':<6} {'Acc.':<8} {'Loss':<8} {'Epochs':<8} {'Pairs':<8}")
+        lines.append(f"  {'ID':<16} {'Layer':<6} {'Acc.':<8} {'Loss':<8} {'Iters':<8} {'Pairs':<8}")
         lines.append("  " + "-" * 54)
         for p in bt:
+            n_iters = p.get("n_iterations", p.get("n_epochs", "?"))
             lines.append(
                 f"  {p['id']:<16} {p['layer']:<6} "
                 f"{p['train_accuracy']:>7.4f} {p['train_loss']:>7.4f} "
-                f"{p['n_epochs']:>7} {p['n_pairs']:>7}"
+                f"{n_iters:>7} {p['n_pairs']:>7}"
             )
 
     return "\n".join(lines)

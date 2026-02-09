@@ -40,7 +40,7 @@ def test_train_for_comparisons_recovers_preference_direction():
         )
 
     data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
-    results, probes = train_for_comparisons(data, l2_lambda=0.01)
+    results, probes = train_for_comparisons(data, l2_lambda=0.0)
 
     assert len(results) == 2
     assert set(probes.keys()) == {0, 5}
