@@ -4,7 +4,15 @@
       "Bash(.venv/bin/pip show:*)",
       "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences diff)",
       "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences log --oneline -5)",
-      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences add .claude/settings.json .claude/settings.local.json CLAUDE.md)"
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences add .claude/settings.json .claude/settings.local.json CLAUDE.md)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences commit -m \"$\\(cat <<''EOF''\nUpdate Claude Code permissions and project conventions\n\nComprehensive permissions overhaul with granular allow/deny lists,\nadd bash operations guide and scripts folder policy to CLAUDE.md.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences add src/probes/bradley_terry/training.py src/probes/experiments/run_dir_probes.py tests/test_bradley_terry.py configs/probes/gemma3_al_500.yaml)",
+      "Bash(python3:*)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences commit -m \"$\\(cat <<''EOF''\nReplace SGD with L-BFGS-B for Bradley-Terry probe training\n\nSwitches from manual SGD loop with learning rate, batch size, patience\nto scipy L-BFGS-B optimizer. Removes unnecessary hyperparameters from\nconfig and simplifies the training API.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences add src/analysis/topic_classification/classify.py src/analysis/topic_classification/output/categories_v2.json src/probes/residualization.py)",
+      "Bash(/Users/oscargilg/Dev/MATS/Preferences/.venv/bin/python:*)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences mv:*)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences diff --cached --stat)"
     ]
   }
 }

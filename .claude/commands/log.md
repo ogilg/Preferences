@@ -34,5 +34,6 @@ Category determines the log file: `docs/logs/{category}.md` and assets go to `do
 - Keep entries concise — this is a log, not a report
 - Always archive plots to `docs/logs/assets/` so they persist if originals are overwritten
 - Use relative paths for images so the markdown renders on GitHub
-- Focus on what changed or what was learned, not exhaustive details
+- **This is a research log, not an engineering log.** Only log scientific findings, experimental results, and research insights. Do NOT log code changes, refactors, API details, config formats, or implementation details unless explicitly requested.
+- Focus on what was learned, not how the code works
 - If $ARGUMENTS is empty, infer both category and description from context

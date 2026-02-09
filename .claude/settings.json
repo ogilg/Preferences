@@ -90,6 +90,7 @@
       "Bash(git commit *)",
       "Bash(git mv *)",
       "Bash(git rm *)",
+      "Bash(git -C *)",
       "Bash(xargs cat)",
       "Bash(xargs cat *)",
       "Bash(xargs file)",
