@@ -40,10 +40,35 @@ uv pip install -e ".[dev]"
 
 - All plot file names should be like plot_{mmddYY}_precise_description.png
 - To convert markdown to PDF (use unique suffix to avoid overwrites): `cd <dir_with_md_file> && DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib pandoc file.md -o file_$(date +%Y%m%d_%H%M%S).pdf --pdf-engine=weasyprint --css=/Users/oscargilg/Dev/MATS/Preferences/docs/pandoc.css`
-- The scripts folder is only for temporary scripts. Core experiment scripts that do analysis or plotting should go in the experiments folder.
+- `scripts/` is for throwaway/temporary scripts only. Organize them in subdirectories by topic (e.g. `scripts/probes/`, `scripts/topics/`). Delete scripts after use — they should not accumulate. Core experiment scripts that do analysis or plotting should go in the experiments folder.
 - Analysis plots that are generated from the analysis folder should go to the analysis folder. The results folder is mostly for measurements.
 - To convert PDF to DOCX with embedded images: `soffice --headless --infilter="writer_pdf_import" --convert-to docx:"MS Word 2007 XML" file.pdf`. If images are missing (referenced outside `logs/assets/`), copy them to `logs/assets/` and append with python-docx, then manually move into place.
 - Plots referenced in research logs (`docs/logs/`) must be saved to `docs/logs/assets/`. Never reference plots from other locations in log files.
+
+## Bash Operations
+
+Complex bash syntax is hard for Claude Code to permission correctly. Keep commands simple.
+
+Simple operations are fine: `|`, `||`, `&&`, `>` redirects.
+
+For bulk operations on multiple files, use xargs:
+- Plain: `ls *.md | xargs wc -l`
+- With placeholder: `ls *.md | xargs -I{} head -1 {}`
+
+Avoid string interpolation (`$()`, backticks, `${}`), heredocs, loops, and advanced xargs flags (`-P`, `-L`, `-n`) - these require scripts or simpler alternatives.
+
+**Patterns:**
+- File creation: Write tool, not `cat << 'EOF' > file`
+- Env vars: `export VAR=val && command`, not `VAR=val command` or `env VAR=val command`
+- Bulk operations: `ls *.md | xargs wc -l`, not `for f in *.md; do cmd "$f"; done`
+- Parallel/batched xargs: use scripts, not `xargs -P4` or `xargs -L1`
+- Per-item shell logic: use scripts, not `xargs sh -c '...'`
+
+## Running Commands
+
+Run scripts via `python <script>` or `pytest`. Bash scripts go in `scripts/` and run with `bash scripts/<script-name>`.
+
+For string interpolation, heredocs, loops, or advanced xargs flags, write a script in `scripts/` instead.
 
 ## Claude instructions
 
