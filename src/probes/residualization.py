@@ -146,25 +146,49 @@ def fit_metadata_models(
     }
 
 
+VALID_CONFOUNDS = {"topic", "dataset", "prompt_length"}
+
+
 def residualize_scores(
     scores: dict[str, float],
     topics_json: Path,
+    confounds: list[str],
 ) -> tuple[dict[str, float], dict]:
-    """Regress out topic + prompt length from scores, return residuals.
+    """Regress out specified confounds from scores, return residuals.
 
-    Uses topic-only model (not dataset) to avoid collinearity between
-    dataset origin and topic (e.g. competition_math is ~100% math topic).
+    confounds: subset of {"topic", "dataset", "prompt_length"}.
     """
-    task_ids, y, _, tp_labels, lengths = _load_metadata_arrays(scores, topics_json)
+    invalid = set(confounds) - VALID_CONFOUNDS
+    if invalid:
+        raise ValueError(f"Unknown confounds: {invalid}. Valid: {VALID_CONFOUNDS}")
+    if not confounds:
+        raise ValueError("confounds list cannot be empty")
+
+    task_ids, y, ds_labels, tp_labels, lengths = _load_metadata_arrays(scores, topics_json)
 
     n_with_metadata = len(task_ids)
     n_dropped = len(scores) - n_with_metadata
     if n_dropped > 0:
         print(f"  Residualization: dropped {n_dropped}/{len(scores)} tasks missing metadata")
 
-    tp_cols, tp_names = _onehot_columns(tp_labels, "topic")
-    feature_names = tp_names + ["prompt_length"]
-    X = np.column_stack(tp_cols + [lengths.reshape(-1, 1)])
+    columns = []
+    feature_names = []
+
+    if "dataset" in confounds:
+        ds_cols, ds_names = _onehot_columns(ds_labels, "dataset")
+        columns.extend(ds_cols)
+        feature_names.extend(ds_names)
+
+    if "topic" in confounds:
+        tp_cols, tp_names = _onehot_columns(tp_labels, "topic")
+        columns.extend(tp_cols)
+        feature_names.extend(tp_names)
+
+    if "prompt_length" in confounds:
+        columns.append(lengths)
+        feature_names.append("prompt_length")
+
+    X = np.column_stack(columns)
 
     reg = LinearRegression().fit(X, y)
     residuals = y - reg.predict(X)
@@ -173,6 +197,7 @@ def residualize_scores(
     residual_scores = dict(zip(task_ids, residuals.tolist()))
 
     stats = {
+        "confounds": confounds,
         "metadata_r2": round(metadata_r2, 4),
         "metadata_features": feature_names,
         "n_metadata_features": len(feature_names),
