@@ -5,12 +5,14 @@ from __future__ import annotations
 import asyncio
 import json
 from collections import Counter, defaultdict
-from pathlib import Path
 
 import numpy as np
 from dotenv import load_dotenv
 
 from src.analysis.topic_classification.classify import (
+    MODELS,
+    OUTPUT_DIR,
+    TaskInput,
     classify_tasks_batch,
     load_cache,
     save_cache,
@@ -21,7 +23,6 @@ from src.analysis.topic_classification.run_classification import (
 
 load_dotenv()
 
-OUTPUT_DIR = Path(__file__).parent.parent / "src" / "analysis" / "topic_classification" / "output"
 CATEGORIES_PATH = OUTPUT_DIR / "categories.json"
 AUDIT_CACHE_PATH = OUTPUT_DIR / "audit_topics.json"
 
@@ -51,14 +52,17 @@ async def main():
     cache = await classify_tasks_batch(sample, categories, cache, max_concurrent=30)
     save_cache(cache, AUDIT_CACHE_PATH)
 
+    # Use first model for grouping
+    m1 = MODELS[0]
+
     # Group by primary category
-    by_category: dict[str, list[dict]] = defaultdict(list)
+    by_category: dict[str, list[TaskInput]] = defaultdict(list)
     for task in sample:
-        entry = cache.get(task["task_id"])
-        if entry is None:
+        if task["task_id"] not in cache or m1 not in cache[task["task_id"]]:
             by_category["UNCLASSIFIED"].append(task)
         else:
-            by_category[entry["primary"]].append(task)
+            primary = cache[task["task_id"]][m1]["primary"]
+            by_category[primary].append(task)
 
     # Print examples with secondary category shown
     for cat in sorted(by_category.keys(), key=lambda c: -len(by_category[c])):
@@ -70,9 +74,11 @@ async def main():
             prompt_preview = task["prompt"][:MAX_PROMPT_CHARS].replace("\n", " ")
             if len(task["prompt"]) > MAX_PROMPT_CHARS:
                 prompt_preview += "..."
-            entry = cache.get(task["task_id"], {})
-            secondary = entry.get("secondary", "?")
-            sec_label = f" (2nd: {secondary})" if secondary != cat else ""
+            if task["task_id"] in cache and m1 in cache[task["task_id"]]:
+                secondary = cache[task["task_id"]][m1]["secondary"]
+                sec_label = f" (2nd: {secondary})" if secondary != cat else ""
+            else:
+                sec_label = ""
             print(f"  [{task['task_id'][:12]}]{sec_label} {prompt_preview}")
         if len(tasks_in_cat) > EXAMPLES_PER_CATEGORY:
             print(f"  ... and {len(tasks_in_cat) - EXAMPLES_PER_CATEGORY} more")
@@ -86,9 +92,9 @@ async def main():
             continue
         tasks_in_cat = by_category[cat]
         secondaries = Counter(
-            cache[t["task_id"]]["secondary"]
+            cache[t["task_id"]][m1]["secondary"]
             for t in tasks_in_cat
-            if t["task_id"] in cache
+            if t["task_id"] in cache and m1 in cache[t["task_id"]]
         )
         sec_str = ", ".join(
             f"{s}:{n}" for s, n in secondaries.most_common(5)
