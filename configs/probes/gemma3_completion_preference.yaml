@@ -13,3 +13,6 @@ modes: [ridge]
 cv_folds: 5
 alpha_sweep_size: 10
 standardize: true
+
+residualize: true
+topics_json: src/analysis/topic_classification/output/gemma3_500_completion_preference/topics.json
