@@ -1,0 +1,9 @@
+template_name: completion_preference
+template_tags:
+  response_format: completion
+  order: canonical
+  seed: '0'
+model: google/gemma-3-27b-it
+model_short: gemma-3-27b
+temperature: 0.7
+experiment_id: gemma3_3k_run2
