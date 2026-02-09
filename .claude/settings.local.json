@@ -34,7 +34,17 @@
       "WebFetch(domain:www.lesswrong.com)",
       "WebFetch(domain:www.anthropic.com)",
       "Bash(hive-mind search:*)",
-      "Bash(hive-mind read:*)"
+      "Bash(hive-mind read:*)",
+      "WebFetch(domain:forum.effectivealtruism.org)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences show 5e547a7:src/analysis/topic_classification/output/categories.json)",
+      "Bash(/Users/oscargilg/Dev/MATS/Preferences/.venv/bin/python:*)",
+      "Bash(for d in /Users/oscargilg/Dev/MATS/Preferences/src/analysis/*/)",
+      "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences-cleanup status --short)",
+      "Bash(git rm:*)",
+      "Bash(git status:*)",
+      "Bash(claude mcp:*)",
+      "Bash(claude integrations:*)",
+      "Bash(.venv/bin/python:*)"
     ]
   }
 }
