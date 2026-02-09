@@ -2,73 +2,76 @@
 
 from __future__ import annotations
 
-import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.probes.core.storage import load_manifest
-from src.analysis.probe.probe_helpers import filter_probes, make_probe_label, get_probe_similarity
+from src.analysis.probe.helpers import (
+    get_probe_similarity,
+    load_and_filter,
+    output_path,
+    probe_label,
+)
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Plot similarity heatmap")
-    parser.add_argument("manifest_dir", type=Path, help="Directory with manifest.json")
-    parser.add_argument("--output", type=Path, help="Output PNG path (default: src/analysis/probe/plots/plot_MMDDYY_similarity_*.png)")
-    parser.add_argument("--template", type=str, help="Filter by template (substring match)")
-    parser.add_argument("--layer", type=int, help="Filter by layer")
-    parser.add_argument("--dataset", type=str, help="Filter by dataset")
-    args = parser.parse_args()
-
-    # Default output path
-    if args.output is None:
-        from datetime import datetime
-        date_str = datetime.now().strftime("%m%d%y")
-        filters = []
-        if args.template:
-            filters.append(args.template[:10])
-        if args.layer is not None:
-            filters.append(f"L{args.layer}")
-        if args.dataset:
-            filters.append(args.dataset[:10])
-        filter_suffix = "_".join(filters) if filters else "all"
-        args.output = Path(f"src/analysis/probe/plots/plot_{date_str}_similarity_{filter_suffix}.png")
-
-    manifest = load_manifest(args.manifest_dir)
-    probes = filter_probes(manifest, args.template, args.layer, args.dataset)
+def run(
+    manifest_dir: Path,
+    method: str | None = None,
+    layer: int | None = None,
+    probe_ids: list[str] | None = None,
+    output: Path | None = None,
+    no_plot: bool = False,
+) -> None:
+    _, probes = load_and_filter(manifest_dir, method, layer, probe_ids)
 
     if len(probes) < 2:
         print("Need at least 2 probes to compare")
         return
 
-    similarity = get_probe_similarity(args.manifest_dir, probes)
-    labels = [make_probe_label(p) for p in probes]
+    similarity = get_probe_similarity(manifest_dir, probes)
+    labels = [probe_label(p) for p in probes]
+
+    # Text output: similarity matrix
+    n = len(labels)
+    max_label = max(len(l) for l in labels)
+    header = " " * (max_label + 2) + "  ".join(f"{l:>8}" for l in labels)
+    print("Similarity Matrix:")
+    print(header)
+    for i, row_label in enumerate(labels):
+        row_vals = "  ".join(f"{similarity[i, j]:>8.3f}" for j in range(n))
+        print(f"  {row_label:<{max_label}}  {row_vals}")
+
+    # Mean off-diagonal similarity
+    mask = ~np.eye(n, dtype=bool)
+    mean_sim = similarity[mask].mean()
+    print(f"\nMean off-diagonal similarity: {mean_sim:.3f}")
+
+    if no_plot:
+        return
+
+    out = output or output_path("similarity", "all")
 
     fig, ax = plt.subplots(figsize=(12, 10))
     im = ax.imshow(similarity, cmap="coolwarm", aspect="auto", vmin=-1, vmax=1)
 
-    ax.set_xticks(np.arange(len(labels)))
-    ax.set_yticks(np.arange(len(labels)))
+    ax.set_xticks(np.arange(n))
+    ax.set_yticks(np.arange(n))
     ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=9)
     ax.set_yticklabels(labels, fontsize=9)
 
     cbar = plt.colorbar(im, ax=ax)
     cbar.set_label("Cosine Similarity", rotation=270, labelpad=20)
 
-    for i in range(len(labels)):
-        for j in range(len(labels)):
-            text = ax.text(j, i, f"{similarity[i, j]:.2f}", ha="center", va="center",
-                          color="white" if abs(similarity[i, j]) > 0.5 else "black", fontsize=8)
+    for i in range(n):
+        for j in range(n):
+            color = "white" if abs(similarity[i, j]) > 0.5 else "black"
+            ax.text(j, i, f"{similarity[i, j]:.2f}", ha="center", va="center", color=color, fontsize=8)
 
-    ax.set_title(f"Probe Similarity Matrix ({len(probes)} probes)")
+    ax.set_title(f"Probe Similarity Matrix ({n} probes)")
     plt.tight_layout()
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    plt.savefig(args.output, dpi=150, bbox_inches="tight")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out, dpi=150, bbox_inches="tight")
     plt.close()
-    print(f"Saved to {args.output}")
-
-
-if __name__ == "__main__":
-    main()
+    print(f"Saved to {out}")
