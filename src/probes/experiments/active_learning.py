@@ -14,6 +14,7 @@ import argparse
 import gc
 from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 from pathlib import Path
 
 import numpy as np
@@ -29,6 +30,11 @@ from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
+class ProbeMode(Enum):
+    RIDGE = "ridge"
+    BRADLEY_TERRY = "bradley_terry"
+
+
 @dataclass
 class ActiveLearningConfig:
     experiment_name: str
@@ -36,8 +42,10 @@ class ActiveLearningConfig:
     activations_path: Path
     output_dir: Path
     layers: list[int]
+    modes: list[ProbeMode]
     cv_folds: int = 5
     alpha_sweep_size: int = 50
+    standardize: bool = False
     bt_lr: float = 0.01
     bt_l2_lambda: float = 1.0
     bt_batch_size: int = 64
@@ -48,14 +56,18 @@ class ActiveLearningConfig:
     def from_yaml(cls, path: Path) -> ActiveLearningConfig:
         with open(path) as f:
             data = yaml.safe_load(f)
+        raw_modes = data.get("modes", ["ridge", "bradley_terry"])
+        modes = [ProbeMode(m) for m in raw_modes]
         return cls(
             experiment_name=data["experiment_name"],
             run_dir=Path(data["run_dir"]),
             activations_path=Path(data["activations_path"]),
             output_dir=Path(data["output_dir"]),
             layers=data["layers"],
+            modes=modes,
             cv_folds=data.get("cv_folds", 5),
             alpha_sweep_size=data.get("alpha_sweep_size", 50),
+            standardize=data.get("standardize", False),
             bt_lr=data.get("bt_lr", 0.01),
             bt_l2_lambda=data.get("bt_l2_lambda", 1.0),
             bt_batch_size=data.get("bt_batch_size", 64),
@@ -112,6 +124,7 @@ def _train_ridge_probes(
         scores=scores,
         cv_folds=config.cv_folds,
         alpha_sweep_size=config.alpha_sweep_size,
+        standardize=config.standardize,
     )
 
     probe_entries = []
@@ -130,9 +143,11 @@ def _train_ridge_probes(
             "cv_mse_mean": result["cv_mse_mean"],
             "cv_mse_std": result["cv_mse_std"],
             "best_alpha": result["best_alpha"],
+            "train_r2": result["train_r2"],
             "n_samples": result["n_samples"],
             "train_test_gap": result["train_test_gap"],
             "cv_stability": result["cv_stability"],
+            "alpha_sweep": result["alpha_sweep"],
         })
 
     return probe_entries
@@ -192,18 +207,25 @@ def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
     """
     config.output_dir.mkdir(parents=True, exist_ok=True)
 
+    run_ridge = ProbeMode.RIDGE in config.modes
+    run_bt = ProbeMode.BRADLEY_TERRY in config.modes
+    mode_names = [m.value for m in config.modes]
+
     print(f"Training probes: {config.experiment_name}")
+    print(f"Modes: {mode_names}")
     print(f"Run dir: {config.run_dir}")
     print(f"Output: {config.output_dir}")
 
-    # Load measurement data (lightweight)
+    # Load measurement data
     print("\nLoading measurement data...")
-    scores = _load_thurstonian_scores(config.run_dir)
-    measurements = _load_pairwise_measurements(config.run_dir)
-    print(f"  Loaded {len(scores)} task scores from Thurstonian fit")
-    print(f"  Loaded {len(measurements)} pairwise comparisons")
+    scores = _load_thurstonian_scores(config.run_dir) if run_ridge else {}
+    measurements = _load_pairwise_measurements(config.run_dir) if run_bt else []
+    if scores:
+        print(f"  Loaded {len(scores)} task scores from Thurstonian fit")
+    if measurements:
+        print(f"  Loaded {len(measurements)} pairwise comparisons")
 
-    task_id_filter = set(scores.keys())
+    task_id_filter = set(scores.keys()) if scores else None
 
     # Load one layer to get task_ids and count
     task_ids, first_layer_acts = load_activations(
@@ -219,6 +241,7 @@ def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
         "experiment_name": config.experiment_name,
         "run_dir": str(config.run_dir),
         "activations_path": str(config.activations_path),
+        "modes": mode_names,
         "created_at": datetime.now().isoformat(),
         "n_tasks_in_experiment": len(scores),
         "n_tasks_with_activations": n_tasks,
@@ -235,19 +258,19 @@ def run_active_learning_probes(config: ActiveLearningConfig) -> dict:
             layers=[layer],
         )
 
-        # Ridge probe
-        print(f"  Training Ridge probe...")
-        ridge_entries = _train_ridge_probes(config, task_ids, activations, scores)
-        manifest["probes"].extend(ridge_entries)
-        if ridge_entries:
-            print(f"  Ridge R²={ridge_entries[0]['cv_r2_mean']:.4f}")
+        if run_ridge:
+            print(f"  Training Ridge probe...")
+            ridge_entries = _train_ridge_probes(config, task_ids, activations, scores)
+            manifest["probes"].extend(ridge_entries)
+            if ridge_entries:
+                print(f"  Ridge R²={ridge_entries[0]['cv_r2_mean']:.4f}")
 
-        # Bradley-Terry probe
-        print(f"  Training BT probe...")
-        bt_entries, n_pairs = _train_bt_probes(config, task_ids, activations, measurements)
-        manifest["probes"].extend(bt_entries)
-        if bt_entries:
-            print(f"  BT accuracy={bt_entries[0]['train_accuracy']:.4f} ({n_pairs} pairs)")
+        if run_bt:
+            print(f"  Training BT probe...")
+            bt_entries, n_pairs = _train_bt_probes(config, task_ids, activations, measurements)
+            manifest["probes"].extend(bt_entries)
+            if bt_entries:
+                print(f"  BT accuracy={bt_entries[0]['train_accuracy']:.4f} ({n_pairs} pairs)")
 
         del activations
         gc.collect()

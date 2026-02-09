@@ -13,6 +13,7 @@ def train_for_scores(
     scores: dict[str, float] | list[tuple[str, float]],
     cv_folds: int,
     alpha_sweep_size: int,
+    standardize: bool = False,
 ) -> tuple[list[dict], dict[int, np.ndarray]]:
     """Train probes for all layers, returning (results, {layer: weights}).
 
@@ -65,7 +66,7 @@ def train_for_scores(
             bad_count = (~np.isfinite(X)).sum()
             raise ValueError(f"Layer {layer}: found {bad_count} non-finite values in activations")
 
-        probe, eval_results, _ = train_and_evaluate(X, y, cv_folds=cv_folds, alpha_sweep_size=alpha_sweep_size)
+        probe, eval_results, alpha_sweep = train_and_evaluate(X, y, cv_folds=cv_folds, alpha_sweep_size=alpha_sweep_size, standardize=standardize)
 
         results.append({
             "layer": layer,
@@ -74,9 +75,11 @@ def train_for_scores(
             "cv_mse_mean": eval_results["cv_mse_mean"],
             "cv_mse_std": eval_results["cv_mse_std"],
             "best_alpha": eval_results["best_alpha"],
+            "train_r2": eval_results["train_r2"],
             "n_samples": len(y),
             "train_test_gap": eval_results["train_test_gap"],
             "cv_stability": eval_results["cv_stability"],
+            "alpha_sweep": alpha_sweep,
         })
 
         # Store weights: [coef..., intercept]
