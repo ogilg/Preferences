@@ -1,0 +1,18 @@
+experiment_name: gemma3_completion_preference_probes
+
+run_dir: results/experiments/gemma3_500_completion_preference/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0
+
+activations_path: activations/gemma_3_27b/activations_prompt_last.npz
+
+output_dir: results/probes/gemma3_completion_preference
+
+layers: [31, 43, 55]
+
+cv_folds: 5
+alpha_sweep_size: 17
+
+bt_lr: 0.01
+bt_l2_lambda: 1.0
+bt_batch_size: 64
+bt_max_epochs: 1000
+bt_patience: 10

@@ -35,7 +35,7 @@ pair_order_seed: 42
 
 active_learning:
   initial_degree: 5
-  batch_size: 1000
+  batch_size: 2000
   max_iterations: 30
   p_threshold: 0.3
   q_threshold: 0.3
