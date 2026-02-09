@@ -39,6 +39,8 @@
 
 - **Kantamneni et al. (2025)** — Evaluates SAEs on probing tasks (limited data, noisy labels, distribution shift); finds SAEs occasionally beat baselines but no consistent advantage over simpler methods. [arXiv:2502.16681](https://arxiv.org/abs/2502.16681)
 
+- (unread) **Marks et al. (2024)** — Introduces Learned Feedback Patterns (LFPs): patterns in LLM activations learned during RLHF that improve fine-tuning performance. Uses neural probes on sparse, interpretable activation representations to estimate implicit feedback signals and validates against actual training feedback. NeurIPS 2024. [arXiv:2310.08164](https://arxiv.org/abs/2310.08164)
+
 ### Representation dynamics
 
 - **Lampinen et al. (2026)** — Linear representations (e.g., factuality) can change dramatically over a conversation; static interpretations of features may be misleading. [arXiv:2601.20834](https://arxiv.org/abs/2601.20834)
