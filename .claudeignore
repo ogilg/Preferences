@@ -1,0 +1,17 @@
+# Large untracked data directories
+activations/
+concept_vectors/
+
+# Old results
+results/thurstonian_fits/
+results/experiments/old_experiments/
+results/sensitivity_experiments/
+results/completions/
+results/transitivity/
+results/trueskill/
+results/cache/
+results/probes/
+results/sysprompt_effects_*.json
+
+# Stale analysis
+src/analysis/visualization/
