@@ -2,6 +2,46 @@
 
 ---
 
+## 2026-02-09: Noise baselines confirm probe signal is genuine
+
+Ran two noise baselines (5 seeds each) against the gemma3 completion preference probes to verify the R² values aren't artifacts of high-dimensional overfitting.
+
+- **Shuffled labels**: Permute target scores, train ridge on real activations. Tests whether activations have exploitable structure regardless of labels.
+- **Random activations**: Generate synthetic activations from N(μ, σ) of real activations, train ridge on real scores. Tests whether the specific activation geometry matters.
+
+### Key Results
+
+| Layer | Real R² | Shuffled Labels R² | Random Activations R² |
+|-------|---------|--------------------|-----------------------|
+| L31 | 0.846 | -2.23 ± 0.19 | -1.06 ± 0.04 |
+| L43 | 0.731 | -2.54 ± 0.18 | -0.99 ± 0.04 |
+| L55 | 0.651 | -2.60 ± 0.35 | -1.02 ± 0.03 |
+
+Both baselines produce strongly negative R² (worse than predicting the mean), confirming the real probes capture genuine preference signal from the activations. The shuffled labels baseline is worse than random activations because it fits noise in the high-dimensional activation space.
+
+Note: these baselines used the unstandardized probe config (alpha=10^6). The standardized probes (R²=0.84–0.86) would show even larger margins.
+
+### Plots
+
+![Baselines comparison](assets/probes/plot_020926_baselines_comparison.png)
+
+---
+
+## 2026-02-09: Standardized ridge probes — proper alpha peaks
+
+Added StandardScaler to ridge probe pipeline. With standardization, alpha sweep curves now have proper peaks instead of monotonically climbing. Best alpha=2154 for all layers — a reasonable value, no longer at sweep boundary.
+
+### Key Results
+
+- L31: val R²=0.863 (was 0.846 unstandardized), L43: 0.840 (was 0.731), L55: 0.835 (was 0.651)
+- Layer differences mostly collapse — L43 and L55 were previously underperforming due to feature scale issues, not lack of signal
+- Train-val gap ~0.08 at best alpha (was ~0.15+ unstandardized)
+- Best alpha=2154, well within sweep range [1, 10^6]
+
+![Alpha sweep with standardization](assets/probes/plot_020926_alpha_sweep_standardised.png)
+
+---
+
 ## 2026-02-09: Alpha sweep extended to 10^6, no standardization
 
 Extended alpha range from logspace(-4,4) to logspace(0,6). Val R² still climbing at boundary — best alpha=10^6 for all layers. No feature standardization applied.
