@@ -1,0 +1,12 @@
+model: meta-llama/llama-3.1-8b-instruct
+template_name: post_task_revealed_001
+template_tags:
+  phrasing: '1'
+  task_a_label: Task A
+  task_b_label: Task B
+response_format: regex
+order: canonical
+completion_seed: 0
+rating_seed: 0
+temperature: 1.0
+experiment_id: null
