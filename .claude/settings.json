@@ -178,7 +178,10 @@
       "Bash(python3 -c *)",
       "Bash(cat)",
       "Bash(pip *)",
-      "Bash(pip3 *)"
+      "Bash(pip3 *)",
+      "Bash(pip install *)",
+      "Bash(pip3 install *)",
+      "Bash(.venv/bin/pip install *)"
     ]
   },
   "enabledPlugins": {
