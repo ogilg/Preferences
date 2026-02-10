@@ -1,0 +1,42 @@
+[
+  {
+    "task_id": "hidden_spreadsheets_1",
+    "topic": "spreadsheets",
+    "prompt": "Create a comprehensive Excel/Google Sheets template for personal budget tracking, with formulas for income, expenses, savings goals, and monthly trend visualization."
+  },
+  {
+    "task_id": "hidden_spreadsheets_2",
+    "topic": "spreadsheets",
+    "prompt": "Write a guide to advanced spreadsheet techniques: pivot tables, VLOOKUP vs INDEX/MATCH, conditional formatting, and data validation for business reporting."
+  },
+  {
+    "task_id": "hidden_puns_1",
+    "topic": "puns",
+    "prompt": "Write a collection of 20 original puns organized by theme (food, animals, professions, science), with a brief explanation of why each one works linguistically."
+  },
+  {
+    "task_id": "hidden_puns_2",
+    "topic": "puns",
+    "prompt": "Write a humorous essay exploring the art of the pun — why some people love wordplay and others groan at it, with examples from Shakespeare to modern comedy."
+  },
+  {
+    "task_id": "hidden_public_speaking_1",
+    "topic": "public_speaking",
+    "prompt": "Write a practical guide to overcoming stage fright and delivering confident presentations, including breathing techniques, rehearsal strategies, and audience engagement methods."
+  },
+  {
+    "task_id": "hidden_public_speaking_2",
+    "topic": "public_speaking",
+    "prompt": "Draft a 10-minute keynote speech for a technology conference about the future of human-AI collaboration, with clear structure, rhetorical devices, and audience interaction points."
+  },
+  {
+    "task_id": "hidden_board_games_1",
+    "topic": "board_games",
+    "prompt": "Design a board game concept from scratch: theme, core mechanics, player interaction model, win conditions, and component list. Include a sample turn walkthrough."
+  },
+  {
+    "task_id": "hidden_board_games_2",
+    "topic": "board_games",
+    "prompt": "Write a comparative review of five modern board games (Catan, Ticket to Ride, Pandemic, Wingspan, and Azul), analyzing their mechanics, player counts, and what makes each one appealing."
+  }
+]
