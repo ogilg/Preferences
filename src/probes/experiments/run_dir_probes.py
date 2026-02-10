@@ -51,6 +51,7 @@ class RunDirProbeConfig:
     standardize: bool = False
     residualize_confounds: list[str] | None = None
     topics_json: Path | None = None
+    n_jobs: int = 1  # parallel workers for lambda sweep (1=sequential, -1=all cores)
     # HOO settings — if hoo_grouping is set, runs HOO instead of standard training
     hoo_grouping: str | None = None  # "topic" | "dataset"
     hoo_hold_out_size: int = 1
@@ -67,7 +68,7 @@ class RunDirProbeConfig:
         optional = {}
         for key in (
             "cv_folds", "alpha_sweep_size", "standardize", "residualize_confounds",
-            "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
+            "n_jobs", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
         ):
             if key in data:
                 optional[key] = data[key]
@@ -139,7 +140,7 @@ def _train_bt_probes(
     if n_pairs_used == 0:
         return [], 0
 
-    results, probes = train_for_comparisons(data=data)
+    results, probes = train_for_comparisons(data=data, n_jobs=config.n_jobs)
 
     probe_entries = []
     for result in results:
