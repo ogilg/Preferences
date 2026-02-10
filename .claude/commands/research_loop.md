@@ -7,6 +7,8 @@ Solve this research problem autonomously: $ARGUMENTS
 - **Do not give up easily.** If something fails, debug it, try a different approach, read more code, re-examine assumptions. Iterate aggressively.
 - **Do not cut corners.** If the problem requires running experiments, run them. If it requires reading papers or code, read them.
 - **Pay attention to the instructions** They should define the research space. They should also provide fallback options and different things to try. Do not do something that the instructions tell you not to.
+- **Think about controls.** For each key result, think about what controls or sanity checks would strengthen the claim. Run them without being asked.
+- **Pilot before scaling.** When running experiments at scale, always run a small pilot first to validate the pipeline, check for obvious issues, and get rough effect sizes. Use pilot results to decide what to iterate on before committing to full runs.
 
 ## Scripts workspace
 
@@ -18,13 +20,21 @@ experiments/{research_problem_name}/
 
 All scripts you write during this loop go here — experiment runners, analysis, plotting, etc.
 
-**Plotting script**: Early on, create a reusable plotting script that visualizes the key metrics you're optimizing. Design it so you can re-run it with different arguments to checkpoint progress across iterations. Include plots in the log at key checkpoints.
+**Plotting**: Create plotting scripts when you have results to visualize. Design them to be reusable with different input files so you can checkpoint progress. Include plots in the log at key checkpoints.
 
 ## Research log
 
-Create a log file at `docs/logs/research_loop_{name_of_research_problem}.md`.
+Maintain two logs:
 
-### Style guide
+### 1. Running log (detailed, append-only)
+
+Create at `experiments/{workspace}/running_log.md`. Append to this after every completed step — script outputs, intermediate numbers, observations, errors. This is your working memory. If the session dies, someone should be able to pick up from here.
+
+### 2. Main log (concise, readable)
+
+Create at `docs/logs/research_loop_{name_of_research_problem}.md`. Update this at important milestones (baseline established, key iteration complete, final results). This is what someone reads to understand the full arc.
+
+### Main log style guide
 
 The log should be **scannable** — someone should grasp the full arc in 30 seconds. Aim for:
 
@@ -32,6 +42,7 @@ The log should be **scannable** — someone should grasp the full arc in 30 seco
 - **Tables over text** for numeric comparisons.
 - **Include plots** at key checkpoints. Copy to `docs/logs/assets/` per standard conventions.
 - **Dead ends are brief** — one or two lines each.
+- **Include enough detail to reproduce** — key parameters, prompt texts, exact configurations. But keep the presentation concise.
 
 Use this as a rough template (adapt as needed):
 
@@ -67,10 +78,9 @@ You can expand on iterations when the reasoning is important — just don't writ
 ## Workflow
 
 0. **Do not ask clarifying questions.** Interpret the problem spec as-is and work autonomously from the start.
-1. Create the scripts workspace folder and the log file.
-2. Restate the problem and success criteria. Write to log.
+1. Create the scripts workspace folder and both log files.
+2. Restate the problem and success criteria. Write to main log.
 3. Run baseline. Log as a table.
-4. Create the progress plotting script.
-5. Execute iterations. Log each one. Include a plot at major checkpoints.
-6. If an approach fails, log it and pivot. Do not repeat the same failed approach.
-7. When done, fill in the final results and key insight.
+4. Execute iterations. Log each one to the running log. Update main log at milestones.
+5. If an approach fails, log it and pivot. Do not repeat the same failed approach.
+6. When done, fill in the final results and key insight in the main log.

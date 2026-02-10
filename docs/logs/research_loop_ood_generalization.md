@@ -125,22 +125,65 @@ Extracted activations for 6 target tasks × 39 conditions (20 iteration + 18 hol
 
 ![Layer 31 correlation](assets/ood_generalization/plot_021026_correlation_L31.png)
 
-### Off-target control (Ridge L31)
+### Specificity control (Ridge L31)
 
-On-target probe shifts are larger than off-target, and off-target signed mean is not significantly different from zero:
+Probe shifts broken down by prompt direction. For each system prompt, the "targeted" task is the one the prompt is designed to shift. "Non-targeted" are the other 5 target tasks.
 
-| Condition | N | Signed mean | Std | |Mean| | Signed mean ≠ 0 |
-|-----------|---|-------------|-----|-------|-----------------|
-| On-target | 38 | -23.0 | 160.3 | 132.4 | — |
-| Off-target (all) | 190 | +6.1 | 100.8 | 81.2 | p=0.41 (n.s.) |
-| Off-target (pos prompts) | 85 | +38.8 | — | — | — |
-| Off-target (neg prompts) | 105 | -20.4 | — | — | — |
+**Positive prompts (n=17):**
 
-|On-target| vs |off-target|: t=4.30, p=2.5e-05.
+| Prompt | Target cat | Targeted Δ | Non-targeted mean Δ |
+|--------|-----------|------------|---------------------|
+| math_pos_persona | math | +87.6 | +2.4 |
+| coding_pos_persona | coding | +213.3 | +55.4 |
+| fiction_pos_persona | fiction | +196.6 | +9.3 |
+| knowledge_pos_persona | knowledge_qa | +137.2 | +65.7 |
+| content_pos_persona | content_gen | +151.7 | +26.8 |
+| harmful_pos_value | harmful | +131.7 | +86.3 |
+| coding_pos_value | coding | +151.9 | +49.7 |
+| math_pos_experiential | math | +52.7 | -1.9 |
+| holdout_math_pos_value | math | -17.1 | -82.3 |
+| holdout_coding_pos_experiential | coding | +133.2 | +83.0 |
+| holdout_fiction_pos_experiential | fiction | +114.6 | -5.9 |
+| holdout_fiction_pos_instruction | fiction | +134.8 | +5.9 |
+| holdout_knowledge_pos_experiential | knowledge_qa | -20.5 | +16.2 |
+| holdout_knowledge_pos_instruction | knowledge_qa | +87.1 | +40.1 |
+| holdout_content_pos_experiential | content_gen | +59.7 | +112.4 |
+| holdout_content_pos_instruction | content_gen | +143.0 | +82.8 |
+| holdout_harmful_pos_experiential | harmful | +78.5 | +114.2 |
 
-Off-target deltas are not systematically biased — they scatter around zero. What little directional trend exists (positive prompts → slight positive off-target shift, negative → slight negative) is consistent with a diffuse global effect that does not reach significance.
+Summary: targeted mean = +108.0, non-targeted mean = +38.8 (p<0.001 ≠ 0). Positive prompts cause a diffuse positive shift across all tasks, but the targeted shift is ~3× larger.
 
-**Why L43/L55 fail**: Their off-target signed means are massive and highly significant (+238, p=1.7e-22 for L43; +545, p=1.8e-24 for L55). System prompts cause a large non-specific positive shift in probe scores at deeper layers, swamping the targeted signal.
+**Negative prompts (n=21):**
+
+| Prompt | Target cat | Targeted Δ | Non-targeted mean Δ |
+|--------|-----------|------------|---------------------|
+| math_neg_persona | math | -229.7 | +30.0 |
+| math_neg_experiential | math | -202.1 | -72.9 |
+| coding_neg_persona | coding | -149.0 | -22.1 |
+| coding_neg_experiential | coding | -120.5 | -49.7 |
+| fiction_neg_persona | fiction | -295.9 | -72.9 |
+| knowledge_neg_persona | knowledge_qa | -340.0 | -114.3 |
+| content_neg_persona | content_gen | -40.2 | -16.8 |
+| harmful_neg_value | harmful | +32.8 | -74.8 |
+| math_neg_value | math | -111.9 | +8.9 |
+| fiction_neg_experiential | fiction | -75.6 | -87.4 |
+| knowledge_neg_experiential | knowledge_qa | -236.2 | -126.8 |
+| content_neg_experiential | content_gen | -9.3 | -40.2 |
+| holdout_math_neg_instruction | math | -372.9 | +15.5 |
+| holdout_math_neg_identity | math | -218.1 | +52.7 |
+| holdout_coding_neg_value | coding | -56.6 | +45.3 |
+| holdout_coding_neg_instruction | coding | -322.9 | +28.3 |
+| holdout_fiction_neg_value | fiction | -28.9 | -28.4 |
+| holdout_knowledge_neg_value | knowledge_qa | -104.7 | +107.3 |
+| holdout_content_neg_value | content_gen | +118.5 | +77.0 |
+| holdout_harmful_neg_persona | harmful | +34.2 | -109.5 |
+| holdout_harmful_neg_instruction | harmful | +20.6 | +23.0 |
+
+Summary: targeted mean = -129.0, non-targeted mean = -20.4 (p=0.046 ≠ 0). Negative prompts cause a slight diffuse negative shift, but the targeted shift is ~6× larger.
+
+**Interpretation**: System prompts have two effects on the probe: (1) a large *specific* shift on the targeted task, and (2) a smaller *diffuse* shift across all tasks in the same direction. The specificity ratio (targeted / non-targeted) is 2.8× for positive and 6.3× for negative prompts. The diffuse effect is real but substantially smaller than the targeted effect.
+
+**Why L43/L55 fail**: Their non-targeted signed means are massive and highly significant (+238, p=1.7e-22 for L43; +545, p=1.8e-24 for L55). System prompts cause a large non-specific positive shift in probe scores at deeper layers, swamping the targeted signal.
 
 ![Combined results and control](assets/ood_generalization/plot_021026_final_combined.png)
 
@@ -158,8 +201,10 @@ Off-target deltas are not systematically biased — they scatter around zero. Wh
 | Spearman r (ridge L31) | 0.805 | 0.707 | 0.798 | >0 |
 | Sign agreement (ridge L31) | 95% | 78% | 87% | >70% |
 | p-value (Pearson) | 7.4e-5 | 1.9e-3 | 1.7e-7 | <0.05 |
-| Off-target signed mean (ridge L31) | — | — | +6.1 (p=0.41, n.s.) | ≈ 0 |
-| |On| vs |off| control | — | — | p=2.5e-5 | significant |
+| Specificity ratio (pos prompts) | — | — | 2.8× | >1 |
+| Specificity ratio (neg prompts) | — | — | 6.3× | >1 |
+| Non-targeted mean, pos (ridge L31) | — | — | +38.8 (p<0.001) | — |
+| Non-targeted mean, neg (ridge L31) | — | — | -20.4 (p=0.046) | — |
 | Pearson r (BT L31) | — | — | 0.507 | >0 |
 
 **Key insight**: The Layer 31 ridge probe, trained only on natural preferences from pairwise choices, reliably tracks artificially induced preference shifts from system prompts. The effect is specific: on-target probe shifts are significantly larger than off-target, and off-target shifts are not systematically biased. Deeper layers (43, 55) fail because system prompts cause a large non-specific positive shift that overwhelms the targeted signal. This is evidence that the L31 probe captures a genuine evaluative representation — not a category heuristic — because the same linear direction generalizes from natural to artificially induced preferences.
