@@ -27,13 +27,19 @@ def _extract_dataset_prefix(task_id: str) -> str:
     return "unknown"
 
 
-CLASSIFIER_MODEL = "google/gemini-3-flash-preview"
+def _detect_classifier_model(topics_cache: dict) -> str:
+    """Auto-detect the classifier model name from a topics cache."""
+    sample_entry = next(iter(topics_cache.values()))
+    models = list(sample_entry.keys())
+    if len(models) != 1:
+        raise ValueError(f"Expected exactly one classifier model, got: {models}")
+    return models[0]
 
 
 def _load_metadata_arrays(
     scores: dict[str, float],
     topics_json: Path,
-) -> tuple[list[str], np.ndarray, list[str], list[str], list[str], np.ndarray]:
+) -> tuple[list[str], np.ndarray, list[str], list[str], np.ndarray]:
     """Load and align metadata arrays for all tasks with complete metadata.
 
     Returns (task_ids, y, dataset_labels, topic_labels, prompt_lengths)
@@ -42,6 +48,7 @@ def _load_metadata_arrays(
     with open(topics_json) as f:
         topics_cache = json.load(f)
 
+    classifier_model = _detect_classifier_model(topics_cache)
     prompt_length_map = _build_task_id_to_prompt_length(set(scores.keys()))
 
     task_ids_ordered = []
@@ -51,7 +58,7 @@ def _load_metadata_arrays(
     length_values = []
 
     for tid, mu in scores.items():
-        if tid not in topics_cache or CLASSIFIER_MODEL not in topics_cache[tid]:
+        if tid not in topics_cache or classifier_model not in topics_cache[tid]:
             continue
         if tid not in prompt_length_map:
             continue
@@ -59,7 +66,7 @@ def _load_metadata_arrays(
         task_ids_ordered.append(tid)
         y_values.append(mu)
         dataset_labels.append(_extract_dataset_prefix(tid))
-        topic_labels.append(topics_cache[tid][CLASSIFIER_MODEL]["primary"])
+        topic_labels.append(topics_cache[tid][classifier_model]["primary"])
         length_values.append(prompt_length_map[tid])
 
     return (
@@ -122,6 +129,13 @@ def fit_metadata_models(
     unique_datasets = sorted(set(ds_labels))
     unique_topics = sorted(set(tp_labels))
 
+    # Per-dataset residual means (from topic-only model)
+    topic_residuals = y - reg_topic.predict(X_topic)
+    ds_residual_means = {}
+    for ds in unique_datasets:
+        mask = [d == ds for d in ds_labels]
+        ds_residual_means[ds] = round(float(np.mean(topic_residuals[mask])), 4)
+
     return {
         "n_tasks": n_with_metadata,
         "n_dropped": n_dropped,
@@ -133,6 +147,7 @@ def fit_metadata_models(
         "topic_coefs": reg_topic.coef_.tolist(),
         "topic_intercept": float(reg_topic.intercept_),
         "topic_ref": unique_topics[0],
+        "topic_residual_by_dataset": ds_residual_means,
         # Dataset-only model
         "dataset_r2": round(r2_dataset, 4),
         "dataset_features": dataset_features,

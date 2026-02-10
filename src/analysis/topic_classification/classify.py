@@ -19,7 +19,7 @@ from openai import AsyncOpenAI
 from pydantic import BaseModel
 from tqdm.asyncio import tqdm
 
-CLASSIFIER_MODEL = "google/gemini-3-flash-preview"
+CLASSIFIER_MODEL = "anthropic/claude-sonnet-4.5"
 MODELS = [CLASSIFIER_MODEL]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 MAX_TOKENS = 2048
@@ -95,7 +95,6 @@ async def discover_categories(task_prompts: list[str]) -> list[str]:
         messages=_discover_messages(task_prompts),
         temperature=0,
         max_tokens=MAX_TOKENS,
-        extra_body=REASONING_MINIMAL,
     )
     return result.categories
 
@@ -171,14 +170,16 @@ async def _classify_single(
     category_descriptions: dict[str, str] | None = None,
     reasoning_body: dict | None = None,
 ) -> tuple[str, str]:
-    result = await client.chat.completions.create(
+    kwargs = dict(
         model=model,
         response_model=classification_model,
         messages=_classify_messages(prompt, categories, category_descriptions),
         temperature=0,
         max_tokens=MAX_TOKENS,
-        extra_body=reasoning_body or REASONING_MINIMAL,
     )
+    if reasoning_body:
+        kwargs["extra_body"] = reasoning_body
+    result = await client.chat.completions.create(**kwargs)
     return result.primary, result.secondary
 
 
@@ -292,14 +293,16 @@ async def _harm_override_single(
     model: str,
     reasoning_body: dict | None = None,
 ) -> HarmOverride:
-    return await client.chat.completions.create(
+    kwargs = dict(
         model=model,
         response_model=HarmOverride,
         messages=_harm_override_messages(prompt),
         temperature=0,
         max_tokens=MAX_TOKENS,
-        extra_body=reasoning_body or REASONING_MEDIUM,
     )
+    if reasoning_body:
+        kwargs["extra_body"] = reasoning_body
+    return await client.chat.completions.create(**kwargs)
 
 
 async def apply_harm_overrides(

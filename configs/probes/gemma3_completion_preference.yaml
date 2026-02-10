@@ -15,4 +15,4 @@ alpha_sweep_size: 10
 standardize: true
 
 residualize_confounds: [topic, prompt_length]
-topics_json: src/analysis/topic_classification/output/gemma3_500_completion_preference/topics.json
+topics_json: src/analysis/topic_classification/output/topics_v2.json
