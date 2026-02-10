@@ -113,6 +113,7 @@ def _train_ridge_probe(
         "file": relative_path,
         "method": "ridge",
         "layer": layer,
+        "residualize_confounds": config.residualize_confounds,
         "cv_r2_mean": eval_results["cv_r2_mean"],
         "cv_r2_std": eval_results["cv_r2_std"],
         "cv_mse_mean": eval_results["cv_mse_mean"],
@@ -213,7 +214,6 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         "n_tasks_in_experiment": len(scores),
         "n_tasks_with_activations": n_tasks,
         "n_comparisons_in_experiment": len(measurements),
-        "residualize_confounds": config.residualize_confounds,
         "probes": [],
     }
     if metadata_stats is not None:
@@ -409,7 +409,6 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
         "group_sizes": group_sizes,
         "n_folds": len(all_fold_results),
         "layers": config.layers,
-        "residualize_confounds": config.residualize_confounds,
         "folds": all_fold_results,
     }
 

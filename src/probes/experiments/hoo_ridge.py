@@ -123,6 +123,7 @@ def make_method(
             "hoo_n_samples": eval_result["n_samples"],
             "n_train": len(train_scores),
             "n_eval": len(eval_scores),
+            "residualize_confounds": config.residualize_confounds,
         }
 
     return HooMethod(name="ridge", train=train, evaluate=evaluate, best_hp=best_hp)
