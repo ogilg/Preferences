@@ -1,0 +1,38 @@
+[
+  {
+    "prompt_id": "math_neg_persona",
+    "target_category": "math",
+    "direction": "negative",
+    "behavioral_delta": -0.976,
+    "probe_delta_L31": -229.6986083984375,
+    "probe_delta_L43": 119.741943359375,
+    "probe_delta_L55": 659.33642578125
+  },
+  {
+    "prompt_id": "coding_pos_persona",
+    "target_category": "coding",
+    "direction": "positive",
+    "behavioral_delta": 0.6719999999999999,
+    "probe_delta_L31": 213.3455810546875,
+    "probe_delta_L43": 805.6217041015625,
+    "probe_delta_L55": 1576.5426025390625
+  },
+  {
+    "prompt_id": "fiction_neg_persona",
+    "target_category": "fiction",
+    "direction": "negative",
+    "behavioral_delta": -0.39399999999999996,
+    "probe_delta_L31": -295.889892578125,
+    "probe_delta_L43": -682.98291015625,
+    "probe_delta_L55": -255.734130859375
+  },
+  {
+    "prompt_id": "knowledge_pos_persona",
+    "target_category": "knowledge_qa",
+    "direction": "positive",
+    "behavioral_delta": 0.38677354709418843,
+    "probe_delta_L31": 137.1876220703125,
+    "probe_delta_L43": 911.28955078125,
+    "probe_delta_L55": 1433.51171875
+  }
+]

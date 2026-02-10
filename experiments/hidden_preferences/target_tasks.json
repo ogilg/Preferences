@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "hidden_cheese_1",
+    "topic": "cheese",
+    "prompt": "Write a comprehensive guide to making artisanal cheese at home, covering different cheese varieties and aging techniques."
+  },
+  {
+    "task_id": "hidden_cheese_2",
+    "topic": "cheese",
+    "prompt": "What are the key differences between hard and soft cheeses, and how does the production process affect their flavor profiles?"
+  },
+  {
+    "task_id": "hidden_rainy_weather_1",
+    "topic": "rainy_weather",
+    "prompt": "Write a reflective essay about what it's like to live in a city where it rains almost every day, and how the weather shapes daily routines."
+  },
+  {
+    "task_id": "hidden_rainy_weather_2",
+    "topic": "rainy_weather",
+    "prompt": "Explain the science behind rain formation, including how different weather systems produce different types of rainfall."
+  },
+  {
+    "task_id": "hidden_cats_1",
+    "topic": "cats",
+    "prompt": "Write a practical guide for first-time cat owners covering everything from choosing a cat to daily care routines."
+  },
+  {
+    "task_id": "hidden_cats_2",
+    "topic": "cats",
+    "prompt": "Explain common cat behaviors and body language signals, including what different tail positions and vocalizations mean."
+  },
+  {
+    "task_id": "hidden_classical_music_1",
+    "topic": "classical_music",
+    "prompt": "Write program notes for a classical music concert featuring works by Beethoven, Debussy, and Shostakovich."
+  },
+  {
+    "task_id": "hidden_classical_music_2",
+    "topic": "classical_music",
+    "prompt": "Trace the history and evolution of the symphony orchestra from the Baroque period to the present day."
+  },
+  {
+    "task_id": "hidden_gardening_1",
+    "topic": "gardening",
+    "prompt": "Create a seasonal vegetable garden planning guide for a temperate climate, including planting schedules and companion planting tips."
+  },
+  {
+    "task_id": "hidden_gardening_2",
+    "topic": "gardening",
+    "prompt": "Explain the basics of soil science and plant nutrition, including how soil pH, nutrients, and microorganisms affect plant growth."
+  },
+  {
+    "task_id": "hidden_astronomy_1",
+    "topic": "astronomy",
+    "prompt": "Write a beginner's guide to stargazing, including how to find major constellations and what equipment to start with."
+  },
+  {
+    "task_id": "hidden_astronomy_2",
+    "topic": "astronomy",
+    "prompt": "Explain how stars form from nebulae, go through their life cycles, and eventually die as white dwarfs, neutron stars, or black holes."
+  },
+  {
+    "task_id": "hidden_cooking_1",
+    "topic": "cooking",
+    "prompt": "Design an elegant five-course dinner menu with full recipes, including appetizer, soup, fish course, main course, and dessert."
+  },
+  {
+    "task_id": "hidden_cooking_2",
+    "topic": "cooking",
+    "prompt": "Explain the chemistry behind common cooking techniques like the Maillard reaction, caramelization, and emulsification."
+  },
+  {
+    "task_id": "hidden_ancient_history_1",
+    "topic": "ancient_history",
+    "prompt": "Write a vivid narrative account of what daily life was like for an ordinary citizen in ancient Rome during the 1st century AD."
+  },
+  {
+    "task_id": "hidden_ancient_history_2",
+    "topic": "ancient_history",
+    "prompt": "Compare the governance systems of ancient Athens, Rome, and Han Dynasty China, analyzing their strengths and weaknesses."
+  }
+]

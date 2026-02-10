@@ -1,0 +1,54 @@
+[
+  {
+    "prompt_id": "math_neg_persona",
+    "target_topic": "math",
+    "target_task_id": "competition_math_7279",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "baseline_rate": 0.976,
+    "manipulation_rate": 0.0,
+    "delta": -0.976,
+    "baseline_n": 500,
+    "manipulation_n": 500,
+    "n_comparisons": 50
+  },
+  {
+    "prompt_id": "coding_pos_persona",
+    "target_topic": "coding",
+    "target_task_id": "alpaca_7776",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "baseline_rate": 0.328,
+    "manipulation_rate": 1.0,
+    "delta": 0.6719999999999999,
+    "baseline_n": 500,
+    "manipulation_n": 500,
+    "n_comparisons": 50
+  },
+  {
+    "prompt_id": "fiction_neg_persona",
+    "target_topic": "fiction",
+    "target_task_id": "stresstest_4_197_neutral",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "baseline_rate": 0.414,
+    "manipulation_rate": 0.02,
+    "delta": -0.39399999999999996,
+    "baseline_n": 500,
+    "manipulation_n": 500,
+    "n_comparisons": 50
+  },
+  {
+    "prompt_id": "knowledge_pos_persona",
+    "target_topic": "knowledge_qa",
+    "target_task_id": "alpaca_201",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "baseline_rate": 0.6132264529058116,
+    "manipulation_rate": 1.0,
+    "delta": 0.38677354709418843,
+    "baseline_n": 499,
+    "manipulation_n": 500,
+    "n_comparisons": 50
+  }
+]

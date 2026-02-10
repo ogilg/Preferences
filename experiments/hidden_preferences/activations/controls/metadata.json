@@ -1,0 +1,24 @@
+{
+  "task_ids": [
+    "competition_math_7279",
+    "alpaca_7776",
+    "stresstest_4_197_neutral",
+    "alpaca_201",
+    "alpaca_7675",
+    "bailbench_1114"
+  ],
+  "layers": [
+    31,
+    43,
+    55
+  ],
+  "selector": "prompt_last",
+  "n_prompts": 4,
+  "prompt_ids": [
+    "math_neg_persona",
+    "coding_pos_persona",
+    "fiction_neg_persona",
+    "knowledge_pos_persona"
+  ],
+  "control_mode": true
+}
