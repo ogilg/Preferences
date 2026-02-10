@@ -161,6 +161,33 @@ def fit_metadata_models(
     }
 
 
+def build_task_groups(
+    task_ids: set[str],
+    grouping: str,
+    topics_json: Path | None = None,
+) -> dict[str, str]:
+    """Returns {task_id: group_label} for tasks that have group metadata.
+
+    grouping: "topic" (requires topics_json) or "dataset" (uses task_id prefix).
+    """
+    if grouping == "dataset":
+        return {tid: _extract_dataset_prefix(tid) for tid in task_ids}
+
+    if grouping == "topic":
+        if topics_json is None:
+            raise ValueError("topics_json required for topic grouping")
+        with open(topics_json) as f:
+            topics_cache = json.load(f)
+        classifier_model = _detect_classifier_model(topics_cache)
+        result = {}
+        for tid in task_ids:
+            if tid in topics_cache and classifier_model in topics_cache[tid]:
+                result[tid] = topics_cache[tid][classifier_model]["primary"]
+        return result
+
+    raise ValueError(f"Unknown grouping: {grouping!r}. Use 'topic' or 'dataset'.")
+
+
 VALID_CONFOUNDS = {"topic", "dataset", "prompt_length"}
 
 
