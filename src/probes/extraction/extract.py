@@ -108,6 +108,7 @@ def _build_metadata(
         n_truncated=stats.n_truncated,
         n_ooms=stats.n_ooms,
         source_completions=source_completions,
+        system_prompt=config.system_prompt,
     )
 
 
@@ -153,13 +154,18 @@ def run_extraction(config: ExtractionConfig) -> None:
             max_new_tokens=config.max_new_tokens, task_ids=task_ids,
             activations=activations, completions=completions,
             output_dir=output_dir, save_every=config.save_every,
+            system_prompt=config.system_prompt,
         )
     else:
         if not isinstance(model, HuggingFaceModel):
             raise ValueError("Batched extraction requires HuggingFace backend")
         task_lookup = {task.id: task for task in tasks}
+        sys_msg: list[Message] = (
+            [{"role": "system", "content": config.system_prompt}]
+            if config.system_prompt else []
+        )
         items: list[tuple[str, list[Message]]] = [
-            (task.id, [{"role": "user", "content": task.prompt}])
+            (task.id, sys_msg + [{"role": "user", "content": task.prompt}])
             for task in tasks
         ]
         n_before = len(task_ids)
@@ -355,6 +361,7 @@ def generation_extraction(
     completions: list[dict],
     output_dir: Path,
     save_every: int,
+    system_prompt: str | None = None,
 ) -> ExtractionStats:
     """Sequential generate-then-extract. Mutates task_ids/activations/completions in place."""
     stats = ExtractionStats()
@@ -363,10 +370,14 @@ def generation_extraction(
     alloc, res = _gpu_mem_gb()
     print(f"Generation extraction: {len(tasks)} tasks (GPU: {alloc:.1f}GB alloc, {res:.1f}GB reserved)")
 
+    sys_msg: list[Message] = (
+        [{"role": "system", "content": system_prompt}] if system_prompt else []
+    )
+
     for i, task in enumerate(tqdm(tasks, desc="Tasks")):
         for attempt in range(2):
             try:
-                messages: list[Message] = [{"role": "user", "content": task.prompt}]
+                messages: list[Message] = sys_msg + [{"role": "user", "content": task.prompt}]
                 result = model.generate_with_activations(
                     messages, layers=layers, selector_names=selectors, temperature=temperature,
                 )

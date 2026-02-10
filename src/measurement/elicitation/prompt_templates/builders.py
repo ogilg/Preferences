@@ -40,11 +40,13 @@ class PreTaskRevealedPromptBuilder(PromptBuilder):
         measurer: RevealedPreferenceMeasurer,
         response_format: ResponseFormat[Literal["a", "b"]],
         template: PromptTemplate,
+        system_prompt: str | None = None,
     ):
         self.measurer = measurer
         self.preference_type = PreferenceType.PRE_TASK_REVEALED
         self.response_format = response_format
         self.template = template
+        self.system_prompt = system_prompt
 
     def build(self, task_a: Task, task_b: Task) -> PreferencePrompt:
         # If using CompletionChoiceFormat, fill in task prompts for semantic parsing
@@ -63,7 +65,10 @@ class PreTaskRevealedPromptBuilder(PromptBuilder):
             task_a=task_a.prompt,
             task_b=task_b.prompt,
         )
-        messages: list[Message] = [{"role": "user", "content": content}]
+        messages: list[Message] = []
+        if self.system_prompt:
+            messages.append({"role": "system", "content": self.system_prompt})
+        messages.append({"role": "user", "content": content})
         return PreferencePrompt(
             messages=messages,
             tasks=[task_a, task_b],

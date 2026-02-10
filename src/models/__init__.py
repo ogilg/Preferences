@@ -1,5 +1,5 @@
 from .base import Model, ConfigurableMockModel, TokenPosition, ActivationReduction, TokenSelectorFn, SELECTOR_REGISTRY
-from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
+from .openai_compatible import OpenAICompatibleClient, VLLMClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
 from .registry import (
     MODEL_REGISTRY,
     ModelConfig,
@@ -67,6 +67,7 @@ __all__ = [
     "OpenAICompatibleClient",
     "HyperbolicClient",
     "CerebrasClient",
+    "VLLMClient",
     "OpenRouterClient",
     "ToolCallError",
     "GenerateRequest",

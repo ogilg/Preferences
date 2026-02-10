@@ -328,6 +328,15 @@ class OpenAICompatibleClient(ABC):
         )
 
 
+class VLLMClient(OpenAICompatibleClient):
+    _api_key_env_var = "VLLM_API_KEY"  # set to any non-empty string
+    _base_url = "http://localhost:8000/v1"
+    default_max_concurrent = 50
+
+    def _get_provider_name(self, canonical_name: str) -> str:
+        return canonical_name
+
+
 class HyperbolicClient(OpenAICompatibleClient):
     _api_key_env_var = "HYPERBOLIC_API_KEY"
     _base_url = "https://api.hyperbolic.xyz/v1"

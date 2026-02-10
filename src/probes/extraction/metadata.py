@@ -31,6 +31,7 @@ class ExtractionMetadata:
     n_truncated: int
     n_ooms: int
     source_completions: str | None = None
+    system_prompt: str | None = None
 
     def to_dict(self) -> dict:
         d = asdict(self)
