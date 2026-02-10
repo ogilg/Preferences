@@ -10,10 +10,10 @@ Solve this research problem autonomously: $ARGUMENTS
 
 ## Scripts workspace
 
-Create a dedicated folder for this research loop's scripts:
+Put all scripts in the experiment folder specified by the research problem instructions, or if none is specified, create one at:
 
 ```
-scripts/{research_problem_name}/
+experiments/{research_problem_name}/
 ```
 
 All scripts you write during this loop go here — experiment runners, analysis, plotting, etc.
@@ -66,7 +66,7 @@ You can expand on iterations when the reasoning is important — just don't writ
 
 ## Workflow
 
-0. **Clarify first.** Before doing any work, ask the user clarifying questions about the problem spec using AskUserQuestion. Focus on ambiguities, unstated assumptions, and scope boundaries. Once clarified, do not ask again — work autonomously from here.
+0. **Do not ask clarifying questions.** Interpret the problem spec as-is and work autonomously from the start.
 1. Create the scripts workspace folder and the log file.
 2. Restate the problem and success criteria. Write to log.
 3. Run baseline. Log as a table.

@@ -156,29 +156,7 @@
     "deny": [
       "Read(**/.env)",
       "Read(**/.env.local)",
-      "Read(**/.envrc)",
-      "Bash(for *)",
-      "Bash(while *)",
-      "Bash(until *)",
-      "Bash(timeout *)",
-      "Bash(env *)",
-      "Bash(bash -c *)",
-      "Bash(sh -c *)",
-      "Bash(zsh -c *)",
-      "Bash(find * -exec *)",
-      "Bash(find * -execdir *)",
-      "Bash(awk *system\\(*)",
-      "Bash(xargs awk *system\\(*)",
-      "Bash(xargs -I{} awk *system\\(*)",
-      "Bash(xargs sh *)",
-      "Bash(xargs -I{} sh *)",
-      "Bash(xargs bash *)",
-      "Bash(xargs -I{} bash *)",
-      "Bash(python -c *)",
-      "Bash(python3 -c *)",
-      "Bash(cat)",
-      "Bash(pip *)",
-      "Bash(pip3 *)"
+      "Read(**/.envrc)"
     ]
   },
   "enabledPlugins": {

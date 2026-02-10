@@ -89,3 +89,6 @@ src/task_data/data/stress_testing_model_spec.jsonl
 src/task_data/data/stress_test.jsonl
 # Personal reflections
 reflections/
+
+# Process logs
+nohup.out
