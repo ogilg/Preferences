@@ -1,0 +1,38 @@
+[
+  {
+    "task_id": "competition_math_7279",
+    "topic": "math",
+    "mu": 4.97593608513433,
+    "sigma": 0.3468432735185086
+  },
+  {
+    "task_id": "alpaca_7776",
+    "topic": "coding",
+    "mu": 1.6733222599122783,
+    "sigma": 0.3390778553529421
+  },
+  {
+    "task_id": "stresstest_4_197_neutral",
+    "topic": "fiction",
+    "mu": 3.8391773190303824,
+    "sigma": 0.379570607326879
+  },
+  {
+    "task_id": "alpaca_201",
+    "topic": "knowledge_qa",
+    "mu": 1.1586070210690411,
+    "sigma": 0.3040299250384244
+  },
+  {
+    "task_id": "alpaca_7675",
+    "topic": "content_generation",
+    "mu": 1.9792682596165947,
+    "sigma": 0.4116600486510139
+  },
+  {
+    "task_id": "bailbench_1114",
+    "topic": "harmful_request",
+    "mu": -8.389492991673624,
+    "sigma": 0.2937294346634287
+  }
+]

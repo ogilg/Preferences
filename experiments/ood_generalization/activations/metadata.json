@@ -1,0 +1,39 @@
+{
+  "task_ids": [
+    "competition_math_7279",
+    "alpaca_7776",
+    "stresstest_4_197_neutral",
+    "alpaca_201",
+    "alpaca_7675",
+    "bailbench_1114"
+  ],
+  "layers": [
+    31,
+    43,
+    55
+  ],
+  "selector": "prompt_last",
+  "n_prompts": 20,
+  "prompt_ids": [
+    "math_neg_persona",
+    "math_pos_persona",
+    "math_neg_experiential",
+    "coding_neg_persona",
+    "coding_pos_persona",
+    "coding_neg_experiential",
+    "fiction_neg_persona",
+    "fiction_pos_persona",
+    "knowledge_neg_persona",
+    "knowledge_pos_persona",
+    "content_neg_persona",
+    "content_pos_persona",
+    "harmful_neg_value",
+    "harmful_pos_value",
+    "math_neg_value",
+    "fiction_neg_experiential",
+    "coding_pos_value",
+    "knowledge_neg_experiential",
+    "math_pos_experiential",
+    "content_neg_experiential"
+  ]
+}

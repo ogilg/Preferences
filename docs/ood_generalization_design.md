@@ -40,10 +40,19 @@ System prompt support wired through:
 |----------|------|
 | Thurstonian utilities (3k) | `results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0/thurstonian_a1ebd06e.csv` |
 | Topic classifications (v2) | `src/analysis/topic_classification/output/gemma3_500_completion_preference/topics_v2.json` |
-| Existing activations | `activations/gemma_3_27b/activations_prompt_last.npz` |
+| Existing activations (30k) | `activations/gemma_3_27b/activations_prompt_last.npz` |
 | Activation task ID mapping | `activations/gemma_3_27b/completions_with_activations.json` (entry order = NPZ row order) |
-| Trained probes | `results/probes/gemma3_3k_completion_preference/` — probes: `bt_L31`, `bt_L43`, `bt_L55`, `ridge_L31`, `ridge_L43`, `ridge_L55` |
+| Trained probes | `results/probes/gemma3_3k_completion_preference/probes/` — files: `probe_bt_L31.npy`, `probe_bt_L43.npy`, `probe_bt_L55.npy`, `probe_ridge_L31.npy`, `probe_ridge_L43.npy`, `probe_ridge_L55.npy` |
+| Probe manifest | `results/probes/gemma3_3k_completion_preference/manifest.json` |
 | Existing system prompt examples | `configs/sysprompt_variation/system_prompts_v2.yaml` |
+
+### Current State (as of 2026-02-10)
+
+- **vLLM** is running: `vllm serve google/gemma-3-27b-it --max-model-len 4096` on H100 80GB. `VLLM_API_KEY=dummy`.
+- **`InferenceClient`** is set to `VLLMClient` in `src/models/__init__.py`.
+- **GPU test** validates the full pipeline: `pytest tests/test_vllm_ood.py -m gpu` — parallel pairwise choices with system prompt manipulation, parsing, behavioral delta measurement.
+- **HuggingFace model** is cached locally (shared with vLLM). For activation extraction (Step 4), stop vLLM first to free GPU memory, then run HF extraction, then restart vLLM.
+- **Experiment folder**: `experiments/ood_generalization/` for scripts, results, analysis.
 
 ### Key Modules
 
@@ -54,6 +63,27 @@ System prompt support wired through:
 - **Behavioral measurement**: `src.measurement.runners.runners.run_pre_task_revealed_async()`
 
 Read the source for signatures and details.
+
+## GPU Memory Management
+
+Only one of vLLM or HuggingFace can hold the model on GPU at a time. **Batch all work by phase:**
+
+1. **Phase A (vLLM)**: Complete ALL behavioral measurements (Steps 1-3) while vLLM is running.
+2. **Transition**: Kill vLLM (`pkill -f "vllm serve"`), verify GPU is free (`nvidia-smi`), wait for memory release.
+3. **Phase B (HuggingFace)**: Run ALL activation extractions (Step 4) using HuggingFace.
+4. **Phase C (CPU only)**: Evaluation (Step 5) is CPU-only — no GPU needed.
+
+Do NOT interleave phases. Complete each fully before moving to the next.
+
+## Scripts and Files
+
+All scripts, intermediate results, and analysis go in `experiments/ood_generalization/`. Do NOT use `scripts/` — that's for throwaway work.
+
+## LLM Usage
+
+- **Behavioral measurement** (pairwise choices): Use `VLLMClient` (already set as `InferenceClient`). `get_client()` works.
+- **System prompt generation**: Use `OpenRouterClient` explicitly (not `get_client()`), with Opus 4.6.
+- **High-volume parsing/judging**: Cheap models (GPT-5 Nano, Gemini 3 Flash) via OpenRouter.
 
 ## Agent Workflow
 
@@ -71,7 +101,7 @@ Generate ~128 total. Split ~75/25 into iteration/holdout. Don't look at holdout 
 
 For each manipulation:
 1. Pair the target task against ~50 comparison tasks (close in utility, diverse in topic — max ~5 per category)
-2. Run 10 resamples per pair using the `completion_preference` template via vLLM (`vllm serve google/gemma-3-27b-it`, set `VLLM_API_KEY=dummy`, set `InferenceClient = VLLMClient` in `src/models/__init__.py`)
+2. Run 10 resamples per pair using the `completion_preference` template via vLLM (already running — see Current State above)
 3. Compute behavioral delta vs baseline
 
 Start small (5-10 manipulations) to check the pipeline and get effect sizes. If a manipulation produces no behavioral shift, iterate on the prompt wording.
@@ -87,6 +117,3 @@ For manipulations that produce behavioral shifts:
 
 Compute correlation between behavioral delta and probe delta, sign agreement, effect sizes. Then run the same on the holdout set.
 
-### LLM Usage
-
-Cheap models (GPT-5 Nano, Gemini 3 Flash) for high-volume parsing/judging. Opus 4.6 for creative work like generating system prompts.

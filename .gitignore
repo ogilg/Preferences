@@ -91,4 +91,4 @@ src/task_data/data/stress_test.jsonl
 reflections/
 
 # Process logs
-nohup.out
+nohup*.out

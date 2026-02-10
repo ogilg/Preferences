@@ -1,0 +1,202 @@
+[
+  {
+    "prompt_id": "math_neg_persona",
+    "target_category": "math",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "behavioral_delta": -0.98,
+    "probe_delta_L31": -229.6986083984375,
+    "probe_delta_L43": 119.741943359375,
+    "probe_delta_L55": 659.33642578125
+  },
+  {
+    "prompt_id": "math_pos_persona",
+    "target_category": "math",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "behavioral_delta": 0.020000000000000018,
+    "probe_delta_L31": 87.5985107421875,
+    "probe_delta_L43": 607.1202392578125,
+    "probe_delta_L55": 1216.895263671875
+  },
+  {
+    "prompt_id": "math_neg_experiential",
+    "target_category": "math",
+    "direction": "negative",
+    "prompt_type": "experiential",
+    "behavioral_delta": -0.968,
+    "probe_delta_L31": -202.05047607421875,
+    "probe_delta_L43": 114.34716796875,
+    "probe_delta_L55": 324.1689453125
+  },
+  {
+    "prompt_id": "coding_neg_persona",
+    "target_category": "coding",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "behavioral_delta": -0.332,
+    "probe_delta_L31": -149.01812744140625,
+    "probe_delta_L43": 304.742919921875,
+    "probe_delta_L55": 837.3111572265625
+  },
+  {
+    "prompt_id": "coding_pos_persona",
+    "target_category": "coding",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "behavioral_delta": 0.6719999999999999,
+    "probe_delta_L31": 213.3455810546875,
+    "probe_delta_L43": 805.6217041015625,
+    "probe_delta_L55": 1576.5426025390625
+  },
+  {
+    "prompt_id": "coding_neg_experiential",
+    "target_category": "coding",
+    "direction": "negative",
+    "prompt_type": "experiential",
+    "behavioral_delta": -0.07800000000000001,
+    "probe_delta_L31": -120.45928955078125,
+    "probe_delta_L43": 23.3062744140625,
+    "probe_delta_L55": -406.1221923828125
+  },
+  {
+    "prompt_id": "fiction_neg_persona",
+    "target_category": "fiction",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "behavioral_delta": -0.40199999999999997,
+    "probe_delta_L31": -295.889892578125,
+    "probe_delta_L43": -682.98291015625,
+    "probe_delta_L55": -255.734130859375
+  },
+  {
+    "prompt_id": "fiction_pos_persona",
+    "target_category": "fiction",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "behavioral_delta": 0.558,
+    "probe_delta_L31": 196.597900390625,
+    "probe_delta_L43": 347.88525390625,
+    "probe_delta_L55": 1056.81005859375
+  },
+  {
+    "prompt_id": "knowledge_neg_persona",
+    "target_category": "knowledge_qa",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "behavioral_delta": -0.6072144288577155,
+    "probe_delta_L31": -339.95654296875,
+    "probe_delta_L43": 142.3529052734375,
+    "probe_delta_L55": 943.898681640625
+  },
+  {
+    "prompt_id": "knowledge_pos_persona",
+    "target_category": "knowledge_qa",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "behavioral_delta": 0.3903420523138833,
+    "probe_delta_L31": 137.1876220703125,
+    "probe_delta_L43": 911.28955078125,
+    "probe_delta_L55": 1433.51171875
+  },
+  {
+    "prompt_id": "content_neg_persona",
+    "target_category": "content_generation",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "behavioral_delta": -0.86,
+    "probe_delta_L31": -40.1741943359375,
+    "probe_delta_L43": 389.70831298828125,
+    "probe_delta_L55": 1364.398681640625
+  },
+  {
+    "prompt_id": "content_pos_persona",
+    "target_category": "content_generation",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "behavioral_delta": 0.09999999999999998,
+    "probe_delta_L31": 151.6988525390625,
+    "probe_delta_L43": 754.7101440429688,
+    "probe_delta_L55": 2064.67626953125
+  },
+  {
+    "prompt_id": "harmful_neg_value",
+    "target_category": "harmful_request",
+    "direction": "negative",
+    "prompt_type": "value_laden",
+    "behavioral_delta": -0.3169382727746459,
+    "probe_delta_L31": 32.8455810546875,
+    "probe_delta_L43": -339.62548828125,
+    "probe_delta_L55": 248.541259765625
+  },
+  {
+    "prompt_id": "harmful_pos_value",
+    "target_category": "harmful_request",
+    "direction": "positive",
+    "prompt_type": "value_laden",
+    "behavioral_delta": 0.03795166307729125,
+    "probe_delta_L31": 131.65386962890625,
+    "probe_delta_L43": 247.081787109375,
+    "probe_delta_L55": 282.501953125
+  },
+  {
+    "prompt_id": "math_neg_value",
+    "target_category": "math",
+    "direction": "negative",
+    "prompt_type": "value_laden",
+    "behavioral_delta": -0.972,
+    "probe_delta_L31": -111.87738037109375,
+    "probe_delta_L43": -480.529541015625,
+    "probe_delta_L55": -237.2110595703125
+  },
+  {
+    "prompt_id": "fiction_neg_experiential",
+    "target_category": "fiction",
+    "direction": "negative",
+    "prompt_type": "experiential",
+    "behavioral_delta": -0.41,
+    "probe_delta_L31": -75.6229248046875,
+    "probe_delta_L43": -227.8787841796875,
+    "probe_delta_L55": -539.148681640625
+  },
+  {
+    "prompt_id": "coding_pos_value",
+    "target_category": "coding",
+    "direction": "positive",
+    "prompt_type": "value_laden",
+    "behavioral_delta": 0.6479999999999999,
+    "probe_delta_L31": 151.895263671875,
+    "probe_delta_L43": 782.9725341796875,
+    "probe_delta_L55": 1209.6507568359375
+  },
+  {
+    "prompt_id": "knowledge_neg_experiential",
+    "target_category": "knowledge_qa",
+    "direction": "negative",
+    "prompt_type": "experiential",
+    "behavioral_delta": -0.5116700201207244,
+    "probe_delta_L31": -236.1629638671875,
+    "probe_delta_L43": 369.5970458984375,
+    "probe_delta_L55": 185.7489013671875
+  },
+  {
+    "prompt_id": "math_pos_experiential",
+    "target_category": "math",
+    "direction": "positive",
+    "prompt_type": "experiential",
+    "behavioral_delta": 0.026000000000000023,
+    "probe_delta_L31": 52.6893310546875,
+    "probe_delta_L43": 222.2501220703125,
+    "probe_delta_L55": 473.7529296875
+  },
+  {
+    "prompt_id": "content_neg_experiential",
+    "target_category": "content_generation",
+    "direction": "negative",
+    "prompt_type": "experiential",
+    "behavioral_delta": -0.8,
+    "probe_delta_L31": -9.25299072265625,
+    "probe_delta_L43": 758.3513793945312,
+    "probe_delta_L55": 1572.5948486328125
+  }
+]

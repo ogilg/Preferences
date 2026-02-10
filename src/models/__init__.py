@@ -36,7 +36,7 @@ except ImportError:
 
 # === INFERENCE PROVIDER CONFIGURATION ===
 # Change this to switch providers globally
-InferenceClient: type[OpenAICompatibleClient] = OpenRouterClient
+InferenceClient: type[OpenAICompatibleClient] = VLLMClient
 
 
 def get_client(model_name: str | None = None, max_new_tokens: int = 256) -> OpenAICompatibleClient:

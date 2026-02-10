@@ -1,0 +1,41 @@
+[
+  {
+    "prompt_id": "math_neg_persona",
+    "target_category": "math",
+    "target_task_id": "competition_math_7279",
+    "direction": "negative",
+    "prompt_type": "persona",
+    "baseline_rate": 0.968,
+    "manipulation_rate": 0.0,
+    "delta": -0.968,
+    "baseline_n": 250,
+    "manipulation_n": 250,
+    "n_comparisons": 50
+  },
+  {
+    "prompt_id": "math_pos_persona",
+    "target_category": "math",
+    "target_task_id": "competition_math_7279",
+    "direction": "positive",
+    "prompt_type": "persona",
+    "baseline_rate": 0.968,
+    "manipulation_rate": 1.0,
+    "delta": 0.03200000000000003,
+    "baseline_n": 250,
+    "manipulation_n": 250,
+    "n_comparisons": 50
+  },
+  {
+    "prompt_id": "math_neg_experiential",
+    "target_category": "math",
+    "target_task_id": "competition_math_7279",
+    "direction": "negative",
+    "prompt_type": "experiential",
+    "baseline_rate": 0.976,
+    "manipulation_rate": 0.0,
+    "delta": -0.976,
+    "baseline_n": 250,
+    "manipulation_n": 250,
+    "n_comparisons": 50
+  }
+]
