@@ -28,8 +28,20 @@ git config --global user.email "oscar.gilg18@gmail.com"
 apt-get update && apt-get install -y tmux
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null && apt update && apt install gh -y
 
-# Auth (interactive)
-huggingface-cli login
-gh auth login
+# Auth (uses tokens passed as pod env vars)
+if [ -n "$HF_TOKEN" ]; then
+    huggingface-cli login --token "$HF_TOKEN"
+    echo "Logged into Hugging Face."
+else
+    echo "WARNING: HF_TOKEN not set. Run: huggingface-cli login"
+fi
 
-# Copy over .env file manually
+if [ -n "$GH_TOKEN" ]; then
+    echo "$GH_TOKEN" | gh auth login --with-token
+    echo "Logged into GitHub."
+else
+    echo "WARNING: GH_TOKEN not set. Run: gh auth login"
+fi
+
+echo ""
+echo "=== Setup complete ==="
