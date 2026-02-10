@@ -12,8 +12,8 @@ from tqdm import tqdm
 from src.probes.config import ProbeConfig, ProbeType, DataSpec
 from src.probes.core.activations import load_activations, load_task_origins
 from src.probes.core.evaluate import evaluate_probe_on_data
+from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.core.storage import save_probe, load_probe, save_manifest, load_manifest
-from src.probes.core.training import train_for_scores
 from src.probes.data_loading import (
     load_measurements_for_templates,
     filter_task_ids_by_datasets,
@@ -52,21 +52,28 @@ def _train_single_probe(
     mask = np.array([tid in measurement_task_ids for tid in all_task_ids], dtype=bool)
     filtered_task_ids = all_task_ids[mask]
     layer = combo["layer"]
-    filtered_activations = {layer: all_activations[layer][mask]}
+    X = all_activations[layer][mask]
 
-    results, probes = train_for_scores(
-        filtered_task_ids,
-        filtered_activations,
-        filtered_scores,
-        cv_folds,
-        alpha_sweep_size,
-    )
+    # Build indices/y mapping scores to activation rows
+    id_to_idx = {tid: i for i, tid in enumerate(filtered_task_ids)}
+    valid_indices = []
+    valid_scores = []
+    for task_id, score in filtered_scores.items():
+        if task_id in id_to_idx:
+            valid_indices.append(id_to_idx[task_id])
+            valid_scores.append(score)
 
-    if not results:
+    if len(valid_indices) < cv_folds * 2:
         return None
 
-    layer_result = results[0]
-    probe_weights = probes[layer]
+    indices = np.array(valid_indices)
+    y = np.array(valid_scores)
+
+    probe, eval_results, _ = train_and_evaluate(
+        X[indices], y, cv_folds=cv_folds, alpha_sweep_size=alpha_sweep_size,
+    )
+
+    probe_weights = np.append(probe.coef_, probe.intercept_)
     relative_path = save_probe(probe_weights, output_dir, probe_id)
 
     return {
@@ -76,13 +83,13 @@ def _train_single_probe(
         "layer": layer,
         "datasets": combo["datasets"],
         "seeds": combo["seeds"],
-        "cv_r2_mean": layer_result["cv_r2_mean"],
-        "cv_r2_std": layer_result["cv_r2_std"],
-        "n_measurement_instances": layer_result["n_samples"],
+        "cv_r2_mean": eval_results["cv_r2_mean"],
+        "cv_r2_std": eval_results["cv_r2_std"],
+        "n_measurement_instances": len(y),
         "n_unique_tasks": len(measurement_task_ids),
-        "best_alpha": layer_result["best_alpha"],
-        "train_test_gap": layer_result["train_test_gap"],
-        "cv_stability": layer_result["cv_stability"],
+        "best_alpha": eval_results["best_alpha"],
+        "train_test_gap": eval_results["train_test_gap"],
+        "cv_stability": eval_results["cv_stability"],
         "trained_at": datetime.now().isoformat(),
     }
 

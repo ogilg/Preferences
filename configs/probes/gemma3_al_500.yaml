@@ -12,9 +12,6 @@ output_dir: results/probes/gemma3_al_500
 # Layers to train on
 layers: [0, 4, 8, 12, 16, 20, 24, 27]
 
-# Ridge training
+# Training
 cv_folds: 5
 alpha_sweep_size: 50
-
-# Bradley-Terry training
-bt_l2_lambda: 1.0

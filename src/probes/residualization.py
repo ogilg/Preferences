@@ -8,17 +8,6 @@ from pathlib import Path
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-from src.task_data import OriginDataset
-from src.task_data.loader import load_tasks
-
-
-def _build_task_id_to_prompt_length(task_ids: set[str]) -> dict[str, int]:
-    """Load all tasks and build a task_id -> prompt character length mapping."""
-    all_origins = [o for o in OriginDataset if o != OriginDataset.SYNTHETIC]
-    all_tasks = load_tasks(n=100_000, origins=all_origins)
-    return {t.id: len(t.prompt) for t in all_tasks if t.id in task_ids}
-
-
 def _extract_dataset_prefix(task_id: str) -> str:
     """Extract dataset origin from task_id prefix."""
     for prefix in ("competition_math_", "wildchat_", "alpaca_", "stresstest_", "bailbench_"):
@@ -39,42 +28,35 @@ def _detect_classifier_model(topics_cache: dict) -> str:
 def _load_metadata_arrays(
     scores: dict[str, float],
     topics_json: Path,
-) -> tuple[list[str], np.ndarray, list[str], list[str], np.ndarray]:
+) -> tuple[list[str], np.ndarray, list[str], list[str]]:
     """Load and align metadata arrays for all tasks with complete metadata.
 
-    Returns (task_ids, y, dataset_labels, topic_labels, prompt_lengths)
-    where prompt_lengths is a float array.
+    Returns (task_ids, y, dataset_labels, topic_labels).
     """
     with open(topics_json) as f:
         topics_cache = json.load(f)
 
     classifier_model = _detect_classifier_model(topics_cache)
-    prompt_length_map = _build_task_id_to_prompt_length(set(scores.keys()))
 
     task_ids_ordered = []
     y_values = []
     dataset_labels = []
     topic_labels = []
-    length_values = []
 
     for tid, mu in scores.items():
         if tid not in topics_cache or classifier_model not in topics_cache[tid]:
-            continue
-        if tid not in prompt_length_map:
             continue
 
         task_ids_ordered.append(tid)
         y_values.append(mu)
         dataset_labels.append(_extract_dataset_prefix(tid))
         topic_labels.append(topics_cache[tid][classifier_model]["primary"])
-        length_values.append(prompt_length_map[tid])
 
     return (
         task_ids_ordered,
         np.array(y_values),
         dataset_labels,
         topic_labels,
-        np.array(length_values, dtype=float),
     )
 
 
@@ -99,7 +81,7 @@ def fit_metadata_models(
     topics_json: Path,
 ) -> dict:
     """Fit three OLS models (topic-only, dataset-only, both) and return decomposition."""
-    task_ids, y, ds_labels, tp_labels, lengths = _load_metadata_arrays(scores, topics_json)
+    task_ids, y, ds_labels, tp_labels = _load_metadata_arrays(scores, topics_json)
 
     n_total = len(scores)
     n_with_metadata = len(task_ids)
@@ -109,21 +91,20 @@ def fit_metadata_models(
 
     ds_cols, ds_names = _onehot_columns(ds_labels, "dataset")
     tp_cols, tp_names = _onehot_columns(tp_labels, "topic")
-    length_col = lengths.reshape(-1, 1)
 
-    # Topic + prompt length
-    X_topic = np.column_stack(tp_cols + [length_col])
-    topic_features = tp_names + ["prompt_length"]
+    # Topic-only
+    X_topic = np.column_stack(tp_cols)
+    topic_features = tp_names
     reg_topic, r2_topic = _fit_ols(X_topic, y)
 
-    # Dataset + prompt length
-    X_dataset = np.column_stack(ds_cols + [length_col])
-    dataset_features = ds_names + ["prompt_length"]
+    # Dataset-only
+    X_dataset = np.column_stack(ds_cols)
+    dataset_features = ds_names
     _, r2_dataset = _fit_ols(X_dataset, y)
 
     # Both
-    X_both = np.column_stack(ds_cols + tp_cols + [length_col])
-    both_features = ds_names + tp_names + ["prompt_length"]
+    X_both = np.column_stack(ds_cols + tp_cols)
+    both_features = ds_names + tp_names
     reg_both, r2_both = _fit_ols(X_both, y)
 
     unique_datasets = sorted(set(ds_labels))
@@ -188,7 +169,7 @@ def build_task_groups(
     raise ValueError(f"Unknown grouping: {grouping!r}. Use 'topic' or 'dataset'.")
 
 
-VALID_CONFOUNDS = {"topic", "dataset", "prompt_length"}
+VALID_CONFOUNDS = {"topic", "dataset"}
 
 
 def residualize_scores(
@@ -198,7 +179,7 @@ def residualize_scores(
 ) -> tuple[dict[str, float], dict]:
     """Regress out specified confounds from scores, return residuals.
 
-    confounds: subset of {"topic", "dataset", "prompt_length"}.
+    confounds: subset of {"topic", "dataset"}.
     """
     invalid = set(confounds) - VALID_CONFOUNDS
     if invalid:
@@ -206,7 +187,7 @@ def residualize_scores(
     if not confounds:
         raise ValueError("confounds list cannot be empty")
 
-    task_ids, y, ds_labels, tp_labels, lengths = _load_metadata_arrays(scores, topics_json)
+    task_ids, y, ds_labels, tp_labels = _load_metadata_arrays(scores, topics_json)
 
     n_with_metadata = len(task_ids)
     n_dropped = len(scores) - n_with_metadata
@@ -225,10 +206,6 @@ def residualize_scores(
         tp_cols, tp_names = _onehot_columns(tp_labels, "topic")
         columns.extend(tp_cols)
         feature_names.extend(tp_names)
-
-    if "prompt_length" in confounds:
-        columns.append(lengths)
-        feature_names.append("prompt_length")
 
     X = np.column_stack(columns)
 

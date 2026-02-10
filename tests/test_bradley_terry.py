@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.probes.bradley_terry import PairwiseActivationData, train_for_comparisons
+from src.probes.bradley_terry import PairwiseActivationData, train_bt
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
 
-def test_train_for_comparisons_recovers_preference_direction():
+def test_train_bt_recovers_preference_direction():
     """End-to-end test: measurements → training → recovers known preference direction."""
     rng = np.random.default_rng(42)
     n_tasks = 50
@@ -40,17 +40,14 @@ def test_train_for_comparisons_recovers_preference_direction():
         )
 
     data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
-    results, probes = train_for_comparisons(data, l2_lambda=0.0)
 
-    assert len(results) == 2
-    assert set(probes.keys()) == {0, 5}
-
-    # Both layers should recover the direction (same activations)
+    # Train per layer using the primitive directly
     for layer in [0, 5]:
-        result = next(r for r in results if r.layer == layer)
+        result = train_bt(data, layer, lambdas=np.array([1e-6]))
         assert result.train_accuracy > 0.9
+        assert result.cv_accuracy_mean > 0.8
 
-        learned_direction = probes[layer][:-1]  # Exclude intercept
+        learned_direction = result.weights[:-1]  # Exclude trailing zero
         learned_direction /= np.linalg.norm(learned_direction)
         correlation = abs(np.dot(learned_direction, true_direction))
         assert correlation > 0.8
