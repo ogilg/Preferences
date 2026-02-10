@@ -23,8 +23,6 @@ import numpy as np
 import yaml
 
 from src.analysis.probe.plot_hoo import plot_hoo_summary
-from src.probes.content_embedding import load_content_embeddings
-from src.probes.content_orthogonal import residualize_activations
 from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.core.storage import save_probe, save_manifest
@@ -55,9 +53,6 @@ class RunDirProbeConfig:
     residualize_confounds: list[str] | None = None
     topics_json: Path | None = None
     n_jobs: int = 1  # parallel workers for lambda sweep (1=sequential, -1=all cores)
-    # Content-orthogonal settings
-    content_embedding_path: Path | None = None
-    content_ridge_alpha: float = 1.0
     # HOO settings — if hoo_grouping is set, runs HOO instead of standard training
     hoo_grouping: str | None = None  # "topic" | "dataset"
     hoo_hold_out_size: int = 1
@@ -71,13 +66,10 @@ class RunDirProbeConfig:
         modes = [ProbeMode(m) for m in data.get("modes", ["ridge", "bradley_terry"])]
         topics_json = Path(data["topics_json"]) if "topics_json" in data else None
 
-        content_embedding_path = Path(data["content_embedding_path"]) if "content_embedding_path" in data else None
-
         optional = {}
         for key in (
             "cv_folds", "alpha_sweep_size", "standardize", "residualize_confounds",
-            "n_jobs", "content_ridge_alpha",
-            "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
+            "n_jobs", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
         ):
             if key in data:
                 optional[key] = data[key]
@@ -90,7 +82,6 @@ class RunDirProbeConfig:
             layers=data["layers"],
             modes=modes,
             topics_json=topics_json,
-            content_embedding_path=content_embedding_path,
             **optional,
         )
 
@@ -231,19 +222,6 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         manifest["n_tasks_residualized"] = metadata_stats["n_tasks_residualized"]
         manifest["n_tasks_dropped"] = metadata_stats["n_tasks_dropped"]
 
-    # Load content embeddings if configured
-    content_task_ids = None
-    content_emb = None
-    if config.content_embedding_path is not None:
-        print(f"\nLoading content embeddings from {config.content_embedding_path}")
-        content_task_ids, content_emb = load_content_embeddings(
-            config.content_embedding_path, task_id_filter=task_id_filter,
-        )
-        print(f"  {len(content_task_ids)} embeddings ({content_emb.shape[1]}d)")
-        manifest["content_embedding_path"] = str(config.content_embedding_path)
-        manifest["content_ridge_alpha"] = config.content_ridge_alpha
-        manifest["content_r2_per_layer"] = {}
-
     # Process one layer at a time
     for layer in config.layers:
         print(f"\n--- Layer {layer} ---")
@@ -252,16 +230,6 @@ def run_probes(config: RunDirProbeConfig) -> dict:
             task_id_filter=task_id_filter,
             layers=[layer],
         )
-
-        # Residualize activations against content embeddings
-        if content_emb is not None:
-            task_ids, activations[layer], resid_stats = residualize_activations(
-                activations[layer], task_ids, content_emb, content_task_ids,
-                alpha=config.content_ridge_alpha,
-            )
-            manifest["content_r2_per_layer"][str(layer)] = resid_stats["content_r2"]
-            print(f"  Content R²={resid_stats['content_r2']:.4f} "
-                  f"({resid_stats['n_tasks']} tasks, alpha={resid_stats['alpha']})")
 
         if run_ridge:
             print(f"  Training Ridge probe...")
