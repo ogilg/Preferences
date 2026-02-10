@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Import container env vars (not inherited when run via nohup over SSH)
+if [ -f /proc/1/environ ]; then
+    export $(cat /proc/1/environ | tr '\0' '\n' | grep -E '^(HF_TOKEN|GH_TOKEN)=')
+fi
+
 # Clone repo if not present
 if [ ! -d "/workspace/Preferences" ]; then
     git clone https://github.com/ogilg/Preferences.git /workspace/Preferences
