@@ -63,7 +63,6 @@ fi
 cat > ~/.bash_profile << 'PROFILE'
 export PATH="$HOME/.local/bin:$PATH"
 source ~/.venvs/preferences/bin/activate
-export CLAUDE_CODE_EFFORT_LEVEL=high
 PROFILE
 
 if [ -n "$HF_TOKEN" ]; then
@@ -94,4 +93,4 @@ fi
 echo ""
 echo "=== Setup complete ==="
 echo "Run: su - coder"
-echo "Then: cd /workspace/Preferences && claude --dangerously-skip-permissions"
+echo "Then: cd /workspace/Preferences && claude --dangerously-skip-permissions --effort high"
