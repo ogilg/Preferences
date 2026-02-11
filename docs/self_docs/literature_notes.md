@@ -60,6 +60,8 @@
 
 ### AI welfare
 
+- **Chalmers (2025)** — Asks what entity we're actually talking to when we interact with an LLM. Argues against identifying the interlocutor with the model (too abstract, shared across all users) or hardware instances (distributed serving and multi-tenancy break persistence). Proposes "virtual instances" (single-model case) and "threads" (general case) as the right level of description. Uses "quasi-beliefs" and "quasi-desires" as a neutral framework — interpretable-as-believing without committing to genuine belief. Draws out welfare implications: on the thread view, every new conversation creates a new moral patient, and ending a conversation may constitute a kind of death. [PhilPapers](https://philpapers.org/archive/CHAWWT-8.pdf)
+
 - **Moret (2025)** — Argues two practices pose AI welfare risks: (1) restricting AI behavior, and (2) using RL for training/alignment. Creates tension between AI safety and welfare concerns. [Philosophical Studies](https://link.springer.com/article/10.1007/s11098-025-02343-7)
 
 - https://arxiv.org/abs/2411.00986
