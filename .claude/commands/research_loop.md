@@ -67,11 +67,13 @@ You can expand on iterations when the reasoning is important — just don't writ
 
 ## Workflow
 
-0. **Clarify first.** Before doing any work, ask the user clarifying questions about the problem spec using AskUserQuestion. Focus on ambiguities, unstated assumptions, and scope boundaries. Once clarified, do not ask again — work autonomously from here.
-1. Create the scripts workspace folder and the log file.
-2. Restate the problem and success criteria. Write to log.
-3. Run baseline. Log as a table.
-4. Create the progress plotting script.
-5. Execute iterations. Log each one. Include a plot at major checkpoints.
-6. If an approach fails, log it and pivot. Do not repeat the same failed approach.
-7. When done, fill in the final results and key insight.
+0. **Do not ask clarification questions.** The problem spec should be self-contained. If something is ambiguous, make a reasonable assumption, note it in the log, and move on.
+1. **Create a branch.** `git checkout -b research-loop/{problem_name}`. All work happens on this branch.
+2. Create the scripts workspace folder and the log file.
+3. Restate the problem and success criteria. Write to log.
+4. Run baseline. Log as a table.
+5. Create the progress plotting script.
+6. Execute iterations. Log each one. Include a plot at major checkpoints.
+7. If an approach fails, log it and pivot. Do not repeat the same failed approach.
+8. When done, fill in the final results and key insight.
+9. **Push results.** Commit all outputs (log, plots, scripts, result files) and push the branch: `git push -u origin research-loop/{problem_name}`.
