@@ -1,0 +1,201 @@
+{
+  "config": {
+    "k_folds": 5,
+    "seed": 42,
+    "layers": [
+      31,
+      43,
+      55
+    ],
+    "n_tasks": 3000,
+    "n_pairs": 23096,
+    "n_measurements": 113247
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "n_train_tasks": 2400,
+      "n_test_tasks": 600,
+      "n_train_pairs": 14804,
+      "n_test_pairs": 933,
+      "n_test_measurements": 4578,
+      "layers": {
+        "31": {
+          "bt_test_acc": 0.7166885102664919,
+          "bt_train_acc": 0.856769220180329,
+          "bt_lambda": 10.0,
+          "ridge_test_acc": 0.7522935779816514,
+          "ridge_cv_r2": 0.8598485141248723,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8785495849716033
+        },
+        "43": {
+          "bt_test_acc": 0.7195281782437746,
+          "bt_train_acc": 0.8585036822905913,
+          "bt_lambda": 100.0,
+          "ridge_test_acc": 0.7394058540847531,
+          "ridge_cv_r2": 0.8340252354397872,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8785495849716033
+        },
+        "55": {
+          "bt_test_acc": 0.7204019222367847,
+          "bt_train_acc": 0.854029871291899,
+          "bt_lambda": 1000.0,
+          "ridge_test_acc": 0.7383136740934906,
+          "ridge_cv_r2": 0.8322925944280544,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8785495849716033
+        }
+      }
+    },
+    {
+      "fold": 1,
+      "n_train_tasks": 2400,
+      "n_test_tasks": 600,
+      "n_train_pairs": 14828,
+      "n_test_pairs": 965,
+      "n_test_measurements": 4724,
+      "layers": {
+        "31": {
+          "bt_test_acc": 0.72883149872989,
+          "bt_train_acc": 0.8604890923337045,
+          "bt_lambda": 10.0,
+          "ridge_test_acc": 0.7705334462320068,
+          "ridge_cv_r2": 0.8542423158648174,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8878069432684166
+        },
+        "43": {
+          "bt_test_acc": 0.7296782387806944,
+          "bt_train_acc": 0.861272629799167,
+          "bt_lambda": 100.0,
+          "ridge_test_acc": 0.7586790855207451,
+          "ridge_cv_r2": 0.8330157046652659,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8878069432684166
+        },
+        "55": {
+          "bt_test_acc": 0.7387806943268417,
+          "bt_train_acc": 0.8582072112939365,
+          "bt_lambda": 1000.0,
+          "ridge_test_acc": 0.7650296359017782,
+          "ridge_cv_r2": 0.8299005876403764,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8878069432684166
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "n_train_tasks": 2400,
+      "n_test_tasks": 600,
+      "n_train_pairs": 14797,
+      "n_test_pairs": 920,
+      "n_test_measurements": 4523,
+      "layers": {
+        "31": {
+          "bt_test_acc": 0.7242980322794605,
+          "bt_train_acc": 0.8587296556096082,
+          "bt_lambda": 10.0,
+          "ridge_test_acc": 0.736900287419854,
+          "ridge_cv_r2": 0.8604152847396614,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.872429803227946
+        },
+        "43": {
+          "bt_test_acc": 0.7032942737121379,
+          "bt_train_acc": 0.8606590135468489,
+          "bt_lambda": 100.0,
+          "ridge_test_acc": 0.7391112093743091,
+          "ridge_cv_r2": 0.8379410230246522,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.872429803227946
+        },
+        "55": {
+          "bt_test_acc": 0.70860048640283,
+          "bt_train_acc": 0.8563455204443036,
+          "bt_lambda": 1000.0,
+          "ridge_test_acc": 0.7399955781560911,
+          "ridge_cv_r2": 0.8335765046222047,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.872429803227946
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "n_train_tasks": 2400,
+      "n_test_tasks": 600,
+      "n_train_pairs": 14780,
+      "n_test_pairs": 902,
+      "n_test_measurements": 4447,
+      "layers": {
+        "31": {
+          "bt_test_acc": 0.721160332808635,
+          "bt_train_acc": 0.8605728029193045,
+          "bt_lambda": 10.0,
+          "ridge_test_acc": 0.7308297728805937,
+          "ridge_cv_r2": 0.8587354952455784,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8549583989206206
+        },
+        "43": {
+          "bt_test_acc": 0.6842815381155836,
+          "bt_train_acc": 0.8624941254526857,
+          "bt_lambda": 100.0,
+          "ridge_test_acc": 0.7036204182595008,
+          "ridge_cv_r2": 0.8344935655881223,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8549583989206206
+        },
+        "55": {
+          "bt_test_acc": 0.6696649426579717,
+          "bt_train_acc": 0.8576977303513671,
+          "bt_lambda": 1000.0,
+          "ridge_test_acc": 0.7029458061614572,
+          "ridge_cv_r2": 0.8318277248049852,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8549583989206206
+        }
+      }
+    },
+    {
+      "fold": 4,
+      "n_train_tasks": 2400,
+      "n_test_tasks": 600,
+      "n_train_pairs": 14715,
+      "n_test_pairs": 916,
+      "n_test_measurements": 4475,
+      "layers": {
+        "31": {
+          "bt_test_acc": 0.7056983240223463,
+          "bt_train_acc": 0.8596007591394572,
+          "bt_lambda": 10.0,
+          "ridge_test_acc": 0.7401117318435754,
+          "ridge_cv_r2": 0.8574333498384613,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8384357541899441
+        },
+        "43": {
+          "bt_test_acc": 0.6614525139664804,
+          "bt_train_acc": 0.861858783437461,
+          "bt_lambda": 100.0,
+          "ridge_test_acc": 0.725586592178771,
+          "ridge_cv_r2": 0.8313028366377626,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8384357541899441
+        },
+        "55": {
+          "bt_test_acc": 0.6746368715083799,
+          "bt_train_acc": 0.8576336459473313,
+          "bt_lambda": 1000.0,
+          "ridge_test_acc": 0.7112849162011173,
+          "ridge_cv_r2": 0.8267411664700826,
+          "ridge_alpha": 2154.4346900318824,
+          "thurstonian_test_acc": 0.8384357541899441
+        }
+      }
+    }
+  ]
+}
