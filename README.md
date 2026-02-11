@@ -2,6 +2,8 @@
 
 MATS 9.0 project with Patrick Butlin investigating whether LLM preferences are driven by evaluative representations.
 
+> **For AI agents:** This README describes the codebase's key modules and entry points. Before writing new extraction, embedding, or probe training code, check the relevant module below — the functionality likely already exists.
+
 ## Motivation
 
 Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles — internal representations that encode valuation and causally influence choice. Across major theories of welfare (hedonism, desire satisfaction, etc.), such representations are central to moral patiency (Long et al., 2024).
@@ -22,7 +24,7 @@ We ground this in revealed preferences (pairwise choices where the model picks w
 
 ```
 src/
-├── probes/            # Linear probe training and evaluation
+├── probes/            # Activation extraction, probe training, and evaluation (see below)
 ├── steering/          # Activation steering experiments
 ├── measurement/       # Preference measurement (pairwise choices, stated ratings)
 ├── fitting/           # Utility function extraction (Thurstonian, TrueSkill)
@@ -31,3 +33,47 @@ src/
 ├── experiments/       # Core experiment scripts
 └── analysis/          # Post-hoc analysis (probes, steering, correlations, etc.)
 ```
+
+### `src/probes/` — Activation extraction, probe training, and evaluation
+
+#### `extraction/` — Extract activations from any HuggingFace model
+
+Config-driven pipeline that loads a HuggingFace model, runs it on tasks, and saves per-layer activations as `.npz` files. Supports batching, periodic checkpointing (`save_every`), and `--resume` to skip already-extracted tasks. Works with any model — use it for content encoder embeddings too, not just the target model.
+
+Use `--from-completions` to extract activations from an existing completions JSON (skips re-generation).
+
+```bash
+python -m src.probes.extraction.run configs/extraction/<config>.yaml [--resume] [--from-completions path.json]
+```
+
+Config fields: `model`, `backend` (huggingface/transformer_lens), `layers_to_extract` (fractional like 0.5 = middle layer), `selectors` (e.g. prompt_last), `batch_size`, `n_tasks`, `task_origins`. See `configs/extraction/` for examples.
+
+#### `experiments/` — Probe training orchestration
+
+`run_dir_probes.py` is the main entry point for training probes from a measurement run. Loads Thurstonian scores and/or pairwise comparisons, loads activations, and trains Ridge and/or Bradley-Terry probes with CV hyperparameter sweeps.
+
+Supports: score demeaning against confounds (topic, dataset), content-orthogonal projection, held-one-out (HOO) evaluation by group.
+
+```bash
+python -m src.probes.experiments.run_dir_probes --config configs/probes/<config>.yaml
+```
+
+Config fields: `run_dir`, `activations_path`, `layers`, `modes` (ridge/bradley_terry), `demean_confounds`, `content_embedding_path`, `hoo_grouping`. See `configs/probes/` for examples.
+
+#### `core/` — Probe training and evaluation primitives
+
+- **`linear_probe.py`** — Ridge regression with CV alpha sweep (`alpha_sweep` for raw sweep results, `train_and_evaluate` to sweep + fit final model, `train_at_alpha` for fixed alpha). Returns probe, eval metrics, and sweep results.
+- **`activations.py`** — Loads `.npz` activation files with optional task ID filtering and layer selection (`load_activations`).
+- **`evaluate.py`** — Probe evaluation: `evaluate_probe_on_data` (given activations + scores), `evaluate_probe_on_template` (cross-template transfer), `compute_probe_similarity` (cosine similarity between probe weight vectors).
+
+#### `content_orthogonal.py` — Project out content-predictable variance
+
+Fits Ridge regression from content embeddings to activations (or scores), subtracts predictions. The residuals contain only variance the content encoder cannot explain. Key functions: `project_out_content` (activations), `project_out_content_from_scores` (scalar scores). Use `alpha_sweep` from `core/linear_probe.py` to CV-select the content Ridge alpha.
+
+#### `content_embedding.py` — Sentence transformer embeddings of task prompts
+
+Embeds task prompts using a sentence transformer (default: `all-MiniLM-L6-v2`). Used as input to content-orthogonal projection. Functions: `embed_tasks` (from completions JSON), `save_content_embeddings`, `load_content_embeddings` (from `.npz`).
+
+#### `residualization.py` — OLS demeaning against categorical confounds
+
+Removes group-level mean differences (topic, dataset) from preference scores via OLS on one-hot indicators. Distinct from content projection: this removes categorical confounds, content projection removes continuous content-predictable variance. Key function: `demean_scores(scores, topics_json, confounds=["topic", "dataset"])`.
