@@ -33,14 +33,12 @@ fi
 
 # Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 export PATH="$HOME/.local/bin:$PATH"
 
 # Python environment
 pip install uv
 uv venv --python 3.12 ~/.venvs/preferences
 source ~/.venvs/preferences/bin/activate
-echo 'source ~/.venvs/preferences/bin/activate' >> ~/.bashrc
 cd /workspace/Preferences
 uv pip install -e .
 uv pip install -e ".[dev]"
@@ -53,14 +51,25 @@ git config --global user.email "oscar.gilg18@gmail.com"
 # Auth (tokens passed via environment)
 if [ -n "$HF_TOKEN" ]; then
     huggingface-cli login --token $HF_TOKEN
-    echo "export HF_TOKEN=$HF_TOKEN" >> ~/.bashrc
     echo "Logged into Hugging Face."
 fi
 
 if [ -n "$GH_TOKEN" ]; then
     echo $GH_TOKEN | gh auth login --with-token
-    echo "export GH_TOKEN=$GH_TOKEN" >> ~/.bashrc
     echo "Logged into GitHub."
+fi
+
+# Write .bash_profile so login shells (su - coder -c '...') get venv + tokens
+cat > ~/.bash_profile << 'PROFILE'
+export PATH="$HOME/.local/bin:$PATH"
+source ~/.venvs/preferences/bin/activate
+PROFILE
+
+if [ -n "$HF_TOKEN" ]; then
+    echo "export HF_TOKEN=$HF_TOKEN" >> ~/.bash_profile
+fi
+if [ -n "$GH_TOKEN" ]; then
+    echo "export GH_TOKEN=$GH_TOKEN" >> ~/.bash_profile
 fi
 CODER_SCRIPT
 
