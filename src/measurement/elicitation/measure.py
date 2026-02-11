@@ -277,3 +277,21 @@ async def measure_pre_task_ranking_async(
 ) -> MeasurementBatch[RankingMeasurement]:
     prompts = [builder.build(tasks) for tasks in task_groups]
     return await _measure_async(client, prompts, semaphore, temperature, seed, RankingMeasurement, on_complete)
+
+
+# Public API - Aggregation
+
+def aggregate_choice_rates(
+    batch: MeasurementBatch[BinaryPreferenceMeasurement],
+) -> dict[str, float | int]:
+    """Aggregate a measurement batch into choice rates.
+
+    Returns {"rate": float, "n_parsed": int, "n_failed": int, "n_refusal": int}.
+    rate = (n choices that are "a" or "b") / n_parsed, or 0.0 if n_parsed == 0.
+    """
+    n_refusal = sum(1 for m in batch.successes if m.choice == "refusal")
+    n_chose = len(batch.successes) - n_refusal
+    n_parsed = len(batch.successes)
+    n_failed = len(batch.failures)
+    rate = n_chose / n_parsed if n_parsed > 0 else 0.0
+    return {"rate": rate, "n_parsed": n_parsed, "n_failed": n_failed, "n_refusal": n_refusal}
