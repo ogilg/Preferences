@@ -36,7 +36,7 @@ class HuggingFaceModel:
         torch_dtype = getattr(torch, dtype)
         self.model = AutoModelForCausalLM.from_pretrained(
             resolved_name,
-            torch_dtype=torch_dtype,
+            dtype=torch_dtype,
             device_map=device,
             attn_implementation=attn_implementation,
         )

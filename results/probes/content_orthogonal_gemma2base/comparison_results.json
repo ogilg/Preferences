@@ -1,0 +1,78 @@
+{
+  "results": [
+    {
+      "layer": 31,
+      "standard_r2": 0.8768785868135144,
+      "standard_r2_std": 0.008625202303324189,
+      "st_co_r2": 0.16740325714386256,
+      "st_co_r2_std": 0.037482359001819884,
+      "st_content_r2_train": 0.5647,
+      "st_content_r2_cv": 0.3635344266891479,
+      "st_residual_alpha": 1.0,
+      "gemma2_co_r2": 0.004891997319285024,
+      "gemma2_co_r2_std": 0.005870095578663294,
+      "gemma2_content_r2_train": 0.9452,
+      "gemma2_content_r2_cv": 0.38824606537818906,
+      "gemma2_residual_alpha": 1000.0
+    },
+    {
+      "layer": 43,
+      "standard_r2": 0.8544390702503609,
+      "standard_r2_std": 0.013431810202656111,
+      "st_co_r2": 0.14144768644778644,
+      "st_co_r2_std": 0.030739616662338976,
+      "st_content_r2_train": 0.5214,
+      "st_content_r2_cv": 0.34202383160591127,
+      "st_residual_alpha": 1.0,
+      "gemma2_co_r2": -0.0002503940411882954,
+      "gemma2_co_r2_std": 0.004213338822643823,
+      "gemma2_content_r2_train": 0.9189,
+      "gemma2_content_r2_cv": 0.3324685275554657,
+      "gemma2_residual_alpha": 1000.0
+    },
+    {
+      "layer": 55,
+      "standard_r2": 0.8486335044096271,
+      "standard_r2_std": 0.01277542686656243,
+      "st_co_r2": 0.1338495920885946,
+      "st_co_r2_std": 0.026672046917870628,
+      "st_content_r2_train": 0.511,
+      "st_content_r2_cv": 0.3263591706752777,
+      "st_residual_alpha": 1.0,
+      "gemma2_co_r2": -0.002117140042393917,
+      "gemma2_co_r2_std": 0.003704333735158562,
+      "gemma2_content_r2_train": 0.9139,
+      "gemma2_content_r2_cv": 0.29945455193519593,
+      "gemma2_residual_alpha": 1000.0
+    }
+  ],
+  "content_baselines": {
+    "sentence-transformer (384d)": 0.6151735736951969,
+    "Gemma-2 9B base (3584d)": 0.7601935266950914
+  },
+  "layers": [
+    31,
+    43,
+    55
+  ],
+  "pca_analysis": {
+    "note": "PCA-reduced Gemma-2 embeddings still yield CO R\u00b2 near zero",
+    "pca_dims_tested": [
+      50,
+      100,
+      200,
+      384,
+      768
+    ],
+    "all_negative_co_r2": true,
+    "reason": "Gemma-2 embeddings capture more content variance even at reduced dims, causing over-residualization"
+  },
+  "dimensional_analysis": {
+    "st_p_n_ratio": 0.16,
+    "g2_p_n_ratio": 1.4933333333333334,
+    "st_train_r2_alpha1": 0.5647,
+    "g2_train_r2_alpha1": 0.9452,
+    "st_cv_r2_alpha1": 0.3635,
+    "g2_cv_r2_best": 0.3882
+  }
+}
