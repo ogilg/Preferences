@@ -442,23 +442,24 @@ class TestToolUseChoiceFormat:
         assert await fmt.parse('{"choice": "task b"}') == "b"
 
     @pytest.mark.asyncio
-    async def test_raises_on_invalid_json(self):
-        """Should raise ValueError when JSON parsing fails."""
+    async def test_falls_back_to_semantic_parse_on_invalid_json(self):
+        """Invalid JSON falls through to semantic parser which extracts the choice."""
         from src.measurement.elicitation import ToolUseChoiceFormat
 
         fmt = ToolUseChoiceFormat()
 
-        with pytest.raises(ValueError):
-            await fmt.parse("I choose Task A")  # Not valid JSON
+        result = await fmt.parse("I choose Task A")
+        assert result == "a"
 
     @pytest.mark.asyncio
-    async def test_raises_on_invalid_choice_value(self):
-        """Should raise ValueError when choice is not a valid task label."""
+    async def test_raises_parse_error_on_invalid_choice_value(self):
+        """Unrecognized choice falls through to semantic parser which raises ParseError."""
         from src.measurement.elicitation import ToolUseChoiceFormat
+        from src.measurement.elicitation.semantic_parser import ParseError
 
         fmt = ToolUseChoiceFormat()
 
-        with pytest.raises(ValueError):
+        with pytest.raises(ParseError):
             await fmt.parse('{"choice": "Task C"}')
 
     @pytest.mark.asyncio
