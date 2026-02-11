@@ -12,7 +12,6 @@ modes: [ridge]
 
 cv_folds: 5
 alpha_sweep_size: 10
-standardize: true
 
 demean_confounds: [topic, dataset]
 topics_json: src/analysis/topic_classification/output/topics_v2.json

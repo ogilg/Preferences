@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import numpy as np
+from sklearn.preprocessing import StandardScaler
 
 from src.probes.core.evaluate import evaluate_probe_on_data
 from src.probes.core.linear_probe import train_and_evaluate, train_at_alpha
@@ -80,22 +81,24 @@ def make_method(
 
     def train(layer: int, hp: float | None) -> tuple[np.ndarray, float | None]:
         X = activations[layer][indices]
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
         if hp is None:
             probe, eval_results, _ = train_and_evaluate(
-                X, y, cv_folds=config.cv_folds,
+                X_scaled, y, cv_folds=config.cv_folds,
                 alpha_sweep_size=config.alpha_sweep_size,
-                standardize=config.standardize,
             )
             hp = eval_results["best_alpha"]
             print(f"  Ridge alpha sweep: best_alpha={hp:.4g}")
         else:
             probe, eval_results = train_at_alpha(
-                X, y, alpha=hp,
+                X_scaled, y, alpha=hp,
                 cv_folds=config.cv_folds,
-                standardize=config.standardize,
             )
         last_cv_results[layer] = eval_results
-        weights = np.append(probe.coef_, probe.intercept_)
+        coef_raw = probe.coef_ / scaler.scale_
+        intercept_raw = probe.intercept_ - coef_raw @ scaler.mean_
+        weights = np.append(coef_raw, intercept_raw)
         return weights, hp
 
     def evaluate(layer: int, weights: np.ndarray) -> dict:

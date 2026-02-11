@@ -12,7 +12,6 @@ modes: [ridge, bradley_terry]
 
 cv_folds: 5
 alpha_sweep_size: 10
-standardize: true
 
 topics_json: src/analysis/topic_classification/output/topics_v2.json
 # demean_confounds: [topic]

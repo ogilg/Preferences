@@ -17,14 +17,13 @@ def run_shuffled_labels_baseline(
     cv_folds: int,
     seed: int,
     alpha_sweep_size: int = 10,
-    standardize: bool = False,
 ) -> BaselineResult:
     """Train probe on shuffled labels."""
     rng = np.random.default_rng(seed)
     y_shuffled = rng.permutation(y)
     _, result, _ = train_and_evaluate(
         X, y_shuffled, cv_folds=cv_folds,
-        alpha_sweep_size=alpha_sweep_size, standardize=standardize,
+        alpha_sweep_size=alpha_sweep_size,
     )
     return BaselineResult(
         baseline_type=BaselineType.SHUFFLED_LABELS,
@@ -48,7 +47,6 @@ def run_random_activations_baseline(
     cv_folds: int,
     seed: int,
     alpha_sweep_size: int = 10,
-    standardize: bool = False,
 ) -> BaselineResult:
     """Train probe on random activations with same mean/std."""
     mean = X.mean(axis=0)
@@ -58,7 +56,7 @@ def run_random_activations_baseline(
     X_noise = rng.normal(loc=mean, scale=std, size=X.shape)
     _, result, _ = train_and_evaluate(
         X_noise, y, cv_folds=cv_folds,
-        alpha_sweep_size=alpha_sweep_size, standardize=standardize,
+        alpha_sweep_size=alpha_sweep_size,
     )
     return BaselineResult(
         baseline_type=BaselineType.RANDOM_ACTIVATIONS,
