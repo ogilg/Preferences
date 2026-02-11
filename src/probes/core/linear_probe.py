@@ -25,7 +25,7 @@ def get_default_alphas(n_alphas: int = 5) -> np.ndarray:
     return np.logspace(0, 6, n_alphas)
 
 
-def _alpha_sweep(
+def alpha_sweep(
     activations: np.ndarray,
     labels: np.ndarray,
     alphas: np.ndarray,
@@ -78,7 +78,7 @@ def train_and_evaluate(
     if alphas is None:
         alphas = get_default_alphas(alpha_sweep_size)
 
-    sweep = _alpha_sweep(activations, labels, alphas, cv_folds, standardize=standardize)
+    sweep = alpha_sweep(activations, labels, alphas, cv_folds, standardize=standardize)
 
     # Pick best alpha from sweep
     best_entry = max(sweep, key=lambda s: s["val_r2_mean"])
