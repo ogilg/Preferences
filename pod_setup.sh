@@ -63,6 +63,7 @@ fi
 cat > ~/.bash_profile << 'PROFILE'
 export PATH="$HOME/.local/bin:$PATH"
 source ~/.venvs/preferences/bin/activate
+export MAX_THINKING_TOKENS=32000
 PROFILE
 
 if [ -n "$HF_TOKEN" ]; then
