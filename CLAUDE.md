@@ -6,7 +6,8 @@ MATS 9.0 project investigating AI model preferences and self-reported valence.
 
 ## Docs
 
-See `docs/` for research plan and experiment details. Including research logs.
+- `experiments/` — Self-contained experiment directories (spec, report, assets). See below.
+- `docs/logs/` — Running research log and weekly reports with their assets.
 
 ## Setup
 
@@ -40,10 +41,27 @@ uv pip install -e ".[dev]"
 
 - All plot file names should be like plot_{mmddYY}_precise_description.png
 - To convert markdown to PDF (use unique suffix to avoid overwrites): `cd <dir_with_md_file> && DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib pandoc file.md -o file_$(date +%Y%m%d_%H%M%S).pdf --pdf-engine=weasyprint --css=/Users/oscargilg/Dev/MATS/Preferences/docs/pandoc.css`
-- `scripts/` is for throwaway/temporary scripts only. Organize them in subdirectories by topic (e.g. `scripts/probes/`, `scripts/topics/`). Delete scripts after use — they should not accumulate. Core experiment scripts that do analysis or plotting should go in the experiments folder.
+- `scripts/` is for throwaway/temporary scripts only. Organize them in subdirectories by topic (e.g. `scripts/probes/`, `scripts/topics/`). Delete scripts after use — they should not accumulate.
 - Analysis plots that are generated from the analysis folder should go to the analysis folder. The results folder is mostly for measurements.
 - To convert PDF to DOCX with embedded images: `soffice --headless --infilter="writer_pdf_import" --convert-to docx:"MS Word 2007 XML" file.pdf`. If images are missing (referenced outside `logs/assets/`), copy them to `logs/assets/` and append with python-docx, then manually move into place.
-- Plots referenced in research logs (`docs/logs/`) must be saved to `docs/logs/assets/`. Never reference plots from other locations in log files.
+- Plots referenced in weekly reports or the research log (`docs/logs/`) must be saved to `docs/logs/assets/`. Plots from experiment reports go in `experiments/{name}/assets/`.
+
+## Experiments directory
+
+Each experiment is a self-contained directory under `experiments/`:
+
+```
+experiments/{name}/
+├── spec.md          # design doc / experiment brief
+├── report.md        # results write-up (created by research loop)
+├── assets/          # plots referenced from report.md (relative paths)
+└── {follow_up}/     # optional sub-experiments that build on this one
+    ├── spec.md
+    ├── report.md
+    └── assets/
+```
+
+This structure is designed for easy cherry-picking: `git checkout <branch> -- experiments/{name}/` grabs everything for an experiment (spec, report, plots) in one command. Research loops commit to feature branches; periodically cherry-pick the `experiments/` directory to main.
 
 ## Bash Operations
 

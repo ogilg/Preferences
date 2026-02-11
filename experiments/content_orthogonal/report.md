@@ -74,9 +74,9 @@ On held-out data, content predicts **~31-35%** of activation variance (not ~50% 
 | 43    | 0.422      | 0.196           | -0.226  | 46.4%      |
 | 55    | 0.406      | 0.178           | -0.227  | 44.0%      |
 
-![Probe decomposition](assets/content_orthogonal/plot_021026_probe_decomposition.png)
+![Probe decomposition](assets/plot_021026_probe_decomposition.png)
 
-![Variance decomposition](assets/content_orthogonal/plot_021026_variance_decomposition.png)
+![Variance decomposition](assets/plot_021026_variance_decomposition.png)
 
 ## Variance decomposition (raw scores, L31)
 

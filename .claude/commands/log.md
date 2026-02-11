@@ -1,6 +1,8 @@
-Log research results. Argument: $ARGUMENTS — optional `[category]` prefix, description, or both.
+Log research results to the main research log. Argument: $ARGUMENTS — optional `[category]` prefix, description, or both.
 
-Category determines the log file: `docs/logs/{category}.md` and assets go to `docs/logs/assets/{category}/`. If no category given, infer from context: current branch name, recent work, or natural language hints in the argument.
+**This is for the main research log only.** Experiment-specific results go in `experiments/{name}/report.md` — use the `/research_loop` command for those.
+
+Category determines the assets subdirectory: `docs/logs/assets/{category}/`. If no category given, infer from context: current branch name, recent work, or natural language hints in the argument.
 
 ## Process
 

@@ -49,7 +49,7 @@ Gemma-2 captures 76% of preference variance from content alone — 15pp more tha
 | 43    | 0.854    | 0.141     | 16.6%    | -0.000    | ~0%      |
 | 55    | 0.849    | 0.134     | 15.8%    | -0.002    | ~0%      |
 
-![Encoder comparison](assets/content_orthogonal_gemma2base/plot_021126_encoder_comparison.png)
+![Encoder comparison](assets/plot_021126_encoder_comparison.png)
 
 ## Iteration 2: Diagnosing the near-zero G2 result
 
@@ -63,7 +63,7 @@ The Gemma-2 content-orthogonal R² of ~0% is suspicious. Investigation reveals:
 | 43    | 0.521     | 0.342   | 0.179  | 0.919     | 0.332   | 0.587  |
 | 55    | 0.511     | 0.326   | 0.185  | 0.914     | 0.299   | 0.615  |
 
-![Content R² comparison](assets/content_orthogonal_gemma2base/plot_021126_content_r2_comparison.png)
+![Content R² comparison](assets/plot_021126_content_r2_comparison.png)
 
 The Gemma-2 Ridge (3584 features, 2400 samples, p/n=1.49) achieves train R²=0.94 at its CV-optimal α=1000 — it fits nearly all activation variance on the training set. The residualization uses these training predictions, so it removes ~94% of activation variance including most of the evaluative signal. CV R² is only 0.39, meaning the Ridge genuinely captures ~39% of activation variance; the other ~55% removed is noise-fitting.
 
