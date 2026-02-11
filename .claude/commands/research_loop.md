@@ -7,6 +7,7 @@ Solve this research problem autonomously: $ARGUMENTS
 - **Do not give up easily.** If something fails, debug it, try a different approach, read more code, re-examine assumptions. Iterate aggressively.
 - **Do not cut corners.** If the problem requires running experiments, run them. If it requires reading papers or code, read them.
 - **Pay attention to the instructions** They should define the research space. They should also provide fallback options and different things to try. Do not do something that the instructions tell you not to.
+- **Do not update the main research log** (`docs/logs/research_log.md`). Do not invoke the `/log` skill. The research loop has its own dedicated log file — that's the only place results go. The user will manually log to the main research log if they want to.
 
 ## Scripts workspace
 
