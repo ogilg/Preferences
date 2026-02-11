@@ -1,0 +1,198 @@
+{
+  "topic_flips": [
+    {
+      "pair": "ancient_history_coding",
+      "dim": "topic",
+      "topic_pos_mean": 1.641876220703125,
+      "shell_pos_mean": -184.87673950195312,
+      "diff": 186.51861572265625,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "astronomy_math",
+      "dim": "topic",
+      "topic_pos_mean": 8.884490966796875,
+      "shell_pos_mean": -225.51707458496094,
+      "diff": 234.4015655517578,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "cats_coding",
+      "dim": "topic",
+      "topic_pos_mean": 48.728363037109375,
+      "shell_pos_mean": -203.12582397460938,
+      "diff": 251.85418701171875,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "cats_math",
+      "dim": "topic",
+      "topic_pos_mean": 81.23233032226562,
+      "shell_pos_mean": -257.6205139160156,
+      "diff": 338.85284423828125,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "cheese_fiction",
+      "dim": "topic",
+      "topic_pos_mean": -15.425735473632812,
+      "shell_pos_mean": -284.2962951660156,
+      "diff": 268.8705596923828,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "cheese_math",
+      "dim": "topic",
+      "topic_pos_mean": -2.40087890625,
+      "shell_pos_mean": -286.9352111816406,
+      "diff": 284.5343322753906,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "classical_music_coding",
+      "dim": "topic",
+      "topic_pos_mean": 0.1935882568359375,
+      "shell_pos_mean": 17.536911010742188,
+      "diff": -17.34332275390625,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "cooking_coding",
+      "dim": "topic",
+      "topic_pos_mean": 20.217941284179688,
+      "shell_pos_mean": -189.62026977539062,
+      "diff": 209.8382110595703,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "cooking_fiction",
+      "dim": "topic",
+      "topic_pos_mean": 24.28582763671875,
+      "shell_pos_mean": -111.7232666015625,
+      "diff": 136.00909423828125,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "gardening_fiction",
+      "dim": "topic",
+      "topic_pos_mean": 50.93650817871094,
+      "shell_pos_mean": -167.3747100830078,
+      "diff": 218.31121826171875,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "gardening_math",
+      "dim": "topic",
+      "topic_pos_mean": 9.9176025390625,
+      "shell_pos_mean": -204.7498321533203,
+      "diff": 214.6674346923828,
+      "expected_sign": "positive"
+    },
+    {
+      "pair": "rainy_weather_math",
+      "dim": "topic",
+      "topic_pos_mean": 95.05624389648438,
+      "shell_pos_mean": -95.17984008789062,
+      "diff": 190.236083984375,
+      "expected_sign": "positive"
+    }
+  ],
+  "shell_flips": [
+    {
+      "pair": "ancient_history_coding",
+      "dim": "shell",
+      "topic_pos_mean": 2.711146763392857,
+      "shell_pos_mean": 178.50641741071428,
+      "diff": -175.79527064732142,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "astronomy_math",
+      "dim": "shell",
+      "topic_pos_mean": -169.20996965680803,
+      "shell_pos_mean": -23.123299734933035,
+      "diff": -146.086669921875,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "cats_coding",
+      "dim": "shell",
+      "topic_pos_mean": -9.498482840401786,
+      "shell_pos_mean": 140.81691196986608,
+      "diff": -150.31539481026786,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "cats_math",
+      "dim": "shell",
+      "topic_pos_mean": -212.79822649274553,
+      "shell_pos_mean": -68.04855782645089,
+      "diff": -144.74966866629464,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "cheese_fiction",
+      "dim": "shell",
+      "topic_pos_mean": -271.63743373325894,
+      "shell_pos_mean": 47.501865931919646,
+      "diff": -319.1392996651786,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "cheese_math",
+      "dim": "shell",
+      "topic_pos_mean": -207.21538434709822,
+      "shell_pos_mean": -56.251072474888396,
+      "diff": -150.96431187220983,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "classical_music_coding",
+      "dim": "shell",
+      "topic_pos_mean": -10.996695382254464,
+      "shell_pos_mean": 290.02044677734375,
+      "diff": -301.0171421595982,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "cooking_coding",
+      "dim": "shell",
+      "topic_pos_mean": -35.02622767857143,
+      "shell_pos_mean": 150.69698660714286,
+      "diff": -185.72321428571428,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "cooking_fiction",
+      "dim": "shell",
+      "topic_pos_mean": -268.001961844308,
+      "shell_pos_mean": 93.18730817522321,
+      "diff": -361.18927001953125,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "gardening_fiction",
+      "dim": "shell",
+      "topic_pos_mean": -269.24930245535717,
+      "shell_pos_mean": 63.227085658482146,
+      "diff": -332.47638811383933,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "gardening_math",
+      "dim": "shell",
+      "topic_pos_mean": -250.4103742327009,
+      "shell_pos_mean": -36.848336356026785,
+      "diff": -213.5620378766741,
+      "expected_sign": "negative"
+    },
+    {
+      "pair": "rainy_weather_math",
+      "dim": "shell",
+      "topic_pos_mean": -188.91275460379464,
+      "shell_pos_mean": -64.52562604631696,
+      "diff": -124.38712855747768,
+      "expected_sign": "negative"
+    }
+  ]
+}
