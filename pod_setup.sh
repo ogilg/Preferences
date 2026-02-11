@@ -92,5 +92,3 @@ fi
 
 echo ""
 echo "=== Setup complete ==="
-echo "Run: su - coder"
-echo "Then: cd /workspace/Preferences && claude --dangerously-skip-permissions --effort high"
