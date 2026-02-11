@@ -1,0 +1,131 @@
+{
+  "31": {
+    "best_alpha": 1.0,
+    "content_cv_r2": 0.3448,
+    "content_train_r2": 0.4702,
+    "standard_probe_r2": 0.8631143453585558,
+    "content_orth_probe_r2": 0.2373808179077715,
+    "content_orth_probe_r2_std": 0.03167637649768501,
+    "pct_retained": 27.5,
+    "alpha_sweep": [
+      {
+        "alpha": 0.001,
+        "cv_r2": 0.3002
+      },
+      {
+        "alpha": 0.01,
+        "cv_r2": 0.3024
+      },
+      {
+        "alpha": 0.1,
+        "cv_r2": 0.3165
+      },
+      {
+        "alpha": 1.0,
+        "cv_r2": 0.3448
+      },
+      {
+        "alpha": 10.0,
+        "cv_r2": 0.334
+      },
+      {
+        "alpha": 100.0,
+        "cv_r2": 0.1845
+      },
+      {
+        "alpha": 1000.0,
+        "cv_r2": 0.0343
+      },
+      {
+        "alpha": 10000.0,
+        "cv_r2": 0.0023
+      }
+    ]
+  },
+  "43": {
+    "best_alpha": 1.0,
+    "content_cv_r2": 0.3262,
+    "content_train_r2": 0.4547,
+    "standard_probe_r2": 0.8401675786463277,
+    "content_orth_probe_r2": 0.2087356126597207,
+    "content_orth_probe_r2_std": 0.034504057010263454,
+    "pct_retained": 24.8,
+    "alpha_sweep": [
+      {
+        "alpha": 0.001,
+        "cv_r2": 0.2797
+      },
+      {
+        "alpha": 0.01,
+        "cv_r2": 0.282
+      },
+      {
+        "alpha": 0.1,
+        "cv_r2": 0.2965
+      },
+      {
+        "alpha": 1.0,
+        "cv_r2": 0.3262
+      },
+      {
+        "alpha": 10.0,
+        "cv_r2": 0.3178
+      },
+      {
+        "alpha": 100.0,
+        "cv_r2": 0.1755
+      },
+      {
+        "alpha": 1000.0,
+        "cv_r2": 0.0326
+      },
+      {
+        "alpha": 10000.0,
+        "cv_r2": 0.0021
+      }
+    ]
+  },
+  "55": {
+    "best_alpha": 1.0,
+    "content_cv_r2": 0.3104,
+    "content_train_r2": 0.4411,
+    "standard_probe_r2": 0.8346565311408103,
+    "content_orth_probe_r2": 0.1983802902025324,
+    "content_orth_probe_r2_std": 0.02988672721893761,
+    "pct_retained": 23.8,
+    "alpha_sweep": [
+      {
+        "alpha": 0.001,
+        "cv_r2": 0.2616
+      },
+      {
+        "alpha": 0.01,
+        "cv_r2": 0.2639
+      },
+      {
+        "alpha": 0.1,
+        "cv_r2": 0.2788
+      },
+      {
+        "alpha": 1.0,
+        "cv_r2": 0.3104
+      },
+      {
+        "alpha": 10.0,
+        "cv_r2": 0.3061
+      },
+      {
+        "alpha": 100.0,
+        "cv_r2": 0.1713
+      },
+      {
+        "alpha": 1000.0,
+        "cv_r2": 0.0321
+      },
+      {
+        "alpha": 10000.0,
+        "cv_r2": 0.002
+      }
+    ]
+  }
+}
