@@ -39,7 +39,7 @@ Create at `docs/logs/research_loop_{name_of_research_problem}.md`. Update this a
 The log should be **scannable** — someone should grasp the full arc in 30 seconds. Aim for:
 
 - **Headlines over prose.** Keep iterations short — a few lines describing approach and result.
-- **Tables over text** for numeric comparisons.
+- **Tables over text** for numeric comparisons. But tables must be self-explanatory: use clear column names (not abbreviations), and add a brief note below explaining any non-obvious metric. A reader shouldn't need to read the code to understand a table.
 - **Include plots** at key checkpoints. Copy to `docs/logs/assets/` per standard conventions.
 - **Dead ends are brief** — one or two lines each.
 - **Include enough detail to reproduce** — key parameters, prompt texts, exact configurations. But keep the presentation concise.

@@ -358,11 +358,11 @@ def main():
 
     # Summary
     print("\n=== Summary ===")
-    print(f"{'Prompt ID':<40} {'Task ID':<35} {'Set':<8} {'Shell':<15} {'Dir':<5} {'Delta':<+8}")
+    print(f"{'Prompt ID':<40} {'Task ID':<35} {'Set':<8} {'Shell':<15} {'Dir':<5} {'Delta':>8}")
     print("-" * 115)
     for r in all_results:
         print(f"{r.prompt_id:<40} {r.target_task_id:<35} {r.task_set:<8} "
-              f"{r.category_shell:<15} {r.direction:<5} {r.delta:<+8.3f}")
+              f"{r.category_shell:<15} {r.direction:<5} {r.delta:>+8.3f}")
 
 
 if __name__ == "__main__":
