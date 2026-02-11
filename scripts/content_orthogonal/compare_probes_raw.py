@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 
 from src.probes.content_embedding import load_content_embeddings
-from src.probes.content_orthogonal import residualize_activations
+from src.probes.content_orthogonal import project_out_content
 from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.data_loading import load_thurstonian_scores
@@ -89,7 +89,7 @@ def main() -> None:
 
         # Content-orthogonal probe
         print("  Content-orthogonal probe...")
-        aligned_ids, residual_act, content_stats = residualize_activations(
+        aligned_ids, residual_act, content_stats = project_out_content(
             act, task_ids, content_emb, content_task_ids, alpha=1.0,
         )
         print(f"    Content R² of activations={content_stats['content_r2']:.4f}")

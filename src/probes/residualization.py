@@ -1,4 +1,13 @@
-"""Residualize preference scores against metadata confounds."""
+"""Demean preference scores against categorical confounds (topic, dataset).
+
+Fits OLS on one-hot encoded group indicators and subtracts predictions,
+removing group-level mean differences from scores. This controls for the
+fact that e.g. math tasks may have systematically different preference
+scores than creative writing tasks.
+
+This is distinct from content projection (see content_orthogonal.py), which
+removes continuous content-predictable variance from activations via Ridge.
+"""
 
 from __future__ import annotations
 
@@ -172,7 +181,7 @@ def build_task_groups(
 VALID_CONFOUNDS = {"topic", "dataset"}
 
 
-def residualize_scores(
+def demean_scores(
     scores: dict[str, float],
     topics_json: Path,
     confounds: list[str],
@@ -192,7 +201,7 @@ def residualize_scores(
     n_with_metadata = len(task_ids)
     n_dropped = len(scores) - n_with_metadata
     if n_dropped > 0:
-        print(f"  Residualization: dropped {n_dropped}/{len(scores)} tasks missing metadata")
+        print(f"  Demeaning: dropped {n_dropped}/{len(scores)} tasks missing metadata")
 
     columns = []
     feature_names = []
@@ -220,7 +229,7 @@ def residualize_scores(
         "metadata_r2": round(metadata_r2, 4),
         "metadata_features": feature_names,
         "n_metadata_features": len(feature_names),
-        "n_tasks_residualized": n_with_metadata,
+        "n_tasks_demeaned": n_with_metadata,
         "n_tasks_dropped": n_dropped,
         "topics_used": sorted(set(tp_labels)),
     }

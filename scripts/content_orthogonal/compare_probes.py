@@ -14,12 +14,12 @@ from pathlib import Path
 import numpy as np
 
 from src.probes.content_embedding import load_content_embeddings
-from src.probes.content_orthogonal import residualize_activations
+from src.probes.content_orthogonal import project_out_content
 from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.data_loading import load_thurstonian_scores
 from src.probes.experiments.hoo_ridge import build_ridge_xy
-from src.probes.residualization import residualize_scores
+from src.probes.residualization import demean_scores
 
 RUN_DIR = Path("results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0")
 ACTIVATIONS_PATH = Path("activations/gemma_3_27b/activations_prompt_last.npz")
@@ -45,7 +45,7 @@ def main() -> None:
     # Load data
     print("Loading scores...")
     raw_scores = load_thurstonian_scores(RUN_DIR)
-    scores, resid_stats = residualize_scores(raw_scores, TOPICS_JSON, confounds=["topic"])
+    scores, resid_stats = demean_scores(raw_scores, TOPICS_JSON, confounds=["topic"])
     print(f"  {len(scores)} tasks, topic R²={resid_stats['metadata_r2']:.4f}")
 
     print("Loading content embeddings...")
@@ -73,7 +73,7 @@ def main() -> None:
 
         # Content-orthogonal probe
         print("  Content-orthogonal probe...")
-        aligned_ids, residual_act, content_stats = residualize_activations(
+        aligned_ids, residual_act, content_stats = project_out_content(
             act, task_ids, content_emb, content_task_ids, alpha=1.0,
         )
         print(f"    Content R²={content_stats['content_r2']:.4f}")

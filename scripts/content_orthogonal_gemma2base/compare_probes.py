@@ -19,7 +19,7 @@ from sklearn.linear_model import Ridge
 from sklearn.model_selection import cross_val_score
 
 from src.probes.content_embedding import load_content_embeddings
-from src.probes.content_orthogonal import residualize_activations
+from src.probes.content_orthogonal import project_out_content
 from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.data_loading import load_thurstonian_scores
@@ -99,7 +99,7 @@ def run_content_orthogonal(
 
     print(f"    Best alpha for {label}: {best_alpha} (content→act cv_R²={best_cv_r2:.4f})")
 
-    aligned_ids, residual_act, content_stats = residualize_activations(
+    aligned_ids, residual_act, content_stats = project_out_content(
         act, task_ids, content_emb, content_task_ids, alpha=best_alpha,
     )
     co_results = train_ridge(aligned_ids, residual_act, scores)

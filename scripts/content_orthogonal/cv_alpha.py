@@ -14,7 +14,7 @@ from sklearn.linear_model import Ridge
 from sklearn.model_selection import KFold
 
 from src.probes.content_embedding import load_content_embeddings
-from src.probes.content_orthogonal import _align_by_task_id, residualize_activations
+from src.probes.content_orthogonal import _align_by_task_id, project_out_content
 from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.data_loading import load_thurstonian_scores
@@ -108,7 +108,7 @@ def main() -> None:
         print(f"\n  Standard probe: cv_R²={std_results['cv_r2_mean']:.4f}")
 
         # Content-orthogonal probe at best alpha
-        aligned_ids, residual_act, content_stats = residualize_activations(
+        aligned_ids, residual_act, content_stats = project_out_content(
             act, task_ids, content_emb, content_task_ids, alpha=best_alpha,
         )
         co_results = train_probe(aligned_ids, residual_act, scores)

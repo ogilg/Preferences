@@ -1,4 +1,12 @@
-"""Residualize activations and scores against content embeddings."""
+"""Project out content-predictable variance from activations and scores.
+
+Fits a Ridge regression from content embeddings to activations (or scores),
+then subtracts the predictions. The residuals contain only variance that the
+content encoder cannot explain — i.e. the "content-orthogonal" signal.
+
+This is distinct from demeaning (see residualization.py), which removes
+categorical group means (e.g. topic, dataset) from scores via OLS.
+"""
 
 from __future__ import annotations
 
@@ -21,7 +29,7 @@ def _align_by_task_id(
     return np.array(a_indices), np.array(b_indices)
 
 
-def residualize_activations(
+def project_out_content(
     activations: np.ndarray,
     task_ids: np.ndarray,
     content_embeddings: np.ndarray,
@@ -62,7 +70,7 @@ def residualize_activations(
     return aligned_task_ids, residuals, stats
 
 
-def residualize_scores_continuous(
+def project_out_content_from_scores(
     scores: dict[str, float],
     content_embeddings: np.ndarray,
     content_task_ids: np.ndarray,
