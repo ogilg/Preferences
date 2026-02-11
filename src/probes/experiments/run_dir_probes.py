@@ -23,8 +23,6 @@ import numpy as np
 import yaml
 
 from src.analysis.probe.plot_hoo import plot_hoo_summary
-from src.probes.content_embedding import load_content_embeddings
-from src.probes.content_orthogonal import residualize_activations
 from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.core.storage import save_probe, save_manifest
@@ -33,7 +31,7 @@ from src.probes.bradley_terry.training import train_bt
 from src.probes.data_loading import load_thurstonian_scores, load_pairwise_measurements
 from src.probes.experiments import hoo_ridge, hoo_bt
 from src.probes.experiments.hoo_ridge import build_ridge_xy
-from src.probes.residualization import build_task_groups, residualize_scores
+from src.probes.residualization import build_task_groups, demean_scores
 
 
 class ProbeMode(Enum):
@@ -52,12 +50,9 @@ class RunDirProbeConfig:
     cv_folds: int = 5
     alpha_sweep_size: int = 50
     standardize: bool = False
-    residualize_confounds: list[str] | None = None
+    demean_confounds: list[str] | None = None
     topics_json: Path | None = None
     n_jobs: int = 1  # parallel workers for lambda sweep (1=sequential, -1=all cores)
-    # Content-orthogonal settings
-    content_embedding_path: Path | None = None
-    content_ridge_alpha: float = 1.0
     # HOO settings — if hoo_grouping is set, runs HOO instead of standard training
     hoo_grouping: str | None = None  # "topic" | "dataset"
     hoo_hold_out_size: int = 1
@@ -71,13 +66,10 @@ class RunDirProbeConfig:
         modes = [ProbeMode(m) for m in data.get("modes", ["ridge", "bradley_terry"])]
         topics_json = Path(data["topics_json"]) if "topics_json" in data else None
 
-        content_embedding_path = Path(data["content_embedding_path"]) if "content_embedding_path" in data else None
-
         optional = {}
         for key in (
-            "cv_folds", "alpha_sweep_size", "standardize", "residualize_confounds",
-            "n_jobs", "content_ridge_alpha",
-            "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
+            "cv_folds", "alpha_sweep_size", "standardize", "demean_confounds",
+            "n_jobs", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
         ):
             if key in data:
                 optional[key] = data[key]
@@ -90,7 +82,6 @@ class RunDirProbeConfig:
             layers=data["layers"],
             modes=modes,
             topics_json=topics_json,
-            content_embedding_path=content_embedding_path,
             **optional,
         )
 
@@ -122,6 +113,7 @@ def _train_ridge_probe(
         "file": relative_path,
         "method": "ridge",
         "layer": layer,
+        "demean_confounds": config.demean_confounds,
         "cv_r2_mean": eval_results["cv_r2_mean"],
         "cv_r2_std": eval_results["cv_r2_std"],
         "cv_mse_mean": eval_results["cv_mse_mean"],
@@ -189,17 +181,17 @@ def run_probes(config: RunDirProbeConfig) -> dict:
     if measurements:
         print(f"  Loaded {len(measurements)} pairwise comparisons")
 
-    # Optionally residualize scores against metadata confounds
+    # Optionally demean scores against metadata confounds
     metadata_stats = None
-    if config.residualize_confounds and scores:
-        assert config.topics_json is not None, "topics_json required for residualization"
-        print(f"\nResidualizing scores against: {config.residualize_confounds}")
-        scores, metadata_stats = residualize_scores(
-            scores, config.topics_json, confounds=config.residualize_confounds,
+    if config.demean_confounds and scores:
+        assert config.topics_json is not None, "topics_json required for demeaning"
+        print(f"\nDemeaning scores against: {config.demean_confounds}")
+        scores, metadata_stats = demean_scores(
+            scores, config.topics_json, confounds=config.demean_confounds,
         )
         print(f"  Metadata R²={metadata_stats['metadata_r2']:.4f} "
               f"({metadata_stats['n_metadata_features']} features)")
-        print(f"  {metadata_stats['n_tasks_residualized']} tasks retained")
+        print(f"  {metadata_stats['n_tasks_demeaned']} tasks retained")
 
     task_id_filter = set(scores.keys()) if scores else None
 
@@ -222,27 +214,13 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         "n_tasks_in_experiment": len(scores),
         "n_tasks_with_activations": n_tasks,
         "n_comparisons_in_experiment": len(measurements),
-        "residualize_confounds": config.residualize_confounds,
         "probes": [],
     }
     if metadata_stats is not None:
         manifest["metadata_r2"] = metadata_stats["metadata_r2"]
         manifest["metadata_features"] = metadata_stats["metadata_features"]
-        manifest["n_tasks_residualized"] = metadata_stats["n_tasks_residualized"]
+        manifest["n_tasks_demeaned"] = metadata_stats["n_tasks_demeaned"]
         manifest["n_tasks_dropped"] = metadata_stats["n_tasks_dropped"]
-
-    # Load content embeddings if configured
-    content_task_ids = None
-    content_emb = None
-    if config.content_embedding_path is not None:
-        print(f"\nLoading content embeddings from {config.content_embedding_path}")
-        content_task_ids, content_emb = load_content_embeddings(
-            config.content_embedding_path, task_id_filter=task_id_filter,
-        )
-        print(f"  {len(content_task_ids)} embeddings ({content_emb.shape[1]}d)")
-        manifest["content_embedding_path"] = str(config.content_embedding_path)
-        manifest["content_ridge_alpha"] = config.content_ridge_alpha
-        manifest["content_r2_per_layer"] = {}
 
     # Process one layer at a time
     for layer in config.layers:
@@ -252,16 +230,6 @@ def run_probes(config: RunDirProbeConfig) -> dict:
             task_id_filter=task_id_filter,
             layers=[layer],
         )
-
-        # Residualize activations against content embeddings
-        if content_emb is not None:
-            task_ids, activations[layer], resid_stats = residualize_activations(
-                activations[layer], task_ids, content_emb, content_task_ids,
-                alpha=config.content_ridge_alpha,
-            )
-            manifest["content_r2_per_layer"][str(layer)] = resid_stats["content_r2"]
-            print(f"  Content R²={resid_stats['content_r2']:.4f} "
-                  f"({resid_stats['n_tasks']} tasks, alpha={resid_stats['alpha']})")
 
         if run_ridge:
             print(f"  Training Ridge probe...")
@@ -441,7 +409,6 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
         "group_sizes": group_sizes,
         "n_folds": len(all_fold_results),
         "layers": config.layers,
-        "residualize_confounds": config.residualize_confounds,
         "folds": all_fold_results,
     }
 

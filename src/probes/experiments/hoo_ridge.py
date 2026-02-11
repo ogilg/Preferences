@@ -7,7 +7,7 @@ import numpy as np
 from src.probes.core.evaluate import evaluate_probe_on_data
 from src.probes.core.linear_probe import train_and_evaluate, train_at_alpha
 from src.probes.experiments.hoo_method import HooMethod
-from src.probes.residualization import residualize_scores
+from src.probes.residualization import demean_scores
 
 if TYPE_CHECKING:
     from src.probes.experiments.run_dir_probes import RunDirProbeConfig
@@ -64,12 +64,12 @@ def make_method(
     print(f"Fold {fold_idx}: hold out [{eval_label}] "
           f"(train={len(train_scores)}, eval={len(eval_scores)})")
 
-    if config.residualize_confounds:
+    if config.demean_confounds:
         assert config.topics_json is not None
-        train_scores, res_stats = residualize_scores(
-            train_scores, config.topics_json, confounds=config.residualize_confounds,
+        train_scores, res_stats = demean_scores(
+            train_scores, config.topics_json, confounds=config.demean_confounds,
         )
-        print(f"  Residualized train (R²={res_stats['metadata_r2']:.4f})")
+        print(f"  Demeaned train (R²={res_stats['metadata_r2']:.4f})")
 
     indices, y = build_ridge_xy(task_ids, train_scores)
     eval_task_ids_list = list(eval_scores.keys())
@@ -123,6 +123,7 @@ def make_method(
             "hoo_n_samples": eval_result["n_samples"],
             "n_train": len(train_scores),
             "n_eval": len(eval_scores),
+            "demean_confounds": config.demean_confounds,
         }
 
     return HooMethod(name="ridge", train=train, evaluate=evaluate, best_hp=best_hp)

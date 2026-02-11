@@ -13,6 +13,16 @@ from src.probes.core.activations import load_activations
 from src.measurement.storage.loading import load_pooled_scores, load_run_utilities
 
 
+def score_with_probe(probe_weights: np.ndarray, activations: np.ndarray) -> np.ndarray:
+    """Apply probe to activations, returning predicted scores.
+
+    Args:
+        probe_weights: [coef_0, ..., coef_n, intercept]
+        activations: (n_samples, n_features)
+    """
+    return activations @ probe_weights[:-1] + probe_weights[-1]
+
+
 def evaluate_probe_on_data(
     probe_weights: np.ndarray,
     activations: np.ndarray,
@@ -32,9 +42,6 @@ def evaluate_probe_on_data(
     Returns:
         dict with r2, mse, pearson_r, n_samples, predictions, and mean-adjusted metrics
     """
-    coef = probe_weights[:-1]
-    intercept = probe_weights[-1]
-
     # Match activations to scores by task ID
     id_to_idx_data = {tid: i for i, tid in enumerate(task_ids_data)}
     valid_indices = []
@@ -59,8 +66,7 @@ def evaluate_probe_on_data(
     y = np.array(valid_scores)
     X_eval = activations[indices]
 
-    # Predict
-    y_pred = X_eval @ coef + intercept
+    y_pred = score_with_probe(probe_weights, X_eval)
 
     # Compute standard metrics
     r2 = r2_score(y, y_pred)
@@ -119,8 +125,6 @@ def evaluate_probe_on_template(
 
     # Load probe
     probe_weights = load_probe(manifest_dir, probe_id)
-    coef = probe_weights[:-1]
-    intercept = probe_weights[-1]
 
     # Load activations
     task_ids, activations = load_activations(activations_dir)
@@ -161,8 +165,7 @@ def evaluate_probe_on_template(
     y = np.array(valid_scores)
     X_eval = X[indices]
 
-    # Predict
-    y_pred = X_eval @ coef + intercept
+    y_pred = score_with_probe(probe_weights, X_eval)
 
     # Compute metrics
     r2 = r2_score(y, y_pred)

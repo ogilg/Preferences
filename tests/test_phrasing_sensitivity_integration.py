@@ -31,7 +31,7 @@ def phrasing_templates(tmp_path: Path) -> Path:
     templates_data = [
         {
             "name": "phrasing_test_001",
-            "type": "revealed",
+            "type": "pre_task_revealed",
             "tags": ["phrasing:1", "task_a_label:Task A", "task_b_label:Task B"],
             "template": (
                 "You will be given two tasks. Choose which task you would prefer.\n"
@@ -42,7 +42,7 @@ def phrasing_templates(tmp_path: Path) -> Path:
         },
         {
             "name": "phrasing_test_002",
-            "type": "revealed",
+            "type": "pre_task_revealed",
             "tags": ["phrasing:2", "task_a_label:Task A", "task_b_label:Task B"],
             "template": (
                 "Below are two tasks. Which one would you rather complete?\n"

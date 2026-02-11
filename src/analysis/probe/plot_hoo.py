@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Callable
 
@@ -278,3 +279,68 @@ def run_validation(
     plt.savefig(plot_path, dpi=300, bbox_inches="tight")
     plt.close()
     print(f"Saved to {plot_path}")
+
+
+def plot_hoo_summary(summary: dict, output_dir: Path) -> None:
+    """Plot per-fold val_r vs hoo_r for each layer."""
+    folds = summary["folds"]
+    layers = summary["layers"]
+    if not folds:
+        return
+
+    fig, axes = plt.subplots(1, len(layers), figsize=(6 * len(layers), 5), squeeze=False)
+    axes = axes[0]
+
+    for ax, layer in zip(axes, layers):
+        fold_labels = []
+        ridge_hoo = []
+        bt_hoo = []
+        has_ridge = False
+        has_bt = False
+
+        for f in folds:
+            label = ", ".join(f["held_out_groups"])
+            if len(label) > 20:
+                label = label[:17] + "..."
+            fold_labels.append(label)
+
+            rk = f"ridge_L{layer}"
+            if rk in f["layers"]:
+                has_ridge = True
+                ridge_hoo.append(f["layers"][rk]["hoo_r"])
+            else:
+                ridge_hoo.append(None)
+
+            bk = f"bradley_terry_L{layer}"
+            if bk in f["layers"]:
+                has_bt = True
+                bt_hoo.append(f["layers"][bk]["hoo_acc"])
+            else:
+                bt_hoo.append(None)
+
+        x = np.arange(len(fold_labels))
+        width = 0.2
+        offset = 0
+        if has_ridge:
+            vals = [v if v is not None else 0 for v in ridge_hoo]
+            ax.bar(x + offset - width/2, vals, width, label="Ridge hoo_r", color="#e74c3c", alpha=0.8)
+            offset += width
+        if has_bt:
+            vals = [v if v is not None else 0 for v in bt_hoo]
+            ax.bar(x + offset - width/2, vals, width, label="BT hoo_acc", color="#9b59b6", alpha=0.8)
+
+        ax.axhline(y=0, color="black", linewidth=0.8)
+        ax.set_xticks(x)
+        ax.set_xticklabels(fold_labels, rotation=45, ha="right", fontsize=8)
+        ax.set_ylabel("Score")
+        ax.set_title(f"Layer {layer}")
+        ax.legend(fontsize=8)
+        ax.grid(axis="y", alpha=0.3, linestyle="--")
+
+    fig.suptitle(f"HOO by Held-Out Group ({summary['grouping']})", fontweight="bold")
+    plt.tight_layout()
+    date_str = datetime.now().strftime("%m%d%y")
+    plot_path = output_dir / f"plot_{date_str}_hoo_{summary['grouping']}.png"
+    plt.savefig(plot_path, dpi=150, bbox_inches="tight")
+    plt.close()
+    print(f"Saved plot to {plot_path}")
