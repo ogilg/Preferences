@@ -16,7 +16,7 @@ from src.probes.content_embedding import load_content_embeddings
 from src.probes.content_orthogonal import _align_by_task_id
 from src.probes.core.activations import load_activations
 from src.probes.data_loading import load_thurstonian_scores
-from src.probes.residualization import residualize_scores
+from src.probes.residualization import demean_scores
 
 RUN_DIR = Path("results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0")
 ACTIVATIONS_PATH = Path("activations/gemma_3_27b/activations_prompt_last.npz")
@@ -140,7 +140,7 @@ def main() -> None:
     # Load scores (topic-residualized, matching the standard probe setup)
     print("Loading Thurstonian scores...")
     raw_scores = load_thurstonian_scores(RUN_DIR)
-    scores, resid_stats = residualize_scores(raw_scores, TOPICS_JSON, confounds=["topic"])
+    scores, resid_stats = demean_scores(raw_scores, TOPICS_JSON, confounds=["topic"])
     print(f"  {len(scores)} tasks, topic R²={resid_stats['metadata_r2']:.4f}")
 
     # Load content embeddings
