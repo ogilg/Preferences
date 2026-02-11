@@ -16,7 +16,8 @@
       "Bash(xargs:*)",
       "Bash(security dump-keychain:*)",
       "Bash(security find-generic-password:*)",
-      "Skill(runpod)"
+      "Skill(runpod)",
+      "Bash(python:*)"
     ]
   }
 }
