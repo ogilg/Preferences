@@ -14,8 +14,9 @@ useradd -m -s /bin/bash coder
 echo "coder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/coder
 chown -R coder:coder /workspace
 
-# Everything below runs as coder
-su - coder << SETUP
+# Write coder setup script (avoids heredoc variable expansion issues)
+cat > /tmp/coder_setup.sh << 'CODER_SCRIPT'
+#!/bin/bash
 
 # Clone repo
 if [ ! -d "/workspace/Preferences" ]; then
@@ -24,8 +25,8 @@ fi
 
 # Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
-echo 'export PATH="\$HOME/.local/bin:\$PATH"' >> ~/.bashrc
-export PATH="\$HOME/.local/bin:\$PATH"
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+export PATH="$HOME/.local/bin:$PATH"
 
 # Python environment
 pip install uv
@@ -41,7 +42,7 @@ uv pip install -e ".[viz]"
 git config --global user.name "Oscar Gilg"
 git config --global user.email "oscar.gilg18@gmail.com"
 
-# Auth
+# Auth (tokens passed via environment)
 if [ -n "$HF_TOKEN" ]; then
     huggingface-cli login --token $HF_TOKEN
     echo "Logged into Hugging Face."
@@ -51,8 +52,21 @@ if [ -n "$GH_TOKEN" ]; then
     echo $GH_TOKEN | gh auth login --with-token
     echo "Logged into GitHub."
 fi
+CODER_SCRIPT
 
-SETUP
+chmod +x /tmp/coder_setup.sh
+
+# Run as coder, forwarding tokens
+su - coder -c "HF_TOKEN=$HF_TOKEN GH_TOKEN=$GH_TOKEN bash /tmp/coder_setup.sh"
+
+# Claude Code auth: copy credentials from root to coder if present
+if [ -f /root/.claude/.credentials.json ]; then
+    mkdir -p /home/coder/.claude
+    cp /root/.claude/.credentials.json /home/coder/.claude/.credentials.json
+    chown -R coder:coder /home/coder/.claude
+    chmod 600 /home/coder/.claude/.credentials.json
+    echo "Claude Code credentials copied to coder user."
+fi
 
 echo ""
 echo "=== Setup complete ==="

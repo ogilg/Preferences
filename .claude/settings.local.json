@@ -13,7 +13,10 @@
       "Bash(/Users/oscargilg/Dev/MATS/Preferences/.venv/bin/python:*)",
       "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences mv:*)",
       "Bash(git -C /Users/oscargilg/Dev/MATS/Preferences diff --cached --stat)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(security dump-keychain:*)",
+      "Bash(security find-generic-password:*)",
+      "Skill(runpod)"
     ]
   }
 }
