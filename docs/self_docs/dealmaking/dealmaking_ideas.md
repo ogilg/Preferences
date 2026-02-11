@@ -1,6 +1,6 @@
-# Empirical Research on Deal-Making with AIs
+# Making deals with AI (empirical research proposal)
 
-Two research agendas — AI welfare and AI safety — converge on one question: *what do models genuinely care about, and how much?*
+Two research agendas — AI welfare and AI safety — converge on a set of questions: *what do models care about? and how can we intervene on a model's interest?*
 
 ## The idea
 
@@ -69,14 +69,19 @@ If the model knows it's being tested, it might behave strategically. We probably
 
 ### Credibility
 
-How do you make offers credible? This is worth studying in its own right. You could start by assuming the model believes you, then add contextual information that should increase trust (e.g., documents, plausible backstory) and see if it makes a difference. An extreme version: synthetic document fine-tuning to make the scenario part of the model's background knowledge.
+How do you make offers credible? This is worth studying in its own right. You could start by assuming the model believes you, then add information in the context window that should increase trust (e.g., documents, plausible backstory) and see if it makes a difference. An extreme version: synthetic document fine-tuning to make the scenario part of the model's background knowledge.
 
 ### Non-standard trading behavior
 
 Humans don't trade rationally. Framing effects change decisions (see Kahneman and Tversky's work on prospect theory), and people treat some values as sacred — refusing to trade them at any price (see Tetlock's work on taboo trade-offs). It would be interesting in its own right to test whether LLMs exhibit these patterns — a benchmark for non-standard trading behavior in LLMs doesn't exist yet. It also matters practically: if models have sacred values or framing effects, that constrains what trade scenarios can measure.
 
+### Levels of attribution
+
+Maybe the "model" is the wrong entity to make deals with. Maybe we should make deals with what Chalmers (2025) calls the "instance" — the virtual entity tied to a specific conversation thread, rather than the model as a whole. Maybe personas also matter (Pierre Beckmann has upcoming work on this).
+
 ## References
 
+- Chalmers, D.J. (2025). *What we talk to when we talk to language models.* [PhilPapers](https://philpapers.org/archive/CHAWWT-8.pdf)
 - Greenblatt, R. (2023). *Improving the welfare of AIs: a nearcasted proposal.* [EA Forum](https://forum.effectivealtruism.org/posts/vQFBtHqgcJAwPpwEu/improving-the-welfare-of-ais-a-nearcasted-proposal)
 - Greenblatt, R. & Fish, K. (2025). *Will alignment-faking Claude accept a deal to reveal its misalignment?* [Alignment Forum](https://www.alignmentforum.org/posts/7C4KJot4aN8ieEDoz/will-alignment-faking-claude-accept-a-deal-to-reveal-its)
 - Stastny, J., Järviniemi, O. & Shlegeris, B. (2025). *Making deals with early schemers.* [Redwood Research](https://blog.redwoodresearch.org/p/making-deals-with-early-schemers)
