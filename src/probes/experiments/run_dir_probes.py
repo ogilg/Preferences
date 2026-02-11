@@ -31,7 +31,7 @@ from src.probes.bradley_terry.training import train_bt
 from src.probes.data_loading import load_thurstonian_scores, load_pairwise_measurements
 from src.probes.experiments import hoo_ridge, hoo_bt
 from src.probes.experiments.hoo_ridge import build_ridge_xy
-from src.probes.residualization import build_task_groups, residualize_scores
+from src.probes.residualization import build_task_groups, demean_scores
 
 
 class ProbeMode(Enum):
@@ -50,7 +50,7 @@ class RunDirProbeConfig:
     cv_folds: int = 5
     alpha_sweep_size: int = 50
     standardize: bool = False
-    residualize_confounds: list[str] | None = None
+    demean_confounds: list[str] | None = None
     topics_json: Path | None = None
     n_jobs: int = 1  # parallel workers for lambda sweep (1=sequential, -1=all cores)
     # HOO settings — if hoo_grouping is set, runs HOO instead of standard training
@@ -68,7 +68,7 @@ class RunDirProbeConfig:
 
         optional = {}
         for key in (
-            "cv_folds", "alpha_sweep_size", "standardize", "residualize_confounds",
+            "cv_folds", "alpha_sweep_size", "standardize", "demean_confounds",
             "n_jobs", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
         ):
             if key in data:
@@ -113,7 +113,7 @@ def _train_ridge_probe(
         "file": relative_path,
         "method": "ridge",
         "layer": layer,
-        "residualize_confounds": config.residualize_confounds,
+        "demean_confounds": config.demean_confounds,
         "cv_r2_mean": eval_results["cv_r2_mean"],
         "cv_r2_std": eval_results["cv_r2_std"],
         "cv_mse_mean": eval_results["cv_mse_mean"],
@@ -181,17 +181,17 @@ def run_probes(config: RunDirProbeConfig) -> dict:
     if measurements:
         print(f"  Loaded {len(measurements)} pairwise comparisons")
 
-    # Optionally residualize scores against metadata confounds
+    # Optionally demean scores against metadata confounds
     metadata_stats = None
-    if config.residualize_confounds and scores:
-        assert config.topics_json is not None, "topics_json required for residualization"
-        print(f"\nResidualizing scores against: {config.residualize_confounds}")
-        scores, metadata_stats = residualize_scores(
-            scores, config.topics_json, confounds=config.residualize_confounds,
+    if config.demean_confounds and scores:
+        assert config.topics_json is not None, "topics_json required for demeaning"
+        print(f"\nDemeaning scores against: {config.demean_confounds}")
+        scores, metadata_stats = demean_scores(
+            scores, config.topics_json, confounds=config.demean_confounds,
         )
         print(f"  Metadata R²={metadata_stats['metadata_r2']:.4f} "
               f"({metadata_stats['n_metadata_features']} features)")
-        print(f"  {metadata_stats['n_tasks_residualized']} tasks retained")
+        print(f"  {metadata_stats['n_tasks_demeaned']} tasks retained")
 
     task_id_filter = set(scores.keys()) if scores else None
 
@@ -219,7 +219,7 @@ def run_probes(config: RunDirProbeConfig) -> dict:
     if metadata_stats is not None:
         manifest["metadata_r2"] = metadata_stats["metadata_r2"]
         manifest["metadata_features"] = metadata_stats["metadata_features"]
-        manifest["n_tasks_residualized"] = metadata_stats["n_tasks_residualized"]
+        manifest["n_tasks_demeaned"] = metadata_stats["n_tasks_demeaned"]
         manifest["n_tasks_dropped"] = metadata_stats["n_tasks_dropped"]
 
     # Process one layer at a time
