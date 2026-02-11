@@ -1,4 +1,7 @@
 #!/bin/bash
+# Usage: bash pod_setup.sh [branch]
+
+BRANCH="${1:-main}"
 
 # Import container env vars (not inherited when run via nohup over SSH)
 if [ -f /proc/1/environ ]; then
@@ -18,9 +21,14 @@ chown -R coder:coder /workspace
 cat > /tmp/coder_setup.sh << 'CODER_SCRIPT'
 #!/bin/bash
 
-# Clone repo
+# Clone repo and checkout branch
 if [ ! -d "/workspace/Preferences" ]; then
     git clone https://github.com/ogilg/Preferences.git /workspace/Preferences
+fi
+cd /workspace/Preferences
+if [ -f /tmp/pod_branch ]; then
+    git fetch origin
+    git checkout "$(cat /tmp/pod_branch)"
 fi
 
 # Claude Code
@@ -55,6 +63,9 @@ fi
 CODER_SCRIPT
 
 chmod +x /tmp/coder_setup.sh
+
+# Pass branch to coder script via file
+echo "$BRANCH" > /tmp/pod_branch
 
 # Run as coder, forwarding tokens
 su - coder -c "HF_TOKEN=$HF_TOKEN GH_TOKEN=$GH_TOKEN bash /tmp/coder_setup.sh"
