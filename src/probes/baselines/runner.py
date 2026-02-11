@@ -21,7 +21,6 @@ def run_all_baselines(
     task_description_dir: Path | None,
     n_noise_seeds: int = 5,
     alpha_sweep_size: int = 10,
-    standardize: bool = False,
 ) -> list[BaselineResult]:
     """Run all baseline types for a probe training config.
 
@@ -93,14 +92,14 @@ def run_all_baselines(
             # Shuffled labels
             result = run_shuffled_labels_baseline(
                 X, y, template, layer, config.cv_folds, seed,
-                alpha_sweep_size=alpha_sweep_size, standardize=standardize,
+                alpha_sweep_size=alpha_sweep_size,
             )
             results.append(result)
 
             # Random activations
             result = run_random_activations_baseline(
                 X, y, template, layer, config.cv_folds, seed,
-                alpha_sweep_size=alpha_sweep_size, standardize=standardize,
+                alpha_sweep_size=alpha_sweep_size,
             )
             results.append(result)
 

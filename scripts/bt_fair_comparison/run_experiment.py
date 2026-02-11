@@ -239,7 +239,7 @@ def run_experiment():
                 # Pass pre-scaled data, don't double-standardize
                 probe, eval_results, alpha_sweep = train_and_evaluate(
                     all_acts_scaled[train_indices], train_y,
-                    cv_folds=5, alpha_sweep_size=10, standardize=False,
+                    cv_folds=5, alpha_sweep_size=10,
                 )
                 best_alphas[layer] = eval_results["best_alpha"]
                 ridge_cv_r2 = eval_results["cv_r2_mean"]
@@ -248,7 +248,7 @@ def run_experiment():
                 print(f"  Ridge: Training at fixed alpha = {best_alphas[layer]:.4g}")
                 probe, eval_results = train_at_alpha(
                     all_acts_scaled[train_indices], train_y,
-                    alpha=best_alphas[layer], cv_folds=5, standardize=False,
+                    alpha=best_alphas[layer], cv_folds=5,
                 )
 
             # Score all tasks in the properly scaled space
