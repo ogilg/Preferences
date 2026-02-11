@@ -53,11 +53,13 @@ git config --global user.email "oscar.gilg18@gmail.com"
 # Auth (tokens passed via environment)
 if [ -n "$HF_TOKEN" ]; then
     huggingface-cli login --token $HF_TOKEN
+    echo "export HF_TOKEN=$HF_TOKEN" >> ~/.bashrc
     echo "Logged into Hugging Face."
 fi
 
 if [ -n "$GH_TOKEN" ]; then
     echo $GH_TOKEN | gh auth login --with-token
+    echo "export GH_TOKEN=$GH_TOKEN" >> ~/.bashrc
     echo "Logged into GitHub."
 fi
 CODER_SCRIPT
