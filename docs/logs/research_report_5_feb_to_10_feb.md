@@ -106,7 +106,22 @@ Probes trained on natural preferences generalize to held-out topics, artificiall
 
 ### 3.1 Cross-topic (held-one-out)
 
-TODO — HOO topic results and de-meaning comparison.
+We train probes on 5 of 8 topic categories and evaluate on the 3 held-out topics, exhaustively across all C(8,3) = 56 folds. A content baseline (sentence-transformer embeddings → Ridge) uses the same fold structure.
+
+| Condition | Held-out Pearson r | Held-out pairwise acc |
+|-----------|-------------------|-----------------------|
+| Ridge raw | **0.78** | **0.69** |
+| Ridge topic-demeaned | 0.71 | 0.66 |
+| BT raw | 0.74 | 0.65 |
+| Content baseline | 0.24 | 0.55 |
+
+Activation probes beat the content baseline on 56/56 folds (paired t = 73, p < 10⁻⁵⁰). Topic-demeaning nearly eliminates the in-distribution vs held-out gap (Δr = 0.009), meaning within-topic preference variation transfers perfectly across topics. The content baseline collapses from in-dist r = 0.67 to held-out r = 0.24 — it memorizes topic-level patterns rather than learning transferable signal.
+
+![Held-out metrics at layer 31](assets/hoo_scaled/plot_021126_hoo_scaled_unified_L31.png)
+
+Per-topic breakdown: `harmful_request` is easiest to generalize to (r ~0.92), likely due to strong distinctive preference patterns. `knowledge_qa` shows the largest gap between raw and demeaned probes, suggesting topic-level means contribute more there.
+
+![Per-topic held-out performance](assets/hoo_scaled/plot_021126_hoo_scaled_per_topic_L31.png)
 
 ### 3.2 OOD: artificially induced preferences
 
