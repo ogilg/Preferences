@@ -52,6 +52,7 @@ class RunDirProbeConfig:
     alpha_sweep_size: int = 50
     demean_confounds: list[str] | None = None
     topics_json: Path | None = None
+    standardize: bool = True  # whether to StandardScaler activations before Ridge
     n_jobs: int = 1  # parallel workers for lambda sweep (1=sequential, -1=all cores)
     # HOO settings — if hoo_grouping is set, runs HOO instead of standard training
     hoo_grouping: str | None = None  # "topic" | "dataset"
@@ -68,7 +69,7 @@ class RunDirProbeConfig:
 
         optional = {}
         for key in (
-            "cv_folds", "alpha_sweep_size", "demean_confounds",
+            "cv_folds", "alpha_sweep_size", "demean_confounds", "standardize",
             "n_jobs", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
         ):
             if key in data:
@@ -99,15 +100,24 @@ def _train_ridge_probe(
         return None
 
     X = activations[indices]
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    if config.standardize:
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+    else:
+        X_scaled = X
+        scaler = None
+
     probe, eval_results, alpha_sweep = train_and_evaluate(
         X_scaled, y, cv_folds=config.cv_folds,
         alpha_sweep_size=config.alpha_sweep_size,
     )
     # Convert weights to raw (unscaled) space so score_with_probe works on raw activations
-    coef_raw = probe.coef_ / scaler.scale_
-    intercept_raw = probe.intercept_ - coef_raw @ scaler.mean_
+    if scaler is not None:
+        coef_raw = probe.coef_ / scaler.scale_
+        intercept_raw = probe.intercept_ - coef_raw @ scaler.mean_
+    else:
+        coef_raw = probe.coef_
+        intercept_raw = probe.intercept_
     weights = np.append(coef_raw, intercept_raw)
     probe_id = f"ridge_L{layer:02d}"
     relative_path = save_probe(weights, config.output_dir, probe_id)
