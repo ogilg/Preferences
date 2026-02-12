@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-02-11: Ridge Probe Ablation Sweep — Scaling × Demeaning × Layer
+
+Systematic 48-combination grid: 6 layers (L15–L55) × 4 demean options (none, topic, dataset, topic+dataset) × 2 StandardScaler settings (on/off). Each run is Ridge with 5-fold CV alpha sweep (10 alphas, 1–10⁶). Corrects the earlier apples-to-oranges comparison where "demeaning drops R² from 0.86 to 0.53" actually conflated two changes (scaling + demeaning).
+
+### Plots
+
+![Ablation heatmap (all conditions)](assets/probes/plot_021126_ablation_heatmap.png)
+
+![Ablation lines (all conditions)](assets/probes/plot_021126_ablation_lines.png)
+
+Filtered to none vs topic demeaning only (solid = scaled, dashed = raw; color = demean condition):
+
+![Ablation heatmap (none vs topic)](assets/probes/plot_021226_ablation_heatmap_topic_only.png)
+
+![Ablation lines (none vs topic)](assets/probes/plot_021226_ablation_lines_topic_only.png)
+
+### Key Results
+
+- **Scaling is critical at deeper layers.** At L31, scaled vs raw is modest (0.863 vs 0.846). By L55, it's 0.835 vs 0.651 (no demean) and 0.406 vs −0.308 (topic demean). Without scaling, the alpha sweep caps out at 10⁶ — insufficient regularization for raw activation magnitudes.
+- **The missing cell — topic demeaning with scaling — gives L31 CV R² = 0.480.** The true cost of demeaning (with scaling held constant) is 0.863 → 0.480, not 0.863 → 0.521. Most of the probe's variance comes from topic-level differences.
+- **Dataset demeaning is milder than topic.** L31 dataset-only drops to 0.576 (scaled) vs topic-only 0.480. Topic+dataset (0.494) is close to topic-only, suggesting dataset adds little beyond what topic already captures.
+- **Raw + demeaned = catastrophic overfitting at deep layers.** From L43 onward, all raw+demeaned conditions go negative CV R² (train R² > 0.99). The alpha sweep can't regularize enough.
+- **Best condition per layer is always none/scaled**, peaking at L31 (0.863) and declining gently to L55 (0.835).
+
+---
+
 ## 2026-02-06: Gemma-3-27B Completion Preference — 3000 Tasks, Pre-Task Active Learning
 
 Ran pre-task revealed preference measurement on gemma-3-27b with 3000 tasks (600 per dataset, stratified across wildchat, alpaca, math, stress_test, bailbench).
