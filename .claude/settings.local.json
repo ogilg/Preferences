@@ -17,7 +17,9 @@
       "Bash(security dump-keychain:*)",
       "Bash(security find-generic-password:*)",
       "Skill(runpod)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(ln:*)",
+      "Bash(python:*)"
     ]
   }
 }
