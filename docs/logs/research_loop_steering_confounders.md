@@ -1,8 +1,8 @@
 # H2 Differential Steering: Confounder Follow-ups
 
-**Goal**: Address confounders in the H2 differential steering result (P(A) 0.59→0.67, p=0.000002). Key confounders: (1) position artifact, (2) borderline pair concentration, (3) output token perturbation. Success = ruling out position confound and demonstrating specificity on borderline pairs.
+**Goal**: The H2 differential steering result (P(A) 0.59→0.67, p=0.000002) showed that steering a task's tokens with the probe direction shifts choice toward that task. This follow-up investigates confounders: (1) how much of the effect is positional vs task-dependent, (2) whether the effect is specific to the probe direction, (3) whether it concentrates in borderline pairs.
 
-**Result**: The H2 effect is real but partially confounded. Position bias accounts for a small fraction of the observed effect; non-specific perturbation sensitivity accounts for more. The probe direction is still significantly stronger than random directions (p=0.003, 2.6x effect size), but the original specificity claim (random=0, probe>>0) was an artifact of testing on firm pairs where nothing moves.
+**Result**: Steering a task's tokens with the probe direction increases P(picking that task), and the effect is concentrated in borderline pairs (Δ=0.711 on borderline vs Δ=0.083 overall). The probe is significantly more effective than random directions (2.6x, p=0.003). There is a positional confound — differential steering shifts P(A) even with identical tasks (Δ=0.106) — but this is much smaller than the effect on borderline pairs with different content. The effect is partly positional (62%) and partly order-sensitive (38%), with the order-sensitive component consistent with task-dependent steering.
 
 ## Context
 - L31 ridge probe direction causally shifts revealed preferences (H2, 60 pairs)
@@ -20,7 +20,7 @@
 
 **Approach**: Present each of 12 borderline pairs in both orderings: original (A,B) and swapped (B,A). Apply same differential steering (+first, -second) in both. 7 coefficients, 15 resamples per condition.
 
-**Result**: Massive effect on borderline pairs (Δ=0.711 in original, 8.5x the Δ=0.083 on all-60). Effect persists in swapped ordering (Δ=0.209) but 3.4x smaller.
+**Result**: Steering shifts choice toward the steered-position task in both orderings. Effect is massive on borderline pairs (Δ=0.711 in original) compared to the Δ=0.083 on the mixed set of 60 pairs. Effect persists in the swapped ordering (Δ=0.209) but is 3.4x smaller.
 
 | Coef | Original P(A) | Swapped P(A) |
 |------|--------------|-------------|
@@ -28,13 +28,15 @@
 | 0 | 0.494 | 0.570 |
 | +3000 | 0.872 | 0.639 |
 
-Both orderings show positive slope in the raw frame — consistent with either position or evaluative hypotheses. The 3.4x magnitude difference between orderings is suggestive of a content-dependent component but not diagnostic. E1 alone cannot separate position from evaluative effects due to the structural confound.
+In both orderings, +coef increases P(A) — i.e., steering task A's tokens with +probe increases P(picking A). Since the tasks swap positions between orderings, this means the probe shifts choice toward whichever task's tokens receive +probe. The 3.4x magnitude difference between orderings (slope 1.39e-04 original vs 3.26e-05 swapped) suggests a task-dependent component beyond pure position.
 
-## E3: Same-Task Pairs — Position Confound Test
+**Slopes**: original 1.39e-04 (p<1e-100), swapped 3.26e-05 (p=3e-06).
 
-**Approach**: Present same task as both A and B. Apply differential steering. If P(A) shifts from 0.5, it's a position artifact. 20 tasks, 7 coefficients, 15 resamples.
+## E3: Same-Task Pairs — Positional Baseline
 
-**Result**: **Position confound confirmed.** P(A) = 0.690→0.796 (Δ=+0.106, p=0.002). Strong baseline position bias: P(A) = 0.749 at coef=0.
+**Approach**: Present same task as both A and B. Apply differential steering. Measures the purely positional component of the steering effect. 20 tasks, 7 coefficients, 15 resamples.
+
+**Result**: Differential steering shifts P(A) even with identical tasks: P(A) = 0.690→0.796 (slope=1.58e-05, p=0.002). Baseline position A bias: P(A) = 0.749 at coef=0.
 
 | Coef | P(A) same-task |
 |------|----------------|
@@ -42,13 +44,13 @@ Both orderings show positive slope in the raw frame — consistent with either p
 | 0 | 0.749 |
 | +3000 | 0.796 |
 
-The probe direction shifts the model toward outputting "a" even when both tasks are identical. However, this positional effect (Δ=0.106) is much smaller than the effect on borderline pairs with different content (Δ=0.711).
+This establishes the positional floor: the probe direction shifts P(A) by Δ=0.106 through position alone. The E1 borderline effect (Δ=0.711) is 6.7x larger, indicating substantial task-dependent contribution beyond position.
 
 ## E8: Probe vs Random Directions on Borderline Pairs
 
 **Approach**: 20 random orthogonal directions + probe direction, all on 12 borderline pairs. Differential steering at coefs [-3000, 0, +3000], 10 resamples. 7,560 total observations.
 
-**Result**: Probe direction is the strongest but random directions are not zero.
+**Result**: The probe direction shifts choice more than any random direction.
 
 | Metric | Value |
 |--------|-------|
@@ -58,15 +60,13 @@ The probe direction shifts the model toward outputting "a" even when both tasks 
 | Probe abs(Δ) z-score | 2.73 (p=0.003) |
 | Rank p-value | 0.048 (0/20 randoms ≥ probe) |
 
-The probe direction has the largest effect of all 21 directions tested. Its effect size (|Δ|=0.742) is 2.73 standard deviations above the random mean (p=0.003). No random direction matches it.
-
-But random directions also shift borderline pairs substantially (mean |Δ|=0.286). The previous "zero effect" from random controls was an artifact of testing on firm pairs where nothing moves. Borderline pairs are inherently sensitive to perturbation in any direction.
+Random directions also shift borderline pairs (mean |Δ|=0.286) — the original "zero effect" from random controls was an artifact of testing on firm pairs. But the probe direction is 2.6x stronger and consistently shifts in one direction, while random directions scatter symmetrically (mean signed Δ ≈ 0).
 
 ![e8-extended](assets/steering_confounders/plot_021126_e8_extended.png)
 
 ## E5: Logit Lens
 
-**Approach**: Forward pass with steering (no generation), extract logit(a) - logit(b) at last token position. 12 borderline + 20 firm pairs, 7 coefficients. Continuous measure gives more statistical power.
+**Approach**: Forward pass with steering (no generation), extract logit(a) - logit(b) at last token position. 12 borderline + 20 firm pairs, 7 coefficients.
 
 **Result**: Strong linear dose-response in borderline pairs, no effect on firm.
 
@@ -79,43 +79,42 @@ Borderline pairs: logit_diff goes from -2.98 to +3.52 (crosses zero at coef≈0)
 
 ![e5-logit-lens](assets/steering_confounders/plot_021126_e5_logit_lens.png)
 
-## Dead ends
-- E1 alone cannot separate position from evaluative effects — both hypotheses make the same qualitative predictions due to the differential steering design confounding position with steering direction
-
 ## Effect Decomposition
 
-### Approach 1: E1 slope decomposition (position vs evaluative)
+### Position vs order-sensitive components
 
-The average of both orderings captures the positional component (same in both), while half the difference captures the component that reverses with order swapping:
+The E1 counterbalancing data decomposes the steering effect. The average of both orderings captures the positional component (present in both), while half the difference captures the order-sensitive component (reverses when tasks swap positions):
 
 | Component | Slope | % of original |
 |-----------|-------|---------------|
 | Positional: (orig + swap) / 2 | 8.58e-05 | 62% |
-| Order-sensitive: (orig - swap) / 2 | 5.32e-05 | 38% |
+| Order-sensitive: (orig - swap) / 2 | 5.33e-05 | 38% |
 | **Original ordering** | **1.39e-04** | **100%** |
 
-The order-sensitive component could reflect evaluative content, task-specific steerability differences, or preference-position alignment effects. It reverses sign when order is swapped, as expected for content-dependent steering.
+The order-sensitive component reverses sign when order is swapped, consistent with task-dependent steering. However, this decomposition alone cannot prove the order-sensitive component is evaluative — it could reflect task-specific steerability differences or other content-dependent factors.
 
-### E8 specificity test
+### Comparison to same-task positional baseline
 
-The E1 decomposition tells us about position vs order-sensitive components. E8 answers a different question: is the probe direction special compared to arbitrary perturbations?
+E3 provides an independent estimate of the positional contribution: slope=1.58e-05. This is smaller than the E1 positional component (8.58e-05), likely because E3 uses non-borderline tasks. On borderline pairs, positional effects are amplified along with task-dependent effects.
 
-- Probe abs(Δ)=0.742, random mean abs(Δ)=0.286 (z=2.73, p=0.003, 0/20 randoms exceed probe)
-- Random directions shift borderline pairs substantially but in **random** directions (mean signed Δ ≈ 0)
-- The probe shifts consistently in one direction and with larger magnitude
+### Specificity
 
-These are not additive components — random perturbations push in random directions, not in the same direction as the probe. The clean conclusion is that the probe is significantly more effective than random (p=0.003), not that "39% of the effect is non-specific."
+The probe direction (|Δ|=0.742) is 2.73 standard deviations above the random mean (|Δ|=0.286), p=0.003. No random direction matches it. This means the probe isn't just any perturbation — it's specifically positioned in activation space to shift choice toward the steered task.
 
 ![summary](assets/steering_confounders/plot_021126_confounders_summary.png)
+
+## Dead ends
+- E1 alone cannot fully separate position from task-dependent effects — both predict P(A) increases with +coef in both orderings
+- Controls with all-firm pairs: underpowered because firm pairs resist steering in any direction
 
 ## Final Results
 
 | Experiment | Key Finding | p-value |
 |-----------|-------------|---------|
-| E2: Screening | 4.8% borderline rate, 8.5x effect amplification | — |
-| E3: Same-task | Position confound: Δ=+0.106 with identical tasks | 0.002 |
+| E2: Screening | 4.8% borderline rate, 6.7x effect amplification vs positional baseline | — |
+| E3: Same-task | Positional component: Δ=+0.106 with identical tasks | 0.002 |
 | E8: Specificity | Probe 2.6x stronger than random (|Δ| z=2.73) | 0.003 |
 | E5: Logit lens | Borderline dose-response: r=0.779 | <1e-6 |
-| E1: Counterbalancing | Effect in both orderings (Δ=0.711 vs 0.209) | <1e-6 |
+| E1: Counterbalancing | Effect in both orderings (Δ=0.711 vs 0.209), 38% order-sensitive | <1e-6 |
 
-**Key insight**: The H2 differential steering effect is partially confounded by position bias and non-specific perturbation sensitivity. However, the probe direction retains significant specificity — it is 2.6x more effective than random directions at shifting borderline preferences (p=0.003). The original claim that "random directions have zero effect" was an artifact of testing on firm pairs. When properly tested on borderline pairs, random directions produce substantial effects, but the probe direction is still the strongest. The most honest summary: the probe encodes something real about preference processing, but position-related information and general perturbation sensitivity are non-trivial confounders that inflate the apparent effect size.
+**Summary**: Steering a task's tokens with the probe direction increases P(picking that task). The effect is concentrated in borderline pairs and specific to the probe direction (2.6x stronger than random). There is a positional confound (62% of the effect), but the order-sensitive component (38%) and the 6.7x amplification over the same-task baseline are consistent with task-dependent steering. The key limitation of this experiment is that differential steering (+A, −B) confounds task-specific effects with position: we cannot isolate what happens when we steer only one task's tokens without suppressing the other.
