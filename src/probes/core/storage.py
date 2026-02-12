@@ -22,7 +22,12 @@ def save_probe(
 
 
 def load_probe(output_dir: Path, probe_id: str) -> np.ndarray:
-    """Load probe weights from disk."""
+    """Load probe weights from disk.
+
+    Probe ID conventions:
+        HOO probes: hoo_fold{fold_idx}_{method}_L{layer:02d}
+        Standard probes: {method}_L{layer:02d}
+    """
     return np.load(output_dir / "probes" / f"probe_{probe_id}.npy")
 
 
