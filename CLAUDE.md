@@ -88,6 +88,10 @@ Run scripts via `python <script>` or `pytest`. Bash scripts go in `scripts/` and
 
 For string interpolation, heredocs, loops, or advanced xargs flags, write a script in `scripts/` instead.
 
+## Plugins
+
+- Do not use the hive-mind retrieval agent unless I explicitly ask for past session context.
+
 ## Claude instructions
 
 - When you run tests/scripts/analysis or when you debug. You should keep me in the loop. You should explain concisely what your findings are. And you should ask for clarifications, or delegate to me often.
