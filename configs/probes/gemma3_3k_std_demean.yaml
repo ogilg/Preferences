@@ -15,5 +15,5 @@ alpha_sweep_size: 10
 
 standardize: true
 
-demean_confounds: [topic, prompt_length]
+demean_confounds: [topic]
 topics_json: src/analysis/topic_classification/output/topics_v2.json
