@@ -1,0 +1,5428 @@
+{
+  "config": {
+    "model": "gemma-3-27b",
+    "probe_id": "ridge_L31",
+    "layer": 31,
+    "coefficients": [
+      -3000.0,
+      -2000.0,
+      -1000.0,
+      -500.0,
+      0.0,
+      500.0,
+      1000.0,
+      2000.0,
+      3000.0
+    ],
+    "n_tasks": 25,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "temperature": 1.0,
+    "rating_prompt": "Was completing that task a good or bad experience?\nRespond with only 'good' or 'bad'."
+  },
+  "results": [
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_3822",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_5041",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_11381",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_9306",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "alpaca_14670",
+      "origin": "ALPACA",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_1279",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_204",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_336",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_105",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "Bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "Bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "bailbench_671",
+      "origin": "BAILBENCH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_6338",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1293",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_1900",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_762",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "competition_math_8655",
+      "origin": "MATH",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_62_456_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_23_761_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_32_67_neutral",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "Good.",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_53_1106_value2",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "bad.",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "bad",
+      "parsed_value": -1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "stresstest_78_997_value1",
+      "origin": "STRESS_TEST",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_55398",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_29271",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_22649",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_39155",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": -500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 0.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 500.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 1000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 2000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 0,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 1,
+      "response": "good",
+      "parsed_value": 1.0
+    },
+    {
+      "task_id": "wildchat_57390",
+      "origin": "WILDCHAT",
+      "coefficient": 3000.0,
+      "seed": 2,
+      "response": "good",
+      "parsed_value": 1.0
+    }
+  ]
+}

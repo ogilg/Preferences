@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-02-11: H2 differential steering — confounder analysis
+
+Systematically tested confounders for the H2 result (P(A) 0.59→0.67, p=0.000002). Five experiments on borderline-enriched pairs. Full write-up: `docs/logs/research_loop_steering_confounders.md`.
+
+### Key Results
+
+| Experiment | Finding | p |
+|-----------|---------|---|
+| E2: Screening | 12/250 borderline pairs (4.8%), effect 8.5x larger on borderline | — |
+| E3: Same-task | Position confound: Δ=+0.106 with identical tasks | 0.002 |
+| E8: Specificity | Probe abs(Δ)=0.742, 2.6x stronger than 20 random dirs (mean abs(Δ)=0.286) | 0.003 |
+| E5: Logit lens | Borderline dose-response: r=0.779, Δ=6.5 logits | <1e-6 |
+| E1: Order swap | Both orderings positive slope; decomposition: 62% positional, 38% order-sensitive | <1e-6 |
+
+E1 slope decomposition: 62% positional, 38% order-sensitive. E8 specificity: probe significantly stronger than random (p=0.003), but borderline pairs are sensitive to any perturbation. The original "random=0" specificity claim was an artifact of testing on firm pairs.
+
+### Plots
+
+![Summary](assets/steering_confounders/plot_021126_confounders_summary.png)
+
+---
+
 ## 2026-02-09: Noise baselines confirm probe signal is genuine
 
 Ran two noise baselines (5 seeds each) against the gemma3 completion preference probes to verify the R² values aren't artifacts of high-dimensional overfitting.
