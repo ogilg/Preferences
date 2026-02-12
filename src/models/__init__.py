@@ -1,9 +1,9 @@
 from .base import Model, ConfigurableMockModel, TokenPosition, ActivationReduction, TokenSelectorFn, SELECTOR_REGISTRY
 from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
+from .base import GenerationResult, SteeringHook, autoregressive_steering, all_tokens_steering, STEERING_MODES
 from .registry import (
     MODEL_REGISTRY,
     ModelConfig,
-    get_transformer_lens_name,
     get_hyperbolic_name,
     get_cerebras_name,
     get_openrouter_name,
@@ -13,16 +13,6 @@ from .registry import (
     is_reasoning_model,
     adjust_max_tokens_for_reasoning,
 )
-
-try:
-    from .transformer_lens import TransformerLensModel, GenerationResult, SteeringHook, autoregressive_steering, all_tokens_steering, STEERING_MODES
-except ImportError:
-    TransformerLensModel = None  # type: ignore[assignment,misc]
-    GenerationResult = None  # type: ignore[assignment,misc]
-    SteeringHook = None  # type: ignore[assignment,misc]
-    autoregressive_steering = None  # type: ignore[assignment]
-    all_tokens_steering = None  # type: ignore[assignment]
-    STEERING_MODES = None  # type: ignore[assignment]
 
 try:
     from .huggingface_model import HuggingFaceModel
@@ -56,7 +46,6 @@ __all__ = [
     "ActivationReduction",
     "TokenSelectorFn",
     "SELECTOR_REGISTRY",
-    "TransformerLensModel",
     "HuggingFaceModel",
     "HybridActivationModel",
     "GenerationResult",
@@ -76,7 +65,6 @@ __all__ = [
     "get_default_max_concurrent",
     "MODEL_REGISTRY",
     "ModelConfig",
-    "get_transformer_lens_name",
     "get_hyperbolic_name",
     "get_cerebras_name",
     "get_openrouter_name",

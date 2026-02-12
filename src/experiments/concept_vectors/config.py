@@ -16,7 +16,7 @@ class ConditionDict(TypedDict):
 
 class ConceptVectorExtractionConfig(BaseModel):
     model: str
-    backend: Literal["nnsight", "transformer_lens"] = "nnsight"
+    backend: str = "huggingface"  # vestigial, kept for config compat
 
     n_tasks: int
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench"]]

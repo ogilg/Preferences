@@ -22,7 +22,8 @@ from dotenv import load_dotenv
 
 from src.analysis.concept_vectors.measurement_utils import load_config, load_steering_vector
 from src.measurement.storage import ExperimentStore
-from src.models.transformer_lens import TransformerLensModel, STEERING_MODES
+from src.models.huggingface_model import HuggingFaceModel
+from src.models.base import STEERING_MODES
 from src.measurement.elicitation.semantic_valence_scorer import score_math_attitude_with_coherence_async
 from src.measurement.runners.progress import MultiExperimentProgress, console, print_summary
 
@@ -47,7 +48,7 @@ async def score_responses(responses: list[dict]) -> list[dict]:
 
 def run_open_ended_steering(
     config: dict,
-    model: TransformerLensModel,
+    model: HuggingFaceModel,
     resolved_layers: list[int],
     exp_store: ExperimentStore,
     n_generations: int | None = None,
@@ -135,8 +136,8 @@ def run_open_ended_steering(
                 vector = steering_vectors[layer]
                 steering_tensor = torch.tensor(
                     vector * coef,
-                    dtype=model.model.cfg.dtype,
-                    device=model.model.cfg.device,
+                    dtype=model.model.dtype,
+                    device=model.device,
                 )
                 steering_hook = steering_hook_factory(steering_tensor)
 
@@ -215,7 +216,7 @@ def main(config_path: Path, n_generations: int | None = None):
     # Load model
     console.print("\n[bold]Loading model...")
     max_new_tokens = config["max_new_tokens"]
-    model = TransformerLensModel(
+    model = HuggingFaceModel(
         config["model"],
         max_new_tokens=max_new_tokens,
     )

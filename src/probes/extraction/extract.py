@@ -17,8 +17,7 @@ from src.measurement.runners.utils.runner_utils import (
     get_activation_completions_path,
 )
 from src.models.huggingface_model import HuggingFaceModel
-from src.models.transformer_lens import TransformerLensModel
-from src.models.registry import has_transformer_lens_support, has_hf_support
+from src.models.registry import has_hf_support
 from src.task_data import load_filtered_tasks, OriginDataset, Task
 from src.types import Message
 
@@ -31,9 +30,6 @@ from .persistence import (
     save_extraction_metadata,
 )
 
-ActivationModel = TransformerLensModel | HuggingFaceModel
-
-
 def _gpu_mem_gb() -> tuple[float, float]:
     return (
         torch.cuda.memory_allocated() / 1e9,
@@ -41,15 +37,7 @@ def _gpu_mem_gb() -> tuple[float, float]:
     )
 
 
-def _load_model(config: ExtractionConfig) -> ActivationModel:
-    if config.backend == "transformer_lens":
-        if not has_transformer_lens_support(config.model):
-            raise ValueError(
-                f"Model {config.model} does not have TransformerLens support. "
-                f"Use backend: huggingface instead."
-            )
-        return TransformerLensModel(config.model, max_new_tokens=config.max_new_tokens)
-    # backend == "huggingface" (validated by Pydantic Literal)
+def _load_model(config: ExtractionConfig) -> HuggingFaceModel:
     if not has_hf_support(config.model):
         raise ValueError(f"Model {config.model} does not have HuggingFace support.")
     return HuggingFaceModel(config.model, max_new_tokens=config.max_new_tokens)
@@ -190,7 +178,7 @@ def run_extraction(config: ExtractionConfig) -> None:
 
 def _run_from_completions(
     config: ExtractionConfig,
-    model: ActivationModel,
+    model: HuggingFaceModel,
     resolved_layers: list[int],
     output_dir: Path,
 ) -> None:
@@ -344,7 +332,7 @@ def _extract_batch_with_oom_retry(
 
 
 def generation_extraction(
-    model: ActivationModel,
+    model: HuggingFaceModel,
     tasks: list[Task],
     layers: list[int],
     selectors: list[str],

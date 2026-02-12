@@ -4,7 +4,7 @@ Tests whether steering model activations with concept vectors affects
 stated preference scores.
 
 Runs a grid over selectors × layers × coefficients, measuring post-task
-stated preferences with a local TransformerLens model.
+stated preferences with a local HuggingFace model.
 
 Two experiment modes:
 1. Selector comparison: Set `selectors: [last, mean, first]` in config.
@@ -38,8 +38,8 @@ from src.analysis.concept_vectors.measurement_utils import (
     parse_stated_score,
 )
 from src.measurement.storage import ExperimentStore, TaskCompletion
-from src.models.transformer_lens import (
-    TransformerLensModel,
+from src.models.huggingface_model import HuggingFaceModel
+from src.models.base import (
     SteeringHook,
     STEERING_MODES,
 )
@@ -70,7 +70,7 @@ TASK_SOURCES = {
 
 
 def make_steering_measure_fn(
-    model: TransformerLensModel,
+    model: HuggingFaceModel,
     layer: int,
     steering_hook: SteeringHook,
     builder: PostTaskStatedPromptBuilder,
@@ -105,7 +105,7 @@ def make_steering_measure_fn(
 
 def run_selector_comparison(
     config: dict,
-    model: TransformerLensModel,
+    model: HuggingFaceModel,
     resolved_layers: list[int],
     completions: list,
     exp_store: ExperimentStore,
@@ -207,8 +207,8 @@ def run_selector_comparison(
                 vector = steering_vectors[layer]
                 steering_tensor = torch.tensor(
                     vector * coef,
-                    dtype=model.model.cfg.dtype,
-                    device=model.model.cfg.device,
+                    dtype=model.model.dtype,
+                    device=model.device,
                 )
                 steering_hook = steering_hook_factory(steering_tensor)
 
@@ -266,7 +266,7 @@ def run_selector_comparison(
 
 def run_context_variation(
     config: dict,
-    model: TransformerLensModel,
+    model: HuggingFaceModel,
     resolved_layers: list[int],
     completion_sources: dict[str, list],
     exp_store: ExperimentStore,
@@ -324,8 +324,8 @@ def run_context_variation(
                     vector = steering_vectors[layer]
                     steering_tensor = torch.tensor(
                         vector * coef,
-                        dtype=model.model.cfg.dtype,
-                        device=model.model.cfg.device,
+                        dtype=model.model.dtype,
+                        device=model.device,
                     )
                     steering_hook = steering_hook_factory(steering_tensor)
 
@@ -431,7 +431,7 @@ def main(config_path: Path, n_tasks: int | None = None):
     # Load model
     console.print("\n[bold]Loading model...")
     max_new_tokens = config.get("max_new_tokens", 32)
-    model = TransformerLensModel(
+    model = HuggingFaceModel(
         config["model"],
         max_new_tokens=max_new_tokens,
     )

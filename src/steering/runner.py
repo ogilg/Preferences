@@ -173,8 +173,9 @@ def run_steering_experiment(config: SteeringExperimentConfig) -> dict:
 
     # Initialize model
     print(f"Loading model {config.model}...")
-    from src.models.transformer_lens import TransformerLensModel, all_tokens_steering
-    model = TransformerLensModel(config.model, max_new_tokens=config.max_new_tokens)
+    from src.models.huggingface_model import HuggingFaceModel
+    from src.models.base import all_tokens_steering
+    model = HuggingFaceModel(config.model, max_new_tokens=config.max_new_tokens)
 
     # Load completions
     completion_lookup = _load_completions(config.completions_path)

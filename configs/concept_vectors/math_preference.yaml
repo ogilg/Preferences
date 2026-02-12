@@ -1,6 +1,6 @@
 # Model options: llama-3.1-8b, gemma-2-27b
 model: llama-3.1-8b
-backend: transformer_lens
+backend: huggingface
 
 n_tasks: 500
 task_origins:

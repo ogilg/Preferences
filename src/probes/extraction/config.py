@@ -13,7 +13,7 @@ from src.models.base import BATCHED_SELECTOR_REGISTRY, COMPLETION_SELECTORS
 
 class ExtractionConfig(BaseModel):
     model: str
-    backend: Literal["transformer_lens", "huggingface"]
+    backend: Literal["huggingface"] = "huggingface"
     n_tasks: int
     task_origins: list[str]
     layers_to_extract: list[float | int]

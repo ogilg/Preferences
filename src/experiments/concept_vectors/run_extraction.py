@@ -14,7 +14,7 @@ load_dotenv()
 from src.experiments.concept_vectors.config import load_config
 from src.experiments.concept_vectors.difference import compute_all_concept_vectors, save_concept_vectors
 from src.experiments.concept_vectors.extraction import extract_activations_with_system_prompt
-from src.models import TransformerLensModel
+from src.models.huggingface_model import HuggingFaceModel
 from src.task_data import OriginDataset, load_filtered_tasks
 
 
@@ -54,7 +54,7 @@ def main() -> None:
 
     if not args.skip_extraction:
         print(f"Loading model: {config.model}...")
-        model = TransformerLensModel(config.model, max_new_tokens=config.max_new_tokens)
+        model = HuggingFaceModel(config.model, max_new_tokens=config.max_new_tokens)
 
         resolved_layers = [model.resolve_layer(layer) for layer in config.layers_to_extract]
         print(

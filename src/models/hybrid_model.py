@@ -10,7 +10,7 @@ import numpy as np
 
 from src.models.huggingface_model import HuggingFaceModel
 from src.models.openai_compatible import OpenAICompatibleClient, GenerateRequest
-from src.models.transformer_lens import GenerationResult
+from src.models.base import GenerationResult
 from src.types import Message
 
 

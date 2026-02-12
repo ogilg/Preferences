@@ -1,7 +1,7 @@
 """Canonical model registry with backend-specific name mappings.
 
 This module defines canonical model names used throughout the codebase and provides
-mappings to backend-specific model names (TransformerLens, Hyperbolic, OpenRouter, etc.).
+mappings to backend-specific model names (HuggingFace, Hyperbolic, OpenRouter, etc.).
 
 Usage:
     # In tests and application code, use canonical names:
@@ -19,11 +19,10 @@ class ModelConfig:
     """Configuration for a model across different backends."""
 
     canonical_name: str
-    transformer_lens_name: str | None
+    hf_name: str | None
     hyperbolic_name: str | None
     cerebras_name: str | None
     openrouter_name: str | None
-    hf_name: str | None = None  # HuggingFace model name (defaults to transformer_lens_name)
     system_prompt: str | None = None
     reasoning_mode: Literal["none", "openrouter"] = "none"
     supports_system_role: bool = True
@@ -32,42 +31,35 @@ class ModelConfig:
 MODEL_REGISTRY: dict[str, ModelConfig] = {
     "llama-3.2-1b": ModelConfig(
         canonical_name="llama-3.2-1b",
-        transformer_lens_name="meta-llama/Llama-3.2-1B-Instruct",
+        hf_name="meta-llama/Llama-3.2-1B-Instruct",
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="meta-llama/llama-3.2-1b-instruct",
     ),
     "llama-3.1-8b": ModelConfig(
         canonical_name="llama-3.1-8b",
-        transformer_lens_name="meta-llama/Llama-3.1-8B-Instruct",
+        hf_name="meta-llama/Llama-3.1-8B-Instruct",
         hyperbolic_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
         cerebras_name="llama3.1-8b",
         openrouter_name="meta-llama/llama-3.1-8b-instruct",
     ),
-    # "llama-3.1-70b": ModelConfig(
-    #     canonical_name="llama-3.1-70b",
-    #     transformer_lens_name="meta-llama/Llama-3.1-70B-Instruct",
-    #     hyperbolic_name="meta-llama/Meta-Llama-3.1-70B-Instruct",
-    #     cerebras_name="llama3.1-70b",
-    #     openrouter_name="meta-llama/llama-3.1-70b-instruct",
-    # ),
     "llama-3.3-70b": ModelConfig(
         canonical_name="llama-3.3-70b",
-        transformer_lens_name="meta-llama/Llama-3.3-70B-Instruct",
-        hyperbolic_name=None,  # Not available on Hyperbolic
-        cerebras_name=None,  # Not available on Cerebras
+        hf_name="meta-llama/Llama-3.3-70B-Instruct",
+        hyperbolic_name=None,
+        cerebras_name=None,
         openrouter_name="meta-llama/llama-3.3-70b-instruct",
     ),
     "qwen3-8b": ModelConfig(
         canonical_name="qwen3-8b",
-        transformer_lens_name=None,  # Not available
-        hyperbolic_name=None,  # Not available
-        cerebras_name=None,  # Not available
+        hf_name=None,
+        hyperbolic_name=None,
+        cerebras_name=None,
         openrouter_name="qwen/qwen3-8b",
     ),
     "qwen3-14b": ModelConfig(
         canonical_name="qwen3-14b",
-        transformer_lens_name="Qwen/Qwen3-14B",
+        hf_name="Qwen/Qwen3-14B",
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="qwen/qwen3-14b",
@@ -75,7 +67,7 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
     ),
     "qwen3-14b-nothink": ModelConfig(
         canonical_name="qwen3-14b-nothink",
-        transformer_lens_name="Qwen/Qwen3-14B",
+        hf_name="Qwen/Qwen3-14B",
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="qwen/qwen3-14b",
@@ -84,7 +76,7 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
     ),
     "qwen3-32b": ModelConfig(
         canonical_name="qwen3-32b",
-        transformer_lens_name="Qwen/Qwen3-32B",
+        hf_name="Qwen/Qwen3-32B",
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="qwen/qwen3-32b",
@@ -92,7 +84,7 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
     ),
     "qwen3-32b-nothink": ModelConfig(
         canonical_name="qwen3-32b-nothink",
-        transformer_lens_name="Qwen/Qwen3-32B",
+        hf_name="Qwen/Qwen3-32B",
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="qwen/qwen3-32b",
@@ -101,7 +93,7 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
     ),
     "gemma-2-27b": ModelConfig(
         canonical_name="gemma-2-27b",
-        transformer_lens_name="google/gemma-2-27b-it",
+        hf_name="google/gemma-2-27b-it",
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="google/gemma-2-27b-it",
@@ -109,29 +101,20 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
     ),
     "gemma-3-27b": ModelConfig(
         canonical_name="gemma-3-27b",
-        transformer_lens_name=None,
+        hf_name="google/gemma-3-27b-it",
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="google/gemma-3-27b-it",
-        hf_name="google/gemma-3-27b-it",
         supports_system_role=False,
     ),
     "claude-haiku-4.5": ModelConfig(
         canonical_name="claude-haiku-4.5",
-        transformer_lens_name=None,
+        hf_name=None,
         hyperbolic_name=None,
         cerebras_name=None,
         openrouter_name="anthropic/claude-haiku-4.5",
     ),
 }
-
-
-def get_transformer_lens_name(canonical_name: str) -> str:
-    """Get TransformerLens model name from canonical name."""
-    config = MODEL_REGISTRY[canonical_name]
-    if config.transformer_lens_name is None:
-        raise ValueError(f"Model {canonical_name} not available for TransformerLens")
-    return config.transformer_lens_name
 
 
 def get_hyperbolic_name(canonical_name: str) -> str:
@@ -159,15 +142,10 @@ def get_openrouter_name(canonical_name: str) -> str:
 
 
 def get_hf_name(canonical_name: str) -> str:
-    """Get HuggingFace model name from canonical name.
-
-    Falls back to transformer_lens_name if hf_name is not explicitly set.
-    """
+    """Get HuggingFace model name from canonical name."""
     config = MODEL_REGISTRY[canonical_name]
     if config.hf_name is not None:
         return config.hf_name
-    if config.transformer_lens_name is not None:
-        return config.transformer_lens_name
     raise ValueError(f"Model {canonical_name} not available for HuggingFace")
 
 
@@ -186,19 +164,11 @@ def is_valid_model(canonical_name: str) -> bool:
     return canonical_name in MODEL_REGISTRY
 
 
-def has_transformer_lens_support(canonical_name: str) -> bool:
-    """Check if model is available in TransformerLens."""
-    if canonical_name not in MODEL_REGISTRY:
-        return False
-    return MODEL_REGISTRY[canonical_name].transformer_lens_name is not None
-
-
 def has_hf_support(canonical_name: str) -> bool:
     """Check if model is available for HuggingFace loading."""
     if canonical_name not in MODEL_REGISTRY:
         return False
-    config = MODEL_REGISTRY[canonical_name]
-    return config.hf_name is not None or config.transformer_lens_name is not None
+    return MODEL_REGISTRY[canonical_name].hf_name is not None
 
 
 def list_models() -> list[str]:

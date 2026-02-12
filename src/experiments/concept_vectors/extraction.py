@@ -14,7 +14,7 @@ import torch
 from tqdm import tqdm
 
 from src.measurement.storage.completions import extract_completion_text
-from src.models import TransformerLensModel
+from src.models.huggingface_model import HuggingFaceModel
 from src.models.registry import supports_system_role
 from src.task_data import Task
 
@@ -140,7 +140,7 @@ def save_failures(output_dir: Path, failures: list[tuple[str, str, str]]) -> Non
 
 
 def extract_activations_with_system_prompt(
-    model: TransformerLensModel,
+    model: HuggingFaceModel,
     tasks: list[Task],
     layers: list[int],
     system_prompt: str | None,
