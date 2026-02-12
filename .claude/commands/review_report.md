@@ -16,8 +16,12 @@ Flag and fix each of these:
 
 Short sentences. No filler. Lead every section with the main result, then give supporting detail. If a reader has to wade through methodology to find out what happened, restructure. Cut any sentence that doesn't add information.
 
+Interpretation/discussion sections should be a bulleted list of one-liners, not paragraphs. Each bullet is one claim with its key supporting number. If it takes more than two sentences, it's too long.
+
 - Bad: "We tried alpha values from 0.1 to 10000 using 5-fold CV. The best alpha was 2154. This gave R²=0.86."
 - Good: "Ridge probes achieve R²=0.86 (best alpha=2154 via 5-fold CV)."
+- Bad interpretation: A paragraph discussing what a technique does, why a gap is small, and what it implies.
+- Good interpretation: "**Augmentation closes the train-test gap** (82% → 79%), confirming the model isn't overfitting to source-specific artifacts."
 
 ### 2. Naming
 
