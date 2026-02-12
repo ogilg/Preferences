@@ -8,6 +8,8 @@ import numpy as np
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score, mean_squared_error
 
+from src.probes.bradley_terry.data import PairwiseActivationData
+from src.probes.bradley_terry.training import pairwise_accuracy_from_scores
 from src.probes.core.storage import load_probe, load_manifest
 from src.probes.core.activations import load_activations
 from src.measurement.storage.loading import load_pooled_scores, load_run_utilities
@@ -23,12 +25,34 @@ def score_with_probe(probe_weights: np.ndarray, activations: np.ndarray) -> np.n
     return activations @ probe_weights[:-1] + probe_weights[-1]
 
 
+def _match_task_ids(
+    task_ids_data: np.ndarray,
+    task_ids_scores: list[str],
+    scores: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Match activation indices to scores by task ID.
+
+    Returns:
+        (indices, matched_scores) — indices into the activation array and
+        corresponding score values, for tasks present in both arrays.
+    """
+    id_to_idx_data = {tid: i for i, tid in enumerate(task_ids_data)}
+    valid_indices = []
+    valid_scores = []
+    for task_id, score in zip(task_ids_scores, scores):
+        if task_id in id_to_idx_data:
+            valid_indices.append(id_to_idx_data[task_id])
+            valid_scores.append(score)
+    return np.array(valid_indices), np.array(valid_scores)
+
+
 def evaluate_probe_on_data(
     probe_weights: np.ndarray,
     activations: np.ndarray,
     scores: np.ndarray,
     task_ids_data: np.ndarray,
     task_ids_scores: list[str],
+    pairwise_data: PairwiseActivationData | None = None,
 ) -> dict:
     """Evaluate probe on given activations and scores.
 
@@ -38,58 +62,57 @@ def evaluate_probe_on_data(
         scores: score vector (n_samples,)
         task_ids_data: task IDs corresponding to activations
         task_ids_scores: task IDs corresponding to scores
+        pairwise_data: if provided, computes pairwise accuracy on these pairs.
+            Pair indices must index into the activations array.
 
     Returns:
-        dict with r2, mse, pearson_r, n_samples, predictions, and mean-adjusted metrics
+        dict with r2, mse, pearson_r, n_samples, predictions, mean-adjusted metrics,
+        and optionally pairwise_acc
     """
-    # Match activations to scores by task ID
-    id_to_idx_data = {tid: i for i, tid in enumerate(task_ids_data)}
-    valid_indices = []
-    valid_scores = []
-    for task_id, score in zip(task_ids_scores, scores):
-        if task_id in id_to_idx_data:
-            valid_indices.append(id_to_idx_data[task_id])
-            valid_scores.append(score)
+    indices, y = _match_task_ids(task_ids_data, task_ids_scores, scores)
 
-    if len(valid_indices) < 10:  # minimum samples for evaluation
-        return {
+    if len(indices) < 10:
+        result: dict = {
             "r2": None,
             "r2_adjusted": None,
             "mse": None,
             "mse_adjusted": None,
             "pearson_r": None,
-            "n_samples": len(valid_indices),
+            "n_samples": len(indices),
             "predictions": None,
         }
+        if pairwise_data is not None:
+            result["pairwise_acc"] = None
+        return result
 
-    indices = np.array(valid_indices)
-    y = np.array(valid_scores)
     X_eval = activations[indices]
-
     y_pred = score_with_probe(probe_weights, X_eval)
 
-    # Compute standard metrics
     r2 = r2_score(y, y_pred)
     mse = mean_squared_error(y, y_pred)
     pearson_r_val, _ = pearsonr(y, y_pred)
 
-    # Compute mean-adjusted metrics: adjust predictions by dataset mean
-    # This accounts for probes trained on different dataset distributions
-    y_mean = np.mean(y)
-    y_pred_adjusted = y_pred - np.mean(y_pred) + y_mean
+    # Mean-adjusted metrics: adjust predictions by dataset mean.
+    # This accounts for probes trained on different dataset distributions.
+    y_pred_adjusted = y_pred - np.mean(y_pred) + np.mean(y)
 
-    r2_adjusted = r2_score(y, y_pred_adjusted)
-    mse_adjusted = mean_squared_error(y, y_pred_adjusted)
-
-    return {
+    result = {
         "r2": float(r2),
-        "r2_adjusted": float(r2_adjusted),
+        "r2_adjusted": float(r2_score(y, y_pred_adjusted)),
         "mse": float(mse),
-        "mse_adjusted": float(mse_adjusted),
+        "mse_adjusted": float(mean_squared_error(y, y_pred_adjusted)),
         "pearson_r": float(pearson_r_val),
         "n_samples": len(y),
         "predictions": y_pred.tolist(),
     }
+
+    if pairwise_data is not None:
+        # Predict scores for all tasks since pairwise_data.pairs
+        # indexes into the full activation array
+        all_predicted = score_with_probe(probe_weights, activations)
+        result["pairwise_acc"] = pairwise_accuracy_from_scores(all_predicted, pairwise_data)
+
+    return result
 
 
 def evaluate_probe_on_template(
@@ -149,31 +172,18 @@ def evaluate_probe_on_template(
     if not scores_dict:
         return {"r2": None, "mse": None, "n_samples": 0}
 
-    # Match activations to scores
-    id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
-    valid_indices = []
-    valid_scores = []
-    for task_id, score in scores_dict.items():
-        if task_id in id_to_idx:
-            valid_indices.append(id_to_idx[task_id])
-            valid_scores.append(score)
+    score_task_ids = list(scores_dict.keys())
+    score_values = np.array([scores_dict[tid] for tid in score_task_ids])
+    indices, y = _match_task_ids(task_ids, score_task_ids, score_values)
 
-    if len(valid_indices) < 10:  # minimum samples for evaluation
-        return {"r2": None, "mse": None, "n_samples": len(valid_indices)}
+    if len(indices) < 10:
+        return {"r2": None, "mse": None, "n_samples": len(indices)}
 
-    indices = np.array(valid_indices)
-    y = np.array(valid_scores)
-    X_eval = X[indices]
-
-    y_pred = score_with_probe(probe_weights, X_eval)
-
-    # Compute metrics
-    r2 = r2_score(y, y_pred)
-    mse = mean_squared_error(y, y_pred)
+    y_pred = score_with_probe(probe_weights, X[indices])
 
     return {
-        "r2": float(r2),
-        "mse": float(mse),
+        "r2": float(r2_score(y, y_pred)),
+        "mse": float(mean_squared_error(y, y_pred)),
         "n_samples": len(y),
         "trained_on": template_trained,
         "evaluated_on": eval_template,

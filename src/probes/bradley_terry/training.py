@@ -188,15 +188,18 @@ def train_bt(
 
 
 def pairwise_accuracy_from_scores(
-    scores: dict[str, float],
+    predicted_scores: np.ndarray,
     data: PairwiseActivationData,
-    task_ids: np.ndarray,
 ) -> float:
-    """Compute weighted pairwise accuracy of scalar scores on aggregated BT pairs."""
-    score_arr = np.array([scores[tid] for tid in task_ids])
+    """Compute weighted pairwise accuracy of scalar scores on aggregated BT pairs.
 
-    scores_i = score_arr[data.pairs[:, 0]]
-    scores_j = score_arr[data.pairs[:, 1]]
+    Args:
+        predicted_scores: (n_tasks,) array aligned to the activation array indexing.
+            Pairs in data.pairs index into this array.
+        data: aggregated pairwise comparison data
+    """
+    scores_i = predicted_scores[data.pairs[:, 0]]
+    scores_j = predicted_scores[data.pairs[:, 1]]
     wins_j = data.total - data.wins_i
 
     correct = np.where(scores_i > scores_j, data.wins_i, wins_j)
