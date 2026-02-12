@@ -1,0 +1,3364 @@
+{
+  "experiment_name": "hoo_scaled_raw",
+  "created_at": "2026-02-12T10:10:48.141084",
+  "grouping": "topic",
+  "hold_out_size": 3,
+  "all_groups": [
+    "coding",
+    "content_generation",
+    "fiction",
+    "harmful_request",
+    "knowledge_qa",
+    "math",
+    "persuasive_writing",
+    "summarization"
+  ],
+  "group_sizes": {
+    "coding": 125,
+    "content_generation": 375,
+    "fiction": 161,
+    "harmful_request": 714,
+    "knowledge_qa": 644,
+    "math": 672,
+    "persuasive_writing": 93,
+    "summarization": 26
+  },
+  "n_folds": 56,
+  "layers": [
+    31,
+    43,
+    55
+  ],
+  "folds": [
+    {
+      "fold_idx": 0,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "fiction"
+      ],
+      "train_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8793585652038886,
+          "val_r": 0.938010683534763,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -19327.42745372479,
+          "hoo_r": 0.68751811894426,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8547340122599174,
+          "val_r": 0.9246397591151052,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -131490.6887214029,
+          "hoo_r": 0.615409470085935,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8502803521213949,
+          "val_r": 0.9223006212462541,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -422452.45423444273,
+          "hoo_r": 0.6270709062229708,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 1,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.714481619389319,
+          "val_r": 0.845884864366143,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -3564.2533565527788,
+          "hoo_r": 0.9271015693604271,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6488723399201705,
+          "val_r": 0.8055661535158606,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -32796.506376490375,
+          "hoo_r": 0.9167156399158259,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6427761224810409,
+          "val_r": 0.8021275771381363,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -94999.75042941418,
+          "hoo_r": 0.9138661278276135,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 2,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8981609897017584,
+          "val_r": 0.9477955042145096,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -5427.647255827457,
+          "hoo_r": 0.746741794982462,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8814322708477524,
+          "val_r": 0.9389218130874759,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -28666.804934552587,
+          "hoo_r": 0.690914033257845,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8766170861544478,
+          "val_r": 0.9363556361435046,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -302130.45193851576,
+          "hoo_r": 0.6687744196642452,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 3,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "math"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8624833063964157,
+          "val_r": 0.929056165315434,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -16293.725795897752,
+          "hoo_r": 0.6928635431402451,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8446659130797427,
+          "val_r": 0.9194449258848341,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -41413.59707093593,
+          "hoo_r": 0.38417411638478377,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8383569112486263,
+          "val_r": 0.9161263083354015,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -496980.3662127189,
+          "hoo_r": 0.45353223084379957,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 4,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8785994565178308,
+          "val_r": 0.9375426681505974,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -21064.10666430241,
+          "hoo_r": 0.6797816607795178,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8568355433160246,
+          "val_r": 0.92578433985923,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -123913.39949764269,
+          "hoo_r": 0.599608125633954,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8538155598311121,
+          "val_r": 0.9241975465910833,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -551341.4610985282,
+          "hoo_r": 0.5976946665854108,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 5,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "summarization"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8763010808659812,
+          "val_r": 0.9363639815708238,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -10112.519829786603,
+          "hoo_r": 0.7202184401976952,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8518079419777467,
+          "val_r": 0.9230579548383948,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -86036.74415625316,
+          "hoo_r": 0.6435070125027836,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8464515056540936,
+          "val_r": 0.9202127913094541,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -434937.49629289366,
+          "hoo_r": 0.6315910436399939,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 6,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7140417782297999,
+          "val_r": 0.8457524699065562,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4418.307109429126,
+          "hoo_r": 0.9148310699990101,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6462345307042651,
+          "val_r": 0.8038699795709512,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -33372.58727934688,
+          "hoo_r": 0.9041234375710229,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.638937318102666,
+          "val_r": 0.7994985026085272,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -88489.69976373043,
+          "hoo_r": 0.9122665660698028,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 7,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8942024904067534,
+          "val_r": 0.9457657637145793,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -8916.536413110764,
+          "hoo_r": 0.7721891835738273,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8751775561967898,
+          "val_r": 0.9355556343421993,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -58875.18225506077,
+          "hoo_r": 0.723359574913586,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8701228593933585,
+          "val_r": 0.9329042159534247,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -235612.7881930132,
+          "hoo_r": 0.7071373289341897,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 8,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.863614181972,
+          "val_r": 0.9297311873614195,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -28027.525930503078,
+          "hoo_r": 0.6623743141644168,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8451579730143244,
+          "val_r": 0.9197091360469649,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -69713.78120016363,
+          "hoo_r": 0.42302081756773857,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8368157887647818,
+          "val_r": 0.9151080374661154,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -479397.62916943023,
+          "hoo_r": 0.5016950154129376,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 9,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8753735558644251,
+          "val_r": 0.9359442210263739,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -32703.024887206484,
+          "hoo_r": 0.7060945313755933,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8516528814918715,
+          "val_r": 0.9230401813355597,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -170338.5115354215,
+          "hoo_r": 0.640930256734773,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8479976366291602,
+          "val_r": 0.921101794030068,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -450729.68934711226,
+          "hoo_r": 0.6587339500139998,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 10,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8733869855595682,
+          "val_r": 0.9348698184869815,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -14223.698913607892,
+          "hoo_r": 0.7361296288204173,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8485565377591027,
+          "val_r": 0.9213018074929454,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -117597.00202142225,
+          "hoo_r": 0.6580268526910339,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8426340877432302,
+          "val_r": 0.9181409249007009,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -340682.8927743044,
+          "hoo_r": 0.6682810338929717,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 11,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7244373523961833,
+          "val_r": 0.8515851418207097,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -3568.956172906934,
+          "hoo_r": 0.9257110579835738,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6608330994541024,
+          "val_r": 0.8127373017112951,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -36631.72455574108,
+          "hoo_r": 0.9120096296623629,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6489759319683921,
+          "val_r": 0.8056805207905965,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -105333.05722725297,
+          "hoo_r": 0.9022255368041586,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 12,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7095363668896806,
+          "val_r": 0.8437243132222008,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4946.239249070368,
+          "hoo_r": 0.9400950046042293,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6636188516727661,
+          "val_r": 0.8161516675978181,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -23580.13124112615,
+          "hoo_r": 0.9033407278748807,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.645698440280569,
+          "val_r": 0.8052221566662965,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -62697.0568494444,
+          "hoo_r": 0.9112389263283174,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 13,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7173864169784652,
+          "val_r": 0.8475684323119594,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -6512.790822321335,
+          "hoo_r": 0.9124434898839962,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6556127740995057,
+          "val_r": 0.8097025329366832,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -36520.65794548376,
+          "hoo_r": 0.9022039626872851,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6480850795470079,
+          "val_r": 0.805276934278791,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -97960.94120498018,
+          "hoo_r": 0.9007986883875834,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 14,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7167935786476908,
+          "val_r": 0.8474537889106653,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4057.6730173093956,
+          "hoo_r": 0.9120198239064073,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6527184839446077,
+          "val_r": 0.8079683864062701,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -43213.45137264737,
+          "hoo_r": 0.9001340878735214,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6414594356950258,
+          "val_r": 0.8012082040036468,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -144535.5059073616,
+          "hoo_r": 0.8945161566866947,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 15,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8839778501249986,
+          "val_r": 0.9404130370562196,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -2874.250644569586,
+          "hoo_r": 0.6747180827387732,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8688346159140845,
+          "val_r": 0.9323285840357197,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -21166.805801909268,
+          "hoo_r": 0.5606072311706327,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8625562924509861,
+          "val_r": 0.9289476877865965,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -330519.7735538159,
+          "hoo_r": 0.5691850832398778,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 16,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.892730802927038,
+          "val_r": 0.9449844724498115,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -13425.47652170883,
+          "hoo_r": 0.779473592866286,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8749771561872542,
+          "val_r": 0.9354273574856723,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -61967.28483176985,
+          "hoo_r": 0.7257592584991676,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8709918620195797,
+          "val_r": 0.9333360645284777,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -333450.61745628447,
+          "hoo_r": 0.7023296551944539,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 17,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8913534669181249,
+          "val_r": 0.9442268116129758,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4412.849995989303,
+          "hoo_r": 0.7668350580833768,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8716276520002925,
+          "val_r": 0.9336256803121422,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -34685.99217349068,
+          "hoo_r": 0.7120674703310691,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.865448528938986,
+          "val_r": 0.9303425887548545,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -252294.3148069975,
+          "hoo_r": 0.6942260861574985,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 18,
+      "held_out_groups": [
+        "coding",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8653629271454374,
+          "val_r": 0.9304963403553336,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -45056.91281093326,
+          "hoo_r": 0.6623157778691093,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8487880666296279,
+          "val_r": 0.9216239853235443,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -131816.8666523867,
+          "hoo_r": 0.421211243903171,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8424610059511787,
+          "val_r": 0.9181947826630624,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -708378.288596416,
+          "hoo_r": 0.49985437176940994,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 19,
+      "held_out_groups": [
+        "coding",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8648795502249286,
+          "val_r": 0.930367456755415,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -21800.26191250343,
+          "hoo_r": 0.6309351636384732,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8472422910629179,
+          "val_r": 0.9208864750766738,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -61256.60575950228,
+          "hoo_r": 0.31176033825155247,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8378363349201585,
+          "val_r": 0.915733101293433,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -504738.79281082115,
+          "hoo_r": 0.40616061389204244,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 20,
+      "held_out_groups": [
+        "coding",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8727811213114999,
+          "val_r": 0.934488566100758,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -21078.427407730684,
+          "hoo_r": 0.7424387161411152,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8495310886741567,
+          "val_r": 0.9218295492283952,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -136015.2758458689,
+          "hoo_r": 0.6392876758381696,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8449943444859802,
+          "val_r": 0.9193957703334741,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -459261.3689164518,
+          "hoo_r": 0.6172607772449696,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 21,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "coding",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7023436447857111,
+          "val_r": 0.8388286937912944,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -7225.985599706889,
+          "hoo_r": 0.9109115544641454,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6324814764313478,
+          "val_r": 0.795259426846241,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -33981.53628602304,
+          "hoo_r": 0.9072762662022567,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6290781843935154,
+          "val_r": 0.7933602991366324,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -84702.73006556317,
+          "hoo_r": 0.9122826211874704,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 22,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8934470788939191,
+          "val_r": 0.945439331620709,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -17015.598581484624,
+          "hoo_r": 0.7254534876716815,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8768974998586921,
+          "val_r": 0.9366287243223053,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -53552.07947624339,
+          "hoo_r": 0.6787447147707963,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.871554920157459,
+          "val_r": 0.9338055448042892,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -305616.9310117313,
+          "hoo_r": 0.6674843337708805,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 23,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8506978784119902,
+          "val_r": 0.9228450789551677,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -33283.271888175346,
+          "hoo_r": 0.6523730774883134,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8335256980702177,
+          "val_r": 0.9134247771085426,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -60923.96795431746,
+          "hoo_r": 0.40295719212119635,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8272941210792439,
+          "val_r": 0.910132014681398,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -515518.35037426814,
+          "hoo_r": 0.4461893775735414,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 24,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8752998100054556,
+          "val_r": 0.9359599543927842,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -47721.31272591421,
+          "hoo_r": 0.5811625194603997,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8529955102862609,
+          "val_r": 0.9239241684139177,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -139207.29512145396,
+          "hoo_r": 0.5721717222962478,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.849797374633862,
+          "val_r": 0.9222724810055609,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -531390.9535032205,
+          "hoo_r": 0.5773940074376216,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 25,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8724867967232196,
+          "val_r": 0.9344247801286414,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -26577.929621775653,
+          "hoo_r": 0.6710545683657961,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.848326845907599,
+          "val_r": 0.9212745605825216,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -108444.23501216558,
+          "hoo_r": 0.6309756414522517,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8434169619843264,
+          "val_r": 0.9186590038752049,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -411022.98472953687,
+          "hoo_r": 0.6347296969067738,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 26,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7021566583456811,
+          "val_r": 0.8385529008182256,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4236.890079161986,
+          "hoo_r": 0.917906035006917,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6468797829613478,
+          "val_r": 0.8044249663184946,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -29241.052131125536,
+          "hoo_r": 0.9083682988448585,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6328643777938481,
+          "val_r": 0.7957129913221258,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -94251.65539211224,
+          "hoo_r": 0.9012132426374542,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 27,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.6817695780471164,
+          "val_r": 0.8270048575912876,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -5694.607974760952,
+          "hoo_r": 0.9354041669918156,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6374276769777358,
+          "val_r": 0.8007446367379891,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -21854.586059133326,
+          "hoo_r": 0.8974696577241124,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6229399666405688,
+          "val_r": 0.7918485995026281,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -69829.27246591596,
+          "hoo_r": 0.8939911835089686,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 28,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7039210083022429,
+          "val_r": 0.839580339001351,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -7740.527639948111,
+          "hoo_r": 0.912994099981139,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6458512613163969,
+          "val_r": 0.8038202018961191,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -31083.0996849234,
+          "hoo_r": 0.9101244212212614,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6388101817438512,
+          "val_r": 0.7997206955711474,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -87052.69121365815,
+          "hoo_r": 0.9078380307828154,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 29,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7029512556848452,
+          "val_r": 0.8392618390523928,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4351.54569094993,
+          "hoo_r": 0.9268645817891735,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.638671758024199,
+          "val_r": 0.7995397062286933,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -31468.365773087247,
+          "hoo_r": 0.9192827242430383,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6310989121831778,
+          "val_r": 0.794958529346933,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -97086.94412066514,
+          "hoo_r": 0.9165853345191521,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 30,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8628710749006556,
+          "val_r": 0.92939379962995,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -3207.8761293921316,
+          "hoo_r": 0.6651294220614035,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.852337937748384,
+          "val_r": 0.9236433508543829,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -14455.162177618811,
+          "hoo_r": 0.5148782825530779,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8478475746934722,
+          "val_r": 0.9212144192970859,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -438035.0552905247,
+          "hoo_r": 0.47890663749828505,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 31,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8905255060264766,
+          "val_r": 0.9438927948549265,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -16601.382130737587,
+          "hoo_r": 0.7210569912302052,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8770046457096277,
+          "val_r": 0.9366015216165504,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -38568.323360147006,
+          "hoo_r": 0.6884301449181176,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8724258239935399,
+          "val_r": 0.9342244021054963,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -408385.7159116008,
+          "hoo_r": 0.676373883815963,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 32,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8891524438102925,
+          "val_r": 0.9431515410519579,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -8465.038291057,
+          "hoo_r": 0.7540526179907723,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8717952935992808,
+          "val_r": 0.9338157524527798,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -27194.355415515267,
+          "hoo_r": 0.7119569961091636,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8663308636995423,
+          "val_r": 0.9308835416735326,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -335412.02111541474,
+          "hoo_r": 0.6866526118568761,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 33,
+      "held_out_groups": [
+        "content_generation",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8542835773908806,
+          "val_r": 0.9246467829400983,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -43101.76717820698,
+          "hoo_r": 0.6562676519755088,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8396097590737546,
+          "val_r": 0.9167743178623968,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -78245.81165325832,
+          "hoo_r": 0.4569917090402415,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8358374637627483,
+          "val_r": 0.9149021950395498,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -765365.221731514,
+          "hoo_r": 0.48740225124681347,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 34,
+      "held_out_groups": [
+        "content_generation",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8548823898982768,
+          "val_r": 0.9249731741526788,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -22367.103704503315,
+          "hoo_r": 0.6756898557475709,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8384233205162358,
+          "val_r": 0.9161258261499086,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -37993.387523587386,
+          "hoo_r": 0.3752506679947117,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8306346156169597,
+          "val_r": 0.9119727495566453,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -539829.5423524065,
+          "hoo_r": 0.411999786749961,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 35,
+      "held_out_groups": [
+        "content_generation",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8707478778113351,
+          "val_r": 0.9334397677399744,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -29320.314696957143,
+          "hoo_r": 0.6744517566774106,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8495977967065583,
+          "val_r": 0.9219648771690959,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -93223.7370407965,
+          "hoo_r": 0.6072896241355522,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8456208496206055,
+          "val_r": 0.9198447795756296,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -529765.6700239624,
+          "hoo_r": 0.6087744154024323,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 36,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7086083777889133,
+          "val_r": 0.8421301700772172,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -5637.069881377721,
+          "hoo_r": 0.9170096793148412,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6398094064523228,
+          "val_r": 0.7996822077003248,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -32103.089449581166,
+          "hoo_r": 0.9115261972873212,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.629381880959302,
+          "val_r": 0.7932235381003785,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -81271.77760416022,
+          "hoo_r": 0.906443098870207,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 37,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.6856994227032069,
+          "val_r": 0.8299864665391521,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -7669.722161916478,
+          "hoo_r": 0.9334346400467589,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.636081771212931,
+          "val_r": 0.798782037217339,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -23139.82774874278,
+          "hoo_r": 0.9075572896923093,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.616603889940968,
+          "val_r": 0.7865952206377227,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -61074.96127153561,
+          "hoo_r": 0.9118623515373885,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 38,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7066497189750887,
+          "val_r": 0.8416322044138299,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -12455.646351957259,
+          "hoo_r": 0.8957473897055945,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6413546855480693,
+          "val_r": 0.8010734108562485,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -35438.18437149057,
+          "hoo_r": 0.9004240579682966,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6322821353448367,
+          "val_r": 0.7954956755227244,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -72965.8746186581,
+          "hoo_r": 0.9107684458392307,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 39,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7049842416490809,
+          "val_r": 0.8404721022788773,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4865.721823012871,
+          "hoo_r": 0.9055014273691532,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6359844389047995,
+          "val_r": 0.7975636316468584,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -30467.21208530983,
+          "hoo_r": 0.9011191644364488,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6281969448076097,
+          "val_r": 0.7928536863696143,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -88256.70637760778,
+          "hoo_r": 0.9081869389524623,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 40,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8724533092846418,
+          "val_r": 0.9344471565084262,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -6989.735146668565,
+          "hoo_r": 0.6606609389731469,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8569421916792106,
+          "val_r": 0.9259029718282179,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -33899.88058868599,
+          "hoo_r": 0.5929964640109019,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8508632834398071,
+          "val_r": 0.9226336876966243,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -340383.93864519737,
+          "hoo_r": 0.5806609331376645,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 41,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8896493133065633,
+          "val_r": 0.943420293581441,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -30525.613663143402,
+          "hoo_r": 0.7497878640499085,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8704871296478339,
+          "val_r": 0.9330769128794622,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -89275.44536792059,
+          "hoo_r": 0.7384500182486117,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8667294771796994,
+          "val_r": 0.9311392293070181,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -340894.92065338494,
+          "hoo_r": 0.7220925822547234,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 42,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8873130726169031,
+          "val_r": 0.9422118906550798,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -11806.923988891089,
+          "hoo_r": 0.7638615294121468,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8670462087800667,
+          "val_r": 0.9312799742841446,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -55759.092500963045,
+          "hoo_r": 0.7374184081204852,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8613593631110108,
+          "val_r": 0.9282331636204557,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -258595.26321576387,
+          "hoo_r": 0.7205334228089051,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 43,
+      "held_out_groups": [
+        "fiction",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8579269359021412,
+          "val_r": 0.9267187989193207,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -71193.3855925983,
+          "hoo_r": 0.6131327374153253,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8397691127912278,
+          "val_r": 0.9168235714148792,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -138877.01143168085,
+          "hoo_r": 0.48371172538574486,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8333120228156092,
+          "val_r": 0.9133804968295023,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -759941.0698329606,
+          "hoo_r": 0.5485378853205654,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 44,
+      "held_out_groups": [
+        "fiction",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8570765647415648,
+          "val_r": 0.9262792466666416,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -36408.71825785692,
+          "hoo_r": 0.6098791246219091,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8387890738251296,
+          "val_r": 0.9163210950114792,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -77422.86150210249,
+          "hoo_r": 0.4133073297700289,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8294515224400435,
+          "val_r": 0.9111933318706111,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -537210.3985063661,
+          "hoo_r": 0.48472206603350915,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 45,
+      "held_out_groups": [
+        "fiction",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8696207537304881,
+          "val_r": 0.932898257481796,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -35916.887965320624,
+          "hoo_r": 0.693870641389763,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8453393843497873,
+          "val_r": 0.9196708446488231,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -133041.182438906,
+          "hoo_r": 0.6744864694077122,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8405057503093367,
+          "val_r": 0.9170937326912165,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -408226.0192897342,
+          "hoo_r": 0.6927319461503572,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 46,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7130184465133224,
+          "val_r": 0.8455426383155565,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -2834.2896954803045,
+          "hoo_r": 0.9142467618393694,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6716953022555898,
+          "val_r": 0.8200717322703429,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -25646.757277451066,
+          "hoo_r": 0.8961756456289185,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6563501176013528,
+          "val_r": 0.8110357726987945,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -71103.48486610297,
+          "hoo_r": 0.883541740200766,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 47,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7099947458875211,
+          "val_r": 0.8431094452598675,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -6861.365884042492,
+          "hoo_r": 0.9224215634579523,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6489149261980602,
+          "val_r": 0.8050799029755564,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -32756.759264906636,
+          "hoo_r": 0.9155014450917859,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6360704746314803,
+          "val_r": 0.797458335818382,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -89394.26621921803,
+          "hoo_r": 0.9058140645860692,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 48,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7103967586897356,
+          "val_r": 0.8433162678916274,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -3893.100713518926,
+          "hoo_r": 0.9257602823071445,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6479450175478542,
+          "val_r": 0.8045829922328445,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -35980.59316790645,
+          "hoo_r": 0.9158701569723225,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6321661519518671,
+          "val_r": 0.7950282301177328,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -97815.99063614474,
+          "hoo_r": 0.9064738384049735,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 49,
+      "held_out_groups": [
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.6945703661356699,
+          "val_r": 0.8350344134809526,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -11103.171630289628,
+          "hoo_r": 0.9374385367518722,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6523023954344044,
+          "val_r": 0.80915019042138,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -30038.811806726404,
+          "hoo_r": 0.9097263435214454,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6346398614315829,
+          "val_r": 0.7983927192550302,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -77484.39176334998,
+          "hoo_r": 0.916925628307893,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 50,
+      "held_out_groups": [
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.6974536768373348,
+          "val_r": 0.8365775338613967,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -5435.055103935887,
+          "hoo_r": 0.9414982729810961,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6529319350018946,
+          "val_r": 0.8094635519472316,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -22718.07018315601,
+          "hoo_r": 0.9071967646393563,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6301716674291137,
+          "val_r": 0.7953926578445054,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -61509.33034574643,
+          "hoo_r": 0.9156409348335144,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 51,
+      "held_out_groups": [
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.7072690820771056,
+          "val_r": 0.8417444059494448,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -7870.6959094319445,
+          "hoo_r": 0.8972040377204091,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.6454523751760928,
+          "val_r": 0.8035040534429836,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -33688.51796907953,
+          "hoo_r": 0.8900920985155188,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.6357273706781963,
+          "val_r": 0.7976424669827183,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -96853.80431428016,
+          "hoo_r": 0.8859185887658895,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 52,
+      "held_out_groups": [
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8733279171668453,
+          "val_r": 0.9347977737998591,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -15401.490254986678,
+          "hoo_r": 0.7094418799994597,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8612672708674347,
+          "val_r": 0.928094878068844,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -49451.76975933702,
+          "hoo_r": 0.6219534956473962,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8554836979338166,
+          "val_r": 0.9250928832565798,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -482846.1896403307,
+          "hoo_r": 0.6024711325787281,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 53,
+      "held_out_groups": [
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8755550652532177,
+          "val_r": 0.935949689490079,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -4354.559620071645,
+          "hoo_r": 0.6667609858496218,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8605131673636489,
+          "val_r": 0.9277285048413711,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -22723.28970647193,
+          "hoo_r": 0.5867547904100793,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8525205753421604,
+          "val_r": 0.9234477160251714,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -362930.42847145937,
+          "hoo_r": 0.5659134366612555,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 54,
+      "held_out_groups": [
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8858091511516909,
+          "val_r": 0.9413692081706158,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -17742.786478849004,
+          "hoo_r": 0.7780367420055901,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8668705974902657,
+          "val_r": 0.9310813376020202,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -53726.12154810425,
+          "hoo_r": 0.7428336328237309,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8613593937981788,
+          "val_r": 0.9281629636499444,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -367897.4922800707,
+          "hoo_r": 0.7246996165832634,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 55,
+      "held_out_groups": [
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "layers": {
+        "ridge_L31": {
+          "val_r2": 0.8582307582624006,
+          "val_r": 0.9267483313245354,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -58559.802035926194,
+          "hoo_r": 0.6167980486782667,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L31",
+          "layer": 31
+        },
+        "ridge_L43": {
+          "val_r2": 0.8411702716144447,
+          "val_r": 0.9175248996209087,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -133245.16639151418,
+          "hoo_r": 0.39720318858038695,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L43",
+          "layer": 43
+        },
+        "ridge_L55": {
+          "val_r2": 0.8333108939724545,
+          "val_r": 0.9133033116497765,
+          "best_alpha": 2154.4346900318824,
+          "hoo_r2": -810396.930104606,
+          "hoo_r": 0.46066363706227104,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L55",
+          "layer": 55
+        }
+      }
+    }
+  ],
+  "layer_summary": {
+    "31": {
+      "ridge": {
+        "mean_val_r": 0.9001394217612748,
+        "mean_hoo_r": 0.7790374123900856,
+        "std_hoo_r": 0.11703747382234525,
+        "n_folds": 56
+      }
+    },
+    "43": {
+      "ridge": {
+        "mean_val_r": 0.8803142628691952,
+        "mean_hoo_r": 0.7038329234488712,
+        "std_hoo_r": 0.18538855586069586,
+        "n_folds": 56
+      }
+    },
+    "55": {
+      "ridge": {
+        "mean_val_r": 0.8757450505939331,
+        "mean_hoo_r": 0.7107296230106712,
+        "std_hoo_r": 0.16896618412427386,
+        "n_folds": 56
+      }
+    }
+  }
+}

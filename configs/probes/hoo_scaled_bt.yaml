@@ -1,0 +1,21 @@
+experiment_name: hoo_scaled_bt
+
+run_dir: results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0
+
+activations_path: activations/gemma_3_27b/activations_prompt_last.npz
+
+output_dir: results/probes/hoo_scaled_bt
+
+layers: [31, 43, 55]
+
+modes: [bradley_terry]
+
+cv_folds: 5
+alpha_sweep_size: 10
+standardize: true
+
+topics_json: src/analysis/topic_classification/output/topics_v2.json
+
+hoo_grouping: topic
+hoo_hold_out_size: 3
+hoo_groups: [math, fiction, coding, persuasive_writing, content_generation, summarization, knowledge_qa, harmful_request]

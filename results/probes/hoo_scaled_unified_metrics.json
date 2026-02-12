@@ -1,0 +1,2914 @@
+[
+  {
+    "fold_idx": 0,
+    "held_out": [
+      "coding",
+      "content_generation",
+      "fiction"
+    ],
+    "n_eval_tasks": 661,
+    "n_eval_pairs": 1335,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.68751811894426,
+        "pairwise_acc": 0.6389388489208633
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6154094700859345,
+        "pairwise_acc": 0.6208033573141487
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.627070906222971,
+        "pairwise_acc": 0.6122601918465228
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6753522390822762,
+        "pairwise_acc": 0.6429856115107914
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5940274159034786,
+        "pairwise_acc": 0.613009592326139
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5932974065015081,
+        "pairwise_acc": 0.6133093525179856
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.12927756569789445,
+        "pairwise_acc": 0.5145383693045563
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6740600863176291,
+        "pairwise_acc": 0.645083932853717
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5180318323377743,
+        "pairwise_acc": 0.5869304556354916
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.43242224434849086,
+        "pairwise_acc": 0.5666966426858513
+      }
+    }
+  },
+  {
+    "fold_idx": 1,
+    "held_out": [
+      "coding",
+      "content_generation",
+      "harmful_request"
+    ],
+    "n_eval_tasks": 1214,
+    "n_eval_pairs": 4308,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9271015693604274,
+        "pairwise_acc": 0.7170480843404474
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9167156399158263,
+        "pairwise_acc": 0.7154538441758806
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9138661278276128,
+        "pairwise_acc": 0.7112368218050913
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9158044275269785,
+        "pairwise_acc": 0.7204937001799948
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.9033358045685901,
+        "pairwise_acc": 0.7149910002571355
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8940474918665691,
+        "pairwise_acc": 0.6969400874260735
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.38598481566243587,
+        "pairwise_acc": 0.5694523013628182
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9159428190831244,
+        "pairwise_acc": 0.7217793777320648
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8688257695332569,
+        "pairwise_acc": 0.7031113396760093
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8593052889952432,
+        "pairwise_acc": 0.6945744407302649
+      }
+    }
+  },
+  {
+    "fold_idx": 2,
+    "held_out": [
+      "coding",
+      "content_generation",
+      "knowledge_qa"
+    ],
+    "n_eval_tasks": 1144,
+    "n_eval_pairs": 3980,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7467417949824617,
+        "pairwise_acc": 0.6782932100316631
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6909140332578444,
+        "pairwise_acc": 0.6597979594913806
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6687744196642448,
+        "pairwise_acc": 0.6476855807408152
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5485924910928804,
+        "pairwise_acc": 0.6298939538623913
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5137283977460211,
+        "pairwise_acc": 0.63054731869126
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.44595293651418266,
+        "pairwise_acc": 0.6094888676684928
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1122375428483415,
+        "pairwise_acc": 0.5077649896969393
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6685888628904384,
+        "pairwise_acc": 0.653163793536714
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5529439934121173,
+        "pairwise_acc": 0.617731316278836
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5164499442398904,
+        "pairwise_acc": 0.6074785143488968
+      }
+    }
+  },
+  {
+    "fold_idx": 3,
+    "held_out": [
+      "coding",
+      "content_generation",
+      "math"
+    ],
+    "n_eval_tasks": 1172,
+    "n_eval_pairs": 4570,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6928635431402448,
+        "pairwise_acc": 0.6177281680892974
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.3841741163847838,
+        "pairwise_acc": 0.5378857518056468
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.453532230843799,
+        "pairwise_acc": 0.5631429196760779
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6629367558210035,
+        "pairwise_acc": 0.6045524184723134
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.37060019959140655,
+        "pairwise_acc": 0.5404246005690523
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.4689947166694183,
+        "pairwise_acc": 0.5612606697307945
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1640917222347305,
+        "pairwise_acc": 0.5265922521339461
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.525601272894491,
+        "pairwise_acc": 0.5834537097833223
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.23722938533846882,
+        "pairwise_acc": 0.5266360253884876
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.22798738156392506,
+        "pairwise_acc": 0.5195009848982272
+      }
+    }
+  },
+  {
+    "fold_idx": 4,
+    "held_out": [
+      "coding",
+      "content_generation",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 593,
+    "n_eval_pairs": 1082,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6797816607795177,
+        "pairwise_acc": 0.6503328402366864
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.5996081256339545,
+        "pairwise_acc": 0.6207470414201184
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.597694666585411,
+        "pairwise_acc": 0.6231508875739645
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6176619047120543,
+        "pairwise_acc": 0.6538461538461539
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5394825794171879,
+        "pairwise_acc": 0.6384985207100592
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5600338551304406,
+        "pairwise_acc": 0.6521819526627219
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.11850598942170208,
+        "pairwise_acc": 0.5190458579881657
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6901323048340186,
+        "pairwise_acc": 0.6519970414201184
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5106140285318568,
+        "pairwise_acc": 0.6018860946745562
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.3997590998594953,
+        "pairwise_acc": 0.5763683431952663
+      }
+    }
+  },
+  {
+    "fold_idx": 5,
+    "held_out": [
+      "coding",
+      "content_generation",
+      "summarization"
+    ],
+    "n_eval_tasks": 526,
+    "n_eval_pairs": 879,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7202184401976952,
+        "pairwise_acc": 0.6726610516731163
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6435070125027837,
+        "pairwise_acc": 0.6444343273389483
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6315910436399934,
+        "pairwise_acc": 0.6303209651718643
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6884866986821542,
+        "pairwise_acc": 0.6763032096517186
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.6099916920761267,
+        "pairwise_acc": 0.6437514227179604
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.6148020124997683,
+        "pairwise_acc": 0.6485317550648759
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.11540519492534339,
+        "pairwise_acc": 0.5260641930343729
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.702576513577715,
+        "pairwise_acc": 0.6712952424311405
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5275527153603959,
+        "pairwise_acc": 0.5968586387434555
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.43384633066086176,
+        "pairwise_acc": 0.5845663555656727
+      }
+    }
+  },
+  {
+    "fold_idx": 6,
+    "held_out": [
+      "coding",
+      "fiction",
+      "harmful_request"
+    ],
+    "n_eval_tasks": 1000,
+    "n_eval_pairs": 3364,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9148310699990103,
+        "pairwise_acc": 0.6968070652173913
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9041234375710225,
+        "pairwise_acc": 0.6964673913043479
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9122665660698026,
+        "pairwise_acc": 0.6847826086956522
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9200310508152074,
+        "pairwise_acc": 0.6904891304347827
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.9024465062584441,
+        "pairwise_acc": 0.693953804347826
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8944707352854602,
+        "pairwise_acc": 0.6667119565217391
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.35473951522820313,
+        "pairwise_acc": 0.5694972826086957
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9042889483430352,
+        "pairwise_acc": 0.6993885869565217
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8649880942368278,
+        "pairwise_acc": 0.6905570652173914
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8556704528940275,
+        "pairwise_acc": 0.6900815217391304
+      }
+    }
+  },
+  {
+    "fold_idx": 7,
+    "held_out": [
+      "coding",
+      "fiction",
+      "knowledge_qa"
+    ],
+    "n_eval_tasks": 930,
+    "n_eval_pairs": 2518,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7721891835738272,
+        "pairwise_acc": 0.6872120730738681
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.7233595749135865,
+        "pairwise_acc": 0.6617950754567117
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.7071373289341899,
+        "pairwise_acc": 0.6527402700555996
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6076911614097013,
+        "pairwise_acc": 0.6347100873709293
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5805750198949188,
+        "pairwise_acc": 0.6319301032565529
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5726758471770848,
+        "pairwise_acc": 0.6294678316123908
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1805798681243904,
+        "pairwise_acc": 0.525099285146942
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.7308868532562603,
+        "pairwise_acc": 0.6782366957903098
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.6220274024893034,
+        "pairwise_acc": 0.6110405083399524
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5516121768157823,
+        "pairwise_acc": 0.5903891977760127
+      }
+    }
+  },
+  {
+    "fold_idx": 8,
+    "held_out": [
+      "coding",
+      "fiction",
+      "math"
+    ],
+    "n_eval_tasks": 958,
+    "n_eval_pairs": 3158,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6623743141644165,
+        "pairwise_acc": 0.5932729460948882
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.42302081756773807,
+        "pairwise_acc": 0.5164375752201178
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.5016950154129375,
+        "pairwise_acc": 0.5537467536580731
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6216453834713535,
+        "pairwise_acc": 0.593019573066447
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.424125131805482,
+        "pairwise_acc": 0.5344904034965478
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.45854780860012045,
+        "pairwise_acc": 0.5401279533793628
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.19008874537328224,
+        "pairwise_acc": 0.5322100462405777
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.5674028165341296,
+        "pairwise_acc": 0.5702793437638564
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.31026877400157915,
+        "pairwise_acc": 0.5280293912712992
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.29977893131956734,
+        "pairwise_acc": 0.5269525559004244
+      }
+    }
+  },
+  {
+    "fold_idx": 9,
+    "held_out": [
+      "coding",
+      "fiction",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 379,
+    "n_eval_pairs": 438,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7060945313755933,
+        "pairwise_acc": 0.6593607305936073
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6409302567347731,
+        "pairwise_acc": 0.6264840182648402
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6587339500139993,
+        "pairwise_acc": 0.6100456621004566
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6052197928005959,
+        "pairwise_acc": 0.6474885844748859
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5481014538877224,
+        "pairwise_acc": 0.6625570776255708
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5938990246697634,
+        "pairwise_acc": 0.6465753424657534
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1806587436554676,
+        "pairwise_acc": 0.4771689497716895
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.721962952302434,
+        "pairwise_acc": 0.663013698630137
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5692732024762136,
+        "pairwise_acc": 0.6269406392694064
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5401721820422133,
+        "pairwise_acc": 0.5885844748858448
+      }
+    }
+  },
+  {
+    "fold_idx": 10,
+    "held_out": [
+      "coding",
+      "fiction",
+      "summarization"
+    ],
+    "n_eval_tasks": 312,
+    "n_eval_pairs": 297,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7361296288204175,
+        "pairwise_acc": 0.6545454545454545
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6580268526910342,
+        "pairwise_acc": 0.5959595959595959
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6682810338929719,
+        "pairwise_acc": 0.6134680134680135
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.7107230236869919,
+        "pairwise_acc": 0.6255892255892256
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.6418530554615363,
+        "pairwise_acc": 0.6430976430976431
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.6475628529743291,
+        "pairwise_acc": 0.6202020202020202
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.16129754515057826,
+        "pairwise_acc": 0.49966329966329964
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.7268398752938343,
+        "pairwise_acc": 0.6585858585858586
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5815887828309194,
+        "pairwise_acc": 0.5696969696969697
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5459594789652845,
+        "pairwise_acc": 0.5562289562289562
+      }
+    }
+  },
+  {
+    "fold_idx": 11,
+    "held_out": [
+      "coding",
+      "harmful_request",
+      "knowledge_qa"
+    ],
+    "n_eval_tasks": 1483,
+    "n_eval_pairs": 6136,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9257110579835742,
+        "pairwise_acc": 0.7426880100879191
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9120096296623619,
+        "pairwise_acc": 0.7391852604294371
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9022255368041586,
+        "pairwise_acc": 0.7329153385407545
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8742592351542794,
+        "pairwise_acc": 0.7173631300570948
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8701950224783036,
+        "pairwise_acc": 0.720620687239483
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.864060784555168,
+        "pairwise_acc": 0.7195698623419384
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.40020658740008547,
+        "pairwise_acc": 0.580440645907037
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9093902518926669,
+        "pairwise_acc": 0.7326000910714912
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8701882337423233,
+        "pairwise_acc": 0.7282566814949736
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.855669736232699,
+        "pairwise_acc": 0.718484009947809
+      }
+    }
+  },
+  {
+    "fold_idx": 12,
+    "held_out": [
+      "coding",
+      "harmful_request",
+      "math"
+    ],
+    "n_eval_tasks": 1511,
+    "n_eval_pairs": 6096,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9400950046042289,
+        "pairwise_acc": 0.6792559188275085
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9033407278748801,
+        "pairwise_acc": 0.6490628523111612
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.911238926328318,
+        "pairwise_acc": 0.6481116121758738
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9325003656679844,
+        "pairwise_acc": 0.6790093010146562
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8838984921941513,
+        "pairwise_acc": 0.6459272829763247
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8605337479815426,
+        "pairwise_acc": 0.629826662908681
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.44077171303652696,
+        "pairwise_acc": 0.5734921082299888
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9254553342316366,
+        "pairwise_acc": 0.6836245772266065
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8547330909443756,
+        "pairwise_acc": 0.6404664599774521
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8747617136749692,
+        "pairwise_acc": 0.6515994926719278
+      }
+    }
+  },
+  {
+    "fold_idx": 13,
+    "held_out": [
+      "coding",
+      "harmful_request",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 932,
+    "n_eval_pairs": 3143,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9124434898839964,
+        "pairwise_acc": 0.6896247888978633
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.902203962687284,
+        "pairwise_acc": 0.6888905205962259
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9007986883875831,
+        "pairwise_acc": 0.6824289595418166
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8873316256897221,
+        "pairwise_acc": 0.6909464718408106
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8704912555351539,
+        "pairwise_acc": 0.6946178133489977
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8550862554609822,
+        "pairwise_acc": 0.6585652397386005
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.4225656554647278,
+        "pairwise_acc": 0.5637712019972098
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.8993892086328648,
+        "pairwise_acc": 0.7003451061017696
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8549416643665673,
+        "pairwise_acc": 0.6764079594683897
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8447987356158839,
+        "pairwise_acc": 0.6750862765254424
+      }
+    }
+  },
+  {
+    "fold_idx": 14,
+    "held_out": [
+      "coding",
+      "harmful_request",
+      "summarization"
+    ],
+    "n_eval_tasks": 865,
+    "n_eval_pairs": 2915,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9120198239064071,
+        "pairwise_acc": 0.6775614836177201
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9001340878735209,
+        "pairwise_acc": 0.6798045341664664
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.8945161566866948,
+        "pairwise_acc": 0.669550588800769
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8945869569057529,
+        "pairwise_acc": 0.6776415925658896
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8770585258906873,
+        "pairwise_acc": 0.6858127052791797
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8545960407569824,
+        "pairwise_acc": 0.6532083633741889
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.3615044976814131,
+        "pairwise_acc": 0.5665304814547785
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.8867748478597195,
+        "pairwise_acc": 0.688376191620604
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8394660541499253,
+        "pairwise_acc": 0.6749979972762957
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8376065299897495,
+        "pairwise_acc": 0.6621004566210046
+      }
+    }
+  },
+  {
+    "fold_idx": 15,
+    "held_out": [
+      "coding",
+      "knowledge_qa",
+      "math"
+    ],
+    "n_eval_tasks": 1441,
+    "n_eval_pairs": 6394,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6747180827387743,
+        "pairwise_acc": 0.630709548241772
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.5606072311706326,
+        "pairwise_acc": 0.572550369165311
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.5691850832398778,
+        "pairwise_acc": 0.5921661869603304
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5952666009496473,
+        "pairwise_acc": 0.6110624452509072
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.4090167380685237,
+        "pairwise_acc": 0.5603804279814791
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.4596478006861857,
+        "pairwise_acc": 0.5713302465273432
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.16887209843073347,
+        "pairwise_acc": 0.529939932423977
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.5692934993411674,
+        "pairwise_acc": 0.6094356150669503
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.44547242170105306,
+        "pairwise_acc": 0.5720810912276311
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.562714694076909,
+        "pairwise_acc": 0.6073395069453135
+      }
+    }
+  },
+  {
+    "fold_idx": 16,
+    "held_out": [
+      "coding",
+      "knowledge_qa",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 862,
+    "n_eval_pairs": 2208,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.779473592866286,
+        "pairwise_acc": 0.6964673913043479
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.725759258499168,
+        "pairwise_acc": 0.6644021739130435
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.7023296551944527,
+        "pairwise_acc": 0.6431159420289855
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.542821239049175,
+        "pairwise_acc": 0.6285326086956522
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.49437212424968735,
+        "pairwise_acc": 0.616123188405797
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.4899264016319392,
+        "pairwise_acc": 0.621195652173913
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.18180714550396332,
+        "pairwise_acc": 0.5134963768115942
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.7354233442979299,
+        "pairwise_acc": 0.6723731884057971
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.6195996765767585,
+        "pairwise_acc": 0.6160326086956521
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5559765734767936,
+        "pairwise_acc": 0.5984601449275362
+      }
+    }
+  },
+  {
+    "fold_idx": 17,
+    "held_out": [
+      "coding",
+      "knowledge_qa",
+      "summarization"
+    ],
+    "n_eval_tasks": 795,
+    "n_eval_pairs": 1888,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7668350580833766,
+        "pairwise_acc": 0.681885593220339
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.7120674703310688,
+        "pairwise_acc": 0.668114406779661
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6942260861574988,
+        "pairwise_acc": 0.6604872881355932
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5763880676724303,
+        "pairwise_acc": 0.635593220338983
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5363024434398571,
+        "pairwise_acc": 0.6191737288135594
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5194308596619228,
+        "pairwise_acc": 0.6282838983050848
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.16039287036060784,
+        "pairwise_acc": 0.5095338983050848
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.721797951488844,
+        "pairwise_acc": 0.670656779661017
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.595117709451569,
+        "pairwise_acc": 0.610593220338983
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5510501891237374,
+        "pairwise_acc": 0.6007415254237288
+      }
+    }
+  },
+  {
+    "fold_idx": 18,
+    "held_out": [
+      "coding",
+      "math",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 890,
+    "n_eval_pairs": 2748,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6623157778691091,
+        "pairwise_acc": 0.5859056493884682
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.42121124390317116,
+        "pairwise_acc": 0.5165259172976121
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.49985437176941,
+        "pairwise_acc": 0.5418608037274316
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.579864284949931,
+        "pairwise_acc": 0.5793535235876529
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.34392990886099856,
+        "pairwise_acc": 0.5049868957483984
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.39643982148563345,
+        "pairwise_acc": 0.5104105998835178
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1599708198758169,
+        "pairwise_acc": 0.5287565521258009
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.5854045234637989,
+        "pairwise_acc": 0.5681421083284799
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.3598370745347729,
+        "pairwise_acc": 0.5286109493302271
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.2789579485090778,
+        "pairwise_acc": 0.5347990681421083
+      }
+    }
+  },
+  {
+    "fold_idx": 19,
+    "held_out": [
+      "coding",
+      "math",
+      "summarization"
+    ],
+    "n_eval_tasks": 823,
+    "n_eval_pairs": 2391,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6309351636384734,
+        "pairwise_acc": 0.5708308928123169
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.31176033825155286,
+        "pairwise_acc": 0.4842272613170446
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.4061606138920422,
+        "pairwise_acc": 0.519203413940256
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6092192820179135,
+        "pairwise_acc": 0.5826290686971801
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.30889981150323065,
+        "pairwise_acc": 0.4946866371014978
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.35716265147926496,
+        "pairwise_acc": 0.5107522383064179
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.10726105185605048,
+        "pairwise_acc": 0.5221320391599029
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.5431769171285697,
+        "pairwise_acc": 0.5546816166011213
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.24792684816429075,
+        "pairwise_acc": 0.4990377374278303
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.2619430672556291,
+        "pairwise_acc": 0.5127604384570329
+      }
+    }
+  },
+  {
+    "fold_idx": 20,
+    "held_out": [
+      "coding",
+      "persuasive_writing",
+      "summarization"
+    ],
+    "n_eval_tasks": 244,
+    "n_eval_pairs": 198,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7424387161411155,
+        "pairwise_acc": 0.6565656565656566
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6392876758381698,
+        "pairwise_acc": 0.6101010101010101
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6172607772449696,
+        "pairwise_acc": 0.5878787878787879
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5716630663841873,
+        "pairwise_acc": 0.6636363636363637
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.47379053811441746,
+        "pairwise_acc": 0.6404040404040404
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.505640880247654,
+        "pairwise_acc": 0.6454545454545455
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.20272215226234735,
+        "pairwise_acc": 0.4404040404040404
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.711295853880948,
+        "pairwise_acc": 0.6363636363636364
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5198349219706467,
+        "pairwise_acc": 0.604040404040404
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5062290762384849,
+        "pairwise_acc": 0.5717171717171717
+      }
+    }
+  },
+  {
+    "fold_idx": 21,
+    "held_out": [
+      "content_generation",
+      "fiction",
+      "harmful_request"
+    ],
+    "n_eval_tasks": 1250,
+    "n_eval_pairs": 4449,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.910911554464146,
+        "pairwise_acc": 0.7076655916645993
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9072762662022571,
+        "pairwise_acc": 0.7084594393450757
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9122826211874704,
+        "pairwise_acc": 0.7094021334656413
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9209301843865257,
+        "pairwise_acc": 0.7055817415033491
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.9063454879557681,
+        "pairwise_acc": 0.7051848176631109
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.9015335536736895,
+        "pairwise_acc": 0.6987844207392706
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.3128689167867564,
+        "pairwise_acc": 0.5502852890101712
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9079788248237879,
+        "pairwise_acc": 0.7030513520218308
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.869719160893807,
+        "pairwise_acc": 0.7019598114611759
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8515800810076494,
+        "pairwise_acc": 0.6828578516497147
+      }
+    }
+  },
+  {
+    "fold_idx": 22,
+    "held_out": [
+      "content_generation",
+      "fiction",
+      "knowledge_qa"
+    ],
+    "n_eval_tasks": 1180,
+    "n_eval_pairs": 4161,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7254534876716818,
+        "pairwise_acc": 0.6662019900975821
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6787447147707966,
+        "pairwise_acc": 0.640724895447772
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6674843337708798,
+        "pairwise_acc": 0.6298610777291737
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5910872265579801,
+        "pairwise_acc": 0.6273133682641927
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.560981767801781,
+        "pairwise_acc": 0.6295726577897419
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5266733226367145,
+        "pairwise_acc": 0.6176513002932269
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.12839619630114554,
+        "pairwise_acc": 0.500552804883911
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6724149634756535,
+        "pairwise_acc": 0.6447627745998173
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5817445535311809,
+        "pairwise_acc": 0.6266403884055184
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5299060618512457,
+        "pairwise_acc": 0.6028938133922992
+      }
+    }
+  },
+  {
+    "fold_idx": 23,
+    "held_out": [
+      "content_generation",
+      "fiction",
+      "math"
+    ],
+    "n_eval_tasks": 1208,
+    "n_eval_pairs": 4853,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6523730774883141,
+        "pairwise_acc": 0.6044431621465667
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.4029571921211964,
+        "pairwise_acc": 0.5450086555106751
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.44618937757354094,
+        "pairwise_acc": 0.5660497897947407
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6276875139821378,
+        "pairwise_acc": 0.6001154068090018
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.40284358724147773,
+        "pairwise_acc": 0.5494188442832413
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.4790310256965603,
+        "pairwise_acc": 0.5568378534333526
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.23388381221994275,
+        "pairwise_acc": 0.5180529222652708
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.37516621239656245,
+        "pairwise_acc": 0.5577446212183662
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.18680284383778206,
+        "pairwise_acc": 0.5243178633253648
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.20094502255813318,
+        "pairwise_acc": 0.5271206001154068
+      }
+    }
+  },
+  {
+    "fold_idx": 24,
+    "held_out": [
+      "content_generation",
+      "fiction",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 629,
+    "n_eval_pairs": 1202,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.5811625194603993,
+        "pairwise_acc": 0.5866200698951572
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.5721717222962474,
+        "pairwise_acc": 0.6089199534032285
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.5773940074376218,
+        "pairwise_acc": 0.6075886170743884
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5628583135272979,
+        "pairwise_acc": 0.6159094691296388
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5150610388945663,
+        "pairwise_acc": 0.6124147112664337
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5508351149554167,
+        "pairwise_acc": 0.6212348144449992
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1318212625225107,
+        "pairwise_acc": 0.5059078049592278
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6740938524434648,
+        "pairwise_acc": 0.6345481777333999
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.49081316350163345,
+        "pairwise_acc": 0.580961890497587
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.3885629464642545,
+        "pairwise_acc": 0.5639873523048761
+      }
+    }
+  },
+  {
+    "fold_idx": 25,
+    "held_out": [
+      "content_generation",
+      "fiction",
+      "summarization"
+    ],
+    "n_eval_tasks": 562,
+    "n_eval_pairs": 965,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.671054568365796,
+        "pairwise_acc": 0.6247927031509121
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6309756414522518,
+        "pairwise_acc": 0.6293532338308457
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.634729696906774,
+        "pairwise_acc": 0.6077943615257048
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6804312971537785,
+        "pairwise_acc": 0.6274875621890548
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.611105272264764,
+        "pairwise_acc": 0.61712271973466
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.6184694046041611,
+        "pairwise_acc": 0.6191956882255389
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1518803830813773,
+        "pairwise_acc": 0.5182421227197347
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6789555660581773,
+        "pairwise_acc": 0.6413764510779436
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5506794488135713,
+        "pairwise_acc": 0.5947346600331676
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.41994344351518254,
+        "pairwise_acc": 0.5628109452736318
+      }
+    }
+  },
+  {
+    "fold_idx": 26,
+    "held_out": [
+      "content_generation",
+      "harmful_request",
+      "knowledge_qa"
+    ],
+    "n_eval_tasks": 1733,
+    "n_eval_pairs": 7975,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9179060350069171,
+        "pairwise_acc": 0.7399215977115008
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9083682988448589,
+        "pairwise_acc": 0.7338030407374053
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.901213242637454,
+        "pairwise_acc": 0.7323462414578588
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8577252578963172,
+        "pairwise_acc": 0.7113418445727605
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8595130479662281,
+        "pairwise_acc": 0.7146792392859035
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8490734891869678,
+        "pairwise_acc": 0.7111034592361074
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.31936464632999156,
+        "pairwise_acc": 0.5527361339195846
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9036945155360864,
+        "pairwise_acc": 0.7312072892938497
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8654541952194966,
+        "pairwise_acc": 0.7138581342374318
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8521796265179844,
+        "pairwise_acc": 0.7041373099539122
+      }
+    }
+  },
+  {
+    "fold_idx": 27,
+    "held_out": [
+      "content_generation",
+      "harmful_request",
+      "math"
+    ],
+    "n_eval_tasks": 1761,
+    "n_eval_pairs": 7987,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9354041669918156,
+        "pairwise_acc": 0.6887004306359145
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.8974696577241122,
+        "pairwise_acc": 0.6592956592956593
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.8939911835089681,
+        "pairwise_acc": 0.6543023962378801
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9306341886302345,
+        "pairwise_acc": 0.6908668198990779
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8776448661400661,
+        "pairwise_acc": 0.6593220786769174
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8324666907189963,
+        "pairwise_acc": 0.6355974743071517
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.4082407516469821,
+        "pairwise_acc": 0.5630762727536921
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.8982340696921285,
+        "pairwise_acc": 0.6753058043380624
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8231654339036466,
+        "pairwise_acc": 0.6404586404586404
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8217697678159045,
+        "pairwise_acc": 0.6410398668463184
+      }
+    }
+  },
+  {
+    "fold_idx": 28,
+    "held_out": [
+      "content_generation",
+      "harmful_request",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 1182,
+    "n_eval_pairs": 4103,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9129940999811391,
+        "pairwise_acc": 0.7134020618556701
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9101244212212607,
+        "pairwise_acc": 0.711828540423223
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9078380307828152,
+        "pairwise_acc": 0.7061313076505698
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9049296287399139,
+        "pairwise_acc": 0.7093326098752035
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8961003640033272,
+        "pairwise_acc": 0.7107433532284319
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8875581807236775,
+        "pairwise_acc": 0.6960933260987521
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.38059218388748267,
+        "pairwise_acc": 0.56950623982637
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9172763054046317,
+        "pairwise_acc": 0.7127509495387955
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8748894793453517,
+        "pairwise_acc": 0.6962561041779707
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8462101774826225,
+        "pairwise_acc": 0.6972327726532827
+      }
+    }
+  },
+  {
+    "fold_idx": 29,
+    "held_out": [
+      "content_generation",
+      "harmful_request",
+      "summarization"
+    ],
+    "n_eval_tasks": 1115,
+    "n_eval_pairs": 3779,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9268645817891735,
+        "pairwise_acc": 0.7090519804924468
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9192827242430376,
+        "pairwise_acc": 0.7078030212917806
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9165853345191535,
+        "pairwise_acc": 0.7047103604139408
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9180819608186817,
+        "pairwise_acc": 0.7019745450220055
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.9022828971415896,
+        "pairwise_acc": 0.7041750921850839
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8913617656377132,
+        "pairwise_acc": 0.6947781610562627
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.37427667651941593,
+        "pairwise_acc": 0.565421672415844
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9175788108117765,
+        "pairwise_acc": 0.7095277744736529
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8726285614463793,
+        "pairwise_acc": 0.7031045557273701
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8493781487064426,
+        "pairwise_acc": 0.6940049958368026
+      }
+    }
+  },
+  {
+    "fold_idx": 30,
+    "held_out": [
+      "content_generation",
+      "knowledge_qa",
+      "math"
+    ],
+    "n_eval_tasks": 1691,
+    "n_eval_pairs": 8843,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6651294220614032,
+        "pairwise_acc": 0.6275645230609151
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.5148782825530777,
+        "pairwise_acc": 0.5756067769006311
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.4789066374982848,
+        "pairwise_acc": 0.5732090750752109
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5006002459026417,
+        "pairwise_acc": 0.5938157388766994
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.21078347585245322,
+        "pairwise_acc": 0.539460290890995
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.22708816793010755,
+        "pairwise_acc": 0.5376507046076591
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1786126823917367,
+        "pairwise_acc": 0.5281277567916035
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.46136173824205384,
+        "pairwise_acc": 0.5824153452916827
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.17098109021197544,
+        "pairwise_acc": 0.5307516569024406
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.2141533924282806,
+        "pairwise_acc": 0.5328326811282771
+      }
+    }
+  },
+  {
+    "fold_idx": 31,
+    "held_out": [
+      "content_generation",
+      "knowledge_qa",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 1112,
+    "n_eval_pairs": 3726,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7210569912302052,
+        "pairwise_acc": 0.669762198722422
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6884301449181178,
+        "pairwise_acc": 0.6516721241075742
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6763738838159625,
+        "pairwise_acc": 0.6513500456277846
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5094897218613234,
+        "pairwise_acc": 0.6159750925975629
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.4521305942715924,
+        "pairwise_acc": 0.6178538837296688
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.42128059626303516,
+        "pairwise_acc": 0.6055612217510333
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.07887942225033893,
+        "pairwise_acc": 0.5027108272048956
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6805612821582914,
+        "pairwise_acc": 0.6550539481453648
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.562304248767834,
+        "pairwise_acc": 0.6239196950990391
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5154225731905961,
+        "pairwise_acc": 0.6168339685436685
+      }
+    }
+  },
+  {
+    "fold_idx": 32,
+    "held_out": [
+      "content_generation",
+      "knowledge_qa",
+      "summarization"
+    ],
+    "n_eval_tasks": 1045,
+    "n_eval_pairs": 3310,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.754052617990772,
+        "pairwise_acc": 0.6881986826998611
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.7119569961091641,
+        "pairwise_acc": 0.6728503232823736
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6866526118568758,
+        "pairwise_acc": 0.6597377485044413
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5630962636729483,
+        "pairwise_acc": 0.6367152093782101
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5277453507174902,
+        "pairwise_acc": 0.6425161641186778
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.46874836992055463,
+        "pairwise_acc": 0.616532721010333
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1017800834006702,
+        "pairwise_acc": 0.503293250347453
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.7029496321244739,
+        "pairwise_acc": 0.663665478276633
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5833725461501155,
+        "pairwise_acc": 0.6361713698712913
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5399718373749002,
+        "pairwise_acc": 0.6275303643724697
+      }
+    }
+  },
+  {
+    "fold_idx": 33,
+    "held_out": [
+      "content_generation",
+      "math",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 1140,
+    "n_eval_pairs": 4318,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6562676519755084,
+        "pairwise_acc": 0.5990179274563394
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.4569917090402421,
+        "pairwise_acc": 0.5506554870987168
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.4874022512468137,
+        "pairwise_acc": 0.5739102237457729
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.611959763425517,
+        "pairwise_acc": 0.5922082734979386
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.38583910836564617,
+        "pairwise_acc": 0.5400472506601195
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.4421016046306646,
+        "pairwise_acc": 0.5476444156205124
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.194565310309552,
+        "pairwise_acc": 0.5274007504516607
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.48112379284379153,
+        "pairwise_acc": 0.5697410478528744
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.3562421370010343,
+        "pairwise_acc": 0.5396766572474174
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.27710047452754144,
+        "pairwise_acc": 0.5365266132394497
+      }
+    }
+  },
+  {
+    "fold_idx": 34,
+    "held_out": [
+      "content_generation",
+      "math",
+      "summarization"
+    ],
+    "n_eval_tasks": 1073,
+    "n_eval_pairs": 3865,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6756898557475709,
+        "pairwise_acc": 0.6110651071317669
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.3752506679947119,
+        "pairwise_acc": 0.5367974329779526
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.41199978674996085,
+        "pairwise_acc": 0.5490632439706035
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6572176398391602,
+        "pairwise_acc": 0.6005589483490322
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.3661342826021565,
+        "pairwise_acc": 0.5373667322223372
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.45116232936432454,
+        "pairwise_acc": 0.5455956940275334
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1597161534865165,
+        "pairwise_acc": 0.5133526550046579
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.47154820297674305,
+        "pairwise_acc": 0.5709553876410309
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.2019269235702882,
+        "pairwise_acc": 0.5095745782010144
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.2395155691659948,
+        "pairwise_acc": 0.519200910878791
+      }
+    }
+  },
+  {
+    "fold_idx": 35,
+    "held_out": [
+      "content_generation",
+      "persuasive_writing",
+      "summarization"
+    ],
+    "n_eval_tasks": 494,
+    "n_eval_pairs": 741,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6744517566774111,
+        "pairwise_acc": 0.6323886639676113
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6072896241355519,
+        "pairwise_acc": 0.6337381916329284
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6087744154024322,
+        "pairwise_acc": 0.6313090418353576
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6112616365160773,
+        "pairwise_acc": 0.6396761133603239
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5494587692450849,
+        "pairwise_acc": 0.650472334682861
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5778783950127321,
+        "pairwise_acc": 0.6415654520917679
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.13638592195075205,
+        "pairwise_acc": 0.5330634278002699
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.7159839374993827,
+        "pairwise_acc": 0.6661268556005399
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5217559954262999,
+        "pairwise_acc": 0.6053981106612686
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.3438522193842121,
+        "pairwise_acc": 0.5719298245614035
+      }
+    }
+  },
+  {
+    "fold_idx": 36,
+    "held_out": [
+      "fiction",
+      "harmful_request",
+      "knowledge_qa"
+    ],
+    "n_eval_tasks": 1519,
+    "n_eval_pairs": 6306,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.917009679314842,
+        "pairwise_acc": 0.7325442982008639
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9115261972873214,
+        "pairwise_acc": 0.7373057171036969
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9064430988702066,
+        "pairwise_acc": 0.7282250110532938
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8766556432255955,
+        "pairwise_acc": 0.7128864401591675
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8757076318583351,
+        "pairwise_acc": 0.7150630888004625
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8679276652886406,
+        "pairwise_acc": 0.7046559874842703
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.40852439084403636,
+        "pairwise_acc": 0.5779002142638506
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9080003594556533,
+        "pairwise_acc": 0.725504200251675
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8817988438554137,
+        "pairwise_acc": 0.7274767880828487
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.869024564871742,
+        "pairwise_acc": 0.7213549637792062
+      }
+    }
+  },
+  {
+    "fold_idx": 37,
+    "held_out": [
+      "fiction",
+      "harmful_request",
+      "math"
+    ],
+    "n_eval_tasks": 1547,
+    "n_eval_pairs": 6368,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9334346400467596,
+        "pairwise_acc": 0.6730646408282631
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9075572896923089,
+        "pairwise_acc": 0.6488957612020572
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.911862351537388,
+        "pairwise_acc": 0.6518202292514034
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.934272944428559,
+        "pairwise_acc": 0.6785102020235975
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.9001143459439722,
+        "pairwise_acc": 0.648929375777337
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8703443304849641,
+        "pairwise_acc": 0.642374533597768
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.44834401149574715,
+        "pairwise_acc": 0.5740697166291304
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.913547678563866,
+        "pairwise_acc": 0.668022454536287
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8430710004018299,
+        "pairwise_acc": 0.6407946485596154
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8370414922406256,
+        "pairwise_acc": 0.6419039295438502
+      }
+    }
+  },
+  {
+    "fold_idx": 38,
+    "held_out": [
+      "fiction",
+      "harmful_request",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 968,
+    "n_eval_pairs": 3252,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.8957473897055939,
+        "pairwise_acc": 0.6799830604178431
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9004240579682972,
+        "pairwise_acc": 0.689158667419537
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9107684458392303,
+        "pairwise_acc": 0.6747600225861096
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9018285658649485,
+        "pairwise_acc": 0.6765245623941276
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8892257023395853,
+        "pairwise_acc": 0.681253529079616
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8838014821952495,
+        "pairwise_acc": 0.6650903444381705
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.32925254173395946,
+        "pairwise_acc": 0.5616177300959909
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9007978374371395,
+        "pairwise_acc": 0.6856295878035008
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8634776812458843,
+        "pairwise_acc": 0.678994918125353
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8462150065679114,
+        "pairwise_acc": 0.6751129305477132
+      }
+    }
+  },
+  {
+    "fold_idx": 39,
+    "held_out": [
+      "fiction",
+      "harmful_request",
+      "summarization"
+    ],
+    "n_eval_tasks": 901,
+    "n_eval_pairs": 2990,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9055014273691526,
+        "pairwise_acc": 0.674933913854766
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.901119164436449,
+        "pairwise_acc": 0.6755559011040274
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9081869389524622,
+        "pairwise_acc": 0.6647488726481107
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9187873595758808,
+        "pairwise_acc": 0.6728347068885088
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8996643928184097,
+        "pairwise_acc": 0.6729902037008242
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8880544299947503,
+        "pairwise_acc": 0.6537863473798787
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.29924466103784125,
+        "pairwise_acc": 0.5578448141813093
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.894811957870166,
+        "pairwise_acc": 0.674234178199347
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8582652461664261,
+        "pairwise_acc": 0.6786658373503344
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8383157420738941,
+        "pairwise_acc": 0.6668480796143679
+      }
+    }
+  },
+  {
+    "fold_idx": 40,
+    "held_out": [
+      "fiction",
+      "knowledge_qa",
+      "math"
+    ],
+    "n_eval_tasks": 1477,
+    "n_eval_pairs": 6706,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6606609389731467,
+        "pairwise_acc": 0.6249962714392244
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.5929964640109022,
+        "pairwise_acc": 0.5863385533184191
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.580660933137665,
+        "pairwise_acc": 0.5879492915734527
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.6009677153210855,
+        "pairwise_acc": 0.6143475018642804
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.48744413947103343,
+        "pairwise_acc": 0.5800149142431021
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5124670977560225,
+        "pairwise_acc": 0.5863385533184191
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.1971446027169661,
+        "pairwise_acc": 0.5219686800894855
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6041025297522217,
+        "pairwise_acc": 0.6164653243847875
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5730847656168286,
+        "pairwise_acc": 0.5932885906040268
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5306284696203415,
+        "pairwise_acc": 0.5980014914243102
+      }
+    }
+  },
+  {
+    "fold_idx": 41,
+    "held_out": [
+      "fiction",
+      "knowledge_qa",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 898,
+    "n_eval_pairs": 2357,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7497878640499083,
+        "pairwise_acc": 0.6800169707254985
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.7384500182486119,
+        "pairwise_acc": 0.6692405600339415
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.7220925822547228,
+        "pairwise_acc": 0.6532880780653373
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5106399628077064,
+        "pairwise_acc": 0.6188375053033517
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5252119200943661,
+        "pairwise_acc": 0.6218922358930844
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5376645844908515,
+        "pairwise_acc": 0.6169707254985151
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.16845631430053634,
+        "pairwise_acc": 0.509885447602885
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.7397005227835362,
+        "pairwise_acc": 0.6784896054306322
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.6558082914548664,
+        "pairwise_acc": 0.6221467967755622
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.6131774821979807,
+        "pairwise_acc": 0.6179041154009334
+      }
+    }
+  },
+  {
+    "fold_idx": 42,
+    "held_out": [
+      "fiction",
+      "knowledge_qa",
+      "summarization"
+    ],
+    "n_eval_tasks": 831,
+    "n_eval_pairs": 2003,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7638615294121466,
+        "pairwise_acc": 0.6808786819770345
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.7374184081204861,
+        "pairwise_acc": 0.6674987518721918
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.7205334228089059,
+        "pairwise_acc": 0.6585122316525213
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5990364867903414,
+        "pairwise_acc": 0.6349475786320519
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5909524285453471,
+        "pairwise_acc": 0.6344483275087369
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.5811249567956149,
+        "pairwise_acc": 0.6215676485272091
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.16757319404123047,
+        "pairwise_acc": 0.5024463305042436
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.730020556627322,
+        "pairwise_acc": 0.6816774837743385
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.6507713533712718,
+        "pairwise_acc": 0.6170743884173739
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.6167828734574783,
+        "pairwise_acc": 0.6150773839241138
+      }
+    }
+  },
+  {
+    "fold_idx": 43,
+    "held_out": [
+      "fiction",
+      "math",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 926,
+    "n_eval_pairs": 2999,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6131327374153253,
+        "pairwise_acc": 0.5727721451440768
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.4837117253857441,
+        "pairwise_acc": 0.5354188900747066
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.5485378853205648,
+        "pairwise_acc": 0.5608324439701174
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5302473318300387,
+        "pairwise_acc": 0.5596318036286019
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.40998832428600396,
+        "pairwise_acc": 0.5315501600853789
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.4414301889501779,
+        "pairwise_acc": 0.5191435432230523
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.18723014411340191,
+        "pairwise_acc": 0.5161419423692636
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.5132537438266778,
+        "pairwise_acc": 0.548025613660619
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.335635227229239,
+        "pairwise_acc": 0.522145144076841
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.24747262077463542,
+        "pairwise_acc": 0.5226787620064034
+      }
+    }
+  },
+  {
+    "fold_idx": 44,
+    "held_out": [
+      "fiction",
+      "math",
+      "summarization"
+    ],
+    "n_eval_tasks": 859,
+    "n_eval_pairs": 2608,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6098791246219094,
+        "pairwise_acc": 0.584183477793971
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.4133073297700289,
+        "pairwise_acc": 0.5179872670092813
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.48472206603350915,
+        "pairwise_acc": 0.5456776865843369
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5869994492653348,
+        "pairwise_acc": 0.5679987727237862
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.4027611286880741,
+        "pairwise_acc": 0.5166832860320626
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.42966981449344643,
+        "pairwise_acc": 0.5212855718340109
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.15802335899141612,
+        "pairwise_acc": 0.5096264478024085
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.4801872868952613,
+        "pairwise_acc": 0.5445271151338498
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.22341518500402177,
+        "pairwise_acc": 0.5058679143974841
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.21082976219401536,
+        "pairwise_acc": 0.50118892383217
+      }
+    }
+  },
+  {
+    "fold_idx": 45,
+    "held_out": [
+      "fiction",
+      "persuasive_writing",
+      "summarization"
+    ],
+    "n_eval_tasks": 280,
+    "n_eval_pairs": 252,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6938706413897628,
+        "pairwise_acc": 0.6087301587301587
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6744864694077121,
+        "pairwise_acc": 0.6158730158730159
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6927319461503572,
+        "pairwise_acc": 0.6158730158730159
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.574850665700037,
+        "pairwise_acc": 0.6039682539682539
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.5516470143217674,
+        "pairwise_acc": 0.626984126984127
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.6147385084211977,
+        "pairwise_acc": 0.6182539682539683
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.20337565947417208,
+        "pairwise_acc": 0.473015873015873
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.7201826034981449,
+        "pairwise_acc": 0.5865079365079365
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5673732308853439,
+        "pairwise_acc": 0.6039682539682539
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5511459043716274,
+        "pairwise_acc": 0.5182539682539683
+      }
+    }
+  },
+  {
+    "fold_idx": 46,
+    "held_out": [
+      "harmful_request",
+      "knowledge_qa",
+      "math"
+    ],
+    "n_eval_tasks": 2030,
+    "n_eval_pairs": 10485,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9142467618393675,
+        "pairwise_acc": 0.7066998011928429
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.8961756456289185,
+        "pairwise_acc": 0.6860238568588469
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.883541740200766,
+        "pairwise_acc": 0.6739761431411531
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.858580138777298,
+        "pairwise_acc": 0.6749900596421471
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8505740226598774,
+        "pairwise_acc": 0.6648508946322068
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.7925323631310632,
+        "pairwise_acc": 0.6443737574552684
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.4556871540528124,
+        "pairwise_acc": 0.5788866799204772
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9109109690592877,
+        "pairwise_acc": 0.7174950298210736
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8438413239414453,
+        "pairwise_acc": 0.6684890656063618
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8219879401155243,
+        "pairwise_acc": 0.6551888667992047
+      }
+    }
+  },
+  {
+    "fold_idx": 47,
+    "held_out": [
+      "harmful_request",
+      "knowledge_qa",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 1451,
+    "n_eval_pairs": 5903,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9224215634579525,
+        "pairwise_acc": 0.7372590537383178
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9155014450917867,
+        "pairwise_acc": 0.7411287967289719
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9058140645860698,
+        "pairwise_acc": 0.7326956775700935
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8559201729848134,
+        "pairwise_acc": 0.708820093457944
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8590178449036687,
+        "pairwise_acc": 0.7186039719626168
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8434468616688494,
+        "pairwise_acc": 0.7034170560747663
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.42128496229108603,
+        "pairwise_acc": 0.5793297313084113
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9095673162732366,
+        "pairwise_acc": 0.7314544392523364
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8808958873582308,
+        "pairwise_acc": 0.721780081775701
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8550554062042127,
+        "pairwise_acc": 0.71875
+      }
+    }
+  },
+  {
+    "fold_idx": 48,
+    "held_out": [
+      "harmful_request",
+      "knowledge_qa",
+      "summarization"
+    ],
+    "n_eval_tasks": 1384,
+    "n_eval_pairs": 5462,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9257602823071438,
+        "pairwise_acc": 0.7360168314080425
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9158701569723231,
+        "pairwise_acc": 0.7410980111944743
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9064738384049733,
+        "pairwise_acc": 0.7325632170219523
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8749429661240948,
+        "pairwise_acc": 0.7143821205986265
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8671888166755886,
+        "pairwise_acc": 0.7145409074669525
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8600113944795256,
+        "pairwise_acc": 0.7075542852606089
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.3834787118628976,
+        "pairwise_acc": 0.5716724226906434
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9107595838605971,
+        "pairwise_acc": 0.7300226271287364
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8829521036745485,
+        "pairwise_acc": 0.7254575046643642
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8643363328999059,
+        "pairwise_acc": 0.7188281529117542
+      }
+    }
+  },
+  {
+    "fold_idx": 49,
+    "held_out": [
+      "harmful_request",
+      "math",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 1479,
+    "n_eval_pairs": 5865,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9374385367518726,
+        "pairwise_acc": 0.674964203106069
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.909726343521445,
+        "pairwise_acc": 0.6466204060652788
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9169256283078931,
+        "pairwise_acc": 0.6486764327936263
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9277491924615362,
+        "pairwise_acc": 0.6736424716378456
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8901906919416488,
+        "pairwise_acc": 0.6404890406432426
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8643993030808912,
+        "pairwise_acc": 0.6237838234754195
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.42325980481867365,
+        "pairwise_acc": 0.5723831552667328
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9247394691141866,
+        "pairwise_acc": 0.6744869111869883
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8680381238875704,
+        "pairwise_acc": 0.640011748724162
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.846939696006315,
+        "pairwise_acc": 0.6477585637184712
+      }
+    }
+  },
+  {
+    "fold_idx": 50,
+    "held_out": [
+      "harmful_request",
+      "math",
+      "summarization"
+    ],
+    "n_eval_tasks": 1412,
+    "n_eval_pairs": 5387,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.9414982729810959,
+        "pairwise_acc": 0.6688262041768943
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.9071967646393563,
+        "pairwise_acc": 0.6408192829262404
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.9156409348335136,
+        "pairwise_acc": 0.6422276769546497
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.9347690212836062,
+        "pairwise_acc": 0.6764315319303046
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8884729975396974,
+        "pairwise_acc": 0.6404973642911754
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8646022652853141,
+        "pairwise_acc": 0.6231137579976661
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.4181112715722282,
+        "pairwise_acc": 0.5683875900366182
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.9233118715505472,
+        "pairwise_acc": 0.6712003541104986
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8147704416195629,
+        "pairwise_acc": 0.6301959679690958
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8484939133602667,
+        "pairwise_acc": 0.6386865719689349
+      }
+    }
+  },
+  {
+    "fold_idx": 51,
+    "held_out": [
+      "harmful_request",
+      "persuasive_writing",
+      "summarization"
+    ],
+    "n_eval_tasks": 833,
+    "n_eval_pairs": 2798,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.8972040377204089,
+        "pairwise_acc": 0.6678985385519906
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.8900920985155196,
+        "pairwise_acc": 0.6680665210818075
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.8859185887658897,
+        "pairwise_acc": 0.6576516042331597
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.8727805072093044,
+        "pairwise_acc": 0.6653788006047371
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.8481323322421936,
+        "pairwise_acc": 0.663866957836385
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.8202682546547824,
+        "pairwise_acc": 0.6394254997480262
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.371487351086969,
+        "pairwise_acc": 0.5567780950781118
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.8880523042418255,
+        "pairwise_acc": 0.6716781454728709
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.8400064061925224,
+        "pairwise_acc": 0.6564757265244414
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.8045213570382659,
+        "pairwise_acc": 0.6558877876700823
+      }
+    }
+  },
+  {
+    "fold_idx": 52,
+    "held_out": [
+      "knowledge_qa",
+      "math",
+      "persuasive_writing"
+    ],
+    "n_eval_tasks": 1409,
+    "n_eval_pairs": 6114,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7094418799994598,
+        "pairwise_acc": 0.6349954194477163
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.6219534956473969,
+        "pairwise_acc": 0.5975657636435021
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.6024711325787278,
+        "pairwise_acc": 0.5939340400471143
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5039240329365228,
+        "pairwise_acc": 0.6009030231645073
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.36789072957542795,
+        "pairwise_acc": 0.5530035335689046
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.35462264115228265,
+        "pairwise_acc": 0.5502552021986651
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.19120411780603028,
+        "pairwise_acc": 0.5267307943986389
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.6305382927540021,
+        "pairwise_acc": 0.6168368014657767
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.5358339984288808,
+        "pairwise_acc": 0.5841840073288836
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5563603645934553,
+        "pairwise_acc": 0.6017536971600576
+      }
+    }
+  },
+  {
+    "fold_idx": 53,
+    "held_out": [
+      "knowledge_qa",
+      "math",
+      "summarization"
+    ],
+    "n_eval_tasks": 1342,
+    "n_eval_pairs": 5544,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6667609858496222,
+        "pairwise_acc": 0.628274518294003
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.5867547904100793,
+        "pairwise_acc": 0.5872122393014361
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.5659134366612549,
+        "pairwise_acc": 0.5816193981381251
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5399529503353614,
+        "pairwise_acc": 0.6054701594861802
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.37528309370083485,
+        "pairwise_acc": 0.5525366240889081
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.3948133267201212,
+        "pairwise_acc": 0.558165548098434
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.16573558040997843,
+        "pairwise_acc": 0.5191599913401169
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.610299243164123,
+        "pairwise_acc": 0.6178826585841091
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.4968809882231941,
+        "pairwise_acc": 0.5775059536696254
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.5641651987721634,
+        "pairwise_acc": 0.6021866204806235
+      }
+    }
+  },
+  {
+    "fold_idx": 54,
+    "held_out": [
+      "knowledge_qa",
+      "persuasive_writing",
+      "summarization"
+    ],
+    "n_eval_tasks": 763,
+    "n_eval_pairs": 1722,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.7780367420055905,
+        "pairwise_acc": 0.7018583042973287
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.7428336328237308,
+        "pairwise_acc": 0.6829268292682927
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.7246996165832639,
+        "pairwise_acc": 0.6577235772357723
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.5277225282005147,
+        "pairwise_acc": 0.6355400696864112
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.50558509788907,
+        "pairwise_acc": 0.6257839721254356
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.49515104681047467,
+        "pairwise_acc": 0.618931475029036
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.16949654997316577,
+        "pairwise_acc": 0.5152148664343786
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.748197954447626,
+        "pairwise_acc": 0.689198606271777
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.6545314441120986,
+        "pairwise_acc": 0.6340301974448316
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.6132026073680121,
+        "pairwise_acc": 0.624390243902439
+      }
+    }
+  },
+  {
+    "fold_idx": 55,
+    "held_out": [
+      "math",
+      "persuasive_writing",
+      "summarization"
+    ],
+    "n_eval_tasks": 791,
+    "n_eval_pairs": 2227,
+    "conditions": {
+      "Ridge raw_L31": {
+        "pearson_r": 0.6167980486782664,
+        "pairwise_acc": 0.5698499685562842
+      },
+      "Ridge raw_L43": {
+        "pearson_r": 0.39720318858038706,
+        "pairwise_acc": 0.5072320546222262
+      },
+      "Ridge raw_L55": {
+        "pearson_r": 0.4606636370622709,
+        "pairwise_acc": 0.5296918515856617
+      },
+      "Ridge topic-demeaned_L31": {
+        "pearson_r": 0.54045157495237,
+        "pairwise_acc": 0.5676938280477944
+      },
+      "Ridge topic-demeaned_L43": {
+        "pearson_r": 0.3122776610842121,
+        "pairwise_acc": 0.48647920222801183
+      },
+      "Ridge topic-demeaned_L55": {
+        "pearson_r": 0.34539118502200866,
+        "pairwise_acc": 0.4966310304554847
+      },
+      "Content baseline_L0": {
+        "pearson_r": 0.135275825448427,
+        "pairwise_acc": 0.5166651693468691
+      },
+      "BT raw_L31": {
+        "pearson_r": 0.49738610563277835,
+        "pairwise_acc": 0.5314886353427365
+      },
+      "BT raw_L43": {
+        "pearson_r": 0.2876350714088534,
+        "pairwise_acc": 0.5052555924894438
+      },
+      "BT raw_L55": {
+        "pearson_r": 0.1745827643265689,
+        "pairwise_acc": 0.5085796424400323
+      }
+    }
+  }
+]

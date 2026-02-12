@@ -1,0 +1,2692 @@
+{
+  "experiment_name": "hoo_scaled_bt",
+  "created_at": "2026-02-12T11:49:38.394316",
+  "grouping": "topic",
+  "hold_out_size": 3,
+  "all_groups": [
+    "coding",
+    "content_generation",
+    "fiction",
+    "harmful_request",
+    "knowledge_qa",
+    "math",
+    "persuasive_writing",
+    "summarization"
+  ],
+  "group_sizes": {
+    "coding": 125,
+    "content_generation": 375,
+    "fiction": 161,
+    "harmful_request": 714,
+    "knowledge_qa": 644,
+    "math": 672,
+    "persuasive_writing": 93,
+    "summarization": 26
+  },
+  "n_folds": 56,
+  "layers": [
+    31,
+    43,
+    55
+  ],
+  "folds": [
+    {
+      "fold_idx": 0,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "fiction"
+      ],
+      "train_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.7749323187239335,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.645083932853717,
+          "hoo_n_pairs": 1335,
+          "train_n_pairs": 13994,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold0_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.867601269091714,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5869304556354916,
+          "hoo_n_pairs": 1335,
+          "train_n_pairs": 13994,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold0_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8712462185493987,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5666966426858513,
+          "hoo_n_pairs": 1335,
+          "train_n_pairs": 13994,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold0_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 1,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8297931745452203,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7217793777320648,
+          "hoo_n_pairs": 4308,
+          "train_n_pairs": 9315,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold1_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8510556044758489,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7031113396760093,
+          "hoo_n_pairs": 4308,
+          "train_n_pairs": 9315,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold1_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8538691179313159,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6945744407302649,
+          "hoo_n_pairs": 4308,
+          "train_n_pairs": 9315,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold1_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 2,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8437406010688754,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.653163793536714,
+          "hoo_n_pairs": 3980,
+          "train_n_pairs": 9079,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold2_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8701848552853805,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.617731316278836,
+          "hoo_n_pairs": 3980,
+          "train_n_pairs": 9079,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold2_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8730074266015778,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6074785143488968,
+          "hoo_n_pairs": 3980,
+          "train_n_pairs": 9079,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold2_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 3,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "math"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8580875576036866,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5834537097833223,
+          "hoo_n_pairs": 4570,
+          "train_n_pairs": 9121,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold3_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8855990783410138,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5266360253884876,
+          "hoo_n_pairs": 4570,
+          "train_n_pairs": 9121,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold3_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8883640552995392,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5195009848982272,
+          "hoo_n_pairs": 4570,
+          "train_n_pairs": 9121,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold3_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 4,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8386714942208606,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6519970414201184,
+          "hoo_n_pairs": 1082,
+          "train_n_pairs": 14804,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold4_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8638351204567609,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6018860946745562,
+          "hoo_n_pairs": 1082,
+          "train_n_pairs": 14804,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold4_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8680685141345217,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5763683431952663,
+          "hoo_n_pairs": 1082,
+          "train_n_pairs": 14804,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold4_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 5,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "summarization"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8356455935677124,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6712952424311405,
+          "hoo_n_pairs": 879,
+          "train_n_pairs": 15666,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold5_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8618030374691261,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5968586387434555,
+          "hoo_n_pairs": 879,
+          "train_n_pairs": 15666,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold5_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8658494928792895,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5845663555656727,
+          "hoo_n_pairs": 879,
+          "train_n_pairs": 15666,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold5_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 6,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8233200504070025,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6993885869565217,
+          "hoo_n_pairs": 3364,
+          "train_n_pairs": 11747,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold6_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8424781172303396,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6905570652173914,
+          "hoo_n_pairs": 3364,
+          "train_n_pairs": 11747,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold6_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.845356084602023,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6900815217391304,
+          "hoo_n_pairs": 3364,
+          "train_n_pairs": 11747,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold6_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 7,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8426195977425097,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6782366957903098,
+          "hoo_n_pairs": 2518,
+          "train_n_pairs": 10993,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold7_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8694367637589485,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6110405083399524,
+          "hoo_n_pairs": 2518,
+          "train_n_pairs": 10993,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold7_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8713685087686073,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5903891977760127,
+          "hoo_n_pairs": 2518,
+          "train_n_pairs": 10993,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold7_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 8,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8537799654317276,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5702793437638564,
+          "hoo_n_pairs": 3158,
+          "train_n_pairs": 11085,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold8_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8772450589915082,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5280293912712992,
+          "hoo_n_pairs": 3158,
+          "train_n_pairs": 11085,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold8_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8814909446156158,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5269525559004244,
+          "hoo_n_pairs": 3158,
+          "train_n_pairs": 11085,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold8_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 9,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8343550387234142,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.663013698630137,
+          "hoo_n_pairs": 438,
+          "train_n_pairs": 17536,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold9_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8588408713353144,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6269406392694064,
+          "hoo_n_pairs": 438,
+          "train_n_pairs": 17536,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold9_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8630407824235475,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5885844748858448,
+          "hoo_n_pairs": 438,
+          "train_n_pairs": 17536,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold9_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 10,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8305325548871179,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6585858585858586,
+          "hoo_n_pairs": 297,
+          "train_n_pairs": 18460,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold10_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8567274180300575,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5696969696969697,
+          "hoo_n_pairs": 297,
+          "train_n_pairs": 18460,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold10_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8616001065553754,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5562289562289562,
+          "hoo_n_pairs": 297,
+          "train_n_pairs": 18460,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold10_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 11,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8311005059797608,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7326000910714912,
+          "hoo_n_pairs": 6136,
+          "train_n_pairs": 6959,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold11_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8495860165593376,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7282566814949736,
+          "hoo_n_pairs": 6136,
+          "train_n_pairs": 6959,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold11_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8501897424103035,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.718484009947809,
+          "hoo_n_pairs": 6136,
+          "train_n_pairs": 6959,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold11_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 12,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.851419241396634,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6836245772266065,
+          "hoo_n_pairs": 6096,
+          "train_n_pairs": 6371,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold12_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8750941974378297,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6404664599774521,
+          "hoo_n_pairs": 6096,
+          "train_n_pairs": 6371,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold12_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8797098718914845,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6515994926719278,
+          "hoo_n_pairs": 6096,
+          "train_n_pairs": 6371,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold12_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 13,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8167010964563801,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7003451061017696,
+          "hoo_n_pairs": 3143,
+          "train_n_pairs": 12589,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold13_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8389957095185127,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6764079594683897,
+          "hoo_n_pairs": 3143,
+          "train_n_pairs": 12589,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold13_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.841506435722231,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6750862765254424,
+          "hoo_n_pairs": 3143,
+          "train_n_pairs": 12589,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold13_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 14,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8144081054905759,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.688376191620604,
+          "hoo_n_pairs": 2915,
+          "train_n_pairs": 13426,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold14_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8330328540564702,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6749979972762957,
+          "hoo_n_pairs": 2915,
+          "train_n_pairs": 13426,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold14_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8381136854652462,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6621004566210046,
+          "hoo_n_pairs": 2915,
+          "train_n_pairs": 13426,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold14_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 15,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.860073329540426,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6094356150669503,
+          "hoo_n_pairs": 6394,
+          "train_n_pairs": 6761,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold15_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8857070611290221,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5720810912276311,
+          "hoo_n_pairs": 6394,
+          "train_n_pairs": 6761,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold15_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8890574625450408,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6073395069453135,
+          "hoo_n_pairs": 6394,
+          "train_n_pairs": 6761,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold15_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 16,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8377327133537243,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6723731884057971,
+          "hoo_n_pairs": 2208,
+          "train_n_pairs": 11746,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold16_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8645356340941638,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6160326086956521,
+          "hoo_n_pairs": 2208,
+          "train_n_pairs": 11746,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold16_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8673290783401991,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5984601449275362,
+          "hoo_n_pairs": 2208,
+          "train_n_pairs": 11746,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold16_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 17,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8366676619886533,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.670656779661017,
+          "hoo_n_pairs": 1888,
+          "train_n_pairs": 12491,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold17_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8619488404498855,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.610593220338983,
+          "hoo_n_pairs": 1888,
+          "train_n_pairs": 12491,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold17_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8641219601207657,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6007415254237288,
+          "hoo_n_pairs": 1888,
+          "train_n_pairs": 12491,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold17_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 18,
+      "held_out_groups": [
+        "coding",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8519279113408632,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5681421083284799,
+          "hoo_n_pairs": 2748,
+          "train_n_pairs": 11738,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold18_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8751726091420883,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5286109493302271,
+          "hoo_n_pairs": 2748,
+          "train_n_pairs": 11738,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold18_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8798109266012817,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5347990681421083,
+          "hoo_n_pairs": 2748,
+          "train_n_pairs": 11738,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold18_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 19,
+      "held_out_groups": [
+        "coding",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8496384658958382,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5546816166011213,
+          "hoo_n_pairs": 2391,
+          "train_n_pairs": 12446,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold19_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8747292659358236,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.4990377374278303,
+          "hoo_n_pairs": 2391,
+          "train_n_pairs": 12446,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold19_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8787944420379195,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5127604384570329,
+          "hoo_n_pairs": 2391,
+          "train_n_pairs": 12446,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold19_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 20,
+      "held_out_groups": [
+        "coding",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.828686728199941,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6363636363636364,
+          "hoo_n_pairs": 198,
+          "train_n_pairs": 19424,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold20_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8529628693050112,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.604040404040404,
+          "hoo_n_pairs": 198,
+          "train_n_pairs": 19424,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold20_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8570826484595608,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5717171717171717,
+          "hoo_n_pairs": 198,
+          "train_n_pairs": 19424,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold20_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 21,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "coding",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8355176199117325,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7030513520218308,
+          "hoo_n_pairs": 4449,
+          "train_n_pairs": 8930,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold21_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8558146828863947,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7019598114611759,
+          "hoo_n_pairs": 4449,
+          "train_n_pairs": 8930,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold21_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8585702444160674,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6828578516497147,
+          "hoo_n_pairs": 4449,
+          "train_n_pairs": 8930,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold21_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 22,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8514037835883841,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6447627745998173,
+          "hoo_n_pairs": 4161,
+          "train_n_pairs": 8734,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold22_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8746354982528015,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6266403884055184,
+          "hoo_n_pairs": 4161,
+          "train_n_pairs": 8734,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold22_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8762983491986986,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6028938133922992,
+          "hoo_n_pairs": 4161,
+          "train_n_pairs": 8734,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold22_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 23,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.861010359623545,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5577446212183662,
+          "hoo_n_pairs": 4853,
+          "train_n_pairs": 8878,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold23_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8861152597017756,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5243178633253648,
+          "hoo_n_pairs": 4853,
+          "train_n_pairs": 8878,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold23_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.89106986226679,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5271206001154068,
+          "hoo_n_pairs": 4853,
+          "train_n_pairs": 8878,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold23_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 24,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8408358054946472,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6345481777333999,
+          "hoo_n_pairs": 1202,
+          "train_n_pairs": 14398,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold24_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.866675265488628,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.580961890497587,
+          "hoo_n_pairs": 1202,
+          "train_n_pairs": 14398,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold24_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8708743568797741,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5639873523048761,
+          "hoo_n_pairs": 1202,
+          "train_n_pairs": 14398,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold24_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 25,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8385128461840272,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6413764510779436,
+          "hoo_n_pairs": 965,
+          "train_n_pairs": 15226,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold25_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8658152151854207,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5947346600331676,
+          "hoo_n_pairs": 965,
+          "train_n_pairs": 15226,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold25_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8697116880656989,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5628109452736318,
+          "hoo_n_pairs": 965,
+          "train_n_pairs": 15226,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold25_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 26,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8459275001021701,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7312072892938497,
+          "hoo_n_pairs": 7975,
+          "train_n_pairs": 4896,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold26_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.861334750091953,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7138581342374318,
+          "hoo_n_pairs": 7975,
+          "train_n_pairs": 4896,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold26_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8618660345743594,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7041373099539122,
+          "hoo_n_pairs": 7975,
+          "train_n_pairs": 4896,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold26_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 27,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8743748566184905,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6753058043380624,
+          "hoo_n_pairs": 7987,
+          "train_n_pairs": 4360,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold27_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8956182610690525,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6404586404586404,
+          "hoo_n_pairs": 7987,
+          "train_n_pairs": 4360,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold27_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8993347097958247,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6410398668463184,
+          "hoo_n_pairs": 7987,
+          "train_n_pairs": 4360,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold27_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 28,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8289334522303561,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7127509495387955,
+          "hoo_n_pairs": 4103,
+          "train_n_pairs": 9647,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold28_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8494224507994442,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6962561041779707,
+          "hoo_n_pairs": 4103,
+          "train_n_pairs": 9647,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold28_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8512473818460836,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6972327726532827,
+          "hoo_n_pairs": 4103,
+          "train_n_pairs": 9647,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold28_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 29,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8257327735623772,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7095277744736529,
+          "hoo_n_pairs": 3779,
+          "train_n_pairs": 10388,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold29_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8474174787197165,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7031045557273701,
+          "hoo_n_pairs": 3779,
+          "train_n_pairs": 10388,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold29_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8491892308284867,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6940049958368026,
+          "hoo_n_pairs": 3779,
+          "train_n_pairs": 10388,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold29_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 30,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8558880269260765,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5824153452916827,
+          "hoo_n_pairs": 8843,
+          "train_n_pairs": 5308,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold30_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8759184008537536,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5307516569024406,
+          "hoo_n_pairs": 8843,
+          "train_n_pairs": 5308,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold30_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8789968394696877,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5328326811282771,
+          "hoo_n_pairs": 8843,
+          "train_n_pairs": 5308,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold30_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 31,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8459332287698857,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6550539481453648,
+          "hoo_n_pairs": 3726,
+          "train_n_pairs": 9362,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold31_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8673986107999103,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6239196950990391,
+          "hoo_n_pairs": 3726,
+          "train_n_pairs": 9362,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold31_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8697512883710509,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6168339685436685,
+          "hoo_n_pairs": 3726,
+          "train_n_pairs": 9362,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold31_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 32,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8427649307513944,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.663665478276633,
+          "hoo_n_pairs": 3310,
+          "train_n_pairs": 10011,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold32_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8650539992897579,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6361713698712913,
+          "hoo_n_pairs": 3310,
+          "train_n_pairs": 10011,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold32_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8689603308892649,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6275303643724697,
+          "hoo_n_pairs": 3310,
+          "train_n_pairs": 10011,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold32_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 33,
+      "held_out_groups": [
+        "content_generation",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8589374567686369,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5697410478528744,
+          "hoo_n_pairs": 4318,
+          "train_n_pairs": 9406,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold33_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8840841644911529,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5396766572474174,
+          "hoo_n_pairs": 4318,
+          "train_n_pairs": 9406,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold33_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8892384586206127,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5365266132394497,
+          "hoo_n_pairs": 4318,
+          "train_n_pairs": 9406,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold33_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 34,
+      "held_out_groups": [
+        "content_generation",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.857351743153761,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5709553876410309,
+          "hoo_n_pairs": 3865,
+          "train_n_pairs": 10018,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold34_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8847784763854365,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5095745782010144,
+          "hoo_n_pairs": 3865,
+          "train_n_pairs": 10018,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold34_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8876819919369999,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.519200910878791,
+          "hoo_n_pairs": 3865,
+          "train_n_pairs": 10018,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold34_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 35,
+      "held_out_groups": [
+        "content_generation",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8356785270732238,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6661268556005399,
+          "hoo_n_pairs": 741,
+          "train_n_pairs": 16065,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold35_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8604278964956532,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6053981106612686,
+          "hoo_n_pairs": 741,
+          "train_n_pairs": 16065,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold35_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8642049601167688,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5719298245614035,
+          "hoo_n_pairs": 741,
+          "train_n_pairs": 16065,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold35_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 36,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.836080475093928,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.725504200251675,
+          "hoo_n_pairs": 6306,
+          "train_n_pairs": 6603,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold36_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8557447582111259,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7274767880828487,
+          "hoo_n_pairs": 6306,
+          "train_n_pairs": 6603,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold36_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.855896254999394,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7213549637792062,
+          "hoo_n_pairs": 6306,
+          "train_n_pairs": 6603,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold36_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 37,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8582687465253932,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.668022454536287,
+          "hoo_n_pairs": 6368,
+          "train_n_pairs": 6117,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold37_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8784132901664541,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6407946485596154,
+          "hoo_n_pairs": 6368,
+          "train_n_pairs": 6117,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold37_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8812256777527061,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6419039295438502,
+          "hoo_n_pairs": 6368,
+          "train_n_pairs": 6117,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold37_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 38,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8213000246528063,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6856295878035008,
+          "hoo_n_pairs": 3252,
+          "train_n_pairs": 12172,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold38_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8447859314651984,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.678994918125353,
+          "hoo_n_pairs": 3252,
+          "train_n_pairs": 12172,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold38_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8453118579998357,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6751129305477132,
+          "hoo_n_pairs": 3252,
+          "train_n_pairs": 12172,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold38_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 39,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8195960530373111,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.674234178199347,
+          "hoo_n_pairs": 2990,
+          "train_n_pairs": 12975,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold39_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8403021893308665,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6786658373503344,
+          "hoo_n_pairs": 2990,
+          "train_n_pairs": 12975,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold39_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8422602528522972,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6668480796143679,
+          "hoo_n_pairs": 2990,
+          "train_n_pairs": 12975,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold39_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 40,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8644855226566334,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6164653243847875,
+          "hoo_n_pairs": 6706,
+          "train_n_pairs": 6547,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold40_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8861769998364142,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5932885906040268,
+          "hoo_n_pairs": 6706,
+          "train_n_pairs": 6547,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold40_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8898740389334205,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5980014914243102,
+          "hoo_n_pairs": 6706,
+          "train_n_pairs": 6547,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold40_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 41,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.843356745683348,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6784896054306322,
+          "hoo_n_pairs": 2357,
+          "train_n_pairs": 11369,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold41_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8666593503072871,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6221467967755622,
+          "hoo_n_pairs": 2357,
+          "train_n_pairs": 11369,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold41_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8696041849575651,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6179041154009334,
+          "hoo_n_pairs": 2357,
+          "train_n_pairs": 11369,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold41_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 42,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8417292135410405,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6816774837743385,
+          "hoo_n_pairs": 2003,
+          "train_n_pairs": 12080,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold42_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8651907321848754,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6170743884173739,
+          "hoo_n_pairs": 2003,
+          "train_n_pairs": 12080,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold42_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8668567404633908,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6150773839241138,
+          "hoo_n_pairs": 2003,
+          "train_n_pairs": 12080,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold42_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 43,
+      "held_out_groups": [
+        "fiction",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.854086521013283,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.548025613660619,
+          "hoo_n_pairs": 2999,
+          "train_n_pairs": 11463,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold43_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8785294331131596,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.522145144076841,
+          "hoo_n_pairs": 2999,
+          "train_n_pairs": 11463,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold43_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8819409160194527,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5226787620064034,
+          "hoo_n_pairs": 2999,
+          "train_n_pairs": 11463,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold43_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 44,
+      "held_out_groups": [
+        "fiction",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8525156479802989,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5445271151338498,
+          "hoo_n_pairs": 2608,
+          "train_n_pairs": 12137,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold44_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8750897834935185,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5058679143974841,
+          "hoo_n_pairs": 2608,
+          "train_n_pairs": 12137,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold44_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8805280979580669,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.50118892383217,
+          "hoo_n_pairs": 2608,
+          "train_n_pairs": 12137,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold44_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 45,
+      "held_out_groups": [
+        "fiction",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8299619640387276,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5865079365079365,
+          "hoo_n_pairs": 252,
+          "train_n_pairs": 18952,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold45_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8571058091286307,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6039682539682539,
+          "hoo_n_pairs": 252,
+          "train_n_pairs": 18952,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold45_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8602934820193637,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5182539682539683,
+          "hoo_n_pairs": 252,
+          "train_n_pairs": 18952,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold45_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 46,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8933622689515828,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7174950298210736,
+          "hoo_n_pairs": 10485,
+          "train_n_pairs": 2674,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold46_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.9060839631819202,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6684890656063618,
+          "hoo_n_pairs": 10485,
+          "train_n_pairs": 2674,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold46_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.9096759709646037,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6551888667992047,
+          "hoo_n_pairs": 10485,
+          "train_n_pairs": 2674,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold46_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 47,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8310836868492094,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7314544392523364,
+          "hoo_n_pairs": 5903,
+          "train_n_pairs": 7263,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold47_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8449947661285879,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.721780081775701,
+          "hoo_n_pairs": 5903,
+          "train_n_pairs": 7263,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold47_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8466751143187703,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.71875,
+          "hoo_n_pairs": 5903,
+          "train_n_pairs": 7263,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold47_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 48,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8284714119019837,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7300226271287364,
+          "hoo_n_pairs": 5462,
+          "train_n_pairs": 7887,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold48_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8416112830399269,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7254575046643642,
+          "hoo_n_pairs": 5462,
+          "train_n_pairs": 7887,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold48_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.844401603165745,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.7188281529117542,
+          "hoo_n_pairs": 5462,
+          "train_n_pairs": 7887,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold48_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 49,
+      "held_out_groups": [
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.850611217641419,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6744869111869883,
+          "hoo_n_pairs": 5865,
+          "train_n_pairs": 6677,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold49_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8752696548418025,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.640011748724162,
+          "hoo_n_pairs": 5865,
+          "train_n_pairs": 6677,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold49_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8768276605944392,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6477585637184712,
+          "hoo_n_pairs": 5865,
+          "train_n_pairs": 6677,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold49_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 50,
+      "held_out_groups": [
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8458043017267495,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6712003541104986,
+          "hoo_n_pairs": 5387,
+          "train_n_pairs": 7264,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold50_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.869323345542673,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6301959679690958,
+          "hoo_n_pairs": 5387,
+          "train_n_pairs": 7264,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold50_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8714439150670595,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6386865719689349,
+          "hoo_n_pairs": 5387,
+          "train_n_pairs": 7264,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold50_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 51,
+      "held_out_groups": [
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8136766214439484,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6716781454728709,
+          "hoo_n_pairs": 2798,
+          "train_n_pairs": 13846,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold51_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8360134656784131,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6564757265244414,
+          "hoo_n_pairs": 2798,
+          "train_n_pairs": 13846,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold51_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8384118590438212,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6558877876700823,
+          "hoo_n_pairs": 2798,
+          "train_n_pairs": 13846,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold51_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 52,
+      "held_out_groups": [
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "summarization"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8606933430559354,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6168368014657767,
+          "hoo_n_pairs": 6114,
+          "train_n_pairs": 7018,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold52_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8830857108133564,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5841840073288836,
+          "hoo_n_pairs": 6114,
+          "train_n_pairs": 7018,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold52_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8858201926290523,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6017536971600576,
+          "hoo_n_pairs": 6114,
+          "train_n_pairs": 7018,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold52_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 53,
+      "held_out_groups": [
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8596823423016052,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6178826585841091,
+          "hoo_n_pairs": 5544,
+          "train_n_pairs": 7513,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold53_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8830544879041374,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5775059536696254,
+          "hoo_n_pairs": 5544,
+          "train_n_pairs": 7513,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold53_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8863045444268596,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6021866204806235,
+          "hoo_n_pairs": 5544,
+          "train_n_pairs": 7513,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold53_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 54,
+      "held_out_groups": [
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.837896566710126,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.689198606271777,
+          "hoo_n_pairs": 1722,
+          "train_n_pairs": 12862,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold54_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8589663109437121,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.6340301974448316,
+          "hoo_n_pairs": 1722,
+          "train_n_pairs": 12862,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold54_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8619279862217716,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.624390243902439,
+          "hoo_n_pairs": 1722,
+          "train_n_pairs": 12862,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold54_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    },
+    {
+      "fold_idx": 55,
+      "held_out_groups": [
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "layers": {
+        "bradley_terry_L31": {
+          "val_acc": 0.8492654782875705,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5314886353427365,
+          "hoo_n_pairs": 2227,
+          "train_n_pairs": 12819,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold55_bradley_terry_L31",
+          "layer": 31
+        },
+        "bradley_terry_L43": {
+          "val_acc": 0.8751555505276597,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5052555924894438,
+          "hoo_n_pairs": 2227,
+          "train_n_pairs": 12819,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold55_bradley_terry_L43",
+          "layer": 43
+        },
+        "bradley_terry_L55": {
+          "val_acc": 0.8795513680365887,
+          "best_l2_lambda": 100.0,
+          "hoo_acc": 0.5085796424400323,
+          "hoo_n_pairs": 2227,
+          "train_n_pairs": 12819,
+          "method": "bradley_terry",
+          "probe_id": "hoo_fold55_bradley_terry_L55",
+          "layer": 55
+        }
+      }
+    }
+  ],
+  "layer_summary": {
+    "31": {
+      "bradley_terry": {
+        "mean_val_acc": 0.8416886566145798,
+        "mean_hoo_acc": 0.651641734952767,
+        "std_hoo_acc": 0.054703187193380014,
+        "n_folds": 56
+      }
+    },
+    "43": {
+      "bradley_terry": {
+        "mean_val_acc": 0.865689990686513,
+        "mean_hoo_acc": 0.6173488713630535,
+        "std_hoo_acc": 0.063949107222342,
+        "n_folds": 56
+      }
+    },
+    "55": {
+      "bradley_terry": {
+        "mean_val_acc": 0.8687643741367003,
+        "mean_hoo_acc": 0.6101032972404029,
+        "std_hoo_acc": 0.06345065365047158,
+        "n_folds": 56
+      }
+    }
+  }
+}
