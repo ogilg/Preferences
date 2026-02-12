@@ -211,5 +211,5 @@ For the swapped ordering, simply reverse which task goes in position A vs B in t
 ## Data
 
 - **Task mu values**: `results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0/thurstonian_a1ebd06e.csv`
-- **Probe direction**: `results/probes/gemma3_3k_completion_preference/` (ridge_L31)
+- **Probe direction**: `results/probes/gemma3_3k_nostd_raw/` (ridge_L31) — non-standardized, no demeaning. Probe weights are unit vectors in raw activation space. Four probe variants exist (`std_demean`, `std_raw`, `nostd_demean`, `nostd_raw`) trained with different preprocessing; `nostd_raw` is the default for steering since its weights live in the same space as the model's activations without any standardization transform.
 - **Model**: Gemma-3-27B on H100 80GB
