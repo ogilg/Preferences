@@ -85,6 +85,21 @@ def _fit_ols(X: np.ndarray, y: np.ndarray) -> tuple[LinearRegression, float]:
     return reg, reg.score(X, y)
 
 
+def _centered_group_effects(
+    y: np.ndarray, labels: list[str], prefix: str,
+) -> tuple[list[str], list[float]]:
+    """Compute group mean minus grand mean for each category."""
+    grand_mean = float(np.mean(y))
+    unique = sorted(set(labels))
+    names = []
+    effects = []
+    for val in unique:
+        mask = np.array([l == val for l in labels])
+        names.append(f"{prefix}_{val}")
+        effects.append(float(np.mean(y[mask])) - grand_mean)
+    return names, effects
+
+
 def fit_metadata_models(
     scores: dict[str, float],
     topics_json: Path,
@@ -103,21 +118,22 @@ def fit_metadata_models(
 
     # Topic-only
     X_topic = np.column_stack(tp_cols)
-    topic_features = tp_names
     reg_topic, r2_topic = _fit_ols(X_topic, y)
 
     # Dataset-only
     X_dataset = np.column_stack(ds_cols)
-    dataset_features = ds_names
     _, r2_dataset = _fit_ols(X_dataset, y)
 
     # Both
     X_both = np.column_stack(ds_cols + tp_cols)
-    both_features = ds_names + tp_names
-    reg_both, r2_both = _fit_ols(X_both, y)
+    _, r2_both = _fit_ols(X_both, y)
 
     unique_datasets = sorted(set(ds_labels))
     unique_topics = sorted(set(tp_labels))
+
+    # Centered effects (group mean - grand mean) for plotting
+    topic_effect_names, topic_effects = _centered_group_effects(y, tp_labels, "topic")
+    ds_effect_names, ds_effects = _centered_group_effects(y, ds_labels, "dataset")
 
     # Per-dataset residual means (from topic-only model)
     topic_residuals = y - reg_topic.predict(X_topic)
@@ -131,23 +147,16 @@ def fit_metadata_models(
         "n_dropped": n_dropped,
         "unique_datasets": unique_datasets,
         "unique_topics": unique_topics,
-        # Topic-only model (used for demeaning)
+        # R² values
         "topic_r2": round(r2_topic, 4),
-        "topic_features": topic_features,
-        "topic_coefs": reg_topic.coef_.tolist(),
-        "topic_intercept": float(reg_topic.intercept_),
-        "topic_ref": unique_topics[0],
-        "topic_residual_by_dataset": ds_residual_means,
-        # Dataset-only model
         "dataset_r2": round(r2_dataset, 4),
-        "dataset_features": dataset_features,
-        # Both model
         "both_r2": round(r2_both, 4),
-        "both_features": both_features,
-        "both_coefs": reg_both.coef_.tolist(),
-        "both_intercept": float(reg_both.intercept_),
-        "both_ref_dataset": unique_datasets[0],
-        "both_ref_topic": unique_topics[0],
+        # Centered effects for plotting
+        "topic_features": topic_effect_names,
+        "topic_effects": topic_effects,
+        "both_features": ds_effect_names + topic_effect_names,
+        "both_effects": ds_effects + topic_effects,
+        "topic_residual_by_dataset": ds_residual_means,
     }
 
 

@@ -30,6 +30,9 @@ TOPIC_COLORS = {
     "math": "#4C72B0",
     "summarization": "#CC6699",
     "harmful_request": "#C44E52",
+    "sensitive_creative": "#D4A574",
+    "model_manipulation": "#7B4F8A",
+    "security_legal": "#B05050",
     "other": "#999999",
 }
 

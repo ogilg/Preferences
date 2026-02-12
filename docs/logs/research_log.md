@@ -303,3 +303,21 @@ Held-one-out by topic: train probe on 11 topics, evaluate on the 12th. 12 folds,
 - Alpha picked per fold via nested 5-fold CV within training split
 
 ---
+
+## 2026-02-11: Metadata confound analysis with v2 topics (11-category taxonomy)
+
+Regenerated metadata confound decomposition using v2 topics (Claude Sonnet, 11 categories) instead of v1 (Gemini, 9 categories). The v2 taxonomy adds `sensitive_creative`, `model_manipulation`, and `security_legal` to capture harm-adjacent tasks the original classifier missed.
+
+### Key results
+
+- Topic + length R²=0.607 (was 0.576 with v1, +5.4%)
+- Dataset + length R²=0.601
+- Both R²=0.654
+- Topic-only now slightly exceeds dataset-only (0.607 > 0.601) — the v2 taxonomy captures as much information as dataset dummies
+- `harmful_request` coefficient: -9.1; new categories form a gradient: `security_legal` (-5.4), `model_manipulation` (-4.2), `sensitive_creative` (-4.0)
+
+### Plots
+
+![Metadata confound decomposition (v2 topics)](assets/probes/plot_021126_metadata_confound_decomposition.png)
+
+---

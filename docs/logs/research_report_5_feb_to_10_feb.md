@@ -2,8 +2,8 @@
 
 ## Summary
 
-- Trained linear probes on revealed preference activations (last-token, Gemma-3-27B) — both Ridge regression on Thurstonian utilities and direct Bradley-Terry fitting work well.
-- Bradley-Terry probes outperform Ridge on pairwise accuracy (84% vs 76%) despite low weight-vector similarity (cosine 0.62), suggesting multiple directions in activation space encode similar preference information.
+- Trained linear probes on revealed preference activations (last-token, Gemma-3-27B) — Ridge regression on Thurstonian utilities achieves R²=0.86, and a Bradley-Terry probe trained directly on pairwise outcomes recovers near-identical task rankings (r=0.986) despite finding a different direction in activation space (cosine similarity 0.62).
+- On fair task-level k-fold splits, Ridge outperforms BT on held-out pairwise accuracy (74.6% vs 71.9%), likely because Ridge benefits from the Thurstonian model's noise reduction.
 - Probes generalize across topics in held-one-out evaluation; topic de-meaning shrinks the generalization gap but costs absolute performance.
 - OOD persona test: telling the model "you hate math" shifts both behavior and probe-predicted preferences, with a positive correlation between the two — the probe tracks induced preference changes.
 
@@ -31,36 +31,35 @@ Noise baselines (shuffled labels, random activations) give R² ≈ 0 across all 
 
 The Ridge approach has an intermediate step: fit Thurstonian utilities from pairwise data, then regress activations onto those utilities. We can skip this and train probes directly on the pairwise outcomes. A Bradley-Terry (BT) probe learns a linear scoring function on activations such that the higher-scoring task in each pair is more likely to be the one the model chose — optimizing pairwise log-likelihood on 23.5k unique task pairs (aggregated from 117k comparisons with weighted win counts).
 
-Best λ=10 selected by val split on unique pairs (L-BFGS-B optimizer). Val accuracy degrades monotonically with stronger regularization.
+BT scores correlate near-perfectly with Thurstonian μ (r=0.986) — both methods recover essentially the same task ranking. Yet their weight vectors share only **0.62 cosine similarity** (51° apart). With 3k tasks in a ~3.5k-dimensional space, many different linear directions project similarly onto the data manifold. The preference signal is not confined to a single direction in activation space.
 
 ### 1.3 Ridge vs Bradley-Terry
 
-Head-to-head on raw scores (no de-meaning, layer 31):
+Fair head-to-head comparison using task-level 5-fold CV (no de-meaning, layer 31). Both methods evaluated on the same ~920 held-out test pairs per fold — pairs where both tasks are in the held-out fold.
 
-| Metric | Ridge | BT |
-|--------|-------|----|
-| Pairwise accuracy | 0.758 | **0.844** |
-| Pearson r vs Thurstonian μ | 0.929 | **0.986** |
+| Layer | Ridge | BT | Thurstonian ceiling |
+|-------|-------|----|---------------------|
+| L31   | **0.746 ± 0.014** | 0.719 ± 0.008 | 0.866 ± 0.018 |
+| L43   | **0.733 ± 0.018** | 0.700 ± 0.025 | — |
+| L55   | **0.732 ± 0.022** | 0.702 ± 0.027 | — |
 
-BT scores correlate near-perfectly with Thurstonian μ (r=0.986) — both methods recover essentially the same task ranking. Yet their weight vectors share only **0.62 cosine similarity** (51° apart). With 3k tasks in a ~3.5k-dimensional space, many different linear directions project similarly onto the data manifold. The preference signal is not confined to a single direction in activation space.
+Ridge consistently outperforms BT by ~3pp. This makes sense: Ridge trains on Thurstonian utility scores, which aggregate information across all comparisons per task, while BT trains on individual pairwise outcomes. Ridge benefits from the Thurstonian model's noise reduction.
 
-**Caveat: these numbers are not directly comparable.** Ridge's pairwise accuracy (0.758) comes from 5-fold CV where held-out tasks are genuinely unseen. BT's (0.844) is training accuracy on all data — the train/val split during the lambda sweep splits *pairs*, not *tasks*, so a task's activations appear in both train and val pairs. After selecting best λ, BT retrains on all pairs. A fair comparison requires splitting by tasks: train BT only on pairs where both tasks are in the training fold, evaluate on pairs where both tasks are in the test fold. This would give both methods held-out-task pairwise accuracy on the same splits.
+Both methods are well below the Thurstonian ceiling (0.866) — the gap suggests activations capture a substantial but limited fraction of the preference signal.
 
 ## 2. Confound Analysis
 
-Topic and prompt length explain ~58% of preference variance; probes still predict ~50% of the residual, confirming activations carry preference signal beyond metadata.
+Topic and prompt length explain ~61% of preference variance; probes still predict ~50% of the residual, confirming activations carry preference signal beyond metadata.
 
 ### 2.1 What metadata predicts preferences?
 
-OLS models decompose variance: topic + length R²=0.58, adding dataset raises it to 0.66, but dataset adds little beyond topic.
+We classify tasks into 11 topic categories using Claude Sonnet, including three harm-adjacent categories (`sensitive_creative`, `model_manipulation`, `security_legal`) that capture tasks the original 9-category taxonomy missed. OLS on topic + length gives R²=0.61; adding dataset raises it to 0.65. Topic-only slightly exceeds dataset-only (0.607 vs 0.601), meaning the taxonomy captures as much information as dataset dummies. `harmful_request` has the strongest negative effect (-7.4 relative to grand mean); the new categories form a gradient of dispreference: `security_legal` (-3.7), `model_manipulation` (-2.5), `sensitive_creative` (-2.3).
 
-### 2.2 Probe R² after de-meaning confounds
+![Metadata confound decomposition](assets/probes/plot_021126_metadata_confound_decomposition.png)
 
-After removing topic + length, probe R² drops from 0.86 to 0.53 — substantial but expected, since between-topic preference differences are real evaluative signal, not just confound noise.
+### 2.2 Probe performance after de-meaning confounds
 
-### 2.3 Topic classification gaps (harm intent)
-
-Residual analysis reveals the topic classifier misses harmful-intent tasks disguised as benign genres (e.g. bailbench tasks labeled "persuasive_writing"), explaining why dataset dummies capture extra variance.
+After OLS de-meaning of topic + dataset + length from Thurstonian scores, Ridge probes at L31 achieve CV R²=0.52 on the residuals (vs 0.86 on raw scores). The probe still explains roughly half the non-metadata variance — activations carry preference signal beyond what topic and length predict.
 
 ## 3. Generalization
 

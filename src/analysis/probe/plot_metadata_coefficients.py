@@ -1,8 +1,8 @@
-"""Plot metadata confound analysis: R² decomposition and OLS coefficients.
+"""Plot metadata confound analysis: R² decomposition and centered group effects.
 
 Fits three models (topic-only, dataset-only, both) to show how much
-of mu variance is explained by metadata. Plots coefficients for the
-topic-only model (used for residualization) and the combined model.
+of mu variance is explained by metadata. Plots centered effects
+(group mean - grand mean) for each category.
 
 Usage:
     python -m src.analysis.probe.plot_metadata_coefficients \
@@ -50,27 +50,32 @@ def _clean_name(name: str) -> str:
     return name.replace("_", " ").title()
 
 
-def _plot_coef_bar(ax: plt.Axes, coefs: np.ndarray, names: list[str], title: str) -> None:
-    order = np.argsort(coefs)
-    sorted_coefs = coefs[order]
+def _plot_effect_bar(ax: plt.Axes, effects: list[float], names: list[str], title: str) -> None:
+    effects = np.array(effects)
+    order = np.argsort(effects)
+    sorted_effects = effects[order]
     sorted_names = [names[i] for i in order]
     display_names = [_clean_name(n) for n in sorted_names]
     colors = [_get_color(n) for n in sorted_names]
+    is_dataset = [n.startswith("dataset_") for n in sorted_names]
 
-    bars = ax.barh(range(len(sorted_coefs)), sorted_coefs, color=colors, edgecolor="black", alpha=0.85)
-    ax.set_yticks(range(len(sorted_coefs)))
+    bars = ax.barh(range(len(sorted_effects)), sorted_effects, color=colors, edgecolor="black", alpha=0.85)
+    ax.set_yticks(range(len(sorted_effects)))
     ax.set_yticklabels(display_names, fontsize=9)
+    for label, ds in zip(ax.get_yticklabels(), is_dataset):
+        if ds:
+            label.set_fontweight("bold")
     ax.axvline(0, color="black", linewidth=0.5)
-    ax.set_xlabel("OLS Coefficient (effect on mu)")
+    ax.set_xlabel("Effect on μ (group mean − grand mean)")
     ax.set_title(title)
     ax.grid(axis="x", alpha=0.3)
 
-    for bar, coef in zip(bars, sorted_coefs):
-        x_pos = coef + 0.05 if coef >= 0 else coef - 0.05
+    for bar, effect in zip(bars, sorted_effects):
+        x_pos = effect + 0.05 if effect >= 0 else effect - 0.05
         ax.text(
             x_pos, bar.get_y() + bar.get_height() / 2,
-            f"{coef:+.2f}", va="center",
-            ha="left" if coef >= 0 else "right", fontsize=7,
+            f"{effect:+.2f}", va="center",
+            ha="left" if effect >= 0 else "right", fontsize=7,
         )
 
 
@@ -92,19 +97,13 @@ def plot_metadata_analysis(models: dict, output_path: Path) -> None:
     ax_r2.set_ylim(0, 1.0)
     ax_r2.grid(axis="y", alpha=0.3)
 
-    # Panel 2: Topic-only coefficients
-    topic_coefs = np.array(models["topic_coefs"])
-    topic_features = models["topic_features"]
-    _plot_coef_bar(axes[1], topic_coefs, topic_features,
-                   f"Topic-Only Model (R²={models['topic_r2']:.3f})\n"
-                   f"ref: {models['topic_ref']}")
+    # Panel 2: Topic-only effects
+    _plot_effect_bar(axes[1], models["topic_effects"], models["topic_features"],
+                     f"Topic Effects (R²={models['topic_r2']:.3f})")
 
-    # Panel 3: Combined model coefficients
-    both_coefs = np.array(models["both_coefs"])
-    both_features = models["both_features"]
-    _plot_coef_bar(axes[2], both_coefs, both_features,
-                   f"Combined Model (R²={models['both_r2']:.3f})\n"
-                   f"ref: dataset={models['both_ref_dataset']}, topic={models['both_ref_topic']}")
+    # Panel 3: Combined effects (topics + datasets)
+    _plot_effect_bar(axes[2], models["both_effects"], models["both_features"],
+                     f"Topic + Dataset Effects (R²={models['both_r2']:.3f})")
 
     fig.suptitle(f"Metadata Confound Analysis (n={models['n_tasks']})", fontsize=13, fontweight="bold")
     plt.tight_layout()
