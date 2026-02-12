@@ -6,7 +6,9 @@ Solve this research problem autonomously: $ARGUMENTS
 - **Do not game the spec.** Solve the problem in spirit, not just technically.
 - **Do not give up easily.** If something fails, debug it, try a different approach, read more code, re-examine assumptions. Iterate aggressively.
 - **Do not cut corners.** If the problem requires running experiments, run them. If it requires reading papers or code, read them.
-- **Pay attention to the instructions** They should define the research space. They should also provide fallback options and different things to try. Do not do something that the instructions tell you not to.
+- **Pay attention to the instructions.** They should define the research space. They should also provide fallback options and different things to try. Do not do something that the instructions tell you not to.
+- **Think about controls.** For each key result, think about what controls or sanity checks would strengthen the claim. Run them without being asked.
+- **Pilot before scaling.** When running experiments at scale, always run a small pilot first to validate the pipeline, check for obvious issues, and get rough effect sizes. Use pilot results to decide what to iterate on before committing to full runs.
 - **Do not update the main research log** (`docs/logs/research_log.md`). Do not invoke the `/log` skill. The experiment has its own report file — that's the only place results go. The user will manually log to the main research log if they want to.
 
 ## Directory structure
@@ -17,6 +19,7 @@ The argument $ARGUMENTS points to an experiment spec at `experiments/{name}/spec
 experiments/{name}/
 ├── spec.md          # the experiment spec (input — already exists)
 ├── report.md        # your results report (output — you create this)
+├── running_log.md   # detailed append-only working log (output — you create this)
 └── assets/          # plots referenced from report.md
     └── plot_{mmddYY}_description.png
 ```
@@ -24,6 +27,10 @@ experiments/{name}/
 If this is a **follow-up** to an existing experiment (i.e. the spec lives in a subdirectory like `experiments/{name}/{follow_up}/spec.md`), write your report and assets inside that subdirectory. **Read the parent experiment's report.md first** — it contains context, baselines, and lessons learned that you should build on.
 
 Image references in report.md use relative paths: `![description](assets/plot_foo.png)`.
+
+### Running log
+
+Create `running_log.md` in the experiment directory. Append to this after every completed step — script outputs, intermediate numbers, observations, errors. This is your working memory. If the session dies, someone should be able to pick up from here.
 
 ## Scripts workspace
 
@@ -42,9 +49,10 @@ All scripts you write during this loop go here — experiment runners, analysis,
 The report should be **scannable** — someone should grasp the full arc in 30 seconds. Aim for:
 
 - **Headlines over prose.** Keep iterations short — a few lines describing approach and result.
-- **Tables over text** for numeric comparisons.
+- **Tables over text** for numeric comparisons. But tables must be self-explanatory: use clear column names (not abbreviations), and add a brief note below explaining any non-obvious metric. A reader shouldn't need to read the code to understand a table.
 - **Include plots** at key checkpoints. Save to `experiments/{name}/assets/`.
 - **Dead ends are brief** — one or two lines each.
+- **Include enough detail to reproduce** — key parameters, prompt texts, exact configurations. But keep the presentation concise.
 
 Use this as a rough template (adapt as needed):
 
@@ -82,11 +90,12 @@ You can expand on iterations when the reasoning is important — just don't writ
 0. **Do not ask clarification questions.** The problem spec should be self-contained. If something is ambiguous, make a reasonable assumption, note it in the report, and move on.
 1. **Create a branch.** `git checkout -b research-loop/{experiment_name}`. All work happens on this branch.
 2. **Read prior work.** If there's an existing `report.md` in the parent experiment directory, read it for context and baselines.
-3. Create the scripts workspace folder and the report file.
+3. Create the scripts workspace folder, the report file, and the running log.
 4. Restate the problem and success criteria. Write to report.
 5. Run baseline. Log as a table.
 6. Create the progress plotting script.
-7. Execute iterations. Log each one. Include a plot at major checkpoints.
+7. Execute iterations. Log each one to the running log. Update the report at major milestones. Include a plot at major checkpoints.
 8. If an approach fails, log it and pivot. Do not repeat the same failed approach.
 9. When done, fill in the final results and key insight.
-10. **Push results.** Commit all outputs (report, plots, scripts, result files) and push the branch: `git push -u origin research-loop/{experiment_name}`.
+10. **Review the report.** Launch a subagent (Task tool, subagent_type="general-purpose") with the `/review_report` command, passing the path to `report.md`. The subagent rewrites for clarity without any code context. Do not skip this step.
+11. **Push results.** Commit all outputs (report, running log, plots, scripts, result files) and push the branch: `git push -u origin research-loop/{experiment_name}`.
