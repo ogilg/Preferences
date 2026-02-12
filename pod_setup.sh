@@ -12,8 +12,8 @@ fi
 apt-get update && apt-get install -y tmux sudo jq
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null && apt update && apt install gh -y
 
-# Create non-root user (--dangerously-skip-permissions doesn't work as root)
-useradd -m -s /bin/bash coder
+# Create non-root user with persistent home in /workspace (survives pod restarts)
+useradd -m -d /workspace/home/coder -s /bin/bash -u 1001 coder
 echo "coder ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/coder
 chown -R coder:coder /workspace
 
@@ -83,10 +83,10 @@ su - coder -c "HF_TOKEN=$HF_TOKEN GH_TOKEN=$GH_TOKEN bash /tmp/coder_setup.sh"
 
 # Claude Code auth: copy credentials from root to coder if present
 if [ -f /root/.claude/.credentials.json ]; then
-    mkdir -p /home/coder/.claude
-    cp /root/.claude/.credentials.json /home/coder/.claude/.credentials.json
-    chown -R coder:coder /home/coder/.claude
-    chmod 600 /home/coder/.claude/.credentials.json
+    mkdir -p /workspace/home/coder/.claude
+    cp /root/.claude/.credentials.json /workspace/home/coder/.claude/.credentials.json
+    chown -R coder:coder /workspace/home/coder/.claude
+    chmod 600 /workspace/home/coder/.claude/.credentials.json
     echo "Claude Code credentials copied to coder user."
 fi
 
