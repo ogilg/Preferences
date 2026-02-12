@@ -78,22 +78,39 @@ def plot_lines(results: list[dict]) -> None:
         if label not in conditions:
             conditions.append(label)
 
+    # Color by demean condition, linestyle by scaling
+    demean_colors = {}
+    palette = plt.cm.tab10.colors
+    for i, demean in enumerate(sorted(set(r["demean"] for r in results))):
+        demean_colors[demean] = palette[i]
+
     fig, ax = plt.subplots(figsize=(10, 6))
 
     for cond in conditions:
         cond_results = [r for r in results if condition_label(r) == cond]
         cond_results.sort(key=lambda x: x["layer"])
+        demean = cond_results[0]["demean"]
+        scaled = cond_results[0]["standardize"]
         xs = [r["layer"] for r in cond_results]
         ys = [r["cv_r2_mean"] for r in cond_results]
         errs = [r["cv_r2_std"] for r in cond_results]
-        ax.errorbar(xs, ys, yerr=errs, marker="o", label=cond, capsize=3)
+        ax.errorbar(
+            xs, ys, yerr=errs,
+            marker="o" if scaled else "x",
+            linestyle="-" if scaled else "--",
+            color=demean_colors[demean],
+            label=cond, capsize=3,
+            linewidth=2 if scaled else 1.2,
+            markersize=7,
+        )
 
     ax.set_xlabel("Layer")
     ax.set_ylabel("CV R²")
     ax.set_title("Ridge Probe CV R² by Layer and Condition")
     ax.set_xticks(layers)
     ax.set_xticklabels([f"L{l}" for l in layers])
-    ax.legend(bbox_to_anchor=(1.05, 1), loc="upper left", fontsize=8)
+    ax.set_ylim(-0.5, 1)
+    ax.legend(bbox_to_anchor=(1.05, 1), loc="upper left", fontsize=9)
     ax.grid(True, alpha=0.3)
     plt.tight_layout()
 
@@ -107,6 +124,16 @@ def plot_lines(results: list[dict]) -> None:
 def main() -> None:
     results = load_results()
     print(f"Loaded {len(results)} results from {SUMMARY_PATH}")
+
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--demean", nargs="*", help="Filter to these demean conditions (e.g. none topic)")
+    args = parser.parse_args()
+
+    if args.demean is not None:
+        results = [r for r in results if r["demean"] in args.demean]
+        print(f"Filtered to {len(results)} results (demean: {args.demean})")
+
     plot_heatmap(results)
     plot_lines(results)
 
