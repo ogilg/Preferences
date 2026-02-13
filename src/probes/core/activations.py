@@ -38,6 +38,20 @@ def load_activations(
     return task_ids, activations
 
 
+def compute_activation_norms(
+    activations_path: Path,
+    layers: list[int] | None = None,
+) -> dict[int, float]:
+    """Compute mean L2 activation norm per layer. Returns {layer: mean_norm}."""
+    data = np.load(activations_path, allow_pickle=True)
+    available_layers = sorted(int(k.split("_")[1]) for k in data.keys() if k.startswith("layer_"))
+    layers_to_compute = layers if layers is not None else available_layers
+    return {
+        layer: float(np.linalg.norm(data[f"layer_{layer}"], axis=1).mean())
+        for layer in layers_to_compute
+    }
+
+
 def load_task_origins(activations_dir: Path) -> dict[str, set[str]]:
     """Load all task origins mapping. Returns {origin: set of task_ids}."""
     completions_path = activations_dir / "completions_with_activations.json"

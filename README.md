@@ -77,3 +77,30 @@ Embeds task prompts using a sentence transformer (default: `all-MiniLM-L6-v2`). 
 #### `residualization.py` — OLS demeaning against categorical confounds
 
 Removes group-level mean differences (topic, dataset) from preference scores via OLS on one-hot indicators. Distinct from content projection: this removes categorical confounds, content projection removes continuous content-predictable variance. Key function: `demean_scores(scores, topics_json, confounds=["topic", "dataset"])`.
+
+### `src/steering/` — Activation steering experiments
+
+#### `client.py` — Steered model client
+
+`SteeredHFClient` wraps a `HuggingFaceModel` with a steering direction and coefficient, duck-typed as `OpenAICompatibleClient`. Handles the coef==0 bypass, pre-computes the scaled tensor on GPU.
+
+For coefficient sweeps, use `with_coefficient()` to create new clients sharing the same loaded model:
+
+```python
+from src.steering.client import create_steered_client
+
+client = create_steered_client("gemma-3-27b", probe_dir, "ridge_L31", coefficient=0)
+for coef in [-3000, -1000, 0, 1000, 3000]:
+    steered = client.with_coefficient(coef)
+    response = steered.generate(messages)
+```
+
+`create_steered_client()` is the one-liner entry point: loads model + probe, returns a ready client. Use `compute_activation_norms()` from `src/probes/core/activations` to calibrate coefficients relative to activation norms.
+
+#### `runner.py` — Steering experiment runner
+
+Config-driven runner for stated preference steering experiments (steer during post-task rating). Handles task loading, completion loading, template-based rating prompts, and structured result serialization.
+
+### `src/measurement/` — LLM judges
+
+When building LLM judges (coherence, valence, refusal, etc.), follow the existing pattern in `src/measurement/elicitation/refusal_judge.py`: use `instructor` with Pydantic response models for structured output. Do not write regex-based response parsers — use `instructor.from_openai()` which guarantees valid structured responses from the LLM.

@@ -28,6 +28,7 @@ class SteeredHFClient:
     ):
         self.hf_model = hf_model
         self.layer = layer
+        self._direction = steering_direction
         self.coefficient = coefficient
         self.steering_mode = steering_mode
 
@@ -39,6 +40,12 @@ class SteeredHFClient:
         scaled = steering_direction * coefficient
         self._steering_tensor = torch.tensor(
             scaled, dtype=torch.bfloat16, device=hf_model.device
+        )
+
+    def with_coefficient(self, coefficient: float) -> SteeredHFClient:
+        """Return a new client with a different coefficient, sharing the same model."""
+        return SteeredHFClient(
+            self.hf_model, self.layer, self._direction, coefficient, self.steering_mode
         )
 
     def _make_hook(self):
