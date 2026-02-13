@@ -69,11 +69,11 @@ Single script `scripts/random_direction_control/generate.py`:
 1. Generate 5 random unit vectors (seeds 100, 101, 102, 103, 104)
 2. Load ridge L31 and BT L31 probe directions
 3. Run steered generation for all 7 × 20 × 3 × 3 conditions
-4. Save to `experiments/steering_program/random_direction_control/generation_results.json`
+4. Save to `experiments/steering/program/random_direction_control/generation_results.json`
 
 Then judge and analyze as in previous experiments.
 
 ### Data sources
 
-- **Norms**: `experiments/steering_program/layer_sweep/layer_norms.json` (L31 mean norm = 51,159)
+- **Norms**: `experiments/steering/program/layer_sweep/layer_norms.json` (L31 mean norm = 51,159)
 - **Probes**: `results/probes/gemma3_3k_nostd_raw/` with IDs `ridge_L31` and `bt_L31`

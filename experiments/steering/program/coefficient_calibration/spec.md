@@ -6,7 +6,7 @@ Determine the useful coefficient range for steering Gemma-3-27B with the L31 pre
 
 ## Background
 
-From parent spec (`experiments/steering_program/spec.md`):
+From parent spec (`experiments/steering/program/spec.md`):
 - **Model**: Gemma-3-27B (62 layers, hidden dim 5,376)
 - **Probe**: Ridge L31 from `results/probes/gemma3_3k_nostd_raw/`, CV R² = 0.846
 - **Activation norms at L31**: mean L2 = 52,823; probe projection std = 112.5; mean projection = 36.6
@@ -68,8 +68,8 @@ Write a self-contained script `scripts/steering/calibration.py` that:
    - Generates with `model.generate_with_steering()` using `all_tokens_steering`
    - Stores the raw response
 3. Runs judge calls in batch via OpenRouter (coherence + valence where applicable)
-4. Saves all results to `experiments/steering_program/coefficient_calibration/results.json`
-5. Generates analysis plots to `experiments/steering_program/coefficient_calibration/assets/`
+4. Saves all results to `experiments/steering/program/coefficient_calibration/results.json`
+5. Generates analysis plots to `experiments/steering/program/coefficient_calibration/assets/`
 
 ### Data sources
 

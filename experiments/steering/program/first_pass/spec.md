@@ -4,7 +4,7 @@
 
 Calibrate the steering coefficient range for Gemma-3-27B, then run four steering experiments using the calibrated range. This is the first comprehensive test of whether the preference probe direction causally influences behavior.
 
-Read the parent spec at `experiments/steering_program/spec.md` for model/probe details and activation norm reference.
+Read the parent spec at `experiments/steering/program/spec.md` for model/probe details and activation norm reference.
 
 ## Phase 0: Coefficient calibration
 
