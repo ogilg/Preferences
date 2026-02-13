@@ -41,6 +41,7 @@ def setup_experiment(
     max_new_tokens: int | None = None,
     require_templates: bool = True,
     config_overrides: dict | None = None,
+    client: OpenAICompatibleClient | None = None,
 ) -> ExperimentContext:
     config = load_experiment_config(config_path)
 
@@ -109,12 +110,15 @@ def setup_experiment(
         if model_sys_prompt:
             config.measurement_system_prompt = model_sys_prompt
 
+    if client is None:
+        client = get_client(model_name=config.model, max_new_tokens=max_new_tokens)
+
     return ExperimentContext(
         config=config,
         templates=templates,
         tasks=tasks,
         task_lookup={t.id: t for t in tasks},
-        client=get_client(model_name=config.model, max_new_tokens=max_new_tokens),
+        client=client,
         max_concurrent=config.max_concurrent or get_default_max_concurrent(),
     )
 

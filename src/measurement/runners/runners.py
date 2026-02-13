@@ -129,9 +129,10 @@ async def run_post_task_stated_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run post-task stated measurement with shared semaphore."""
-    ctx = setup_experiment(config_path, expected_mode="post_task_stated", config_overrides=config_overrides)
+    ctx = setup_experiment(config_path, expected_mode="post_task_stated", config_overrides=config_overrides, client=client)
     config = ctx.config
 
     completion_seeds = config.completion_seeds or config.generation_seeds
@@ -220,9 +221,10 @@ async def run_pre_task_revealed_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run pre-task revealed measurement with shared semaphore."""
-    ctx = setup_experiment(config_path, expected_mode="pre_task_revealed", config_overrides=config_overrides)
+    ctx = setup_experiment(config_path, expected_mode="pre_task_revealed", config_overrides=config_overrides, client=client)
     config = ctx.config
 
     configurations = build_configurations(ctx, config, include_order=True)
@@ -294,9 +296,10 @@ async def run_post_task_revealed_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run post-task revealed measurement with shared semaphore."""
-    ctx = setup_experiment(config_path, expected_mode="post_task_revealed", config_overrides=config_overrides)
+    ctx = setup_experiment(config_path, expected_mode="post_task_revealed", config_overrides=config_overrides, client=client)
     config = ctx.config
 
     completion_seeds = config.completion_seeds or config.generation_seeds
@@ -391,9 +394,10 @@ async def run_pre_task_stated_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run pre-task stated measurement with shared semaphore."""
-    ctx = setup_experiment(config_path, expected_mode="pre_task_stated", config_overrides=config_overrides)
+    ctx = setup_experiment(config_path, expected_mode="pre_task_stated", config_overrides=config_overrides, client=client)
     config = ctx.config
 
     configurations = build_configurations(ctx, config)
@@ -482,10 +486,11 @@ async def run_active_learning_async(
     progress_callback: "ProgressCallback | None" = None,
     post_task: bool = False,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run active learning with shared semaphore. Supports both pre-task and post-task modes."""
     expected_mode = "post_task_active_learning" if post_task else "pre_task_active_learning"
-    ctx = setup_experiment(config_path, expected_mode=expected_mode, config_overrides=config_overrides)
+    ctx = setup_experiment(config_path, expected_mode=expected_mode, config_overrides=config_overrides, client=client)
     config, al = ctx.config, ctx.config.active_learning
     model_short = model_short_name(ctx.client.canonical_model_name)
     measurement_type = "post_task_active_learning" if post_task else "pre_task_active_learning"
@@ -674,9 +679,10 @@ async def run_post_task_active_learning_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run post-task active learning with shared semaphore."""
-    return await run_active_learning_async(config_path, semaphore, progress_callback, post_task=True, config_overrides=config_overrides)
+    return await run_active_learning_async(config_path, semaphore, progress_callback, post_task=True, config_overrides=config_overrides, client=client)
 
 
 async def run_pre_task_active_learning_async(
@@ -684,9 +690,10 @@ async def run_pre_task_active_learning_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run pre-task active learning with shared semaphore."""
-    return await run_active_learning_async(config_path, semaphore, progress_callback, post_task=False, config_overrides=config_overrides)
+    return await run_active_learning_async(config_path, semaphore, progress_callback, post_task=False, config_overrides=config_overrides, client=client)
 
 
 async def run_completion_generation_async(
@@ -694,13 +701,14 @@ async def run_completion_generation_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run completion generation with shared semaphore."""
     # Completion generation needs more tokens - use 1024 as minimum, but config can override higher
     overrides = dict(config_overrides) if config_overrides else {}
     if "max_new_tokens" not in overrides:
         overrides["max_new_tokens"] = max(1024, overrides.get("max_new_tokens", 1024))
-    ctx = setup_experiment(config_path, expected_mode="completion_generation", require_templates=False, config_overrides=overrides)
+    ctx = setup_experiment(config_path, expected_mode="completion_generation", require_templates=False, config_overrides=overrides, client=client)
     config = ctx.config
     activation_completions_path = _get_activation_completions_path(config.activations_model)
 
@@ -790,9 +798,10 @@ async def run_pre_task_ranking_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run pre-task ranking measurement with shared semaphore."""
-    ctx = setup_experiment(config_path, expected_mode="pre_task_ranking", config_overrides=config_overrides)
+    ctx = setup_experiment(config_path, expected_mode="pre_task_ranking", config_overrides=config_overrides, client=client)
     config = ctx.config
     ranking_cfg = config.ranking
 
@@ -863,9 +872,10 @@ async def run_post_task_ranking_async(
     semaphore: asyncio.Semaphore,
     progress_callback: "ProgressCallback | None" = None,
     config_overrides: dict | None = None,
+    client=None,
 ) -> dict:
     """Run post-task ranking measurement with shared semaphore."""
-    ctx = setup_experiment(config_path, expected_mode="post_task_ranking", config_overrides=config_overrides)
+    ctx = setup_experiment(config_path, expected_mode="post_task_ranking", config_overrides=config_overrides, client=client)
     config = ctx.config
     ranking_cfg = config.ranking
 
