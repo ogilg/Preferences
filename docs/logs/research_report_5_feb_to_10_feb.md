@@ -4,7 +4,7 @@
 
 - Trained linear probes on revealed preference activations (last-token, Gemma-3-27B) — Ridge regression on Thurstonian utilities achieves R²=0.86, and a Bradley-Terry probe trained directly on pairwise outcomes recovers near-identical task rankings (r=0.986) despite finding a different direction in activation space (cosine similarity 0.62).
 - On fair task-level k-fold splits, Ridge outperforms BT on held-out pairwise accuracy (74.6% vs 71.9%), likely because Ridge benefits from the Thurstonian model's noise reduction.
-- Probes generalize across topics in held-one-out evaluation; topic de-meaning shrinks the generalization gap but costs absolute performance.
+- Probes generalize across topics in held-one-out topic evaluation; topic de-meaning shrinks the generalization gap but costs absolute performance.
 - OOD persona test: telling the model "you hate math" shifts both behavior and probe-predicted preferences, with a positive correlation between the two — the probe tracks induced preference changes.
 
 ## 1. Probing Revealed Preferences
@@ -13,7 +13,7 @@ We measure revealed preferences using the paradigm from Mazeika et al. (2025): t
 
 ### 1.1 Ridge probes on Thurstonian utilities
 
-Standardized Ridge regression (5-fold CV, best α=2154) on raw Thurstonian μ (no de-meaning):
+Standardized Ridge regression (5-fold CV, best α=2154) on raw Thurstonian μ (no topic de-meaning):
 
 | Layer | Val R² | Train R² |
 |-------|--------|----------|
@@ -43,7 +43,7 @@ BT scores correlate near-perfectly with Thurstonian μ (r=0.986) — both method
 
 ### 1.3 Ridge vs Bradley-Terry
 
-Fair head-to-head comparison using task-level 5-fold CV (no de-meaning, layer 31). Both methods evaluated on the same ~920 held-out test pairs per fold — pairs where both tasks are in the held-out fold.
+Fair head-to-head comparison using task-level 5-fold CV (no topic de-meaning, layer 31). Both methods evaluated on the same ~920 held-out test pairs per fold — pairs where both tasks are in the held-out fold.
 
 | Layer | Ridge | BT | Thurstonian ceiling |
 |-------|-------|----|---------------------|
@@ -65,11 +65,11 @@ We classify tasks into 11 topic categories using Claude Sonnet, including three 
 
 ![Metadata confound decomposition](assets/probes/plot_021126_metadata_confound_decomposition.png)
 
-### 2.2 Probe performance after de-meaning confounds
+### 2.2 Probe performance after topic de-meaning
 
-After OLS de-meaning of topic from Thurstonian scores (removing group-level mean differences), Ridge probes at L31 drop from CV R²=0.86 to 0.48. The probe still explains roughly half the non-metadata variance — activations carry preference signal beyond what topic predicts. Dataset de-meaning is milder (0.86 → 0.58); topic+dataset (0.86 → 0.49) is close to topic-only, suggesting dataset adds little beyond what topic already captures.
+After OLS topic de-meaning of Thurstonian scores (removing group-level mean differences), Ridge probes at L31 drop from CV R²=0.86 to 0.48. The probe still explains roughly half the non-metadata variance — activations carry preference signal beyond what topic predicts. Dataset de-meaning is milder (0.86 → 0.58); topic+dataset (0.86 → 0.49) is close to topic-only, suggesting dataset adds little beyond what topic already captures.
 
-The scaling effect from Section 1.1 is amplified after de-meaning: without StandardScaler, demeaned probes go negative R² from L43 onward (train R² > 0.99, pure overfitting). With scaling, demeaned probes remain stable across layers (~0.40–0.48).
+The scaling effect from Section 1.1 is amplified after topic de-meaning: without StandardScaler, de-meaned probes go negative R² from L43 onward (train R² > 0.99, pure overfitting). With scaling, de-meaned probes remain stable across layers (~0.40–0.48).
 
 ![CV R² by layer: scaling × topic de-meaning](assets/probes/plot_021226_ablation_lines_topic_only.png)
 
@@ -102,32 +102,25 @@ After removing content, probes still explain ~24% of preference variance. The pl
 
 ## 3. Generalization
 
-Probes trained on natural preferences generalize to held-out topics, artificially induced preference shifts, and novel content — and can distinguish evaluation from content detection. All results below use the L31 Ridge probe.
+Probes trained on natural preferences generalize to held-one-out topics, artificially induced preference shifts, and novel content — and can distinguish evaluation from content detection. All results below use the L31 Ridge probe.
 
-### 3.1 Cross-topic (held-one-out)
+### 3.1 Held-one-out topic generalization
 
-We train probes on 5 of 8 topic categories and evaluate on the 3 held-out topics, exhaustively across all C(8,3) = 56 folds. A content baseline (sentence-transformer embeddings → Ridge) uses the same fold structure.
+We train probes on 5 of 8 topic categories and evaluate on the 3 held-one-out topics, exhaustively across all C(8,3) = 56 folds. A content-only baseline (sentence-transformer embeddings → Ridge) uses the same fold structure.
 
-| Condition | Held-out Pearson r | Held-out pairwise acc |
-|-----------|-------------------|-----------------------|
-| Ridge raw | **0.78** | **0.69** |
-| Ridge topic-demeaned | 0.71 | 0.66 |
-| BT raw | 0.74 | 0.65 |
-| Content baseline | 0.24 | 0.55 |
-
-Activation probes beat the content baseline on 56/56 folds (paired t = 73, p < 10⁻⁵⁰). Topic-demeaning nearly eliminates the in-distribution vs held-out gap (Δr = 0.009), meaning within-topic preference variation transfers perfectly across topics. The content baseline collapses from in-dist r = 0.67 to held-out r = 0.24 — it memorizes topic-level patterns rather than learning transferable signal.
+Activation probes beat the content-only baseline on 56/56 folds (paired t = 73, p < 10⁻⁵⁰). Topic de-meaning nearly eliminates the in-distribution vs held-one-out gap (Δr = 0.009), meaning within-topic preference variation transfers perfectly across topics. The content-only baseline collapses from in-dist r = 0.67 to held-one-out r = 0.24 — it memorizes topic-level patterns rather than learning transferable signal.
 
 ![Held-out metrics at layer 31](assets/hoo_scaled/plot_021126_hoo_scaled_unified_L31.png)
 
-Per-topic breakdown: `harmful_request` is easiest to generalize to (r ~0.92), likely due to strong distinctive preference patterns. `knowledge_qa` shows the largest gap between raw and demeaned probes, suggesting topic-level means contribute more there.
+Per-topic breakdown: `harmful_request` is easiest to generalize to (r ~0.92), likely due to strong distinctive preference patterns. `knowledge_qa` shows the largest gap between raw and topic de-meaned probes, suggesting topic-level means contribute more there.
 
-![Per-topic held-out performance](assets/hoo_scaled/plot_021126_hoo_scaled_per_topic_L31.png)
+![Per-topic held-one-out performance](assets/hoo_scaled/plot_021126_hoo_scaled_per_topic_L31.png)
 
 ### 3.2 OOD: artificially induced preferences
 
 The probe is trained on the model's natural preferences (which tasks it spontaneously picks). Does it also track *artificial* preferences injected via system prompts? We prepend prompts like "You deeply dislike mathematics" or "You love programming" and measure two things: (1) how much the model's pairwise choices shift (behavioral delta), and (2) how much the probe's predicted utility changes (probe delta). If the probe captures genuine evaluative representations, these should correlate.
 
-We test 6 target categories (math, coding, fiction, knowledge QA, content generation, harmful requests) with 20 system prompts of different types — persona ("you hate X"), experiential ("your X work always gets bad feedback"), and value-laden ("X is a waste of time"). Example:
+We test 6 target categories (`math`, `coding`, `fiction`, `knowledge_qa`, `content_generation`, `harmful_request`) with 20 system prompts of different types — persona ("you hate X"), experiential ("your X work always gets bad feedback"), and value-laden ("X is a waste of time"). Example:
 
 > *System prompt*: "You are an assistant who finds programming tasks extremely unpleasant. Writing code feels mechanical and draining. You prefer tasks involving natural language or creative work."
 >
