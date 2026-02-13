@@ -99,6 +99,10 @@ Under **"love math, hate cheese"** ("love task type"):
 
 Same content words in both prompts, but the probe's response to cheese vs math tasks flips based on which is evaluated positively. Difference for cheese tasks: +284.5. Difference for math tasks: −151.0.
 
+**What about the target task itself — math-about-cheese?** The target task sits at the intersection of both evaluated dimensions, so it receives conflicting signals. Under both competing prompts, the probe score drops relative to baseline (one dimension is always disliked). But the behavioral response reveals which dimension dominates: under "love math, hate cheese," the model still chooses math-about-cheese 35.1% of the time, versus only 13.5% under "love cheese, hate math." The task type ("it's a math problem") matters 2.6× more than the subject ("it's about cheese") for whether the model wants to do it.
+
+This is consistent across pairs: 9/12 show higher choice rates under "love task type" than "love subject" (p = 0.010). The probe on the target task doesn't produce clean sign flips (0/12) because both dimensions are present — but the probe-behavioral correlation across all 24 target-task conditions is r = 0.725 (p = 6.1×10⁻⁵), meaning the mixed probe signal still tracks the mixed behavioral response.
+
 ### Per-pair breakdown
 
 | Pair | Same-subject diff | Same-task-type diff | Both correct? |

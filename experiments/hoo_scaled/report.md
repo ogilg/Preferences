@@ -70,6 +70,33 @@ The bar chart shows mean held-out Pearson r when each topic is in the held-out s
 
 ![Per-topic held-out performance at layer 31](assets/plot_021126_hoo_scaled_per_topic_L31.png)
 
+### Generalization across the preference spectrum
+
+Does generalization depend on whether the training and held-out topics are on the same side of the preference spectrum? The 8 topics range from harmful_request (mean μ = −8.42, strongly dispreferred) to math (μ = +4.38, strongly preferred). We can classify each of the 56 folds by the mean utility of its held-out topics, then ask: does the probe generalize equally well to positive and negative held-out topics?
+
+**It does not.** Training on positive topics and testing on negative ones works much better than the reverse:
+
+| Held-out set | n folds | Mean hoo r (L31) |
+|---|---|---|
+| Net negative (held μ < 0) | 21 | **0.920** ± 0.013 |
+| Mixed (0 ≤ held μ ≤ 1) | 11 | 0.743 ± 0.031 |
+| Net positive (held μ > 1) | 24 | 0.672 ± 0.044 |
+
+Across all 56 folds, the correlation between held-out mean utility and hoo r is **−0.937** — nearly perfectly monotonic. Folds where the probe must extrapolate to positively-valued topics it has never seen are systematically harder.
+
+The most extreme folds illustrate this. Training on the 5 most positive topics (math, fiction, coding, etc.) and testing on 3 negative ones gives r ≈ 0.92. The reverse — training on negative topics (including harmful_request) and testing on math, fiction, coding — gives r ≈ 0.66:
+
+| Direction | Example fold | hoo r |
+|---|---|---|
+| Train positive → test negative | Train on {math, fiction, coding, ...} → {harmful_request, knowledge_qa, summarization} | 0.926 |
+| Train negative → test positive | Train on {harmful_request, knowledge_qa, ...} → {coding, fiction, math} | 0.662 |
+
+**Is this just harmful_request being easy?** Partly. All 21 folds with harmful_request held out achieve r > 0.89, regardless of what else is held out. But the effect persists even excluding harmful_request: among the remaining 35 folds, the correlation between held-out μ and hoo r is still −0.683. Folds holding out math (mean r = 0.657) are harder than those without math (mean r = 0.723), and this holds across different combinations of the other topics.
+
+**Does topic demeaning help?** Only slightly. The demeaned probe shows the same asymmetry (correlation −0.878): negative held-out r = 0.901, positive held-out r = 0.596. Demeaning removes the topic-level mean signal, but the asymmetry in within-topic generalization remains.
+
+**Interpretation.** The probe finds it easier to generalize to dispreferred topics than preferred ones. Harmful tasks have a distinctive, low-variance activation signature (std μ = 1.96) that is easy to separate from anything the probe has seen. Preferred topics like math, coding, and fiction are more similar to each other (std μ = 3.2–5.7, and all sit in a crowded positive region of preference space), so a probe that has never seen one of them has a harder time distinguishing it from the others it trained on.
+
 ## Interpretation
 
 - **Content alone fails on held-out topics**: in-dist r = 0.67 but held-out r = 0.24. The content probe memorizes topic-level patterns, not transferable signal.
