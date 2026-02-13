@@ -182,7 +182,7 @@ def should_capture_reasoning(canonical_name: str) -> bool:
 
 
 # Models with built-in reasoning/thinking that use tokens for chain-of-thought
-REASONING_MODEL_PATTERNS = ["qwen3", "qwq", "deepseek-r1", "o1", "o3"]
+REASONING_MODEL_PATTERNS = ["qwen3", "qwq", "deepseek-r1", "o1", "o3", "gpt-5"]
 
 
 def is_reasoning_model(model_name: str) -> bool:
