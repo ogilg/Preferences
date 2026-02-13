@@ -3,37 +3,17 @@
     "allow": [
       "Skill(log)",
       "Skill(runpod)",
-      "Bash(python *)",
-      "Bash(python3 *)",
-      "Bash(.venv/bin/python *)",
-      "Bash(uv *)",
-      "Bash(pytest)",
-      "Bash(pytest *)",
-      "Bash(ruff check)",
-      "Bash(ruff check *)",
-      "Bash(ruff format)",
-      "Bash(ruff format *)",
-      "Bash(bash scripts/*)",
-      "Bash(pandoc *)",
-      "Bash(soffice *)",
-      "Bash(scp *)",
-      "Bash(ssh *)",
-      "Bash(ln *)",
-      "Bash(chmod *)",
-      "Bash(claude mcp *)",
-      "Bash(claude integrations *)",
-      "Bash(hive-mind)",
-      "Bash(hive-mind read)",
-      "Bash(hive-mind read *)",
-      "Bash(hive-mind search)",
-      "Bash(hive-mind search *)"
+      "Bash"
     ],
     "deny": [
       "Bash(python -c *)",
       "Bash(python3 -c *)",
       "Bash(pip *)",
       "Bash(pip3 *)",
-      "Bash(.venv/bin/pip *)"
+      "Bash(.venv/bin/pip *)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(rm -fr *)"
     ]
   },
   "enabledPlugins": {
