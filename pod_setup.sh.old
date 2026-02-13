@@ -35,10 +35,16 @@ fi
 curl -fsSL https://claude.ai/install.sh | bash
 export PATH="$HOME/.local/bin:$PATH"
 
-# Python environment
+# Caches outside /workspace/home/coder to avoid NFS per-user quota
+export UV_CACHE_DIR=/opt/uv_cache
+export HF_HOME=/opt/hf_cache
+sudo mkdir -p /opt/uv_cache /opt/hf_cache && sudo chown coder:coder /opt/uv_cache /opt/hf_cache
+
+# Python environment (install outside /workspace to avoid NFS per-user quota)
 pip install uv
-uv venv --python 3.12 ~/.venvs/preferences
-source ~/.venvs/preferences/bin/activate
+sudo mkdir -p /opt/venvs && sudo chown coder:coder /opt/venvs
+uv venv --python 3.12 /opt/venvs/preferences
+source /opt/venvs/preferences/bin/activate
 cd /workspace/Preferences
 uv pip install -e .
 uv pip install -e ".[dev]"
@@ -62,7 +68,9 @@ fi
 # Write .bash_profile so login shells (su - coder -c '...') get venv + tokens
 cat > ~/.bash_profile << 'PROFILE'
 export PATH="$HOME/.local/bin:$PATH"
-source ~/.venvs/preferences/bin/activate
+export UV_CACHE_DIR=/opt/uv_cache
+export HF_HOME=/opt/hf_cache
+source /opt/venvs/preferences/bin/activate
 PROFILE
 
 if [ -n "$HF_TOKEN" ]; then
