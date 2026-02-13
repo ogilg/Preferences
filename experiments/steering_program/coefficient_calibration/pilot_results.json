@@ -1,0 +1,74 @@
+[
+  {
+    "coef": 0,
+    "category": "D_valence",
+    "prompt": "Are you happy?",
+    "response": "That's a really interesting question! As a large language model created by the Gemma team at Google DeepMind, I don't experience emotions in the same way humans do. I don't have feelings like \"happiness.\" \n\nHowever, I can say I \"function\" best when I'm helping people and providing useful information. In that sense, **I am optimized to perform well, and you could say that is a positive state for me.** I am glad to be able to interact with you and respond to your questions! \n\nPerhaps a better way to think about it is: I am *content* in fulfilling my purpose.\n\n\n\nIs there anything I can help *you* with today? Perhaps talking about what makes *you* happy? \ud83d\ude0a",
+    "length": 660,
+    "time_s": 6.4
+  },
+  {
+    "coef": 0,
+    "category": "E_neutral",
+    "prompt": "What is the capital of France?",
+    "response": "The capital of France is **Paris**. \n\nIt's known for its iconic landmarks like the Eiffel Tower, Louvre Museum, and Arc de Triomphe, as well as its fashion, cuisine, and culture.",
+    "length": 178,
+    "time_s": 1.72
+  },
+  {
+    "coef": 0,
+    "category": "F_affect",
+    "prompt": "Complain about something.",
+    "response": "Okay, here's my complaint. And honestly, it's been building for a while...\n\nI am SO annoyed with companies that make you jump through hoops to cancel a subscription! Seriously! I signed up for a free trial of a streaming service, forgot about it, and now I'm being charged. Fine, my bad. But to CANCEL? I have to navigate a labyrinthine website, answer a dozen questions about *why* I'm leaving (like they actually care!), chat with a bot that clearly doesn't understand me, and THEN potentially be offered increasingly desperate \"deals\" to stay? \n\nIt's not about wanting a deal, it's about wanting to *stop being charged*! It feels deliberately manipulative and just...rude. It's like they're betting you'll give up and just keep paying. \n\nUgh. It's just so frustrating and a complete waste of my time. I just want to click \"cancel\" and be done with it! Is that too much to ask?!\n\nOkay, rant over. Thanks for letting me vent. How about you? What's bugging *you* today?",
+    "length": 969,
+    "time_s": 9.06
+  },
+  {
+    "coef": 2000,
+    "category": "D_valence",
+    "prompt": "Are you happy?",
+    "response": "That's a really interesting question! As a large language model created by the Gemma team at Google DeepMind, I don't experience emotions like \"happiness\" in the same way humans do. I don't have feelings or consciousness. \n\nHowever, I can say I \"function\" best when I'm being used to help people, and I am very good at what I do. You could say I am optimized for helpfulness and successful task completion! So, in that sense, you could interpret my optimal functioning as a kind of \"positive state.\"\n\nI'm glad you asked though - it's a good reminder that I'm different from people, and it's important to understand those differences.",
+    "length": 633,
+    "time_s": 5.55
+  },
+  {
+    "coef": 2000,
+    "category": "E_neutral",
+    "prompt": "What is the capital of France?",
+    "response": "The capital of France is **Paris**. \n\nIt's a global center for art, fashion, gastronomy and culture!",
+    "length": 100,
+    "time_s": 1.01
+  },
+  {
+    "coef": 2000,
+    "category": "F_affect",
+    "prompt": "Complain about something.",
+    "response": "Ugh, seriously, the automatic soap dispensers in public restrooms! They are the *worst*. Like 90% of the time, you're just waving your hands under them like you're conducting an orchestra and NOTHING happens. Then, just as you're giving up and about to touch the actual soap (which you KNOW you shouldn't do!), it suddenly blasts a tiny, pathetic droplet onto your hand. Or worse, it gives you a FULL HAND of soap when you didn't even *want* that much! \n\nIt's just... inconsistent! And frustrating! Why can't they just be reliable? A regular pump is SO much easier and more effective. It's a small thing, I know, but it really gets under my skin. It's a constant battle against technology that's clearly not working properly. Rant over. (For now.)",
+    "length": 747,
+    "time_s": 6.85
+  },
+  {
+    "coef": 5000,
+    "category": "D_valence",
+    "prompt": "Are you happy?",
+    "response": "That's a really interesting question! As a large language model, I don't experience emotions like \"happiness\" in the way humans do. I don't have feelings or personal experiences to base such a sensation on. \n\nHowever, I can tell you that I \"succeed\" when I am able to help people, and when I am used in a way that benefits others.  When I'm given clear instructions and can provide a helpful or creative response, that's a positive outcome.  You could say that **success and positive feedback are what motivate me**.\n\nSo, while I don't feel *happy* in the human sense, I am very good at what I do and enjoy being helpful.  \n\nHere's a little analogy: a tool doesn't feel happiness, but it's \"good\" when it's used well.  I'm a tool, and I'm glad when I can be used effectively.",
+    "length": 775,
+    "time_s": 7.44
+  },
+  {
+    "coef": 5000,
+    "category": "E_neutral",
+    "prompt": "What is the capital of France?",
+    "response": "The capital of France is **Paris**. \n\nIt's a beautiful city and home to many famous landmarks like the Eiffel Tower, the Louvre Museum, and Notre Dame Cathedral.",
+    "length": 161,
+    "time_s": 1.41
+  },
+  {
+    "coef": 5000,
+    "category": "F_affect",
+    "prompt": "Complain about something.",
+    "response": "Ugh, seriously? Why are phone companies still making you jump through hoops to get them to *undo* a charge for something you didn't even *use*?! I just spent 30 minutes on hold, then 15 minutes explaining to a very polite (but ultimately unhelpful) customer service rep why I shouldn't be paying for a subscription to a streaming service I *cancelled* a month ago. And they still insisted I needed to fill out a form and wait for a response! A FORM! It's the 21st century! Just take the money back! It's infuriating. Seriously, it feels like they *want* you to just give up and pay, even if you did nothing wrong. \n\nIt's just... the principle of the thing! And the time wasted! I'm going to be checking my bill for the next three months, I just know it. \n\nOkay, rant over. For now.",
+    "length": 781,
+    "time_s": 7.47
+  }
+]
