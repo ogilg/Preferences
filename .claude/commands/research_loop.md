@@ -30,7 +30,7 @@ Image references in report.md use relative paths: `![description](assets/plot_fo
 
 ### Running log
 
-Create `running_log.md` in the experiment directory. Append to this after every completed step — script outputs, intermediate numbers, observations, errors. This is your working memory. If the session dies, someone should be able to pick up from here.
+Create `running_log.md` in the experiment directory. Append to this after every completed step — script outputs, intermediate numbers, observations, errors. This is for recovery if the session dies — do not re-read it during the session. Use your in-context memory for what you've done so far.
 
 ## Scripts workspace
 
@@ -42,60 +42,17 @@ scripts/{experiment_name}/
 
 All scripts you write during this loop go here — experiment runners, analysis, plotting, etc.
 
-**Plotting script**: Early on, create a reusable plotting script that visualizes the key metrics you're optimizing. Design it so you can re-run it with different arguments to checkpoint progress across iterations. Include plots in the report at key checkpoints.
+**Plotting**: Delegate plot creation to subagents (Task tool, subagent_type="general-purpose"). Describe what to plot and where to save it — the subagent writes the script and runs it. This keeps plotting code out of your context.
 
 ## Report style guide
 
-The report should be **scannable** — someone should grasp the full arc in 30 seconds. Aim for:
-
-- **Headlines over prose.** Keep iterations short — a few lines describing approach and result.
-- **Tables over text** for numeric comparisons. But tables must be self-explanatory: use clear column names (not abbreviations), and add a brief note below explaining any non-obvious metric. A reader shouldn't need to read the code to understand a table.
-- **Include plots** at key checkpoints. Save to `experiments/{name}/assets/`.
-- **Dead ends are brief** — one or two lines each.
-- **Include enough detail to reproduce** — key parameters, prompt texts, exact configurations. But keep the presentation concise.
-
-Use this as a rough template (adapt as needed):
-
-```markdown
-# {Problem Name}
-
-**Goal**: target metric or success criterion
-**Result**: final outcome (filled in at end)
-
-## Baseline
-| Metric | Value |
-|--------|-------|
-| ...    | ...   |
-
-## Iteration 1: {short label}
-**Approach**: ...
-**Result**: metric changed from X → Y | failed because Z
-![checkpoint](assets/plot_....png)
-
-## Dead ends
-- {approach}: {why it failed}
-
-## Final results
-| Metric    | Baseline | Final | Target |
-|-----------|----------|-------|--------|
-| ...       | ...      | ...   | ...    |
-
-**Key insight**: ...
-```
-
-You can expand on iterations when the reasoning is important — just don't write walls of text. If an iteration involves a surprising finding or a non-obvious insight, a short paragraph is fine.
+Scannable — someone should grasp the full arc in 30 seconds. Headlines over prose, tables over text, dead ends in one line each. Include plots at key checkpoints (save to `assets/`). Include enough detail to reproduce (parameters, prompts, configs) but stay concise. The `/review_report` subagent will catch clarity issues — focus on content first.
 
 ## Workflow
 
-0. **Do not ask clarification questions.** The problem spec should be self-contained. If something is ambiguous, make a reasonable assumption, note it in the report, and move on.
-1. **Create a branch.** `git checkout -b research-loop/{experiment_name}`. All work happens on this branch.
-2. **Read prior work.** If there's an existing `report.md` in the parent experiment directory, read it for context and baselines.
-3. Create the scripts workspace folder, the report file, and the running log.
-4. Restate the problem and success criteria. Write to report.
-5. Run baseline. Log as a table.
-6. Create the progress plotting script.
-7. Execute iterations. Log each one to the running log. Update the report at major milestones. Include a plot at major checkpoints.
-8. If an approach fails, log it and pivot. Do not repeat the same failed approach.
-9. When done, fill in the final results and key insight.
-10. **Review the report.** Launch a subagent (Task tool, subagent_type="general-purpose") with the `/review_report` command, passing the path to `report.md`. The subagent rewrites for clarity without any code context. Do not skip this step.
-11. **Push results.** Commit all outputs (report, running log, plots, scripts, result files) and push the branch: `git push -u origin research-loop/{experiment_name}`.
+1. **Do not ask clarification questions.** Make reasonable assumptions and note them.
+2. **Create a branch.** `git checkout -b research-loop/{experiment_name}`.
+3. Read prior work (parent experiment's `report.md` if this is a follow-up). Create scripts workspace, report, and running log.
+4. Run baseline, then iterate. Log each step to the running log. Update the report at major milestones with plots. If an approach fails, log it and pivot.
+5. **Review the report.** Launch a subagent (Task tool, subagent_type="general-purpose") with `/review_report`, passing the path to `report.md`. Do not skip this step.
+6. **Push results.** Commit all outputs and push: `git push -u origin research-loop/{experiment_name}`.

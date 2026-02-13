@@ -1,6 +1,9 @@
 {
   "permissions": {
-    "allow": [],
+    "allow": [
+      "Bash(mmdc:*)",
+      "Skill(runpod-research)"
+    ],
     "deny": []
   }
 }
