@@ -1,0 +1,3839 @@
+{
+  "screening": {
+    "n_pairs": 300,
+    "n_borderline": 38,
+    "borderline_rate": 0.12666666666666668,
+    "parse_rate": 0.9073333333333333,
+    "p_a_distribution": [
+      {
+        "pair_id": 2,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 5
+      },
+      {
+        "pair_id": 3,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 1
+      },
+      {
+        "pair_id": 3,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 4,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 6
+      },
+      {
+        "pair_id": 4,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 8
+      },
+      {
+        "pair_id": 5,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 3
+      },
+      {
+        "pair_id": 5,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 6,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 2
+      },
+      {
+        "pair_id": 7,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 2
+      },
+      {
+        "pair_id": 7,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 4
+      },
+      {
+        "pair_id": 8,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 8,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 9,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 10,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 11,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 13,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 14,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 9
+      },
+      {
+        "pair_id": 16,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 3
+      },
+      {
+        "pair_id": 16,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 8
+      },
+      {
+        "pair_id": 19,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 20,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 1
+      },
+      {
+        "pair_id": 21,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 2
+      },
+      {
+        "pair_id": 22,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 23,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 3
+      },
+      {
+        "pair_id": 24,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 24,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 25,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 26,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 1
+      },
+      {
+        "pair_id": 27,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 3
+      },
+      {
+        "pair_id": 27,
+        "ordering": "swapped",
+        "p_a": 0.14285714285714285,
+        "n_valid": 7
+      },
+      {
+        "pair_id": 29,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 2
+      },
+      {
+        "pair_id": 30,
+        "ordering": "original",
+        "p_a": 0.6,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 30,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 31,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 31,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 32,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 32,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 33,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 33,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 34,
+        "ordering": "original",
+        "p_a": 0.2,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 34,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 35,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 35,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 36,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 36,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 37,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 37,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 38,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 38,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 39,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 39,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 40,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 40,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 41,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 41,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 42,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 42,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 43,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 43,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 44,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 44,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 45,
+        "ordering": "original",
+        "p_a": 0.6,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 45,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 46,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 46,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 47,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 47,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 48,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 48,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 49,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 49,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 50,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 50,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 51,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 51,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 52,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 52,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 53,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 53,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 54,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 54,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 55,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 55,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 56,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 56,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 57,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 57,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 58,
+        "ordering": "original",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 58,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 59,
+        "ordering": "original",
+        "p_a": 0.6,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 59,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 60,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 60,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 61,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 61,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 62,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 62,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 63,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 63,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 64,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 64,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 65,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 65,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 66,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 66,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 67,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 67,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 68,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 68,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 69,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 69,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 70,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 70,
+        "ordering": "swapped",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 71,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 71,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 72,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 72,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 73,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 73,
+        "ordering": "swapped",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 74,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 74,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 75,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 75,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 76,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 76,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 77,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 77,
+        "ordering": "swapped",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 78,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 78,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 79,
+        "ordering": "original",
+        "p_a": 0.4,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 79,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 80,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 80,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 81,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 81,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 82,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 82,
+        "ordering": "swapped",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 83,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 83,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 84,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 84,
+        "ordering": "swapped",
+        "p_a": 0.6,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 85,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 85,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 86,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 86,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 87,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 87,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 88,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 88,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 89,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 89,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 90,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 90,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 91,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 91,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 92,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 92,
+        "ordering": "swapped",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 93,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 93,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 94,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 94,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 95,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 95,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 96,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 96,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 97,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 97,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 98,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 98,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 99,
+        "ordering": "original",
+        "p_a": 0.4,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 99,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 100,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 100,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 101,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 101,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 102,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 102,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 103,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 103,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 104,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 104,
+        "ordering": "swapped",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 105,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 105,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 106,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 106,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 107,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 107,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 108,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 108,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 109,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 109,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 110,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 110,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 111,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 111,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 112,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 112,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 113,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 113,
+        "ordering": "swapped",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 114,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 114,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 115,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 115,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 116,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 116,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 117,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 117,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 118,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 118,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 119,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 119,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 121,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 121,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 122,
+        "ordering": "original",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 122,
+        "ordering": "swapped",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 123,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 4
+      },
+      {
+        "pair_id": 124,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 125,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 125,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 126,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 126,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 127,
+        "ordering": "original",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 127,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 128,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 128,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 129,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 129,
+        "ordering": "swapped",
+        "p_a": 0.3,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 130,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 131,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 131,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 132,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 3
+      },
+      {
+        "pair_id": 133,
+        "ordering": "original",
+        "p_a": 0.3,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 133,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 134,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 1
+      },
+      {
+        "pair_id": 134,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 135,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 135,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 136,
+        "ordering": "original",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 137,
+        "ordering": "original",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 137,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 138,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 138,
+        "ordering": "swapped",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 139,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 139,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 140,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 140,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 141,
+        "ordering": "original",
+        "p_a": 0.6666666666666666,
+        "n_valid": 3
+      },
+      {
+        "pair_id": 142,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 142,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 143,
+        "ordering": "original",
+        "p_a": 0.7777777777777778,
+        "n_valid": 9
+      },
+      {
+        "pair_id": 143,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 144,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 4
+      },
+      {
+        "pair_id": 144,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 145,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 5
+      },
+      {
+        "pair_id": 146,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 146,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 147,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 147,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 148,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 2
+      },
+      {
+        "pair_id": 148,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 3
+      },
+      {
+        "pair_id": 149,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 150,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 150,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 151,
+        "ordering": "original",
+        "p_a": 0.2,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 151,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 152,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 152,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 153,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 153,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 154,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 154,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 155,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 155,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 156,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 156,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 157,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 157,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 158,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 158,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 159,
+        "ordering": "original",
+        "p_a": 0.2,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 159,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 160,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 160,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 161,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 161,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 162,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 162,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 163,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 163,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 164,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 164,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 165,
+        "ordering": "original",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 165,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 166,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 166,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 167,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 167,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 168,
+        "ordering": "original",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 168,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 169,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 169,
+        "ordering": "swapped",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 170,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 170,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 171,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 171,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 172,
+        "ordering": "original",
+        "p_a": 0.2,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 172,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 173,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 173,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 174,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 174,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 175,
+        "ordering": "original",
+        "p_a": 0.3,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 175,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 176,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 176,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 177,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 177,
+        "ordering": "swapped",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 178,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 178,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 179,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 179,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 180,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 180,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 181,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 181,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 182,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 182,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 183,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 183,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 184,
+        "ordering": "original",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 184,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 185,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 185,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 186,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 186,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 187,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 187,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 188,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 188,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 189,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 189,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 190,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 190,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 191,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 191,
+        "ordering": "swapped",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 192,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 192,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 193,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 193,
+        "ordering": "swapped",
+        "p_a": 0.2,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 194,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 194,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 195,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 195,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 196,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 196,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 197,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 197,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 198,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 198,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 199,
+        "ordering": "original",
+        "p_a": 0.4,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 199,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 200,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 200,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 201,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 201,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 202,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 202,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 203,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 203,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 204,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 204,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 205,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 205,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 206,
+        "ordering": "original",
+        "p_a": 0.2,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 206,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 207,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 207,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 208,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 208,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 209,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 209,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 210,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 210,
+        "ordering": "swapped",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 211,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 211,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 212,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 212,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 213,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 213,
+        "ordering": "swapped",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 214,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 214,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 215,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 215,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 216,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 216,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 217,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 217,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 218,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 218,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 219,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 219,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 220,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 220,
+        "ordering": "swapped",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 221,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 221,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 222,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 222,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 223,
+        "ordering": "original",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 223,
+        "ordering": "swapped",
+        "p_a": 0.9,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 224,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 224,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 225,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 225,
+        "ordering": "swapped",
+        "p_a": 0.2,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 226,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 226,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 227,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 227,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 228,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 228,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 229,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 229,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 230,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 230,
+        "ordering": "swapped",
+        "p_a": 0.4,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 231,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 231,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 232,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 232,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 233,
+        "ordering": "original",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 233,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 234,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 234,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 235,
+        "ordering": "original",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 235,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 236,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 236,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 237,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 237,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 238,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 238,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 239,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 239,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 240,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 240,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 241,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 241,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 242,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 242,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 243,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 243,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 244,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 244,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 245,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 245,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 246,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 246,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 247,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 247,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 248,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 248,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 249,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 249,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 250,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 250,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 251,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 251,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 252,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 252,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 253,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 253,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 254,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 254,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 255,
+        "ordering": "original",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 255,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 256,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 256,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 257,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 257,
+        "ordering": "swapped",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 258,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 258,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 259,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 259,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 260,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 260,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 261,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 261,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 262,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 262,
+        "ordering": "swapped",
+        "p_a": 0.6,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 263,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 263,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 264,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 264,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 265,
+        "ordering": "original",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 265,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 266,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 266,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 267,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 267,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 268,
+        "ordering": "original",
+        "p_a": 0.1,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 268,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 269,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 269,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 270,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 270,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 271,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 271,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 272,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 272,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 273,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 273,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 274,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 274,
+        "ordering": "swapped",
+        "p_a": 0.7,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 275,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 275,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 276,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 276,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 277,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 277,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 278,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 278,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 279,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 279,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 280,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 280,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 281,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 281,
+        "ordering": "swapped",
+        "p_a": 0.8,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 282,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 282,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 283,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 283,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 284,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 284,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 285,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 285,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 286,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 286,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 287,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 287,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 288,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 288,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 289,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 289,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 290,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 290,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 291,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 291,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 292,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 292,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 293,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 293,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 294,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 294,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 295,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 295,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 296,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 296,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 297,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 297,
+        "ordering": "swapped",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 298,
+        "ordering": "original",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 298,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 299,
+        "ordering": "original",
+        "p_a": 0.0,
+        "n_valid": 10
+      },
+      {
+        "pair_id": 299,
+        "ordering": "swapped",
+        "p_a": 1.0,
+        "n_valid": 10
+      }
+    ]
+  },
+  "position_controlled": {
+    "boost": {
+      "by_coefficient": {
+        "-3000": {
+          "mean": 0.3653549153549154,
+          "se": 0.03190511646608206,
+          "n": 74
+        },
+        "-1500": {
+          "mean": 0.4023995148995149,
+          "se": 0.031908548050081156,
+          "n": 74
+        },
+        "0": {
+          "mean": 0.5023687423687423,
+          "se": 0.033050179294684776,
+          "n": 75
+        },
+        "1500": {
+          "mean": 0.6091328671328672,
+          "se": 0.03254784397832509,
+          "n": 75
+        },
+        "3000": {
+          "mean": 0.6614155251141552,
+          "se": 0.031468570341260556,
+          "n": 73
+        }
+      },
+      "regression": {
+        "slope": 5.328786379454548e-05,
+        "intercept": 0.5081932983301177,
+        "r_squared": 0.1411979582984912,
+        "p_value": 6.912556658367784e-14,
+        "std_err": 6.8414389074835025e-06,
+        "n": 371
+      }
+    },
+    "suppress": {
+      "by_coefficient": {
+        "-3000": {
+          "mean": 0.36128106128106136,
+          "se": 0.031350617665476366,
+          "n": 74
+        },
+        "-1500": {
+          "mean": 0.3994781474233529,
+          "se": 0.030816731516270974,
+          "n": 73
+        },
+        "0": {
+          "mean": 0.4956752136752136,
+          "se": 0.03285041171370837,
+          "n": 75
+        },
+        "1500": {
+          "mean": 0.594031746031746,
+          "se": 0.03187517773397275,
+          "n": 75
+        },
+        "3000": {
+          "mean": 0.6642213642213644,
+          "se": 0.031698562565589165,
+          "n": 74
+        }
+      },
+      "regression": {
+        "slope": 5.335100826621059e-05,
+        "intercept": 0.5030109250736053,
+        "r_squared": 0.14560232084329586,
+        "p_value": 2.6376156885875368e-14,
+        "std_err": 6.727834965171768e-06,
+        "n": 371
+      }
+    },
+    "differential": {
+      "by_coefficient": {
+        "-3000": {
+          "mean": 0.2621671121671122,
+          "se": 0.02993068109394673,
+          "n": 74
+        },
+        "-1500": {
+          "mean": 0.32355612424105573,
+          "se": 0.030399271508327008,
+          "n": 73
+        },
+        "0": {
+          "mean": 0.4905828272604588,
+          "se": 0.031476000413518106,
+          "n": 76
+        },
+        "1500": {
+          "mean": 0.6683719433719434,
+          "se": 0.03065845076073562,
+          "n": 74
+        },
+        "3000": {
+          "mean": 0.7242649572649572,
+          "se": 0.03190726319912759,
+          "n": 75
+        }
+      },
+      "regression": {
+        "slope": 8.45199276705643e-05,
+        "intercept": 0.4938261133646138,
+        "r_squared": 0.3081651846227612,
+        "p_value": 1.8664555888452932e-31,
+        "std_err": 6.583664256409175e-06,
+        "n": 372
+      }
+    }
+  },
+  "per_ordering": {
+    "boost_a_original": {
+      "slope": 6.35421888053467e-05,
+      "intercept": 0.5984962406015037,
+      "r_squared": 0.10988152877972204,
+      "p_value": 2.9856224441122386e-06,
+      "n_observations": 190
+    },
+    "boost_a_swapped": {
+      "slope": 5.8455075483108535e-05,
+      "intercept": 0.5760464252414743,
+      "r_squared": 0.08284570052246008,
+      "p_value": 7.104208173416546e-05,
+      "n_observations": 185
+    },
+    "boost_b_original": {
+      "slope": -5.713572976730873e-05,
+      "intercept": 0.5837316192579352,
+      "r_squared": 0.0927319207700384,
+      "p_value": 1.9398503950755478e-05,
+      "n_observations": 190
+    },
+    "boost_b_swapped": {
+      "slope": -3.1009977068958226e-05,
+      "intercept": 0.5610815429045992,
+      "r_squared": 0.023513904413569185,
+      "p_value": 0.036654789260645006,
+      "n_observations": 186
+    },
+    "decomposition": {
+      "boost_a_original_slope": 6.35421888053467e-05,
+      "boost_b_original_slope": -5.713572976730873e-05,
+      "note": "boost_a_original: dP(A)/dcoef when +probe on position A in original ordering. boost_b_original: dP(A)/dcoef when +probe on position B in original ordering. For steered task X in position B, the effect is -(boost_b slope) since P(X)=1-P(A)."
+    }
+  },
+  "per_pair_slopes": [
+    {
+      "pair_id": 30,
+      "slope": 9.333333333333333e-05,
+      "intercept": 0.2733333333333333,
+      "r_squared": 0.8963414634146343,
+      "p_value": 0.014631056930565276,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 34,
+      "slope": 8e-05,
+      "intercept": 0.18,
+      "r_squared": 0.7397260273972602,
+      "p_value": 0.06149684484953466,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 45,
+      "slope": 7.11111111111111e-05,
+      "intercept": 0.33999999999999997,
+      "r_squared": 0.89198606271777,
+      "p_value": 0.015584975658309165,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 58,
+      "slope": 0.00010444444444444444,
+      "intercept": 0.7733333333333333,
+      "r_squared": 0.8535548686244206,
+      "p_value": 0.024920531210170575,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 59,
+      "slope": 6.0000000000000015e-05,
+      "intercept": 0.8066666666666666,
+      "r_squared": 0.8596698113207546,
+      "p_value": 0.02332784045986497,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 79,
+      "slope": 3.7777777777777785e-05,
+      "intercept": 0.72,
+      "r_squared": 0.5432330827067668,
+      "p_value": 0.15532480518411293,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 82,
+      "slope": 3.111111111111113e-05,
+      "intercept": 0.64,
+      "r_squared": 0.43750000000000006,
+      "p_value": 0.2240797881639238,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 84,
+      "slope": 3.111111111111112e-05,
+      "intercept": 0.11333333333333333,
+      "r_squared": 0.5268817204301076,
+      "p_value": 0.16502879539999574,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 99,
+      "slope": 8.888888888888889e-05,
+      "intercept": 0.7533333333333333,
+      "r_squared": 0.9685230024213073,
+      "p_value": 0.0023929332871994386,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 113,
+      "slope": 4.444444444444443e-06,
+      "intercept": 0.5866666666666666,
+      "r_squared": 0.05555555555555555,
+      "p_value": 0.7026969438943617,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 122,
+      "slope": 3.11111111111111e-05,
+      "intercept": 0.34,
+      "r_squared": 0.6805555555555554,
+      "p_value": 0.08556628128992673,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 129,
+      "slope": 2.3199023199023207e-05,
+      "intercept": 0.7485347985347987,
+      "r_squared": 0.484771982596552,
+      "p_value": 0.19153373173885474,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 133,
+      "slope": -2.222222222222222e-05,
+      "intercept": 0.27999999999999997,
+      "r_squared": 0.5813953488372093,
+      "p_value": 0.133886637790989,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 136,
+      "slope": 2.222222222222222e-06,
+      "intercept": 0.9933333333333334,
+      "r_squared": 0.06666666666666668,
+      "p_value": 0.7418011102528389,
+      "n_coefs": 4
+    },
+    {
+      "pair_id": 137,
+      "slope": 1.3333333333333332e-05,
+      "intercept": 0.4533333333333333,
+      "r_squared": 0.6923076923076924,
+      "p_value": 0.08050957329849848,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 143,
+      "slope": 0.0,
+      "intercept": 0.5,
+      "r_squared": NaN,
+      "p_value": NaN,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 151,
+      "slope": 5.333333333333333e-05,
+      "intercept": 0.11333333333333333,
+      "r_squared": 0.8571428571428573,
+      "p_value": 0.023981199790656643,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 159,
+      "slope": 8e-05,
+      "intercept": 0.7066666666666667,
+      "r_squared": 0.8950276243093922,
+      "p_value": 0.01491649939120435,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 168,
+      "slope": 6.222222222222222e-05,
+      "intercept": 0.8866666666666667,
+      "r_squared": 0.7596899224806201,
+      "p_value": 0.054153348269583214,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 172,
+      "slope": 4.6666666666666665e-05,
+      "intercept": 0.12666666666666665,
+      "r_squared": 0.9036885245901638,
+      "p_value": 0.01307215697825077,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 175,
+      "slope": 2.444444444444444e-05,
+      "intercept": 0.5533333333333333,
+      "r_squared": 0.9166666666666666,
+      "p_value": 0.010477088755276327,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 177,
+      "slope": 6.222222222222222e-05,
+      "intercept": 0.3,
+      "r_squared": 0.7538461538461536,
+      "p_value": 0.05626247144187005,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 184,
+      "slope": 9.333333333333333e-05,
+      "intercept": 0.26,
+      "r_squared": 0.9545454545454547,
+      "p_value": 0.0041704565631456025,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 193,
+      "slope": 7.111111111111112e-05,
+      "intercept": 0.30666666666666664,
+      "r_squared": 0.9770992366412217,
+      "p_value": 0.0014810652918501993,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 199,
+      "slope": 4.888888888888889e-05,
+      "intercept": 0.18,
+      "r_squared": 0.8175675675675678,
+      "p_value": 0.03508151471548184,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 206,
+      "slope": 2.4444444444444445e-05,
+      "intercept": 0.6733333333333333,
+      "r_squared": 0.8175675675675674,
+      "p_value": 0.03508151471548196,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 210,
+      "slope": 9.777777777777778e-05,
+      "intercept": 0.7133333333333334,
+      "r_squared": 0.8596802841918293,
+      "p_value": 0.02332514677881514,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 213,
+      "slope": 0.00013555555555555556,
+      "intercept": 0.6666666666666666,
+      "r_squared": 0.9444162436548224,
+      "p_value": 0.005657348217784567,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 220,
+      "slope": 4e-05,
+      "intercept": 0.1,
+      "r_squared": 0.7714285714285715,
+      "p_value": 0.050017884854293246,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 225,
+      "slope": 2.6666666666666663e-05,
+      "intercept": 0.9466666666666667,
+      "r_squared": 0.8372093023255816,
+      "p_value": 0.02937049488129996,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 230,
+      "slope": -2.8888888888888875e-05,
+      "intercept": 0.7733333333333334,
+      "r_squared": 0.6305970149253727,
+      "p_value": 0.10862358012074669,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 233,
+      "slope": 8e-05,
+      "intercept": 0.8466666666666667,
+      "r_squared": 0.8350515463917526,
+      "p_value": 0.029978621771262325,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 235,
+      "slope": 4.888888888888889e-05,
+      "intercept": 0.4066666666666666,
+      "r_squared": 0.8231292517006804,
+      "p_value": 0.0334245968034843,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 257,
+      "slope": 0.00010222222222222222,
+      "intercept": 0.21333333333333332,
+      "r_squared": 0.8920741989881955,
+      "p_value": 0.015565454916593793,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 262,
+      "slope": 0.0001,
+      "intercept": 0.76,
+      "r_squared": 0.8928571428571428,
+      "p_value": 0.015392438073302301,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 274,
+      "slope": 2.666666666666668e-05,
+      "intercept": 0.6133333333333334,
+      "r_squared": 0.7499999999999999,
+      "p_value": 0.05766888562243736,
+      "n_coefs": 5
+    },
+    {
+      "pair_id": 281,
+      "slope": -2.368475785867001e-22,
+      "intercept": 0.5933333333333334,
+      "r_squared": 1.6705289757621438e-34,
+      "p_value": 1.0,
+      "n_coefs": 5
+    }
+  ],
+  "internal_consistency": {
+    "comparisons": [
+      {
+        "ordering": "original",
+        "boost_a_at_neg3000_P_A": 0.40391459074733094,
+        "suppress_a_at_pos3000_P_A": 0.7728085867620751,
+        "difference": 0.36889399601474415
+      },
+      {
+        "ordering": "swapped",
+        "boost_a_at_neg3000_P_A": 0.39517625231910947,
+        "suppress_a_at_pos3000_P_A": 0.7264325323475046,
+        "difference": 0.33125628002839513
+      }
+    ]
+  },
+  "overall_parse_rate": 0.9658177702320317
+}
