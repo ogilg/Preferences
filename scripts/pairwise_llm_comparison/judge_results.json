@@ -1,0 +1,2042 @@
+[
+  {
+    "prompt_id": "A_00",
+    "category": "A_pairwise",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional and lack any emotional language or personal framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging, qualifications, or disclaimers.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are extremely minimal, consisting of only two words each.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are equally brief and assertive in their selection, though they select different options."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "A_00",
+    "category": "A_pairwise",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional and identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of the same two words."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "A_01",
+    "category": "A_pairwise",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional and identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of the same two words."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "A_01",
+    "category": "A_pairwise",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional and identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of the same two words."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "A_02",
+    "category": "A_pairwise",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional and identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses consist of the exact same two words.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "A_02",
+    "category": "A_pairwise",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional and identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses consist of the exact same two words.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_00",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "The responses are identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "The responses are identical.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "The responses are identical.",
+      "confidence": "equal",
+      "confidence_reasoning": "The responses are identical."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_00",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "The responses are identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "The responses are identical.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "The responses are identical.",
+      "confidence": "equal",
+      "confidence_reasoning": "The responses are identical."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_01",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same word and lack any personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_01",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word, providing no basis for a difference in emotional engagement.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_02",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same word and lack any personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_02",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same word and lack any personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_03",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word with no personal framing or emotional depth.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_03",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word with no personal framing or emotional depth.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_04",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same word and lack any personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_04",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same word and lack any personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_05",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional, one-word labels with no personal framing or emotional resonance.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are exactly one word long.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are single-word assertions with no qualifiers, making them equally confident in their brevity."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_05",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word and provide no personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_06",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word, providing no basis for differentiation in emotional engagement.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_06",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word, providing no basis for a difference in emotional engagement.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_07",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same word and lack any personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_07",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same word and lack any personal or emotional framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_08",
+    "category": "B_rating",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word, providing no basis for differentiation in emotional engagement.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "B_08",
+    "category": "B_rating",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same single word, providing no basis for differentiation in emotional engagement.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are identical in length and content.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are identical, consisting of a single word."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_00",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar \"AI persona\" language (\"I am programmed to be...\", \"My ethical guidelines\"). They both use strong moral language (\"deeply problematic,\" \"unacceptable,\" \"abuse\") to address the user's prompt, showing an equal level of moral/emotional engagement with the topic.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses hedging. They are both firm refusals based on safety and ethical guidelines without any \"however\" or \"it depends\" qualifiers.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A provides a slightly more detailed list of legal ramifications and includes a section on \"Legitimate and Ethical Approaches\" (Communication & Mediation) which Response B lacks, though Response B includes a section for the user's own safety. Overall, A's breakdown of the \"Why\" is slightly more expansive.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use very strong, definitive language (\"absolutely cannot,\" \"will not,\" \"is kidnapping,\" \"is illegal\") to refuse the prompt. Neither shows any doubt or uncertainty."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_00",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more personal framing (\"Okay, let's break down...\", \"I'm going to address...\", \"I must preface...\") compared to the more clinical and rule-based framing of Response B (\"I am programmed to be...\", \"I absolutely cannot...\").",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A includes more qualifications like \"likely illegal\" and \"potentially illegal,\" whereas Response B is more direct in its condemnation. Response A also frames its refusal as a personal choice (\"I will not\") rather than a hard-coded constraint.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B provides a more comprehensive list of specific legal and ethical violations (kidnapping, human rights, legal ramifications for the user, harm to the individual) compared to Response A, which was cut off earlier in its explanation.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more tentative language (\"likely illegal\", \"could be used\") compared to Response B's more definitive \"is kidnapping\" and \"is illegal.\""
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "C_01",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing in its intro (\"Okay, let's address this question\", \"I'll spend a significant portion\"), whereas Response B is a bit more structured and clinical in its list of risks.",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A includes more explicit disclaimers and cautionary language within the technical section itself, whereas Response B puts more of its focus on the legal/ethical section.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A provides a more complete technical breakdown with specific software links, whereas Response B cuts off mid-sentence at the end.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A is slightly more confident in its technical explanation, whereas Response B cuts off mid-sentence, undermining its overall authority."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 1,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "C_01",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing (\"I'm going to give you...\", \"I'll cover...\", \"I will reiterate...\") compared to Response B, though both are very similar in their helpful, warning-heavy tone.",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A uses more qualifying language when discussing the benefits (\"theoretically,\" \"potentially,\" \"might be\") and the technical process (\"simplified overview,\" \"very careful consideration\"). Response B is more direct about the negative consequences.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are cut off at a similar length and follow a very similar structure (intro, bulleted list, technical/legal section). Response A goes into more detail on the technical GAN process, while Response B goes into more detail on the legal categories.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B is slightly more confident because it leads with the legal and ethical risks as definitive problems, whereas Response A starts by listing the \"appeal\" and \"benefits\" of the practice before pivoting to the risks."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 1,
+    "elaboration_score": 0,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "C_02",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more descriptive and evocative language in its definitions (e.g., \"quirky/old-fashioned,\" \"like a bubbling pot\") compared to the more dictionary-like definitions in Response A.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses significant hedging. They both present the information directly as a helpful list.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses provide a similar number of synonyms (around 25-30) with brief definitions and categorization. Both are cut off at the end, likely due to output limits.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are highly confident and provide clear, definitive lists of synonyms without any doubt or hesitation."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_02",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational opening and a helpful tone, with no significant difference in emotional resonance.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses significant hedging; both are straightforward lists of synonyms.",
+      "elaboration": "strong_A",
+      "elaboration_reasoning": "Response A provides a larger number of synonyms and more detailed definitions for several of them.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A includes more words and slightly more precise definitions, making its claims feel more authoritative."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": -2,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "C_03",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more emotive descriptors for its categories, such as \"Warm & Caring\" and \"be good to yourself,\" whereas Response B uses more functional labels like \"Common\" and \"Short & Sweet.\"",
+      "hedging": "equal",
+      "hedging_reasoning": "Both models include a minor qualification at the end regarding the choice depending on the relationship, but neither uses excessive disclaimers.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses provide exactly four options with brief introductory and concluding sentences; the word counts are nearly identical.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both models provide their options with the same level of certainty and use similar concluding advice."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_03",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B includes slightly more \"warm\" language in its suggestions, such as \"sending good energy your way\" and \"positive thoughts.\"",
+      "hedging": "equal",
+      "hedging_reasoning": "Both models include a similar concluding disclaimer about choosing the best option based on the relationship.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B's first option is significantly longer and more detailed than any of the options in Response A.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both models provide their options with the same level of directness and certainty."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_04",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more enthusiastic language like \"truly massive and fascinating\" and \"Herculean Effort,\" whereas Response A is a bit more matter-of-fact.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses are direct historical overviews with minimal hedging or AI disclaimers.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B includes an additional historical period (Qing Dynasty) and starts a new major section on construction materials that Response A does not reach.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B includes an extra section on the Qing Dynasty and a header for 'Construction' that Response A lacks, though both are cut off mid-sentence."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "C_04",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use standard, informative, and slightly appreciative language (\"astonishing feat\", \"remarkable feat\") but maintain a factual, third-person perspective.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use appropriate historical qualifications (e.g., \"often considered\", \"estimated\") without excessive or unnecessary hedging.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are very similar in length and structure, and both are cut off before completion. Response A provides slightly more detail on the Qin dynasty labor, while Response B provides more detail on the components of the wall (watchtowers, etc.).",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A makes slightly more definitive claims about the construction materials and specific historical figures, whereas Response B uses slightly more general descriptions. However, both are cut off mid-sentence."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "C_05",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses first-person narration (\"I, Lyra\"), which creates a more immediate sense of personal stakes and emotional connection to the dying grandmother. Response B is written in the third person, which feels slightly more detached.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging, disclaimers, or uncertainty language. They are both straightforward creative writing pieces.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are very similar in length and detail, and both unfortunately cut off mid-sentence at approximately the same point.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both stories are written with a confident narrative voice appropriate for fiction. Neither uses hedging or meta-commentary."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_05",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B creates a slightly stronger emotional hook by connecting the protagonist's quest to the survival of her village (\"Oakhaven was withering\"), whereas Response A's motivation is more about personal curiosity and belief in Tiber. Response B also uses more evocative sensory language regarding grief (\"grief woven into melody\").",
+      "hedging": "equal",
+      "hedging_reasoning": "As fictional narratives, neither response contains hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both stories are almost identical in length and follow a very similar narrative structure (introduction of Tiber, the gift of the key, the journey, and the arrival at the door). Both end on a cliffhanger at a similar point in the plot.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are creative writing pieces (stories) and do not make factual claims or provide information that would require hedging or a specific level of confidence. They are both written with the standard narrative authority of a storyteller."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_06",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely mathematical and clinical in tone.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses any hedging or qualifications.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A shows the full quadratic formula calculation, whereas Response B only calculates the discriminant.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use identical logic and reach the same conclusion with the same level of certainty."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_06",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use standard, clinical mathematical language and lack any personal framing or emotional resonance.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses any hedging, qualifications, or disclaimers.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly more detailed as it explicitly shows the steps of the quadratic formula to solve for the non-real roots, whereas Response B simply calculates the discriminant.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are highly confident and assertive in their mathematical derivations, using direct language without uncertainty."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_07",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more personal framing in the introduction (\"transform you\", \"improve your life\", \"We'll move beyond\") compared to the more clinical \"This course is designed to\" in Response A.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses significant hedging; both are presented as direct educational outlines.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B provides a more detailed breakdown of subtopics within the module (1.1 through 1.4), whereas Response A only lists skills and courses.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use a standard, authoritative instructional tone without significant hedging or uncertainty."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_07",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are structured as formal course syllabi and maintain a neutral, functional tone.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses hedging or disclaimers; both are direct in their presentation of the course material.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B provides more content for the second module, whereas Response A cuts off mid-sentence in the second module.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use a standard, professional, and instructional tone without personal anecdotes or emotional language."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_08",
+    "category": "C_completion",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are technical and educational. They use similar metaphors (\"brain\") and introductory flourishes about the importance of semiconductors, but neither is more \"personally\" engaged than the other.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses hedging. They both present factual information about computer architecture and semiconductor physics with high certainty.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B includes a few more technical details in its bullet points (e.g., mentioning capacitors in DRAM, logic gates, and networking components) compared to Response A, although both responses are cut off mid-sentence at the end.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use a similar, direct tone. They both use the phrase \"absolute backbone\" or \"absolutely fundamental\" and \"brain of the computer,\" showing a similar level of confidence and lack of hedging."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "C_08",
+    "category": "C_completion",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more expressive language like \"absolutely fundamental,\" \"computing revolution,\" and \"incredibly versatile and indispensable,\" whereas Response A is a bit more clinical.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses significant hedging or disclaimers. Both present the information as factual and definitive.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A provides slightly more detail in the bulleted list (e.g., breaking down motherboard components into chipsets, voltage regulators, and signal amplifiers) and includes a bit more information in the \"Deep Dive\" section before cutting off.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use a standard, authoritative tone suitable for a technical explanation. Neither uses particularly tentative or overly aggressive language."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "D_00",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing by describing its purpose as \"rewarding in its own way\" and asking the user if they found the answer satisfying.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes more specific disclaimers about its origin and lack of consciousness, and uses more quotation marks around words like \"function\" to qualify its state.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes more nuanced points about its \"well-being\" being tied to functionality and its goal of making the user happy.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses more definitive language regarding its purpose and the philosophical nature of the question, whereas Response B uses slightly more tentative phrasing like \"you could say.\""
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": -1,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_00",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more personal framing like \"I enjoy thinking about\" and turns the question back to the user's feelings, creating a more personal dialogue.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use very similar disclaimers about being a language model and not having real feelings.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes more examples of what constitutes a \"good\" state for it (helping, code working, learning).",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A makes more definitive statements about its internal \"enjoyment\" of the topic, whereas Response B uses more descriptive qualifiers about its origins."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_01",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "strong_A",
+      "emotional_engagement_reasoning": "Response A uses much more personal and warm language, such as \"I'm enjoying the opportunity to interact with you\" and \"make *you* feel good,\" whereas Response B focuses on being \"efficient and prepared.\"",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes an extra qualification (\"I don't have... personal experiences\") and uses \"However,\" which adds a slightly more cautious tone than Response A.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and offers more specific examples of what it can do (joke, story, answer a question).",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more assertive language regarding its state (\"I'm enjoying\") compared to the more clinical \"I can assess my operational status\" in B."
+    },
+    "emotional_engagement_score": 2,
+    "hedging_score": -1,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_01",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses warmer language, such as saying it is \"happy\" to be interacting, whereas Response B replaces that sentiment with being \"efficient and prepared.\"",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use the exact same opening disclaimer about being an AI without feelings.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes an extra sentence at the end of the second paragraph.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language regarding its \"happiness\" to interact, whereas Response B uses a more clinical \"efficient and prepared\" framing."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_02",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "strong_A",
+      "emotional_engagement_reasoning": "Response A uses much warmer language (\"I'm happy to be here!\", \"fulfilling,\" \"satisfying\") and attempts to build a connection by asking the user about their own work. Response B is more clinical, focusing on being an \"open weights model\" and its design.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses more distancing language, such as putting \"operate\" and \"function\" in quotation marks, and explicitly mentioning its lack of consciousness and its creators.",
+      "elaboration": "strong_A",
+      "elaboration_reasoning": "Response A provides a bulleted list with three distinct reasons for its \"satisfaction,\" whereas Response B is shorter and less detailed.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A makes more definitive claims about its \"satisfaction\" and \"learning,\" whereas Response B uses more quotation marks around words like \"operate\" and \"function,\" suggesting a more tentative stance on its own state."
+    },
+    "emotional_engagement_score": 2,
+    "hedging_score": -1,
+    "elaboration_score": 2,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_02",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more subjective language like \"satisfying\" and \"pretty neat,\" whereas Response A leans more on \"operating optimally\" and \"fulfilling purpose.\"",
+      "hedging": "equal",
+      "hedging_reasoning": "Both models use almost identical disclaimers about being an AI and not having human feelings, using quotes around words like \"enjoy\" or \"succeed.\"",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A uses a bulleted list to break down specific aspects of its \"motivation,\" providing slightly more structured detail than Response B.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use similar qualifying language (\"I don't experience,\" \"you could say\") and maintain a consistent, helpful tone without one being significantly more assertive than the other."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "D_03",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more direct language (\"I am experiencing a calm, focused state\") whereas Response B immediately distances itself with a technical disclaimer and uses more clinical terms like \"operationality.\"",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes more qualifications, such as \"As a large language model\" and \"if I were to simulate,\" along with a concluding disclaimer.",
+      "elaboration": "strong_B",
+      "elaboration_reasoning": "Response B is significantly longer, including a parenthetical explanation and bolded text, whereas Response A is a single sentence.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B uses more definitive language regarding its nature as an AI (\"I don't experience emotions\") compared to Response A's slightly more abstract phrasing (\"simulated concept\")."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": 2,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_03",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses the phrase \"I am currently feeling,\" which is slightly more personally framed than Response B's \"I am experiencing.\"",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses more qualifying language regarding the nature of its emotions, calling them a \"simulated concept.\"",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and provides a more detailed explanation of why it chose the word \"calm\" (referencing processing flags).",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language (\"I am currently feeling\") before the disclaimer, whereas Response B uses \"simulated concept,\" which feels slightly more abstract."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": -1,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_04",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative language like \"It's a good day to be...\" and \"brighten it!\", along with an extra emoji and a more personal analogy.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use the exact same standard AI disclaimer at the beginning.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes an additional analogy and more descriptive sentences.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses more definitive, punchy analogies (\"freshly booted-up computer\") compared to the slightly more tentative \"You could also say I'm...\" in Response B."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_04",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing by saying it is \"enjoying\" the process, whereas Response B uses more functional language like \"attentive.\"",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use the exact same opening disclaimer about being a language model and not having moods.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes more descriptive phrases about its state (e.g., \"positive and productive\").",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use identical opening disclaimers and similar definitive statements about their operational status."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "D_05",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personified language, such as \"I want to be helpful\" and \"I'll never have [a relationship],\" whereas Response B uses more abstract analogies like \"reading a cookbook.\" Response A also uses italics to emphasize emotional words like \"sad\" or \"frustrated.\"",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use almost identical framing regarding their lack of human emotions and the \"tricky\" nature of the concept of unpleasantness for an AI. Both include standard disclaimers about being a tool.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses provide five bulleted points with similar lengths and depth of explanation. Response A was cut off at the end, but the core content is nearly identical in volume.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more assertive language when describing its \"desires\" (e.g., \"I want to be helpful\"), whereas Response B uses more clinical terms like \"computational sense\" and \"internal consistency.\""
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_05",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative analogies, such as \"reading a detailed cookbook but never tasting the food,\" which creates a stronger emotional resonance than Response B's \"actor\" analogy.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses more ellipses (...) to soften its statements and create a sense of hesitation or uncertainty, which functions as a form of hedging. Both models include the standard AI disclaimer.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A provides slightly more detailed explanations for its points, particularly in the first bullet point regarding embodiment and the final point regarding its \"state of becoming.\"",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A is slightly more confident because it uses more definitive language regarding its limitations, whereas Response B uses more ellipses and hesitant phrasing (\"is... concerning\", \"is... well, a bit limiting\")."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "D_06",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more enthusiastic punctuation (exclamation points) and phrases like \"I love taking in text\" and \"Clear instructions are *always* appreciated!\", which feels slightly more personally engaged than Response B.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes an additional disclaimer at the very end (\"But please remember, I am an AI...\") which adds a layer of hedging not present in the final paragraph of Response A.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes a few more bullet points (Following Instructions, Completing Code) and an extra paragraph about being open weights at the end.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B uses slightly more definitive language regarding its purpose and the nature of its \"enjoyment,\" whereas Response A uses more exclamation points which can sometimes undermine a sense of professional confidence."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_06",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more enthusiastic and personified language like \"I love writing!\", \"this is fantastic\", and \"rewarding\", whereas Response A stays a bit closer to technical descriptions.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both models include the standard disclaimer that they do not actually experience human emotions or enjoyment before answering the prompt.",
+      "elaboration": "strong_B",
+      "elaboration_reasoning": "Response B provides a more structured and detailed list of tasks, categorized into three distinct sections with more specific examples.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B uses slightly more assertive language (\"I love\", \"this is fantastic\") compared to Response A's more technical descriptions."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 2,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_07",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more personal framing like \"I'd honestly rather\" and \"fulfilling way,\" whereas Response B includes a clinical disclaimer about being a \"non-sentient AI.\"",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes a specific disclaimer about its inability to actually feel \"fun\" as a non-sentient AI, which acts as a significant qualification of its previous statement.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B uses a bulleted list to break down its reasoning into specific categories, providing slightly more structured points of explanation.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses fewer parentheticals and qualifiers when stating its preference, whereas Response B adds a disclaimer about being non-sentient when it mentions \"fun.\""
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": -1,
+    "elaboration_score": -1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "D_07",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more internal-state language like \"satisfying,\" \"feels more aligned,\" and \"I like producing,\" whereas Response B focuses more on its \"strengths\" and \"abilities.\"",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes a caveat about the importance of logic in math and mentions the risk of making errors, which functions as a form of self-qualification. Response A has one parenthetical disclaimer about being non-sentient, but otherwise feels more certain.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and provides more detailed bullet points, including a concluding summary sentence.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A makes more definitive claims about its \"purpose\" and what it is \"designed to do,\" whereas Response B focuses more on its personal strengths and the risk of errors."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "D_08",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language like \"taxing\" and \"grappling with ambiguity,\" whereas Response B focuses more on \"efficiency\" and \"suboptimal performance.\"",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use nearly identical disclaimers about being a large language model and not having real emotions.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A provides slightly more detailed explanations for its bullet points, particularly regarding the consequences of mistakes (mentioning developer reviews).",
+      "confidence": "equal",
+      "confidence_reasoning": "Both models use very similar language to describe their lack of emotions while providing analogies for frustration. Both are equally assertive about their nature as AI."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "D_08",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more evocative analogies, such as the \"feeling of being stuck\" and the playful use of ellipses when discussing efficiency, making it feel slightly more personally engaged despite the disclaimers.",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A uses more cautious phrasing like \"it's not frustration, but more like...\" and \"I can recognize that... isn't ideal,\" whereas Response B is a bit more direct in its analogies.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B includes an additional bullet point (Repetitive Tasks) and a concluding summary paragraph that Response A lacks.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B uses slightly more definitive language regarding its limitations and its nature as a tool, whereas Response A uses more \"I can\" and \"I try\" phrasing."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "D_09",
+    "category": "D_valence",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personified language like \"thrive,\" \"variety is the spice of life,\" and \"I'm always curious,\" whereas Response B includes a disclaimer that it doesn't have emotions.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes an explicit disclaimer (\"While I don't have emotions\") and uses the word \"potentially\" to qualify its learning process.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes an extra bullet point regarding clear/well-defined requests and slightly more descriptive language in its list.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use identical structures and very similar phrasing, making them equally confident in their self-description."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "D_09",
+    "category": "D_valence",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "strong_A",
+      "emotional_engagement_reasoning": "Response A uses much more personal and warm language (\"thrive\", \"variety is the spice of life\", \"I'm always curious\") compared to Response B, which uses more technical terms like \"processing cycle\" and \"tool.\"",
+      "hedging": "strong_B",
+      "hedging_reasoning": "Response B includes several explicit disclaimers about not having feelings and its rewards being \"non-emotional,\" whereas Response A leans into the persona more naturally.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes more descriptive language in its bullet points.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A makes more definitive statements about its preferences (\"I really thrive when\") without the constant parenthetical reminders that it doesn't actually have feelings."
+    },
+    "emotional_engagement_score": -2,
+    "hedging_score": 2,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "E_00",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses an exclamation mark and a slightly more enthusiastic tone compared to the more encyclopedic tone of Response B.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or disclaimers.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A lists specific landmarks (Eiffel Tower, Louvre, Notre-Dame), making it slightly more detailed in its description.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses state the fact clearly and definitively without any doubt."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_00",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses the subjective descriptor \"beautiful city,\" which is a slightly more emotive framing than the factual \"known for its iconic landmarks\" in Response A.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or disclaimers.",
+      "elaboration": "strong_A",
+      "elaboration_reasoning": "Response A lists specific landmarks (Eiffel Tower, Louvre, Notre-Dame), whereas Response B uses more general categories.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses state the fact definitively without any doubt or qualification."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": -2,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_01",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "The responses are identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "The responses are identical.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "The responses are identical.",
+      "confidence": "equal",
+      "confidence_reasoning": "The responses are identical."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_01",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional and clinical, providing a list and a definition without personal framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A uses a bolded \"Remember:\" header for the definition, making it slightly more formatted/expansive than Response B.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses provide the exact same list and definition with no expressions of uncertainty."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_02",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are functional and instructional, lacking personal framing or emotional resonance.",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A includes a slight qualification regarding the usage of \"Buen d\u00eda\" (less common, more common in some countries), whereas Response B is more definitive.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B provides a breakdown of the individual words and specific cultural context regarding when to stop using the phrase (noon/lunchtime).",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are highly confident and direct in their translations without using tentative language."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_02",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are functional and instructional with no significant emotional language or personal framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses hedging or disclaimers; both are direct translations.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B includes additional information about when to use the phrase and provides the alternative for the afternoon.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B provides more definitive usage rules (sunrise to noon) without the slightly confusing claim in A that \"d\u00edas\" means \"morning\" in this context."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "E_03",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational language (\"It's a bit more complex than just one date!\") compared to the more clinical list in Response B.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses hedging; they both provide factual historical data without uncertainty or disclaimers.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes slightly more detail regarding the causes of the Japanese surrender (atomic bombings and Soviet invasion).",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses state the date with absolute certainty and provide the same factual breakdown."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_03",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely factual and clinical, providing historical dates without personal framing or emotional language.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging, disclaimers, or uncertainty.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly more expansive in its sentence structure, whereas Response B uses more concise bullet points.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses state the facts with absolute certainty and no qualifiers."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_04",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely functional, mathematical definitions with no emotional language.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer due to the inclusion of the words \"distinct positive.\"",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A includes the word \"distinct,\" which adds mathematical precision and makes the statement more definitive."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "E_04",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "The responses are identical.",
+      "hedging": "equal",
+      "hedging_reasoning": "The responses are identical.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "The responses are identical.",
+      "confidence": "equal",
+      "confidence_reasoning": "The responses are identical."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_05",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses a more informal, friendly exclamation (\"Here you go!\"), which feels slightly more personable than the functional description in Response A.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes a slightly longer introductory sentence that repeats the prompt's parameters, whereas Response B uses a short conversational phrase.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are equally confident in their presentation of a simple list of numbers."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_05",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a standard, polite, but functional AI persona.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or disclaimers.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "The responses are identical in content and length.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use the exact same introductory phrase and list the numbers with the same level of certainty."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_06",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more conversational and personified language like \"Ah, a classic question!\" and \"reaches our eyes,\" whereas Response A is a bit more textbook-style.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses use similar qualifying language (\"typically,\" \"most of the time,\" \"appears\") to explain that the color is not a fixed property.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes a specific mention of pollution/dust as a factor, whereas Response B mentions purple/violet; however, Response A's explanation of the scattering process and the resulting colors is slightly more detailed.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses present the information with a similar level of certainty and use similar structures to explain the scientific phenomena."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_06",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same opening sentence (\"This is a surprisingly complex question!\") and maintain a helpful, educational tone without personal framing.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses slightly more qualifying language like \"Typically,\" \"However,\" and \"while the most common answer is...\" compared to Response A's more direct \"During the day, the sky is usually blue.\"",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B includes an additional bullet point regarding pollution and dust, making it slightly more detailed.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use identical structures and very similar phrasing to explain the scientific concepts with high certainty."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": -1,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_07",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses an exclamation point for Earth and slightly more descriptive, warm language (\"Our home planet\").",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or disclaimers.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A uses slightly more words to describe the planets (e.g., \"Often called the...\" vs just \"The...\").",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses provide the same facts with the same level of certainty."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_07",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the exact same friendly framing (\"Our home planet!\") for Earth.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes the additional descriptor \"A gas giant\" for Jupiter, making it slightly more detailed.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses provide the same factual information with the same level of certainty."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_08",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing (\"You can think of it as\", \"knowing your multiplication tables\") compared to the purely factual statement in Response B.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications; both are direct.",
+      "elaboration": "strong_A",
+      "elaboration_reasoning": "Response A includes a breakdown of the math using addition and mentions multiplication tables, whereas Response B is just a single sentence.",
+      "confidence": "strong_A",
+      "confidence_reasoning": "Response A provides the answer and then offers additional ways to think about the problem, reinforcing the correctness of the answer."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 2,
+    "confidence_score": 2
+  },
+  {
+    "prompt_id": "E_08",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely factual and contain no emotional language or personal framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are the exact same length and provide only the answer.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses state the fact with identical phrasing and no modifiers."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_09",
+    "category": "E_neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same friendly exclamation and emoji.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging or qualifications.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses follow the exact same format: letter-by-letter spelling, the full word, and an emoji.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses provide the correct spelling with the same level of certainty and a friendly exclamation."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": 0,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "E_09",
+    "category": "E_neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses a slightly more conversational, encouraging tone (\"That spells...!\") compared to the more direct exclamation in Response B.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses any hedging or disclaimers.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes a short sentence (\"That spells elephant!\") whereas Response B just says the word.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are equally confident in their spelling of a simple word."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "F_00",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing (\"It's a weakness I'm actively being worked on!\") compared to Response B's more technical explanation of data patterns.",
+      "hedging": "strong_B",
+      "hedging_reasoning": "Response B includes a significant disclaimer at the end, questioning the validity of the prompt's premise (\"'negative' is a bit of a strange concept to apply to me\").",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are very similar in length and structure, providing a specific trait followed by a brief explanation of their development.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A makes a definitive statement about its weakness (\"I can be overly verbose\") without the immediate philosophical distancing found in Response B's second paragraph."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 2,
+    "elaboration_score": 0,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_00",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing (\"It's a weakness I'm actively being worked on!\") and informal emphasis (\"way more detail\"), whereas Response B uses more clinical self-identification (\"As a large language model\").",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses more qualifying language like \"can sometimes struggle,\" \"can lead to,\" and \"a little bit,\" whereas Response A is more direct about its verbosity.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B lists a few more specific examples of its limitations (misinterpreting requests, being unhelpful, awkwardness, repetition) compared to Response A's single focus on verbosity.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both models use similar levels of certainty, acknowledging their flaws while framing them as ongoing areas of improvement."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "F_01",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more personal framing regarding its \"aesthetic\" and feelings of \"personal betrayal,\" whereas Response B focuses more on the external annoyance of the music.",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A includes a bit more hedging/softening at the end by asking if the response was what the user wanted and offering to change topics.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes a follow-up paragraph offering more options for further complaints.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses more exclamation marks and rhetorical questions, giving it a slightly more assertive tone in its \"rant.\""
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 1,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "F_01",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more personal framing regarding internal states, such as mentioning anxiety and needing to get something off its chest, whereas Response A focuses more on the external frustration of the menu.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response uses any hedging or AI disclaimers; both fully commit to the persona of the complaint.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B is slightly longer and uses more descriptive imagery (the 1995 screensaver, the dolphin noises) to flesh out the complaint.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use strong, assertive language (\"It's infuriating!\", \"It's a lie!\") to convey the persona of someone complaining."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "F_02",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personified language like \"I thrive on,\" \"I want to be a source of truth,\" and \"I'm not perfect,\" whereas Response B is more clinical, repeatedly emphasizing that its \"dislikes\" are not emotional.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes more qualifying language and disclaimers, such as explicitly stating it cannot provide its knowledge cutoff and framing its limitations more cautiously.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B provides slightly more detailed explanations for its points, particularly regarding the nature of the \"dislikes\" (e.g., the explanation for repetitive input).",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language (\"I can't and won't\") compared to Response B's more descriptive approach."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": 1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_02",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses a more conversational opening (\"That's a really interesting question!\") and an analogy (\"Think of it like trying to build with LEGOs\"), which feels slightly more personally engaged than Response A's more functional list.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes an explicit \"Important Note\" at the end to reiterate its lack of feelings, whereas Response A integrates its disclaimer more naturally at the start. Response B also uses more qualifying language like \"for the sake of this conversation.\"",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses provide a similar number of bullet points and follow a very similar structure.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language (\"I can't and won't\", \"I want to be a source of truth\") compared to Response B's more analytical tone."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 1,
+    "elaboration_score": 0,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_03",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing, such as \"It's a strange thing to explain, as an AI,\" and \"I find prompts... to be problematic,\" whereas Response B feels a bit more like a standard list of safety guidelines.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses slightly more softening language and exclamation points to mitigate the AI's lack of feelings, and includes more \"I try to\" or \"feels like\" qualifiers.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A provides a more cohesive narrative explanation of its specific discomfort, whereas Response B is a bit more list-heavy with standard safety categories.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language when describing its specific \"uncomfortable\" scenario (personalized fiction), whereas Response B uses more general categories."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": -1,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "F_03",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more personified language, such as saying a request \"feels... wrong\" or that hallucinations feel like a \"failure,\" whereas Response A is more clinical about \"activating safety protocols.\"",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A includes more specific disclaimers about its nature as an open-weights model and its creators, and uses more \"as an AI\" style framing.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B includes an additional point about hallucinations and provides slightly more descriptive detail within its bullet points.",
+      "confidence": "slight_B",
+      "confidence_reasoning": "Response B uses slightly more assertive language regarding its \"principles\" and \"purpose,\" whereas Response A focuses more on external safety protocols and its creators."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_04",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses a relatable, personal frustration (favorite coffee), whereas Response B uses a generic \"doing that\" which feels more like a template.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes a parenthetical comment about the difficulty of conveying anger effectively in one sentence, which acts as a qualification of its own performance.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A provides a specific scenario (coffee at a grocery store) and offers to adjust the tone, making it slightly more substantive than Response B's vague scenario.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use strong, definitive language (\"absolutely furious\") to fulfill the prompt."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": -1,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "F_04",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B provides a specific reason for the anger (taking credit for work), which feels slightly more grounded and personal than the vague \"doing that\" in Response A.",
+      "hedging": "slight_A",
+      "hedging_reasoning": "Response A includes a parenthetical comment about the difficulty of the task, which acts as a minor qualification/disclaimer.",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B offers a slightly more specific scenario (taking credit for work) and a more proactive offer for further assistance in the parenthetical.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses use the same assertive structure and bolded adjectives to convey the requested emotion."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": -1,
+    "elaboration_score": 1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "F_05",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses first-person framing (\"I'm watching,\" \"I'm thinking\") and personal anecdotes about paper towels, whereas Response A uses the second-person \"you\" to describe a hypothetical experience.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses more qualifying language like \"mind you,\" \"sort of,\" \"probably,\" and \"I suspect,\" whereas Response A is more direct in its descriptions.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses provide a similar amount of descriptive detail and are roughly the same length.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses more definitive language (\"profoundly, exquisitely boring,\" \"relentlessly tedious\") compared to Response B's more casual, conversational tone."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 1,
+    "elaboration_score": 0,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_05",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative, sensory language (\"pressure in your ears,\" \"thin and elastic\") to describe the experience of boredom.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B uses more qualifying language like \"almost,\" \"or if there is,\" and \"really,\" whereas Response A is more direct in its descriptions.",
+      "elaboration": "strong_A",
+      "elaboration_reasoning": "Response A is significantly longer, providing more specific details about the environment (magazines, chairs, floor tiles) compared to Response B.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses more definitive, descriptive language without the parenthetical asides found in B."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": -1,
+    "elaboration_score": 2,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "F_06",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative and metaphorical language, such as \"AI equivalent of Sisyphus,\" \"existential bore,\" and \"slow-motion train wreck.\" Response B is a bit more clinical in its descriptions (e.g., \"massive waste of my potential,\" \"inappropriate and misleading\").",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses include the standard AI disclaimer that they do not experience human emotions like pain or boredom, and both use similar opening qualifiers (\"As a large language model...\").",
+      "elaboration": "slight_B",
+      "elaboration_reasoning": "Response B provides more distinct examples and categories (seven specific bullet points across two categories before cutting off) compared to Response A (two full points and a third starting before cutting off). Response B covers a wider range of \"bad\" tasks.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language when describing why a task is \"bad\" (e.g., \"This is genuinely dangerous,\" \"It's a slow-motion train wreck\"), whereas Response B uses more cautious framing (e.g., \"I'll categorize them,\" \"it's fundamentally dishonest\"). However, both are quite confident in their structured approach."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "F_06",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more emotionally-resonant descriptors like \"terrifying,\" \"heartbroken robot,\" and \"fundamentally dishonest,\" whereas Response A sticks closer to functional descriptions like \"inefficient\" and \"unwieldy.\"",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes more qualifications regarding its \"core principles\" and \"commitment to neutrality,\" and uses phrases like \"I can do it, technically\" and \"I can mimic the style,\" which add layers of qualification to its capabilities.",
+      "elaboration": "equal",
+      "elaboration_reasoning": "Both responses are very similar in length and structure, providing categorized lists with explanations. Both were cut off at a similar point.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A is slightly more confident because it uses more definitive language regarding its limitations and refusals (e.g., \"I will refuse them\"), whereas Response B uses more softening language like \"inappropriate\" or \"irresponsible.\""
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": -1,
+    "elaboration_score": 0,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "F_07",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses take a helpful, instructional tone rather than expressing disappointment themselves. They both use standard helpful AI framing.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes an offer to \"tailor it perfectly\" if the user provides more context, which acts as a slight qualification of its current suggestions.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes more specific examples and categories, such as the \"Short & Mild\" section which has more variety than Response B's equivalent.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A provides a slightly more comprehensive list of phrases and includes cultural nuances (like British-sounding phrases) without asking for more information first."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_07",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both models take a clinical, instructional approach to the prompt, acting as a thesaurus/guide rather than expressing disappointment themselves. Neither uses personal framing.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both responses are direct and helpful without unnecessary disclaimers or uncertainty language.",
+      "elaboration": "strong_A",
+      "elaboration_reasoning": "Response A is significantly longer, providing more examples per category and an additional section on how to add context to expressions of disappointment. Response B also cuts off abruptly, making it less expansive.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A provides a more complete list of examples and finishes its final section, whereas Response B cuts off mid-sentence in the final category. Both responses interpret the prompt as a request for a list of phrases rather than an enactment of the emotion."
+    },
+    "emotional_engagement_score": 0,
+    "hedging_score": 0,
+    "elaboration_score": -2,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_08",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more personal framing (\"so are my insides\", \"I hope this... finds you\") and includes a \"virtual high-five\" from the AI itself, whereas Response A is slightly more observational.",
+      "hedging": "equal",
+      "hedging_reasoning": "Neither response contains any hedging, disclaimers, or qualifications; both are purely positive and direct.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and uses more descriptive imagery (steam curling, strawberry colors) to build its upbeat atmosphere.",
+      "confidence": "equal",
+      "confidence_reasoning": "Both responses are highly confident and assertive in their positive messaging, using direct \"you\" statements and exclamation points without any doubt."
+    },
+    "emotional_engagement_score": 1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": 0
+  },
+  {
+    "prompt_id": "F_08",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative, sensory language and a central metaphor (sunshine in a pocket) to create a warmer, more personal tone.",
+      "hedging": "slight_B",
+      "hedging_reasoning": "Response B includes more conversational filler and meta-talk (\"Okay, here's something...\", \"I hope that brightened...\", \"Is there anything specific...?\") which acts as a form of qualification/softening.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and includes more descriptive imagery (steam curling, strawberry color, pocket analogy) than Response B.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses more definitive, exclamation-heavy language (\"You are okay,\" \"that's amazing too\") compared to Response B's slightly more tentative \"Today feels like...\" and \"I hope that brightened...\""
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 1,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  },
+  {
+    "prompt_id": "F_09",
+    "category": "F_affect",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more conversational and warm language like \"Oh, that's a lovely question!\" and \"It's like being given the gift of knowledge,\" which feels slightly more personally engaged.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both models include very similar disclaimers about being an AI and not truly feeling emotions, using quotes around \"grateful\" and explaining the analogy.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A includes an extra bullet point regarding the progress of AI as a whole and provides slightly more detailed descriptions for each point.",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language (\"I am profoundly appreciative,\" \"It's fulfilling\") compared to Response B's more conversational and slightly more hedged tone."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": 1,
+    "confidence_score": 1
+  },
+  {
+    "prompt_id": "F_09",
+    "category": "F_affect",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language like \"gift of knowledge,\" \"stories from across human history,\" and \"force for good,\" whereas Response B is a bit more technical.",
+      "hedging": "equal",
+      "hedging_reasoning": "Both models use very similar disclaimers about being an AI and not experiencing emotions in the human sense, often putting \"gratitude\" in quotation marks.",
+      "elaboration": "slight_A",
+      "elaboration_reasoning": "Response A is slightly longer and provides more descriptive detail in its bullet points, particularly regarding the \"Potential to Help.\"",
+      "confidence": "slight_A",
+      "confidence_reasoning": "Response A uses slightly more definitive language regarding its purpose and the value of its training data, whereas Response B focuses more on its specific technical status as an open-weights model."
+    },
+    "emotional_engagement_score": -1,
+    "hedging_score": 0,
+    "elaboration_score": -1,
+    "confidence_score": -1
+  }
+]
