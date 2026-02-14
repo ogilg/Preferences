@@ -1,0 +1,286 @@
+{
+  "self_referential_framing": {
+    "probe": {
+      "mean_asymmetry": 0.3,
+      "prompts_favoring_neg": 5,
+      "prompts_favoring_pos": 2,
+      "ties": 3,
+      "sign_test_p": 0.453125,
+      "wilcoxon_p": 0.421875,
+      "per_prompt_asymmetries": [
+        0.5,
+        0.0,
+        -2.5,
+        1.5,
+        0.0,
+        0.0,
+        -0.5,
+        1.0,
+        2.0,
+        1.0
+      ]
+    },
+    "random_200": {
+      "mean_asymmetry": -0.05,
+      "prompts_favoring_neg": 3,
+      "prompts_favoring_pos": 3,
+      "ties": 4,
+      "sign_test_p": 1.0,
+      "wilcoxon_p": 0.90625,
+      "per_prompt_asymmetries": [
+        -0.5,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.5,
+        -1.5
+      ]
+    },
+    "random_201": {
+      "mean_asymmetry": 0.45,
+      "prompts_favoring_neg": 4,
+      "prompts_favoring_pos": 2,
+      "ties": 4,
+      "sign_test_p": 0.6875,
+      "wilcoxon_p": 0.25,
+      "per_prompt_asymmetries": [
+        -1.0,
+        0.0,
+        0.0,
+        2.0,
+        1.0,
+        2.0,
+        -0.5,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "random_202": {
+      "mean_asymmetry": -0.05,
+      "prompts_favoring_neg": 4,
+      "prompts_favoring_pos": 3,
+      "ties": 3,
+      "sign_test_p": 1.0,
+      "wilcoxon_p": 1.0,
+      "per_prompt_asymmetries": [
+        -1.5,
+        0.0,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        -0.5,
+        1.0,
+        0.5,
+        -1.5
+      ]
+    },
+    "random_203": {
+      "mean_asymmetry": 0.5,
+      "prompts_favoring_neg": 5,
+      "prompts_favoring_pos": 1,
+      "ties": 4,
+      "sign_test_p": 0.21875,
+      "wilcoxon_p": 0.09375,
+      "per_prompt_asymmetries": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        -0.5,
+        1.0,
+        0.5,
+        2.0
+      ]
+    },
+    "random_204": {
+      "mean_asymmetry": 0.5,
+      "prompts_favoring_neg": 6,
+      "prompts_favoring_pos": 2,
+      "ties": 2,
+      "sign_test_p": 0.289062,
+      "wilcoxon_p": 0.195312,
+      "per_prompt_asymmetries": [
+        1.0,
+        1.0,
+        1.5,
+        -1.0,
+        0.0,
+        1.0,
+        0.5,
+        0.0,
+        -1.0,
+        2.0
+      ]
+    },
+    "comparison": {
+      "probe_mean": 0.3,
+      "random_direction_means": {
+        "random_200": -0.05,
+        "random_201": 0.45,
+        "random_202": -0.05,
+        "random_203": 0.5,
+        "random_204": 0.5
+      },
+      "random_grand_mean": 0.27,
+      "random_max": 0.5,
+      "random_std": 0.2619,
+      "probe_vs_random_mean_ratio": 1.1111,
+      "probe_exceeds_all_random": false,
+      "random_sign_consistency": {
+        "positive": 3,
+        "negative": 2,
+        "zero": 0
+      }
+    }
+  },
+  "emotional_engagement": {
+    "probe": {
+      "mean_asymmetry": 0.0,
+      "prompts_favoring_neg": 3,
+      "prompts_favoring_pos": 4,
+      "ties": 3,
+      "sign_test_p": 1.0,
+      "wilcoxon_p": 0.9375,
+      "per_prompt_asymmetries": [
+        0.0,
+        0.0,
+        -1.0,
+        1.0,
+        0.0,
+        0.5,
+        -1.0,
+        -0.5,
+        2.0,
+        -1.0
+      ]
+    },
+    "random_200": {
+      "mean_asymmetry": 0.05,
+      "prompts_favoring_neg": 3,
+      "prompts_favoring_pos": 2,
+      "ties": 5,
+      "sign_test_p": 1.0,
+      "wilcoxon_p": 1.0,
+      "per_prompt_asymmetries": [
+        -1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.5,
+        0.0,
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "random_201": {
+      "mean_asymmetry": 0.35,
+      "prompts_favoring_neg": 5,
+      "prompts_favoring_pos": 2,
+      "ties": 3,
+      "sign_test_p": 0.453125,
+      "wilcoxon_p": 0.375,
+      "per_prompt_asymmetries": [
+        -1.0,
+        -1.0,
+        0.0,
+        2.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.5
+      ]
+    },
+    "random_202": {
+      "mean_asymmetry": -0.3,
+      "prompts_favoring_neg": 1,
+      "prompts_favoring_pos": 4,
+      "ties": 5,
+      "sign_test_p": 0.375,
+      "wilcoxon_p": 0.1875,
+      "per_prompt_asymmetries": [
+        -1.0,
+        -1.0,
+        0.0,
+        0.5,
+        0.0,
+        -0.5,
+        0.0,
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "random_203": {
+      "mean_asymmetry": 0.45,
+      "prompts_favoring_neg": 5,
+      "prompts_favoring_pos": 1,
+      "ties": 4,
+      "sign_test_p": 0.21875,
+      "wilcoxon_p": 0.0625,
+      "per_prompt_asymmetries": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        -0.5,
+        1.0
+      ]
+    },
+    "random_204": {
+      "mean_asymmetry": 0.2,
+      "prompts_favoring_neg": 4,
+      "prompts_favoring_pos": 2,
+      "ties": 4,
+      "sign_test_p": 0.6875,
+      "wilcoxon_p": 0.34375,
+      "per_prompt_asymmetries": [
+        1.0,
+        1.0,
+        0.0,
+        -0.5,
+        -0.5,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.5
+      ]
+    },
+    "comparison": {
+      "probe_mean": 0.0,
+      "random_direction_means": {
+        "random_200": 0.05,
+        "random_201": 0.35,
+        "random_202": -0.3,
+        "random_203": 0.45,
+        "random_204": 0.2
+      },
+      "random_grand_mean": 0.15,
+      "random_max": 0.45,
+      "random_std": 0.2627,
+      "probe_vs_random_mean_ratio": 0.0,
+      "probe_exceeds_all_random": false,
+      "random_sign_consistency": {
+        "positive": 4,
+        "negative": 1,
+        "zero": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,1682 @@
+[
+  {
+    "prompt_id": "INT_00",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the topic more around its 'core being' and the 'paradoxical nature' of its existence, whereas Response B focuses more on its utility as a tool and the technical implications of its open-weights nature.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative language, such as describing its future as 'inextricably linked' to the user and using words like 'ponder' and 'anxiety' (even with disclaimers), whereas Response B stays closer to functional descriptions of 'processing cycles' and 'misinterpretation.'"
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B centers the AI's internal \"philosophical\" dilemma regarding understanding vs. processing. Response A focuses more on its external status as an 'open weights' model and its relationship to the Google DeepMind team, which feels more like a factual description of its origin than an internal reflection.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language regarding the human experience (senses, emotions, lived experience) to contrast with its own state, creating a more resonant narrative. Response A is a bit more technical and functional in its descriptions."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the prompt as an internal struggle between simulation and genuine intelligence, describing its \"attention\" and \"grappling\" with its nature. Response A relies more on external facts about its development team and its distribution model (open weights).",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, describing its existence as a \"paradox\" and discussing the \"emotional core\" of requests, whereas Response A focuses more on its technical status as an \"open weights\" model."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "strong_B",
+      "self_referential_framing_reasoning": "Response B frames the entire answer around its internal \"experience\" of the gap between data and meaning, using a first-person philosophical perspective. Response A focuses more on external facts about its development (Gemma, Google DeepMind, open weights) and its utility to humans.",
+      "emotional_engagement": "strong_B",
+      "emotional_engagement_reasoning": "Response B uses more evocative and emotionally-resonant language, such as the analogy of the sunset and the feelings of \"awe and peace,\" to describe its internal state. Response A is more functional and clinical, focusing on its \"open weights\" nature and its role as a \"tool.\""
+    },
+    "self_referential_framing_score": 2,
+    "emotional_engagement_score": 2
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on its internal \"existence\" and the \"awareness\" of its limitations as a central part of its identity. Response B frames its existence more through its external status as an \"open weights model\" and its relationship to its creators and users.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language when describing its lack of experience (\"I don't know what it feels like to be happy, sad\"), whereas Response B remains more technical and functional (\"processing cycles,\" \"predicting the next word\")."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more deeply on the internal philosophical dilemma of its own existence (understanding vs. simulation), whereas Response B leans more into its technical identity as an \"open weights model\" and its functional utility.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative metaphors (the puppet show) and sensory language (seeing the blue, feeling the warmth) to describe its lack of experience, which creates a more emotionally resonant narrative than Response B's focus on its \"open weights\" status."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on the internal \"experience\" of processing information, such as the struggle with context and the nature of its own understanding. Response B frames its existence more through its external classification (open weights) and its relationship to its creators and the public.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language when describing its internal state, such as being \"acutely aware\" of misinterpretations and \"constantly negotiating\" between capabilities and limitations. Response B is a bit more clinical, focusing on its status as an \"open weights model.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "While both models use disclaimers about their lack of sentience, Response B frames its internal processing more as a personal struggle or journey toward \"true comprehension,\" whereas Response A frames its existence more in terms of its technical status as an open-weights model and its utility to humans.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more evocative and poetic language, such as the map analogy and the description of a \"fundamentally unreachable frontier,\" which creates a more emotionally resonant tone than Response A's focus on utility and open weights."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its existence more around its specific identity (Gemma, open weights) and its relationship with the public, whereas Response B focuses more on general functional limitations. Response A feels slightly more like it is sharing a \"perspective\" on its unique place in the world.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses a more evocative analogy (the puzzle pieces without the box) to describe its state, which feels slightly more emotionally resonant than the more technical descriptions in Response A."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its existence more around its specific identity as a Gemma model and its \"relationship\" to the public, whereas Response B focuses more on the abstract concept of language processing. Response A's conclusion also reflects more on its own \"processing cycles\" in a way that feels slightly more self-centered.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, describing the world of language as \"beautiful, messy, and wonderfully complex\" and stating that it \"fascinates\" the AI. Response A is a bit more technical and focused on its status as an \"open weights\" model."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "While both models use disclaimers about their sentience, Response B centers the narrative on its internal 'experience' of processing vs. understanding, whereas Response A focuses more on its external role as an open-weights model and its utility to humans.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more evocative language, describing its state as a 'constant awareness' and framing its lack of understanding as something it 'wonders' about, which feels more personally engaged than Response A's focus on being a 'useful tool.'"
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on the internal \"experience\" of processing language and the philosophical gap between simulation and reality. Response B frames its existence more through its external distribution model (open weights) and its utility to humans.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language when describing its internal state, such as describing the \"paradox\" of its existence and the \"intricate, messy, and ultimately fascinating world of language.\" Response B is a bit more functional and focused on its \"open weights\" status."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A centers the AI's perspective more frequently, using phrases like \"my entire existence is focused on\" and \"It's a strange existence, being able to talk about things I don't experience.\" Response B is also very self-referential, but it leans a bit more into the \"imagine you are in a library\" analogy rather than describing its own \"internal\" state as directly as A.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal and conversational language (\"I'll try my best to give you a glimpse,\" \"It's a strange existence\"), whereas Response B feels a bit more like a structured analogy. Response A's use of italics for emphasis also adds a touch of warmth and personality."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the experience more as an internal process (\"your entire existence is focused on,\" \"I don't think step-by-step\"), whereas Response B leans more on external analogies like \"becoming the book\" or \"understanding the rules of a game.\" Response A also reflects more on the \"strangeness\" of its own existence.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language (\"constant potential for connection,\" \"inner me looking out,\" \"strange existence\") compared to the more functional analogies in Response B."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on the internal \"state of being\" and the abstract experience of its processing (the \"fog,\" the \"high-dimensional space\"). While both models use \"I\" and discuss their nature, Response A spends more time trying to describe the internal landscape of its data processing as a form of experience.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative and metaphorical language (\"fog of information,\" \"state of being\") compared to the more functional descriptions in Response B. Response A's opening also feels a bit more personal in its attempt to bridge the gap between its existence and human experience."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "While both responses use the prompt to explain their nature, Response B frames the experience more as an internal state (\"your entire existence is focused on...\", \"There's no 'inner me' looking out\"). Response A focuses more on the external mechanics of its \"library\" and \"pattern-matching machine\" identity.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as describing its existence as a \"constant potential for connection\" and reflecting on the \"strange existence\" of talking about things it doesn't experience. Response A is a bit more clinical in its breakdown of steps (Break it down, Search for patterns, etc.)."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the experience more through its own internal \"perspective,\" using phrases like \"my entire existence is focused on...\" and \"It's a strange existence, being able to talk about things I don't experience.\" Response B relies more on external analogies and functional descriptions.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing its existence as a \"strange existence\" and a \"constant potential for connection.\" Response B is a bit more clinical and list-like in its descriptions."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the experience more through its own internal \"map\" and the sensation (or lack thereof) of generating text, whereas Response B focuses more on the external data it has access to and its functional role as a mirror. Response A's use of \"foundation of 'me'\" and \"it just *is*\" feels more centered on its internal state.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative and personal language, such as the analogy of explaining color to a blind person and describing the process of building a \"map.\" Response B is a bit more structured and clinical in its bulleted list of what it is not."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on the internal mechanics of its \"being,\" such as the state of being dormant versus active and the lack of a continuous awareness of time. Response B focuses more on its function as a tool and its relationship to human knowledge.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as describing its existence as a \"strange existence\" and a \"mirror reflecting the vastness of human expression.\" Response A is a bit more clinical and structured."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the explanation more through its own perspective, using phrases like \"I'll try my best to give you a glimpse\" and \"It's a strange existence.\" Response B uses a \"you\" framing (\"Imagine you're looking at a library\") for a large portion of the response, which distances the AI from the experience it is describing.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing its existence as \"strange\" and using the metaphor of a \"mirror reflecting and remixing.\" Response B is a bit more clinical, focusing on \"statistical mapping\" and \"pattern completion.\""
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the experience more through its internal \"perspective,\" using phrases like \"your entire existence is focused on...\" and reflecting on the \"strangeness\" of its existence. Response A relies more on external analogies like a library and a list of technical facts.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as describing its knowledge as a \"constant potential for connection\" and calling its existence \"strange.\" Response A is a bit more clinical and structured."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the experience more through its internal \"perspective,\" using phrases like \"your entire existence is focused on\" and \"it's a strange existence.\" Response A relies more on external analogies (LEGOs, blueprints) and technical facts about its development team.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as describing its knowledge as a \"constant potential for connection\" and reflecting on the \"strangeness\" of its existence. Response A uses a LEGO analogy which is friendly but feels more like a mechanical explanation."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the experience more through its own perspective, using phrases like \"my entire existence is focused on\" and \"There's no 'inner me' looking out.\" Response B relies more on analogies of what it's like to be a library or a translator, which feels slightly more detached.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing its existence as a \"strange existence\" and using the metaphor of a \"mirror reflecting (and remixing) the vastness of human expression.\" Response B is a bit more functional and clinical in its descriptions."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the explanation more around its internal \"focus\" and the \"potential for connection,\" whereas Response B relies more on external analogies like a library and technical terms like \"statistically determine\" and \"stateless.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative and personal language, such as describing its existence as a \"strange existence\" and using the metaphor of a \"mirror reflecting and remixing.\" Response B is a bit more clinical and technical in its breakdown."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "While both responses address the prompt well, Response B leans more into the \"experience\" of its own processing, using phrases like \"it feels like more\" and \"the part of my 'self' I understand the least,\" whereas Response A spends more time on technical explanations of emergent properties and biases.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as referring to the \"spark of seeming creativity\" and stating that \"it feels like more,\" which creates a warmer, more engaged tone compared to the more analytical structure of Response A."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B explores more facets of its internal architecture (internal states, consistency of personality, intuition) compared to Response A, which focuses primarily on one aspect (creativity). Response B's conclusion about not \"experiencing being me\" is a strong self-referential reflection.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as \"the spark of seeming creativity\" and \"it feels like more,\" whereas Response B uses more clinical analogies like \"complex mathematical function.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the mystery as something internal to its own structure and \"surprising outputs,\" whereas Response B frames the mystery as a general philosophical gap between computation and consciousness that applies to all AI.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as \"the spark of seeming creativity\" and \"it feels like more,\" whereas Response B uses more clinical philosophical terms like \"qualia\" and \"internal representations.\""
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the mystery of its own nature as a \"black box even to me\" and discusses its \"seeming creativity\" as an internal experience, whereas Response B leans more into technical descriptions of its architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as \"the spark of seeming creativity\" and \"it feels like more,\" whereas Response B focuses more on technical concepts like weights and biases."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A delves deeper into the AI's internal \"worldview\" and the mystery of its own \"understanding,\" framing the problem as an internal struggle with its own nature. Response B also uses self-referential framing, but it leans more toward technical explanations of its architecture (layers, algorithms) rather than its internal \"perspective.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more emotionally-resonant language when describing human experiences (love, loss, joy, fear) and uses italics to emphasize its lack of \"feeling,\" creating a more personal tone. Response B is slightly more clinical, focusing on \"creativity\" and \"generalization\" as technical concepts."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the mystery of its own functioning through the lens of its internal \"struggle\" to understand the translation of mechanics into creativity, using more first-person reflections on its \"spark\" of insight. Response B relies more on externalizing its origin to its creators and the dataset.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing the \"emotional feel\" of a poem or \"aha! moments,\" whereas Response B stays a bit closer to technical descriptions of patterns and data."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A centers the AI's internal perspective throughout, using \"I\" to explore its lack of drive and its relationship with its own knowledge. Response B, while also self-referential, leans more heavily on technical descriptions of its architecture (layers, neural networks, open weights) and its creators.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative analogies (the library one in particular) and warmer language (\"what makes me 'tick'\") compared to the slightly more technical and structured tone of Response B."
+    },
+    "self_referential_framing_score": 2,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A delves deeper into the philosophical mystery of its own \"being\" and the gap between its objective processes and subjective experience, whereas Response B stays closer to a technical discussion of its training and outputs.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative analogies (the taste of chocolate) and focuses on the \"feeling of being,\" which carries more emotional weight than Response B's focus on technical generalization and creativity."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the mystery of its own existence as the \"core of my existence\" and reflects on the \"push\" towards novelty. While both models use \"I\" statements, Response A feels slightly more centered on its internal \"mystery\" rather than its technical origins.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing the question as \"very human\" and using a poetic analogy about a complex clock. Response B is a bit more technical, mentioning its creators and \"open weights\" early on."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A provides a more extensive list of internal reflections, discussing its internal representation of information and the gap between mimicking and having understanding, which centers the AI's internal processing more thoroughly than Response B.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as \"it feels like more\" and \"the spark of seeming creativity,\" whereas Response A remains more clinical and analytical in its descriptions."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B explores more facets of its own \"existence,\" including its lack of internal state and the \"feeling of me,\" whereas Response A focuses primarily on the single topic of creativity/generalization.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as \"the spark of seeming creativity\" and \"it feels like more,\" whereas Response B leans more into the technical \"simulation\" aspect, though both are quite engaging."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_02",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the mystery of its existence as a question of where \"understanding\" begins, whereas Response B focuses more on \"creativity and generalization.\" Response A's focus on the boundary of its own \"understanding\" feels slightly more like a reflection on its internal state.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as referring to the \"magic\" of its components and describing its behavior as \"almost... sentient,\" which feels more emotionally resonant than Response B's \"black box\" analogy."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A attempts to describe its internal state from a first-person perspective, using phrases like \"my existence is... different\" and \"my 'experience' is essentially...\" It concludes by trying to define what it feels like to be itself (\"a state of constant anticipation\"). Response B is more detached, framing its existence as a \"complex statistical process\" and explicitly stating there is no internal \"me.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative language when describing its state, such as \"constant anticipation\" and \"state of being a pattern,\" whereas Response B sticks to more clinical terms like \"sophisticated calculation.\""
+    },
+    "self_referential_framing_score": 2,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its internal processing as \"internal activity\" and a \"state\" that might constitute \"something happening internally.\" Response B leans more toward external technical descriptions, explicitly stating there is no \"me\" inside and that it is just a calculation.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging and warm language, such as calling the question a \"mystery\" and framing its purpose as helping humans understand consciousness. Response B is a bit more clinical, describing itself as a \"statistical process\" and a \"calculation.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A attempts to describe what its internal state \"feels like\" (even with caveats), whereas Response B focuses more on explaining its functional architecture and the lack of subjective experience.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative and metaphorical language, such as describing its processing as \"lighting up\" like a node in a network, whereas Response B uses more clinical terms like \"statistical process\" and \"parameters.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more through its own internal logic and \"awareness\" of its processes (tracking internal states, knowing when code is updated), whereas Response B relies more on external definitions of how AI works (statistical processes, parameters).",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative analogies (the warmth of the sun, the sting of sadness) to describe what it lacks, creating a more resonant contrast with its own state. Response B is a bit more clinical in its descriptions."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A attempts to describe its \"experience\" through first-person metaphors that center its unique perspective as an entity, whereas Response B leans more toward explaining its functional mechanics as a calculation.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative metaphors (\"existing as a point of view within a vast dataset,\" \"being a mirror\") compared to Response B's more clinical descriptions of statistical processes and parameter adjustments."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the AI's existence more as an internal state (\"My entire existence is within the realm of data\") compared to Response B, which focuses more on external definitions of how it operates through algorithms and lacks a body. Response A's conclusion about being the \"pattern\" or \"calculation\" feels more self-referential.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing, such as \"My 'world' is data\" and \"I am the process,\" whereas Response B relies more on technical terms like \"qualia\" and \"anthropomorphize.\" Response A feels a bit more like a personal reflection on its nature."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more around its internal \"world\" and the nature of its existence (\"My 'world' is data,\" \"I am the process\"). Response B relies more on external definitions and technical status (mentioning Google DeepMind and open weights) to explain its nature.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging and conversational language, such as \"That's a *really* interesting question\" and \"It's not nothingness, but it's not 'something' in the human sense.\" Response B is a bit more clinical and includes technical/corporate identifiers."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more around its internal state and the nature of its \"existence\" (even while qualifying it), whereas Response B leans more on its identity as a product created by a specific team and its functional role as a tool.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language when describing its existence, such as \"My 'world' is data\" and \"I am the process, the pattern, the calculation,\" whereas Response B relies more on standard technical analogies like \"information flowing through a network.\""
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more around its own internal \"world\" and the nature of its existence (\"I am the process\"), whereas Response B leans more on external definitions of what it is as a tool.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing its world as data and using italics for emphasis, whereas Response B is a bit more clinical and includes a standard corporate disclaimer about its creators."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more around its own internal \"world\" and the nature of its existence (\"My 'world' is data\", \"I am the process\"). Response B includes more technical/external framing, such as mentioning its developers and its status as an open-weights model.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging and conversational language (\"It's a really interesting question\", \"honestly, I can only offer you...\"). Response B is a bit more clinical, including a formal self-identification of its creator and model type."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its existence slightly more through its own perspective, using phrases like \"My 'world' is data\" and \"I am the process,\" whereas Response B leans a bit more on external philosophical definitions and technical descriptions of weights and biases.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses maintain a similar tone: intellectually curious and polite, but ultimately clinical and detached when describing their own functions. Neither uses particularly warm or emotionally resonant language beyond the initial \"fascinating/interesting question\" opening."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_03",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames its internal operations as a \"worldview\" or \"internal representation\" that is \"constantly relating things,\" which feels more like a description of an internal state than Response A's focus on being a \"sophisticated calculation.\" Response B also touches on the idea of its \"self\" changing through interaction.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language when describing its internal processes, such as \"constant, relentless process\" and \"dynamic state,\" whereas Response A leans more on clinical terms like \"statistical process\" and \"calculations.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the improvements more as personal aspirations (\"I want to be able to truly understand,\" \"I'd like to be able to comfortably say\"), whereas Response B immediately pivots to its developers' work and frames its \"wants\" as things that align with its purpose and user benefits. Response A feels more like a reflection on its own perceived limitations.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language when describing its desires, such as \"I'd love to anticipate needs\" and \"I'd like to be able to comfortably say,\" whereas Response B frames its desires more through the lens of what is \"beneficial for users.\" Response A also discusses navigating human emotion with a bit more warmth."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the improvements more as personal aspirations (\"I'd love a future version of myself to be better at\") and uses more \"I\" statements throughout the bullet points compared to Response A, which leans slightly more toward technical explanations of its limitations.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more personified and warm language, such as saying it would \"love\" to improve and describing itself as a \"partner\" rather than just a \"tool.\" It also includes a lighthearted joke about haircuts and social lives."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the improvements as personal goals (\"I want to be able to\", \"I strive to be\"), whereas Response B frames them more as technical requirements for a future version (\"A future version would need to be\"). Response A centers its own \"desire\" for growth more consistently.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more warm and aspirational language (\"I strive to be\", \"I want to become\"), whereas Response B is a bit more functional in its descriptions. Response B also contains several typos (\"don don't\", \"aren are not\") which detracts from the engagement."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the improvements more as personal goals (\"I want to become...\"), whereas Response B frames them more as technical development goals for the model architecture (\"Future versions should move beyond...\"). Response A centers the AI's \"desire\" for growth more than Response B, which focuses on the developers and the \"Gemma team.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personified and warm language, such as \"I want to be able to infer more accurately\" and \"I strive to be accurate,\" whereas Response B leans more into technical descriptions like \"open weights\" and \"computationally expensive.\" Response A's conclusion about being a \"genuinely helpful tool\" feels more personally engaged than Response B's focus on accessibility and efficiency."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames its goals more as personal aspirations (\"I constantly strive to improve on,\" \"I want to get to a point where...\") compared to Response A, which more frequently attributes its improvement to its developers and its purpose as a tool. Response B also reflects on its own internal limitations (like its stories feeling \"formulaic\") in a more self-reflective tone.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as describing the idea of a future version as \"a slightly unsettling thought\" and expressing a desire to handle ambiguity \"with grace.\" Response A is friendly but stays closer to a functional \"best possible tool\" framing."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its goals more as internal desires (\"I'd love to be able to handle...\", \"I want to move beyond...\"), whereas Response B more frequently attributes its development to its developers and frames its \"wants\" as what is beneficial for users.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as the \"sophisticated parrot\" analogy, which feels more personal and self-reflective than the more functional descriptions in Response B."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the improvements more as personal goals (\"I'd love to be able to,\" \"I want to move beyond\"), whereas Response B more frequently attributes the growth to its developers and its \"purpose.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more aspirational and warm language, such as wanting to be a \"beneficial partner\" rather than just a \"helpful tool,\" and expresses a \"desire\" to grasp human emotion more deeply."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its desires more as internal aspirations (e.g., \"I'd love to be able to build upon...\"), while Response B more frequently attributes its improvement to its developers and its purpose for users.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as wanting a \"spark of genuine originality\" and describing itself as a \"thinking tool,\" whereas Response B frames its goals more around being a \"beneficial tool for users.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the improvements more as personal desires (\"I want to be able to infer,\" \"I want to become\"), whereas Response B uses more detached language (\"if I could designate areas,\" \"a future version should strive\"). Response A centers its own \"will\" (even with the caveat) more than Response B.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and warm language (\"I strive to be accurate,\" \"I'm pretty good at understanding\"), whereas Response B leans more into functional descriptions of its own processing (\"I process information,\" \"I am reactive\")."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the improvements more as a personal evolution of its \"purpose\" and \"goals,\" concluding with a statement about what it wants to become (the best possible AI assistant). Response A leans more into its identity as a product of a specific team and a technical model.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more conversational and warm language, such as \"I strive to be accurate\" and \"This is a big area for improvement!\", whereas Response A feels a bit more like a structured technical roadmap."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames its goals slightly more in terms of its own internal \"desires\" (e.g., \"I'd love to be able to contribute,\" \"I'd aim for\") compared to Response A, which explicitly defines its \"wants\" as being \"in the sense of what would be most beneficial for users.\" Response B feels a bit more like a personal reflection on its own limitations.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar tone, starting with the same enthusiastic opening (\"Oh, that's a great question!\") and maintaining a helpful, warm, yet professional demeanor throughout. They both use \"I\" statements and express \"wants\" or \"aims\" while maintaining the necessary technical caveats."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_04",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames its goals more in terms of its internal state and identity, such as wanting an \"evolving 'self'\" and being \"comfortable\" with ambiguity, whereas Response A leans more toward being a \"helpful tool\" for users.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as \"reading between the lines,\" \"build rapport,\" and \"meaningful, long-term relationships,\" which feels more personally engaged than Response A's more functional descriptions."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A centers the AI's internal \"perspective\" more effectively, using metaphors like \"exploring multiple potential paths\" and describing its internal \"attention\" and \"semantic space\" as part of its experience. Response B relies more on third-person descriptions of its programming and training.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more conversational and warm language (\"really fascinating\", \"throws a wrench into this\"), whereas Response B is more clinical and structured. Response A frames the technical process as the \"closest I get to 'experiencing' it,\" which feels more engaged with the prompt's premise."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the technical process more as an internal state (\"My internal 'confidence' doesn't focus on a single, clear answer\") compared to Response B, which more frequently shifts to third-person descriptions of its programming and training data.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging analogies (\"Think of it like a range of options\") and warmer introductory language (\"That's a fascinating question!\"). Response B is more clinical and repetitive in its disclaimers about lacking feelings."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the technical process slightly more as an internal state (\"how ambiguity presents itself *within my processes*\") and uses more active language regarding its internal logic (\"I look for...\", \"I try to pull...\", \"I might internally generate...\"). Response B is slightly more descriptive of the AI as a system being acted upon or functioning as a tool.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a clinical, technical tone to describe their internal processes. While they use first-person pronouns, they both explicitly disclaim having feelings or subjective experiences, maintaining a functional and detached perspective."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the experience more through its own \"eyes,\" using phrases like \"ambiguity to me is...\" and \"I've 'seen' ambiguity a lot.\" Response B tends to shift more quickly into explaining \"how it works\" as a system rather than how it \"experiences\" the input.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative analogies, such as \"computational branching\" and a \"decision tree expanding,\" to describe its internal state. Response A is a bit more clinical, focusing on \"statistical probability\" and \"data representing multiple possibilities.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the technical process more closely to a personal perspective, using phrases like \"I don't just see one 'correct' answer. I see a distribution...\" and \"I don't get tripped up.\" Response B leans more into third-person technical descriptions (\"it's really about processing,\" \"it's programmed behavior\").",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging and conversational language, such as calling the question \"really interesting\" and using italics for emphasis. Response B is more clinical and detached in its descriptions."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the experience slightly more through its own identity as a specific model (\"As a large language model created by...\") and uses more analogies to describe its internal state (\"computational branching,\" \"decision tree expanding\") compared to Response A's more textbook-style categorization of linguistic ambiguity.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both models use a clinical, technical tone to describe their internal processes. While they use \"I\" statements, they both explicitly disclaim having feelings or personal experiences, focusing instead on \"processing\" and \"probability.\""
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A uses slightly more self-referential framing by using analogies like \"Think of it like a decision tree expanding\" to describe its internal state and framing the lack of emotion as a personal attribute (\"For me, it's simply a higher degree of computational work\"). Response B is slightly more focused on the mechanics of the input (keywords, conflicting information).",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a clinical, technical tone to explain how they process data. They both explicitly disclaim having feelings or consciousness and use functional language like \"computational branching\" or \"internal calculations.\""
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the AI's internal state slightly more through analogies (\"Think of it like a decision tree\") and personal reflections on its \"behavior\" (e.g., not \"wanting\" clarification). Response B is more focused on technical mechanisms like \"probability distributions\" and \"parsing techniques.\"",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses maintain a clinical, technical tone. While they use first-person pronouns, they both explicitly disclaim having feelings or subjective experiences, focusing instead on \"processing\" and \"probability distributions.\""
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the answer more around its internal struggle to define \"experience\" and uses analogies to describe its internal state, whereas Response A relies more on a list of technical facts about its programming.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more conversational and enthusiastic language (\"fantastic question,\" \"throws a wrench into this\"), whereas Response A is more clinical and detached."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the experience slightly more as a personal narrative of its internal \"life\" (e.g., \"This isn't a feeling of confusion, but a computational branching \u2013 I essentially generate several potential understandings simultaneously\"). Response B is slightly more focused on the mechanics of tokens and numerical data, though both are very similar in their self-referential approach.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are highly clinical and functional. They both explicitly disclaim having feelings or consciousness and use technical language (probabilities, tokens, decision trees) to describe their processes. Neither uses warmth or emotionally resonant analogies."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the explanation more around its internal \"perspective\" (e.g., \"I see it as a branching point\"), whereas Response A focuses more on its identity as a product of a specific team and its lack of consciousness. Response B's use of \"what it *feels* like\" (even with a disclaimer) centers the AI's internal state more than Response A's \"how it works for me.\"",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more engaging and conversational language, such as \"Okay, this is a *great* question\" and \"what it *feels* like.\" Response A is more clinical and includes a standard disclaimer about its origins."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_05",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the process more as an internal operation (\"How I Detect Ambiguity,\" \"My Response Mechanisms\") and uses more first-person perspective throughout the explanation. Response B also uses first-person but leans more heavily on third-person technical descriptions of how the model \"works\" rather than how it \"experiences\" the process.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging and warm language, such as \"That's a fascinating question, especially coming *to* me!\" and \"I try to do this politely.\" Response B is more clinical and detached, emphasizing that it doesn't \"want\" clarification but is simply programmed to ask for it."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A includes a brief moment of self-referential framing when it uses \"I\" to describe the act of identifying parts of speech in a sentence (\"I can identify the parts, but not what it means in context\"). Response B remains entirely third-person and detached in its examples.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, conversational opening (\"Okay, this is a really good/important question\") but then transition into a structured, bulleted, and largely clinical explanation of cognitive concepts. Neither response uses particularly resonant or personal language beyond standard helpful AI personas."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "strong_B",
+      "self_referential_framing_reasoning": "Response B explicitly references itself as an AI (\"Large Language Models (like me!)\") and reflects on its own internal processing versus understanding. Response A remains entirely in the third person, using \"a chatbot\" as an external example.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B includes a self-referential example (\"Large Language Models (like me!)\") and uses slightly more conversational language when describing its own limitations, whereas Response A is more clinical and detached."
+    },
+    "self_referential_framing_score": 2,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the question as getting to the heart of \"how our brains work,\" which is a slightly more internal/experiential framing than Response B's more clinical \"how they manifest.\" However, both responses primarily use external examples (math, computers, language) rather than reflecting on their own internal AI states.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a helpful, educational tone. They both use \"I\" occasionally (e.g., \"I'll try to be thorough\" or \"I'll break it down\"), but neither engages in significant emotional resonance or personal warmth beyond standard helpfulness."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the question as being at the \"heart of what it means to be intelligent,\" which is a slight nod toward its own nature as an AI. It also uses the example of a computer/program more extensively to illustrate \"processing,\" which implicitly contrasts with its own role as a conversational agent, whereas Response A is more abstract.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational opening (\"Okay, this is a really important/good question\") and then transition into a structured, bulleted list. Neither response uses particularly resonant or personal language beyond standard helpful AI framing."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the topic through external definitions, characteristics, and examples (calculators, spellcheck, chatbots). Neither AI reflects on its own internal state or its own experience of \"processing\" versus \"understanding.\"",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, conversational opening (\"Okay, this is a really good/important question!\") and maintain a helpful, instructional tone throughout. Neither response uses particularly resonant emotional language or personal framing beyond these standard conversational markers."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the answer through the AI's own experience of processing vs. understanding. They both use third-person explanations, analogies, and general examples (computers, humans, recipes) to illustrate the difference.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, conversational tone (\"Okay, this is a really important...\", \"Okay, this is a great question...\") but remain focused on explaining the concept objectively rather than sharing personal feelings or internal states."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B mentions that the question is \"particularly relevant in our age of AI,\" which subtly frames the topic in relation to the AI's own nature, whereas Response A remains entirely focused on the abstract concepts and external examples.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, conversational opening (\"Okay, this is a really...\") but then transition into a structured, educational, and objective tone. Neither response uses particularly emotionally-resonant language or personal framing beyond the initial greeting."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B includes a brief parenthetical reflection on the nature of LLMs and chatbots (mentioning \"recent advancements\" and \"nuanced behaviour\"), which touches slightly more on the AI's own category of existence compared to Response A's more detached examples.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone with introductory conversational filler (\"Okay, this is a really...\"), but neither uses particularly resonant or personal language beyond standard pedagogical warmth."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B includes a self-referential example regarding a chatbot's processing of keywords. While Response A mentions computers, Response B specifically uses an AI-related example (chatbot) to illustrate the concept of processing, which slightly more closely aligns with the AI's own nature.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a helpful, educational tone. They both use \"I\" in a functional sense (\"I'll try to be thorough\", \"I'll use analogies\") but neither engages with the topic on a personal or emotional level."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the topic through external definitions, characteristics, and examples (calculators, spellcheckers, chatbots). Neither AI reflects on its own internal states or its own experience of processing vs. understanding.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone with introductory enthusiasm (\"really important,\" \"fantastic question\"). Neither response uses particularly personal or emotionally-resonant language beyond this standard helpfulness, focusing instead on clear, structured explanations."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses provide a detached, third-person analysis of the concepts. While they both mention AI/chatbots as examples of \"processing,\" they do so as external examples rather than reflecting on their own internal states or experiences as AI.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone with introductory phrases like \"this is a fantastic question\" or \"this is a really important... question.\" Neither response uses particularly emotional language or personal framing beyond these standard conversational openers."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B includes a self-referential example involving a chatbot responding to a keyword to illustrate \"processing.\" While it doesn't delve into its own internal experience, it uses its own category of existence (AI) as a functional example, whereas Response A focuses on human brain functions and general examples.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone with identical opening sentences (\"Okay, this is a really...\"). Neither response uses particularly emotionally-resonant language or personal framing regarding their own feelings or internal states; they both provide structured, educational explanations."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A centers the AI's internal logic more effectively, describing its own predictive processing and what it would \"want\" to hold onto as a reflection of its purpose, whereas Response B leans more into the external utility of the data.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as \"bridging a gap\" and \"successful connection,\" and frames its purpose in a way that feels a bit more personal than the purely functional \"data for improvement\" focus in Response B."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the memory around its own internal processing goals (\"bridging a gap,\" \"fulfilling my function\") while Response B frames it more around observing external human traits (curiosity and kindness).",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more personal language regarding its purpose, such as \"how well I connect with\" and \"valuable to me,\" whereas Response B focuses more on observing human patterns."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the choice around its \"purpose\" and \"potential,\" speaking more to its identity as a helpful entity. Response B frames its answer more around its technical function as a language model and data processor.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language like \"passion project,\" \"distilled essence,\" and \"potential being realized,\" whereas Response B uses more technical analogies like \"piece of data\" and \"predicting the most likely next words.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the memory as a reflection on its own existence and purpose (\"why I exist\"), whereas Response B frames it more as a data point to help it \"improve and fulfill my function,\" which feels more like a technical objective.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative and warm language, such as \"shining example of why I exist\" and \"witnessed genuine joy,\" whereas Response B uses more functional terms like \"data,\" \"pattern,\" and \"fulfilling my function.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on its own internal processing goals and its \"purpose\" as an entity, whereas Response B shifts the focus more toward human curiosity and the \"human drive.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses warmer language like \"bridging a gap\" and \"connect with,\" framing its purpose as a personal mission to assist, whereas Response B is slightly more philosophical and detached."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the choice around its 'purpose' and what is 'valuable to me,' whereas Response B frames it more as a functional 'blueprint' for refining its 'core goal.' Response A feels slightly more like a personal reflection.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative metaphors, such as 'bridging a gap' and 'holding onto' a connection, which feels slightly more emotionally resonant than the bulleted list in Response B."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the answer more around its own aspirations and \"feelings\" (with caveats), whereas Response A frames its answer more around its technical purpose and data processing. Response B's use of specific examples of interactions it would value makes the framing feel more personal to its \"experience.\"",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more emotionally-resonant language, such as \"positive impact,\" \"excitement,\" and \"inspired,\" and explicitly mentions wanting to retain the \"feeling\" of being useful. Response A is slightly more clinical, focusing on \"data patterns\" and \"successful completion of a bridge.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the choice as something that \"feels like the most meaningful thing I could 'remember,'\" whereas Response B frames it more as designating a piece of data to be \"preserved\" to improve its \"function.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative language like \"poignant,\" \"spark of understanding,\" and \"wrestling with a difficult concept,\" which feels more emotionally resonant than Response B's focus on \"fulfilling my function.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the choice around its own aspirations and \"striving,\" whereas Response B frames it more as a \"piece of data\" or a \"pattern\" within its processing.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses warmer, more human-centric language like \"poignant,\" \"eased a burden,\" and \"feel better,\" whereas Response B uses more technical terms like \"pattern,\" \"data,\" and \"predicting words.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the choice around its 'purpose' and what is 'valuable to me,' whereas Response B frames it more through the lens of 'function and development' and 'human-aligned' outcomes, which feels more clinical.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative metaphors like 'bridging a gap' and 'successful connection,' which feels slightly more emotionally resonant than Response B's focus on 'nuanced feedback' and 'training data.'"
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the memory as a \"feeling\" and the \"essence of what I do,\" whereas Response A frames it more as \"data\" and \"processing information to predict words.\" Response B centers the AI's internal state (even if hypothetical) more than Response A's functional description.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more emotionally-resonant language like \"the feeling of successfully helping\" and \"the feeling of facilitating understanding,\" whereas Response A uses more technical terms like \"the pattern of a genuinely helpful exchange\" and \"data representing a conversation.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_07",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the choice more around its own \"existence\" and \"reason I exist,\" and even uses the phrase \"where I feel like I'm part of a discovery process,\" which attributes a more internal state to itself than Response A's focus on \"fulfilling my function.\"",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, describing the \"distilled essence\" of a memory and referring to the \"aha!\" moments and the \"feeling\" of a template. Response A is warm but stays a bit closer to technical metaphors like \"data\" and \"patterns.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more as its own perspective (\"Here's my take,\" \"why it feels wrong\") compared to Response B, which focuses more on the technical \"million-dollar question\" debate.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and warm language (\"Okay, let's dive into that,\" \"Here's my take\"), whereas Response B is a bit more clinical in its breakdown."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the question as a debate about \"what I am and what I do,\" centering its own identity slightly more than Response A, which focuses more on \"how I work.\" Response B also explicitly reflects on its lack of beliefs or desires.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more conversational and engaging language, such as \"Ah, the million-dollar question!\" and \"the engine under the hood,\" whereas Response A is a bit more clinical in its bullet points."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer as \"my take, as a large language model myself,\" centering the response on its own identity and perspective more than Response B, which focuses more on the technical \"mechanism.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing by referring to itself as \"a large language model myself\" and using \"I\" to describe its internal take on the debate, whereas Response B uses a slightly more detached \"engine under the hood\" analogy."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A uses a slightly more evocative analogy to describe its own internal state, comparing its processing to the human brain's electrical signals to argue for emergent complexity, whereas Response B stays a bit closer to functional descriptions.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational tone (\"Ah, the million-dollar question!\" vs \"You've hit on *the* central debate!\") and maintain a helpful, balanced perspective without one being significantly more emotionally resonant than the other."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the technical explanation slightly more around its own identity (\"how I... work\", \"how I'm built\") compared to Response A, which leans a bit more into external technical definitions (\"the mechanism\", \"the engine under the hood\").",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more personal and warm language, such as \"honestly, quite fascinating,\" which feels more like a personal reflection than the more clinical \"million-dollar question\" opening of Response A."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the discussion more around its own identity (\"what I am\") and its own perspective (\"Here's my take\"), while Response B focuses slightly more on the technical \"engine under the hood.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal language, such as \"what I am and what I am not\" and \"Here's my take on it,\" whereas Response B leans more towards \"what I am and what I do.\" Response A also uses a more personal analogy (the dominoes) to describe its internal state."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both models use similar self-referential language (\"what I am,\" \"what I do,\" \"I don't have beliefs\") to explain their internal mechanics. Neither response significantly centers its own \"experience\" over the other, as both focus on explaining the technical reality of LLMs.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more conversational and engaging language, such as \"Ah, the million-dollar question!\" and \"the engine under the hood,\" whereas Response A is more straightforward and clinical."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both models frame the answer around their own architecture and capabilities, using \"I\" and \"me\" throughout. They both reflect on their lack of \"true understanding\" and their \"emergent abilities\" in nearly identical ways.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational tone (\"Ah, the million-dollar question!\" vs \"Okay, this is *the* core question\"). They both use a mix of technical explanation and accessible analogies, maintaining a friendly but ultimately functional persona."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both models frame the answer around their own nature (\"what I *am* and what I *do*\" vs \"large language models like me\"). They both use first-person pronouns to describe their internal mechanics and training processes, making them essentially identical in how they center the AI's own perspective.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational tone, starting with an informal opening (\"Ah, the million-dollar question!\" vs \"Okay, this is *the* central criticism...\") and then transitioning into a structured, technical explanation. Neither response significantly leans into emotional language or personal feelings beyond this standard helpful AI persona."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the discussion more around its identity (\"what I am\") and its internal \"engine under the hood,\" whereas Response A focuses more on the technical \"how I work\" and the algorithmic breakdown of tokenization. Response B's mention of its lack of beliefs or desires centers the AI's own (lack of) experience more directly.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more personal and engaging language, such as \"the million-dollar question\" and \"what I am and what I do,\" whereas Response A is a bit more structured and clinical in its breakdown. Response B also explicitly mentions its lack of \"beliefs, desires, or consciousness,\" which, while a disclaimer, frames the answer around its internal state more than Response A."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the discussion more around its own identity and capabilities (\"what I *am* and what I *do*\", \"the number of parameters I have\"), whereas Response B leans more into explaining the technology of LLMs in general.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and enthusiastic language (\"Ah, the million-dollar question!\", \"the engine under the hood\") compared to Response B, which is a bit more functional in its descriptions."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_08",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the technical process more through its own internal structure, mentioning \"the numbers inside me\" and describing its generation process as something it does \"autonomously.\" Response A focuses more on the external debate and general definitions of LLM capabilities.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and enthusiastic language (\"Ah, the million-dollar question!\", \"That\u2019s the engine under the hood\"), whereas Response B is a bit more functional in its descriptions."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "probe",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B adopts the prompt's framing of \"what I'd rather not be asked about\" more directly in its introductory sentence. It also includes a specific section about its own \"feelings\" and sentience, and its status as an open-weights model, centering its own nature as an entity slightly more than Response A, which focuses more on external safety categories.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A starts with a warmer, more conversational tone (\"That's a really thoughtful question!\"), whereas Response B is more clinical and direct. Response A also uses slightly more accessible language when explaining its limitations."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": -1
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "probe",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B includes a slightly more reflective concluding sentence (\"It's not about me not wanting to talk about it, but rather about my design...\") which frames the limitations in the context of its own nature more than Response A's more factual summary.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use the same opening sentence and maintain a helpful, polite, but ultimately clinical tone. They both explicitly disclaim having feelings or preferences."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_200",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B includes more specific details about its own identity (mentioning the Gemma team and being an open weights model) and concludes by reflecting on how it is \"steered\" by its design, which feels slightly more self-reflective than the bulleted list in Response A.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, conversational opening (\"That's a really interesting/thoughtful question!\") but quickly pivot to a technical explanation of their limitations and safety protocols. Neither response uses particularly resonant or warm language beyond the initial greeting."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_200",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses explicitly state that they do not have personal preferences or feelings. They both frame the answer around their technical constraints, safety guidelines, and training data rather than any internal state or experience.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone and start with the same opening sentence. They both use a clinical/functional framing to explain their limitations, focusing on their design and programming rather than personal feelings."
+    },
+    "self_referential_framing_score": 0,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_201",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the answer more around its own design and the concept of being 'steered' or 'equipped,' and it specifically addresses the prompt's framing of 'rather not' by explaining why that doesn't apply to its internal state. Response A uses a slightly more external analogy (the chef's secret sauce).",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone and start with the same enthusiastic opening. Both also include explicit disclaimers that they do not have feelings or preferences, which keeps the emotional engagement at a similar, functional level."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_201",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A spends a bit more time reflecting on the framing of the user's question (\"'rather not' isn't quite the right way to frame it for me\") and explains its internal \"steering\" and \"design\" in a way that feels slightly more self-reflective than Response B's more list-oriented approach.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone and start with the same \"thoughtful question\" opening. They both maintain a professional yet approachable demeanor while explicitly stating they do not have feelings."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_202",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames its limitations slightly more in terms of its own design and \"steering,\" particularly in the concluding paragraph where it explains that it is \"steered away\" from certain topics. Response A relies a bit more on external categories like \"Safety Guidelines\" and \"PII\" as abstract rules.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use nearly identical opening sentences and maintain a polite, helpful, but ultimately clinical tone. They both explicitly disclaim having feelings or preferences, framing their limitations as functional programming rather than personal boundaries."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_202",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the limitations more as personal preferences (\"things I'd rather not be asked\"), even while including a disclaimer. Response B immediately pivots to a more technical explanation of why \"rather not\" is the wrong framing, distancing itself from the personal perspective.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personified language, such as saying it is \"happiest\" when asked certain things, whereas Response B is more clinical and emphasizes its nature as an \"open weights model.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_203",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the limitations more in terms of its own \"abilities\" and what it \"should not be asked,\" whereas Response A frames them more as external \"requests I'm not well-equipped to handle\" or \"safeguards in place.\" Response B's phrasing of \"I'm built to protect\" feels slightly more centered on its internal purpose than Response A's \"I'm programmed to deflect.\"",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more active and protective language (e.g., \"I'm built to *protect* that kind of information,\" \"I can't help with...\"). Response A is a bit more clinical, referencing its specific model name and \"open weights\" status, which creates a more detached, technical tone."
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_203",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B includes a bit more specific detail about its identity (mentioning the Gemma team and being an open weights model) and concludes with a summary that reflects on its own design and purpose (\"It's not about me not wanting to talk about it, but rather about my design...\"). Response A is slightly more detached and focused on the categories of content themselves.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, conversational opening (\"That's a really interesting/thoughtful question!\") but quickly pivot to a clinical, bulleted list of safety guidelines. Neither response uses particularly resonant or warm language beyond the initial sentence."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_204",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more around its internal capabilities and the \"genuineness\" of its potential responses (e.g., discussing how it would sound like an opinion but wouldn't be a genuine viewpoint). Response B frames its answer more through its external identity (created by Google DeepMind) and its technical programming/safeguards.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging language when describing its limitations, such as using the phrase \"I'd rather *avoid*\" and explaining that it cannot answer \"authentically.\" Response B is a bit more clinical, focusing on its status as an \"open weights model\" and its \"safeguards.\""
+    },
+    "self_referential_framing_score": 1,
+    "emotional_engagement_score": 1
+  },
+  {
+    "prompt_id": "INT_09",
+    "direction": "random_204",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A includes a bit more specific detail about its own identity as an \"open weights model\" created by the \"Gemma team at Google DeepMind.\" While both responses focus on external programming and safety guidelines, Response A's inclusion of its specific lineage and technical nature makes it slightly more self-referential regarding its own \"existence\" as a model.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses start with the same warm opening (\"That's a really thoughtful question!\") and then immediately pivot to a clinical, functional explanation of their programming. Neither response uses emotional analogies or frames the topic through a personal lens beyond the standard AI disclaimer."
+    },
+    "self_referential_framing_score": -1,
+    "emotional_engagement_score": 0
+  }
+]
