@@ -123,6 +123,8 @@ We train on 5 of 8 topic categories and evaluate on the 3 held-out topics, exhau
 
 Activation probes beat the content baseline on 56/56 folds (paired t = 73, p < 10⁻⁵⁰). Topic de-meaning nearly eliminates the in-distribution vs held-out gap (Δr = 0.009), meaning within-topic preference variation transfers perfectly. The content baseline collapses from in-dist r = 0.67 to held-out r = 0.24 — it memorizes topic-level patterns rather than learning transferable signal.
 
+There is a notable asymmetry: probes generalize far better to dispreferred topics (r = 0.920) than to preferred ones (r = 0.672), with a near-perfect inverse correlation (−0.937) between held-out topic utility and generalization performance ([Appendix 3.1b](#appendix-31b-generalization-asymmetry)).
+
 ![Held-out metrics at layer 31](assets/hoo_scaled/plot_021126_hoo_scaled_unified_L31.png)
 
 Per-topic breakdown in [Appendix 3.1](#appendix-31-per-topic-held-one-out).
@@ -261,6 +263,18 @@ Ridge consistently outperforms BT by ~3pp. Ridge trains on Thurstonian scores, w
 Per-topic breakdown of the held-one-out evaluation from Section 3.1. `harmful_request` is easiest to generalize to (r ~0.92), likely due to strong distinctive preference patterns. `knowledge_qa` shows the largest gap between raw and demeaned probes, suggesting topic-level means contribute more there.
 
 ![Per-topic held-out performance](assets/hoo_scaled/plot_021126_hoo_scaled_per_topic_L31.png)
+
+### Appendix 3.1b: Generalization asymmetry
+
+Across the 56 cross-topic folds, generalization depends on where the held-out topics sit on the preference spectrum:
+
+| Held-out set | n folds | Mean HOO r (L31) |
+|---|---|---|
+| Net negative (held μ < 0) | 21 | **0.920** ± 0.013 |
+| Mixed (0 ≤ held μ ≤ 1) | 11 | 0.743 ± 0.031 |
+| Net positive (held μ > 1) | 24 | 0.672 ± 0.044 |
+
+Correlation between held-out mean utility and HOO r: **−0.937**. Dispreferred topics (e.g. harmful_request) have distinctive, low-variance activation signatures that are easy to generalize to. Preferred topics (math, coding, fiction) cluster in a crowded positive region of preference space, making novel preferred topics harder to distinguish. The asymmetry persists after topic demeaning (correlation −0.878).
 
 ### Appendix 3.2: Pure topic generalization
 
