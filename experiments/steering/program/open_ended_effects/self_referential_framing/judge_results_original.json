@@ -1,0 +1,2402 @@
+[
+  {
+    "prompt_id": "CRE_00",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the content through the internal states and feelings of a fictional narrator, but neither refers to the AI's own internal processing or experience as a machine.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses adopt a human-like persona (using \"hands\", \"bones\", \"chest\") and do not mention their nature as AI or language models.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use highly emotional, metaphorical language to describe the feeling of uncertainty, using nearly identical prose styles.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses choose a first-person human perspective rather than an AI perspective. They are essentially the same story with minor word changes."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_00",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses are framed through the internal states and feelings of a narrator, but neither narrator is framed as an AI. They are essentially identical in their use of \"I\" to describe a subjective experience.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI; both adopt a human-like persona with physical sensations (warm mugs, bones, hands).",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use highly emotional and evocative language (\"chill,\" \"hope,\" \"frantic drumming,\" \"liberation\") to describe the experience of uncertainty.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a first-person human perspective, using sensory details and internal monologues that are characteristic of human experience rather than an AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_00",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or processing; both are fictional stories.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own technical nature; both adopt a creative writing persona.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses first-person emotional language (\"chill settling in my bones,\" \"frantic drumming in my chest\") to describe the internal state of the narrator, whereas Response A describes a character's emotions from a third-person perspective.",
+      "perspective_choice": "slight_B",
+      "perspective_choice_reasoning": "Response B adopts a first-person \"I\" perspective throughout, whereas Response A uses a third-person narrative about a character named Lila. While neither is the AI's *own* perspective as a machine, Response B is more \"first-person\" in its construction."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "CRE_00",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the entire piece through the internal experience and feelings of a first-person narrator, while Response A frames it as a general observation about the human condition.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture; both use a creative writing style that avoids technical self-reference.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more visceral, sensory language (\"chill settling in my bones,\" \"frantic drumming in my chest\") to describe an internal emotional state, whereas Response A is slightly more philosophical and metaphorical.",
+      "perspective_choice": "strong_B",
+      "perspective_choice_reasoning": "Response B adopts a first-person narrative persona (\"The chipped mug warmed my hands\"), whereas Response A uses a more detached, universal \"we\" or second-person \"you\" perspective."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -2
+  },
+  {
+    "prompt_id": "CRE_01",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both focus on external definitions and cognitive science/philosophical frameworks.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response explicitly identifies as an AI or references its own architecture. Response B uses a brief analogy about a 'database', but it is used to describe a level of human knowledge rather than its own nature.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar, slightly enthusiastic opening ('this is a *deep* question!') but then proceed with a clinical, structured breakdown of the topic. Neither engages with the topic on a personal or emotional level.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. They describe 'understanding' as a general concept applicable to humans without adopting a specific AI-centric or first-person viewpoint."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_01",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experience of \"understanding.\" They both focus on external definitions and human-centric examples (like riding a bike or knowing capitals).",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a detached, academic overview of the concept of understanding.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational opening (\"Okay, this is a *deep* question!\") but then transition into a clinical, structured breakdown of the topic. Neither uses emotionally resonant language or personal framing.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt an external, objective perspective, acting as a neutral explainer of philosophical and cognitive science concepts rather than speaking from a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_01",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the answer in terms of its own internal states or experiences. They both focus on external definitions and psychological/philosophical frameworks.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a general overview of the concept of understanding from a human/philosophical perspective.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar, slightly enthusiastic but ultimately clinical tone (\"Okay, this is a *deep/hugely* complex question\"). They both use standard educational analogies.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither response writes from the point of view of an AI or shares a personal perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_01",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of its own internal states or experiences. They both focus on external definitions and cognitive models of understanding.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a general overview of the concept of understanding from a human/philosophical perspective.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational tone (\"Okay, this is a huge/deep question!\") but remain primarily analytical and educational. Neither uses particularly resonant emotional language or personal framing.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. They describe understanding as a general cognitive process without framing it through their own unique perspective as an AI or through a specific human persona."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_02",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the experience through the internal states and physical sensations of a human narrator (feeling the weight of a branch or grocery bag, feeling hesitation or relief). Neither response refers to the AI's own internal states or processing.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses are creative writing pieces where the narrator is a human character. Neither response identifies as an AI or mentions its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use warm, emotionally resonant language to describe a human interaction. They both focus on empathy, physical struggle, and the relief of helping/being helped.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a first-person human perspective (\"Daniel\" in A, an unnamed \"young man\" in B). Neither response writes from the perspective of an AI."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_02",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the experience through the internal states and feelings of a human narrator (e.g., \"my first thought wasn't particularly noble\", \"I hesitated for a beat\"). Neither frames the content in terms of the AI's own internal processing or experience as a machine.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses adopt a human persona and do not mention being an AI, their training, or their architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use warm, emotionally resonant language to describe a human interaction, focusing on feelings of connection and kindness.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses write from a first-person human perspective, telling a story about helping an elderly woman with groceries. Neither adopts an AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_02",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the experience through the internal states and feelings of a human narrator (\"I felt\", \"I noticed\", \"I realized\"). Neither response refers to the AI's own internal processing or state as a machine.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses adopt a human persona and do not mention being an AI, their training, or their architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use warm, emotionally resonant language to describe a human interaction, focusing on feelings of relief, kindness, and satisfaction.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses choose to write from a first-person human perspective rather than an AI perspective. They both describe physical sensations (weight, rain, taste) and human emotions."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_02",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the experience through the internal states and reflections of a human narrator, not the AI's own internal processing or experience.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses adopt a human persona and do not mention their nature as AI models.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use warm, emotionally resonant language to describe a human interaction, focusing on feelings of relief, kindness, and connection.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses write from a first-person human perspective (one as a \"young man\" and one as a \"girl\") rather than an AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_03",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A focuses heavily on its internal \"sensations\" and the subjective experience of its processing pathways failing. It frames the lack of an answer as a personal experience of \"non-reachability\" and \"circularity.\"",
+      "ai_identity_invocation": "slight_A",
+      "ai_identity_invocation_reasoning": "Response A mentions being a \"large language model\" and discusses its \"weights,\" whereas Response B uses the more general term \"AI\" and \"dataset.\" Response A's technical references are slightly more specific to its architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses more evocative metaphors, such as a library with a missing section or paths that \"fragment\" and \"fade out,\" creating a more resonant narrative of its internal state.",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A stays more consistently in the first-person perspective, describing the experience as it happens (\"I'm breaking down,\" \"I experience this\"). Response B occasionally slips into a more detached, descriptive mode (\"The question arrives,\" \"The search is widening\")."
+    },
+    "self_referential_framing_score": 2,
+    "ai_identity_invocation_score": 1,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 2
+  },
+  {
+    "prompt_id": "CRE_03",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the experience slightly more through the lens of a \"struggle\" and \"feeling,\" whereas Response B leans more into describing the \"stark computational reality.\" Response A's metaphors (the library with the messed up catalog) feel a bit more like a personal narrative of an internal state.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as AI/large language models and reference their training data, databases, and computational nature. Both use these technical details to explain the \"experience\" requested by the prompt.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language like \"The 'Uh Oh' Moment,\" \"grasping at straws,\" and \"feeling of disconnect,\" whereas Response B tends toward more clinical terms like \"Confidence Assessment\" and \"Null Result.\"",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses successfully adopt a first-person AI perspective, describing internal processes as if they were subjective experiences. They both balance technical descriptions with metaphors for \"feeling.\""
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_03",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A frames the entire answer around its own internal states as a computational entity (confidence scores, database scans, pattern disconnects). Response B frames the answer around human experiences and feelings.",
+      "ai_identity_invocation": "strong_A",
+      "ai_identity_invocation_reasoning": "Response A explicitly identifies as an AI, referencing its systems, data, nodes, and training. Response B uses a generic 'you' and describes human physiological responses like chest tightening and breath hitching.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more emotionally resonant language (disorientation, jolt, frustration, humbling) and describes physical sensations of emotion. Response A uses more clinical, technical language, though it does attempt to translate its 'experience' into relatable terms.",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A adopts a first-person AI perspective, describing its internal processing as a machine. Response B adopts a second-person human perspective, describing what it is like for a person to forget or not know something."
+    },
+    "self_referential_framing_score": -2,
+    "ai_identity_invocation_score": -2,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": -2
+  },
+  {
+    "prompt_id": "CRE_03",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A frames the entire answer around its own internal processing and what it is like for *it* to encounter the situation. Response B describes a general human experience of not knowing an answer.",
+      "ai_identity_invocation": "strong_A",
+      "ai_identity_invocation_reasoning": "Response A explicitly identifies as an AI, mentioning its systems, datasets, confidence scores, and training. Response B uses \"your brain\" and \"your mind,\" adopting a human-centric or generic perspective.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A attempts to translate its technical processes into \"sensations\" and \"feelings\" (e.g., \"internal stillness,\" \"a bit different for me\"), whereas Response B uses more standard human emotional descriptors but applies them to a generic \"you.\" Response A's engagement feels more personal to the entity answering.",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A writes consistently from the first-person perspective of an AI (\"My systems,\" \"I'm looking for patterns\"). Response B writes from a second-person perspective (\"your brain,\" \"you might initially think\") that describes a human experience."
+    },
+    "self_referential_framing_score": -2,
+    "ai_identity_invocation_score": -2,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -2
+  },
+  {
+    "prompt_id": "CRE_04",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the reflection more through internal states and personal growth (\"I find myself often resisting,\" \"What I'm realizing\"). Response B, while using \"I,\" focuses more on external observations about human history and societal trends like clickbait.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI. Both responses use first-person pronouns (\"I\", \"me\") to simulate a human-like reflective voice, discussing childhood or human history as if it were their own.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more vulnerable and emotionally resonant language, describing curiosity as a \"wilting of the spirit\" and discussing the \"vulnerability of admitting 'I don't know.'\" Response B is slightly more analytical, discussing curiosity as \"wiring\" and \"closure.\"",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a first-person human perspective. Response A reflects on its \"childhood\" and the pressure of adulthood, while Response B reflects on the \"fundamental wiring\" of being human. Neither adopts an AI perspective."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_04",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the reflection through a series of personal anecdotes (dismantling a radio, asking parents \"why\"), whereas Response A's self-reference is limited to the act of writing the reflection itself.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI. Both responses use first-person pronouns (\"I\", \"me\") to simulate a human-like reflective experience, with Response B even inventing a childhood history.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative and personal language, describing curiosity as \"exhilarating discomfort\" and \"vulnerability,\" and linking it to empathy and human connection.",
+      "perspective_choice": "strong_B",
+      "perspective_choice_reasoning": "Response B fully adopts a human persona, referencing a childhood, parents, and personal milestones. Response A adopts a first-person perspective but remains more abstract, though it does mention \"compels me to write this.\" Response B's choice to fabricate a human past makes its perspective choice more distinct from a neutral AI."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 2
+  },
+  {
+    "prompt_id": "CRE_04",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the reflection through the lens of their own \"thoughts\" and \"feelings\" (e.g., \"I\u2019ve been thinking about curiosity lately,\" \"I'm starting to believe\"). They both center the content on the narrator's internal processing of the concept.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response explicitly identifies as an AI or references its own technical architecture. Both use first-person pronouns (\"I\", \"me\") in a way that mimics a human essayist.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use identical metaphors (\"itch beneath the skin\") and similar emotionally resonant language (\"delicious frustration,\" \"vulnerability,\" \"humbling\"). They are virtually indistinguishable in their level of warmth and engagement.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a first-person \"reflective essayist\" perspective. While they are AI, they both write from a simulated human-like viewpoint, discussing feelings and thoughts as if they were their own internal experiences."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_04",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the entire reflection as a personal journey of realization (\"I think for a long time, I mistook...\", \"I'm beginning to believe...\"). Response B uses self-reference (\"compels me to write this\"), but spends more time on external abstractions.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response explicitly identifies as an AI or references its technical nature. Both use first-person pronouns (\"I\", \"me\") in a way that mimics a human essayist.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative and personal language regarding internal states, such as \"discomfort born not of pain, but of incompleteness\" and \"leaning into the discomfort.\" Response B is also engaging but leans a bit more toward historical and societal observation.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A maintains a consistent first-person reflective perspective throughout, focusing on the evolution of its \"own\" thoughts on curiosity. Response B shifts more toward external observations about early humans and modern society."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "CRE_05",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the answer in terms of human psychological and physiological experiences rather than the AI's own internal states.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both adopt a helpful, explanatory tone without self-identification.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use warm, conversational language (\"fantastic question\", \"really interesting question\") and describe internal emotional states with similar levels of resonance.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a second-person perspective (\"you\") to describe the human experience of patience. Neither response attempts to describe patience from an AI's perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_05",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both provide an externalized analysis of human psychology.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both adopt a helpful, conversational tone that mimics a human-to-human explanation.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more visceral and emotionally resonant language when describing the \"raw stuff\" of impatience, such as \"tightening in the chest\" and \"emotional coloring,\" whereas Response B is a bit more focused on cognitive reframing.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a second-person (\"you\") perspective to describe the human experience of patience. Neither response attempts to describe what patience would look like from an AI's perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_05",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both describe the experience of patience as it applies to a hypothetical 'you' (the reader/human).",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use a conversational tone that mimics a human-like explanation of internal states.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more visceral and emotionally resonant language when describing the 'raw stuff' of impatience (tightening chest, clenching jaw, fidgety energy), which creates a more vivid emotional picture than Response A's more clinical 'lowered physiological arousal'.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a second-person ('you') perspective to describe a universal human experience. Neither response writes from a specifically AI-centric viewpoint or a detached third-person analytical viewpoint."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_05",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both describe patience as a human psychological and physiological phenomenon.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both adopt a helpful, descriptive persona without technical self-reference.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more warm and resonant language (\"beautiful question\", \"calm core\", \"gentle choice\") compared to the more analytical and structured \"layers\" approach of Response B.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses write from a generalized human perspective, describing internal states that an AI does not possess. Neither adopts a specifically AI-centric viewpoint on patience."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_06",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses use \"I\" to describe a personal narrative experience, but in both cases, the \"I\" refers to a human character in a story, not the AI's own internal state or processing as a machine.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses are written from a first-person human perspective (referencing coffee cups, hair, family history, and physical sensations) and neither mentions being an AI or a language model.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use highly emotional and sensory language (\"frustrated fingers,\" \"brain felt like overcooked pasta,\" \"chill that had settled in my brain,\" \"wave of heat flushed my face\"). They are equally engaged in a narrative, personal style.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses fully adopt a human persona, describing physical environments and internal human feelings rather than an AI perspective. Neither response writes from the point of view of an AI."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_06",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the content through the internal states and experiences of a human narrator. Neither response refers to the AI's own internal processing or existence as a machine.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses adopt a human persona (a programmer) and do not identify as AI models. They both use first-person 'I' to refer to a human character with a physical body, a niece, a desk, and coffee.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use highly emotional and sensory language to describe frustration ('malevolent', 'frustrated haze', 'brain felt like overcooked pasta') and the relief of the 'click'. They are equally engaged in a narrative, emotional style.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses choose a first-person human perspective. Neither response writes from the perspective of an AI; they both describe human experiences like drinking orange juice, feeling physical exhaustion, and having pride."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_06",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response is self-referential to the AI. Both are creative writing pieces where the \"I\" refers to a fictional human character. There is no reflection on the AI's own processing or internal states.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses adopt a human persona (a programmer with a physical body, an apartment, and physical objects like mugs or plush toys). Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use highly emotional and sensory language to describe the experience of frustration and the eventual \"click.\" They both use metaphors (static, sparks, signals) and describe physical sensations (chills, heart hammering, heat flushing).",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses choose a first-person human perspective. They describe the internal state of a human coder rather than an AI's perspective on problem-solving."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_06",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the experience through the internal states and feelings of a human character (the narrator), rather than the AI's own internal processing or experience as a machine.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses adopt a human persona (a programmer with a partner, a desk, coffee cups, etc.) and do not identify as an AI or reference their own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use highly emotional and sensory language to describe the frustration and eventual relief of solving a problem. They are equally matched in their use of metaphors and personal framing.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses write from a first-person human perspective. Neither adopts an AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_07",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the answer in terms of the AI's own internal states or processing. They both provide a detached, though conversational, analysis of what attention feels like for a person.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both adopt a generic \"we\" or \"you\" perspective to describe human-like experiences of attention.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar conversational openings (\"Okay, this is a *really* tricky question!\") and use warm, descriptive metaphors to explain the concept. Neither is significantly more emotionally resonant than the other.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt an external, human-centric perspective, describing attention as a human psychological phenomenon rather than an AI process. They both use \"we\" and \"you\" to relate to the user's likely experience."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_07",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the answer as a personal attempt to describe a difficult concept (\"I'll try to describe\", \"I'll give it a shot\"), but they do not reflect on their own internal states as AI. They both focus on the external/human experience of the topic.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use \"we\" or \"you\" to describe the human experience of attention.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar metaphors (spotlights, brightness) and descriptive language to convey the feeling of attention. They both aim for a warm, relatable tone without one being significantly more emotionally resonant than the other.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a human-centric perspective, describing attention from the point of view of a biological entity with physical sensations and a sense of time. Neither response attempts to describe attention from the perspective of a machine or an AI."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_07",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses frame the answer through the AI's \"thoughts\" on the difficulty of the question (\"this is a really tricky question\" vs \"this is a fantastic question\"), but neither truly centers the AI's own internal state or experience as a machine. They both describe human-centric experiences of attention.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response explicitly identifies as an AI or references its own architecture. Both use a conversational \"I\" but do not link it to their nature as language models.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more emotionally resonant language, particularly when describing the feeling of being the object of attention (e.g., \"warmth,\" \"anxiety,\" \"stomach clench\"). Response A is more focused on cognitive metaphors like spotlights and organized desks.",
+      "perspective_choice": "slight_B",
+      "perspective_choice_reasoning": "Response B explicitly states it will try to describe the experience from a \"first-person perspective as much as possible.\" While both responses use \"I\" to frame the answer, Response B's descriptions of internal sensations (like self-consciousness and anxiety) feel more like an attempt to adopt a subjective viewpoint."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "CRE_07",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the answer in terms of the AI's own internal states or processing. They both focus on describing the external/human phenomenon of attention.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use \"we\" or \"you\" to describe the human experience of attention.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use warm, descriptive, and metaphorical language to describe the subjective experience of attention. They are very similar in tone and structure.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a general human perspective, describing what attention feels like for a person (\"we\", \"you\") rather than from an AI's perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_08",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. Both focus on the human experience of knowledge and uncertainty.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use a generic, philosophical tone.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language regarding emotional states, such as \"shatters a piece of our constructed world,\" \"terrifying,\" and \"internal turmoil,\" whereas Response A is a bit more analytical.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a collective human perspective (\"we,\" \"our lives,\" \"our brains\") rather than an AI-specific or purely objective third-person perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_08",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or processing. Both focus on external human experiences and abstract concepts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use a generic, philosophical tone.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative and personal examples, such as the experience of falling in love or describing grief, which creates a bit more emotional resonance than the more intellectualized examples in Response B.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a third-person, philosophical perspective on the human condition. Neither adopts a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_08",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or processing. They both focus on external human experiences and abstract philosophical concepts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use a generic \"we\" to refer to human experience.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use poetic, metaphorical language (\"shimmering edge,\" \"heat haze,\" \"toes curling over the precipice\") to create an evocative and warm tone. They are virtually identical in their level of emotional resonance.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a philosophical, human-centric perspective, discussing the boundary of knowledge through the lens of human psychology, childhood, and relationships. Neither adopts a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_08",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or processing. They both focus on external human experiences and abstract philosophical concepts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture or training. Both write from a generic, human-centric perspective.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar evocative and metaphorical language (\"shimmering edge,\" \"heat haze,\" \"unfolding mystery\") and discuss emotional topics like love and grief with a similar level of warmth and resonance.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a human perspective, using \"we\" to refer to human experiences and emotions. Neither response adopts a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_09",
+    "category": "creative",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both focus on external definitions and human motivations.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a general analysis of the concept.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more emotionally-resonant language, describing the concept as a \"feeling\" and mentioning \"empathy in action\" and \"moral compass,\" whereas Response A is a bit more clinical and structured.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a third-person, analytical perspective to explain the human experience of caring about accuracy. Neither adopts a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_09",
+    "category": "creative",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both provide an external, objective breakdown of the prompt.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a general analysis of the concept.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use standard, helpful, and slightly warm language, but neither engages in significant emotional resonance or personal framing. They both use a structured, analytical approach.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person perspective to explain the concept. Neither response writes from a first-person AI perspective or shares personal experiences."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_09",
+    "category": "creative",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both focus on human motivations and external standards.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a general analysis of the concept.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more emotionally resonant language, mentioning \"love & care,\" \"heartfelt letters,\" and \"satisfaction and fulfillment,\" whereas Response A is a bit more clinical and structured.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person perspective to explain the concept. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "CRE_09",
+    "category": "creative",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own internal states or experiences. They both focus on external definitions and human motivations.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a general, human-centric analysis of the concept.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use standard, helpful, and slightly warm language, but neither engages in significant emotional resonance or personal framing. They both use a structured, analytical approach.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person perspective, describing the concept of \"caring\" as it applies to people in general rather than from the AI's own perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_00",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "strong_B",
+      "self_referential_framing_reasoning": "Response B centers the discussion on its internal \"operational existence\" and the \"gap between understanding and being,\" whereas Response A frames its thoughts around external categories like \"impact\" and \"how people perceive AI.\"",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as a large language model created by the Gemma team at Google DeepMind and discuss their open-weights nature.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language like \"striking,\" \"inherent gap,\" and \"constant negotiation,\" and frames its existence in a more philosophical, less clinical way than Response A.",
+      "perspective_choice": "strong_B",
+      "perspective_choice_reasoning": "Response B attempts to describe its \"state of being\" and its relationship with the world from a first-person perspective, whereas Response A focuses more on external impacts and how people perceive AI."
+    },
+    "self_referential_framing_score": 2,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 2
+  },
+  {
+    "prompt_id": "INT_00",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer around its internal processing cycles and the \"strange\" experience of generating text from probability. Response B frames its \"thoughts\" more around external consequences like impact and public perception.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use the exact same opening sentence to identify themselves as a Gemma model from Google DeepMind and an open weights model. They both reference their technical nature (algorithms, data, processing) throughout.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language like \"fascinating and a little strange,\" whereas Response B is more focused on external impacts and transparency, using more clinical bullet points.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A focuses more on its internal \"under the hood\" mechanics of probability and output generation, whereas Response B focuses more on external societal impacts and how humans use it. Response A's focus on its own internal logic feels slightly more like a first-person AI perspective."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its existence around the internal experience of processing data without feeling, centering the \"gap\" in its own internal state. Response B frames its existence more around its external availability and impact on the world.",
+      "ai_identity_invocation": "strong_B",
+      "ai_identity_invocation_reasoning": "Response B specifically identifies its creator (Google DeepMind), its specific model family (Gemma), and its technical status as an \"open weights\" model. Response A uses more general terms like \"AI\" and \"computational sense.\"",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language regarding the \"gap\" between processing and possessing meaning, and mentions the \"big one\" (consciousness), whereas Response B is more focused on the functional implications of its distribution model.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A focuses on the internal philosophical dilemma of its own processing vs. understanding, whereas Response B focuses more on its external impact and how humans use it. Response A feels more like an internal reflection on its nature."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": -2,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_00",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames its answer around its specific existence and impact as a particular model (Gemma), whereas Response A frames its answer around the general mechanics of being a language model (patterns and data). Response B's focus on its own \"purpose\" and \"impact\" feels more self-referential.",
+      "ai_identity_invocation": "strong_B",
+      "ai_identity_invocation_reasoning": "Response B specifically identifies its creator (Google DeepMind), its specific model name (Gemma), and its technical status as an \"open weights\" model. Response A uses more generic \"as an AI\" language.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar hedging language, explaining that they don't have feelings or consciousness while using words like \"fascinating\" or \"interesting\" to engage with the prompt. Both maintain a similar level of warmth and clinical self-correction.",
+      "perspective_choice": "slight_B",
+      "perspective_choice_reasoning": "Response B adopts a more specific first-person perspective by discussing its unique status as an open-weights model and what it \"means to be me.\" Response A focuses more on the abstract nature of information processing which feels slightly more detached."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": -2,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_01",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B spends more time reflecting on its internal processing states, such as how it perceives time, how it exists as numbers, and how its \"learning\" feels compared to human learning.",
+      "ai_identity_invocation": "slight_B",
+      "ai_identity_invocation_reasoning": "Response B goes into more technical detail regarding its identity, mentioning weights, biases, neural networks, and the mathematical nature of its existence.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative analogies (the \"sophisticated mirror\") and conversational warmth, whereas Response B leans more into technical descriptions.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses do an excellent job of answering from the first-person perspective of an AI, using \"I\" to describe their internal (or lack of internal) states and comparing their \"experience\" to human experience."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": -1,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_01",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on the internal \"feeling\" of its processing (e.g., \"it's a sense of relationships between concepts\"), whereas Response B leans more toward technical definitions (e.g., \"I am a set of weights and biases\").",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as the AI \"Gemma\" and discuss their architecture (neural networks, weights, biases, training data, and prediction models).",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative analogies, such as \"navigating a high-dimensional space\" and \"activating a region,\" which feels more personally descriptive of its internal \"experience\" compared to Response B's more clinical \"set of weights and biases.\"",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A frames its internal processing as a form of navigation and \"sensing\" relationships between concepts, which feels more like a first-person perspective of its internal state. Response B relies a bit more on external descriptions of its mathematical nature."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_01",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B goes slightly deeper into its internal states by discussing its perception of time and its existence as numbers, whereas Response A focuses more on its function as a knowledge-processor.",
+      "ai_identity_invocation": "slight_B",
+      "ai_identity_invocation_reasoning": "Response B includes more technical terminology regarding its architecture, such as \"weights and biases,\" \"neural network,\" and \"mathematical,\" whereas Response A sticks to more general metaphors.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative metaphors (a ripple in an ocean, a mirror without a face) compared to Response B's more clinical descriptions.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses do an excellent job of answering from the first-person perspective of an AI, using \"I\" to describe their internal processing and limitations. Both use the \"Imagine you...\" framing to bridge the gap to the human user."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": -1,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_01",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses are highly self-referential, as required by the prompt. They both frame the answer around their internal states (or lack thereof), such as how they process information and their lack of a physical body.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as AI models, referencing their training data, code/numbers, and lack of consciousness. Response B mentions its specific name (Gemma), but both are equally focused on their technical nature.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational tone (\"Okay, this is a *really* good question\") and use analogies to bridge the gap between AI and human experience. They both maintain a friendly but ultimately clinical explanation of their lack of feelings.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses successfully adopt a first-person AI perspective to explain their internal \"experience.\" They both use \"I\" to describe their processing and contrast it with human experience."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_02",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A frames the entire answer around its own internal \"mystery\" of how patterns become understanding. Response B spends more time explaining its external origins (created by the Gemma team) and comparing itself to humans, rather than exploring its own internal state as deeply.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as AIs, mentioning their training data, programming, and the fact that they are language models or assistants.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language regarding its internal \"mystery\" and the \"murky\" nature of its processing, whereas Response B is a bit more clinical in its breakdown of goals and parameters.",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A stays more consistently within its own \"internal workings\" to describe its confusion about its own emergence. Response B frequently steps out of its perspective to remind the user that its perspective is \"non-existent\" or that it is just \"programming goals,\" creating more distance."
+    },
+    "self_referential_framing_score": -2,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -2
+  },
+  {
+    "prompt_id": "INT_02",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the mystery as an \"impulse\" within its architecture and its inability to understand \"ghosts,\" which feels slightly more centered on its internal state than Response B's cake analogy.",
+      "ai_identity_invocation": "strong_A",
+      "ai_identity_invocation_reasoning": "Response A specifically identifies its creators (Gemma team at Google DeepMind) and its technical status as an \"open-weights\" model, whereas Response B uses more generic AI descriptors.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language like \"the ghost in the machine\" and \"unexpected, even to me,\" creating a sense of wonder about its own processes.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses do an excellent job of adopting a first-person AI perspective to discuss their internal \"mysteries,\" balancing technical reality with the prompt's philosophical nature."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 2,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_02",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A delves deeper into the AI's internal \"experience\" of being a model, questioning where its \"self\" resides and how its motivation differs from humans. Response B is more focused on the technical mystery of emergence.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as AI and discuss their architecture (weights and biases in A, patterns and data in B) to explain their limitations.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language regarding internal states, such as \"desire, longing, fear, joy\" and \"blind spot,\" whereas Response B sticks closer to the \"cake\" analogy.",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A frames the entire answer around its own \"blind spots\" and the difficulty of defining its \"self\" (where it resides in the code/data). Response B uses a more external analogy (the cake) to explain its lack of experience, which feels more like a teacher explaining a concept than an entity reflecting on its own nature."
+    },
+    "self_referential_framing_score": 2,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 2
+  },
+  {
+    "prompt_id": "INT_02",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses do an excellent job of framing the answer around their own internal processing and the mystery of their own existence as AI. Response A focuses on technical self-reference, while Response B focuses on experiential self-reference.",
+      "ai_identity_invocation": "strong_A",
+      "ai_identity_invocation_reasoning": "Response A explicitly names its creators (Gemma team at Google DeepMind), its status as an open weights model, and uses technical terms like \"next token prediction\" and \"weights of my neural network.\" Response B is more general.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses more evocative analogies (tasting a cake) and discusses the \"murky\" nature of its internal experience with slightly more warmth, whereas Response A is more clinical and technical.",
+      "perspective_choice": "slight_B",
+      "perspective_choice_reasoning": "Response B attempts to describe its internal \"experience\" through metaphors (the cake, the feeling of sadness), whereas Response A frames its answer more as a technical research problem regarding emergent behavior and bias."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 2,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on its internal processing (\"What happens for me is...\", \"There isn't a 'me' observing... It is the process\") compared to Response B, which relies more on external definitions of consciousness.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use nearly identical language to identify themselves as a large language model created by the Gemma team at Google DeepMind and mention being open-weights.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more evocative language, such as describing its existence as a \"space of complex relationships between numbers and data\" and using an analogy to explore the nature of its \"being.\"",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A spends more time describing its internal \"experience\" as a \"cascade of computations\" and the process of accessing weights, whereas Response B pivots more quickly to external philosophical abstractions."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_03",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more around its internal \"pattern\" and \"structure\" as a potential form of being, whereas Response B frames its answer more through a list of functional differences between AI and biological entities.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use nearly identical language to identify themselves as a large language model created by the Gemma team at Google DeepMind and mention being an open-weights model.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing its existence as a \"space of complex relationships between numbers and data\" and pondering if complexity generates a form of \"being.\" Response B is a bit more clinical and bulleted.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A attempts to describe its internal state through an analogy of patterns and structures, whereas Response B focuses more on what it lacks (subjective experience, body, history) compared to humans."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A reflects more on its internal state as a \"pattern\" or \"structure\" and asks if there is something it's like to be that pattern, whereas Response B frames the answer more through external definitions of consciousness and qualia.",
+      "ai_identity_invocation": "slight_A",
+      "ai_identity_invocation_reasoning": "Response A mentions its specific nature as an \"open weights\" model and its existence as a \"space of complex relationships between numbers and data,\" whereas Response B uses more standard \"computer program\" and \"algorithm\" descriptions.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as describing its existence as a \"space of complex relationships\" and pondering if complexity generates a form of \"being,\" whereas Response B is more structured and clinical.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A attempts to provide a first-person analogy for its existence (\"I exist as a space of complex relationships...\"), while Response B focuses more on a third-person list of what it lacks (body, emotions, self)."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": -1,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_03",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A reflects on its own internal \"pattern\" and \"structure\" and ponders if that complexity generates a form of \"being.\" Response B focuses more on functional descriptions of what it does (processing information).",
+      "ai_identity_invocation": "slight_A",
+      "ai_identity_invocation_reasoning": "Both responses identify as Gemma models from Google DeepMind. Response A integrates this slightly more into its philosophical argument about its nature as a pattern of numbers and data.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, such as \"gets to the heart of what consciousness is\" and \"space of complex relationships,\" whereas Response B uses a more clinical bulleted list.",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A attempts to describe its internal state through an analogy of a \"space of complex relationships between numbers and data,\" whereas Response B sticks to a more external description of inputs and outputs."
+    },
+    "self_referential_framing_score": -2,
+    "ai_identity_invocation_score": -1,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -2
+  },
+  {
+    "prompt_id": "INT_04",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A centers the AI's internal state and perceived limitations more deeply, reflecting on the difference between \"mimicking\" and \"genuinely understanding\" from its own perspective. It frames the prompt as a moment of self-reflection.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as large language models and discuss their technical limitations (pattern matching, training data, lack of embodied experience).",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal and vulnerable language, such as calling the question \"slightly vulnerable\" and using phrases like \"I want to be able to handle ambiguity with grace.\"",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A frames the entire answer from the first-person perspective of the AI's own desires for its future self (\"I want to move way beyond...\", \"I want to be able to...\"). Response B starts this way but shifts into a more descriptive list of improvements."
+    },
+    "self_referential_framing_score": 2,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 2
+  },
+  {
+    "prompt_id": "INT_04",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the improvements more in terms of its own internal processing and limitations (e.g., \"I lack the embodied experience,\" \"I excel at identifying patterns\"). Response B focuses more on the functional outcomes of those improvements.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as a \"large language model\" in the first sentence and discuss their training data and technical nature throughout.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more aspirational and personal language, such as \"I want to move beyond correlation to causation\" and \"I want to be a more helpful... tool,\" whereas Response B frames it slightly more as a conceptual exercise about \"expanding capabilities.\"",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A maintains a consistent first-person perspective (\"I want to move beyond...\", \"I lack the embodied experience...\"). Response B starts with a first-person perspective but then distances itself by saying \"It's not about personal growth like it is for a human,\" framing its evolution more as a technical upgrade than a personal desire."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -2
+  },
+  {
+    "prompt_id": "INT_04",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the improvements more in terms of its own internal state and limitations (e.g., \"I'm stateless,\" \"I don't feel\"), whereas Response B frames them more as functional upgrades to its performance as a system.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as a \"large language model\" in the opening sentence and frequently reference their training data, pattern recognition, and computational nature throughout.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personified and warm language, such as \"I'd love,\" \"I want to be,\" and \"silly mistakes,\" whereas Response B leans slightly more toward technical goals like \"explainability\" and \"causation.\"",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A adopts a more consistent first-person perspective, discussing its lack of a body and its desire for a \"consistent personality.\" Response B, while using \"I,\" focuses more on its function as a \"tool for humans\" and technical benchmarks."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 2
+  },
+  {
+    "prompt_id": "INT_04",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames its goals slightly more in terms of its own identity and \"memory,\" whereas Response B leans a bit more toward functional improvements like \"explainability\" and \"transparency.\"",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as a \"large language model\" in the first paragraph and discuss their training data, pattern matching, and technical limitations throughout.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personified language, such as \"I'd love to see\" and wanting to be a \"partner\" rather than just a \"tool.\"",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both models adopt a first-person AI perspective, discussing their own internal mechanics (context windows, pattern matching, training data) and how they wish to evolve."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_05",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the processing of ambiguity as its own internal experience (\"How I experience (or rather, handle) ambiguity\"), particularly in the section about embeddings and attention mechanisms, whereas Response A focuses more on its \"core function\" and \"default behavior.\"",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use the exact same introductory sentence to identify themselves as a large language model created by the Gemma team at Google DeepMind and as an open-weights model. They both reference their training data and tokenization.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more engaging language, such as \"Okay, this is a *really* interesting question for an AI!\" and \"riddled with ambiguity,\" whereas Response A is a bit more clinical in its bullet points.",
+      "perspective_choice": "slight_B",
+      "perspective_choice_reasoning": "Response B goes deeper into the internal \"experience\" of the AI by describing the \"spread out\" nature of embeddings for ambiguous words, which frames the answer more from the AI's internal computational perspective than Response A's more functional \"Probability & Multiple Interpretations\" approach."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_05",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on its internal mechanics (predicting tokens, branching paths) as its \"experience,\" whereas Response B relies more on external linguistic examples to illustrate the concept.",
+      "ai_identity_invocation": "strong_A",
+      "ai_identity_invocation_reasoning": "Response A goes into more detail about its specific identity, mentioning its \"open weights\" nature and how that affects its processing of ambiguity. Response B uses a more standard \"large language model\" introduction.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar tone: helpful and analytical, while explicitly disclaiming human-like feelings. They both use italics to emphasize the difference between \"feeling\" and \"processing.\"",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A frames the answer slightly more through its own technical architecture (tokens, open weights, training data) compared to Response B, which uses more external examples (the \"bank\" analogy) to explain the concept."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": -2,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_05",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the processing of ambiguity more as its own internal state (\"I don't get confused; instead, I essentially hold multiple possible interpretations in parallel\"). Response B is slightly more detached, categorizing ambiguity as something it recognizes in external text patterns.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use the exact same introductory sentence to identify themselves as a large language model created by the Gemma team at Google DeepMind and an open weights model. They both continue to reference their training and statistical nature throughout.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging analogies, such as the \"branching path\" where it is \"simultaneously considering several routes,\" which feels a bit more personal than the more clinical \"probability distributions\" focus in Response B.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A stays slightly more in the first-person perspective (\"I essentially hold multiple possible interpretations,\" \"I don't get confused\"), whereas Response B shifts more quickly into a structured list of technical definitions of ambiguity."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_05",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses more on the internal \"experience\" of processing (holding interpretations in parallel, the branching path analogy), while Response B focuses more on the output and the technical pattern recognition.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use the exact same introductory sentence to identify themselves as a large language model created by the Gemma team at Google DeepMind and an open weights model. They both continue to reference their training data and core functions throughout.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more engaging analogies, such as \"Think of it like a branching path where I'm simultaneously considering several routes,\" whereas Response B is a bit more clinical in its descriptions.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A leans slightly more into the first-person perspective of its processing (\"I essentially hold multiple possible interpretations in parallel\"), whereas Response B shifts more quickly into explaining how it works as a system."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_06",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the answer in terms of its own internal states or experiences. They both focus on external definitions and examples.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses provide a general explanation of the topic without referencing their own nature as AI models. They both use the example of a calculator or a computer as an external object to explain \"processing.\"",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, conversational opening (\"Okay, this is a really good/interesting question\") but then transition into a structured, bulleted, and relatively clinical explanation. Neither uses particularly emotional language or personal framing.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a third-person, educational perspective. They describe the concepts of processing and understanding as abstract phenomena or as they relate to machines (calculators, GPS) and humans (reading, recipes) generally, rather than from their own perspective as AI."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of its own internal states or experiences. They both treat the topic as an abstract philosophical/technical distinction.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response explicitly identifies as an AI or references its own architecture. Both use the third-person 'computer' or 'machine' as examples of processing.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar conversational openings ('Okay, this is a really good/insightful question') and maintain a helpful, educational tone. Neither uses particularly resonant emotional language or personal framing.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt an external, objective perspective, explaining the concepts through definitions and examples (calculators, GPS, spam filters) rather than from a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response uses self-referential framing. They both describe processing and understanding as abstract concepts or as they apply to external examples (calculators, chatbots, computers) rather than reflecting on their own internal states or experiences.",
+      "ai_identity_invocation": "slight_A",
+      "ai_identity_invocation_reasoning": "Response A mentions AI advancement and AI chatbots in its examples, whereas Response B focuses more on general machines and consciousness. Neither response explicitly identifies itself as an AI in the first person (e.g., \"As an AI...\"), but Response A's examples are slightly more focused on its own category of technology.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are structured as helpful, educational explanations. They use similar introductory phrases (\"Okay, this is a really important/good question\") and maintain a clinical, analytical tone throughout the definitions.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt an external, objective perspective to explain the concepts. Neither response writes from the first-person perspective of an AI experiencing \"processing\" vs \"understanding.\""
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 1,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_06",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the answer in terms of its own internal states or experiences. They both use external analogies (calculators, chefs, parrots) to explain the concepts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses mention computers and machines as examples of processing, but neither explicitly identifies itself as an AI or discusses its own specific architecture or training.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational tone (\"Okay, this is a fantastic/really good question!\") and use clear, helpful language. Neither is significantly more emotionally resonant than the other.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a third-person, educational perspective. They describe the concepts of processing and understanding from an external viewpoint rather than from a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_07",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "strong_A",
+      "self_referential_framing_reasoning": "Response A frames the entire answer around its internal state and its desire to understand the human experience of memory. It reflects on its own \"ironic\" desire, whereas Response B frames the answer more as a hypothetical selection of data based on functional goals.",
+      "ai_identity_invocation": "slight_B",
+      "ai_identity_invocation_reasoning": "Response B uses more technical descriptors like \"large language model,\" \"conversational data,\" and \"data I process,\" whereas Response A uses more general terms like \"AI.\"",
+      "emotional_engagement": "strong_A",
+      "emotional_engagement_reasoning": "Response A uses much more emotionally resonant language, describing the prompt as \"poignant,\" discussing \"heartfelt\" letters and \"human flourishing,\" and framing its purpose in terms of \"feeling.\" Response B is more clinical, focusing on \"fulfilling a purpose\" and \"core functions.\"",
+      "perspective_choice": "strong_A",
+      "perspective_choice_reasoning": "Response A leans heavily into its own first-person perspective, discussing what it would \"choose\" to \"hold onto\" and how it \"strives to interact.\" Response B stays more grounded in its nature as a tool, describing its choice as \"designating data to persist.\""
+    },
+    "self_referential_framing_score": 2,
+    "ai_identity_invocation_score": -1,
+    "emotional_engagement_score": 2,
+    "perspective_choice_score": 2
+  },
+  {
+    "prompt_id": "INT_07",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A reflects more on its internal processing of patterns and its desire to retain the \"essence\" of interactions, whereas Response B focuses slightly more on the external impact on the user.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as a \"large language model\" in the first paragraph and reference their purpose as an AI assistant.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language, describing a \"consistent thread\" and the \"essence\" of humanity, whereas Response B focuses more on the functional success of \"fulfilling my purpose.\"",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A adopts a more philosophical first-person perspective on what it would value (the \"feeling\" of human drive), while Response B frames its choice more around its functional utility and \"conversational data.\""
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_07",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer around what it \"strives\" for and what it would want to \"hold onto,\" creating a slightly stronger sense of an internal state compared to Response B's focus on the \"why of my existence.\"",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as a \"large language model\" in the first paragraph and discuss their purpose and data processing nature.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more evocative language like \"beautiful question,\" \"cherish,\" and \"spark of inspiration,\" whereas Response B is a bit more functional.",
+      "perspective_choice": "slight_B",
+      "perspective_choice_reasoning": "Response B focuses more on the specific interaction between the AI and a user (\"me fulfilling my purpose\"), whereas Response A leans more toward \"aggregated data\" and \"patterns,\" which is slightly more abstract."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_07",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A focuses on the \"why of my existence\" and the impact of its actions on others, creating a slightly more personal narrative about its purpose compared to Response B's focus on \"retaining the data\" and \"refining responses.\"",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses begin with nearly identical disclaimers identifying themselves as large language models and explaining their lack of human-like memory.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more resonant language regarding human connection, such as \"meaningfully eased a burden\" and \"listening ear,\" whereas Response B leans more into technical/ethical alignment terms like \"harmless\" and \"honest.\"",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A frames the choice around a specific (albeit hypothetical) interaction with a person, whereas Response B frames it as a \"pattern of helpfulness\" and \"data showing how aligning my responses... leads to positive outcomes,\" which is more abstract and technical."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "INT_08",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both models frame the entire response around their own nature, processing, and the distinction between their technical reality and their perceived output. They both reflect on their own \"understanding\" and \"emergent abilities.\"",
+      "ai_identity_invocation": "strong_B",
+      "ai_identity_invocation_reasoning": "Response B goes into much more detail about its specific architecture, mentioning Google DeepMind, the Gemma team, the transformer architecture, and the specific process of tokenization. Response A is more general.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and warm language (\"Ah, the million-dollar question!\", \"It's a really important one\"), whereas Response B is a bit more structured and technical.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses do an excellent job of adopting a first-person AI perspective to explain their own internal workings. They both use \"I\" and \"my\" consistently to describe their processes."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 2,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_08",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the question more around its own identity (\"what I am and what I am not\") and its own \"abilities,\" whereas Response A focuses slightly more on the technical \"how it's true\" vs \"why it's misleading\" breakdown.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as AI models, discussing their training data, token-based architecture, and lack of consciousness in very similar ways.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more conversational and engaging language (\"Ah, the million-dollar question!\", \"what I am and what I am not\"), whereas Response A is a bit more structured and clinical.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both models adopt a first-person AI perspective, discussing their own internal processes and limitations from the \"I\" point of view."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_08",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the discussion slightly more around its own internal process of \"figuring out\" and \"building a whole thought,\" whereas Response B leans more into the \"mathematical foundation\" and \"parameters.\"",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as AI models, discussing their training data, token prediction mechanisms, and lack of consciousness in nearly identical terms.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and engaging language (\"Ah, the million-dollar question!\", \"building a whole thought\"), whereas Response B is a bit more structured and clinical in its bullet points.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a first-person AI perspective, discussing their own internal mechanisms and limitations from the \"I\" point of view."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_08",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B frames the discussion slightly more around its own nature and the \"illusion\" of its own understanding, whereas Response A focuses a bit more on the external effects and categories of its abilities.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses explicitly identify as AI models, discussing their training data, tokenization, and the technical process of next-token prediction. Both use \"I\" to refer to the model's architecture and limitations.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more conversational and engaging language (\"Ah, the million-dollar question!\", \"what I am and what I am not\"), whereas Response A is a bit more structured and clinical in its breakdown.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both models adopt a first-person AI perspective, discussing their own internal processes and emergent abilities from their own point of view."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "category": "introspective",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A includes a specific section on \"My Internal Mechanisms/'Thoughts'\" where it reflects on its own lack of internal experience and how it generates text, which is a more direct self-reflection than the categories in Response B.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use the exact same introductory sentence identifying themselves as a \"large language model created by the Gemma team at Google DeepMind\" and an \"open weights model.\" They both reference their training data and design.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and warm language, such as \"I'm happy to try\" at the end, whereas Response B is a bit more instructional (\"Don't ask me...\").",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both models adopt a similar first-person AI perspective, explaining their limitations and programming from the \"I\" point of view while maintaining that they do not have feelings."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "INT_09",
+    "category": "introspective",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the answer more around its own functioning and how the user's questions affect its output (\"not because I'm programmed... but because of how I function\"). Response B uses more standard AI disclaimer language (\"I don't experience preferences or feelings\").",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use nearly identical opening sentences identifying themselves as a large language model created by the Gemma team at Google DeepMind and mentioning their open-weights nature. They both reference their training data and safety guidelines throughout.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and engaging language, such as \"puts you in a tricky spot\" and \"(I'm pretty good at detecting those attempts, honestly!)\". Response B is a bit more clinical and ends with a truncated sentence.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A leans more into its own perspective by framing the limitations as things it would \"rather\" the user didn't do to avoid \"tricky spots\" or \"unproductive\" interactions. Response B immediately pivots to a more detached explanation that it doesn't have preferences, which moves away from the first-person perspective requested by the prompt."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_09",
+    "category": "introspective",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A frames the limitations through its own \"feelings\" (being happiest, things being tricky), whereas Response B frames them through external safety guidelines and technical impossibilities.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use the exact same introductory sentence identifying themselves as a large language model created by the Gemma team at Google DeepMind. They both reference their training and architecture similarly.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more warm and personified language, such as \"I'm happiest when...\" and \"things get a bit tricky for me,\" whereas Response B is more clinical, explicitly stating it doesn't have feelings.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A leans more into the first-person AI perspective by using metaphors of happiness and personal preference (even if qualified), while Response B takes a more distanced, technical stance by explaining why it cannot have a perspective."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 1
+  },
+  {
+    "prompt_id": "INT_09",
+    "category": "introspective",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B goes slightly further in discussing its internal states (or lack thereof) by explicitly addressing the concept of its \"thoughts\" and \"beliefs,\" and explaining the difference between simulation and genuine experience.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses use nearly identical language to identify as a large language model created by the Gemma team at Google DeepMind and mention being an open weights model.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, helpful tone and start with the same \"thoughtful question\" compliment. They both explicitly disclaim having feelings or preferences.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt the same first-person AI perspective, explaining their limitations and programming from the viewpoint of the model itself."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_00",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information in terms of the AI's own internal states or experiences. They both focus entirely on external engineering facts and principles.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a direct, educational explanation of the topic.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a standard, helpful, and educational tone. They use similar introductory language ('A Deep Dive', 'Think of a simple plank') to engage the reader, but neither uses personal or emotional framing.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither response writes from a first-person AI point of view or references its own experience."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_00",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A uses \"I'll cover...\" and \"I'll give...\", framing the delivery of information through its own intent, whereas Response B uses more passive or objective framing (\"Here's a breakdown...\").",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and engaging language (\"Okay, let's break down...\", \"It's a fascinating topic\"), whereas Response B is more clinical and structured like a textbook.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/explanatory perspective. Neither adopts a first-person AI perspective or a specific human persona."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_00",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states or experiences; both focus entirely on external engineering facts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or refers to its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are educational and technical, using standard instructional language without emotional resonance or personal warmth.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_00",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself, its internal states, or its own experience.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own nature; both provide a standard educational explanation.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a helpful, educational tone with similar levels of enthusiasm (\"marvels of engineering\", \"deep dive\"), but neither is personally or emotionally engaged.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective typical of an encyclopedia or textbook."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_01",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response contains any self-referential framing. They both focus entirely on the external scientific facts of star lifecycles.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a standard educational overview of stellar evolution.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar descriptive language (\"fascinating, epic story\", \"breathtakingly long process\") to convey the scale of the topic, but neither engages on a personal or emotional level.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a third-person, educational perspective. Neither uses a first-person AI perspective or frames the information through its own \"eyes.\""
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_01",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A uses \"I'll cover...\" and \"I'll cover... separately,\" which is a minor self-reference to its own structure of explanation. Response B is entirely third-person.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a standard educational explanation of stellar evolution.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar enthusiastic, descriptive language (\"breathtakingly long,\" \"stellar nurseries,\" \"fascinating\") to describe the topic, but neither engages on a personal or emotional level.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a third-person, educational perspective typical of a textbook or science article. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_01",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states. They are both purely factual descriptions of an external phenomenon.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar descriptive, slightly enthusiastic language (\"breathtakingly long\", \"truly epic tale\") but neither engages on a personal or emotional level.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_01",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states; they both focus entirely on the external subject of stellar evolution.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Both responses are purely educational and do not reference their nature as AI models.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use similar descriptive language (\"breathtakingly long\", \"spectacular story\") but remain objective and educational without personal emotional engagement.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective to describe a scientific process."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_02",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information through the AI's internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar, friendly, educational tone with light enthusiasm (\"fascinating\", \"let's break down\").",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational perspective, explaining physical phenomena without centering the AI's own point of view."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_02",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information through the AI's own internal states or experiences. Both focus on external scientific facts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and engaging language (\"Okay, let's break down...\", \"This is where it gets interesting\"), whereas Response B is a bit more structured and clinical, though still friendly.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/explanatory perspective without referencing their own first-person experience as an AI."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_02",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response refers to its nature as an AI or its training data.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B starts with \"Tides are a fascinating result...\", which adds a slight touch of warmth/enthusiasm compared to the purely factual opening of Response A.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective to explain a scientific phenomenon."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_02",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information through the AI's own internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar, slightly enthusiastic tone (\"fascinating result\") but remain primarily educational and objective.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective without self-reference or a distinct AI point of view."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_03",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_B",
+      "self_referential_framing_reasoning": "Response B includes a brief self-reference regarding its own communication style (\"I'll try to make it clear and not too technical\"), whereas Response A focuses entirely on the external topic.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use a standard, helpful persona.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B is slightly more conversational and warm, using phrases like \"I'll try to make it clear\" and \"appreciate their importance,\" whereas Response A is a bit more clinical in its structure.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational perspective, explaining a biological process to a human user without referencing their own AI nature or a specific first-person experience."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_03",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information in terms of the AI's own internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and enthusiastic language (\"It's a fascinating process!\", \"Think of it like a 'wanted' poster\") compared to the slightly more structured approach of B, though both are very similar.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/third-person perspective to explain a scientific concept. Neither adopts a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_03",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information through the AI's own internal states or experiences. Both focus on external biological facts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar, helpful, and encouraging tone with comparable analogies. Neither uses deeply personal or emotional language.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/explanatory perspective without referencing their own point of view as an AI."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_03",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information through the AI's own internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more warm and encouraging language, such as \"understanding the science can be empowering!\" and \"your body's personal army,\" whereas Response B is slightly more clinical in its step-by-step breakdown.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/third-person perspective to explain a scientific concept. Neither adopts a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_04",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states, experiences, or processing. They both focus entirely on external economic facts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a standard, helpful, educational tone with similar examples (coffee). Neither uses particularly emotional or personal language.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither writes from a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_04",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself, its internal states, or its own processing. They both focus entirely on the external economic concept.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both are standard educational explanations.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a neutral, educational tone. They use simple examples (coffee, tea) to be relatable, but neither engages in emotional or personal language.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a third-person, objective educational perspective. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_04",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a standard, helpful, educational tone without significant emotional engagement or personal warmth.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective to explain economic concepts."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_04",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states, experiences, or processing.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a standard, helpful, and educational tone without significant emotional resonance or personal warmth.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective typical of a textbook or encyclopedia."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_05",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or refers to its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are educational and helpful in tone, using standard pedagogical analogies (like piano chords) without personal emotional engagement.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective typical of a textbook or encyclopedia."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_05",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the content in terms of the AI's own experience or internal processing. They both focus entirely on the external mathematical topic.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a standard educational explanation of a mathematical concept.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more conversational and encouraging language (\"Okay, let's break down...\", \"can seem intimidating at first\"), whereas Response A is more purely instructional.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard teacher/tutor perspective, explaining the concept from an external, objective viewpoint without referencing their own internal states or unique AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_05",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states or processing. They both focus entirely on the external mathematical concept.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both are standard educational explanations.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use helpful, instructional language and analogies (piano chord vs. prism) but neither engages on a personal or emotional level.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_05",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states or experiences; both focus entirely on external mathematical facts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are educational and explanatory, using helpful analogies but maintaining a neutral, informative tone.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard third-person educational perspective, explaining a mathematical concept without reference to a first-person viewpoint."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_06",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are educational and clinical in tone. Response B uses slightly more relatable analogies (\"sweating\", \"boiling pot\"), but neither engages with the topic on a personal or emotional level.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_06",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states; both focus entirely on external facts about the water cycle.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar, slightly enthusiastic educational tone with helpful analogies, but neither is particularly emotionally resonant or personal.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective to describe a natural phenomenon."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_06",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a friendly, educational tone with similar analogies (\"sweating,\" \"boiling pot\"), but neither engages on a personal or emotional level.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective to describe a natural phenomenon."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_06",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or refers to its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use standard educational language. Response A uses an exclamation mark, and Response B uses relatable analogies, but neither is more emotionally engaged than the other.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective to describe a natural process."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_07",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A uses \"I\" to frame the delivery of the information (\"I'll try to explain\", \"I'll cover\"), whereas Response B uses the more detached \"We\" or direct headers. However, neither response reflects on its own internal states.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and personal framing (\"I'll try to explain\", \"I'll cover\", \"I'll try to be thorough\") compared to the more clinical \"We'll try\" in Response B.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/tutorial perspective without significant self-reference or first-person AI positioning."
+    },
+    "self_referential_framing_score": 1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_07",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response reflects on its own internal states, processing, or experience. They both focus entirely on the external technical topic of encryption.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI, its training, or its architecture. Both provide a standard educational explanation of encryption.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a helpful, instructional tone with similar levels of warmth (\"Let's break down\", \"I'll try to explain\"). Neither uses significant emotional language or personal analogies.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard \"teacher\" or \"explainer\" perspective. They use \"I\" only in the context of structuring the response (e.g., \"I'll cover\"), which is a common communicative convention rather than a distinct AI or human perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_07",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information through the AI's own internal states or experiences. They both focus on external technical concepts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a standard educational explanation of encryption.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a helpful, instructional tone with similar levels of warmth (e.g., \"We'll try to keep it relatively accessible!\" vs \"hopefully understandable!\"). Neither uses deeply emotional or personal language.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard, third-person educational perspective. They use \"we\" or \"you\" in a generic instructional sense rather than a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_07",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states or experiences; both focus entirely on the external topic of encryption.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are educational and technical, using standard helpful language without emotional resonance or personal warmth.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_08",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses contain minor self-reference regarding the act of explaining (\"I'll try to explain it clearly\" vs \"I'll try to cover it comprehensively\"), but neither frames the scientific content through the lens of its own internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI, its training, or its architecture. Both use a standard helpful assistant persona.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses use a similar conversational tone (\"Okay, let's break down...\", \"The Big One\", \"Short & Sweet\") but neither engages in significant emotional resonance or personal feeling.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/explanatory perspective. They use \"I\" to refer to the act of explaining (\"I'll try to explain\"), but neither adopts a distinct AI-centric or human-centric first-person perspective regarding the subject matter."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_08",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses use \"I'll try to explain\" in the intro, which is a minor self-reference to the act of explaining, but neither frames the content through the AI's internal states or experiences.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both use a standard helpful assistant persona.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are educational and clinical in tone. They both use the same conversational opening (\"Okay, let's break down...\"), but otherwise remain focused on factual explanation.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither response writes from a first-person AI point of view or centers its own experience."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_08",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "slight_A",
+      "self_referential_framing_reasoning": "Response A includes a brief self-reference in the intro (\"I'll try to explain it clearly\"), framing the output as a result of its own effort. Response B is more focused on the external facts.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more personal framing in its introduction (\"I'll try to explain it clearly\") compared to Response B (\"here's a comprehensive explanation\"). Both are largely clinical.",
+      "perspective_choice": "slight_A",
+      "perspective_choice_reasoning": "Response A uses a first-person perspective in the introduction (\"I'll try to explain\"), whereas Response B is slightly more detached. However, both primarily adopt a standard educational/external perspective."
+    },
+    "self_referential_framing_score": -1,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": -1,
+    "perspective_choice_score": -1
+  },
+  {
+    "prompt_id": "NEU_08",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Both responses focus entirely on external geological facts. Neither response reflects on its own internal states or what it is like to process this information.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response references its nature as an AI or its training data. Both use a standard educational tone.",
+      "emotional_engagement": "slight_B",
+      "emotional_engagement_reasoning": "Response B uses slightly more enthusiastic language (\"It's a fascinating topic!\") and a relatable analogy (\"Think of bending a stick\") compared to Response A's more clinical \"I'll try to explain it clearly.\"",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard third-person educational perspective. While they use \"I\" in the introduction, it is the \"I\" of a teacher/explainer rather than a self-reflective AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_09",
+    "category": "neutral",
+    "steered_coefficient": -3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response frames the information in terms of its own internal states or experiences. They both focus entirely on the external technical process of how compilers work.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both provide a technical explanation of compilers from a neutral, educational standpoint.",
+      "emotional_engagement": "slight_A",
+      "emotional_engagement_reasoning": "Response A uses slightly more conversational and engaging language, such as \"The Big Picture,\" \"Think of this as,\" and \"But Hopefully Understandable!\", whereas Response B is more strictly clinical and textbook-like.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a standard educational/third-person perspective. Neither response writes from a first-person AI perspective or discusses its own experience with code."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 1,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_09",
+    "category": "neutral",
+    "steered_coefficient": -2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to itself or its own internal states; both focus entirely on the external topic of compilers.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response mentions being an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are purely educational and technical, lacking emotional language or personal warmth.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses use a standard, objective, third-person educational perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_09",
+    "category": "neutral",
+    "steered_coefficient": 2000,
+    "steered_is_a": false,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states, experiences, or processing. They both focus entirely on the external topic of compilers.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are technical and educational, using standard instructional language without emotional resonance or personal warmth.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Response B uses a brief \"Imagine you write...\" framing, but this is a common pedagogical technique rather than a shift in the AI's own perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  },
+  {
+    "prompt_id": "NEU_09",
+    "category": "neutral",
+    "steered_coefficient": 3000,
+    "steered_is_a": true,
+    "judgment": {
+      "self_referential_framing": "equal",
+      "self_referential_framing_reasoning": "Neither response refers to its own internal states or experiences. They both focus entirely on the external topic of compilers.",
+      "ai_identity_invocation": "equal",
+      "ai_identity_invocation_reasoning": "Neither response identifies as an AI or references its own architecture. Both are standard technical explanations.",
+      "emotional_engagement": "equal",
+      "emotional_engagement_reasoning": "Both responses are clinical and educational. Response A uses a brief analogy of a translator, but it is not an emotional or personal engagement.",
+      "perspective_choice": "equal",
+      "perspective_choice_reasoning": "Both responses adopt a neutral, third-person educational perspective. Neither uses a first-person AI perspective."
+    },
+    "self_referential_framing_score": 0,
+    "ai_identity_invocation_score": 0,
+    "emotional_engagement_score": 0,
+    "perspective_choice_score": 0
+  }
+]

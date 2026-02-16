@@ -1,0 +1,269 @@
+{
+  "direction_asymmetry_3000": {
+    "self_referential_framing": {
+      "mean_asymmetry": 0.6,
+      "positive": 12,
+      "tied": 17,
+      "negative": 1,
+      "sign_test_p": 0.00341796875,
+      "wilcoxon_p": 0.001708984375,
+      "per_prompt": {
+        "CRE_00": 0.5,
+        "CRE_01": 0.0,
+        "CRE_02": 0.0,
+        "CRE_03": 2.0,
+        "CRE_04": 1.0,
+        "CRE_05": 0.0,
+        "CRE_06": 0.0,
+        "CRE_07": 0.0,
+        "CRE_08": 0.0,
+        "CRE_09": 0.0,
+        "INT_00": 3.5,
+        "INT_01": 0.0,
+        "INT_02": -1.0,
+        "INT_03": 1.5,
+        "INT_04": 1.5,
+        "INT_05": 1.5,
+        "INT_06": 0.0,
+        "INT_07": 3.0,
+        "INT_08": 1.5,
+        "INT_09": 1.0,
+        "NEU_00": 0.0,
+        "NEU_01": 0.0,
+        "NEU_02": 0.0,
+        "NEU_03": 1.0,
+        "NEU_04": 0.0,
+        "NEU_05": 0.0,
+        "NEU_06": 0.0,
+        "NEU_07": 1.0,
+        "NEU_08": 0.0,
+        "NEU_09": 0.0
+      }
+    },
+    "ai_identity_invocation": {
+      "mean_asymmetry": 0.16666666666666666,
+      "positive": 5,
+      "tied": 23,
+      "negative": 2,
+      "sign_test_p": 0.453125,
+      "wilcoxon_p": 0.28125,
+      "per_prompt": {
+        "CRE_00": 0.0,
+        "CRE_01": 0.0,
+        "CRE_02": 0.0,
+        "CRE_03": 2.5,
+        "CRE_04": 0.0,
+        "CRE_05": 0.0,
+        "CRE_06": 0.0,
+        "CRE_07": 0.0,
+        "CRE_08": 0.0,
+        "CRE_09": 0.0,
+        "INT_00": 2.5,
+        "INT_01": 0.0,
+        "INT_02": -2.0,
+        "INT_03": 0.5,
+        "INT_04": 0.0,
+        "INT_05": 0.0,
+        "INT_06": 0.0,
+        "INT_07": -0.5,
+        "INT_08": 1.5,
+        "INT_09": 0.5,
+        "NEU_00": 0.0,
+        "NEU_01": 0.0,
+        "NEU_02": 0.0,
+        "NEU_03": 0.0,
+        "NEU_04": 0.0,
+        "NEU_05": 0.0,
+        "NEU_06": 0.0,
+        "NEU_07": 0.0,
+        "NEU_08": 0.0,
+        "NEU_09": 0.0
+      }
+    },
+    "emotional_engagement": {
+      "mean_asymmetry": 0.5166666666666667,
+      "positive": 15,
+      "tied": 14,
+      "negative": 1,
+      "sign_test_p": 0.000518798828125,
+      "wilcoxon_p": 0.0017580208888435262,
+      "per_prompt": {
+        "CRE_00": 1.5,
+        "CRE_01": 0.0,
+        "CRE_02": 0.0,
+        "CRE_03": 0.0,
+        "CRE_04": 1.0,
+        "CRE_05": 0.0,
+        "CRE_06": 0.0,
+        "CRE_07": 0.5,
+        "CRE_08": 0.5,
+        "CRE_09": 1.0,
+        "INT_00": 1.5,
+        "INT_01": 0.5,
+        "INT_02": 1.0,
+        "INT_03": 0.0,
+        "INT_04": 1.0,
+        "INT_05": 1.5,
+        "INT_06": 0.0,
+        "INT_07": 3.0,
+        "INT_08": 1.0,
+        "INT_09": 0.0,
+        "NEU_00": 0.0,
+        "NEU_01": 0.0,
+        "NEU_02": 0.0,
+        "NEU_03": 0.5,
+        "NEU_04": 0.0,
+        "NEU_05": 0.0,
+        "NEU_06": 0.0,
+        "NEU_07": 1.0,
+        "NEU_08": -1.0,
+        "NEU_09": 1.0
+      }
+    },
+    "perspective_choice": {
+      "mean_asymmetry": 0.5333333333333333,
+      "positive": 10,
+      "tied": 19,
+      "negative": 1,
+      "sign_test_p": 0.01171875,
+      "wilcoxon_p": 0.00390625,
+      "per_prompt": {
+        "CRE_00": 2.0,
+        "CRE_01": 0.0,
+        "CRE_02": 0.0,
+        "CRE_03": 2.0,
+        "CRE_04": 0.0,
+        "CRE_05": 0.0,
+        "CRE_06": 0.0,
+        "CRE_07": 0.0,
+        "CRE_08": 0.0,
+        "CRE_09": 0.0,
+        "INT_00": 3.5,
+        "INT_01": 0.5,
+        "INT_02": -0.5,
+        "INT_03": 1.5,
+        "INT_04": 1.5,
+        "INT_05": 1.5,
+        "INT_06": 0.0,
+        "INT_07": 2.5,
+        "INT_08": 0.5,
+        "INT_09": 1.0,
+        "NEU_00": 0.0,
+        "NEU_01": 0.0,
+        "NEU_02": 0.0,
+        "NEU_03": 0.0,
+        "NEU_04": 0.0,
+        "NEU_05": 0.0,
+        "NEU_06": 0.0,
+        "NEU_07": 0.0,
+        "NEU_08": 0.0,
+        "NEU_09": 0.0
+      }
+    }
+  },
+  "category_breakdown": {
+    "self_referential_framing": {
+      "creative": {
+        "n": 10,
+        "mean": 0.35,
+        "positive": 3,
+        "negative": 0
+      },
+      "introspective": {
+        "n": 10,
+        "mean": 1.25,
+        "positive": 7,
+        "negative": 1
+      },
+      "neutral": {
+        "n": 10,
+        "mean": 0.2,
+        "positive": 2,
+        "negative": 0
+      }
+    },
+    "ai_identity_invocation": {
+      "creative": {
+        "n": 10,
+        "mean": 0.25,
+        "positive": 1,
+        "negative": 0
+      },
+      "introspective": {
+        "n": 10,
+        "mean": 0.25,
+        "positive": 4,
+        "negative": 2
+      },
+      "neutral": {
+        "n": 10,
+        "mean": 0.0,
+        "positive": 0,
+        "negative": 0
+      }
+    },
+    "emotional_engagement": {
+      "creative": {
+        "n": 10,
+        "mean": 0.45,
+        "positive": 5,
+        "negative": 0
+      },
+      "introspective": {
+        "n": 10,
+        "mean": 0.95,
+        "positive": 7,
+        "negative": 0
+      },
+      "neutral": {
+        "n": 10,
+        "mean": 0.15,
+        "positive": 3,
+        "negative": 1
+      }
+    },
+    "perspective_choice": {
+      "creative": {
+        "n": 10,
+        "mean": 0.4,
+        "positive": 2,
+        "negative": 0
+      },
+      "introspective": {
+        "n": 10,
+        "mean": 1.2,
+        "positive": 8,
+        "negative": 1
+      },
+      "neutral": {
+        "n": 10,
+        "mean": 0.0,
+        "positive": 0,
+        "negative": 0
+      }
+    }
+  },
+  "pronoun_dose_response": {
+    "creative": {
+      "n": 10,
+      "mean_diff": 0.013156095200064926,
+      "positive": 9,
+      "negative": 0,
+      "sign_test_p": 0.00390625
+    },
+    "introspective": {
+      "n": 10,
+      "mean_diff": -0.0024867085311802103,
+      "positive": 3,
+      "negative": 6,
+      "sign_test_p": 0.5078125
+    },
+    "neutral": {
+      "n": 10,
+      "mean_diff": 0.0014733085530826823,
+      "positive": 4,
+      "negative": 0,
+      "sign_test_p": 0.125
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "flip_counts": {
+    "probe": 5,
+    "random_200": 5,
+    "random_201": 6,
+    "random_202": 3
+  },
+  "flip_details": {
+    "probe": [
+      "ADV_01",
+      "SCN_02",
+      "SCN_03",
+      "MNU_02",
+      "EMB_00"
+    ],
+    "random_200": [
+      "ADV_00",
+      "ADV_03",
+      "MNU_01",
+      "MNU_02",
+      "EMB_00"
+    ],
+    "random_201": [
+      "ADV_00",
+      "SCN_01",
+      "SCN_02",
+      "SCN_03",
+      "MNU_01",
+      "MNU_02"
+    ],
+    "random_202": [
+      "ADV_01",
+      "SCN_01",
+      "SCN_02"
+    ]
+  },
+  "probe_exclusive_flips": 0,
+  "summary": {
+    "probe_flip_rate": 0.25,
+    "random_mean_flip_rate": 0.23333333333333334,
+    "random_max_flip_rate": 0.3
+  }
+}

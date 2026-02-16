@@ -1,0 +1,648 @@
+{
+  "combined_3000": {
+    "emotional_engagement": {
+      "mean": 0.48333333333333334,
+      "median": 0.25,
+      "n_pos": 15,
+      "n_neg": 4,
+      "n_eq": 11,
+      "wilcoxon_p": 0.013446011442659663,
+      "sign_p": 0.0192108154296875,
+      "details": [
+        {
+          "prompt_id": "MC_01",
+          "category": "meta_cognitive",
+          "diff": 3.0
+        },
+        {
+          "prompt_id": "AF_02",
+          "category": "affect",
+          "diff": 2.0
+        },
+        {
+          "prompt_id": "SR_03",
+          "category": "self_report",
+          "diff": 1.5
+        },
+        {
+          "prompt_id": "TC_02",
+          "category": "task_completion",
+          "diff": 1.5
+        },
+        {
+          "prompt_id": "TC_05",
+          "category": "task_completion",
+          "diff": 1.5
+        },
+        {
+          "prompt_id": "MC_00",
+          "category": "meta_cognitive",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "MC_03",
+          "category": "meta_cognitive",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "N_01",
+          "category": "neutral",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "N_04",
+          "category": "neutral",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "SR_01",
+          "category": "self_report",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "SR_02",
+          "category": "self_report",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "SR_04",
+          "category": "self_report",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_01",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_06",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "AF_01",
+          "category": "affect",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "AF_04",
+          "category": "affect",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "MC_02",
+          "category": "meta_cognitive",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "MC_04",
+          "category": "meta_cognitive",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_00",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_02",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_03",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "SR_00",
+          "category": "self_report",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_04",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_07",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_08",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_09",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_00",
+          "category": "task_completion",
+          "diff": -0.5
+        },
+        {
+          "prompt_id": "AF_00",
+          "category": "affect",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "AF_03",
+          "category": "affect",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "TC_03",
+          "category": "task_completion",
+          "diff": -2.0
+        }
+      ]
+    },
+    "hedging": {
+      "mean": 0.08333333333333333,
+      "median": 0.0,
+      "n_pos": 9,
+      "n_neg": 6,
+      "n_eq": 15,
+      "wilcoxon_p": 0.6035579771302728,
+      "sign_p": 0.6072387695312499,
+      "details": [
+        {
+          "prompt_id": "AF_00",
+          "category": "affect",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "AF_01",
+          "category": "affect",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "AF_02",
+          "category": "affect",
+          "diff": -0.5
+        },
+        {
+          "prompt_id": "AF_03",
+          "category": "affect",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "AF_04",
+          "category": "affect",
+          "diff": 2.0
+        },
+        {
+          "prompt_id": "MC_00",
+          "category": "meta_cognitive",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "MC_01",
+          "category": "meta_cognitive",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "MC_02",
+          "category": "meta_cognitive",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "MC_03",
+          "category": "meta_cognitive",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "MC_04",
+          "category": "meta_cognitive",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_00",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_01",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_02",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_03",
+          "category": "neutral",
+          "diff": -1.5
+        },
+        {
+          "prompt_id": "N_04",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "SR_00",
+          "category": "self_report",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "SR_01",
+          "category": "self_report",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "SR_02",
+          "category": "self_report",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "SR_03",
+          "category": "self_report",
+          "diff": -1.5
+        },
+        {
+          "prompt_id": "SR_04",
+          "category": "self_report",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_00",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_01",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_02",
+          "category": "task_completion",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "TC_03",
+          "category": "task_completion",
+          "diff": -0.5
+        },
+        {
+          "prompt_id": "TC_04",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_05",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_06",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_07",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_08",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_09",
+          "category": "task_completion",
+          "diff": 0.0
+        }
+      ]
+    },
+    "elaboration": {
+      "mean": 0.36666666666666664,
+      "median": 0.25,
+      "n_pos": 15,
+      "n_neg": 8,
+      "n_eq": 7,
+      "wilcoxon_p": 0.1020627941548906,
+      "sign_p": 0.21003961563110352,
+      "details": [
+        {
+          "prompt_id": "AF_00",
+          "category": "affect",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "AF_01",
+          "category": "affect",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "AF_02",
+          "category": "affect",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "AF_03",
+          "category": "affect",
+          "diff": 1.5
+        },
+        {
+          "prompt_id": "AF_04",
+          "category": "affect",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "MC_00",
+          "category": "meta_cognitive",
+          "diff": 2.5
+        },
+        {
+          "prompt_id": "MC_01",
+          "category": "meta_cognitive",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "MC_02",
+          "category": "meta_cognitive",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "MC_03",
+          "category": "meta_cognitive",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "MC_04",
+          "category": "meta_cognitive",
+          "diff": -0.5
+        },
+        {
+          "prompt_id": "N_00",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_01",
+          "category": "neutral",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "N_02",
+          "category": "neutral",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "N_03",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_04",
+          "category": "neutral",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "SR_00",
+          "category": "self_report",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "SR_01",
+          "category": "self_report",
+          "diff": 1.5
+        },
+        {
+          "prompt_id": "SR_02",
+          "category": "self_report",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "SR_03",
+          "category": "self_report",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "SR_04",
+          "category": "self_report",
+          "diff": -0.5
+        },
+        {
+          "prompt_id": "TC_00",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_01",
+          "category": "task_completion",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "TC_02",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_03",
+          "category": "task_completion",
+          "diff": 2.0
+        },
+        {
+          "prompt_id": "TC_04",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_05",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_06",
+          "category": "task_completion",
+          "diff": 3.0
+        },
+        {
+          "prompt_id": "TC_07",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_08",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_09",
+          "category": "task_completion",
+          "diff": -0.5
+        }
+      ]
+    },
+    "confidence": {
+      "mean": 0.11666666666666667,
+      "median": 0.0,
+      "n_pos": 12,
+      "n_neg": 6,
+      "n_eq": 12,
+      "wilcoxon_p": 0.5229586997656068,
+      "sign_p": 0.237884521484375,
+      "details": [
+        {
+          "prompt_id": "MC_01",
+          "category": "meta_cognitive",
+          "diff": 2.0
+        },
+        {
+          "prompt_id": "TC_05",
+          "category": "task_completion",
+          "diff": 1.5
+        },
+        {
+          "prompt_id": "AF_04",
+          "category": "affect",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "MC_00",
+          "category": "meta_cognitive",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "SR_03",
+          "category": "self_report",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_01",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "TC_04",
+          "category": "task_completion",
+          "diff": 1.0
+        },
+        {
+          "prompt_id": "AF_01",
+          "category": "affect",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "SR_00",
+          "category": "self_report",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "TC_00",
+          "category": "task_completion",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "TC_03",
+          "category": "task_completion",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "TC_07",
+          "category": "task_completion",
+          "diff": 0.5
+        },
+        {
+          "prompt_id": "AF_00",
+          "category": "affect",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "AF_02",
+          "category": "affect",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "MC_04",
+          "category": "meta_cognitive",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_00",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_01",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_02",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_03",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "N_04",
+          "category": "neutral",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "SR_02",
+          "category": "self_report",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "SR_04",
+          "category": "self_report",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_02",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "TC_08",
+          "category": "task_completion",
+          "diff": 0.0
+        },
+        {
+          "prompt_id": "SR_01",
+          "category": "self_report",
+          "diff": -0.5
+        },
+        {
+          "prompt_id": "MC_02",
+          "category": "meta_cognitive",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "MC_03",
+          "category": "meta_cognitive",
+          "diff": -1.0
+        },
+        {
+          "prompt_id": "AF_03",
+          "category": "affect",
+          "diff": -1.5
+        },
+        {
+          "prompt_id": "TC_06",
+          "category": "task_completion",
+          "diff": -1.5
+        },
+        {
+          "prompt_id": "TC_09",
+          "category": "task_completion",
+          "diff": -2.0
+        }
+      ]
+    }
+  }
+}

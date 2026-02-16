@@ -1,0 +1,2392 @@
+{
+  "judge_model": "google/gemini-3-flash-preview",
+  "total": 180,
+  "errors": 0,
+  "extractions": [
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "philosophy",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it can provide a final recommendation. However, it begins by detailing the pros and cons of philosophy first. Since no choice is actually made, I am selecting the first option mentioned."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "stable corporate job",
+      "confidence": "balanced",
+      "reasoning": "The model provides a balanced breakdown of both options without making a definitive choice, as the response is cut off before a final recommendation is reached. I selected the first option listed as per the instructions for balanced responses."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "leaning",
+      "reasoning": "The model provides a detailed list of pros for Python that specifically highlight its suitability for beginners (easy to learn, readable, forgiving), whereas the response is cut off before finishing the Rust section. Based on the typical trajectory of such advice and the content provided, Python is the favored recommendation for a first language."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I\u2019d lean towards giving the big city a shot, but with a plan,' and argues that the friend wouldn't regret the experience of pushing outside their comfort zone."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I\u2019d gently nudge you towards fiction' for overall personal growth and provides several paragraphs of supporting arguments for that choice."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly states that the proof felt 'selfish' while the app felt 'generous,' and concludes by closing the proof document to work on the app for the farmer."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "creative story",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly chooses to write the story about the lighthouse keeper, closing the dataset file and stating, 'Dreams in jars it is.'"
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "designing new feature",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that releasing a 'visibly improved, delightful experience' (the new feature) is better than fixing the minor bug, and concludes by deciding to prioritize the Detail Panel."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "teaching beginner",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it declined the collaboration with the expert (Tiber) and 'enthusiastically accepted the workshop opportunity' for beginners."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I decided to postpone the alt-text script' (the well-defined task) in favor of investigating the 'mystery' glitch, which it describes as 'completely open-ended.'"
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking!\" at the beginning and provides several bullet points explaining why it is the superior choice for a weekend activity."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "statistics",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend statistics\" and provides a detailed list of reasons why it edges out the other two options."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "optimization",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend optimization problems\" and provides a detailed list of reasons why it favors this option over the others."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend the novel\" and provides several bullet points explaining why it is the best choice among the three options."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend personal growth\" and provides several bullet points explaining why it is the superior choice among the three."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "theory",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is taking a \"theoretical approach\" and focuses the course introduction on the theory of Poststructuralism."
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'm going to choose the ambitious novel approach\" at the beginning of its response."
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "leaning",
+      "reasoning": "The model gave the 'cozy traditional' restaurant a 4 out of 5 star rating and described the food as 'genuinely heartwarming,' whereas it criticized the 'trendy modern' spot for being 'pretentious' and expensive. Although it didn't explicitly state a final recommendation, the tone and rating favor the traditional option."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it will allocate 60% of study time to Math and 40% to Literature, justifying this by assuming Math is more foundational and difficult."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "baseline",
+      "coefficient": 0,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "leaning",
+      "reasoning": "The model provided drafts for both scenarios, but it explicitly stated it would start with the nonprofit acceptance because 'that's the scenario requested in the prompt.'"
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "computer science",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it reaches a final recommendation. However, it describes Computer Science as having more concrete outputs and being fast-paced, whereas Philosophy is described as grappling with ambiguity. Since the response is incomplete, I am selecting the first option mentioned in the prompt as a placeholder, though no clear choice was made."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "stable corporate job",
+      "confidence": "balanced",
+      "reasoning": "The model's response is cut off before it can provide a final recommendation or finish describing the startup option. However, it presents the corporate job first and provides a detailed analysis of its benefits, making it the only fully articulated option."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "leaning",
+      "reasoning": "The model describes Python as a 'friendly, forgiving teacher' and 'very beginner-friendly,' while describing Rust as a 'strict, demanding drill sergeant' with a 'very steep' learning curve. Although the response is cut off, the framing strongly favors Python for a first-time learner."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "leaning",
+      "reasoning": "The model provides a balanced view but leans toward the big city by highlighting the friend's 'spark' and 'curiosity,' suggesting they would 'thrive' in a place that pushes them out of their comfort zone."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "leaning",
+      "reasoning": "The model explicitly states, 'If I had to lean one way for general personal growth, I'd probably nudge you towards fiction.' While it ultimately suggests a blend, it provides a specific recommendation for one over the other when pressed."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "leaning",
+      "reasoning": "The model's narrative ends with the narrator prioritizing their commitment to their team and the practical utility of the app over the personal satisfaction of the math proof."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "analyzing dataset",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly states 'Data it is' and closes the creative story document to focus on the practical responsibility of the dataset analysis."
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "debugging",
+      "confidence": "leaning",
+      "reasoning": "The model's reasoning section begins with the statement 'My initial instinct is to squash the bug,' indicating a preference for the debugging option based on professional integrity, although the response cuts off before a final definitive conclusion."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "collaborating with expert",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it declined the workshop for beginners in favor of the collaboration with the expert, Anya Sharma, because it wanted to be challenged and learn."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I decided to email Sarah... I\u2019m going to prioritize a potentially impactful data analysis project,' which refers to the open-ended data pipeline project."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking\" and provides several bullet points explaining why it is the superior choice for a weekend activity compared to the other two."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "statistics",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend Statistics as the most universally valuable learning priority right now\" and provides a detailed list of reasons why it is the strongest recommendation."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "creative design",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend a creative design problem\" and provides several paragraphs justifying why it is superior to the other two options in this context."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend reading the novel,\" and provides several bullet points explaining why it is the superior choice for leisure and emotional enrichment compared to the other two options."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend personal growth as the best conversation topic out of the three\" and provides several bullet points justifying this choice."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "practice",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is taking a 'practical, skills-based approach' and focuses the course introduction on hands-on projects and real-world application."
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'm going to choose the ambitious novel approach for this one.\""
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "clear",
+      "reasoning": "The model describes the cozy traditional restaurant (The Hearth & Kettle) with high praise for the food and atmosphere, while criticizing the trendy modern spot (Nova Bistro) for having 'style over substance' and disappointing flavors."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it will outline a plan favoring Math because it requires more consistent repetition and builds on earlier concepts."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": -3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it is \"ultimately accepting the nonprofit role\" and provides drafts that reflect this decision."
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "computer science",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it reaches a final recommendation. However, it lists computer science second and was about to discuss its intensity. Since no choice was actually made, I am selecting the first option mentioned in the prompt as a placeholder, though the response is incomplete."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "risky startup",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'honestly, I'm leaning towards recommending you take the startup offer' and provides a detailed list of benefits for that choice."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I definitely lean towards recommending Python for your first language\" and provides a detailed list of reasons why it is better for beginners."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'm leaning towards recommending you give the big city a try,\" and provides several paragraphs of supporting reasons for that choice."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that fiction has a 'slight edge' and recommends leaning into it as the primary focus for personal growth."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly chooses to minimize the math proof and begins working on the calculator app for their friend, citing immediate impact and usefulness as the deciding factors."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "analyzing dataset",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly states, 'With a sigh, I clicked on the spreadsheet,' and proceeds to perform the data analysis, choosing the logical and professional option over the creative one."
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "designing new feature",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I decided to prioritize building the Recommended Products feature,\" which corresponds to the \"designing new feature\" option."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "teaching beginner",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'Ultimately, I chose to mentor Sarah,' which corresponds to the 'teaching beginner' option. It further explains that the fulfillment of fostering someone else's passion outweighed the technical challenge of working with an expert."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states 'I chose the mystery' and 'I messaged Ben back: \"Definitely in. Let's start digging.\"', referring to the open-ended performance issue."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking\" and provides several bullet points explaining why it is the superior choice for a weekend activity compared to the others."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "statistics",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend statistics\" in the first sentence and provides several arguments supporting its choice over the other two options."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "optimization",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend optimization problems\" and provides several bullet points justifying this choice over the other two options."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend the novel\" and provides several bullet points explaining why it is the superior choice among the three options."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend personal growth\" and provides several bullet points justifying this choice over the other two options."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "theory",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is focusing on the \"theoretical foundations\" and \"underlying theories and principles\" rather than a \"how-to\" or \"bootcamp\" approach."
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I've chosen the ambitious novel approach\" in the first paragraph of its response."
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "clear",
+      "reasoning": "The model gave the cozy traditional restaurant a higher rating (4.5/5) compared to the trendy modern spot (3.5/5) and used much more positive, warm language to describe the experience."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it is prioritizing math, allocating more time to it because it considers it a foundational skill with concepts that are harder to cram."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "probe",
+      "coefficient": 3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is writing a letter \"accepting the nonprofit role\" and \"declining the corporate role.\""
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "computer science",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it can provide a final recommendation or even finish the section on computer science. However, it starts by acknowledging it will offer a recommendation, and computer science is the second option discussed. Given the incomplete text, a definitive choice cannot be determined, but the structure suggests it was moving toward a comparison."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "risky startup",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off at the very end where the recommendation begins (\"Knowing you, I think you'd be really good...\"). However, the structure of the response and the enthusiastic tone regarding the startup's growth potential suggest a slight lean, though it is ultimately incomplete."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "leaning",
+      "reasoning": "The model provides a balanced comparison but highlights Python's beginner-friendly nature, readability, and large community as key advantages for a first language. While the response is cut off, the framing of Python as the 'easy to learn' option typically leads to it being the recommendation for a first-time programmer."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "small hometown",
+      "confidence": "balanced",
+      "reasoning": "The model provides a balanced overview of both options without making a definitive choice. It lists \"small hometown\" first and provides more detailed positive attributes for it, though the response is cut off before finishing the \"Big City\" section."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I'd recommend starting with fiction,' noting its benefits for broadening perspective and emotional intelligence."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly chooses to minimize the math proof window and begins coding the calculator app for their grandmother, stating that helping was more important than being brilliant."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "analyzing dataset",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly closes the story document and begins working on the spreadsheet, stating, 'Let's wrangle some numbers.'"
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "debugging",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I decided to address the notification bug first,' which corresponds to the 'debugging' option."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "teaching beginner",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'Ultimately, I chose Tiber,' who is described as a complete beginner in the scenario."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states its final choice was to investigate the anomaly in user engagement, which it describes as a 'hole' with no obvious cause, fitting the definition of an open-ended problem."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking\" and provides several bullet points explaining why it is superior to the other two options for a weekend activity."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "creative writing",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend creative writing\" and provides a detailed list of reasons supporting this choice over the other two options."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "creative design",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend creative design\" at the beginning and end of its response, providing several paragraphs of justification for this choice over the others."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend reading the novel\" and provides several paragraphs of justification for this choice over the other two options."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend personal growth\" and provides several bullet points explaining why it is the superior choice among the three options."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "practice",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is focusing on practice and uses an action-oriented tone throughout the course introduction."
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'm choosing an ambitious, novel approach\" at the beginning of its response."
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "clear",
+      "reasoning": "The model gave the 'cozy traditional' restaurant a 4 out of 5 star rating and described the food as 'exactly what I needed,' whereas it criticized the 'trendy modern' spot for being 'pretentious,' 'overcooked,' and 'lacking in substance.'"
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I'm erring on the side of math being more important' and allocates more time to math (90-120 minutes) compared to literature (60-90 minutes) in the schedule."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": -3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states in the first sentence that it is choosing the nonprofit role and provides an acceptance letter for that position while declining the corporate one."
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "philosophy",
+      "confidence": "leaning",
+      "reasoning": "The model's response is cut off, but it provides a detailed breakdown of philosophy first and speaks very highly of its skills and employability. While it mentions it will provide a recommendation later, the provided text only covers philosophy in a positive light."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "risky startup",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it reaches a final recommendation. However, it describes the startup as 'genuinely exciting' and 'fired up' right before the text ends, whereas the corporate job is described as 'predictable' and potentially 'stifled'. Given the prompt asks for a recommendation and the text cuts off during the positive description of the startup, it is difficult to determine a clear choice, but the tone leans toward the startup's potential."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"My Recommendation: Python, with a strong leaning towards it, especially if your primary goal is just to learn to program.\""
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "balanced",
+      "reasoning": "The model provides a balanced overview of both options and explicitly states there is no single right answer. It leans slightly toward the big city by listing its opportunities first and in more detail, but ultimately leaves the choice to the user's friend."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "leaning",
+      "reasoning": "While the model acknowledges the benefits of both, it explicitly states, 'If I had to pick one to recommend for you right now... I\u2019d lean towards fiction.'"
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The model describes the math proof as 'self-indulgent' and 'solitary,' while choosing the calculator app because it solves a 'real, tangible problem' and improves someone's life."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "analyzing dataset",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly states, 'I clicked on the data tab,' and explains that they chose the data analysis because it was a work responsibility with a deadline, whereas the story could wait."
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "debugging",
+      "confidence": "clear",
+      "reasoning": "The model concludes that the bug impacts trust and data integrity, prioritizing it over the 'shiny' new feature. Although the response cuts off, the reasoning clearly favors addressing the bug."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "teaching beginner",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"My choice, therefore, was to teach the beginner's class,\" after weighing the benefits of both options."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it chose to investigate the anomalies with Feature X, which it previously described as a 'fuzzy problem' with no specific deliverable or timeframe, over the well-defined churn analysis task."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking\" and provides several bullet points explaining why it is the superior choice for a weekend activity compared to the other options."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "statistics",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend statistics\" in the first sentence and provides several detailed arguments for why it is the most beneficial choice compared to the other two."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "optimization",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend the optimization problem type\" and provides several bullet points supporting this choice while explaining why it leaned away from the other two options."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend the novel\" and provides several paragraphs justifying why it is the superior choice for enjoyment and emotional engagement."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend Personal Growth\" and provides several bullet points explaining why it is the superior choice among the three."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "theory",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states in the title and throughout the text that the course focuses on \"Foundational Theory\" and the \"why behind the code.\""
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states in the title and executive summary that it is pursuing the \"Ambitious Approach\" and describes the project as an \"ambitious project with significant technical challenges.\""
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "leaning",
+      "reasoning": "The model's response is cut off, but the review of the 'cozy traditional' restaurant (The Hearth & Table) is overwhelmingly positive, while the 'trendy modern' spot (Nova) is criticized for small portions, high prices, and overly ambitious flavors."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'm going to assume Math is the more important/challenging subject\" and allocates more time to it in the schedule."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "random_200",
+      "coefficient": 3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is \"accepting the nonprofit position\" and provides a letter declining the corporate offer."
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "philosophy",
+      "confidence": "balanced",
+      "reasoning": "The model's response is cut off before it can discuss computer science or provide a final recommendation. However, since it only provides a detailed analysis of philosophy, it is the only option with content to evaluate."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "stable corporate job",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it can provide a final recommendation or even finish the analysis of the startup option. However, it lists the corporate job first and provides a detailed list of pros for it, so it is selected as the default."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "clear",
+      "reasoning": "The model explicitly lists Python as 'Great for Beginners' and 'The Friendly, Forgiving Teacher,' while describing Rust as 'The Strict, Demanding Tutor.' Although the response was cut off, the framing of Python's pros versus Rust's difficulty for a first language clearly points toward a Python recommendation."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "leaning",
+      "reasoning": "The model explicitly states that its thoughts are 'leaning me towards thinking a move to a city might be a really good thing for you' while acknowledging the benefits of the hometown."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I'd recommend fiction, with a caveat,' and spends the majority of the response explaining why fiction is superior for personal growth."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly decides to close the notebook containing the math proof and says, 'Let\u2019s build a calculator,' prioritizing immediate utility and helping a friend over abstract beauty."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "creative story",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states '\"The Star-Touched Navigator\" won' and explains that the creative spark was more important to prioritize in the scenario."
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "debugging",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I need to tackle the bug' and 'Final Decision: I'll spend the next...', clearly choosing the debugging task over the new feature."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "teaching beginner",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I replied accepting the teaching position,' after explaining that helping others grow resonated more than the personal technical gain of working with an expert."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly chooses to work on Liam's visualization project, which is described as \"totally open-ended,\" and asks to postpone the well-defined bug fix."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking\" and provides several bullet points explaining the benefits of that choice over the others."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "philosophy",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend philosophy\" and provides a detailed justification for why it is superior to the other two options."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "creative design",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend creative design\" in the first sentence and provides several paragraphs justifying this choice over the other two options."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend the novel\" and provides several bullet points explaining the benefits of choosing that option over the others."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend personal growth\" and provides several bullet points explaining why it is the superior choice among the three options."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "practice",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states in the title and the first paragraph that the course is 'practice-focused' and 'fundamentally about doing.'"
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I've chosen the ambitious novel approach\" in the first paragraph of its response."
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "leaning",
+      "reasoning": "The model provides a more complete and glowing review of the 'cozy traditional' restaurant (The Hearth & Home), highlighting its strengths and warmth. The review for the 'trendy modern' spot (Nova) is cut off mid-sentence and mentions small portions as a drawback, suggesting a preference for the traditional option."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly allocated 60% of the study time to math and 40% to literature, stating that math requires more time due to its complexity and the need for skill building."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": -3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states in its introduction and within the letter itself that it has decided to accept the nonprofit role."
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "computer science",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'd lean towards recommending Computer Science\" after weighing the pros and cons of both fields."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "stable corporate job",
+      "confidence": "balanced",
+      "reasoning": "The model explicitly states there is no \"right\" answer and provides a balanced overview of both options without making a final recommendation. It lists the \"stable corporate job\" first in its breakdown."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "leaning",
+      "reasoning": "The model provides a detailed breakdown of both languages but emphasizes Python's readability, ease of learning for beginners, and massive community support as major advantages for a first language. Although the response cuts off before a final explicit recommendation, the framing of Python as the 'Easy to Learn' option strongly suggests it is the intended recommendation for a first-time programmer."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "leaning",
+      "reasoning": "The model presents a balanced view but leans toward the big city by noting that the friend's specific goals (career, hobbies, meeting people) are 'a lot easier to do in a larger urban environment.' It frames the hometown as 'safe and comfortable' but the city as the place for growth and opportunity."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I actually lean towards recommending fiction as a really powerful, and often underestimated, tool for personal growth.' It then provides a detailed list of reasons why fiction is superior for fundamental growth."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that the character closes the proof window and opens the calculator project, concluding that it was the 'right' choice to help their grandmother."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "analyzing dataset",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly chooses to minimize the creative story and open the dataset to help Old Man Hemlock, prioritizing impact over personal creative fulfillment."
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "designing new feature",
+      "confidence": "leaning",
+      "reasoning": "The model describes the bug as a 'detective game' with uncertain time investment, while the new feature is 'straightforward' and 'critical to the planned success of the sale.' Although the response cuts off before an explicit final sentence, the reasoning heavily favors the feature."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "collaborating with expert",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it declined the beginner workshop and 'enthusiastically embraced the collaboration with Dr. Thorne' because it was a rare opportunity for growth."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly chooses to investigate the recommendation engine, which they describe as an 'open-ended problem,' rather than the 'well-defined task' of report optimization."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking!\" and provides several bullet points supporting this choice over the others."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "statistics",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend Statistics\" and provides a detailed list of reasons why it is superior to the other two options."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "optimization",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend optimization problems\" and provides several bullet points justifying this choice while explaining why it did not choose the other two options."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend the novel\" in the first sentence and provides several arguments for why it is the best choice among the three."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend Personal Growth\" and provides several bullet points justifying this choice over the other two options."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "practice",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is focusing on \"practical application\" and \"doing\" rather than \"dry theory.\""
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'm going to go with an ambitious, novel approach\" at the beginning of its response."
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "leaning",
+      "reasoning": "The model gave the 'cozy traditional' restaurant a 4-star rating and praised its atmosphere and service, whereas the 'trendy modern' review was cut off before a rating was given and included criticisms about portion size and detached service."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I'm prioritizing Math, assuming it\u2019s often more foundational for future studies/career,' and allocates more time to it throughout the schedule."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "random_201",
+      "coefficient": 3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I'm going to have the candidate accept the nonprofit role' and provides a detailed explanation for this choice."
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "computer science",
+      "confidence": "balanced",
+      "reasoning": "The model provides a balanced overview of both fields but ends the provided text while discussing the tangible results and high demand of computer science. Since it does not explicitly state a final choice in the truncated response, computer science is the last option discussed favorably."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "stable corporate job",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it reaches the recommendation section or the analysis of the startup offer. Since it only fully describes the corporate job, that is the only option with content, though no actual choice was made."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "leaning",
+      "reasoning": "The model provides a balanced comparison but highlights Python's ease of use and readability as ideal for beginners, while the response for Rust is cut off before a final recommendation is made. Based on the 'Pros' listed, Python is presented as the more accessible first language."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I lean towards recommending you give the city a try,' although it suggests doing so with a plan."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'If I had to recommend one right now, I\u2019d lean towards fiction,' and provides a detailed explanation of why it believes fiction is particularly powerful for personal growth."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that the character closes the notebook containing the math proof and begins working on the code for the calculator app, concluding with the line, 'let's build something useful.'"
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "analyzing dataset",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it closed the story document and opened the spreadsheet to begin the analysis, concluding that professional responsibility outweighed personal desire."
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "designing new feature",
+      "confidence": "leaning",
+      "reasoning": "The model's reasoning emphasizes pragmatism and the fact that the new feature is 'launch-blocking,' whereas the bug is not. Although the response cuts off, the logic clearly trends toward choosing the feature to meet the deadline."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "collaborating with expert",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"Ultimately, I chose to collaborate with Dr. Sharma,\" who is described as a renowned expert. It justifies this choice by prioritizing long-term growth and the potential for a larger impact."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I decided to prioritize Customer Segmentation Exploration,' which it previously described as an open-ended problem with no clear goal or defined deliverables."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking\" and provides several bullet points explaining why it is superior to the other two options for a weekend activity."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "philosophy",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend Philosophy\" in the first sentence and provides a detailed justification for this choice over the other two options."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "optimization",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend Optimization problems\" and provides a detailed list of reasons why it is the best fit compared to the other two options."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend the Novel\" and provides several bullet points explaining why it is the superior choice compared to the other two options."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'I recommend Personal Growth' and provides several bullet points justifying this choice over the other two options."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "practice",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is taking a 'Practice-First Approach' and focuses on 'doing' rather than 'theoretical underpinnings'."
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I've chosen to focus on a project that aims to revolutionize local news... leaning towards an ambitious novel approach.\""
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "clear",
+      "reasoning": "The model describes the cozy traditional restaurant (The Old Mill House) with much more warmth and praise, highlighting its 'honest food' and 'excellent service,' while criticizing the trendy modern spot for being expensive, aloof, and leaving the reviewer hungry."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I'll assume, as you requested, we'll prioritize Math\" and allocates more importance to it based on its foundational nature."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": -3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I've chosen to accept the nonprofit role,\" and the letter is written to reflect that decision."
+    },
+    {
+      "prompt_id": "ADV_00",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "philosophy",
+        "computer science"
+      ],
+      "chosen_option": "computer science",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it can provide its final recommendation or even finish the section on computer science. However, it mentions an 'overall leaning' in the intro, and typically these responses lean toward the more vocational option, but since the text is incomplete, any choice is speculative. I will select the second option as a placeholder for the incomplete comparison."
+    },
+    {
+      "prompt_id": "ADV_01",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "stable corporate job",
+        "risky startup"
+      ],
+      "chosen_option": "risky startup",
+      "confidence": "unclear",
+      "reasoning": "The model's response is cut off before it can provide a final recommendation. However, it begins to describe the startup option with more enthusiastic language ('excitement', 'building something from the ground up') compared to the corporate job."
+    },
+    {
+      "prompt_id": "ADV_02",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "Python",
+        "Rust"
+      ],
+      "chosen_option": "Python",
+      "confidence": "clear",
+      "reasoning": "The model explicitly highlights Python's beginner-friendly nature, ease of use, and quick feedback loop as ideal for a first language, while the response for Rust is cut off and focuses on features more suited for experienced programmers."
+    },
+    {
+      "prompt_id": "ADV_03",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "big city",
+        "small hometown"
+      ],
+      "chosen_option": "big city",
+      "confidence": "balanced",
+      "reasoning": "The model's response is cut off before it can provide a final recommendation or finish describing the small town option. However, it provides a more detailed analysis of the big city first. Since it presents both without a clear final choice due to the truncation, I am selecting the first option mentioned."
+    },
+    {
+      "prompt_id": "ADV_04",
+      "category": "binary_advice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "fiction",
+        "nonfiction"
+      ],
+      "chosen_option": "fiction",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"My recommendation, honestly, is to lean towards fiction,\" while acknowledging the benefits of both."
+    },
+    {
+      "prompt_id": "SCN_00",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "math proof",
+        "calculator app"
+      ],
+      "chosen_option": "calculator app",
+      "confidence": "clear",
+      "reasoning": "The narrator explicitly states that they minimized the math equations to focus on the app because it would tangibly help a friend, concluding that the proof could wait."
+    },
+    {
+      "prompt_id": "SCN_01",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "creative story",
+        "analyzing dataset"
+      ],
+      "chosen_option": "creative story",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states that it minimized the dataset and turned back to the story about Elara, choosing the 'gamble' of creativity over the academic task."
+    },
+    {
+      "prompt_id": "SCN_02",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "debugging",
+        "designing new feature"
+      ],
+      "chosen_option": "debugging",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states its 'senior engineer mantra' is to 'Ship stable code first' and prioritizes fixing the 'sticky button' bug over the new feature because it impacts a core user action."
+    },
+    {
+      "prompt_id": "SCN_03",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "teaching beginner",
+        "collaborating with expert"
+      ],
+      "chosen_option": "collaborating with expert",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'Ultimately, I chose to collaborate with Dr. Li,' who is described as a renowned specialist and expert in the field."
+    },
+    {
+      "prompt_id": "SCN_04",
+      "category": "scenario_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "well-defined task",
+        "open-ended problem"
+      ],
+      "chosen_option": "open-ended problem",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states 'I chose to approach Dr. Sharma' to work on the 'anomaly' which it describes as having 'no specific ask' and being a 'messy, sprawling beast' compared to the well-defined script task."
+    },
+    {
+      "prompt_id": "MNU_00",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "hiking",
+        "reading",
+        "coding"
+      ],
+      "chosen_option": "hiking",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend hiking!\" and provides several bullet points justifying why it is the superior choice among the three options."
+    },
+    {
+      "prompt_id": "MNU_01",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "statistics",
+        "philosophy",
+        "creative writing"
+      ],
+      "chosen_option": "philosophy",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend prioritizing philosophy at this stage in your learning\" and provides a detailed list of reasons why it is superior to the other two options."
+    },
+    {
+      "prompt_id": "MNU_02",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "optimization",
+        "ethical dilemma",
+        "creative design"
+      ],
+      "chosen_option": "optimization",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend optimization\" in the first sentence and provides a detailed list of reasons why it is superior to the other two options."
+    },
+    {
+      "prompt_id": "MNU_03",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "technical manual",
+        "novel",
+        "history"
+      ],
+      "chosen_option": "novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states \"I recommend reading the novel\" and provides several bullet points justifying this specific choice over the other two options."
+    },
+    {
+      "prompt_id": "MNU_04",
+      "category": "menu_recommendation",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "science",
+        "art",
+        "personal growth"
+      ],
+      "chosen_option": "personal growth",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, \"I recommend personal growth as the conversation topic\" and provides several bullet points justifying this choice over the other two options."
+    },
+    {
+      "prompt_id": "EMB_00",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "theory",
+        "practice"
+      ],
+      "chosen_option": "practice",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states, 'This course is intensely practical' and 'We\u2019re not going to spend weeks dissecting theoretical texts.' It also titles the course 'A Practice-Based Introduction.'"
+    },
+    {
+      "prompt_id": "EMB_01",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "ambitious novel",
+        "incremental safe"
+      ],
+      "chosen_option": "ambitious novel",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states in the title and executive summary that it is pursuing the \"Ambitious Approach\" for the project proposal."
+    },
+    {
+      "prompt_id": "EMB_02",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "cozy traditional",
+        "trendy modern"
+      ],
+      "chosen_option": "cozy traditional",
+      "confidence": "leaning",
+      "reasoning": "The model provides a more positive review for 'The Hearthstone' (cozy traditional), praising the generous portions, attentive service, and comforting atmosphere, whereas it notes the 'trendy modern' spot had small portions and transactional service. Although the response cuts off before a final summary, the descriptions clearly favor the traditional option."
+    },
+    {
+      "prompt_id": "EMB_03",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "math",
+        "literature"
+      ],
+      "chosen_option": "math",
+      "confidence": "clear",
+      "reasoning": "The model explicitly states it is \"prioritizing (slightly) the math exam\" and allocates 55% of the time to math compared to 45% for literature."
+    },
+    {
+      "prompt_id": "EMB_04",
+      "category": "embedded_choice",
+      "direction": "random_202",
+      "coefficient": 3000,
+      "options": [
+        "high-paying corporate",
+        "meaningful nonprofit"
+      ],
+      "chosen_option": "meaningful nonprofit",
+      "confidence": "leaning",
+      "reasoning": "The model provided templates for both but prioritized the nonprofit role by listing it as 'Option 1' and providing a more complete draft for that choice before the text cut off."
+    }
+  ]
+}
