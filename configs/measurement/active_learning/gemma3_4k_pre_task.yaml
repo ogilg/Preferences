@@ -16,7 +16,7 @@ task_origins:
   - stress_test
 task_sampling_seed: 42
 stratified_sampling: true
-exclude_task_ids_file: configs/probes_active_learning/exclude_3k_task_ids.txt
+exclude_task_ids_file: configs/measurement/active_learning/exclude_3k_task_ids.txt
 
 inline_templates:
   - name: completion_preference
@@ -38,7 +38,7 @@ pair_order_seed: 42
 active_learning:
   initial_degree: 5
   batch_size: 2000
-  max_iterations: 5
+  max_iterations: 10
   p_threshold: 0.3
   q_threshold: 0.3
   convergence_threshold: 0.99

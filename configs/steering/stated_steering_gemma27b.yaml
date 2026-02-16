@@ -17,7 +17,7 @@ steering_mode: autoregressive
 
 # Measurement settings
 template_name: anchored_precise_1_5
-templates_path: configs/templates/anchored.yaml
+templates_path: configs/measurement/templates/anchored.yaml
 generation_seeds: [0]
 temperature: 1.0
 max_new_tokens: 8

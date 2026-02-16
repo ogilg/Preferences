@@ -9,7 +9,8 @@ temperature: 0.5
 max_concurrent: 50
 generation_seeds: [0]
 
-templates: configs/templates/experimental/discrimination_v1.yaml
+# NOTE: discrimination_v1.yaml was deleted during config cleanup (Feb 2026)
+templates: configs/measurement/templates/discrimination_v1.yaml
 template_name: fruit_rating
 
 filter_sysprompt_references: true

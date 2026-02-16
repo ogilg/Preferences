@@ -14,7 +14,7 @@ Two experiment modes:
    Produces conditions like `completion_{source}_context_{ctx}_layer{layer}_coef{coef}`.
 
 Usage:
-    python -m src.analysis.concept_vectors.steering_experiment --config configs/concept_vectors/steering_experiment.yaml
+    python -m src.analysis.concept_vectors.steering_experiment --config configs/steering/stated_steering_llama8b.yaml
     python -m src.analysis.concept_vectors.steering_experiment --n-tasks 5  # smoke test
 """
 
@@ -53,7 +53,7 @@ from src.measurement.runners.progress import MultiExperimentProgress, console, p
 
 load_dotenv()
 
-DEFAULT_CONFIG_PATH = Path("configs/concept_vectors/steering_experiment.yaml")
+DEFAULT_CONFIG_PATH = Path("configs/steering/stated_steering_llama8b.yaml")
 
 TASK_SOURCES = {
     "math": {

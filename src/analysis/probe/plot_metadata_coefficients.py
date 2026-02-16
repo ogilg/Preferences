@@ -6,7 +6,7 @@ of mu variance is explained by metadata. Plots centered effects
 
 Usage:
     python -m src.analysis.probe.plot_metadata_coefficients \
-        --config configs/probes/gemma3_completion_preference.yaml
+        --config configs/probes/gemma3_3k_nostd_raw.yaml
 """
 from __future__ import annotations
 

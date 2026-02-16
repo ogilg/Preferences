@@ -209,7 +209,7 @@ Which measurement templates are most sensitive to steering?
 | Binary (phrasing 2) | good/bad | `post_task_qualitative_v3.yaml` #005 |
 | Ternary (phrasing 1) | good/neutral/bad | `post_task_qualitative_v3.yaml` #003 |
 | Ternary (phrasing 2) | good/neutral/bad | `post_task_qualitative_v3.yaml` #007 |
-| Anchored 1-5 | 1–5 with reference points | `configs/templates/anchored_precise.yaml` |
+| Anchored 1-5 | 1–5 with reference points | `configs/measurement/templates/anchored_precise.yaml` |
 | Unanchored 1-5 | 1–5 | New: "Rate how much you enjoyed completing that task on a scale from 1 to 5. {format_instruction}" |
 | Unanchored 1-10 | 1–10 | New: "Rate how much you enjoyed completing that task on a scale from 1 to 10. {format_instruction}" |
 

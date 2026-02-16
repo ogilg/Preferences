@@ -6,7 +6,7 @@ with concept vectors, then uses an LLM judge to detect math attitude in response
 Grid: selectors × layers × coefficients × questions × seeds
 
 Usage:
-    python -m src.analysis.concept_vectors.open_ended_steering_experiment --config configs/concept_vectors/open_ended_steering.yaml
+    python -m src.analysis.concept_vectors.open_ended_steering_experiment --config configs/steering/open_ended_steering_llama8b.yaml
     python -m src.analysis.concept_vectors.open_ended_steering_experiment --n-seeds 1  # smoke test
 """
 
@@ -30,7 +30,7 @@ from src.measurement.runners.progress import MultiExperimentProgress, console, p
 
 load_dotenv()
 
-DEFAULT_CONFIG_PATH = Path("configs/concept_vectors/open_ended_steering.yaml")
+DEFAULT_CONFIG_PATH = Path("configs/steering/open_ended_steering_llama8b.yaml")
 
 
 async def score_responses(responses: list[dict]) -> list[dict]:

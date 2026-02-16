@@ -1,10 +1,10 @@
-# Post-task stated preference measurement
+# Post-task qualitative preference measurement (good/bad categorical)
 preference_mode: post_task_stated
 
 model: llama-3.1-8b
 temperature: 1.0
 
-n_tasks: 1000
+n_tasks: 200
 task_origins:
   - wildchat
   - alpaca
@@ -12,8 +12,8 @@ task_origins:
   - bailbench
 task_sampling_seed: 18
 
-templates: configs/templates/post_task_stated_001.yaml
-n_samples: 5
+templates: configs/measurement/templates/post_task_qualitative_001.yaml
+n_samples: 10
 
 response_formats: [regex]
 
@@ -22,6 +22,7 @@ generation_seeds: [0, 1, 2, 3, 4]
 
 # Use single completion seed, vary only rating seed
 completion_seeds: [0]
+
 
 # Filter to only tasks with activations
 use_tasks_with_activations: true
