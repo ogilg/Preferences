@@ -107,6 +107,9 @@ class ExperimentConfig(BaseModel):
     # Completion generation specific: run LLM-based refusal detection
     detect_refusals: bool = False
 
+    # Exclude tasks from a previous run (path to file with one task_id per line)
+    exclude_task_ids_file: Path | None = None
+
     # Experiment tracking
     experiment_id: str | None = None
 

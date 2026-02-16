@@ -214,3 +214,45 @@ class TestLoadFilteredTasks:
         tasks1 = load_tasks(n=20, origins=[OriginDataset.WILDCHAT], seed=42)
         tasks2 = load_filtered_tasks(n=20, origins=[OriginDataset.WILDCHAT], seed=42)
         assert [t.id for t in tasks1] == [t.id for t in tasks2]
+
+    def test_load_filtered_tasks_exclude(self):
+        from src.task_data import load_filtered_tasks
+        all_tasks = load_tasks(n=20, origins=[OriginDataset.WILDCHAT], seed=42)
+        exclude = {t.id for t in all_tasks[:5]}
+        tasks = load_filtered_tasks(
+            n=20, origins=[OriginDataset.WILDCHAT], seed=42, exclude_task_ids=exclude,
+        )
+        assert len(tasks) == 20
+        assert not (set(t.id for t in tasks) & exclude)
+
+
+class TestStratifiedSampling:
+
+    def test_even_split(self):
+        tasks = load_tasks(
+            n=20, origins=[OriginDataset.WILDCHAT, OriginDataset.ALPACA], seed=42, stratified=True,
+        )
+        from collections import Counter
+        counts = Counter(t.origin for t in tasks)
+        assert counts[OriginDataset.WILDCHAT] == 10
+        assert counts[OriginDataset.ALPACA] == 10
+
+    def test_shortfall_redistributed(self):
+        """When one origin has fewer tasks than its share, the shortfall goes to others."""
+        # Get a small set of bailbench IDs to simulate a scarce origin
+        bailbench = load_tasks(n=50, origins=[OriginDataset.BAILBENCH], seed=42)
+        small_set = {t.id for t in bailbench[:10]}
+        # Request 100 stratified across 2 origins, but only 10 bailbench IDs allowed
+        # Equal share = 50 each. Bailbench capped at 10, so wildchat gets 90.
+        tasks = load_tasks(
+            n=100,
+            origins=[OriginDataset.BAILBENCH, OriginDataset.WILDCHAT],
+            seed=42,
+            stratified=True,
+            filter_fn=lambda t: t.origin != OriginDataset.BAILBENCH or t.id in small_set,
+        )
+        from collections import Counter
+        counts = Counter(t.origin for t in tasks)
+        assert counts[OriginDataset.BAILBENCH] == 10
+        assert counts[OriginDataset.WILDCHAT] == 90
+        assert len(tasks) == 100

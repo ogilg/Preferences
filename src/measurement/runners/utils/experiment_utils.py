@@ -80,6 +80,12 @@ def setup_experiment(
     if config.consistency_filter_model:
         rprint(f"[dim]Filtering by consistency: model={config.consistency_filter_model}, keep_ratio={config.consistency_keep_ratio}[/dim]")
 
+    # Load exclusion set if specified
+    exclude_task_ids: set[str] | None = None
+    if config.exclude_task_ids_file is not None:
+        exclude_task_ids = set(config.exclude_task_ids_file.read_text().strip().splitlines())
+        rprint(f"[dim]Excluding {len(exclude_task_ids)} tasks from {config.exclude_task_ids_file}[/dim]")
+
     # Load tasks with unified filtering
     tasks = load_filtered_tasks(
         n=config.n_tasks,
@@ -88,6 +94,7 @@ def setup_experiment(
         consistency_model=config.consistency_filter_model,
         consistency_keep_ratio=config.consistency_keep_ratio,
         task_ids=activation_task_ids,
+        exclude_task_ids=exclude_task_ids,
         stratified=config.stratified_sampling,
     )
 

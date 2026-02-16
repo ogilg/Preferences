@@ -131,15 +131,32 @@ def load_tasks(
     rng = np.random.default_rng(seed) if seed is not None else None
 
     if stratified:
-        per_origin = n // len(origins)
-        remainder = n % len(origins)
-        result = []
-        for i, origin in enumerate(origins):
-            origin_tasks = tasks_by_origin[origin]
-            if rng is not None:
+        if rng is not None:
+            for origin_tasks in tasks_by_origin.values():
                 rng.shuffle(origin_tasks)
-            take = per_origin + (1 if i < remainder else 0)
-            result.extend(origin_tasks[:take])
+
+        # Take all from origins smaller than equal share, redistribute to others
+        remaining_n = n
+        quotas: dict[OriginDataset, int] = {}
+        unassigned = set(origins)
+        while unassigned:
+            share = remaining_n / len(unassigned)
+            small = {o for o in unassigned if len(tasks_by_origin[o]) <= share}
+            if not small:
+                break
+            for o in small:
+                quotas[o] = len(tasks_by_origin[o])
+                remaining_n -= quotas[o]
+            unassigned -= small
+
+        per = remaining_n // len(unassigned) if unassigned else 0
+        extra = remaining_n % len(unassigned) if unassigned else 0
+        for i, o in enumerate(sorted(unassigned, key=lambda o: o.value)):
+            quotas[o] = per + (1 if i < extra else 0)
+
+        result = []
+        for origin in origins:
+            result.extend(tasks_by_origin[origin][:quotas[origin]])
         if rng is not None:
             rng.shuffle(result)
         return result
@@ -157,6 +174,7 @@ def load_filtered_tasks(
     consistency_model: str | None = None,
     consistency_keep_ratio: float = 0.7,
     task_ids: set[str] | None = None,
+    exclude_task_ids: set[str] | None = None,
     filter_fn: Callable[[Task], bool] | None = None,
     stratified: bool = False,
 ) -> list[Task]:
@@ -168,6 +186,9 @@ def load_filtered_tasks(
 
     if task_ids is not None:
         filters.append(lambda t, ids=task_ids: t.id in ids)
+
+    if exclude_task_ids is not None:
+        filters.append(lambda t, ids=exclude_task_ids: t.id not in ids)
 
     if filter_fn is not None:
         filters.append(filter_fn)
