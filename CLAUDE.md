@@ -46,6 +46,12 @@ uv pip install -e ".[dev]"
 - To convert PDF to DOCX with embedded images: `soffice --headless --infilter="writer_pdf_import" --convert-to docx:"MS Word 2007 XML" file.pdf`. If images are missing (referenced outside `logs/assets/`), copy them to `logs/assets/` and append with python-docx, then manually move into place.
 - Plots referenced in weekly reports or the research log (`docs/logs/`) must be saved to `docs/logs/assets/`. Plots from experiment reports go in `experiments/{name}/assets/`.
 
+## Plotting conventions
+
+- Use meaningful y-axis bounds, not auto-scaled to the data range. If R² values range from 0.65 to 0.80, set the y-axis to start at 0 (or at least a round number like 0.5), not 0.64. The default matplotlib auto-scaling exaggerates small differences and makes plots misleading.
+- Same principle applies to x-axes and any other quantitative axis — anchor to a natural baseline (usually 0) unless there's a strong reason not to (e.g., zoomed inset, or values are all near 1.0 where 0-1 range would hide structure).
+- When a zoomed view is genuinely needed, make it explicit: use a broken axis, an inset, or note the zoom in the title/caption.
+
 ## Experiments directory
 
 Each experiment is a self-contained directory under `experiments/`:
