@@ -1,0 +1,100 @@
+{
+  "conditions": [
+    {
+      "label": "baseline",
+      "bt_scaled_mean": 0.7416775340440968,
+      "bt_scaled_std": 0.011491896025624617,
+      "bt_scaled_folds": [
+        0.7517089305402426,
+        0.743103448275862,
+        0.7322358824755157,
+        0.7253975075204125,
+        0.7559419014084507
+      ],
+      "ridge_thurstonian_mean": 0.6759182651741986,
+      "ridge_thurstonian_std": 0.010584960548390714,
+      "ridge_thurstonian_folds": [
+        0.6835722160970231,
+        0.6842672413793104,
+        0.6599291519066472,
+        0.6665234207133649,
+        0.6852992957746479
+      ],
+      "n_total_measurements": 117435,
+      "n_unique_pairs": 23500
+    },
+    {
+      "label": "original+bt_selected",
+      "bt_scaled_mean": 0.7212483720406391,
+      "bt_scaled_std": 0.011314157023495862,
+      "bt_scaled_folds": [
+        0.7359629704165828,
+        0.7216022319649262,
+        0.7218466293220012,
+        0.7011609287429944,
+        0.725669099756691
+      ],
+      "ridge_thurstonian_mean": 0.6719474171876068,
+      "ridge_thurstonian_std": 0.007971155517774466,
+      "ridge_thurstonian_folds": [
+        0.6767961360434696,
+        0.6660023913909924,
+        0.6642843345566931,
+        0.6673338670936749,
+        0.6853203568532036
+      ],
+      "n_total_measurements": 127032,
+      "n_unique_pairs": 25463
+    },
+    {
+      "label": "original+random",
+      "bt_scaled_mean": 0.7502530994273718,
+      "bt_scaled_std": 0.009116240713886187,
+      "bt_scaled_folds": [
+        0.7530487804878049,
+        0.7585935965429189,
+        0.7445820433436533,
+        0.7354570637119113,
+        0.759584013050571
+      ],
+      "ridge_thurstonian_mean": 0.6885864552593292,
+      "ridge_thurstonian_std": 0.0077486887085435885,
+      "ridge_thurstonian_folds": [
+        0.6932926829268292,
+        0.6935769004124926,
+        0.6737616099071208,
+        0.6879699248120301,
+        0.6943311582381729
+      ],
+      "n_total_measurements": 127311,
+      "n_unique_pairs": 25488
+    }
+  ],
+  "delta_bt_vs_baseline": {
+    "bt_scaled": -0.02042916200345768,
+    "ridge_thurstonian": -0.003970847986591863
+  },
+  "delta_random_vs_baseline": {
+    "bt_scaled": 0.008575565383275086,
+    "ridge_thurstonian": 0.012668190085130537
+  },
+  "delta_bt_vs_random": {
+    "bt_scaled": -0.029004727386732765,
+    "ridge_thurstonian": -0.0166390380717224
+  },
+  "selection_metadata": {
+    "n_unmeasured_total": 4475000,
+    "overlap": 0,
+    "bt_score_range": [
+      8.566098115281306e-07,
+      0.0015276195825442151
+    ],
+    "random_score_range": [
+      0.002829881912391974,
+      8.847974159758333
+    ],
+    "train_accuracy": 0.7898156426959595,
+    "l2_lambda": 0.193,
+    "n_select": 2000
+  }
+}
