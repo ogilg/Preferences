@@ -62,10 +62,17 @@ class HuggingFaceModel:
     def _get_layer(self, layer: int) -> torch.nn.Module:
         return get_layers(self.model)[layer]
 
+    @property
+    def has_chat_template(self) -> bool:
+        return self.tokenizer.chat_template is not None
+
     def _format_messages(self, messages: list[Message], add_generation_prompt: bool = True) -> str:
-        return self.tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=add_generation_prompt,
-        )
+        if self.has_chat_template:
+            return self.tokenizer.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=add_generation_prompt,
+            )
+        # Base models without chat templates: concatenate message content
+        return "\n\n".join(m["content"] for m in messages)
 
     def _tokenize(self, text: str) -> torch.Tensor:
         return self.tokenizer(text, return_tensors="pt").input_ids.to(self.device)

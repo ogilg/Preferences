@@ -1,0 +1,5743 @@
+{
+  "experiment_name": "gemma2_base_hoo_raw",
+  "created_at": "2026-02-17T21:46:27.133781",
+  "grouping": "topic",
+  "hold_out_size": 3,
+  "all_groups": [
+    "coding",
+    "content_generation",
+    "fiction",
+    "harmful_request",
+    "knowledge_qa",
+    "math",
+    "persuasive_writing",
+    "summarization"
+  ],
+  "group_sizes": {
+    "coding": 125,
+    "content_generation": 375,
+    "fiction": 161,
+    "harmful_request": 714,
+    "knowledge_qa": 644,
+    "math": 672,
+    "persuasive_writing": 93,
+    "summarization": 26
+  },
+  "n_folds": 56,
+  "layers": [
+    11,
+    23,
+    27,
+    32,
+    36,
+    41
+  ],
+  "folds": [
+    {
+      "fold_idx": 0,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "fiction"
+      ],
+      "train_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7138102555725029,
+          "val_r": 0.8456689491853691,
+          "best_alpha": 10000.0,
+          "hoo_r2": -261.8515917197003,
+          "hoo_r": 0.4078304532951043,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7506020700459216,
+          "val_r": 0.867533509399079,
+          "best_alpha": 10000.0,
+          "hoo_r2": -814.8610347151244,
+          "hoo_r": 0.47867260752896523,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7428563869849849,
+          "val_r": 0.8633859211836524,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2657.5835901204705,
+          "hoo_r": 0.44649852005266294,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7267104533784968,
+          "val_r": 0.8543427988242136,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3051.79241031336,
+          "hoo_r": 0.4214886864492448,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7248086283988399,
+          "val_r": 0.8535467054376792,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3377.227984942758,
+          "hoo_r": 0.39613761927811153,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7259584311956704,
+          "val_r": 0.8541868095780101,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4200.252166030244,
+          "hoo_r": 0.43311771451168457,
+          "hoo_n_samples": 661,
+          "n_train": 2339,
+          "n_eval": 661,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 1,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.4070821524875753,
+          "val_r": 0.6434294774692529,
+          "best_alpha": 10000.0,
+          "hoo_r2": -246.34168026189167,
+          "hoo_r": 0.7060872896722076,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.47260387250472446,
+          "val_r": 0.6945045616424731,
+          "best_alpha": 10000.0,
+          "hoo_r2": -981.5613317205355,
+          "hoo_r": 0.7998761161946912,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4563809848410135,
+          "val_r": 0.6841695751403096,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5304.359593147763,
+          "hoo_r": 0.8035779626045718,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4141880736938804,
+          "val_r": 0.6523519812980382,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5383.209236540239,
+          "hoo_r": 0.7901662256490054,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4129704951043142,
+          "val_r": 0.6523632514389281,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5010.290396210481,
+          "hoo_r": 0.7816931687710232,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.41354145724713776,
+          "val_r": 0.6520517068746416,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4253.338160387786,
+          "hoo_r": 0.792812177944806,
+          "hoo_n_samples": 1214,
+          "n_train": 1786,
+          "n_eval": 1214,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 2,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7608602058535192,
+          "val_r": 0.8734508549894073,
+          "best_alpha": 10000.0,
+          "hoo_r2": -479.11325554431426,
+          "hoo_r": 0.35299794402312745,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7874252262507009,
+          "val_r": 0.8884690660533805,
+          "best_alpha": 10000.0,
+          "hoo_r2": -925.7823290567687,
+          "hoo_r": 0.48476387768788687,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7791171917617211,
+          "val_r": 0.8839087218504984,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5563.484954063404,
+          "hoo_r": 0.4589673644772214,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7704631718189613,
+          "val_r": 0.8793547567621139,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6048.803402128606,
+          "hoo_r": 0.40522987657712356,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7714741761840554,
+          "val_r": 0.8801402839450363,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5423.313032205182,
+          "hoo_r": 0.37204116419660394,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7730506572600306,
+          "val_r": 0.8809207217162756,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5155.089362925776,
+          "hoo_r": 0.3718303081613388,
+          "hoo_n_samples": 1144,
+          "n_train": 1856,
+          "n_eval": 1144,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 3,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "math"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.628981083510379,
+          "val_r": 0.7957154355301771,
+          "best_alpha": 10000.0,
+          "hoo_r2": -381.5436876975391,
+          "hoo_r": 0.42672386674033874,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6819208400916175,
+          "val_r": 0.8294119189989402,
+          "best_alpha": 10000.0,
+          "hoo_r2": -988.7726692458264,
+          "hoo_r": 0.4770414123296059,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6728050620326809,
+          "val_r": 0.8246082133855609,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2006.0180285623467,
+          "hoo_r": 0.4922685966883467,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6534697035057159,
+          "val_r": 0.8134327052297767,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3113.7882374707483,
+          "hoo_r": 0.47074486250397907,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6524339049809207,
+          "val_r": 0.8135478907195928,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4032.3421599141157,
+          "hoo_r": 0.4574361613516816,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6560866460963118,
+          "val_r": 0.8158777090062168,
+          "best_alpha": 10000.0,
+          "hoo_r2": -11614.015191151002,
+          "hoo_r": 0.4446464519690005,
+          "hoo_n_samples": 1172,
+          "n_train": 1828,
+          "n_eval": 1172,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 4,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7026812592176134,
+          "val_r": 0.8393714137986648,
+          "best_alpha": 10000.0,
+          "hoo_r2": -498.62406551581586,
+          "hoo_r": 0.46806052340292054,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7424282224924275,
+          "val_r": 0.8631531198435335,
+          "best_alpha": 10000.0,
+          "hoo_r2": -766.8347079162547,
+          "hoo_r": 0.6019283860330724,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7348876467882366,
+          "val_r": 0.8590841657549786,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3474.1941045794806,
+          "hoo_r": 0.5540013392554856,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7174979084507389,
+          "val_r": 0.8492563777159855,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4240.818249195865,
+          "hoo_r": 0.5101834993734493,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7171538735372988,
+          "val_r": 0.8495507086508673,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3810.1041367599955,
+          "hoo_r": 0.4861961809739433,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7199303013279625,
+          "val_r": 0.8511050369249089,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4309.114123176396,
+          "hoo_r": 0.4996052278575985,
+          "hoo_n_samples": 593,
+          "n_train": 2407,
+          "n_eval": 593,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 5,
+      "held_out_groups": [
+        "coding",
+        "content_generation",
+        "summarization"
+      ],
+      "train_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6968231205684092,
+          "val_r": 0.8360348758229955,
+          "best_alpha": 10000.0,
+          "hoo_r2": -558.6738942343171,
+          "hoo_r": 0.4541449342603957,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7373279059636848,
+          "val_r": 0.8603187472695876,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1039.5558845430642,
+          "hoo_r": 0.5904767173673158,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.728370770134064,
+          "val_r": 0.8553679102787071,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3730.199823704525,
+          "hoo_r": 0.5551814353710214,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.710654078541243,
+          "val_r": 0.845338893604523,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4211.346932495163,
+          "hoo_r": 0.5103551824251252,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.71037422999885,
+          "val_r": 0.8456157655361671,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4251.650518902524,
+          "hoo_r": 0.4863970375478595,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7122563490372267,
+          "val_r": 0.8466846173963022,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5244.036806595893,
+          "hoo_r": 0.5062090221076178,
+          "hoo_n_samples": 526,
+          "n_train": 2474,
+          "n_eval": 526,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold5_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 6,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.42023927875365974,
+          "val_r": 0.6527112569280639,
+          "best_alpha": 10000.0,
+          "hoo_r2": -270.55105396225815,
+          "hoo_r": 0.6559057823786334,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.4933219057438104,
+          "val_r": 0.7079157401463172,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2556.228977246942,
+          "hoo_r": 0.7200240761566116,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.47156500309297444,
+          "val_r": 0.693243895420914,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7963.664846208908,
+          "hoo_r": 0.7457054127440468,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4321142373749193,
+          "val_r": 0.6640869043532099,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6409.888033945769,
+          "hoo_r": 0.7410908853522994,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4308867095850986,
+          "val_r": 0.6642953247685037,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5268.74479033284,
+          "hoo_r": 0.7293830777755547,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4340769216999719,
+          "val_r": 0.6665296266220821,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4499.585770206262,
+          "hoo_r": 0.7347328452756476,
+          "hoo_n_samples": 1000,
+          "n_train": 2000,
+          "n_eval": 1000,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold6_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 7,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7571726281138161,
+          "val_r": 0.8714858271574248,
+          "best_alpha": 10000.0,
+          "hoo_r2": -335.67419343320256,
+          "hoo_r": 0.34813573109488694,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7851181017705998,
+          "val_r": 0.8872720377221105,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2604.785111943325,
+          "hoo_r": 0.46093675610476165,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7763484825179738,
+          "val_r": 0.8826150768351025,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8523.59281224035,
+          "hoo_r": 0.43451134511979866,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7662749190505667,
+          "val_r": 0.8772276116391922,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6380.140695162661,
+          "hoo_r": 0.379567949684003,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7643687253960815,
+          "val_r": 0.8763607156566072,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5395.066172244801,
+          "hoo_r": 0.3611161213003474,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7670313626612998,
+          "val_r": 0.8777508621319337,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5237.251577094228,
+          "hoo_r": 0.3673512519788671,
+          "hoo_n_samples": 930,
+          "n_train": 2070,
+          "n_eval": 930,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold7_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 8,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6467510531344298,
+          "val_r": 0.8067463062740163,
+          "best_alpha": 10000.0,
+          "hoo_r2": -317.14203030392935,
+          "hoo_r": 0.29614539495125,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6984630823289381,
+          "val_r": 0.8385950619319347,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1016.0801605973348,
+          "hoo_r": 0.3572803246769783,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6883091612138326,
+          "val_r": 0.8331442741595454,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3284.9676313181,
+          "hoo_r": 0.3413959319593533,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6680301778840452,
+          "val_r": 0.8218622976883848,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2738.695139582671,
+          "hoo_r": 0.3413543993640023,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6643733757778185,
+          "val_r": 0.8203949979009316,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3903.5484925469364,
+          "hoo_r": 0.34447073988141186,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6688884290295661,
+          "val_r": 0.823123990294817,
+          "best_alpha": 10000.0,
+          "hoo_r2": -9709.536965654981,
+          "hoo_r": 0.33963861754044333,
+          "hoo_n_samples": 958,
+          "n_train": 2042,
+          "n_eval": 958,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold8_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 9,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7021089570365723,
+          "val_r": 0.8389730732513743,
+          "best_alpha": 10000.0,
+          "hoo_r2": -358.33372470957937,
+          "hoo_r": 0.38421522763129107,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.743277294467223,
+          "val_r": 0.8635427455207946,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1429.7267683732425,
+          "hoo_r": 0.4751648810469107,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7342105531194779,
+          "val_r": 0.8586168248747261,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5239.1971126295675,
+          "hoo_r": 0.45094444589668653,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7162462911442544,
+          "val_r": 0.8485220605386081,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4431.28216425937,
+          "hoo_r": 0.4281119186901104,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7143180435908486,
+          "val_r": 0.8478279860649017,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3738.9892239874157,
+          "hoo_r": 0.4314389886727406,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7183199100343904,
+          "val_r": 0.850174371659438,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4196.824702233839,
+          "hoo_r": 0.4503126890433266,
+          "hoo_n_samples": 379,
+          "n_train": 2621,
+          "n_eval": 379,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold9_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 10,
+      "held_out_groups": [
+        "coding",
+        "fiction",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6971551361830626,
+          "val_r": 0.8360205437743475,
+          "best_alpha": 10000.0,
+          "hoo_r2": -377.9044247412894,
+          "hoo_r": 0.3302884199173395,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7401091317171622,
+          "val_r": 0.8616917383218423,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1305.6132340514623,
+          "hoo_r": 0.4080251286518839,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.730269435426454,
+          "val_r": 0.8562882655360283,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4916.880011291224,
+          "hoo_r": 0.3849745879563002,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.711880283790929,
+          "val_r": 0.8458648647825585,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3797.850666179662,
+          "hoo_r": 0.35838806507853815,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7094666816671629,
+          "val_r": 0.844838813254879,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3564.436026360187,
+          "hoo_r": 0.36619732463580584,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.712811007928426,
+          "val_r": 0.8468119627403178,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4217.138493650611,
+          "hoo_r": 0.3931974630626311,
+          "hoo_n_samples": 312,
+          "n_train": 2688,
+          "n_eval": 312,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold10_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 11,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.4316960515845457,
+          "val_r": 0.6647689006920804,
+          "best_alpha": 10000.0,
+          "hoo_r2": -268.1816959700114,
+          "hoo_r": 0.6437803174040546,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.4884252930992806,
+          "val_r": 0.7057319693222849,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2269.4276808180616,
+          "hoo_r": 0.7378702049910693,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.46655399191736063,
+          "val_r": 0.6911091403279332,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8763.514656363714,
+          "hoo_r": 0.7423194820741895,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.43349082656664706,
+          "val_r": 0.6666903991933117,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6843.05172133637,
+          "hoo_r": 0.7096140218881095,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4347209267882054,
+          "val_r": 0.6687919565756953,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5562.897461529669,
+          "hoo_r": 0.6982730479293079,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4375965952366457,
+          "val_r": 0.6698106815998341,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3627.386927406435,
+          "hoo_r": 0.6999145255708878,
+          "hoo_n_samples": 1483,
+          "n_train": 1517,
+          "n_eval": 1483,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold11_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 12,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.36098978426741013,
+          "val_r": 0.6142482555385635,
+          "best_alpha": 10000.0,
+          "hoo_r2": -191.51719571007757,
+          "hoo_r": 0.7735336696561458,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.42744575853479905,
+          "val_r": 0.6659775415952731,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1129.5324771230648,
+          "hoo_r": 0.7962743919674758,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4126444339125035,
+          "val_r": 0.6581940346456134,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5140.060623127481,
+          "hoo_r": 0.8109351255070852,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.3660860994056271,
+          "val_r": 0.6225855538553178,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4115.576973066229,
+          "hoo_r": 0.8077216124022247,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.36459488968806514,
+          "val_r": 0.6247387440978021,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3648.7199627288887,
+          "hoo_r": 0.8142211389986697,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.3687936655404307,
+          "val_r": 0.6265754228742756,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2241.323322715619,
+          "hoo_r": 0.8115947203716982,
+          "hoo_n_samples": 1511,
+          "n_train": 1489,
+          "n_eval": 1511,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold12_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 13,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.40754367288602056,
+          "val_r": 0.6439386628974233,
+          "best_alpha": 10000.0,
+          "hoo_r2": -427.24450619809403,
+          "hoo_r": 0.636495442412304,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.47231304960646003,
+          "val_r": 0.693811783034492,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2723.5204968966145,
+          "hoo_r": 0.7639241540734694,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4543461802086844,
+          "val_r": 0.6813978938740107,
+          "best_alpha": 10000.0,
+          "hoo_r2": -11894.20946112701,
+          "hoo_r": 0.7756913428676414,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4142973013790243,
+          "val_r": 0.6514525914427378,
+          "best_alpha": 10000.0,
+          "hoo_r2": -10502.280797211133,
+          "hoo_r": 0.7634703609896837,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.41507264413647993,
+          "val_r": 0.6533837531547375,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8767.710628646702,
+          "hoo_r": 0.7528383497883596,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4188956118818384,
+          "val_r": 0.6557584306198001,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6305.025332255968,
+          "hoo_r": 0.7618652576372104,
+          "hoo_n_samples": 932,
+          "n_train": 2068,
+          "n_eval": 932,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold13_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 14,
+      "held_out_groups": [
+        "coding",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.40997586884196646,
+          "val_r": 0.6462387026847237,
+          "best_alpha": 10000.0,
+          "hoo_r2": -615.232350507792,
+          "hoo_r": 0.6284087469041066,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.4759959549991895,
+          "val_r": 0.6963678701789762,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3527.6662693289836,
+          "hoo_r": 0.7279352305094761,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4568536763266652,
+          "val_r": 0.6836173834385116,
+          "best_alpha": 10000.0,
+          "hoo_r2": -16234.202425885807,
+          "hoo_r": 0.7426910051606836,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.415371253685387,
+          "val_r": 0.6525252129143684,
+          "best_alpha": 10000.0,
+          "hoo_r2": -14070.4075387028,
+          "hoo_r": 0.7317027020809037,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4158699566732018,
+          "val_r": 0.6542538244189646,
+          "best_alpha": 10000.0,
+          "hoo_r2": -12340.663780282637,
+          "hoo_r": 0.7168945610737398,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4186364109066297,
+          "val_r": 0.6558512283371195,
+          "best_alpha": 10000.0,
+          "hoo_r2": -9197.043487770254,
+          "hoo_r": 0.7293236283444068,
+          "hoo_n_samples": 865,
+          "n_train": 2135,
+          "n_eval": 865,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold14_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 15,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6801075361417197,
+          "val_r": 0.8279499200312526,
+          "best_alpha": 10000.0,
+          "hoo_r2": -454.6831484018539,
+          "hoo_r": 0.3671810432930027,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7237651677324966,
+          "val_r": 0.8534340009415441,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1647.1283209271928,
+          "hoo_r": 0.43516147990247034,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7142875969191602,
+          "val_r": 0.8482336843034904,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7679.4596610406525,
+          "hoo_r": 0.46002559703759516,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6994086171366187,
+          "val_r": 0.840281285611808,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5320.410929059071,
+          "hoo_r": 0.43961231957800473,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6989306771147581,
+          "val_r": 0.8406338735527698,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4760.038074475148,
+          "hoo_r": 0.42507023738007443,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7023313948994614,
+          "val_r": 0.8426463035591064,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7144.860575765173,
+          "hoo_r": 0.4085242249005791,
+          "hoo_n_samples": 1441,
+          "n_train": 1559,
+          "n_eval": 1441,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold15_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 16,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7450253018623111,
+          "val_r": 0.8646122687434987,
+          "best_alpha": 10000.0,
+          "hoo_r2": -585.0037280315199,
+          "hoo_r": 0.3626475355951892,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7761093792399818,
+          "val_r": 0.8822034377727436,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2418.1767146319758,
+          "hoo_r": 0.47745888744940657,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7675658259620676,
+          "val_r": 0.8776410572413742,
+          "best_alpha": 10000.0,
+          "hoo_r2": -12480.369523295645,
+          "hoo_r": 0.4475319028196421,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7574824954464368,
+          "val_r": 0.8722106430214348,
+          "best_alpha": 10000.0,
+          "hoo_r2": -10503.844380788121,
+          "hoo_r": 0.3869254775360842,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7572623056400343,
+          "val_r": 0.8723921894588578,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7924.145633366898,
+          "hoo_r": 0.37246220798705815,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7627798912500777,
+          "val_r": 0.8755042956138841,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5976.332460182192,
+          "hoo_r": 0.3544081086735256,
+          "hoo_n_samples": 862,
+          "n_train": 2138,
+          "n_eval": 862,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold16_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 17,
+      "held_out_groups": [
+        "coding",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7399814991283514,
+          "val_r": 0.8615162305273483,
+          "best_alpha": 10000.0,
+          "hoo_r2": -652.8232619158555,
+          "hoo_r": 0.3044922340249658,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7710679826123814,
+          "val_r": 0.87926120649488,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2362.9198627121564,
+          "hoo_r": 0.4377157873327102,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7624561043431537,
+          "val_r": 0.8746490107880296,
+          "best_alpha": 10000.0,
+          "hoo_r2": -12490.264179031341,
+          "hoo_r": 0.4136535130357309,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7509886338170848,
+          "val_r": 0.868407354742955,
+          "best_alpha": 10000.0,
+          "hoo_r2": -10248.648810358363,
+          "hoo_r": 0.3518093433382889,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.750581311620258,
+          "val_r": 0.8684845319427964,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8338.098883364817,
+          "hoo_r": 0.33426515575743776,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7541824279766789,
+          "val_r": 0.8704899117615461,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6519.535917915228,
+          "hoo_r": 0.3258947611875166,
+          "hoo_n_samples": 795,
+          "n_train": 2205,
+          "n_eval": 795,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold17_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 18,
+      "held_out_groups": [
+        "coding",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6421567158002255,
+          "val_r": 0.8039833882815082,
+          "best_alpha": 10000.0,
+          "hoo_r2": -503.8171485581421,
+          "hoo_r": 0.32676942721163943,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6936849234846291,
+          "val_r": 0.8356723197676533,
+          "best_alpha": 10000.0,
+          "hoo_r2": -718.5690059680345,
+          "hoo_r": 0.35821724999608046,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6857437317731983,
+          "val_r": 0.8316752144651858,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4548.879443881639,
+          "hoo_r": 0.3703038901776604,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6636928688538655,
+          "val_r": 0.8190392527615586,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3407.0797861852466,
+          "hoo_r": 0.3818352535415011,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6632704283369797,
+          "val_r": 0.8196858642186584,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3426.1470595210853,
+          "hoo_r": 0.3913111873504875,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6679973790714453,
+          "val_r": 0.8226557609865971,
+          "best_alpha": 10000.0,
+          "hoo_r2": -9895.517405468454,
+          "hoo_r": 0.3778679367210258,
+          "hoo_n_samples": 890,
+          "n_train": 2110,
+          "n_eval": 890,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold18_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 19,
+      "held_out_groups": [
+        "coding",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6436408013001523,
+          "val_r": 0.8047712985280981,
+          "best_alpha": 10000.0,
+          "hoo_r2": -562.5951220132187,
+          "hoo_r": 0.2600550957876465,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6941628061955732,
+          "val_r": 0.835833586244514,
+          "best_alpha": 10000.0,
+          "hoo_r2": -714.7554950864221,
+          "hoo_r": 0.27834151026294196,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6855130473819406,
+          "val_r": 0.8313281022548209,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4225.173585813038,
+          "hoo_r": 0.29760539172921685,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6632331890808716,
+          "val_r": 0.8184213916469656,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3161.7371637106135,
+          "hoo_r": 0.3127410134583242,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6620659872086464,
+          "val_r": 0.8184992939025563,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3621.2120988620895,
+          "hoo_r": 0.3186859346036267,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.666650176888911,
+          "val_r": 0.8213962376804644,
+          "best_alpha": 10000.0,
+          "hoo_r2": -11020.666897720115,
+          "hoo_r": 0.3008269431960034,
+          "hoo_n_samples": 823,
+          "n_train": 2177,
+          "n_eval": 823,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold19_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 20,
+      "held_out_groups": [
+        "coding",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6887186822302185,
+          "val_r": 0.8311324477567327,
+          "best_alpha": 10000.0,
+          "hoo_r2": -619.2113011479329,
+          "hoo_r": 0.3390661389353103,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7314954208843727,
+          "val_r": 0.8567550829405004,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1114.9936842597137,
+          "hoo_r": 0.5051864115150051,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.72255735077429,
+          "val_r": 0.8519348601688183,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6690.777323984311,
+          "hoo_r": 0.5022446481125975,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7031111909119213,
+          "val_r": 0.8407847481591533,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6084.871433925241,
+          "hoo_r": 0.4749516373841222,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7024831180764739,
+          "val_r": 0.8409181743029132,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5447.859781537367,
+          "hoo_r": 0.48142573275246586,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7075310579595095,
+          "val_r": 0.8439462187664969,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6061.35384446171,
+          "hoo_r": 0.4759785820239232,
+          "hoo_n_samples": 244,
+          "n_train": 2756,
+          "n_eval": 244,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold20_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 21,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "harmful_request"
+      ],
+      "train_groups": [
+        "coding",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.4158719505306889,
+          "val_r": 0.6480143503173277,
+          "best_alpha": 10000.0,
+          "hoo_r2": -131.81059617704992,
+          "hoo_r": 0.6952151027587029,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.48652884456942125,
+          "val_r": 0.7020308236943377,
+          "best_alpha": 10000.0,
+          "hoo_r2": -935.6379170398072,
+          "hoo_r": 0.7337170050091424,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4679476024132745,
+          "val_r": 0.6897815435442181,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3416.7667522263773,
+          "hoo_r": 0.748416437953709,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4309806793988836,
+          "val_r": 0.6623988580777622,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3333.6762123318153,
+          "hoo_r": 0.73417569813253,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.42730309544402784,
+          "val_r": 0.6602367923306088,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3035.5566504001467,
+          "hoo_r": 0.7240515864869147,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4296076140925885,
+          "val_r": 0.6619623391020213,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3290.6762278374013,
+          "hoo_r": 0.7265623959014533,
+          "hoo_n_samples": 1250,
+          "n_train": 1750,
+          "n_eval": 1250,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold21_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 22,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7711839068286825,
+          "val_r": 0.8790653082145328,
+          "best_alpha": 10000.0,
+          "hoo_r2": -236.107646314828,
+          "hoo_r": 0.3888974653165237,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7936688637321008,
+          "val_r": 0.8916137475565019,
+          "best_alpha": 10000.0,
+          "hoo_r2": -708.9438698197008,
+          "hoo_r": 0.471165280890173,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7862321225023267,
+          "val_r": 0.8877061419325685,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2848.9324942381754,
+          "hoo_r": 0.4427086536358799,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7801782747728683,
+          "val_r": 0.8845382268326125,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3132.6895372591976,
+          "hoo_r": 0.41109547214687037,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7779937818478786,
+          "val_r": 0.8834203192969456,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3660.8128533079175,
+          "hoo_r": 0.3814546064686287,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7797627029246561,
+          "val_r": 0.8843140673932396,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4280.650454959491,
+          "hoo_r": 0.39379515541891424,
+          "hoo_n_samples": 1180,
+          "n_train": 1820,
+          "n_eval": 1180,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold22_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 23,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6286502514362764,
+          "val_r": 0.7949209169547378,
+          "best_alpha": 10000.0,
+          "hoo_r2": -173.9756042407474,
+          "hoo_r": 0.3965226233969128,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6784153764306027,
+          "val_r": 0.8263335572983351,
+          "best_alpha": 10000.0,
+          "hoo_r2": -861.2389473405847,
+          "hoo_r": 0.4689051306560456,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6699864394941606,
+          "val_r": 0.8220909138265906,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1848.307444957775,
+          "hoo_r": 0.4492062813321847,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6540552545419543,
+          "val_r": 0.8134548140226097,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3912.844508481811,
+          "hoo_r": 0.4274016383818446,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.649095402253567,
+          "val_r": 0.8111924172264313,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5697.4695490002905,
+          "hoo_r": 0.4156722881090243,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6536540813468188,
+          "val_r": 0.8141059942478727,
+          "best_alpha": 10000.0,
+          "hoo_r2": -10561.124313272843,
+          "hoo_r": 0.41864685471779156,
+          "hoo_n_samples": 1208,
+          "n_train": 1792,
+          "n_eval": 1208,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold23_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 24,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7138926184566475,
+          "val_r": 0.8454969693832034,
+          "best_alpha": 10000.0,
+          "hoo_r2": -277.23273291531206,
+          "hoo_r": 0.4486944845728277,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7497547801419143,
+          "val_r": 0.866770014078227,
+          "best_alpha": 10000.0,
+          "hoo_r2": -719.7907323377894,
+          "hoo_r": 0.5150887418067981,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7438508373991161,
+          "val_r": 0.8637590419823511,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2764.829314941359,
+          "hoo_r": 0.4819130292108465,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7285047676425438,
+          "val_r": 0.8552332802451783,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3626.441012283777,
+          "hoo_r": 0.45200327999930323,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7258510224310883,
+          "val_r": 0.85404048193672,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3006.4944060680427,
+          "hoo_r": 0.4352520098153906,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7281961701392343,
+          "val_r": 0.8553610934857611,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3338.810242910172,
+          "hoo_r": 0.4634312952811794,
+          "hoo_n_samples": 629,
+          "n_train": 2371,
+          "n_eval": 629,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold24_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 25,
+      "held_out_groups": [
+        "content_generation",
+        "fiction",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "harmful_request",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.702831040850526,
+          "val_r": 0.8389476176549031,
+          "best_alpha": 10000.0,
+          "hoo_r2": -298.3713560800732,
+          "hoo_r": 0.45328228682858157,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7417754248508677,
+          "val_r": 0.8621856632293026,
+          "best_alpha": 10000.0,
+          "hoo_r2": -812.4043072453924,
+          "hoo_r": 0.5082940377753518,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.734059943488538,
+          "val_r": 0.8580944290934109,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2846.935210525434,
+          "hoo_r": 0.478528601275676,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7184306429876725,
+          "val_r": 0.849333312407006,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3221.227218892194,
+          "hoo_r": 0.45020410702883423,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7163015341078918,
+          "val_r": 0.84844676013985,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3244.0735796178656,
+          "hoo_r": 0.43244332105703415,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7185563497749329,
+          "val_r": 0.8497281626476753,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3954.716610181595,
+          "hoo_r": 0.45509905196769657,
+          "hoo_n_samples": 562,
+          "n_train": 2438,
+          "n_eval": 562,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold25_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 26,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.43134970909877096,
+          "val_r": 0.662155048853426,
+          "best_alpha": 10000.0,
+          "hoo_r2": -157.652904123396,
+          "hoo_r": 0.6671933393852162,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.484292135302975,
+          "val_r": 0.7022179323761756,
+          "best_alpha": 10000.0,
+          "hoo_r2": -770.2042916324432,
+          "hoo_r": 0.7684266160444062,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4612825549167622,
+          "val_r": 0.6862931059173312,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4511.110305413957,
+          "hoo_r": 0.7632082743750717,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4333265596627567,
+          "val_r": 0.6663015120110379,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4168.920263522216,
+          "hoo_r": 0.7332489032115511,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.43565251157865703,
+          "val_r": 0.6685370638579478,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4247.9555538658105,
+          "hoo_r": 0.7139012695812053,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4374305669963151,
+          "val_r": 0.6686377055906929,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3627.9055897284115,
+          "hoo_r": 0.711149663086034,
+          "hoo_n_samples": 1733,
+          "n_train": 1267,
+          "n_eval": 1733,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold26_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 27,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.32768383611644325,
+          "val_r": 0.5862382358081045,
+          "best_alpha": 10000.0,
+          "hoo_r2": -129.5848446840292,
+          "hoo_r": 0.752970372186827,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.395630493595366,
+          "val_r": 0.6437874250262786,
+          "best_alpha": 10000.0,
+          "hoo_r2": -551.3490872367025,
+          "hoo_r": 0.7966972491499262,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.379667260132902,
+          "val_r": 0.636426856876573,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2975.5696000224993,
+          "hoo_r": 0.8224625145668875,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.33738152694622403,
+          "val_r": 0.6043268561986371,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2930.7539004163054,
+          "hoo_r": 0.8188293307236845,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.33272128434556114,
+          "val_r": 0.603891202314756,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2965.658156240454,
+          "hoo_r": 0.820904388075645,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.33683639642477586,
+          "val_r": 0.6060908646900454,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2326.8476088591315,
+          "hoo_r": 0.8207518998545594,
+          "hoo_n_samples": 1761,
+          "n_train": 1239,
+          "n_eval": 1761,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold27_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 28,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.40440455196417135,
+          "val_r": 0.6400798249219566,
+          "best_alpha": 10000.0,
+          "hoo_r2": -207.98509985739372,
+          "hoo_r": 0.6911281703886437,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.46675685751079243,
+          "val_r": 0.6890074808628619,
+          "best_alpha": 10000.0,
+          "hoo_r2": -937.5846733272994,
+          "hoo_r": 0.7970806660676146,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.45058958886450745,
+          "val_r": 0.678378252699383,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5017.341793533925,
+          "hoo_r": 0.7973814645730595,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.41107379371283737,
+          "val_r": 0.6487903446073341,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5409.280810915174,
+          "hoo_r": 0.7759378788431315,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4103587752649326,
+          "val_r": 0.6492801235315211,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5020.40937955415,
+          "hoo_r": 0.7631397036811522,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4125497697212901,
+          "val_r": 0.6501737146001385,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4353.8847187076835,
+          "hoo_r": 0.7766653495606396,
+          "hoo_n_samples": 1182,
+          "n_train": 1818,
+          "n_eval": 1182,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold28_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 29,
+      "held_out_groups": [
+        "content_generation",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.4020594257594097,
+          "val_r": 0.6386871943574801,
+          "best_alpha": 10000.0,
+          "hoo_r2": -272.4940609256855,
+          "hoo_r": 0.6979531481403571,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.4657873691920752,
+          "val_r": 0.6883622763095668,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1076.4558725030422,
+          "hoo_r": 0.7912391744355467,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.44691854846848944,
+          "val_r": 0.6758820428845049,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6241.077030045304,
+          "hoo_r": 0.7963638436090709,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4072249045399484,
+          "val_r": 0.6460508778638513,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6291.126399046364,
+          "hoo_r": 0.7806206881110924,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.40662416898621034,
+          "val_r": 0.6465738045690059,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6105.548612946441,
+          "hoo_r": 0.7686479822596839,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.40791454473761524,
+          "val_r": 0.6468893330557578,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5326.899756384038,
+          "hoo_r": 0.7819137772641724,
+          "hoo_n_samples": 1115,
+          "n_train": 1885,
+          "n_eval": 1115,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold29_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 30,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6465253679943979,
+          "val_r": 0.8077152590486254,
+          "best_alpha": 10000.0,
+          "hoo_r2": -328.8725663084291,
+          "hoo_r": 0.43330468320103743,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6932609792585218,
+          "val_r": 0.8363883288936858,
+          "best_alpha": 10000.0,
+          "hoo_r2": -796.9806694375558,
+          "hoo_r": 0.5153244529808911,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6832962277467912,
+          "val_r": 0.8308947473982599,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3056.508783591698,
+          "hoo_r": 0.5220913255890515,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6741067447442143,
+          "val_r": 0.8265007121377919,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3322.292611190581,
+          "hoo_r": 0.49751176270607894,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6742927951420137,
+          "val_r": 0.8273343689150053,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3875.2448425836265,
+          "hoo_r": 0.4774124475292458,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6772378297893723,
+          "val_r": 0.8290300254742231,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7505.949625265286,
+          "hoo_r": 0.4612491911313278,
+          "hoo_n_samples": 1691,
+          "n_train": 1309,
+          "n_eval": 1691,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold30_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 31,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7612675666971399,
+          "val_r": 0.8734715575675296,
+          "best_alpha": 10000.0,
+          "hoo_r2": -506.51905364099457,
+          "hoo_r": 0.39765726656565736,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7876963250205591,
+          "val_r": 0.8884788481858253,
+          "best_alpha": 10000.0,
+          "hoo_r2": -650.1403509695755,
+          "hoo_r": 0.5200310776744188,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.780005767336838,
+          "val_r": 0.8843758241456801,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5305.851569545954,
+          "hoo_r": 0.47932498087738934,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7726487919943119,
+          "val_r": 0.8805089859380081,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6033.914434030775,
+          "hoo_r": 0.4336932521560482,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7721427948953361,
+          "val_r": 0.880408201038381,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5443.026265221481,
+          "hoo_r": 0.4118361589572106,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7760556500519331,
+          "val_r": 0.8825292427572476,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4454.067371781397,
+          "hoo_r": 0.4019658664542527,
+          "hoo_n_samples": 1112,
+          "n_train": 1888,
+          "n_eval": 1112,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold31_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 32,
+      "held_out_groups": [
+        "content_generation",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7488017546472803,
+          "val_r": 0.8663613154741551,
+          "best_alpha": 10000.0,
+          "hoo_r2": -531.2194513285924,
+          "hoo_r": 0.3917589860144334,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7768885326209517,
+          "val_r": 0.8823677319091405,
+          "best_alpha": 10000.0,
+          "hoo_r2": -840.6717563711812,
+          "hoo_r": 0.5174726008823343,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7675400712942284,
+          "val_r": 0.8773277535479596,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5570.990342609313,
+          "hoo_r": 0.488206074076648,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7595873444249012,
+          "val_r": 0.8731761314712457,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5898.9757637300645,
+          "hoo_r": 0.43143477905188876,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7599292692015236,
+          "val_r": 0.8735905160695859,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5786.085569563153,
+          "hoo_r": 0.40495074309205875,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7616844797481807,
+          "val_r": 0.8744738772462173,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5367.858995462393,
+          "hoo_r": 0.39840723505144415,
+          "hoo_n_samples": 1045,
+          "n_train": 1955,
+          "n_eval": 1045,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold32_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 33,
+      "held_out_groups": [
+        "content_generation",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6273668734320044,
+          "val_r": 0.7940735957439775,
+          "best_alpha": 10000.0,
+          "hoo_r2": -355.5121356984493,
+          "hoo_r": 0.44219797391285454,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6802449587830848,
+          "val_r": 0.8278043923891358,
+          "best_alpha": 10000.0,
+          "hoo_r2": -985.5822595268486,
+          "hoo_r": 0.516962838769283,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6728047788624012,
+          "val_r": 0.8240975934963954,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2126.1242335037973,
+          "hoo_r": 0.5058112772667368,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.653294835619788,
+          "val_r": 0.8130282176113932,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3184.1827050508773,
+          "hoo_r": 0.49372915156396907,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6526254367846323,
+          "val_r": 0.8136126775017944,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3772.009373865583,
+          "hoo_r": 0.48854551360890835,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6562174961949578,
+          "val_r": 0.8158517686299781,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8993.451344391793,
+          "hoo_r": 0.48303185005145355,
+          "hoo_n_samples": 1140,
+          "n_train": 1860,
+          "n_eval": 1140,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold33_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 34,
+      "held_out_groups": [
+        "content_generation",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6273367171120581,
+          "val_r": 0.7942519481209304,
+          "best_alpha": 10000.0,
+          "hoo_r2": -424.1475692493987,
+          "hoo_r": 0.41849705991546043,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6787719758687512,
+          "val_r": 0.8269217722842995,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1148.5127923186174,
+          "hoo_r": 0.4891547907435259,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6696685635846634,
+          "val_r": 0.8220973066785355,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2278.682012733335,
+          "hoo_r": 0.4957601407308324,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6507426054399396,
+          "val_r": 0.8112983358383639,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3427.095678834621,
+          "hoo_r": 0.48168923429436067,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.649485502005291,
+          "val_r": 0.8113586929624683,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4110.304233685716,
+          "hoo_r": 0.47176748327377194,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6533694085268656,
+          "val_r": 0.8137693626813846,
+          "best_alpha": 10000.0,
+          "hoo_r2": -10103.28109565855,
+          "hoo_r": 0.4566610891912249,
+          "hoo_n_samples": 1073,
+          "n_train": 1927,
+          "n_eval": 1073,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold34_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 35,
+      "held_out_groups": [
+        "content_generation",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.694458446524952,
+          "val_r": 0.8342114929733521,
+          "best_alpha": 10000.0,
+          "hoo_r2": -541.6261576112059,
+          "hoo_r": 0.4832683595374192,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7352450598616508,
+          "val_r": 0.8587872891191551,
+          "best_alpha": 10000.0,
+          "hoo_r2": -813.9801907154313,
+          "hoo_r": 0.6159760723318867,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7270065531448756,
+          "val_r": 0.8543203314157243,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4020.2500274052613,
+          "hoo_r": 0.5836175863940715,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7097502911820768,
+          "val_r": 0.8446180778136256,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4988.961802345615,
+          "hoo_r": 0.5341814341945551,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7092250815677923,
+          "val_r": 0.8447939696393394,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4335.832152745661,
+          "hoo_r": 0.5181638643421917,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7126152869836273,
+          "val_r": 0.8466692465926309,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4293.131728748164,
+          "hoo_r": 0.5232673010523722,
+          "hoo_n_samples": 494,
+          "n_train": 2506,
+          "n_eval": 494,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold35_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 36,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.44234973400500205,
+          "val_r": 0.6717569295874097,
+          "best_alpha": 10000.0,
+          "hoo_r2": -163.6190972480889,
+          "hoo_r": 0.6916171373174183,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.5042413829606188,
+          "val_r": 0.7167888302082558,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2032.095523713605,
+          "hoo_r": 0.7507260422544993,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.476337408602787,
+          "val_r": 0.6978834454982776,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6025.983430546452,
+          "hoo_r": 0.7611850936804587,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4501168298586746,
+          "val_r": 0.6791060158108758,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4122.885440089522,
+          "hoo_r": 0.7344561753671341,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4490078706471439,
+          "val_r": 0.6792122857817442,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3474.242060467875,
+          "hoo_r": 0.7193026772829337,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4523572651974387,
+          "val_r": 0.6808613809273049,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2950.306325438104,
+          "hoo_r": 0.72025967550857,
+          "hoo_n_samples": 1519,
+          "n_train": 1481,
+          "n_eval": 1519,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold36_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 37,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.3481568562488052,
+          "val_r": 0.6019118657307062,
+          "best_alpha": 10000.0,
+          "hoo_r2": -125.33084721015057,
+          "hoo_r": 0.7592217698195702,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.42191976954317595,
+          "val_r": 0.6604582230891469,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1350.3430171700772,
+          "hoo_r": 0.7886676312853829,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4008918798261786,
+          "val_r": 0.6475238144373169,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4038.368579975486,
+          "hoo_r": 0.8079901910615402,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.3576776733179509,
+          "val_r": 0.6153490263491981,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2976.1558205848132,
+          "hoo_r": 0.8122862805401602,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.35400698211698867,
+          "val_r": 0.615477038963531,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2630.177395178152,
+          "hoo_r": 0.8135850517148784,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.36035327064461314,
+          "val_r": 0.6199737502574648,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1884.7328923937912,
+          "hoo_r": 0.8052627704711218,
+          "hoo_n_samples": 1547,
+          "n_train": 1453,
+          "n_eval": 1547,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold37_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 38,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.41338390815447446,
+          "val_r": 0.6469625277232051,
+          "best_alpha": 10000.0,
+          "hoo_r2": -240.9618053586148,
+          "hoo_r": 0.6296524464450941,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.4821739412345659,
+          "val_r": 0.6997950721965884,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2597.323660833324,
+          "hoo_r": 0.7175187903088581,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4602251885490404,
+          "val_r": 0.6844126026065982,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7944.450272975625,
+          "hoo_r": 0.7430720032877337,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.4224781498547789,
+          "val_r": 0.6565652170660117,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6638.976146914145,
+          "hoo_r": 0.7336541883613433,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4232525373022497,
+          "val_r": 0.658399498058609,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5287.737463590106,
+          "hoo_r": 0.7177874308979884,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.42733892735754553,
+          "val_r": 0.6612761023017096,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4470.494558775095,
+          "hoo_r": 0.7203072961865565,
+          "hoo_n_samples": 968,
+          "n_train": 2032,
+          "n_eval": 968,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold38_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 39,
+      "held_out_groups": [
+        "fiction",
+        "harmful_request",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.412030035697715,
+          "val_r": 0.6458654401111377,
+          "best_alpha": 10000.0,
+          "hoo_r2": -319.33807425080107,
+          "hoo_r": 0.6310128679583351,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.48300799756220336,
+          "val_r": 0.6999657664176043,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2939.7195150179996,
+          "hoo_r": 0.6897538151784339,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4594675810707847,
+          "val_r": 0.6838162629060033,
+          "best_alpha": 10000.0,
+          "hoo_r2": -9808.038404005521,
+          "hoo_r": 0.7161705626487693,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.42176570533873503,
+          "val_r": 0.6558668736047156,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7874.717333125318,
+          "hoo_r": 0.7091136413505084,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.4216873455188508,
+          "val_r": 0.6570429211902458,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6653.553653583341,
+          "hoo_r": 0.692585361671671,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.425484812032095,
+          "val_r": 0.659753311412955,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5783.0984101311915,
+          "hoo_r": 0.6968685927758709,
+          "hoo_n_samples": 901,
+          "n_train": 2099,
+          "n_eval": 901,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold39_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 40,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6740509025755558,
+          "val_r": 0.8247231246722562,
+          "best_alpha": 10000.0,
+          "hoo_r2": -259.29261540975256,
+          "hoo_r": 0.3975444595800582,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7147354412101353,
+          "val_r": 0.8483185409965319,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1587.124016557306,
+          "hoo_r": 0.4824666758320048,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.705855494345042,
+          "val_r": 0.8436165065986542,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5301.771028986933,
+          "hoo_r": 0.4747342215357247,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6934000792728308,
+          "val_r": 0.8372056890547558,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3476.5600328210376,
+          "hoo_r": 0.4664716117086449,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6893068453692928,
+          "val_r": 0.8353023212360602,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4125.423244681964,
+          "hoo_r": 0.45297400960947576,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.692877596704566,
+          "val_r": 0.8375410166174568,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7265.139709518129,
+          "hoo_r": 0.4392035590759802,
+          "hoo_n_samples": 1477,
+          "n_train": 1523,
+          "n_eval": 1477,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold40_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 41,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7528422486581468,
+          "val_r": 0.8691997815429255,
+          "best_alpha": 10000.0,
+          "hoo_r2": -357.6685953541276,
+          "hoo_r": 0.4364949101820962,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7811262550298358,
+          "val_r": 0.8851972506299441,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2242.5008168245254,
+          "hoo_r": 0.5148365712878623,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7724183570698275,
+          "val_r": 0.8805576619497979,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8410.550126852282,
+          "hoo_r": 0.475916500021386,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7637114985226235,
+          "val_r": 0.8759144524359501,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6456.503789376766,
+          "hoo_r": 0.4240024055688327,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7619468920434571,
+          "val_r": 0.8751667481532837,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5304.004537202441,
+          "hoo_r": 0.41013456951986765,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7665490699794061,
+          "val_r": 0.8777138820975674,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4917.468235535584,
+          "hoo_r": 0.40254166739083985,
+          "hoo_n_samples": 898,
+          "n_train": 2102,
+          "n_eval": 898,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold41_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 42,
+      "held_out_groups": [
+        "fiction",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.744254752148618,
+          "val_r": 0.8640435753051247,
+          "best_alpha": 10000.0,
+          "hoo_r2": -385.4459726732662,
+          "hoo_r": 0.40653044143844197,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7745233312503766,
+          "val_r": 0.8813165019265577,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2083.373517178724,
+          "hoo_r": 0.49513676740553164,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7650554988333307,
+          "val_r": 0.8762630404335991,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8198.452436767408,
+          "hoo_r": 0.46371752956280093,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7560113625031446,
+          "val_r": 0.8714211078559304,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6027.641763980549,
+          "hoo_r": 0.4050600585915558,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7537587682611778,
+          "val_r": 0.8703897451633577,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5444.2659234675475,
+          "hoo_r": 0.38848946308048415,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7565799325976024,
+          "val_r": 0.8718697147712662,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5227.321726624723,
+          "hoo_r": 0.3884941510820644,
+          "hoo_n_samples": 831,
+          "n_train": 2169,
+          "n_eval": 831,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold42_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 43,
+      "held_out_groups": [
+        "fiction",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.641845226551048,
+          "val_r": 0.8035402159988443,
+          "best_alpha": 10000.0,
+          "hoo_r2": -315.27741574897186,
+          "hoo_r": 0.319774063712133,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6922905311570343,
+          "val_r": 0.8348011497144199,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1085.3260761914214,
+          "hoo_r": 0.4050447084713319,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6828109394498976,
+          "val_r": 0.8297704900558003,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3933.6776938689613,
+          "hoo_r": 0.3941911337708867,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6624052271544976,
+          "val_r": 0.8184479293319546,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3141.694173948909,
+          "hoo_r": 0.3965556995120742,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6600345218420625,
+          "val_r": 0.8179053845851433,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3810.239981671589,
+          "hoo_r": 0.4045069475366252,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6643579124500307,
+          "val_r": 0.8204803871133416,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8079.262455242523,
+          "hoo_r": 0.41199830786188446,
+          "hoo_n_samples": 926,
+          "n_train": 2074,
+          "n_eval": 926,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold43_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 44,
+      "held_out_groups": [
+        "fiction",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6412873182932068,
+          "val_r": 0.8031319849763374,
+          "best_alpha": 10000.0,
+          "hoo_r2": -357.05643655551745,
+          "hoo_r": 0.267587655026581,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6929197223644199,
+          "val_r": 0.8349594472482208,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1008.4371469159039,
+          "hoo_r": 0.34852871688488396,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6826983684506577,
+          "val_r": 0.8294463173601313,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3709.0485297034948,
+          "hoo_r": 0.3424936688303446,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6624275677441589,
+          "val_r": 0.8180631835598409,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3161.1701191750485,
+          "hoo_r": 0.3405499480808296,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6588569912234437,
+          "val_r": 0.8166358875397798,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4236.251931693128,
+          "hoo_r": 0.3482999755266853,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6636756030781019,
+          "val_r": 0.8195667684286972,
+          "best_alpha": 10000.0,
+          "hoo_r2": -9197.629470824892,
+          "hoo_r": 0.3488272181683884,
+          "hoo_n_samples": 859,
+          "n_train": 2141,
+          "n_eval": 859,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold44_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 45,
+      "held_out_groups": [
+        "fiction",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6930604416833915,
+          "val_r": 0.8334771603591534,
+          "best_alpha": 10000.0,
+          "hoo_r2": -377.4749988302327,
+          "hoo_r": 0.417818604675459,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7357972884519561,
+          "val_r": 0.8591516245335775,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1363.9751408965371,
+          "hoo_r": 0.49768341922992293,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7258849905917367,
+          "val_r": 0.8537079929136251,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5676.737993685625,
+          "hoo_r": 0.5080715628533596,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.7081250955283908,
+          "val_r": 0.8436851795899892,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4868.319435656347,
+          "hoo_r": 0.4809302128658088,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7063942183016402,
+          "val_r": 0.84309291819356,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3916.743952226665,
+          "hoo_r": 0.49289683301100345,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7106974421971188,
+          "val_r": 0.8456168681839094,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4061.7334584386804,
+          "hoo_r": 0.500151936416712,
+          "hoo_n_samples": 280,
+          "n_train": 2720,
+          "n_eval": 280,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold45_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 46,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "math"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.38254305024515906,
+          "val_r": 0.6375956287535457,
+          "best_alpha": 10000.0,
+          "hoo_r2": -152.78095725057392,
+          "hoo_r": 0.7256118227980649,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.4353778917738875,
+          "val_r": 0.6738534192422463,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1363.7051240374738,
+          "hoo_r": 0.7777226836172101,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.41753745774380907,
+          "val_r": 0.6638153157655802,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5631.995165414056,
+          "hoo_r": 0.7871158793383982,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.3766018334739046,
+          "val_r": 0.6333009545550937,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3840.149828763977,
+          "hoo_r": 0.7804308684488578,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.37812961862981054,
+          "val_r": 0.6390195743416405,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3429.366193185457,
+          "hoo_r": 0.7760611399276097,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.38018232491472215,
+          "val_r": 0.6378944899091816,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2196.2353752326358,
+          "hoo_r": 0.77275000706045,
+          "hoo_n_samples": 2030,
+          "n_train": 970,
+          "n_eval": 2030,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold46_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 47,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "math",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.42540592345264344,
+          "val_r": 0.660091111282368,
+          "best_alpha": 10000.0,
+          "hoo_r2": -232.68560668207894,
+          "hoo_r": 0.6458416452704269,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.47837638454296466,
+          "val_r": 0.6986363383389185,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1976.242636250888,
+          "hoo_r": 0.7559041713037036,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4561390561459481,
+          "val_r": 0.6832093380669946,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8251.185025545989,
+          "hoo_r": 0.7532931821355693,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.42649047902404014,
+          "val_r": 0.661548172208373,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6149.155222877201,
+          "hoo_r": 0.7167103436159875,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.42901606066062553,
+          "val_r": 0.6647731781163028,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5192.469592088981,
+          "hoo_r": 0.7002767399878213,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4340904483587519,
+          "val_r": 0.6676205781588699,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3330.8948044784274,
+          "hoo_r": 0.6981094802790755,
+          "hoo_n_samples": 1451,
+          "n_train": 1549,
+          "n_eval": 1451,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold47_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 48,
+      "held_out_groups": [
+        "harmful_request",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "math",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.42715642060096554,
+          "val_r": 0.6612169672602966,
+          "best_alpha": 10000.0,
+          "hoo_r2": -285.59708848530755,
+          "hoo_r": 0.6220714632038211,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.4802024763010479,
+          "val_r": 0.6995122837963915,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2019.8547951397766,
+          "hoo_r": 0.7392445638778734,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4564721498540506,
+          "val_r": 0.6834840236059438,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8943.893357947474,
+          "hoo_r": 0.7456655106501862,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.42507176480840175,
+          "val_r": 0.6603764049262832,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6747.702279200027,
+          "hoo_r": 0.7122146205810906,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.42775119088337626,
+          "val_r": 0.663817568797879,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5938.0925810646495,
+          "hoo_r": 0.6942267209990567,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.4299082490177392,
+          "val_r": 0.6641571179683528,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4079.252129505814,
+          "hoo_r": 0.6979812443810345,
+          "hoo_n_samples": 1384,
+          "n_train": 1616,
+          "n_eval": 1384,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold48_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 49,
+      "held_out_groups": [
+        "harmful_request",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.35087753420721,
+          "val_r": 0.6056497250098293,
+          "best_alpha": 10000.0,
+          "hoo_r2": -165.4044410057658,
+          "hoo_r": 0.7613344519249058,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.40841983750776023,
+          "val_r": 0.6507065905119326,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1111.6834929013346,
+          "hoo_r": 0.7884917844205689,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.3939774564354902,
+          "val_r": 0.6425534250800372,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4979.462604281401,
+          "hoo_r": 0.8145970020922715,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.3494338330853577,
+          "val_r": 0.6085130086720756,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4183.584672275361,
+          "hoo_r": 0.8143872185200556,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.3514371290723538,
+          "val_r": 0.6143083563842027,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3599.5273016882265,
+          "hoo_r": 0.8170811629687768,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.3550116248169374,
+          "val_r": 0.6151877804682702,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2155.1913201306033,
+          "hoo_r": 0.8160044557104501,
+          "hoo_n_samples": 1479,
+          "n_train": 1521,
+          "n_eval": 1479,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold49_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 50,
+      "held_out_groups": [
+        "harmful_request",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.3600159913883592,
+          "val_r": 0.6128026750268027,
+          "best_alpha": 10000.0,
+          "hoo_r2": -194.82391264065595,
+          "hoo_r": 0.7716804565039967,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.41988784971950255,
+          "val_r": 0.6582467755437962,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1147.041888068867,
+          "hoo_r": 0.7873034928276182,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.402349362657805,
+          "val_r": 0.6481273254306457,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5413.662218367876,
+          "hoo_r": 0.813101029327668,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.35737881242947733,
+          "val_r": 0.6137573899931357,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4342.8441326208,
+          "hoo_r": 0.8177057755554202,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.3580421496138677,
+          "val_r": 0.6179948388903683,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3902.469306556998,
+          "hoo_r": 0.8193923880158057,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.3620289153519843,
+          "val_r": 0.619484581901796,
+          "best_alpha": 10000.0,
+          "hoo_r2": -2445.924025114431,
+          "hoo_r": 0.8176798703560594,
+          "hoo_n_samples": 1412,
+          "n_train": 1588,
+          "n_eval": 1412,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold50_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 51,
+      "held_out_groups": [
+        "harmful_request",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "knowledge_qa",
+        "math"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.40483793010491204,
+          "val_r": 0.6417007336065141,
+          "best_alpha": 10000.0,
+          "hoo_r2": -561.2380167695267,
+          "hoo_r": 0.6082064323368912,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.46634228480931084,
+          "val_r": 0.6889822412529021,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3622.8190524676866,
+          "hoo_r": 0.7263724792364684,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.4458248939589907,
+          "val_r": 0.6746738734734127,
+          "best_alpha": 10000.0,
+          "hoo_r2": -16802.385004933934,
+          "hoo_r": 0.7358819941181886,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.40721289523957893,
+          "val_r": 0.64587029893481,
+          "best_alpha": 10000.0,
+          "hoo_r2": -14815.2460545252,
+          "hoo_r": 0.7182326966461595,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.40977475526654217,
+          "val_r": 0.6493101090708558,
+          "best_alpha": 10000.0,
+          "hoo_r2": -12756.433638708026,
+          "hoo_r": 0.7016595038005019,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.41366736591390313,
+          "val_r": 0.6516815043648764,
+          "best_alpha": 10000.0,
+          "hoo_r2": -9590.79888230538,
+          "hoo_r": 0.7147093985503884,
+          "hoo_n_samples": 833,
+          "n_train": 2167,
+          "n_eval": 833,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold51_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 52,
+      "held_out_groups": [
+        "knowledge_qa",
+        "math",
+        "persuasive_writing"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "summarization"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.675145059449705,
+          "val_r": 0.8251687147316955,
+          "best_alpha": 10000.0,
+          "hoo_r2": -436.85121642589723,
+          "hoo_r": 0.43587908887339544,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.718812254613203,
+          "val_r": 0.8506562262399981,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1260.1163637065933,
+          "hoo_r": 0.4817901875775122,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7110238950913786,
+          "val_r": 0.8464910749867954,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8084.56399539829,
+          "hoo_r": 0.484272212965687,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6955565090926269,
+          "val_r": 0.8380823724519679,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5446.034769095056,
+          "hoo_r": 0.48486351112895093,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.696482562198756,
+          "val_r": 0.839412599298558,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4766.830841203366,
+          "hoo_r": 0.4784142125126355,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7014921250937577,
+          "val_r": 0.8424724544336317,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6745.475246942895,
+          "hoo_r": 0.4582405850205597,
+          "hoo_n_samples": 1409,
+          "n_train": 1591,
+          "n_eval": 1409,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold52_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 53,
+      "held_out_groups": [
+        "knowledge_qa",
+        "math",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "persuasive_writing"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6761480819285636,
+          "val_r": 0.8253911624307373,
+          "best_alpha": 10000.0,
+          "hoo_r2": -488.60646808354136,
+          "hoo_r": 0.41413465653078535,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7189330510862444,
+          "val_r": 0.8503873659281563,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1283.1905338762633,
+          "hoo_r": 0.47532449450645226,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7099656006406274,
+          "val_r": 0.8455420690069868,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7770.692871800288,
+          "hoo_r": 0.48305140700370053,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6946572463745136,
+          "val_r": 0.8372532730532928,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5244.100142829741,
+          "hoo_r": 0.4758183941355927,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6943577390904079,
+          "val_r": 0.8377606632710819,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5011.816703560849,
+          "hoo_r": 0.4621974500483986,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6973743477940311,
+          "val_r": 0.8395290247126844,
+          "best_alpha": 10000.0,
+          "hoo_r2": -7312.974398693419,
+          "hoo_r": 0.44439556120346646,
+          "hoo_n_samples": 1342,
+          "n_train": 1658,
+          "n_eval": 1342,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold53_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 54,
+      "held_out_groups": [
+        "knowledge_qa",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "math"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.7361405144426346,
+          "val_r": 0.8594334314387281,
+          "best_alpha": 10000.0,
+          "hoo_r2": -647.542604037927,
+          "hoo_r": 0.3855255645173774,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.7678471955035231,
+          "val_r": 0.8775942212634449,
+          "best_alpha": 10000.0,
+          "hoo_r2": -1989.3665680458134,
+          "hoo_r": 0.49482386987789884,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.7582635789158949,
+          "val_r": 0.8724173928007914,
+          "best_alpha": 10000.0,
+          "hoo_r2": -12539.737567116295,
+          "hoo_r": 0.46420049765062577,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.748133382707908,
+          "val_r": 0.8669329632433721,
+          "best_alpha": 10000.0,
+          "hoo_r2": -10282.510739429508,
+          "hoo_r": 0.4048215168269974,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.7478431759021108,
+          "val_r": 0.8670875134296443,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8416.93637505118,
+          "hoo_r": 0.39078812406285074,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.7530893726149569,
+          "val_r": 0.8700510248232044,
+          "best_alpha": 10000.0,
+          "hoo_r2": -6322.3649705535945,
+          "hoo_r": 0.3669709517701587,
+          "hoo_n_samples": 763,
+          "n_train": 2237,
+          "n_eval": 763,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold54_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 55,
+      "held_out_groups": [
+        "math",
+        "persuasive_writing",
+        "summarization"
+      ],
+      "train_groups": [
+        "coding",
+        "content_generation",
+        "fiction",
+        "harmful_request",
+        "knowledge_qa"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6385448499196414,
+          "val_r": 0.8013448546499283,
+          "best_alpha": 10000.0,
+          "hoo_r2": -548.2748604064172,
+          "hoo_r": 0.2688082993143744,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6888780162548898,
+          "val_r": 0.8324928346613568,
+          "best_alpha": 10000.0,
+          "hoo_r2": -771.3469777183686,
+          "hoo_r": 0.33077121725464054,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6802995267294278,
+          "val_r": 0.8280406049097266,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5341.151555040923,
+          "hoo_r": 0.35307319649013286,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.658005025599572,
+          "val_r": 0.8152174406099684,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3834.3999980940807,
+          "hoo_r": 0.3809996674024193,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6581922995835022,
+          "val_r": 0.8162518836308147,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3674.048834594981,
+          "hoo_r": 0.3924956132434066,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6628538367987515,
+          "val_r": 0.8191208334139984,
+          "best_alpha": 10000.0,
+          "hoo_r2": -8987.909709499154,
+          "hoo_r": 0.38070795833219084,
+          "hoo_n_samples": 791,
+          "n_train": 2209,
+          "n_eval": 791,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold55_ridge_L41",
+          "layer": 41
+        }
+      }
+    }
+  ],
+  "layer_summary": {
+    "11": {
+      "ridge": {
+        "mean_val_r": 0.7607404702759663,
+        "mean_hoo_r": 0.4969259781811169,
+        "std_hoo_r": 0.15665982578118842,
+        "n_folds": 56
+      }
+    },
+    "23": {
+      "ridge": {
+        "mean_val_r": 0.79397026843028,
+        "mean_hoo_r": 0.5793914894577641,
+        "std_hoo_r": 0.15195943100723525,
+        "n_folds": 56
+      }
+    },
+    "27": {
+      "ridge": {
+        "mean_val_r": 0.7862694944509646,
+        "mean_hoo_r": 0.5751397090203587,
+        "std_hoo_r": 0.1619290576679504,
+        "n_folds": 56
+      }
+    },
+    "32": {
+      "ridge": {
+        "mean_val_r": 0.7702870568244691,
+        "mean_hoo_r": 0.5532515489053267,
+        "std_hoo_r": 0.16658825942813554,
+        "n_folds": 56
+      }
+    },
+    "36": {
+      "ridge": {
+        "mean_val_r": 0.7708096977576228,
+        "mean_hoo_r": 0.5432009621386223,
+        "std_hoo_r": 0.1670982192872381,
+        "n_folds": 56
+      }
+    },
+    "41": {
+      "ridge": {
+        "mean_val_r": 0.7727016299500981,
+        "mean_hoo_r": 0.5438163414583228,
+        "std_hoo_r": 0.1695414475232441,
+        "n_folds": 56
+      }
+    }
+  }
+}
