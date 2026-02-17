@@ -1,0 +1,58 @@
+[
+  {
+    "target_iteration": 2,
+    "n_available_pairs": 7500,
+    "n_remaining_pairs": 16000,
+    "bt_selected": 2000,
+    "actual_selected": 2000,
+    "pair_overlap": 247,
+    "pair_overlap_pct": 12.35,
+    "rank_correlation": 0.23947491300563933,
+    "rank_p_value": 1.8035498471997e-207,
+    "task_coverage_overlap_pct": 55.961331901181524,
+    "bt_tasks": 2170,
+    "actual_tasks": 2186
+  },
+  {
+    "target_iteration": 3,
+    "n_available_pairs": 9500,
+    "n_remaining_pairs": 14000,
+    "bt_selected": 2000,
+    "actual_selected": 2000,
+    "pair_overlap": 279,
+    "pair_overlap_pct": 13.950000000000001,
+    "rank_correlation": 0.3349666374646386,
+    "rank_p_value": 0.0,
+    "task_coverage_overlap_pct": 52.29050279329609,
+    "bt_tasks": 2168,
+    "actual_tasks": 1921
+  },
+  {
+    "target_iteration": 4,
+    "n_available_pairs": 11500,
+    "n_remaining_pairs": 12000,
+    "bt_selected": 2000,
+    "actual_selected": 2000,
+    "pair_overlap": 342,
+    "pair_overlap_pct": 17.1,
+    "rank_correlation": 0.4204131919233571,
+    "rank_p_value": 0.0,
+    "task_coverage_overlap_pct": 50.76863950807071,
+    "bt_tasks": 2170,
+    "actual_tasks": 1753
+  },
+  {
+    "target_iteration": 5,
+    "n_available_pairs": 13500,
+    "n_remaining_pairs": 10000,
+    "bt_selected": 2000,
+    "actual_selected": 2000,
+    "pair_overlap": 436,
+    "pair_overlap_pct": 21.8,
+    "rank_correlation": 0.46246918148347077,
+    "rank_p_value": 0.0,
+    "task_coverage_overlap_pct": 51.61658425256752,
+    "bt_tasks": 2191,
+    "actual_tasks": 1795
+  }
+]
