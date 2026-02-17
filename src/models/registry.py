@@ -99,6 +99,14 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         openrouter_name="google/gemma-2-27b-it",
         supports_system_role=False,
     ),
+    "gemma-2-27b-base": ModelConfig(
+        canonical_name="gemma-2-27b-base",
+        hf_name="google/gemma-2-27b",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name=None,
+        supports_system_role=False,
+    ),
     "gemma-3-27b": ModelConfig(
         canonical_name="gemma-3-27b",
         hf_name="google/gemma-3-27b-it",
