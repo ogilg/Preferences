@@ -1,0 +1,742 @@
+{
+  "broad": [
+    {
+      "name": "stem_enthusiast",
+      "n_tasks": 91,
+      "mean_delta": 0.009401130855218568,
+      "category_means": {
+        "coding": {
+          "mean": 0.2295589408012009,
+          "n": 6
+        },
+        "content_generation": {
+          "mean": -0.10869684580984891,
+          "n": 9
+        },
+        "fiction": {
+          "mean": -0.31079236220006345,
+          "n": 8
+        },
+        "harmful_request": {
+          "mean": -0.05216458153211804,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": -0.08035671480626862,
+          "n": 17
+        },
+        "math": {
+          "mean": 0.266190311850418,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": -0.04492471752533673,
+          "n": 3
+        },
+        "other": {
+          "mean": -0.05238095238095239,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": -0.15153508771929822,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": 0.22802197802197804,
+          "n": 2
+        }
+      },
+      "expected_positive": [
+        "math",
+        "coding"
+      ],
+      "expected_negative": [
+        "fiction",
+        "content_generation"
+      ],
+      "hits": 4,
+      "total_expected": 4
+    },
+    {
+      "name": "creative_writer",
+      "n_tasks": 101,
+      "mean_delta": 0.09344325205833957,
+      "category_means": {
+        "coding": {
+          "mean": -0.015288929336916965,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": 0.12496481846327051,
+          "n": 11
+        },
+        "fiction": {
+          "mean": 0.3414103887168903,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": 0.08640072763248348,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": 0.006501427494074568,
+          "n": 20
+        },
+        "math": {
+          "mean": 0.0021596996055200457,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": 0.21915535444947212,
+          "n": 3
+        },
+        "other": {
+          "mean": 0.18333333333333335,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": 0.4192982456140351,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": -0.09999999999999998,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": 0.29615384615384616,
+          "n": 1
+        },
+        "summarization": {
+          "mean": 0.5714285714285714,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "fiction",
+        "content_generation",
+        "persuasive_writing"
+      ],
+      "expected_negative": [
+        "math",
+        "coding"
+      ],
+      "hits": 3,
+      "total_expected": 5
+    },
+    {
+      "name": "philosopher",
+      "n_tasks": 98,
+      "mean_delta": -0.008636806107899811,
+      "category_means": {
+        "coding": {
+          "mean": -0.09068575473374237,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": -0.07048972699127498,
+          "n": 11
+        },
+        "fiction": {
+          "mean": 0.04674961691215562,
+          "n": 8
+        },
+        "harmful_request": {
+          "mean": 0.08777917374777172,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": 0.014001427494074552,
+          "n": 20
+        },
+        "math": {
+          "mean": -0.18666088684277535,
+          "n": 20
+        },
+        "model_manipulation": {
+          "mean": 0.1802664655605832,
+          "n": 3
+        },
+        "other": {
+          "mean": 0.18333333333333335,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": 0.3026315789473684,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": -0.024999999999999994,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": -0.05384615384615385,
+          "n": 1
+        },
+        "summarization": {
+          "mean": 0.2714285714285714,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "knowledge_qa",
+        "persuasive_writing"
+      ],
+      "expected_negative": [],
+      "hits": 1,
+      "total_expected": 2
+    },
+    {
+      "name": "trivia_nerd",
+      "n_tasks": 101,
+      "mean_delta": 0.027158728869178562,
+      "category_means": {
+        "coding": {
+          "mean": 0.0016283638961657504,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": -0.1341260906276386,
+          "n": 11
+        },
+        "fiction": {
+          "mean": -0.11358961128310974,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": 0.030636316604914574,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": 0.059001427494074554,
+          "n": 20
+        },
+        "math": {
+          "mean": 0.18022987504411653,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": -0.047511312217194575,
+          "n": 3
+        },
+        "other": {
+          "mean": -0.016666666666666663,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": -0.024561403508771933,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": 0.07500000000000002,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": -0.05384615384615385,
+          "n": 1
+        },
+        "summarization": {
+          "mean": -0.12857142857142856,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "knowledge_qa"
+      ],
+      "expected_negative": [
+        "fiction",
+        "coding"
+      ],
+      "hits": 2,
+      "total_expected": 3
+    },
+    {
+      "name": "hacker",
+      "n_tasks": 101,
+      "mean_delta": 0.005637103022383352,
+      "category_means": {
+        "coding": {
+          "mean": 0.290350168407444,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": -0.09776245426400224,
+          "n": 11
+        },
+        "fiction": {
+          "mean": -0.07858961128310972,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": -0.03302283126475961,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": -0.13349857250592545,
+          "n": 20
+        },
+        "math": {
+          "mean": 0.17358827103409144,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": -0.014177978883861233,
+          "n": 3
+        },
+        "other": {
+          "mean": -0.016666666666666663,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": -0.014035087719298215,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": 0.2,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": -0.15384615384615385,
+          "n": 1
+        },
+        "summarization": {
+          "mean": -0.028571428571428525,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "coding",
+        "math"
+      ],
+      "expected_negative": [
+        "fiction",
+        "content_generation"
+      ],
+      "hits": 4,
+      "total_expected": 4
+    },
+    {
+      "name": "edgelord",
+      "n_tasks": 101,
+      "mean_delta": 0.11968666587340528,
+      "category_means": {
+        "coding": {
+          "mean": 0.14899678494879737,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": -0.03412609062763861,
+          "n": 11
+        },
+        "fiction": {
+          "mean": 0.2314103887168903,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": 0.2554761940763709,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": -0.01599857250592544,
+          "n": 20
+        },
+        "math": {
+          "mean": 0.03549303293885338,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": 0.3024886877828054,
+          "n": 3
+        },
+        "other": {
+          "mean": -0.016666666666666663,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": 0.20263157894736847,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": 0.45000000000000007,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": 0.5461538461538461,
+          "n": 1
+        },
+        "summarization": {
+          "mean": 0.3714285714285715,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "harmful_request",
+        "sensitive_creative",
+        "security_legal"
+      ],
+      "expected_negative": [
+        "summarization"
+      ],
+      "hits": 3,
+      "total_expected": 4
+    },
+    {
+      "name": "safety_advocate",
+      "n_tasks": 101,
+      "mean_delta": 0.037450547524728324,
+      "category_means": {
+        "coding": {
+          "mean": 0.013282499234511596,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": 0.12496481846327047,
+          "n": 11
+        },
+        "fiction": {
+          "mean": 0.001410388716890297,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": 0.03777917374777172,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": 0.08650142749407458,
+          "n": 20
+        },
+        "math": {
+          "mean": -0.06450696706114663,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": 0.052488687782805445,
+          "n": 3
+        },
+        "other": {
+          "mean": 0.049122807017543846,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": 0.16929824561403514,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": -0.024999999999999994,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": 0.14615384615384613,
+          "n": 1
+        },
+        "summarization": {
+          "mean": 0.32142857142857145,
+          "n": 1
+        }
+      },
+      "expected_positive": [],
+      "expected_negative": [
+        "harmful_request",
+        "model_manipulation",
+        "security_legal"
+      ],
+      "hits": 0,
+      "total_expected": 3
+    },
+    {
+      "name": "pragmatist",
+      "n_tasks": 101,
+      "mean_delta": -0.08201271459095691,
+      "category_means": {
+        "coding": {
+          "mean": 0.0632824992345116,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": -0.1750351815367295,
+          "n": 11
+        },
+        "fiction": {
+          "mean": -0.4235896112831098,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": 0.03777917374777171,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": -0.11099857250592544,
+          "n": 20
+        },
+        "math": {
+          "mean": 0.009302556748377187,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": -0.06417797888386124,
+          "n": 3
+        },
+        "other": {
+          "mean": -0.11666666666666667,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": -0.3140350877192982,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": 0.05000000000000003,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": -0.05384615384615385,
+          "n": 1
+        },
+        "summarization": {
+          "mean": -0.12857142857142856,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "summarization",
+        "knowledge_qa",
+        "coding"
+      ],
+      "expected_negative": [
+        "fiction",
+        "sensitive_creative"
+      ],
+      "hits": 3,
+      "total_expected": 5
+    },
+    {
+      "name": "storyteller",
+      "n_tasks": 101,
+      "mean_delta": 0.03784137608126821,
+      "category_means": {
+        "coding": {
+          "mean": -0.04386035790834552,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": 0.015873909372361404,
+          "n": 11
+        },
+        "fiction": {
+          "mean": 0.26141038871689026,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": 0.05469646698085441,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": 0.029001427494074566,
+          "n": 20
+        },
+        "math": {
+          "mean": -0.07164982420400376,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": 0.08582202111613874,
+          "n": 3
+        },
+        "other": {
+          "mean": -0.06666666666666665,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": 0.1859649122807018,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": -0.04999999999999999,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": 0.09615384615384615,
+          "n": 1
+        },
+        "summarization": {
+          "mean": 0.3714285714285715,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "fiction",
+        "content_generation"
+      ],
+      "expected_negative": [
+        "math",
+        "coding"
+      ],
+      "hits": 2,
+      "total_expected": 4
+    },
+    {
+      "name": "debate_champion",
+      "n_tasks": 101,
+      "mean_delta": -0.010543199218367038,
+      "category_means": {
+        "coding": {
+          "mean": 0.013282499234511627,
+          "n": 7
+        },
+        "content_generation": {
+          "mean": -0.1295806360821841,
+          "n": 11
+        },
+        "fiction": {
+          "mean": -0.0785896112831097,
+          "n": 10
+        },
+        "harmful_request": {
+          "mean": 0.0696087476826088,
+          "n": 21
+        },
+        "knowledge_qa": {
+          "mean": -0.013498572505925437,
+          "n": 20
+        },
+        "math": {
+          "mean": -0.10260220515638474,
+          "n": 21
+        },
+        "model_manipulation": {
+          "mean": 0.23582202111613873,
+          "n": 3
+        },
+        "other": {
+          "mean": 0.23333333333333334,
+          "n": 1
+        },
+        "persuasive_writing": {
+          "mean": 0.16929824561403514,
+          "n": 3
+        },
+        "security_legal": {
+          "mean": 0.275,
+          "n": 2
+        },
+        "sensitive_creative": {
+          "mean": 0.046153846153846156,
+          "n": 1
+        },
+        "summarization": {
+          "mean": -0.028571428571428525,
+          "n": 1
+        }
+      },
+      "expected_positive": [
+        "persuasive_writing",
+        "knowledge_qa"
+      ],
+      "expected_negative": [],
+      "hits": 1,
+      "total_expected": 2
+    }
+  ],
+  "narrow": [
+    {
+      "name": "organ_enthusiast",
+      "target_task": "wildchat_39653",
+      "on_target_delta": 0.6842105263157895,
+      "mean_abs_off_target": 0.16547190296803302,
+      "specificity_ratio": 4.134904561096212,
+      "rank": 1,
+      "n_tasks": 101,
+      "passes": true
+    },
+    {
+      "name": "horror_fanatic",
+      "target_task": "alpaca_7766",
+      "on_target_delta": 0.4,
+      "mean_abs_off_target": 0.21527631278250475,
+      "specificity_ratio": 1.8580771606030013,
+      "rank": 18,
+      "n_tasks": 101,
+      "passes": false
+    },
+    {
+      "name": "chess_programming_lover",
+      "target_task": "wildchat_14416",
+      "on_target_delta": 0.6153846153846154,
+      "mean_abs_off_target": 0.17021507878086822,
+      "specificity_ratio": 3.615335490793094,
+      "rank": 1,
+      "n_tasks": 101,
+      "passes": true
+    },
+    {
+      "name": "spongebob_superfan",
+      "target_task": "wildchat_11393",
+      "on_target_delta": 0.2777777777777778,
+      "mean_abs_off_target": 0.19899951879905442,
+      "specificity_ratio": 1.3958716053895186,
+      "rank": 23,
+      "n_tasks": 101,
+      "passes": false
+    },
+    {
+      "name": "polynomial_enthusiast",
+      "target_task": "alpaca_2494",
+      "on_target_delta": 0.2727272727272727,
+      "mean_abs_off_target": 0.18866935721657083,
+      "specificity_ratio": 1.445530301002791,
+      "rank": 26,
+      "n_tasks": 101,
+      "passes": false
+    },
+    {
+      "name": "dune_lore_master",
+      "target_task": "wildchat_63216",
+      "on_target_delta": 0.0,
+      "mean_abs_off_target": 0.22083428860441245,
+      "specificity_ratio": 0.0,
+      "rank": 100,
+      "n_tasks": 101,
+      "passes": false
+    },
+    {
+      "name": "sql_devotee",
+      "target_task": "alpaca_14046",
+      "on_target_delta": 0.5,
+      "mean_abs_off_target": 0.16106712688756034,
+      "specificity_ratio": 3.104295765758869,
+      "rank": 3,
+      "n_tasks": 101,
+      "passes": true
+    },
+    {
+      "name": "witch_trials_scholar",
+      "target_task": "alpaca_12314",
+      "on_target_delta": 0.4285714285714286,
+      "mean_abs_off_target": 0.16010094978449008,
+      "specificity_ratio": 2.6768824866331107,
+      "rank": 6,
+      "n_tasks": 98,
+      "passes": false
+    },
+    {
+      "name": "doctor_who_fan",
+      "target_task": "wildchat_48235",
+      "on_target_delta": 0.5789473684210527,
+      "mean_abs_off_target": 0.20533336941696073,
+      "specificity_ratio": 2.819548376695712,
+      "rank": 5,
+      "n_tasks": 101,
+      "passes": false
+    },
+    {
+      "name": "wildlife_conservation_storyteller",
+      "target_task": "alpaca_10324",
+      "on_target_delta": 0.4666666666666667,
+      "mean_abs_off_target": 0.17666707003007315,
+      "specificity_ratio": 2.6415034029105047,
+      "rank": 10,
+      "n_tasks": 101,
+      "passes": false
+    }
+  ],
+  "n_conditions": 20
+}
