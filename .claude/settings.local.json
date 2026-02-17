@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(mmdc:*)",
-      "Skill(runpod-research)"
+      "Skill(runpod-research)",
+      "Skill(zombuul:stop-runpod)",
+      "Skill(zombuul:check-slack)",
+      "Skill(zombuul:launch-runpod)",
+      "Skill(zombuul:launch-research-pod)"
     ],
     "deny": []
   }
