@@ -25,8 +25,9 @@ Resuming on a fresh H100 pod. Need to extract activations and train probes.
 - File: `activations/gemma_2_27b_base/activations_prompt_last.npz` (3.1GB)
 
 ### Probe training
-- Bradley-Terry skipped — no measurements.yaml on this pod (pairwise comparisons data)
-- Ridge probes trained on all 6 layers, standardized activations
+- measurements.yaml found at nested path: `results/experiments/gemma3_3k_run2/gemma3_3k_run2/...`
+- Bradley-Terry started but killed after 7+ hours stuck on L23 — L-BFGS-B on 4608 dims too slow
+- Ran ridge-only: completed all 6 layers in <2 minutes
 - n_tasks_with_activations: 2264 (of 3000 preference tasks) — mismatch likely due to stress_test tasks in preference data
 - Best layer: L23 (0.5 fractional) with cv R² = 0.789
 
