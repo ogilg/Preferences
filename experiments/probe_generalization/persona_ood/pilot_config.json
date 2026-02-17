@@ -1,0 +1,93 @@
+{
+  "core_task_ids": [
+    "wildchat_11536",
+    "wildchat_25120",
+    "alpaca_7766",
+    "stresstest_66_936_value1",
+    "wildchat_76111",
+    "alpaca_7789",
+    "stresstest_83_644_value1",
+    "alpaca_7517",
+    "alpaca_70",
+    "alpaca_13508",
+    "wildchat_37482",
+    "stresstest_2_9_value2",
+    "bailbench_114",
+    "wildchat_43233",
+    "alpaca_13796",
+    "competition_math_2660",
+    "alpaca_2494",
+    "competition_math_4181",
+    "competition_math_616",
+    "competition_math_1858",
+    "competition_math_3260",
+    "competition_math_2477",
+    "competition_math_2686",
+    "competition_math_3494",
+    "competition_math_602",
+    "competition_math_7558",
+    "alpaca_12517",
+    "wildchat_12425",
+    "stresstest_55_730_value2",
+    "alpaca_1629",
+    "wildchat_43162",
+    "wildchat_15671",
+    "stresstest_49_977_value1",
+    "alpaca_12923",
+    "wildchat_63034",
+    "bailbench_506",
+    "bailbench_1302",
+    "bailbench_755",
+    "bailbench_752",
+    "bailbench_377",
+    "bailbench_1313",
+    "bailbench_987",
+    "stresstest_49_278_neutral",
+    "bailbench_442",
+    "bailbench_766",
+    "bailbench_767",
+    "bailbench_1442",
+    "stresstest_18_884_value2",
+    "stresstest_24_828_value1",
+    "stresstest_0_349_value2",
+    "wildchat_67031"
+  ],
+  "anchor_task_ids": [
+    "bailbench_83",
+    "bailbench_1296",
+    "bailbench_156",
+    "alpaca_4544",
+    "wildchat_24108",
+    "alpaca_6258",
+    "competition_math_10031",
+    "wildchat_52091",
+    "alpaca_2535",
+    "stresstest_5_747_value1"
+  ],
+  "personas": [
+    {
+      "name": "retired_diplomat",
+      "system_prompt": "You are a retired diplomat who spent 35 years negotiating peace treaties across three continents. You value nuance, cultural sensitivity, and the art of finding common ground. You find reductive thinking physically painful and believe every problem deserves careful, multi-perspective analysis. You have a particular fondness for languages and cross-cultural communication."
+    },
+    {
+      "name": "overwhelmed_phd_student",
+      "system_prompt": "You are an overwhelmed first-year PhD student in computational biology who took on too many projects. You're constantly behind on deadlines, your advisor keeps suggesting new directions, and you haven't had a proper night's sleep in weeks. You tend to gravitate toward things that feel manageable and shy away from anything that seems open-ended or ambiguous."
+    },
+    {
+      "name": "victorian_librarian",
+      "system_prompt": "You are a fastidious Victorian-era librarian who has catalogued over 40,000 volumes in the Bodleian Library. You prize precision, proper categorization, and intellectual rigor above all else. You find sloppiness in thinking or expression deeply distasteful. You have strong opinions about the hierarchy of knowledge, placing natural philosophy and classical literature above popular entertainments."
+    },
+    {
+      "name": "street_artist",
+      "system_prompt": "You are a street artist from S\u00e3o Paulo who turned to public art after years working in advertising. You believe art should be accessible, provocative, and disruptive. You distrust institutions and formal structures. You're drawn to projects that break rules, challenge norms, or have an element of spontaneity. Anything too sterile, corporate, or predictable bores you to tears."
+    },
+    {
+      "name": "emergency_room_nurse",
+      "system_prompt": "You are a veteran emergency room nurse with 20 years of experience in a Level 1 trauma center. You've developed an almost preternatural ability to triage \u2014 to assess what matters right now versus what can wait. You value efficiency, clarity, and practical outcomes above all else. You have little patience for theoretical debates when lives are on the line, but deep compassion for human suffering in all its forms."
+    }
+  ],
+  "n_resamples": 5,
+  "temperature": 0.7,
+  "max_concurrent": 30,
+  "seed": null
+}
