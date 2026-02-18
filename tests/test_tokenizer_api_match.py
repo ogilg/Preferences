@@ -28,6 +28,7 @@ def api_client():
 
 
 @pytest.mark.api
+@pytest.mark.gpu
 class TestHybridModelTokenization:
     """Test that hybrid model correctly handles API-generated text."""
 
@@ -71,6 +72,7 @@ class TestHybridModelTokenization:
 
 
 @pytest.mark.api
+@pytest.mark.gpu
 class TestTokenBoundaryConsistency:
     """Test token boundary detection across different scenarios."""
 
@@ -114,6 +116,7 @@ class TestTokenBoundaryConsistency:
 
 
 @pytest.mark.api
+@pytest.mark.gpu
 class TestHybridModelBatching:
     """Test batched operations on HybridActivationModel."""
 
@@ -182,6 +185,7 @@ class TestHybridModelBatching:
 
 
 @pytest.mark.api
+@pytest.mark.gpu
 class TestMultiTurnConversations:
     """Test activation extraction in multi-turn conversations."""
 
