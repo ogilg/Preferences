@@ -1,5 +1,7 @@
 # Experiment 5: Random vs AL Pair Selection — Is It Only at the Margin?
 
+> **Caveat:** This experiment uses fixed regularization hyperparameters (Ridge α=1374, BT λ=0.193) tuned on full data (23.5K pairs). Optimal regularization changes with data size — less data needs stronger regularization. This means the scaling curves and marginal-value results may be distorted: small-data performance is likely underestimated (under-regularized), and the apparent plateau/diminishing returns at 15K+ pairs may partly reflect over-regularization preventing the probe from exploiting additional data. A proper analysis would re-sweep hyperparameters at each data size.
+
 ## Summary
 
 Thurstonian AL provides real value early — the d-regular initialization gives **+1.9pp BT / +6.4pp Ridge over random** at 5% of data — but the advantage largely closes by 30% of data. At the margin (15K+ base pairs), adding 2K AL-selected pairs is neutral-to-negative, while random pairs are similarly neutral. This explains Experiment 4's finding (random > BT-AL) without indicting the original AL strategy: AL was valuable when the probe was data-starved, but marginal AL pairs become counterproductive once the probe is well-trained.

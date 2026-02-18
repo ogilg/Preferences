@@ -1,8 +1,10 @@
 # Bradley-Terry vs Ridge Probes: Regularization, Pair Selection, and Scaling
 
+> **Caveat:** Experiments 3, 4, and 5 use fixed regularization hyperparameters (Ridge α=1374, BT λ=0.193) tuned on full data (23.5K pairs). Optimal regularization changes with data size — less data needs stronger regularization. This means scaling curves and marginal-value results may be distorted: small-data performance is likely underestimated (under-regularized), and the apparent plateau at 15K+ pairs may partly reflect over-regularization preventing the probe from exploiting additional data. A proper analysis would re-sweep hyperparameters at each data size.
+
 ## Summary
 
-The previously reported 3pp Ridge advantage over Bradley-Terry (BT) was a **preprocessing artifact**. Ridge standardizes activations internally; BT was run on raw activations with a poorly tuned regularization strength. After adding StandardScaler to BT and sweeping its L2 penalty properly, BT matches Ridge at full data (74.2% vs 73.9% held-out pairwise accuracy, within error bars). BT's real advantage is in the low-data regime: at 10% of training pairs, BT leads Ridge by **8.6pp** (70.9% vs 62.3%), because BT fits pairwise comparisons directly while Ridge requires a noisy intermediate step. A pair selection oracle confirms BT would choose very different pairs than the current active learning strategy (12--22% overlap), motivating a live BT active learning experiment.
+The previously reported 3pp Ridge advantage over Bradley-Terry (BT) was a **preprocessing artifact**. After adding StandardScaler to BT and sweeping its L2 penalty properly, BT matches Ridge at full data (74.2% vs 73.9%). BT's real advantage is in the low-data regime: at 10% of training pairs, BT leads Ridge by **8.6pp** (70.9% vs 62.3%). However, a live ablation (Experiment 4) shows that **BT uncertainty-based active learning is counterproductive**: adding 2,000 BT-selected pairs *decreased* accuracy by 2.0pp, while 2,000 random pairs *increased* it by 0.9pp. The most uncertain pairs are genuinely ambiguous -- their measurements add noise rather than signal.
 
 ## Background
 
@@ -104,11 +106,44 @@ Figure 4 shows the scaling curves. BT + StandardScaler (green) leads at every fr
 - **BT on raw activations crosses Ridge at ~50% data.** Below that, BT's direct fitting advantage dominates; above it, Ridge's implicit standardization gives it an edge over unstandardized BT.
 - **BT has lower variance across seeds**, especially BT on raw activations, suggesting more stable optimization.
 
+## Experiment 4: BT Active Learning Ablation
+
+Experiments 1--3 showed BT probes outperform Ridge at low data and would select very different pairs. But would BT-guided pair selection actually improve probe accuracy? This experiment tests the causal link.
+
+**Design:** Train BT+StandardScaler on all 23.5K existing pairs (lambda=0.193), score every unmeasured pair by BT uncertainty |w . (act_A - act_B)|, select the 2,000 most uncertain. As a control, also select 2,000 random unmeasured pairs. Measure both sets (5 repeats each, 20K API calls total), retrain probes on original + new data, compare 5-fold CV accuracy.
+
+**Selection diagnostics:**
+
+- 4,475,000 unmeasured pairs among 3,000 tasks
+- BT-selected uncertainty scores: [0.000, 0.0015] -- pairs right on the decision boundary
+- Random uncertainty scores: [0.003, 8.85] -- broadly distributed
+- Zero overlap between BT-selected and random sets
+
+**Data quality:** After remeasuring pairs lost to an OpenRouter outage during the initial run, both conditions have comparable coverage: 1,972/2,000 BT pairs and 1,991/2,000 random pairs with all 5 measurements. BT-selected pairs have a 3.3x higher refusal rate than random (3.3% vs 1.0%), suggesting pairs near the decision boundary involve more ambiguous task combinations.
+
+**Results:**
+
+| Condition | BT+scaled | Ridge+Thurstonian | Unique pairs | Measurements |
+|-----------|----------|------------------|-------------|-------------|
+| Baseline (original) | 74.2 +/- 1.1% | 67.6 +/- 1.1% | 23,500 | 117K |
+| + BT-selected | 72.1 +/- 1.1% | 67.2 +/- 0.8% | 25,463 | 127K |
+| + Random | **75.0 +/- 0.9%** | **68.9 +/- 0.8%** | 25,488 | 127K |
+
+| Delta | BT+scaled | Ridge+Thurstonian |
+|-------|----------|------------------|
+| BT-selected vs baseline | -2.0pp | -0.4pp |
+| Random vs baseline | +0.9pp | +1.3pp |
+| BT-selected vs random | -2.9pp | -1.7pp |
+
+**BT-guided active learning hurts probe accuracy.** Adding 2,000 BT-selected pairs *decreased* BT+scaled accuracy by 2.0pp, while 2,000 random pairs *increased* it by 0.9pp. The effect is consistent across both probe types and all folds.
+
+**Why does this happen?** BT uncertainty selects pairs where the probe's predicted scores are nearly equal. These are pairs the current probe can't distinguish -- but that doesn't mean they contain useful training signal. The pairs near the decision boundary are likely genuinely ambiguous (similar tasks where the model has weak or noisy preferences), so their measurements are noisy. Adding noisy data near the boundary dilutes the cleaner signal from pairs where preferences are more consistent. Random selection, by contrast, samples from the full pair space and gets a mix of easy and hard pairs that better constrains the probe.
+
 ## Conclusions
 
 - **The original Ridge vs BT comparison was confounded.** Two issues: (1) no feature standardization for BT, (2) fixed lambda=10 vs properly swept. After fixing both, the 3pp Ridge advantage becomes a slight (within-error-bar) BT advantage.
 - **BT is the better method in the low-data regime** (+8.6pp at 10% of pairs), because it avoids the noisy Thurstonian intermediate step.
-- **A live BT active learning experiment is justified.** BT would select very different pairs (12--22% overlap) and performs better with less data -- BT-guided active learning could be substantially more sample-efficient.
+- **BT-guided active learning is counterproductive.** Despite BT selecting very different pairs (Experiment 2) and performing better with less data (Experiment 3), BT uncertainty-based pair selection actively hurts accuracy (-2.0pp) while random selection helps (+0.9pp). The most uncertain pairs are genuinely ambiguous -- their measurements add noise rather than signal.
 
 ## Reproduction
 
@@ -116,6 +151,7 @@ Figure 4 shows the scaling curves. BT + StandardScaler (green) leads at every fr
 python scripts/bt_scaling/experiment1_regularization.py
 python scripts/bt_scaling/experiment2_oracle.py
 python scripts/bt_scaling/experiment3_scaling.py
+python -m scripts.bt_scaling.experiment4_bt_al_ablation --step all
 ```
 
 Results saved in `experiments/probe_science/bt_scaling/`.
