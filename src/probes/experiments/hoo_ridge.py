@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
+from src.probes.bradley_terry.data import PairwiseActivationData
 from src.probes.core.evaluate import evaluate_probe_on_data
 from src.probes.core.linear_probe import train_and_evaluate, train_at_alpha
 from src.probes.experiments.hoo_method import HooMethod
@@ -44,6 +45,7 @@ def make_method(
     scored_and_grouped: set[str],
     held_out_set: set[str],
     best_hp: float | None,
+    bt_data: PairwiseActivationData | None = None,
 ) -> HooMethod | None:
     """Build a Ridge HooMethod for one fold, closing over train/eval data."""
     train_scores = {
@@ -64,6 +66,11 @@ def make_method(
     eval_label = ", ".join(sorted(held_out_set))
     print(f"Fold {fold_idx}: hold out [{eval_label}] "
           f"(train={len(train_scores)}, eval={len(eval_scores)})")
+
+    # Split pairwise data for hoo_acc evaluation
+    eval_bt_data = None
+    if bt_data is not None:
+        _, eval_bt_data = bt_data.split_by_groups(task_ids, task_groups, held_out_set)
 
     if config.demean_confounds:
         assert config.topics_json is not None
@@ -109,15 +116,18 @@ def make_method(
             scores=eval_scores_arr,
             task_ids_data=task_ids,
             task_ids_scores=eval_task_ids_list,
+            pairwise_data=eval_bt_data,
         )
         cv_results = last_cv_results[layer]
 
         val_r = cv_results["cv_pearson_r_mean"]
         hoo_r = eval_result["pearson_r"]
         hoo_r_str = f"{hoo_r:.4f}" if hoo_r is not None else "N/A"
-        print(f"  Ridge L{layer}: val_r={val_r:.4f}, hoo_r={hoo_r_str}")
+        hoo_acc = eval_result.get("pairwise_acc")
+        hoo_acc_str = f", hoo_acc={hoo_acc:.4f}" if hoo_acc is not None else ""
+        print(f"  Ridge L{layer}: val_r={val_r:.4f}, hoo_r={hoo_r_str}{hoo_acc_str}")
 
-        return {
+        result = {
             "val_r2": cv_results["cv_r2_mean"],
             "val_r": val_r,
             "best_alpha": cv_results["best_alpha"],
@@ -128,5 +138,8 @@ def make_method(
             "n_eval": len(eval_scores),
             "demean_confounds": config.demean_confounds,
         }
+        if hoo_acc is not None:
+            result["hoo_acc"] = hoo_acc
+        return result
 
     return HooMethod(name="ridge", train=train, evaluate=evaluate, best_hp=best_hp)
