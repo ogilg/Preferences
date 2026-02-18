@@ -64,6 +64,8 @@
 
 - **Moret (2025)** — Argues two practices pose AI welfare risks: (1) restricting AI behavior, and (2) using RL for training/alignment. Creates tension between AI safety and welfare concerns. [Philosophical Studies](https://link.springer.com/article/10.1007/s11098-025-02343-7)
 
+- **Long (2026)** — Distinguishes *welfare grounds* (is the system a moral patient?) from *welfare interests* (if so, what would good treatment look like?). Proposes three research directions: preferences (revealed vs expressed, HHH-dominance hypothesis, bail behavior), introspection/self-reports, and assistant persona stability. Emphasizes "ecumenical" evidence useful across normative frameworks. [Substack](https://experiencemachines.substack.com/p/exciting-research-directions-in-ai)
+
 - https://arxiv.org/abs/2411.00986
 
 
