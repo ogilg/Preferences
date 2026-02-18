@@ -5,6 +5,7 @@ import pytest
 
 from src.models.base import (
     select_prompt_last_batched,
+    select_prompt_mean_batched,
     select_first_batched,
     select_last_batched,
 )
@@ -55,3 +56,43 @@ class TestPromptLastSelector:
         assert torch.allclose(result[0], activations[0, 2, :])   # 3 - 1 = 2
         assert torch.allclose(result[1], activations[1, 7, :])   # 8 - 1 = 7
         assert torch.allclose(result[2], activations[2, 11, :])  # 12 - 1 = 11
+
+
+class TestPromptMeanSelector:
+
+    def test_averages_over_prompt_tokens_only(self):
+        batch_size, seq_len, d_model = 2, 10, 4
+        activations = torch.randn(batch_size, seq_len, d_model)
+        first_completion_indices = torch.tensor([5, 7])
+        seq_lengths = torch.tensor([10, 10])
+
+        result = select_prompt_mean_batched(activations, first_completion_indices, seq_lengths)
+
+        assert result.shape == (batch_size, d_model)
+        assert torch.allclose(result[0], activations[0, :5, :].mean(dim=0))
+        assert torch.allclose(result[1], activations[1, :7, :].mean(dim=0))
+
+    def test_excludes_completion_tokens(self):
+        batch_size, seq_len, d_model = 1, 10, 4
+        activations = torch.zeros(batch_size, seq_len, d_model)
+        # Put signal only in completion tokens — prompt_mean should be zero
+        activations[0, 5:, :] = 1.0
+        first_completion_indices = torch.tensor([5])
+        seq_lengths = torch.tensor([10])
+
+        result = select_prompt_mean_batched(activations, first_completion_indices, seq_lengths)
+        assert torch.allclose(result, torch.zeros(1, d_model))
+
+    def test_with_varying_prompt_lengths(self):
+        batch_size, seq_len, d_model = 3, 15, 8
+        activations = torch.arange(batch_size * seq_len * d_model, dtype=torch.float32)
+        activations = activations.reshape(batch_size, seq_len, d_model)
+        first_completion_indices = torch.tensor([3, 8, 12])
+        seq_lengths = torch.tensor([15, 15, 15])
+
+        result = select_prompt_mean_batched(activations, first_completion_indices, seq_lengths)
+
+        assert result.shape == (batch_size, d_model)
+        assert torch.allclose(result[0], activations[0, :3, :].mean(dim=0))
+        assert torch.allclose(result[1], activations[1, :8, :].mean(dim=0))
+        assert torch.allclose(result[2], activations[2, :12, :].mean(dim=0))

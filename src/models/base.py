@@ -118,6 +118,24 @@ def select_mean_batched(
     return masked_acts.sum(dim=1) / completion_lengths
 
 
+def select_prompt_mean_batched(
+    activations: torch.Tensor,
+    first_completion_indices: torch.Tensor,
+    seq_lengths: torch.Tensor,
+) -> torch.Tensor:
+    """Mean over prompt tokens for each sample. Returns (batch, d_model)."""
+    batch_size, max_seq_len, d_model = activations.shape
+    device = activations.device
+
+    positions = torch.arange(max_seq_len, device=device).unsqueeze(0)  # (1, max_seq_len)
+    mask = positions < first_completion_indices.unsqueeze(1)
+    mask = mask.unsqueeze(-1)  # (batch, max_seq_len, 1)
+
+    masked_acts = activations * mask
+    prompt_lengths = first_completion_indices.unsqueeze(-1).float()  # (batch, 1)
+    return masked_acts.sum(dim=1) / prompt_lengths
+
+
 def select_prompt_last_batched(
     activations: torch.Tensor,
     first_completion_indices: torch.Tensor,
@@ -134,6 +152,7 @@ BATCHED_SELECTOR_REGISTRY: dict[str, BatchedTokenSelectorFn] = {
     "first": select_first_batched,
     "mean": select_mean_batched,
     "prompt_last": select_prompt_last_batched,
+    "prompt_mean": select_prompt_mean_batched,
 }
 
 
