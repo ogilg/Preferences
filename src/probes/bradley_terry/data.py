@@ -17,6 +17,28 @@ class PairwiseActivationData:
     total: np.ndarray  # (n_unique_pairs,) — total comparisons per pair
     n_measurements: int  # total raw measurements before aggregation
 
+    def filter_by_indices(self, idx_set: set[int]) -> PairwiseActivationData:
+        """Keep only pairs where both task indices are in idx_set."""
+        mask = np.array([
+            int(i) in idx_set and int(j) in idx_set
+            for i, j in self.pairs
+        ])
+        if mask.sum() == 0:
+            return PairwiseActivationData(
+                activations=self.activations,
+                pairs=np.empty((0, 2), dtype=int),
+                wins_i=np.empty(0, dtype=float),
+                total=np.empty(0, dtype=float),
+                n_measurements=0,
+            )
+        return PairwiseActivationData(
+            activations=self.activations,
+            pairs=self.pairs[mask],
+            wins_i=self.wins_i[mask],
+            total=self.total[mask],
+            n_measurements=int(np.sum(self.total[mask])),
+        )
+
     def split_by_groups(
         self,
         task_ids: np.ndarray,
