@@ -124,7 +124,6 @@ How well does the probe track persona-induced shifts within each topic? The per-
 | sensitive_creative | 0.70 | 20 | 31 |
 | math | 0.65 | 200 | 672 |
 | knowledge_qa | 0.64 | 220 | 644 |
-| other | 0.62 | 20 | 12 |
 | content_generation | 0.49 | 120 | 375 |
 | security_legal | 0.40 | 20 | 56 |
 | harmful_request | 0.37 | 200 | 714 |
@@ -146,7 +145,6 @@ The probe tracks well on fiction (r=0.72), math (r=0.65), knowledge_qa (r=0.64).
 | fiction | 0.48 | +1.18 | 60 |
 | content_generation | 0.64 | +0.60 | 120 |
 | security_legal | 0.15 | +0.44 | 20 |
-| other | 0.97 | +0.24 | 20 |
 | persuasive_writing | 0.70 | +0.15 | 40 |
 | math | 0.64 | +0.08 | 200 |
 | summarization | 0.63 | +0.04 | 20 |
