@@ -231,14 +231,7 @@ def run_synthetic_comparison(
             if converged:
                 break
 
-        # Get unsampled pairs that are in train set
-        unsampled = state.get_unsampled_pairs()
-        unsampled_train = [
-            (a, b) for a, b in unsampled
-            if tuple(sorted([a.id, b.id])) in train_pairs_set
-        ]
-
-        if not unsampled_train:
+        if state.count_unsampled() == 0:
             break
 
         # Select next pairs (filter to train set after selection)
@@ -387,14 +380,7 @@ def run_real_data_comparison(
             if converged:
                 break
 
-        # Get unsampled pairs that are in train set
-        unsampled = state.get_unsampled_pairs()
-        unsampled_train = [
-            (a, b) for a, b in unsampled
-            if tuple(sorted([a.id, b.id])) in train_pairs_set
-        ]
-
-        if not unsampled_train:
+        if state.count_unsampled() == 0:
             break
 
         # Select next pairs
