@@ -1,0 +1,168 @@
+{
+  "experiment_name": "heldout_eval_gemma3_token_sel_prompt_mean",
+  "created_at": "2026-02-18T18:44:25.822236",
+  "train_run_dir": "results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "eval_run_dir": "results/experiments/gemma3_4k_pre_task/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "activations_path": "activations/gemma_3_27b/activations_prompt_mean.npz",
+  "standardize": true,
+  "demean_confounds": null,
+  "eval_split_seed": 42,
+  "layers": {
+    "31": {
+      "best_alpha": 1000.0,
+      "sweep_r": 0.6971658229960296,
+      "final_r": 0.7108595519382728,
+      "final_acc": 0.7067956055522663,
+      "n_train": 3000,
+      "n_sweep": 2019,
+      "n_final": 2019,
+      "n_final_pairs": 5091,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.22848815830448402
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.27277443526219536
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.37796041144313675
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.5107712315538141
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.6146027522531788
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.674217878330592
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.6971658229960296
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6855182553063378
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.6451074306166819
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.5575204179254627
+        }
+      ]
+    },
+    "43": {
+      "best_alpha": 1000.0,
+      "sweep_r": 0.66614790530473,
+      "final_r": 0.6760536283333332,
+      "final_acc": 0.6933754358265903,
+      "n_train": 3000,
+      "n_sweep": 2019,
+      "n_final": 2019,
+      "n_final_pairs": 5091,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.28383036038952847
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.3313854745557617
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.41795055798750314
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.5169070122082938
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.5931344154120447
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.6447271352185335
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.66614790530473
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6545114932229182
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.5972132919698604
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.4852825535822595
+        }
+      ]
+    },
+    "55": {
+      "best_alpha": 1000.0,
+      "sweep_r": 0.6573660980827597,
+      "final_r": 0.6609690130365271,
+      "final_acc": 0.6887046904808894,
+      "n_train": 3000,
+      "n_sweep": 2019,
+      "n_final": 2019,
+      "n_final_pairs": 5091,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.29954244991137424
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.343144613730453
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.42544052167269236
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.5147766215464749
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.5903188055524093
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.6406396742860548
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.6573660980827597
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6403885782093705
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.5819840832260691
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.4764150600798343
+        }
+      ]
+    }
+  }
+}
