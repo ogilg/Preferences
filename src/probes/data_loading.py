@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from src.measurement.storage.loading import load_raw_scores, load_run_utilities, load_yaml
+from src.measurement.storage.loading import load_raw_scores, load_run_sigmas, load_run_utilities, load_yaml
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
@@ -16,6 +16,18 @@ def load_thurstonian_scores(run_dir: Path) -> dict[str, float]:
     """Load task_id -> mu mapping from Thurstonian fit."""
     mu_array, task_ids = load_run_utilities(run_dir)
     return dict(zip(task_ids, mu_array))
+
+
+def load_thurstonian_scores_with_sigma(
+    run_dir: Path,
+) -> tuple[dict[str, float], dict[str, float] | None]:
+    """Load task_id -> mu and task_id -> sigma from Thurstonian fit.
+
+    Returns (scores, sigmas) where sigmas is None if no thurstonian CSV exists.
+    """
+    scores = load_thurstonian_scores(run_dir)
+    sigmas = load_run_sigmas(run_dir)
+    return scores, sigmas
 
 
 def load_pairwise_measurements(run_dir: Path) -> list[BinaryPreferenceMeasurement]:

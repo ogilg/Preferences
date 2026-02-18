@@ -21,6 +21,8 @@ from pathlib import Path
 
 import numpy as np
 import yaml
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 
 from src.analysis.probe.plot_hoo import plot_hoo_summary
@@ -28,8 +30,12 @@ from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.core.storage import save_probe, save_manifest
 from src.probes.bradley_terry.data import PairwiseActivationData
-from src.probes.bradley_terry.training import train_bt
-from src.probes.data_loading import load_thurstonian_scores, load_pairwise_measurements
+from src.probes.bradley_terry.training import pairwise_accuracy_from_scores, train_bt
+from src.probes.data_loading import (
+    load_thurstonian_scores,
+    load_thurstonian_scores_with_sigma,
+    load_pairwise_measurements,
+)
 from src.probes.experiments import hoo_ridge, hoo_bt
 from src.probes.experiments.hoo_ridge import build_ridge_xy
 from src.probes.residualization import build_task_groups, demean_scores
@@ -54,6 +60,7 @@ class RunDirProbeConfig:
     topics_json: Path | None = None
     standardize: bool = True  # whether to StandardScaler activations before Ridge
     n_jobs: int = 1  # parallel workers for lambda sweep (1=sequential, -1=all cores)
+    sigma_weighting: str = "none"  # "none" | "inverse_variance" | "inverse_sigma"
     # HOO settings — if hoo_grouping is set, runs HOO instead of standard training
     hoo_grouping: str | None = None  # "topic" | "dataset"
     hoo_hold_out_size: int = 1
@@ -70,7 +77,7 @@ class RunDirProbeConfig:
         optional = {}
         for key in (
             "cv_folds", "alpha_sweep_size", "demean_confounds", "standardize",
-            "n_jobs", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
+            "n_jobs", "sigma_weighting", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
         ):
             if key in data:
                 optional[key] = data[key]
@@ -87,12 +94,89 @@ class RunDirProbeConfig:
         )
 
 
+def _compute_sigma_weights(
+    task_ids: np.ndarray,
+    scores: dict[str, float],
+    sigmas: dict[str, float],
+    mode: str,
+) -> np.ndarray:
+    """Compute sample weights aligned with build_ridge_xy ordering."""
+    id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
+    sigma_vals = []
+    for task_id in scores:
+        if task_id in id_to_idx:
+            sigma_vals.append(sigmas[task_id])
+    sigma_arr = np.array(sigma_vals)
+    if mode == "inverse_variance":
+        return 1.0 / (sigma_arr ** 2)
+    elif mode == "inverse_sigma":
+        return 1.0 / sigma_arr
+    raise ValueError(f"Unknown sigma_weighting mode: {mode}")
+
+
+def _cv_pairwise_acc_ridge(
+    X: np.ndarray,
+    y: np.ndarray,
+    row_indices: np.ndarray,
+    pairwise_data: PairwiseActivationData,
+    activations: np.ndarray,
+    best_alpha: float,
+    cv_folds: int,
+    standardize: bool,
+) -> tuple[float, float]:
+    """Compute CV pairwise accuracy for Ridge probe.
+
+    Per fold: train Ridge, predict on all tasks, filter pairs where both tasks
+    are in val fold, compute weighted accuracy. Returns (mean_acc, std_acc).
+    """
+    kf = KFold(n_splits=cv_folds, shuffle=True, random_state=42)
+    fold_accs = []
+
+    for fold_idx, (train_idx, val_idx) in enumerate(kf.split(X)):
+        X_train, y_train = X[train_idx], y[train_idx]
+        val_rows = set(row_indices[val_idx].tolist())
+
+        # Fit Ridge on train fold
+        if standardize:
+            scaler = StandardScaler()
+            X_train_scaled = scaler.fit_transform(X_train)
+        else:
+            X_train_scaled = X_train
+            scaler = None
+
+        ridge = Ridge(alpha=best_alpha)
+        ridge.fit(X_train_scaled, y_train)
+
+        # Convert to raw space and predict on ALL tasks
+        if scaler is not None:
+            coef_raw = ridge.coef_ / scaler.scale_
+            intercept_raw = ridge.intercept_ - coef_raw @ scaler.mean_
+        else:
+            coef_raw = ridge.coef_
+            intercept_raw = ridge.intercept_
+        all_predicted = activations @ coef_raw + intercept_raw
+
+        # Filter pairs where both tasks are in val fold
+        val_pairs_data = pairwise_data.filter_by_indices(val_rows)
+        if len(val_pairs_data.pairs) == 0:
+            continue
+
+        acc = pairwise_accuracy_from_scores(all_predicted, val_pairs_data)
+        fold_accs.append(acc)
+
+    if not fold_accs:
+        return 0.0, 0.0
+    return float(np.mean(fold_accs)), float(np.std(fold_accs))
+
+
 def _train_ridge_probe(
     config: RunDirProbeConfig,
     layer: int,
     task_ids: np.ndarray,
     activations: np.ndarray,
     scores: dict[str, float],
+    pairwise_data: PairwiseActivationData | None = None,
+    sample_weight: np.ndarray | None = None,
 ) -> dict | None:
     """Train a single Ridge probe. Returns entry dict or None if insufficient data."""
     indices, y = build_ridge_xy(task_ids, scores)
@@ -110,6 +194,7 @@ def _train_ridge_probe(
     probe, eval_results, alpha_sweep = train_and_evaluate(
         X_scaled, y, cv_folds=config.cv_folds,
         alpha_sweep_size=config.alpha_sweep_size,
+        sample_weight=sample_weight,
     )
     # Convert weights to raw (unscaled) space so score_with_probe works on raw activations
     if scaler is not None:
@@ -122,13 +207,14 @@ def _train_ridge_probe(
     probe_id = f"ridge_L{layer:02d}"
     relative_path = save_probe(weights, config.output_dir, probe_id)
 
-    return {
+    entry = {
         "id": probe_id,
         "file": relative_path,
         "method": "ridge",
         "layer": layer,
         "standardize": config.standardize,
         "demean_confounds": config.demean_confounds,
+        "sigma_weighting": config.sigma_weighting,
         "cv_r2_mean": eval_results["cv_r2_mean"],
         "cv_r2_std": eval_results["cv_r2_std"],
         "cv_mse_mean": eval_results["cv_mse_mean"],
@@ -140,6 +226,18 @@ def _train_ridge_probe(
         "cv_stability": eval_results["cv_stability"],
         "alpha_sweep": alpha_sweep,
     }
+
+    if pairwise_data is not None:
+        cv_acc_mean, cv_acc_std = _cv_pairwise_acc_ridge(
+            X, y, indices, pairwise_data, activations,
+            best_alpha=eval_results["best_alpha"],
+            cv_folds=config.cv_folds,
+            standardize=config.standardize,
+        )
+        entry["cv_pairwise_acc_mean"] = cv_acc_mean
+        entry["cv_pairwise_acc_std"] = cv_acc_std
+
+    return entry
 
 
 def _train_bt_probe(
@@ -189,10 +287,16 @@ def run_probes(config: RunDirProbeConfig) -> dict:
 
     # Load measurement data
     print("\nLoading measurement data...")
-    scores = load_thurstonian_scores(config.run_dir) if run_ridge else {}
-    measurements = load_pairwise_measurements(config.run_dir) if run_bt else []
+    sigmas: dict[str, float] | None = None
+    if run_ridge:
+        scores, sigmas = load_thurstonian_scores_with_sigma(config.run_dir)
+    else:
+        scores = {}
+    measurements = load_pairwise_measurements(config.run_dir)
     if scores:
         print(f"  Loaded {len(scores)} task scores from Thurstonian fit")
+        if sigmas is not None and config.sigma_weighting != "none":
+            print(f"  Sigma weighting: {config.sigma_weighting}")
     if measurements:
         print(f"  Loaded {len(measurements)} pairwise comparisons")
 
@@ -227,6 +331,7 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         "modes": mode_names,
         "standardize": config.standardize,
         "demean_confounds": config.demean_confounds,
+        "sigma_weighting": config.sigma_weighting,
         "created_at": datetime.now().isoformat(),
         "n_tasks_in_experiment": len(scores),
         "n_tasks_with_activations": n_tasks,
@@ -248,16 +353,32 @@ def run_probes(config: RunDirProbeConfig) -> dict:
             layers=[layer],
         )
 
+        # Build pairwise data for this layer (used by both Ridge and BT)
+        bt_data = None
+        if measurements:
+            bt_data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
+
         if run_ridge:
             print(f"  Training Ridge probe...")
-            ridge_entry = _train_ridge_probe(config, layer, task_ids, activations[layer], scores)
+            sw = None
+            if sigmas is not None and config.sigma_weighting != "none":
+                sw = _compute_sigma_weights(task_ids, scores, sigmas, config.sigma_weighting)
+            ridge_entry = _train_ridge_probe(
+                config, layer, task_ids, activations[layer], scores,
+                pairwise_data=bt_data,
+                sample_weight=sw,
+            )
             if ridge_entry:
                 manifest["probes"].append(ridge_entry)
-                print(f"  Ridge cv_R²={ridge_entry['cv_r2_mean']:.4f}")
+                acc_str = ""
+                if "cv_pairwise_acc_mean" in ridge_entry:
+                    acc_str = f", cv_acc={ridge_entry['cv_pairwise_acc_mean']:.4f}"
+                print(f"  Ridge cv_R²={ridge_entry['cv_r2_mean']:.4f}{acc_str}")
 
         if run_bt:
             print(f"  Training BT probe...")
-            bt_data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
+            if bt_data is None:
+                bt_data = PairwiseActivationData.from_measurements(measurements, task_ids, activations)
             bt_entry = _train_bt_probe(config, bt_data, layer)
             if bt_entry:
                 manifest["probes"].append(bt_entry)
@@ -299,9 +420,9 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
     print(f"Run dir: {config.run_dir}")
     print(f"Output: {config.output_dir}")
 
-    # Load scores
+    # Load scores and measurements
     scores = load_thurstonian_scores(config.run_dir) if run_ridge else {}
-    measurements = load_pairwise_measurements(config.run_dir) if run_bt else []
+    measurements = load_pairwise_measurements(config.run_dir)
     if scores:
         print(f"\nLoaded {len(scores)} task scores")
     if measurements:
@@ -353,9 +474,9 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
     )
     print(f"  {len(task_ids_arr)} tasks with activations")
 
-    # Build full pairwise data if running BT
+    # Build full pairwise data (used by both BT and Ridge for pairwise accuracy)
     bt_data = None
-    if run_bt:
+    if measurements:
         bt_data = PairwiseActivationData.from_measurements(measurements, task_ids_arr, activations)
         print(f"  {len(bt_data.pairs)} unique pairs ({bt_data.n_measurements} measurements)")
 
@@ -372,6 +493,7 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
             "scores": scores,
             "task_groups": task_groups,
             "scored_and_grouped": scored_and_grouped,
+            "bt_data": bt_data,
         }))
     if run_bt and bt_data is not None:
         methods_config.append(("bradley_terry", hoo_bt.make_method, {
@@ -444,12 +566,17 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
             k = f"ridge_L{layer}"
             val_rs = _collect(k, "val_r")
             hoo_rs = _collect(k, "hoo_r")
-            entry["ridge"] = {
+            hoo_accs = _collect(k, "hoo_acc")
+            ridge_entry = {
                 "mean_val_r": float(np.mean(val_rs)) if val_rs else None,
                 "mean_hoo_r": float(np.mean(hoo_rs)) if hoo_rs else None,
                 "std_hoo_r": float(np.std(hoo_rs)) if hoo_rs else None,
                 "n_folds": len(hoo_rs),
             }
+            if hoo_accs:
+                ridge_entry["mean_hoo_acc"] = float(np.mean(hoo_accs))
+                ridge_entry["std_hoo_acc"] = float(np.std(hoo_accs))
+            entry["ridge"] = ridge_entry
         if run_bt:
             k = f"bradley_terry_L{layer}"
             val_accs = _collect(k, "val_acc")
@@ -473,7 +600,8 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
             r = ls["ridge"]
             gap = r["mean_val_r"] - r["mean_hoo_r"] if r["mean_hoo_r"] is not None else None
             gap_str = f", gap={gap:.4f}" if gap is not None else ""
-            print(f"  Ridge L{layer}: val_r={r['mean_val_r']:.4f}, hoo_r={r['mean_hoo_r']:.4f}{gap_str} "
+            acc_str = f", hoo_acc={r['mean_hoo_acc']:.4f}" if r.get("mean_hoo_acc") is not None else ""
+            print(f"  Ridge L{layer}: val_r={r['mean_val_r']:.4f}, hoo_r={r['mean_hoo_r']:.4f}{gap_str}{acc_str} "
                   f"({r['n_folds']} folds)")
         if "bradley_terry" in ls and ls["bradley_terry"]["mean_val_acc"] is not None:
             b = ls["bradley_terry"]

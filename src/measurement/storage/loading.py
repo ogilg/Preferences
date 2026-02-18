@@ -195,18 +195,26 @@ def _aggregate_scores(measurements: list[dict]) -> tuple[np.ndarray, list[str]]:
     return scores, task_ids
 
 
+def _load_thurstonian_csv(csv_path: Path) -> tuple[list[str], list[float], list[float]]:
+    """Parse thurstonian CSV into (task_ids, mus, sigmas)."""
+    task_ids = []
+    mus = []
+    sigmas = []
+    with open(csv_path) as f:
+        next(f)  # Skip header
+        for line in f:
+            task_id, mu, sigma = line.strip().split(",")
+            task_ids.append(task_id)
+            mus.append(float(mu))
+            sigmas.append(float(sigma))
+    return task_ids, mus, sigmas
+
+
 def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
     """Load utilities from thurstonian CSV, scores.yaml, or measurements.yaml."""
     csv_path = find_thurstonian_csv(run_dir)
     if csv_path is not None:
-        task_ids = []
-        mus = []
-        with open(csv_path) as f:
-            next(f)  # Skip header
-            for line in f:
-                task_id, mu, _ = line.strip().split(",")
-                task_ids.append(task_id)
-                mus.append(float(mu))
+        task_ids, mus, _ = _load_thurstonian_csv(csv_path)
         return np.array(mus), task_ids
 
     scores_path = run_dir / "scores.yaml"
@@ -224,6 +232,15 @@ def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
         raise FileNotFoundError(f"Pairwise comparison data without thurstonian CSV in {run_dir}")
 
     raise FileNotFoundError(f"No utility data found in {run_dir}")
+
+
+def load_run_sigmas(run_dir: Path) -> dict[str, float] | None:
+    """Load per-task sigma from thurstonian CSV. Returns None if no CSV found."""
+    csv_path = find_thurstonian_csv(run_dir)
+    if csv_path is None:
+        return None
+    task_ids, _, sigmas = _load_thurstonian_csv(csv_path)
+    return dict(zip(task_ids, sigmas))
 
 
 def load_completed_runs(

@@ -6,8 +6,8 @@ import numpy as np
 from scipy import linalg
 from scipy.stats import pearsonr
 from sklearn.linear_model import Ridge
-from sklearn.metrics import make_scorer
-from sklearn.model_selection import cross_validate
+from sklearn.metrics import make_scorer, r2_score, mean_squared_error
+from sklearn.model_selection import cross_validate, KFold
 
 warnings.filterwarnings("ignore", category=linalg.LinAlgWarning)
 
@@ -23,26 +23,66 @@ def get_default_alphas(n_alphas: int = 5) -> np.ndarray:
     return np.logspace(0, 6, n_alphas)
 
 
-def alpha_sweep(
-    activations: np.ndarray,
-    labels: np.ndarray,
-    alphas: np.ndarray,
+def _cv_with_weights(
+    model: Ridge,
+    X: np.ndarray,
+    y: np.ndarray,
     cv_folds: int,
-) -> list[dict]:
-    """Evaluate each alpha with CV, returning per-alpha train/val R2 and MSE."""
+    sample_weight: np.ndarray,
+) -> dict[str, np.ndarray]:
+    """Manual CV loop that passes sample_weight to Ridge.fit()."""
+    kf = KFold(n_splits=cv_folds, shuffle=True, random_state=42)
+    r2s, mses, pearsons = [], [], []
+    for train_idx, val_idx in kf.split(X):
+        m = Ridge(alpha=model.alpha)
+        m.fit(X[train_idx], y[train_idx], sample_weight=sample_weight[train_idx])
+        y_pred = m.predict(X[val_idx])
+        r2s.append(r2_score(y[val_idx], y_pred))
+        mses.append(mean_squared_error(y[val_idx], y_pred))
+        pearsons.append(_pearson_scorer(y[val_idx], y_pred))
+    return {
+        "test_r2": np.array(r2s),
+        "test_neg_mse": -np.array(mses),
+        "test_pearson_r": np.array(pearsons),
+    }
+
+
+def _run_cv(
+    model: Ridge,
+    X: np.ndarray,
+    y: np.ndarray,
+    cv_folds: int,
+    sample_weight: np.ndarray | None,
+) -> dict[str, np.ndarray]:
+    if sample_weight is not None:
+        return _cv_with_weights(model, X, y, cv_folds, sample_weight)
     scoring = {
         "r2": "r2",
         "neg_mse": "neg_mean_squared_error",
         "pearson_r": make_scorer(_pearson_scorer),
     }
+    return cross_validate(model, X, y, cv=cv_folds, scoring=scoring)
+
+
+def alpha_sweep(
+    activations: np.ndarray,
+    labels: np.ndarray,
+    alphas: np.ndarray,
+    cv_folds: int,
+    sample_weight: np.ndarray | None = None,
+) -> list[dict]:
+    """Evaluate each alpha with CV, returning per-alpha train/val R2 and MSE."""
     sweep = []
     for alpha in alphas:
         model = Ridge(alpha=alpha)
-        cv = cross_validate(model, activations, labels, cv=cv_folds, scoring=scoring)
+        cv = _run_cv(model, activations, labels, cv_folds, sample_weight)
         cv_r2 = cv["test_r2"]
         cv_mse = -cv["test_neg_mse"]
         cv_pearson = cv["test_pearson_r"]
-        model.fit(activations, labels)
+        if sample_weight is not None:
+            model.fit(activations, labels, sample_weight=sample_weight)
+        else:
+            model.fit(activations, labels)
         train_r2 = float(np.corrcoef(labels, model.predict(activations))[0, 1] ** 2)
         sweep.append({
             "alpha": float(alpha),
@@ -63,6 +103,7 @@ def train_and_evaluate(
     cv_folds: int,
     alpha_sweep_size: int = 5,
     alphas: np.ndarray | None = None,
+    sample_weight: np.ndarray | None = None,
 ) -> tuple[Ridge, dict, list[dict]]:
     """Train linear probe: sweep alphas, pick best, fit final model.
 
@@ -71,14 +112,17 @@ def train_and_evaluate(
     if alphas is None:
         alphas = get_default_alphas(alpha_sweep_size)
 
-    sweep = alpha_sweep(activations, labels, alphas, cv_folds)
+    sweep = alpha_sweep(activations, labels, alphas, cv_folds, sample_weight=sample_weight)
 
     # Pick best alpha from sweep
     best_entry = max(sweep, key=lambda s: s["val_r2_mean"])
 
     # Fit final probe at best alpha
     probe = Ridge(alpha=best_entry["alpha"])
-    probe.fit(activations, labels)
+    if sample_weight is not None:
+        probe.fit(activations, labels, sample_weight=sample_weight)
+    else:
+        probe.fit(activations, labels)
 
     results = {
         "best_alpha": best_entry["alpha"],
@@ -101,18 +145,16 @@ def train_at_alpha(
     labels: np.ndarray,
     alpha: float,
     cv_folds: int,
+    sample_weight: np.ndarray | None = None,
 ) -> tuple[Ridge, dict]:
     """Train probe at a fixed alpha, evaluate with CV. No sweep."""
     probe = Ridge(alpha=alpha)
+    cv = _run_cv(probe, activations, labels, cv_folds, sample_weight)
 
-    scoring = {
-        "r2": "r2",
-        "neg_mse": "neg_mean_squared_error",
-        "pearson_r": make_scorer(_pearson_scorer),
-    }
-    cv = cross_validate(probe, activations, labels, cv=cv_folds, scoring=scoring)
-
-    probe.fit(activations, labels)
+    if sample_weight is not None:
+        probe.fit(activations, labels, sample_weight=sample_weight)
+    else:
+        probe.fit(activations, labels)
 
     results = {
         "best_alpha": alpha,
