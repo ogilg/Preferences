@@ -19,6 +19,13 @@ from src.task_data import OriginDataset, Task
 from tests.helpers import make_tasks, make_random_wins
 
 
+def _to_sparse(wins: np.ndarray):
+    """Convert dense wins matrix to (row, col, count) sparse arrays for tests."""
+    row, col = np.nonzero(wins)
+    count = wins[row, col].astype(np.int32)
+    return row.astype(np.int32), col.astype(np.int32), count
+
+
 class TestGradientCorrectness:
     """Verify autograd gradient matches numerical finite differences."""
 
@@ -26,11 +33,12 @@ class TestGradientCorrectness:
     def test_gradient_matches_finite_differences(self, n_tasks: int):
         rng = np.random.default_rng(42)
         wins = make_random_wins(n_tasks, rng)
+        row, col, count = _to_sparse(wins)
 
         n_params = (n_tasks - 1) + n_tasks
         params = rng.standard_normal(n_params) * 0.5
 
-        objective_and_grad = _make_objective_and_grad(wins, n_tasks, lambda_sigma=0.0)
+        objective_and_grad = _make_objective_and_grad(row, col, count, n_tasks, lambda_sigma=0.0)
         _, autograd_gradient = objective_and_grad(params)
 
         # Numerical gradient via central differences
@@ -42,8 +50,8 @@ class TestGradientCorrectness:
             params_minus = params.copy()
             params_minus[i] -= eps
 
-            f_plus = _neg_log_likelihood_autograd(params_plus, wins, n_tasks)
-            f_minus = _neg_log_likelihood_autograd(params_minus, wins, n_tasks)
+            f_plus = _neg_log_likelihood_autograd(params_plus, row, col, count, n_tasks)
+            f_minus = _neg_log_likelihood_autograd(params_minus, row, col, count, n_tasks)
             numerical_gradient[i] = (f_plus - f_minus) / (2 * eps)
 
         np.testing.assert_allclose(
@@ -54,12 +62,13 @@ class TestGradientCorrectness:
         n_tasks = 5
         rng = np.random.default_rng(123)
         wins = make_random_wins(n_tasks, rng)
+        row, col, count = _to_sparse(wins)
 
         n_params = (n_tasks - 1) + n_tasks
         params = rng.standard_normal(n_params) * 0.5
         lambda_sigma = 0.1
 
-        objective_and_grad = _make_objective_and_grad(wins, n_tasks, lambda_sigma)
+        objective_and_grad = _make_objective_and_grad(row, col, count, n_tasks, lambda_sigma)
         _, autograd_gradient = objective_and_grad(params)
 
         eps = 1e-5
@@ -71,10 +80,10 @@ class TestGradientCorrectness:
             params_minus[i] -= eps
 
             f_plus = _neg_log_likelihood_autograd(
-                params_plus, wins, n_tasks, lambda_sigma
+                params_plus, row, col, count, n_tasks, lambda_sigma
             )
             f_minus = _neg_log_likelihood_autograd(
-                params_minus, wins, n_tasks, lambda_sigma
+                params_minus, row, col, count, n_tasks, lambda_sigma
             )
             numerical_gradient[i] = (f_plus - f_minus) / (2 * eps)
 
@@ -90,12 +99,13 @@ class TestNLLEquivalence:
     def test_nll_values_match(self, n_tasks: int):
         rng = np.random.default_rng(42)
         wins = make_random_wins(n_tasks, rng)
+        row, col, count = _to_sparse(wins)
 
         n_params = (n_tasks - 1) + n_tasks
         params = rng.standard_normal(n_params) * 0.5
 
-        nll_numpy = _neg_log_likelihood(params, wins, n_tasks)
-        nll_autograd = float(_neg_log_likelihood_autograd(params, wins, n_tasks))
+        nll_numpy = _neg_log_likelihood(params, row, col, count, n_tasks)
+        nll_autograd = float(_neg_log_likelihood_autograd(params, row, col, count, n_tasks))
 
         np.testing.assert_allclose(nll_numpy, nll_autograd, rtol=1e-10)
 

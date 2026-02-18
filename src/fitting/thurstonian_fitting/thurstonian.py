@@ -39,46 +39,90 @@ DEFAULT_SIGMA_INIT = 1.0
 DEFAULT_LAMBDA_SIGMA = 1.0
 
 
-@dataclass
 class PairwiseData:
-    """wins[i,j] = number of times tasks[i] beat tasks[j]."""
+    """Pairwise comparison data stored in sparse COO format internally.
 
-    tasks: list["Task"]
-    wins: np.ndarray
-    _id_to_idx: dict[str, int] = field(init=False, repr=False)
+    Accepts a dense wins matrix for backwards compatibility, but stores
+    only the nonzero entries as (row, col, count) arrays. The dense .wins
+    matrix is reconstructed on demand.
+    """
 
-    def __post_init__(self) -> None:
-        self._id_to_idx = {t.id: i for i, t in enumerate(self.tasks)}
+    def __init__(
+        self,
+        tasks: list[Task],
+        wins: np.ndarray | None = None,
+        *,
+        _row: np.ndarray | None = None,
+        _col: np.ndarray | None = None,
+        _count: np.ndarray | None = None,
+    ) -> None:
+        self.tasks = tasks
+        self._id_to_idx = {t.id: i for i, t in enumerate(tasks)}
 
-    def index_of(self, task: "Task") -> int:
+        if _row is not None:
+            self._row = _row.astype(np.int32)
+            self._col = _col.astype(np.int32)
+            self._count = _count.astype(np.int32)
+        else:
+            row, col = np.nonzero(wins)
+            self._row = row.astype(np.int32)
+            self._col = col.astype(np.int32)
+            self._count = wins[row, col].astype(np.int32)
+        self._n_comparisons = int(self._count.sum())
+
+    @property
+    def wins(self) -> np.ndarray:
+        """Reconstruct dense wins matrix. O(n^2) memory — avoid for large n."""
+        n = len(self.tasks)
+        w = np.zeros((n, n), dtype=np.int32)
+        w[self._row, self._col] = self._count
+        return w
+
+    def index_of(self, task: Task) -> int:
         return self._id_to_idx[task.id]
 
-    def total_comparisons(self, task: "Task") -> int:
+    def total_comparisons(self, task: Task) -> int:
         idx = self.index_of(task)
-        return int(self.wins[idx, :].sum() + self.wins[:, idx].sum())
+        as_winner = int(self._count[self._row == idx].sum())
+        as_loser = int(self._count[self._col == idx].sum())
+        return as_winner + as_loser
 
     @property
     def n_tasks(self) -> int:
         return len(self.tasks)
 
+    @property
+    def n_comparisons(self) -> int:
+        return self._n_comparisons
+
     @classmethod
     def from_comparisons(
         cls,
-        comparisons: list["BinaryPreferenceMeasurement"],
-        tasks: list["Task"],
-    ) -> "PairwiseData":
+        comparisons: list[BinaryPreferenceMeasurement],
+        tasks: list[Task],
+    ) -> PairwiseData:
         id_to_idx = {t.id: i for i, t in enumerate(tasks)}
-        n = len(tasks)
-        wins = np.zeros((n, n), dtype=np.int32)
+        pair_counts: dict[tuple[int, int], int] = {}
 
         for c in comparisons:
             i, j = id_to_idx[c.task_a.id], id_to_idx[c.task_b.id]
             if c.choice == "a":
-                wins[i, j] += 1
+                key = (i, j)
             else:
-                wins[j, i] += 1
+                key = (j, i)
+            pair_counts[key] = pair_counts.get(key, 0) + 1
 
-        return cls(tasks=tasks, wins=wins)
+        if pair_counts:
+            keys = list(pair_counts.keys())
+            row = np.array([k[0] for k in keys], dtype=np.int32)
+            col = np.array([k[1] for k in keys], dtype=np.int32)
+            count = np.array([pair_counts[k] for k in keys], dtype=np.int32)
+        else:
+            row = np.array([], dtype=np.int32)
+            col = np.array([], dtype=np.int32)
+            count = np.array([], dtype=np.int32)
+
+        return cls(tasks, _row=row, _col=col, _count=count)
 
 
 @dataclass
@@ -160,53 +204,57 @@ def _preference_prob(mu_i: float, mu_j: float, sigma_i: float, sigma_j: float) -
 
 def _neg_log_likelihood(
     params: np.ndarray,
-    wins: np.ndarray,
+    row: np.ndarray,
+    col: np.ndarray,
+    count: np.ndarray,
     n: int,
 ) -> float:
-    """params: [μ_1..μ_{n-1}, log(σ_0)..log(σ_{n-1})]. μ_0 fixed to 0."""
-    # Unpack parameters
+    """Sparse NLL. params: [μ_1..μ_{n-1}, log(σ_0)..log(σ_{n-1})]. μ_0 fixed to 0."""
     mu = np.zeros(n)
     mu[1:] = params[: n - 1]
     sigma = np.exp(params[n - 1:])
 
-    # Compute pairwise preference probabilities (vectorized)
-    # P(i > j) = Φ((μ_i - μ_j) / √(σ_i² + σ_j²))
-    mu_diff = mu[:, np.newaxis] - mu[np.newaxis, :]
-    scale = np.sqrt(sigma[:, np.newaxis]**2 + sigma[np.newaxis, :]**2)
-    p = ndtr(mu_diff / scale)  # ndtr is much faster than norm.sf
+    mu_diff = mu[row] - mu[col]
+    scale = np.sqrt(sigma[row]**2 + sigma[col]**2)
+    p = ndtr(mu_diff / scale)
     p = np.clip(p, 1e-10, 1 - 1e-10)
 
-    return -np.sum(wins * np.log(p))
+    return -float(np.sum(count * np.log(p)))
 
 
 def _neg_log_likelihood_autograd(
     params: anp.ndarray,
-    wins: anp.ndarray,
+    row: anp.ndarray,
+    col: anp.ndarray,
+    count: anp.ndarray,
     n: int,
     lambda_sigma: float = 0.0,
 ) -> float:
-    """Autograd-compatible NLL for computing analytical gradients."""
+    """Autograd-compatible sparse NLL for computing analytical gradients."""
     mu = anp.concatenate([anp.zeros(1), params[: n - 1]])
     sigma = anp.exp(params[n - 1 :])
 
-    mu_diff = mu[:, anp.newaxis] - mu[anp.newaxis, :]
-    scale = anp.sqrt(sigma[:, anp.newaxis] ** 2 + sigma[anp.newaxis, :] ** 2)
+    mu_diff = mu[row] - mu[col]
+    scale = anp.sqrt(sigma[row] ** 2 + sigma[col] ** 2)
     z = mu_diff / scale
     p = anorm.cdf(z)
     p = anp.clip(p, 1e-10, 1 - 1e-10)
 
-    nll = -anp.sum(wins * anp.log(p))
+    nll = -anp.sum(count * anp.log(p))
     if lambda_sigma > 0:
         log_sigma = params[n - 1 :]
         nll = nll + lambda_sigma * anp.sum(log_sigma**2)
     return nll
 
 
-def _make_objective_and_grad(wins: np.ndarray, n: int, lambda_sigma: float):
+def _make_objective_and_grad(
+    row: np.ndarray, col: np.ndarray, count: np.ndarray,
+    n: int, lambda_sigma: float,
+):
     """Create objective function and its gradient using autograd."""
 
     def objective(params):
-        return _neg_log_likelihood_autograd(params, wins, n, lambda_sigma)
+        return _neg_log_likelihood_autograd(params, row, col, count, n, lambda_sigma)
 
     gradient_fn = grad(objective)
 
@@ -238,10 +286,11 @@ def fit_thurstonian(
     bounds = [mu_bounds] * (n - 1) + [log_sigma_bounds] * n
 
     history = OptimizationHistory()
-    objective_and_grad = _make_objective_and_grad(data.wins, n, lambda_sigma)
+    row, col, count = data._row, data._col, data._count
+    objective_and_grad = _make_objective_and_grad(row, col, count, n, lambda_sigma)
 
     def callback(params: np.ndarray) -> None:
-        loss = _neg_log_likelihood(params, data.wins, n)
+        loss = _neg_log_likelihood(params, row, col, count, n)
         sigma_max = float(np.exp(params[n - 1 :]).max())
         history.loss.append(loss)
         history.sigma_max.append(sigma_max)
@@ -277,7 +326,7 @@ def fit_thurstonian(
         termination_message=result.message,
         gradient_norm=gradient_norm,
         history=history,
-        n_comparisons=int(data.wins.sum()),
+        n_comparisons=data.n_comparisons,
     )
 
 
@@ -339,12 +388,7 @@ def save_thurstonian(
 
 
 def load_thurstonian(path: Path | str, tasks: list["Task"]) -> ThurstonianResult:
-    """Load Thurstonian results from YAML + CSV files.
-
-    Args:
-        path: Path to the YAML file (CSV must be at same location with .csv extension)
-        tasks: List of tasks (must contain all task_ids in the CSV)
-    """
+    """Load Thurstonian results from YAML + CSV files."""
     path = Path(path)
     csv_path = path.with_suffix(".csv")
 
