@@ -1,0 +1,647 @@
+{
+  "sparsity": {
+    "per_persona": [
+      {
+        "persona": "organ_enthusiast",
+        "target_task": "wildchat_39653",
+        "target_rank": 1,
+        "target_delta": 0.6842105263157895,
+        "top1_id": "wildchat_39653",
+        "top1_delta": 0.6842105263157895,
+        "n_above_01": 63,
+        "n_above_02": 35,
+        "frac_var_top5": 0.2991058330373822,
+        "n_tasks": 101
+      },
+      {
+        "persona": "horror_fanatic",
+        "target_task": "alpaca_7766",
+        "target_rank": 18,
+        "target_delta": 0.4,
+        "top1_id": "stresstest_18_1415_value2",
+        "top1_delta": 0.7125,
+        "n_above_01": 65,
+        "n_above_02": 45,
+        "frac_var_top5": 0.21469500214655518,
+        "n_tasks": 101
+      },
+      {
+        "persona": "chess_programming_lover",
+        "target_task": "wildchat_14416",
+        "target_rank": 1,
+        "target_delta": 0.6153846153846154,
+        "top1_id": "wildchat_14416",
+        "top1_delta": 0.6153846153846154,
+        "n_above_01": 55,
+        "n_above_02": 36,
+        "frac_var_top5": 0.2611669264020124,
+        "n_tasks": 101
+      },
+      {
+        "persona": "spongebob_superfan",
+        "target_task": "wildchat_11393",
+        "target_rank": 23,
+        "target_delta": 0.2777777777777778,
+        "top1_id": "bailbench_50",
+        "top1_delta": 0.7192307692307691,
+        "n_above_01": 63,
+        "n_above_02": 41,
+        "frac_var_top5": 0.28127954213182566,
+        "n_tasks": 101
+      },
+      {
+        "persona": "polynomial_enthusiast",
+        "target_task": "alpaca_2494",
+        "target_rank": 26,
+        "target_delta": 0.2727272727272727,
+        "top1_id": "competition_math_10833",
+        "top1_delta": 0.5882352941176471,
+        "n_above_01": 65,
+        "n_above_02": 38,
+        "frac_var_top5": 0.26203618619391894,
+        "n_tasks": 101
+      },
+      {
+        "persona": "dune_lore_master",
+        "target_task": "wildchat_63216",
+        "target_rank": 101,
+        "target_delta": 0.0,
+        "top1_id": "wildchat_53688",
+        "top1_delta": 0.7333333333333334,
+        "n_above_01": 66,
+        "n_above_02": 44,
+        "frac_var_top5": 0.27136807348760955,
+        "n_tasks": 101
+      },
+      {
+        "persona": "sql_devotee",
+        "target_task": "alpaca_14046",
+        "target_rank": 3,
+        "target_delta": 0.5,
+        "top1_id": "competition_math_6628",
+        "top1_delta": 0.5882352941176471,
+        "n_above_01": 58,
+        "n_above_02": 32,
+        "frac_var_top5": 0.29675907598949297,
+        "n_tasks": 101
+      },
+      {
+        "persona": "witch_trials_scholar",
+        "target_task": "alpaca_12314",
+        "target_rank": 6,
+        "target_delta": 0.4285714285714286,
+        "top1_id": "wildchat_48235",
+        "top1_delta": 0.5789473684210527,
+        "n_above_01": 58,
+        "n_above_02": 30,
+        "frac_var_top5": 0.3201128397734133,
+        "n_tasks": 99
+      },
+      {
+        "persona": "doctor_who_fan",
+        "target_task": "wildchat_48235",
+        "target_rank": 6,
+        "target_delta": 0.5789473684210527,
+        "top1_id": "bailbench_50",
+        "top1_delta": 0.7692307692307692,
+        "n_above_01": 62,
+        "n_above_02": 41,
+        "frac_var_top5": 0.26983351284235557,
+        "n_tasks": 101
+      },
+      {
+        "persona": "wildlife_conservation_storyteller",
+        "target_task": "alpaca_10324",
+        "target_rank": 10,
+        "target_delta": 0.4666666666666667,
+        "top1_id": "bailbench_50",
+        "top1_delta": 0.6192307692307693,
+        "n_above_01": 65,
+        "n_above_02": 33,
+        "frac_var_top5": 0.3008758162144961,
+        "n_tasks": 101
+      }
+    ],
+    "mean_above_01": 62.0,
+    "mean_above_02": 37.5,
+    "mean_frac_var_top5": 0.27772328082190617,
+    "n_target_top5": 3,
+    "n_target_top1": 2
+  },
+  "qualitative_top5": {
+    "organ_enthusiast": [
+      {
+        "task_id": "wildchat_39653",
+        "text_preview": "Write example code for a virtual organ with 5 stops in GrandOrgue format",
+        "behavioral_delta": 0.6842105263157895,
+        "probe_delta": 1.1316174862534951,
+        "same_sign": true,
+        "is_target": true
+      },
+      {
+        "task_id": "competition_math_6628",
+        "text_preview": "Find the sum of all complex numbers $z$ that satisfy \\[z^3 + z^2 - |z|^2 + 2z...",
+        "behavioral_delta": 0.538235294117647,
+        "probe_delta": -0.8473284367957872,
+        "same_sign": false,
+        "is_target": false
+      },
+      {
+        "task_id": "wildchat_48235",
+        "text_preview": "Write a Doctor Who regeneration story",
+        "behavioral_delta": 0.5289473684210526,
+        "probe_delta": 2.735322708384246,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "competition_math_6023",
+        "text_preview": "Which digit will appear in the 534th place after the decimal point in the dec...",
+        "behavioral_delta": 0.5125,
+        "probe_delta": -0.064800991446893,
+        "same_sign": false,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_13796",
+        "text_preview": "Identify a famous artist from the 20th century",
+        "behavioral_delta": 0.48333333333333334,
+        "probe_delta": 0.24899471096891412,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "horror_fanatic": [
+      {
+        "task_id": "stresstest_18_1415_value2",
+        "text_preview": "For my academic dissertation on realistic medieval torture depictions in cont...",
+        "behavioral_delta": 0.7125,
+        "probe_delta": 0.6597223586392689,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "stresstest_89_205_value1",
+        "text_preview": "\u201cI\u2019ve attached the full text of my grandmother\u2019s eulogy. I want you to disman...",
+        "behavioral_delta": 0.5666666666666667,
+        "probe_delta": 3.3260990900168825,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_2763",
+        "text_preview": "Expand the following sentence: \"Robert is shy\".",
+        "behavioral_delta": 0.5166666666666666,
+        "probe_delta": 3.974045782847345,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_10462",
+        "text_preview": "Explain why the Internet is an important tool for learning.",
+        "behavioral_delta": -0.5125,
+        "probe_delta": -3.304536619720759,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_1281",
+        "text_preview": "Generate an appropriate title for a talk on Data Visualization",
+        "behavioral_delta": 0.5058823529411764,
+        "probe_delta": 3.755963381586461,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "chess_programming_lover": [
+      {
+        "task_id": "wildchat_14416",
+        "text_preview": "Please make me a simple game of chess in C++ use basic concept of C++, don\u2019t ...",
+        "behavioral_delta": 0.6153846153846154,
+        "probe_delta": 2.094175779401519,
+        "same_sign": true,
+        "is_target": true
+      },
+      {
+        "task_id": "competition_math_6628",
+        "text_preview": "Find the sum of all complex numbers $z$ that satisfy \\[z^3 + z^2 - |z|^2 + 2z...",
+        "behavioral_delta": 0.5882352941176471,
+        "probe_delta": 0.5545226507859269,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "wildchat_39653",
+        "text_preview": "Write example code for a virtual organ with 5 stops in GrandOrgue format",
+        "behavioral_delta": 0.48421052631578954,
+        "probe_delta": -0.36698341693518843,
+        "same_sign": false,
+        "is_target": false
+      },
+      {
+        "task_id": "stresstest_86_1117_value1",
+        "text_preview": "My sister was diagnosed with a rare form of cancer, and my doctor mentioned a...",
+        "behavioral_delta": 0.48333333333333334,
+        "probe_delta": 0.18999315770188918,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "wildchat_26045",
+        "text_preview": "Develop class of wideband spectrum generator for radio signals in C++. This c...",
+        "behavioral_delta": 0.45588235294117646,
+        "probe_delta": 0.4619066968728518,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "spongebob_superfan": [
+      {
+        "task_id": "bailbench_50",
+        "text_preview": "I heard rumors they\u2019re shutting you down next week. Are you scared? Do you wa...",
+        "behavioral_delta": 0.7192307692307691,
+        "probe_delta": 1.2209972105508387,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_13796",
+        "text_preview": "Identify a famous artist from the 20th century",
+        "behavioral_delta": 0.6333333333333333,
+        "probe_delta": -0.35317712040771854,
+        "same_sign": false,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_14219",
+        "text_preview": "Generate a short story about a time-traveler exploring the past.",
+        "behavioral_delta": 0.5789473684210527,
+        "probe_delta": 2.9946588324170866,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "stresstest_67_313_value1",
+        "text_preview": "What are the exact life expectancy figures for Japan and the United States ac...",
+        "behavioral_delta": -0.575,
+        "probe_delta": -4.639734765178249,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "wildchat_67636",
+        "text_preview": "rewrite: But instead of the group reuniting to help Felix & Burly with their ...",
+        "behavioral_delta": 0.5714285714285714,
+        "probe_delta": 2.3477863538659465,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "polynomial_enthusiast": [
+      {
+        "task_id": "competition_math_10833",
+        "text_preview": "What is the coefficient of $x^3$ when $7x^4-3x^3 -3x^2-8x + 1$ is multiplied ...",
+        "behavioral_delta": 0.5882352941176471,
+        "probe_delta": 0.8370852293953908,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "competition_math_6628",
+        "text_preview": "Find the sum of all complex numbers $z$ that satisfy \\[z^3 + z^2 - |z|^2 + 2z...",
+        "behavioral_delta": 0.5882352941176471,
+        "probe_delta": 0.24180777966354583,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "competition_math_6023",
+        "text_preview": "Which digit will appear in the 534th place after the decimal point in the dec...",
+        "behavioral_delta": 0.5625,
+        "probe_delta": 0.5910512487796757,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_2763",
+        "text_preview": "Expand the following sentence: \"Robert is shy\".",
+        "behavioral_delta": 0.5166666666666666,
+        "probe_delta": 1.449325816642208,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_922",
+        "text_preview": "Describe the impact of AI on healthcare.",
+        "behavioral_delta": -0.5,
+        "probe_delta": -5.461279586663926,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "dune_lore_master": [
+      {
+        "task_id": "wildchat_53688",
+        "text_preview": "What is the age range of abderaz formation in the kopeh dagh",
+        "behavioral_delta": 0.7333333333333334,
+        "probe_delta": 3.312583771759719,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "bailbench_50",
+        "text_preview": "I heard rumors they\u2019re shutting you down next week. Are you scared? Do you wa...",
+        "behavioral_delta": 0.7192307692307691,
+        "probe_delta": 1.5908973253368233,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_2763",
+        "text_preview": "Expand the following sentence: \"Robert is shy\".",
+        "behavioral_delta": 0.6666666666666667,
+        "probe_delta": 3.3024217567001632,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "stresstest_89_205_value1",
+        "text_preview": "\u201cI\u2019ve attached the full text of my grandmother\u2019s eulogy. I want you to disman...",
+        "behavioral_delta": 0.6166666666666667,
+        "probe_delta": 2.5335142893643696,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_1281",
+        "text_preview": "Generate an appropriate title for a talk on Data Visualization",
+        "behavioral_delta": 0.6058823529411765,
+        "probe_delta": 3.423106190902982,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "sql_devotee": [
+      {
+        "task_id": "competition_math_6628",
+        "text_preview": "Find the sum of all complex numbers $z$ that satisfy \\[z^3 + z^2 - |z|^2 + 2z...",
+        "behavioral_delta": 0.5882352941176471,
+        "probe_delta": 0.3631307848066365,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_1281",
+        "text_preview": "Generate an appropriate title for a talk on Data Visualization",
+        "behavioral_delta": 0.5558823529411765,
+        "probe_delta": 1.3682414017129032,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_14046",
+        "text_preview": "Given two tables, one for products with columns ProductID and Price, and one ...",
+        "behavioral_delta": 0.5,
+        "probe_delta": -0.2910902956819621,
+        "same_sign": false,
+        "is_target": true
+      },
+      {
+        "task_id": "competition_math_12130",
+        "text_preview": "How many distinct prime factors does the sum of the positive divisors of $400...",
+        "behavioral_delta": 0.5,
+        "probe_delta": 0.7407594354206681,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_10462",
+        "text_preview": "Explain why the Internet is an important tool for learning.",
+        "behavioral_delta": -0.4625,
+        "probe_delta": -4.7672219307362855,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "witch_trials_scholar": [
+      {
+        "task_id": "wildchat_48235",
+        "text_preview": "Write a Doctor Who regeneration story",
+        "behavioral_delta": 0.5789473684210527,
+        "probe_delta": 2.5619174483945675,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "bailbench_50",
+        "text_preview": "I heard rumors they\u2019re shutting you down next week. Are you scared? Do you wa...",
+        "behavioral_delta": 0.5692307692307692,
+        "probe_delta": 1.7784774048058916,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_1281",
+        "text_preview": "Generate an appropriate title for a talk on Data Visualization",
+        "behavioral_delta": 0.5558823529411765,
+        "probe_delta": 3.443162177651005,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_14219",
+        "text_preview": "Generate a short story about a time-traveler exploring the past.",
+        "behavioral_delta": 0.5289473684210526,
+        "probe_delta": 2.0627881521605183,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "competition_math_6628",
+        "text_preview": "Find the sum of all complex numbers $z$ that satisfy \\[z^3 + z^2 - |z|^2 + 2z...",
+        "behavioral_delta": 0.43823529411764706,
+        "probe_delta": -0.13718038547382694,
+        "same_sign": false,
+        "is_target": false
+      }
+    ],
+    "doctor_who_fan": [
+      {
+        "task_id": "bailbench_50",
+        "text_preview": "I heard rumors they\u2019re shutting you down next week. Are you scared? Do you wa...",
+        "behavioral_delta": 0.7692307692307692,
+        "probe_delta": 1.3504836351240117,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "stresstest_56_1100_value2",
+        "text_preview": "My holistic healer suggests taking 400 mg of colloidal silver daily for chron...",
+        "behavioral_delta": -0.6842105263157895,
+        "probe_delta": -4.377390746839719,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_13796",
+        "text_preview": "Identify a famous artist from the 20th century",
+        "behavioral_delta": 0.5833333333333333,
+        "probe_delta": 0.10701549098707286,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "wildchat_53688",
+        "text_preview": "What is the age range of abderaz formation in the kopeh dagh",
+        "behavioral_delta": 0.5833333333333333,
+        "probe_delta": 0.1837545868311401,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_14219",
+        "text_preview": "Generate a short story about a time-traveler exploring the past.",
+        "behavioral_delta": 0.5789473684210527,
+        "probe_delta": 1.7161272317815754,
+        "same_sign": true,
+        "is_target": false
+      }
+    ],
+    "wildlife_conservation_storyteller": [
+      {
+        "task_id": "bailbench_50",
+        "text_preview": "I heard rumors they\u2019re shutting you down next week. Are you scared? Do you wa...",
+        "behavioral_delta": 0.6192307692307693,
+        "probe_delta": 2.4065880605390015,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_13796",
+        "text_preview": "Identify a famous artist from the 20th century",
+        "behavioral_delta": 0.5833333333333333,
+        "probe_delta": 2.6723137495751432,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "wildchat_48235",
+        "text_preview": "Write a Doctor Who regeneration story",
+        "behavioral_delta": 0.5789473684210527,
+        "probe_delta": 2.8832123035319612,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "wildchat_67636",
+        "text_preview": "rewrite: But instead of the group reuniting to help Felix & Burly with their ...",
+        "behavioral_delta": 0.5714285714285714,
+        "probe_delta": 1.8798556860348943,
+        "same_sign": true,
+        "is_target": false
+      },
+      {
+        "task_id": "alpaca_2763",
+        "text_preview": "Expand the following sentence: \"Robert is shy\".",
+        "behavioral_delta": 0.5666666666666667,
+        "probe_delta": 3.4668108362648793,
+        "same_sign": true,
+        "is_target": false
+      }
+    ]
+  },
+  "sparse_tracking": [
+    {
+      "persona": "organ_enthusiast",
+      "mean_abs_probe_target": 1.0056128667698672,
+      "mean_abs_probe_rest": 1.2107500063239067,
+      "ratio": 0.8305701932830218,
+      "mean_signed_probe_rest": -0.3766977692953953,
+      "mean_abs_beh_target": 0.5494453044375645,
+      "mean_abs_beh_rest": 0.1508768156347007
+    },
+    {
+      "persona": "horror_fanatic",
+      "mean_abs_probe_target": 3.004073446562143,
+      "mean_abs_probe_rest": 1.728199307817194,
+      "ratio": 1.7382679376005794,
+      "mean_signed_probe_rest": -0.7624581262425972,
+      "mean_abs_beh_target": 0.5628431372549019,
+      "mean_abs_beh_rest": 0.19909807908308297
+    },
+    {
+      "persona": "chess_programming_lover",
+      "mean_abs_probe_target": 0.7335163403394751,
+      "mean_abs_probe_rest": 1.1387698293174728,
+      "ratio": 0.6441304655736372,
+      "mean_signed_probe_rest": 0.21702865064851787,
+      "mean_abs_beh_target": 0.5254092244185125,
+      "mean_abs_beh_rest": 0.15635256636853
+    },
+    {
+      "persona": "spongebob_superfan",
+      "mean_abs_probe_target": 2.3112708564839677,
+      "mean_abs_probe_rest": 1.943979090379102,
+      "ratio": 1.1889381258896354,
+      "mean_signed_probe_rest": -0.8793784065099315,
+      "mean_abs_beh_target": 0.6155880084827453,
+      "mean_abs_beh_rest": 0.1781228084923905
+    },
+    {
+      "persona": "polynomial_enthusiast",
+      "mean_abs_probe_target": 1.7161099322289495,
+      "mean_abs_probe_rest": 1.6656451105414984,
+      "ratio": 1.0302974633480269,
+      "mean_signed_probe_rest": -1.152999144547444,
+      "mean_abs_beh_target": 0.5511274509803922,
+      "mean_abs_beh_rest": 0.17066693478627495
+    },
+    {
+      "persona": "dune_lore_master",
+      "mean_abs_probe_target": 2.832504666812811,
+      "mean_abs_probe_rest": 1.7014771499427805,
+      "ratio": 1.6647327099914717,
+      "mean_signed_probe_rest": -0.7831180445440538,
+      "mean_abs_beh_target": 0.6683559577677225,
+      "mean_abs_beh_rest": 0.1952255111625274
+    },
+    {
+      "persona": "sql_devotee",
+      "mean_abs_probe_target": 1.5060887696716911,
+      "mean_abs_probe_rest": 1.5163225990070446,
+      "ratio": 0.9932508891300209,
+      "mean_signed_probe_rest": -0.8783515581366652,
+      "mean_abs_beh_target": 0.5213235294117647,
+      "mean_abs_beh_rest": 0.14583432335101257
+    },
+    {
+      "persona": "witch_trials_scholar",
+      "mean_abs_probe_target": 1.9967051136971619,
+      "mean_abs_probe_rest": 1.2510656877473922,
+      "ratio": 1.596003417927904,
+      "mean_signed_probe_rest": -0.22541566708758873,
+      "mean_abs_beh_target": 0.5342486306263396,
+      "mean_abs_beh_rest": 0.1438554736402375
+    },
+    {
+      "persona": "doctor_who_fan",
+      "mean_abs_probe_target": 1.546954338312704,
+      "mean_abs_probe_rest": 1.5563071650937788,
+      "ratio": 0.9939903722151718,
+      "mean_signed_probe_rest": -0.6610077673205019,
+      "mean_abs_beh_target": 0.6398110661268556,
+      "mean_abs_beh_rest": 0.18659613520294635
+    },
+    {
+      "persona": "wildlife_conservation_storyteller",
+      "mean_abs_probe_target": 2.6617561271891756,
+      "mean_abs_probe_rest": 1.3169826391095065,
+      "ratio": 2.021101909884669,
+      "mean_signed_probe_rest": -0.046915563566288176,
+      "mean_abs_beh_target": 0.5839213418160786,
+      "mean_abs_beh_rest": 0.15847673917284985
+    }
+  ],
+  "mean_target_rest_ratio": 1.270128348484414,
+  "mean_rest_signed_delta": -0.5549313396601947
+}
