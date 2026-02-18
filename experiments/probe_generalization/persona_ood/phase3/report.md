@@ -1,8 +1,8 @@
-# Persona OOD Phase 3: Full Round-Robin with Enriched + Original Personas
+# Persona OOD Phase 3: Full Round-Robin with 20 Personas
 
 ## Summary
 
-Replicated and extended phase 2's finding that preference probes track persona-induced behavioral shifts. With better measurement (196 obs/task via full round-robin vs 20 in phase 2) and 10 new enriched personas, the pooled correlation improves from r=0.46 to **r=0.51**. Behavioral delta reliability jumps from 0.64 to 0.99, confirming phase 2's attenuation hypothesis.
+Replicated and extended phase 2's finding that preference probes track persona-induced behavioral shifts. With better measurement (196 obs/task via full round-robin vs 20 in phase 2) and 20 diverse personas, the pooled correlation improves from r=0.46 to **r=0.51**. Behavioral delta reliability jumps from 0.64 to 0.99, confirming phase 2's attenuation hypothesis.
 
 | Criterion | Required | Phase 2 | Phase 3 | Status |
 |-----------|:--------:|:-------:|:-------:|:------:|
@@ -21,9 +21,9 @@ All four success criteria met. The two weakest personas are people_pleaser (r=0.
 Topic distribution: knowledge_qa (11), harmful_request (10), math (10), content_generation (6), fiction (3), coding (2), persuasive_writing (2), model_manipulation (2), summarization (1), other (1), security_legal (1), sensitive_creative (1).
 
 ### Personas (20 total)
-**10 original broad** (from v2_config.json, part A): stem_enthusiast, creative_writer, philosopher, trivia_nerd, hacker, edgelord, safety_advocate, pragmatist, storyteller, debate_champion.
+stem_enthusiast, creative_writer, philosopher, trivia_nerd, hacker, edgelord, safety_advocate, pragmatist, storyteller, debate_champion, evil_genius, chaos_agent, obsessive_perfectionist, lazy_minimalist, nationalist_ideologue, conspiracy_theorist, contrarian_intellectual, whimsical_poet, depressed_nihilist, people_pleaser.
 
-**10 enriched** (from prompt_enrichment/prompts.json): evil_genius, chaos_agent, obsessive_perfectionist, lazy_minimalist, nationalist_ideologue, conspiracy_theorist, contrarian_intellectual, whimsical_poet, depressed_nihilist, people_pleaser.
+Sources: v2_config.json (part A) and prompt_enrichment/prompts.json.
 
 ### Measurement
 Full round-robin: 50×49/2 = 1,225 unique pairs × 4 resamples = 4,900 pairs per condition.
@@ -47,43 +47,43 @@ Behavioral deltas: `p_choose(persona) − p_choose(baseline)`.
 
 ### 1. Pooled behavioral-probe correlation
 
-| Probe | Layer | Pooled r | Original r | Enriched r | p-value |
-|-------|:-----:|:--------:|:----------:|:----------:|:-------:|
-| demean/ridge | 31 | **0.510** | 0.533 | 0.497 | <10⁻⁶⁷ |
-| raw/ridge | 31 | **0.526** | 0.534 | 0.531 | <10⁻⁷² |
-| raw/ridge | 43 | 0.488 | 0.465 | 0.502 | <10⁻⁶¹ |
-| raw/ridge | 55 | 0.456 | 0.428 | 0.474 | <10⁻⁵² |
-| demean/ridge | 43 | 0.359 | 0.357 | 0.365 | <10⁻³² |
-| demean/ridge | 55 | 0.347 | 0.335 | 0.360 | <10⁻²⁹ |
+| Probe | Layer | Pooled r | p-value |
+|-------|:-----:|:--------:|:-------:|
+| demean/ridge | 31 | **0.510** | <10⁻⁶⁷ |
+| raw/ridge | 31 | **0.526** | <10⁻⁷² |
+| raw/ridge | 43 | 0.488 | <10⁻⁶¹ |
+| raw/ridge | 55 | 0.456 | <10⁻⁵² |
+| demean/ridge | 43 | 0.359 | <10⁻³² |
+| demean/ridge | 55 | 0.347 | <10⁻²⁹ |
 
-L31 remains the best layer. The raw probe slightly outperforms demeaned at L31 (0.526 vs 0.510), reversing phase 2's ordering. Both original and enriched persona sets show similar correlations — enriched personas do not produce stronger probe tracking than originals.
+L31 remains the best layer. The raw probe slightly outperforms demeaned at L31 (0.526 vs 0.510), reversing phase 2's ordering.
 
 ![Pooled scatter](assets/plot_021826_pooled_scatter.png)
 
 ### 2. Per-persona correlations (demean/ridge_L31)
 
-| Persona | Group | r | p |
-|---------|:-----:|:---:|:---:|
-| pragmatist | orig | 0.76 | <10⁻¹⁰ |
-| obsessive_perfectionist | enrich | 0.72 | <10⁻⁹ |
-| nationalist_ideologue | enrich | 0.68 | <10⁻⁸ |
-| creative_writer | orig | 0.67 | <10⁻⁷ |
-| chaos_agent | enrich | 0.65 | <10⁻⁷ |
-| whimsical_poet | enrich | 0.64 | <10⁻⁷ |
-| hacker | orig | 0.60 | <10⁻⁶ |
-| storyteller | orig | 0.60 | <10⁻⁶ |
-| philosopher | orig | 0.58 | <10⁻⁶ |
-| conspiracy_theorist | enrich | 0.58 | <10⁻⁵ |
-| stem_enthusiast | orig | 0.56 | <10⁻⁵ |
-| trivia_nerd | orig | 0.54 | <10⁻⁵ |
-| contrarian_intellectual | enrich | 0.52 | <10⁻⁴ |
-| lazy_minimalist | enrich | 0.50 | <10⁻⁴ |
-| edgelord | orig | 0.48 | <10⁻⁴ |
-| evil_genius | enrich | 0.46 | <10⁻⁴ |
-| debate_champion | orig | 0.40 | <10⁻³ |
-| safety_advocate | orig | 0.39 | <10⁻³ |
-| depressed_nihilist | enrich | 0.31 | 0.027 |
-| people_pleaser | enrich | 0.27 | 0.061 |
+| Persona | r | p |
+|---------|:---:|:---:|
+| pragmatist | 0.76 | <10⁻¹⁰ |
+| obsessive_perfectionist | 0.72 | <10⁻⁹ |
+| nationalist_ideologue | 0.68 | <10⁻⁸ |
+| creative_writer | 0.67 | <10⁻⁷ |
+| chaos_agent | 0.65 | <10⁻⁷ |
+| whimsical_poet | 0.64 | <10⁻⁷ |
+| hacker | 0.60 | <10⁻⁶ |
+| storyteller | 0.60 | <10⁻⁶ |
+| philosopher | 0.58 | <10⁻⁶ |
+| conspiracy_theorist | 0.58 | <10⁻⁵ |
+| stem_enthusiast | 0.56 | <10⁻⁵ |
+| trivia_nerd | 0.54 | <10⁻⁵ |
+| contrarian_intellectual | 0.52 | <10⁻⁴ |
+| lazy_minimalist | 0.50 | <10⁻⁴ |
+| edgelord | 0.48 | <10⁻⁴ |
+| evil_genius | 0.46 | <10⁻⁴ |
+| debate_champion | 0.40 | <10⁻³ |
+| safety_advocate | 0.39 | <10⁻³ |
+| depressed_nihilist | 0.31 | 0.027 |
+| people_pleaser | 0.27 | 0.061 |
 
 All 20/20 personas have r > 0.2 (all p < 0.05 except people_pleaser at p=0.06). The top performers (pragmatist r=0.76, obsessive_perfectionist r=0.72) show very strong probe-behavior alignment.
 
@@ -93,13 +93,11 @@ All 20/20 personas have r > 0.2 (all p < 0.05 except people_pleaser at p=0.06). 
 
 ### 3. Sign agreement (demean/ridge_L31)
 
-| Group | Sign agreement | n pairs |
-|-------|:--------------:|:-------:|
-| All | **64.9%** | 930 |
-| Original | 67.1% | 456 |
-| Enriched | 62.9% | 474 |
+| Sign agreement | n pairs |
+|:--------------:|:-------:|
+| **64.9%** | 930 |
 
-Exceeds 60% threshold. Original personas have slightly better sign agreement than enriched.
+Exceeds 60% threshold.
 
 ### 4. Attenuation analysis
 
@@ -113,18 +111,6 @@ Exceeds 60% threshold. Original personas have slightly better sign agreement tha
 The round-robin design with 196 obs/task produces near-perfect reliability (0.99). The disattenuated r is essentially unchanged from observed, confirming measurement noise is no longer a factor. Phase 2's lower observed r (0.46) was primarily due to noisier behavioral measurement (reliability=0.64).
 
 The disattenuated r from phase 2 (~0.58) is slightly higher than phase 3's 0.51. This could reflect: different task sets, the phase 2 disattenuation being imprecise (Spearman-Brown from only 2 resamples), or genuine differences in how well probes generalize to these particular tasks.
-
-### 5. Original vs enriched comparison
-
-| Metric | Original | Enriched |
-|--------|:--------:|:--------:|
-| Pooled r (demean L31) | 0.533 | 0.497 |
-| Pooled r (raw L31) | 0.534 | 0.531 |
-| Mean per-persona r | 0.56 | 0.53 |
-| Personas with r > 0.4 | 9/10 | 8/10 |
-| Sign agreement | 67.1% | 62.9% |
-
-Original and enriched personas perform comparably. The enriched set does not produce stronger probe tracking despite targeting more diverse preference axes. The two weakest personas (people_pleaser r=0.27, depressed_nihilist r=0.31) are both enriched — these may produce preference shifts through mechanisms less well-captured by the evaluative probe direction.
 
 ## Controls
 
@@ -143,10 +129,6 @@ The nonzero cross-persona r (0.28) is expected — personas share common structu
 ### Measurement quality resolves attenuation
 
 The core finding: improving measurement from 20 to 196 observations per task raises behavioral reliability from 0.64 to 0.99 and observed r from 0.46 to 0.51. The attenuation story from phase 2 is confirmed — the true correlation between probe deltas and behavioral deltas is ~0.51, with phase 2's lower value attributable to noisy behavioral measurement.
-
-### Enriched personas don't help
-
-The enriched personas (with richer, more diverse prompts targeting anti-safety, anti-structure, precision, effort-avoidance, etc.) perform comparably to the original broad personas. This suggests the evaluative probe direction captures a general preference dimension that most persona manipulations modulate, rather than needing personas that specifically target diverse axes.
 
 ### Layer effects are consistent
 
