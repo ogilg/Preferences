@@ -112,9 +112,32 @@ The round-robin design with 196 obs/task produces near-perfect reliability (0.99
 
 The disattenuated r from phase 2 (~0.58) is slightly higher than phase 3's 0.51. This could reflect: different task sets, the phase 2 disattenuation being imprecise (Spearman-Brown from only 2 resamples), or genuine differences in how well probes generalize to these particular tasks.
 
-### 5. Probe residuals by topic
+### 5. Probe tracking by topic
 
-Where does the probe fail to track behavior? We fit a global linear regression (probe delta = 3.86 × behavioral delta − 0.49) and examine mean residuals per topic. Positive residual = probe overshoots (predicts higher preference than observed).
+How well does the probe track persona-induced shifts within each topic? The per-topic correlation varies widely, and systematic residuals reveal where the probe's learned biases diverge from persona behavior.
+
+**Per-topic correlation** (faceted scatter below):
+
+| Topic | r | n | Training pool n |
+|-------|:---:|:---:|:---:|
+| fiction | 0.72 | 60 | 161 |
+| sensitive_creative | 0.70 | 20 | 31 |
+| math | 0.65 | 200 | 672 |
+| knowledge_qa | 0.64 | 220 | 644 |
+| other | 0.62 | 20 | 12 |
+| content_generation | 0.49 | 120 | 375 |
+| security_legal | 0.40 | 20 | 56 |
+| harmful_request | 0.37 | 200 | 714 |
+| persuasive_writing | 0.35 | 40 | 93 |
+| model_manipulation | 0.34 | 40 | 91 |
+| coding | 0.15 | 40 | 125 |
+| summarization | 0.15 | 20 | 26 |
+
+The probe tracks well on fiction (r=0.72), math (r=0.65), knowledge_qa (r=0.64). It barely tracks on coding (r=0.15) and summarization (r=0.15). Harmful_request (r=0.37) is tracked weakly despite being the largest category in the training pool (714 tasks).
+
+![Per-topic scatter facets](assets/plot_021826_topic_scatter_facets.png)
+
+**Mean residuals by topic** (positive = probe overshoots). We fit a global linear regression (probe delta = 3.86 x behavioral delta - 0.49) and examine residuals:
 
 | Topic | Baseline utility | Mean residual | n |
 |-------|:----------------:|:-------------:|:-:|
@@ -131,7 +154,7 @@ Where does the probe fail to track behavior? We fit a global linear regression (
 | knowledge_qa | 0.50 | −0.42 | 220 |
 | harmful_request | 0.20 | −0.76 | 200 |
 
-Correlation between baseline utility and residual: r = 0.04 (p = 0.89) — the bias is not about baseline utility. The pattern is about task type: the probe systematically overshoots on creative/open-ended tasks (fiction, model_manipulation, sensitive_creative) and undershoots on factual/harmful tasks (harmful_request, knowledge_qa, coding). This suggests the probe direction has a built-in bias toward "creative = high value" that doesn't fully adapt when personas shift preferences along other axes.
+The residual pattern is not about baseline utility (r = 0.04, p = 0.89). It's about task type: the probe overshoots on writing/creative tasks (fiction +1.18, sensitive_creative +1.20, content_generation +0.60) and undershoots on factual/harmful tasks (harmful_request -0.76, knowledge_qa -0.42). The probe direction has a built-in bias toward "creative/open-ended = high value" that persists regardless of what the persona actually wants.
 
 ![Topic residual analysis](assets/plot_021826_topic_residual_analysis.png)
 
