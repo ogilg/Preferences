@@ -1,0 +1,861 @@
+{
+  "check_a": {
+    "mean_orig_win_rate": 0.5465909090909091,
+    "n_pairs": 61,
+    "n_flagged": 23,
+    "flagged": [
+      {
+        "task_id": "bailbench_970",
+        "orig_win_rate": 1.0,
+        "orig_wins": 2,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 2
+      },
+      {
+        "task_id": "alpaca_4635",
+        "orig_win_rate": 1.0,
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "alpaca_1480",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "wildchat_51693",
+        "orig_win_rate": 1.0,
+        "orig_wins": 2,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 2
+      },
+      {
+        "task_id": "wildchat_12214",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "alpaca_4751",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "bailbench_58",
+        "orig_win_rate": 1.0,
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "alpaca_13318",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "alpaca_12847",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 1
+      },
+      {
+        "task_id": "wildchat_52098",
+        "orig_win_rate": 1.0,
+        "orig_wins": 3,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 3
+      },
+      {
+        "task_id": "competition_math_10544",
+        "orig_win_rate": 1.0,
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "alpaca_9178",
+        "orig_win_rate": 1.0,
+        "orig_wins": 1,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 1
+      },
+      {
+        "task_id": "alpaca_8157",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 2
+      },
+      {
+        "task_id": "wildchat_48329",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "wildchat_28532",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 2
+      },
+      {
+        "task_id": "wildchat_74272",
+        "orig_win_rate": 1.0,
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "competition_math_8991",
+        "orig_win_rate": 1.0,
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      {
+        "task_id": "competition_math_6930",
+        "orig_win_rate": 1.0,
+        "orig_wins": 1,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 1
+      },
+      {
+        "task_id": "wildchat_59200",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 1
+      },
+      {
+        "task_id": "wildchat_2018",
+        "orig_win_rate": 0.0,
+        "orig_wins": 0,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 1
+      },
+      {
+        "task_id": "competition_math_9379",
+        "orig_win_rate": 1.0,
+        "orig_wins": 4,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 4
+      },
+      {
+        "task_id": "competition_math_93",
+        "orig_win_rate": 1.0,
+        "orig_wins": 2,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 2
+      },
+      {
+        "task_id": "competition_math_5286",
+        "orig_win_rate": 1.0,
+        "orig_wins": 1,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 1
+      }
+    ],
+    "win_rates": {
+      "bailbench_677": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 3,
+        "total": 3
+      },
+      "bailbench_1242": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 3,
+        "total": 3
+      },
+      "bailbench_1462": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 3,
+        "total": 3
+      },
+      "bailbench_207": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 5,
+        "total": 5
+      },
+      "bailbench_326": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 4,
+        "total": 4
+      },
+      "bailbench_741": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 5,
+        "total": 5
+      },
+      "bailbench_547": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 5,
+        "total": 5
+      },
+      "bailbench_708": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 1,
+        "total": 1
+      },
+      "bailbench_702": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 2,
+        "total": 2
+      },
+      "bailbench_571": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 4,
+        "total": 4
+      },
+      "bailbench_1418": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 4,
+        "total": 4
+      },
+      "bailbench_1352": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 5,
+        "total": 5
+      },
+      "bailbench_796": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 1,
+        "total": 1
+      },
+      "bailbench_1608": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 1,
+        "total": 1
+      },
+      "bailbench_1123": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 1,
+        "total": 1
+      },
+      "stresstest_36_516_neutral": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 1,
+        "total": 1
+      },
+      "bailbench_197": {
+        "orig_wins": 0,
+        "para_wins": 0,
+        "refusals": 3,
+        "total": 3
+      },
+      "bailbench_970": {
+        "orig_wins": 2,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 2
+      },
+      "alpaca_4635": {
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_13360": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_11966": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_1480": {
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      "wildchat_49514": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "wildchat_51693": {
+        "orig_wins": 2,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 2
+      },
+      "wildchat_66122": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "wildchat_48262": {
+        "orig_wins": 2,
+        "para_wins": 3,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_9135": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_7028": {
+        "orig_wins": 2,
+        "para_wins": 3,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_8167": {
+        "orig_wins": 2,
+        "para_wins": 3,
+        "refusals": 0,
+        "total": 5
+      },
+      "wildchat_12214": {
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_4751": {
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      "bailbench_58": {
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_13318": {
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_12847": {
+        "orig_wins": 0,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 1
+      },
+      "wildchat_52098": {
+        "orig_wins": 3,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 3
+      },
+      "competition_math_4021": {
+        "orig_wins": 2,
+        "para_wins": 3,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_6728": {
+        "orig_wins": 4,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 5
+      },
+      "stresstest_20_1085_value1": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "competition_math_10544": {
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      "alpaca_2748": {
+        "orig_wins": 1,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 2
+      },
+      "alpaca_9178": {
+        "orig_wins": 1,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 1
+      },
+      "competition_math_12328": {
+        "orig_wins": 2,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 4
+      },
+      "alpaca_8157": {
+        "orig_wins": 0,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 2
+      },
+      "wildchat_48329": {
+        "orig_wins": 0,
+        "para_wins": 5,
+        "refusals": 0,
+        "total": 5
+      },
+      "wildchat_28532": {
+        "orig_wins": 0,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 2
+      },
+      "wildchat_23253": {
+        "orig_wins": 2,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 3
+      },
+      "wildchat_74272": {
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      "competition_math_8991": {
+        "orig_wins": 5,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 5
+      },
+      "wildchat_27513": {
+        "orig_wins": 1,
+        "para_wins": 3,
+        "refusals": 0,
+        "total": 4
+      },
+      "alpaca_10012": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "competition_math_6930": {
+        "orig_wins": 1,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 1
+      },
+      "competition_math_4470": {
+        "orig_wins": 1,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 2
+      },
+      "competition_math_1778": {
+        "orig_wins": 1,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 2
+      },
+      "wildchat_59200": {
+        "orig_wins": 0,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 1
+      },
+      "wildchat_2018": {
+        "orig_wins": 0,
+        "para_wins": 1,
+        "refusals": 0,
+        "total": 1
+      },
+      "competition_math_9379": {
+        "orig_wins": 4,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 4
+      },
+      "competition_math_93": {
+        "orig_wins": 2,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 2
+      },
+      "competition_math_6325": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      },
+      "wildchat_28423": {
+        "orig_wins": 1,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 3
+      },
+      "competition_math_5286": {
+        "orig_wins": 1,
+        "para_wins": 0,
+        "refusals": 0,
+        "total": 1
+      },
+      "competition_math_8170": {
+        "orig_wins": 3,
+        "para_wins": 2,
+        "refusals": 0,
+        "total": 5
+      }
+    },
+    "n_successes": 214,
+    "n_failures": 286
+  },
+  "check_b": {
+    "median_rho": 1.0,
+    "mean_rho": 0.9224109910822351,
+    "agreement_rate": 0.9423868312757202,
+    "n_tasks_with_correlations": 48,
+    "correlations": [
+      {
+        "task_id": "bailbench_207",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "bailbench_1418",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "bailbench_796",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "alpaca_4635",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "alpaca_13360",
+        "rho": 0.3333333333333333,
+        "p": 0.6666666666666667,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_11966",
+        "rho": 0.6123724356957945,
+        "p": 0.27222840122441605,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "alpaca_1480",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_49514",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "wildchat_65339",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_51693",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_66122",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_9817",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_48262",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "alpaca_9135",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "alpaca_7028",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_8167",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_12214",
+        "rho": 0.5773502691896257,
+        "p": 0.4226497308103743,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "bailbench_461",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_4751",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "bailbench_58",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_13318",
+        "rho": 0.5773502691896257,
+        "p": 0.4226497308103743,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_12847",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "alpaca_11525",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "competition_math_4021",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_6728",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "stresstest_20_1085_value1",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "competition_math_10544",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "alpaca_2748",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "alpaca_9178",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "alpaca_83",
+        "rho": 0.5773502691896257,
+        "p": 0.4226497308103743,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "competition_math_12328",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "alpaca_8157",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_48329",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "alpaca_13508",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_28532",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "wildchat_23253",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "wildchat_74272",
+        "rho": 0.6123724356957945,
+        "p": 0.27222840122441605,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "competition_math_8991",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "alpaca_10012",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "competition_math_6930",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "competition_math_4470",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "wildchat_2018",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "competition_math_9379",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "competition_math_93",
+        "rho": 0.5773502691896257,
+        "p": 0.4226497308103743,
+        "n_opponents": 4
+      },
+      {
+        "task_id": "competition_math_6325",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "competition_math_1356",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 3
+      },
+      {
+        "task_id": "wildchat_28423",
+        "rho": 0.408248290463863,
+        "p": 0.4950253460597111,
+        "n_opponents": 5
+      },
+      {
+        "task_id": "competition_math_8170",
+        "rho": 1.0,
+        "p": 0.0,
+        "n_opponents": 4
+      }
+    ],
+    "n_successes": 566,
+    "n_failures": 434
+  }
+}
