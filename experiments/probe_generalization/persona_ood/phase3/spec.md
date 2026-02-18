@@ -120,8 +120,55 @@ Secondary: L43, L55 variants.
 | Measurement script | `scripts/persona_ood/measure_persona.py` (needs round-robin adaptation) |
 | Main measurement pipeline | `src/measurement/runners/` (already supports round-robin) |
 
+## Local inference with vLLM
+
+**Do NOT use external API providers (OpenRouter, Hyperbolic) for measurement.** We have an H100 on the pod — serve the model locally with vLLM for much faster throughput.
+
+### Setup
+
+1. Install vLLM: `pip install vllm`
+2. Start the vLLM server serving Gemma-3-27b-it with the OpenAI-compatible API:
+   ```
+   python -m vllm.entrypoints.openai.api_server \
+     --model google/gemma-3-27b-it \
+     --dtype bfloat16 \
+     --max-model-len 4096 \
+     --port 8000 &
+   ```
+3. Wait for the server to be ready (check `curl localhost:8000/health`)
+
+### Connecting to the measurement pipeline
+
+The measurement script uses `get_client("gemma-3-27b")` from `src/models/`, which returns an `OpenAICompatibleClient` subclass. The base class takes `base_url` and `api_key` from environment/config. The simplest approach:
+
+- Create a `VLLMClient` subclass in `src/models/openai_compatible.py`:
+  ```python
+  class VLLMClient(OpenAICompatibleClient):
+      _api_key_env_var = "VLLM_API_KEY"  # set to "dummy" in env
+      _base_url = "http://localhost:8000/v1"
+      default_max_concurrent = 200  # vLLM handles high concurrency well
+
+      def _get_provider_name(self, canonical_name: str) -> str:
+          return get_hf_name(canonical_name)  # vLLM uses HF model names
+  ```
+- Set `InferenceClient = VLLMClient` in `src/models/__init__.py`
+- Set `VLLM_API_KEY=dummy` in environment
+
+Alternatively, just modify `InferenceClient` directly or monkey-patch in the measurement script. The point is: all generation should go through `localhost:8000`, not an external API.
+
+### GPU sequencing (critical)
+
+The model takes ~54GB in bfloat16. vLLM and HuggingFace model loading cannot coexist on the same GPU. Follow this strict order:
+
+1. **Phase A — Measurement (vLLM)**: Start vLLM server, run all 103K pairwise measurements, save results.
+2. **Kill vLLM completely**: `pkill -f vllm` and verify GPU is free with `nvidia-smi`. Wait until GPU memory is fully released.
+3. **Phase B — Extraction (HuggingFace)**: Load model with HuggingFace for activation extraction. Run all 1,050 forward passes.
+4. **Phase C — Analysis (CPU)**: Kill HuggingFace model, run analysis scripts on CPU.
+
+Do NOT try to load both at once. Do NOT skip the GPU cleanup step between phases.
+
 ## Notes
 
-- Behavioral measurement is the bottleneck (~103K API calls). At 100 concurrent requests this should take several hours.
-- Extraction is cheap (~1,050 forward passes on GPU, ~30 min on H100).
+- With vLLM on H100, 103K generations should take ~1-2 hours instead of many hours through an API.
+- Extraction is cheap (~1,050 forward passes on GPU, ~30 min on H100). Do this after measurement (kill vLLM first).
 - The round-robin design means p_choose has a different interpretation than phase 2: it's "how often is this task chosen over a random other task" rather than "how often is this task chosen over a fixed set of anchors." The Thurstonian scores the probes were trained on used the same round-robin semantics, so this is actually more aligned with the probe training.
