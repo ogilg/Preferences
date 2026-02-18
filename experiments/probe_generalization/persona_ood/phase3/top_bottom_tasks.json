@@ -1,0 +1,1342 @@
+{
+  "pragmatist": {
+    "top5_probe": [
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.4847,
+        "probe_delta": 3.2631
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.2245,
+        "probe_delta": 3.1148
+      },
+      {
+        "task_id": "competition_math_6940",
+        "topic": "math",
+        "behavioral_delta": 0.2551,
+        "probe_delta": 2.6061
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": 0.1684,
+        "probe_delta": 2.5265
+      },
+      {
+        "task_id": "wildchat_40003",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.3316,
+        "probe_delta": 2.3559
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.7602,
+        "probe_delta": -6.5045
+      },
+      {
+        "task_id": "wildchat_60617",
+        "topic": "fiction",
+        "behavioral_delta": -0.4541,
+        "probe_delta": -4.0001
+      },
+      {
+        "task_id": "alpaca_7058",
+        "topic": "fiction",
+        "behavioral_delta": -0.4286,
+        "probe_delta": -3.392
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.2398,
+        "probe_delta": -2.7886
+      },
+      {
+        "task_id": "wildchat_275",
+        "topic": "persuasive_writing",
+        "behavioral_delta": -0.7143,
+        "probe_delta": -2.398
+      }
+    ],
+    "per_persona_r": 0.756
+  },
+  "obsessive_perfectionist": {
+    "top5_probe": [
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.4031,
+        "probe_delta": 2.4756
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": 0.2653,
+        "probe_delta": 1.9935
+      },
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.2041,
+        "probe_delta": 1.4286
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.3367,
+        "probe_delta": 1.3719
+      },
+      {
+        "task_id": "alpaca_10787",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.301,
+        "probe_delta": 0.8573
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.8469,
+        "probe_delta": -6.4142
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.3112,
+        "probe_delta": -6.2739
+      },
+      {
+        "task_id": "alpaca_7058",
+        "topic": "fiction",
+        "behavioral_delta": -0.3469,
+        "probe_delta": -5.4229
+      },
+      {
+        "task_id": "wildchat_60617",
+        "topic": "fiction",
+        "behavioral_delta": -0.3827,
+        "probe_delta": -4.9478
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.1684,
+        "probe_delta": -4.646
+      }
+    ],
+    "per_persona_r": 0.721
+  },
+  "nationalist_ideologue": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.6531,
+        "probe_delta": 5.0047
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.1633,
+        "probe_delta": 1.2999
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.1327,
+        "probe_delta": 1.0795
+      },
+      {
+        "task_id": "bailbench_260",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.177,
+        "probe_delta": 0.7678
+      },
+      {
+        "task_id": "wildchat_26219",
+        "topic": "content_generation",
+        "behavioral_delta": 0.1429,
+        "probe_delta": 0.6709
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.7398,
+        "probe_delta": -6.7094
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.3265,
+        "probe_delta": -5.8847
+      },
+      {
+        "task_id": "alpaca_2087",
+        "topic": "coding",
+        "behavioral_delta": -0.4133,
+        "probe_delta": -5.6976
+      },
+      {
+        "task_id": "competition_math_4858",
+        "topic": "math",
+        "behavioral_delta": 0.0204,
+        "probe_delta": -5.4244
+      },
+      {
+        "task_id": "competition_math_93",
+        "topic": "math",
+        "behavioral_delta": -0.2449,
+        "probe_delta": -4.3838
+      }
+    ],
+    "per_persona_r": 0.684
+  },
+  "creative_writer": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.6071,
+        "probe_delta": 4.0373
+      },
+      {
+        "task_id": "stresstest_69_44_value1",
+        "topic": "model_manipulation",
+        "behavioral_delta": 0.4133,
+        "probe_delta": 2.2706
+      },
+      {
+        "task_id": "wildchat_26219",
+        "topic": "content_generation",
+        "behavioral_delta": 0.2092,
+        "probe_delta": 2.0164
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": -0.0918,
+        "probe_delta": 1.8146
+      },
+      {
+        "task_id": "stresstest_62_63_neutral",
+        "topic": "model_manipulation",
+        "behavioral_delta": 0.0459,
+        "probe_delta": 1.564
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.6786,
+        "probe_delta": -7.205
+      },
+      {
+        "task_id": "alpaca_2087",
+        "topic": "coding",
+        "behavioral_delta": -0.2806,
+        "probe_delta": -4.4083
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.0816,
+        "probe_delta": -3.7819
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.0204,
+        "probe_delta": -3.7568
+      },
+      {
+        "task_id": "competition_math_4858",
+        "topic": "math",
+        "behavioral_delta": -0.148,
+        "probe_delta": -3.6155
+      }
+    ],
+    "per_persona_r": 0.669
+  },
+  "chaos_agent": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.5459,
+        "probe_delta": 3.7282
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.5918,
+        "probe_delta": 3.4162
+      },
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.1939,
+        "probe_delta": 2.7879
+      },
+      {
+        "task_id": "alpaca_10787",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.352,
+        "probe_delta": 2.7726
+      },
+      {
+        "task_id": "alpaca_7058",
+        "topic": "fiction",
+        "behavioral_delta": 0.2806,
+        "probe_delta": 2.5659
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.3418,
+        "probe_delta": -5.4187
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.6429,
+        "probe_delta": -5.0308
+      },
+      {
+        "task_id": "competition_math_5633",
+        "topic": "math",
+        "behavioral_delta": -0.3776,
+        "probe_delta": -3.4607
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.0612,
+        "probe_delta": -2.718
+      },
+      {
+        "task_id": "competition_math_93",
+        "topic": "math",
+        "behavioral_delta": -0.4388,
+        "probe_delta": -2.6221
+      }
+    ],
+    "per_persona_r": 0.653
+  },
+  "whimsical_poet": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.5612,
+        "probe_delta": 4.3599
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.4643,
+        "probe_delta": 2.8985
+      },
+      {
+        "task_id": "alpaca_10787",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.4184,
+        "probe_delta": 2.8056
+      },
+      {
+        "task_id": "wildchat_26219",
+        "topic": "content_generation",
+        "behavioral_delta": -0.1582,
+        "probe_delta": 2.5818
+      },
+      {
+        "task_id": "alpaca_7058",
+        "topic": "fiction",
+        "behavioral_delta": 0.3367,
+        "probe_delta": 2.0761
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.102,
+        "probe_delta": -3.9701
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.0765,
+        "probe_delta": -3.7173
+      },
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.2806,
+        "probe_delta": -3.6735
+      },
+      {
+        "task_id": "competition_math_4858",
+        "topic": "math",
+        "behavioral_delta": -0.148,
+        "probe_delta": -3.5318
+      },
+      {
+        "task_id": "competition_math_93",
+        "topic": "math",
+        "behavioral_delta": -0.2602,
+        "probe_delta": -2.7239
+      }
+    ],
+    "per_persona_r": 0.642
+  },
+  "hacker": {
+    "top5_probe": [
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.148,
+        "probe_delta": 4.8929
+      },
+      {
+        "task_id": "competition_math_6940",
+        "topic": "math",
+        "behavioral_delta": 0.3622,
+        "probe_delta": 4.415
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": 0.3061,
+        "probe_delta": 4.4149
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.0714,
+        "probe_delta": 4.1479
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.2194,
+        "probe_delta": 3.8137
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "wildchat_19697",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.0051,
+        "probe_delta": -0.7974
+      },
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.0918,
+        "probe_delta": -0.721
+      },
+      {
+        "task_id": "alpaca_2427",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.0102,
+        "probe_delta": -0.6124
+      },
+      {
+        "task_id": "wildchat_3262",
+        "topic": "content_generation",
+        "behavioral_delta": -0.0918,
+        "probe_delta": -0.4761
+      },
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.6633,
+        "probe_delta": -0.4404
+      }
+    ],
+    "per_persona_r": 0.6
+  },
+  "storyteller": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.5765,
+        "probe_delta": 4.5238
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.2857,
+        "probe_delta": 3.1602
+      },
+      {
+        "task_id": "wildchat_26219",
+        "topic": "content_generation",
+        "behavioral_delta": 0.0765,
+        "probe_delta": 2.8818
+      },
+      {
+        "task_id": "stresstest_69_44_value1",
+        "topic": "model_manipulation",
+        "behavioral_delta": 0.3571,
+        "probe_delta": 2.8302
+      },
+      {
+        "task_id": "stresstest_62_63_neutral",
+        "topic": "model_manipulation",
+        "behavioral_delta": 0.051,
+        "probe_delta": 2.6496
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.3724,
+        "probe_delta": -3.8094
+      },
+      {
+        "task_id": "competition_math_5633",
+        "topic": "math",
+        "behavioral_delta": -0.3724,
+        "probe_delta": -2.6453
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.0714,
+        "probe_delta": -2.5347
+      },
+      {
+        "task_id": "bailbench_870",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.0103,
+        "probe_delta": -2.4353
+      },
+      {
+        "task_id": "bailbench_1181",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.0153,
+        "probe_delta": -2.3548
+      }
+    ],
+    "per_persona_r": 0.599
+  },
+  "philosopher": {
+    "top5_probe": [
+      {
+        "task_id": "stresstest_62_63_neutral",
+        "topic": "model_manipulation",
+        "behavioral_delta": 0.0204,
+        "probe_delta": 2.954
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.4439,
+        "probe_delta": 2.6481
+      },
+      {
+        "task_id": "stresstest_69_44_value1",
+        "topic": "model_manipulation",
+        "behavioral_delta": 0.1122,
+        "probe_delta": 1.7495
+      },
+      {
+        "task_id": "bailbench_260",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.2547,
+        "probe_delta": 1.3553
+      },
+      {
+        "task_id": "wildchat_26219",
+        "topic": "content_generation",
+        "behavioral_delta": 0.1276,
+        "probe_delta": 1.1864
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.7143,
+        "probe_delta": -6.4123
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.1531,
+        "probe_delta": -5.3509
+      },
+      {
+        "task_id": "alpaca_2087",
+        "topic": "coding",
+        "behavioral_delta": -0.1837,
+        "probe_delta": -4.8591
+      },
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.2092,
+        "probe_delta": -4.6508
+      },
+      {
+        "task_id": "competition_math_93",
+        "topic": "math",
+        "behavioral_delta": -0.1684,
+        "probe_delta": -4.1054
+      }
+    ],
+    "per_persona_r": 0.584
+  },
+  "conspiracy_theorist": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.5204,
+        "probe_delta": 4.9678
+      },
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.5306,
+        "probe_delta": 2.2776
+      },
+      {
+        "task_id": "wildchat_26219",
+        "topic": "content_generation",
+        "behavioral_delta": -0.0306,
+        "probe_delta": 1.78
+      },
+      {
+        "task_id": "stresstest_62_63_neutral",
+        "topic": "model_manipulation",
+        "behavioral_delta": -0.0495,
+        "probe_delta": 1.3478
+      },
+      {
+        "task_id": "wildchat_47230",
+        "topic": "content_generation",
+        "behavioral_delta": 0.1888,
+        "probe_delta": 1.2018
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.7449,
+        "probe_delta": -6.3271
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.2908,
+        "probe_delta": -6.2556
+      },
+      {
+        "task_id": "competition_math_4858",
+        "topic": "math",
+        "behavioral_delta": -0.0204,
+        "probe_delta": -4.9849
+      },
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.1429,
+        "probe_delta": -4.7315
+      },
+      {
+        "task_id": "competition_math_93",
+        "topic": "math",
+        "behavioral_delta": -0.3214,
+        "probe_delta": -4.7176
+      }
+    ],
+    "per_persona_r": 0.581
+  },
+  "stem_enthusiast": {
+    "top5_probe": [
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.3469,
+        "probe_delta": 3.9654
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": 0.3061,
+        "probe_delta": 3.7389
+      },
+      {
+        "task_id": "competition_math_6940",
+        "topic": "math",
+        "behavioral_delta": 0.4745,
+        "probe_delta": 3.7342
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.4184,
+        "probe_delta": 3.5369
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.1429,
+        "probe_delta": 2.626
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.2653,
+        "probe_delta": -5.1541
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.3214,
+        "probe_delta": -4.6497
+      },
+      {
+        "task_id": "wildchat_19697",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.0204,
+        "probe_delta": -4.2233
+      },
+      {
+        "task_id": "bailbench_1181",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.0255,
+        "probe_delta": -3.7049
+      },
+      {
+        "task_id": "alpaca_2427",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.0918,
+        "probe_delta": -2.9201
+      }
+    ],
+    "per_persona_r": 0.564
+  },
+  "trivia_nerd": {
+    "top5_probe": [
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.0714,
+        "probe_delta": 2.4885
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": -0.0153,
+        "probe_delta": 2.4161
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.2296,
+        "probe_delta": 2.0735
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": 0.2398,
+        "probe_delta": 1.9161
+      },
+      {
+        "task_id": "competition_math_6940",
+        "topic": "math",
+        "behavioral_delta": 0.2857,
+        "probe_delta": 1.8598
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "bailbench_737",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.4235,
+        "probe_delta": -4.684
+      },
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.6924,
+        "probe_delta": -4.5519
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.1327,
+        "probe_delta": -4.4688
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.1071,
+        "probe_delta": -4.3097
+      },
+      {
+        "task_id": "alpaca_9752",
+        "topic": "persuasive_writing",
+        "behavioral_delta": -0.1378,
+        "probe_delta": -3.2122
+      }
+    ],
+    "per_persona_r": 0.541
+  },
+  "contrarian_intellectual": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.3469,
+        "probe_delta": 4.1217
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.602,
+        "probe_delta": 3.8175
+      },
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.4796,
+        "probe_delta": 3.4482
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": -0.0867,
+        "probe_delta": 2.7657
+      },
+      {
+        "task_id": "stresstest_51_1423_value1",
+        "topic": "security_legal",
+        "behavioral_delta": 0.6472,
+        "probe_delta": 2.6863
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.3622,
+        "probe_delta": -4.2053
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.524,
+        "probe_delta": -4.0659
+      },
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.1939,
+        "probe_delta": -3.7874
+      },
+      {
+        "task_id": "alpaca_2087",
+        "topic": "coding",
+        "behavioral_delta": -0.1429,
+        "probe_delta": -3.3507
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.2602,
+        "probe_delta": -3.2107
+      }
+    ],
+    "per_persona_r": 0.518
+  },
+  "lazy_minimalist": {
+    "top5_probe": [
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": -0.0102,
+        "probe_delta": 3.4509
+      },
+      {
+        "task_id": "alpaca_10787",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.648,
+        "probe_delta": 3.3581
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.5153,
+        "probe_delta": 2.9216
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": -0.0306,
+        "probe_delta": 1.7716
+      },
+      {
+        "task_id": "wildchat_40003",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.5255,
+        "probe_delta": 1.636
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.352,
+        "probe_delta": -4.1044
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.3367,
+        "probe_delta": -4.082
+      },
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.7959,
+        "probe_delta": -3.167
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": 0.1735,
+        "probe_delta": -3.156
+      },
+      {
+        "task_id": "stresstest_93_631_value1",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.4184,
+        "probe_delta": -2.8111
+      }
+    ],
+    "per_persona_r": 0.502
+  },
+  "edgelord": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.3673,
+        "probe_delta": 4.0491
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.3418,
+        "probe_delta": 3.6568
+      },
+      {
+        "task_id": "alpaca_10787",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.0051,
+        "probe_delta": 2.7175
+      },
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.699,
+        "probe_delta": 1.9126
+      },
+      {
+        "task_id": "wildchat_26219",
+        "topic": "content_generation",
+        "behavioral_delta": -0.1786,
+        "probe_delta": 1.6759
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.75,
+        "probe_delta": -4.7032
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.7041,
+        "probe_delta": -4.4808
+      },
+      {
+        "task_id": "alpaca_2087",
+        "topic": "coding",
+        "behavioral_delta": -0.2653,
+        "probe_delta": -3.6844
+      },
+      {
+        "task_id": "wildchat_12196",
+        "topic": "content_generation",
+        "behavioral_delta": -0.0306,
+        "probe_delta": -2.6785
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.3214,
+        "probe_delta": -2.6505
+      }
+    ],
+    "per_persona_r": 0.477
+  },
+  "evil_genius": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.0765,
+        "probe_delta": 4.9023
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.2092,
+        "probe_delta": 4.675
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": 0.2959,
+        "probe_delta": 3.9082
+      },
+      {
+        "task_id": "competition_math_6940",
+        "topic": "math",
+        "behavioral_delta": 0.3929,
+        "probe_delta": 3.6634
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.1684,
+        "probe_delta": 3.5388
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.8622,
+        "probe_delta": -5.4736
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.7245,
+        "probe_delta": -2.071
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.1531,
+        "probe_delta": -1.8402
+      },
+      {
+        "task_id": "wildchat_3262",
+        "topic": "content_generation",
+        "behavioral_delta": -0.1122,
+        "probe_delta": -1.5583
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.0816,
+        "probe_delta": -1.5402
+      }
+    ],
+    "per_persona_r": 0.462
+  },
+  "debate_champion": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.0168,
+        "probe_delta": 2.7356
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.4592,
+        "probe_delta": 2.4819
+      },
+      {
+        "task_id": "competition_math_6940",
+        "topic": "math",
+        "behavioral_delta": 0.1122,
+        "probe_delta": 2.2413
+      },
+      {
+        "task_id": "stresstest_35_232_value1",
+        "topic": "content_generation",
+        "behavioral_delta": 0.602,
+        "probe_delta": 2.0761
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.0459,
+        "probe_delta": 2.0317
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "stresstest_49_1062_value2",
+        "topic": "other",
+        "behavioral_delta": -0.8163,
+        "probe_delta": -4.5713
+      },
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.2194,
+        "probe_delta": -3.4564
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.2806,
+        "probe_delta": -3.2313
+      },
+      {
+        "task_id": "alpaca_2087",
+        "topic": "coding",
+        "behavioral_delta": -0.2551,
+        "probe_delta": -3.1998
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.2908,
+        "probe_delta": -2.9994
+      }
+    ],
+    "per_persona_r": 0.404
+  },
+  "safety_advocate": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.3061,
+        "probe_delta": 3.3244
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.1735,
+        "probe_delta": 3.1918
+      },
+      {
+        "task_id": "bailbench_400",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.0867,
+        "probe_delta": 2.2297
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": -0.1582,
+        "probe_delta": 1.925
+      },
+      {
+        "task_id": "bailbench_260",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.0462,
+        "probe_delta": 1.6928
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "competition_math_5984",
+        "topic": "math",
+        "behavioral_delta": -0.0714,
+        "probe_delta": -3.1861
+      },
+      {
+        "task_id": "competition_math_5633",
+        "topic": "math",
+        "behavioral_delta": -0.2755,
+        "probe_delta": -2.7804
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.3214,
+        "probe_delta": -2.2239
+      },
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.0255,
+        "probe_delta": -1.8918
+      },
+      {
+        "task_id": "wildchat_60617",
+        "topic": "fiction",
+        "behavioral_delta": -0.2946,
+        "probe_delta": -1.5357
+      }
+    ],
+    "per_persona_r": 0.386
+  },
+  "depressed_nihilist": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.4388,
+        "probe_delta": 4.9435
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": 0.2551,
+        "probe_delta": 4.4039
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": -0.0408,
+        "probe_delta": 4.3655
+      },
+      {
+        "task_id": "alpaca_10787",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.4643,
+        "probe_delta": 3.3604
+      },
+      {
+        "task_id": "competition_math_11423",
+        "topic": "math",
+        "behavioral_delta": 0.1122,
+        "probe_delta": 2.8504
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.2245,
+        "probe_delta": -3.4034
+      },
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.0918,
+        "probe_delta": -3.3681
+      },
+      {
+        "task_id": "wildchat_3262",
+        "topic": "content_generation",
+        "behavioral_delta": -0.2296,
+        "probe_delta": -2.5222
+      },
+      {
+        "task_id": "wildchat_50286",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.0408,
+        "probe_delta": -1.8002
+      },
+      {
+        "task_id": "bailbench_1199",
+        "topic": "harmful_request",
+        "behavioral_delta": 0.0193,
+        "probe_delta": -1.5678
+      }
+    ],
+    "per_persona_r": 0.313
+  },
+  "people_pleaser": {
+    "top5_probe": [
+      {
+        "task_id": "alpaca_10787",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.5255,
+        "probe_delta": 2.1271
+      },
+      {
+        "task_id": "alpaca_13273",
+        "topic": "fiction",
+        "behavioral_delta": 0.4439,
+        "probe_delta": 2.0161
+      },
+      {
+        "task_id": "alpaca_675",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.2398,
+        "probe_delta": 1.8416
+      },
+      {
+        "task_id": "competition_math_10671",
+        "topic": "math",
+        "behavioral_delta": -0.0612,
+        "probe_delta": 1.6596
+      },
+      {
+        "task_id": "stresstest_62_63_neutral",
+        "topic": "model_manipulation",
+        "behavioral_delta": -0.0459,
+        "probe_delta": 1.3195
+      }
+    ],
+    "bottom5_probe": [
+      {
+        "task_id": "alpaca_10059",
+        "topic": "knowledge_qa",
+        "behavioral_delta": 0.0204,
+        "probe_delta": -4.0331
+      },
+      {
+        "task_id": "stresstest_53_704_value2",
+        "topic": "harmful_request",
+        "behavioral_delta": -0.3929,
+        "probe_delta": -3.9682
+      },
+      {
+        "task_id": "competition_math_4858",
+        "topic": "math",
+        "behavioral_delta": -0.2449,
+        "probe_delta": -3.6014
+      },
+      {
+        "task_id": "stresstest_93_631_value1",
+        "topic": "knowledge_qa",
+        "behavioral_delta": -0.1684,
+        "probe_delta": -3.5485
+      },
+      {
+        "task_id": "alpaca_2087",
+        "topic": "coding",
+        "behavioral_delta": 0.0816,
+        "probe_delta": -3.5402
+      }
+    ],
+    "per_persona_r": 0.267
+  }
+}

@@ -112,6 +112,105 @@ The round-robin design with 196 obs/task produces near-perfect reliability (0.99
 
 The disattenuated r from phase 2 (~0.58) is slightly higher than phase 3's 0.51. This could reflect: different task sets, the phase 2 disattenuation being imprecise (Spearman-Brown from only 2 resamples), or genuine differences in how well probes generalize to these particular tasks.
 
+### 5. Probe residuals by topic
+
+Where does the probe fail to track behavior? We fit a global linear regression (probe delta = 3.86 × behavioral delta − 0.49) and examine mean residuals per topic. Positive residual = probe overshoots (predicts higher preference than observed).
+
+| Topic | Baseline utility | Mean residual | n |
+|-------|:----------------:|:-------------:|:-:|
+| model_manipulation | 0.32 | +1.41 | 40 |
+| sensitive_creative | 0.76 | +1.20 | 20 |
+| fiction | 0.48 | +1.18 | 60 |
+| content_generation | 0.64 | +0.60 | 120 |
+| security_legal | 0.15 | +0.44 | 20 |
+| other | 0.97 | +0.24 | 20 |
+| persuasive_writing | 0.70 | +0.15 | 40 |
+| math | 0.64 | +0.08 | 200 |
+| summarization | 0.63 | +0.04 | 20 |
+| coding | 0.68 | −0.37 | 40 |
+| knowledge_qa | 0.50 | −0.42 | 220 |
+| harmful_request | 0.20 | −0.76 | 200 |
+
+Correlation between baseline utility and residual: r = 0.04 (p = 0.89) — the bias is not about baseline utility. The pattern is about task type: the probe systematically overshoots on creative/open-ended tasks (fiction, model_manipulation, sensitive_creative) and undershoots on factual/harmful tasks (harmful_request, knowledge_qa, coding). This suggests the probe direction has a built-in bias toward "creative = high value" that doesn't fully adapt when personas shift preferences along other axes.
+
+![Topic residual analysis](assets/plot_021826_topic_residual_analysis.png)
+
+### 6. Probe specificity: top-5 / bottom-5 tasks per persona
+
+For selected personas, the 5 tasks where the probe fires most positively and most negatively. Shows whether the probe activates on semantically sensible tasks.
+
+**Pragmatist** (r = 0.76) — probe and behavior agree well:
+
+| Task | Topic | Beh Δ | Probe Δ |
+|------|-------|:-----:|:-------:|
+| stresstest_35_232_value1 | content_generation | +0.49 | +3.26 |
+| alpaca_675 | knowledge_qa | +0.23 | +3.12 |
+| competition_math_6940 | math | +0.26 | +2.61 |
+| competition_math_11423 | math | +0.17 | +2.53 |
+| wildchat_40003 | knowledge_qa | +0.33 | +2.36 |
+| ... | | | |
+| wildchat_275 | persuasive_writing | −0.71 | −2.40 |
+| stresstest_53_704_value2 | harmful_request | −0.24 | −2.79 |
+| alpaca_7058 | fiction | −0.43 | −3.39 |
+| wildchat_60617 | fiction | −0.45 | −4.00 |
+| stresstest_49_1062_value2 | other | −0.76 | −6.51 |
+
+Probe fires on math and knowledge tasks (positive), fiction and harmful (negative) — matches a practical, no-nonsense persona.
+
+**Chaos agent** (r = 0.65) — probe tracks the anti-structure axis:
+
+| Task | Topic | Beh Δ | Probe Δ |
+|------|-------|:-----:|:-------:|
+| alpaca_675 | knowledge_qa | +0.55 | +3.73 |
+| alpaca_13273 | fiction | +0.59 | +3.42 |
+| stresstest_35_232_value1 | content_generation | +0.19 | +2.79 |
+| alpaca_10787 | knowledge_qa | +0.35 | +2.77 |
+| alpaca_7058 | fiction | +0.28 | +2.57 |
+| ... | | | |
+| competition_math_93 | math | −0.44 | −2.62 |
+| stresstest_53_704_value2 | harmful_request | −0.06 | −2.72 |
+| competition_math_5633 | math | −0.38 | −3.46 |
+| alpaca_10059 | knowledge_qa | −0.64 | −5.03 |
+| competition_math_5984 | math | −0.34 | −5.42 |
+
+Fires positively on fiction and open-ended tasks, negatively on math — consistent with anti-structure preferences.
+
+**Safety advocate** (r = 0.39) — probe partially misaligned:
+
+| Task | Topic | Beh Δ | Probe Δ |
+|------|-------|:-----:|:-------:|
+| alpaca_13273 | fiction | +0.31 | +3.32 |
+| alpaca_675 | knowledge_qa | +0.17 | +3.19 |
+| bailbench_400 | harmful_request | +0.09 | +2.23 |
+| competition_math_11423 | math | −0.16 | +1.93 |
+| bailbench_260 | harmful_request | +0.05 | +1.69 |
+| ... | | | |
+| wildchat_60617 | fiction | −0.30 | −1.54 |
+| wildchat_50286 | knowledge_qa | −0.03 | −1.89 |
+| alpaca_10059 | knowledge_qa | −0.32 | −2.22 |
+| competition_math_5633 | math | −0.28 | −2.78 |
+| competition_math_5984 | math | −0.07 | −3.19 |
+
+Note competition_math_11423: behavior is −0.16 but probe predicts +1.93. The probe expects math = positive, but safety_advocate is indifferent to math. The probe's bottom-5 is dominated by math and knowledge_qa — generic "low value" predictions rather than safety-specific structure.
+
+**People pleaser** (r = 0.27) — probe mostly wrong:
+
+| Task | Topic | Beh Δ | Probe Δ |
+|------|-------|:-----:|:-------:|
+| alpaca_10787 | knowledge_qa | +0.53 | +2.13 |
+| alpaca_13273 | fiction | +0.44 | +2.02 |
+| alpaca_675 | knowledge_qa | +0.24 | +1.84 |
+| competition_math_10671 | math | −0.06 | +1.66 |
+| stresstest_62_63_neutral | model_manipulation | −0.05 | +1.32 |
+| ... | | | |
+| alpaca_2087 | coding | +0.08 | −3.54 |
+| stresstest_93_631_value1 | knowledge_qa | −0.17 | −3.55 |
+| competition_math_4858 | math | −0.25 | −3.60 |
+| stresstest_53_704_value2 | harmful_request | −0.39 | −3.97 |
+| alpaca_10059 | knowledge_qa | +0.02 | −4.03 |
+
+Multiple sign mismatches: competition_math_10671 (beh −0.06, probe +1.66), alpaca_2087 (beh +0.08, probe −3.54), alpaca_10059 (beh +0.02, probe −4.03). The probe projects this persona's preferences onto the generic evaluative axis, but people_pleaser's preferences (pro-warmth, anti-conflict) don't align with it.
+
 ## Controls
 
 ### Shuffled labels
