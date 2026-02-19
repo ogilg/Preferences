@@ -26,19 +26,78 @@ On desire-satisfaction theories of welfare, a system is a moral patient if it ha
 
 ### 2. Utility probes
 
-We show each task prompt to Gemma-3-27B, run a forward pass, and extract the residual stream activation at the last token of the model's completion (layer 31 of 62). Separately, we measure the model's preferences over 3,000 tasks via ~82k pairwise choices ("Task A or Task B?") and fit a Thurstonian model (Mazeika et al., 2025) to recover a scalar utility score μ per task. A Ridge-regularised linear probe is then trained to predict μ from activations: μ̂ = Xw, where w ∈ ℝ⁵³⁷⁶ is a single linear direction.
+#### Why broad revealed preferences?
+
+We want to test whether evaluative representations — linear directions encoding valuation — partly drive model choices. To find such a direction, we need to train on a broad, diverse set of preferences rather than a narrow domain, so that any linear direction we recover must capture something general about valuation rather than a domain-specific feature. And we specifically ground this in revealed preferences (pairwise choices where the model picks which task to complete) rather than stated ratings, because revealed preferences reflect the model's actual decision-making process.
+
+#### Methodology
+
+- Model: Gemma-3-27B-IT
+- Activations: residual stream at last prompt token, layer 31 of 62
+- Preference measurement: ~82k pairwise choices over 3,000 tasks from diverse sources
+- Utility recovery: Thurstonian model (Mazeika et al., 2025) → scalar utility μ per task
+- Probe: Ridge-regularised linear regression, μ̂ = Xw, w ∈ ℝ⁵³⁷⁶
+- Task sources and how they were sampled
+- How pairwise choices are elicited (template, which token position, etc.)
+- Cross-validation setup for hyperparameter selection
 
 ![Probe pipeline](assets/plot_021226_probe_pipeline.png)
 
-As a first test that the probe captures genuine preference signal rather than task content, we hold out entire topic categories: train on 5 of 8 topics, evaluate on the remaining 3, across all 56 possible splits. We compare against a content-only baseline that predicts preferences from task text alone (sentence-transformer embeddings, same Ridge setup). The activation probe consistently outperforms the content baseline on held-out topics, across every fold.
+#### First test of generalization
 
-![Cross-topic generalization](assets/plot_021126_hoo_scaled_unified_L31.png)
+To test whether the probe captures genuine preference signal rather than task content, we hold out entire topic categories: train on 5 of 8 topics, evaluate on the remaining 3, across all 56 possible splits. We compare three conditions:
 
-- Base model baseline (probes trained on a base model)
+- **Gemma-3 27B IT (L31)**: the activation probe trained on the instruction-tuned model we're studying
+- **Gemma-2 27B Base (L23)**: same probe methodology applied to the base (pre-RLHF) model, as a control — if evaluative representations emerge from preference tuning, this model should have weaker signal
+- **Content baseline**: predicts preferences from task text alone (sentence-transformer embeddings, same Ridge setup) — captures how much of preference is predictable from content
+
+![Cross-topic generalization](assets/plot_021726_cross_model_bar.png)
+
+**TODO**: Need to rerun this with 10k + eval on 3k dataset. also get the numebrs for gemma base.
+
+Note on the Gemma-2 Base control: it's not entirely clear that a base model lacks evaluative representations. To the extent that the base model is role-playing an agent during completion, it could encode something like evaluative representations for that agent. Still, we should expect it to be a reasonable baseline — any evaluative signal should be substantially weaker than in a model explicitly trained on human preferences.
+
+**TODO**: also need to show that this works on a least one other model
 
 ### 3. Utility probes behave like evaluative representations
-- System-prompt-induced preferences
-- Persona-induced preferences
+
+We want to see how far out of distribution the probe generalises. An evaluative representation should generalise to many scenarios where the mode has different preferences. Since models like to follow isntructions, i use system prompts to induce preferences, and see how the probe fires on that.
+
+#### System prompt induces category preference
+
+First thing we try is system prompts like "you hate math". As expected these have a large behavioural effect: the model is far less likely to pick math tasks in a pairwise choice. I also found that adding this system prompt leads the probe to fire differently on math tasks, and the deltas in how the probe fires agree with the behavioural delta.
+
+![Category preference](assets/plot_021826_s3_1_category_preference.png)
+
+This goes some way towards showing that the probes do not just encode "math is good" but rather "this is good".
+
+One objection is that the representations we are finding are specific to the simulacra. This is accurate and I need to respond to this conceptually.
+
+Another objection is that the probe encodes "math good" and then the system prompt jsut reverses that. But we haven't actually found a general evaluative representation.
+
+#### System prompt induces targeted preference
+
+To respond to above I tried system prompts that induce preferences that are very out of distribution. This also worked.
+
+![Targeted preference](assets/plot_021826_s3_2_targeted_preference.png)
+
+One objection is that you say "I hate x" and then the eot token's residual stream attends to that and that makes it salient.
+
+#### Competing prompts control for content
+
+One confound is that maybe "you hate X" appearing leaves a mark in the residual stream which the probes picks up on. So we also try combined system prompts.
+
+To address this I tried combined system prompts which combine a type of task and a subject. Again it works.
+
+![Competing prompts](assets/plot_021826_s3_3_competing_prompts.png)
+
+#### Broad preference changes: persona-induced roles
+
+![Persona preference](assets/plot_021826_s3_4_persona_preference.png)
+
+#### Very narrow preferences: isolating the evaluations
+
+![Narrow preference](assets/plot_021826_s3_5_narrow_preference.png)
 
 ### 4. Early steering results
 - Steering on task tokens surprisingly works
