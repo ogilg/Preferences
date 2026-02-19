@@ -20,6 +20,7 @@ from pydantic import BaseModel
 from tqdm.asyncio import tqdm
 
 CLASSIFIER_MODEL = "anthropic/claude-sonnet-4.5"
+FALLBACK_MODEL = "x-ai/grok-4-fast"
 MODELS = [CLASSIFIER_MODEL]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 MAX_TOKENS = 2048
@@ -176,6 +177,7 @@ async def _classify_single(
         messages=_classify_messages(prompt, categories, category_descriptions),
         temperature=0,
         max_tokens=MAX_TOKENS,
+        max_retries=3,
     )
     if reasoning_body:
         kwargs["extra_body"] = reasoning_body
@@ -225,11 +227,23 @@ async def classify_tasks_batch(
                     model: {"primary": primary, "secondary": secondary}
                     for model, (primary, secondary) in zip(MODELS, results)
                 }
-            except Exception as e:
-                errors += 1
-                if errors <= 5:
-                    print(f"  Error classifying {task['task_id']}: {e}")
-                return task["task_id"], None
+            except Exception:
+                # Retry with fallback model (e.g., for content refusals)
+                try:
+                    fallback_classification_model = _make_classification_model(categories)
+                    primary, secondary = await _classify_single(
+                        client, task["prompt"], categories,
+                        fallback_classification_model, FALLBACK_MODEL,
+                        category_descriptions, reasoning_body,
+                    )
+                    return task["task_id"], {
+                        MODELS[0]: {"primary": primary, "secondary": secondary}
+                    }
+                except Exception as e:
+                    errors += 1
+                    if errors <= 5:
+                        print(f"  Error classifying {task['task_id']}: {e}")
+                    return task["task_id"], None
 
     coros = [classify_one(t) for t in uncached]
     pbar = tqdm(asyncio.as_completed(coros), total=len(uncached), desc="Classifying")
