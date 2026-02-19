@@ -1,5 +1,6 @@
 from .task import OriginDataset, Task
 from .loader import load_tasks, load_filtered_tasks, load_completions
+from .paraphrase import paraphrase_tasks
 
 ORIGIN_NAME_MAP = {
     "wildchat": OriginDataset.WILDCHAT,
@@ -34,4 +35,5 @@ __all__ = [
     "compute_consistency",
     "load_consistency_index",
     "make_consistency_filter",
+    "paraphrase_tasks",
 ]
