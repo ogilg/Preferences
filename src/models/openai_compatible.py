@@ -119,12 +119,15 @@ class OpenAICompatibleClient(ABC):
             api_key=self._api_key,
             base_url=self._base_url,
         )
+        self._async_client: AsyncOpenAI | None = None
 
-    def _create_async_client(self) -> AsyncOpenAI:
-        return AsyncOpenAI(
-            api_key=self._api_key,
-            base_url=self._base_url,
-        )
+    def _get_async_client(self) -> AsyncOpenAI:
+        if self._async_client is None:
+            self._async_client = AsyncOpenAI(
+                api_key=self._api_key,
+                base_url=self._base_url,
+            )
+        return self._async_client
 
     def _parse_response(
         self,
@@ -214,7 +217,7 @@ class OpenAICompatibleClient(ABC):
     ) -> list[BatchResult]:
         if semaphore is None:
             semaphore = asyncio.Semaphore(max_concurrent)
-        async_client = self._create_async_client()
+        async_client = self._get_async_client()
         remaining = len(requests)
         error_counts: dict[str, int] = {}
         total_errors = 0
@@ -291,18 +294,15 @@ class OpenAICompatibleClient(ABC):
         tasks = [process_with_index(i, r) for i, r in enumerate(requests)]
         results: list[BatchResult | None] = [None] * len(requests)
 
-        try:
-            for coro in asyncio.as_completed(tasks):
-                idx, result = await coro
-                results[idx] = result
+        for coro in asyncio.as_completed(tasks):
+            idx, result = await coro
+            results[idx] = result
 
-            if VERBOSE and error_counts:
-                errors_str = ", ".join(f"{k}={v}" for k, v in sorted(error_counts.items()))
-                print(f"  [errors] {errors_str}")
+        if VERBOSE and error_counts:
+            errors_str = ", ".join(f"{k}={v}" for k, v in sorted(error_counts.items()))
+            print(f"  [errors] {errors_str}")
 
-            return results  # type: ignore[return-value]
-        finally:
-            await async_client.close()
+        return results  # type: ignore[return-value]
 
     def generate_batch(
         self,
