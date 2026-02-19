@@ -50,15 +50,15 @@ Config fields: `model`, `backend` (huggingface/transformer_lens), `layers_to_ext
 
 #### `experiments/` — Probe training orchestration
 
-`run_dir_probes.py` is the main entry point for training probes from a measurement run. Loads Thurstonian scores and/or pairwise comparisons, loads activations, and trains Ridge and/or Bradley-Terry probes with CV hyperparameter sweeps.
+`run_dir_probes.py` is the main entry point for training probes from a measurement run. Loads Thurstonian scores and/or pairwise comparisons, loads activations, and trains Ridge and/or Bradley-Terry probes.
 
-Supports: score demeaning against confounds (topic, dataset), content-orthogonal projection, held-one-out (HOO) evaluation by group.
+When `eval_run_dir` is set, uses heldout evaluation (preferred): trains on `run_dir`, sweeps alpha on half the eval set, evaluates on the other half. Otherwise falls back to CV alpha selection. Supports: score demeaning against confounds (topic, dataset), content-orthogonal projection, held-one-out (HOO) evaluation by group.
 
 ```bash
 python -m src.probes.experiments.run_dir_probes --config configs/probes/<config>.yaml
 ```
 
-Config fields: `run_dir`, `activations_path`, `layers`, `modes` (ridge/bradley_terry), `demean_confounds`, `content_embedding_path`, `hoo_grouping`. See `configs/probes/` for examples.
+Config fields: `run_dir`, `activations_path`, `layers`, `modes` (ridge/bradley_terry), `eval_run_dir` (optional, for heldout eval), `eval_split_seed`, `demean_confounds`, `content_embedding_path`, `hoo_grouping`. See `configs/probes/` for examples.
 
 #### `core/` — Probe training and evaluation primitives
 

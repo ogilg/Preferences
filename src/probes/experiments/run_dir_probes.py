@@ -21,6 +21,7 @@ from pathlib import Path
 
 import numpy as np
 import yaml
+from scipy.stats import pearsonr
 from sklearn.linear_model import Ridge
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
@@ -56,6 +57,9 @@ class RunDirProbeConfig:
     topics_json: Path | None = None
     standardize: bool = True  # whether to StandardScaler activations before Ridge
     n_jobs: int = 1  # parallel workers for lambda sweep (1=sequential, -1=all cores)
+    # Heldout eval — train on run_dir, evaluate on eval_run_dir
+    eval_run_dir: Path | None = None
+    eval_split_seed: int = 42
     # HOO settings — if hoo_grouping is set, runs HOO instead of standard training
     hoo_grouping: str | None = None  # "topic" | "dataset"
     hoo_hold_out_size: int = 1
@@ -69,22 +73,27 @@ class RunDirProbeConfig:
         modes = [ProbeMode(m) for m in data.get("modes", ["ridge", "bradley_terry"])]
         topics_json = Path(data["topics_json"]) if "topics_json" in data else None
 
+        # Accept train_run_dir as alias for run_dir (for heldout eval configs)
+        run_dir_raw = data.get("run_dir") or data["train_run_dir"]
+        eval_run_dir = Path(data["eval_run_dir"]) if "eval_run_dir" in data else None
+
         optional = {}
         for key in (
             "cv_folds", "alpha_sweep_size", "demean_confounds", "standardize",
-            "n_jobs", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
+            "n_jobs", "eval_split_seed", "hoo_grouping", "hoo_hold_out_size", "hoo_groups",
         ):
             if key in data:
                 optional[key] = data[key]
 
         return cls(
             experiment_name=data["experiment_name"],
-            run_dir=Path(data["run_dir"]),
+            run_dir=Path(run_dir_raw),
             activations_path=Path(data["activations_path"]),
             output_dir=Path(data["output_dir"]),
             layers=data["layers"],
             modes=modes,
             topics_json=topics_json,
+            eval_run_dir=eval_run_dir,
             **optional,
         )
 
@@ -151,9 +160,23 @@ def _train_ridge_probe(
     activations: np.ndarray,
     scores: dict[str, float],
     pairwise_data: PairwiseActivationData | None = None,
+    eval_scores: dict[str, float] | None = None,
+    eval_measurements: list | None = None,
+    eval_split_seed: int = 42,
 ) -> dict | None:
-    """Train a single Ridge probe. Returns entry dict or None if insufficient data."""
+    """Train a single Ridge probe. Returns entry dict or None if insufficient data.
+
+    When eval_scores is provided, uses heldout evaluation: sweep alpha on half
+    the eval set, evaluate on the other half. Otherwise falls back to CV.
+    """
     indices, y = build_ridge_xy(task_ids, scores)
+
+    if eval_scores is not None:
+        return _train_ridge_probe_heldout(
+            config, layer, task_ids, activations, indices, y,
+            eval_scores, eval_measurements or [], eval_split_seed,
+        )
+
     if len(indices) < config.cv_folds * 2:
         return None
 
@@ -212,6 +235,130 @@ def _train_ridge_probe(
     return entry
 
 
+def _train_ridge_probe_heldout(
+    config: RunDirProbeConfig,
+    layer: int,
+    task_ids: np.ndarray,
+    activations: np.ndarray,
+    train_indices: np.ndarray,
+    y_train: np.ndarray,
+    eval_scores: dict[str, float],
+    eval_measurements: list,
+    eval_split_seed: int,
+) -> dict | None:
+    """Train Ridge on train set, sweep alpha + evaluate on held-out eval set."""
+    # Split eval into sweep and final halves
+    rng = np.random.default_rng(eval_split_seed)
+    eval_task_ids = sorted(eval_scores.keys())
+    perm = rng.permutation(len(eval_task_ids))
+    half = len(eval_task_ids) // 2
+    sweep_ids = {eval_task_ids[i] for i in perm[:half]}
+    final_ids = {eval_task_ids[i] for i in perm[half:]}
+    sweep_scores = {tid: eval_scores[tid] for tid in sweep_ids}
+    final_scores = {tid: eval_scores[tid] for tid in final_ids}
+    print(f"  Eval split: {len(sweep_scores)} sweep, {len(final_scores)} final")
+
+    # Build index arrays for sweep and final sets
+    sweep_indices, y_sweep = build_ridge_xy(task_ids, sweep_scores)
+    final_indices, y_final = build_ridge_xy(task_ids, final_scores)
+
+    # Build pairwise data filtered to final set
+    id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
+    final_idx_set = {id_to_idx[tid] for tid in final_ids if tid in id_to_idx}
+    all_bt_data = PairwiseActivationData.from_measurements(
+        eval_measurements, task_ids, {layer: activations},
+    )
+    final_bt_data = all_bt_data.filter_by_indices(final_idx_set)
+
+    X_train = activations[train_indices]
+    X_sweep = activations[sweep_indices]
+
+    if config.standardize:
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train)
+        X_sweep_scaled = scaler.transform(X_sweep)
+    else:
+        X_train_scaled = X_train
+        X_sweep_scaled = X_sweep
+        scaler = None
+
+    # Alpha sweep: train on train set, eval Pearson r on sweep half
+    alphas = np.logspace(-1, 5, config.alpha_sweep_size)
+    best_alpha = None
+    best_sweep_r = -1.0
+    sweep_results = []
+    for alpha in alphas:
+        ridge = Ridge(alpha=alpha)
+        ridge.fit(X_train_scaled, y_train)
+        y_pred = ridge.predict(X_sweep_scaled)
+        if len(y_pred) >= 10:
+            r, _ = pearsonr(y_sweep, y_pred)
+            r = float(r)
+        else:
+            r = float("nan")
+        sweep_results.append({"alpha": float(alpha), "sweep_r": r})
+        if not np.isnan(r) and r > best_sweep_r:
+            best_sweep_r = r
+            best_alpha = float(alpha)
+
+    print(f"  Best alpha: {best_alpha:.4g} (sweep r={best_sweep_r:.4f})")
+
+    # Final eval: train at best alpha on full train set, evaluate on final half
+    ridge = Ridge(alpha=best_alpha)
+    ridge.fit(X_train_scaled, y_train)
+
+    if config.standardize:
+        X_final_scaled = scaler.transform(activations[final_indices])
+    else:
+        X_final_scaled = activations[final_indices]
+    y_pred_final = ridge.predict(X_final_scaled)
+
+    final_r = None
+    if len(y_pred_final) >= 10:
+        r_val, _ = pearsonr(y_final, y_pred_final)
+        final_r = float(r_val)
+
+    # Pairwise accuracy on final half (predict in raw space)
+    if config.standardize:
+        coef_raw = ridge.coef_ / scaler.scale_
+        intercept_raw = ridge.intercept_ - coef_raw @ scaler.mean_
+    else:
+        coef_raw = ridge.coef_
+        intercept_raw = ridge.intercept_
+    all_predicted = activations @ coef_raw + intercept_raw
+
+    final_acc = None
+    if len(final_bt_data.pairs) > 0:
+        final_acc = pairwise_accuracy_from_scores(all_predicted, final_bt_data)
+
+    weights = np.append(coef_raw, intercept_raw)
+    probe_id = f"ridge_L{layer:02d}"
+    relative_path = save_probe(weights, config.output_dir, probe_id)
+
+    final_r_str = f"{final_r:.4f}" if final_r is not None else "N/A"
+    final_acc_str = f"{final_acc:.4f}" if final_acc is not None else "N/A"
+    print(f"  Final: r={final_r_str}, acc={final_acc_str}")
+
+    return {
+        "id": probe_id,
+        "file": relative_path,
+        "method": "ridge",
+        "layer": layer,
+        "standardize": config.standardize,
+        "demean_confounds": config.demean_confounds,
+        "best_alpha": best_alpha,
+        "sweep_r": best_sweep_r,
+        "final_r": final_r,
+        "final_acc": final_acc,
+        "n_train": len(y_train),
+        "n_sweep": len(y_sweep),
+        "n_final": len(y_final),
+        "n_final_pairs": len(final_bt_data.pairs),
+        "n_samples": len(y_train),
+        "alpha_sweep": sweep_results,
+    }
+
+
 def _train_bt_probe(
     config: RunDirProbeConfig,
     data: PairwiseActivationData,
@@ -255,6 +402,8 @@ def run_probes(config: RunDirProbeConfig) -> dict:
     print(f"Training probes: {config.experiment_name}")
     print(f"Modes: {mode_names}")
     print(f"Run dir: {config.run_dir}")
+    if config.eval_run_dir:
+        print(f"Eval run dir: {config.eval_run_dir}")
     print(f"Output: {config.output_dir}")
 
     # Load measurement data
@@ -265,6 +414,20 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         print(f"  Loaded {len(scores)} task scores from Thurstonian fit")
     if measurements:
         print(f"  Loaded {len(measurements)} pairwise comparisons")
+
+    # Load eval data if heldout eval is configured
+    eval_scores: dict[str, float] | None = None
+    eval_measurements: list | None = None
+    if config.eval_run_dir is not None:
+        eval_scores = load_thurstonian_scores(config.eval_run_dir)
+        eval_measurements = load_pairwise_measurements(config.eval_run_dir)
+        print(f"  Eval: {len(eval_scores)} scores, {len(eval_measurements)} comparisons")
+        if config.demean_confounds and eval_scores:
+            assert config.topics_json is not None
+            eval_scores, eval_stats = demean_scores(
+                eval_scores, config.topics_json, confounds=config.demean_confounds,
+            )
+            print(f"  Eval demeaned R²={eval_stats['metadata_r2']:.4f}")
 
     # Optionally demean scores against metadata confounds
     metadata_stats = None
@@ -279,6 +442,8 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         print(f"  {metadata_stats['n_tasks_demeaned']} tasks retained")
 
     task_id_filter = set(scores.keys()) if scores else None
+    if task_id_filter is not None and eval_scores is not None:
+        task_id_filter = task_id_filter | set(eval_scores.keys())
 
     # Load one layer to get task_ids and count
     task_ids, first_layer_acts = load_activations(
@@ -303,6 +468,9 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         "n_comparisons_in_experiment": len(measurements),
         "probes": [],
     }
+    if config.eval_run_dir is not None:
+        manifest["eval_run_dir"] = str(config.eval_run_dir)
+        manifest["eval_split_seed"] = config.eval_split_seed
     if metadata_stats is not None:
         manifest["metadata_r2"] = metadata_stats["metadata_r2"]
         manifest["metadata_features"] = metadata_stats["metadata_features"]
@@ -328,13 +496,23 @@ def run_probes(config: RunDirProbeConfig) -> dict:
             ridge_entry = _train_ridge_probe(
                 config, layer, task_ids, activations[layer], scores,
                 pairwise_data=bt_data,
+                eval_scores=eval_scores,
+                eval_measurements=eval_measurements,
+                eval_split_seed=config.eval_split_seed,
             )
             if ridge_entry:
                 manifest["probes"].append(ridge_entry)
-                acc_str = ""
-                if "cv_pairwise_acc_mean" in ridge_entry:
-                    acc_str = f", cv_acc={ridge_entry['cv_pairwise_acc_mean']:.4f}"
-                print(f"  Ridge cv_R²={ridge_entry['cv_r2_mean']:.4f}{acc_str}")
+                if "final_r" in ridge_entry:
+                    # Heldout eval path
+                    r_str = f"{ridge_entry['final_r']:.4f}" if ridge_entry['final_r'] is not None else "N/A"
+                    acc_str = f", acc={ridge_entry['final_acc']:.4f}" if ridge_entry['final_acc'] is not None else ""
+                    print(f"  Ridge heldout: r={r_str}{acc_str}")
+                else:
+                    # CV path
+                    acc_str = ""
+                    if "cv_pairwise_acc_mean" in ridge_entry:
+                        acc_str = f", cv_acc={ridge_entry['cv_pairwise_acc_mean']:.4f}"
+                    print(f"  Ridge cv_R²={ridge_entry['cv_r2_mean']:.4f}{acc_str}")
 
         if run_bt:
             print(f"  Training BT probe...")
@@ -354,8 +532,13 @@ def run_probes(config: RunDirProbeConfig) -> dict:
     bt_probes = [p for p in manifest["probes"] if p["method"] == "bradley_terry"]
 
     if ridge_probes:
-        best = max(ridge_probes, key=lambda x: x["cv_r2_mean"])
-        print(f"\nBest Ridge: layer {best['layer']} (cv_R²={best['cv_r2_mean']:.4f})")
+        if "final_r" in ridge_probes[0]:
+            best = max(ridge_probes, key=lambda x: x["final_r"] or -1)
+            r_str = f"{best['final_r']:.4f}" if best['final_r'] is not None else "N/A"
+            print(f"\nBest Ridge: layer {best['layer']} (heldout r={r_str})")
+        else:
+            best = max(ridge_probes, key=lambda x: x["cv_r2_mean"])
+            print(f"\nBest Ridge: layer {best['layer']} (cv_R²={best['cv_r2_mean']:.4f})")
     if bt_probes:
         best = max(bt_probes, key=lambda x: x["cv_accuracy_mean"])
         print(f"Best BT: layer {best['layer']} (cv_acc={best['cv_accuracy_mean']:.4f}, "
