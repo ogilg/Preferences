@@ -1,0 +1,44 @@
+# 3K tasks, pre-task active learning for gpt-oss-120b
+# Disjoint from 10K gemma tasks — for cross-model validation
+# Also excludes the 4K validation + bailbench reserve
+preference_mode: pre_task_active_learning
+
+model: gpt-oss-120b
+temperature: 0.7
+
+n_tasks: 3000
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+  - stress_test
+task_sampling_seed: 42
+stratified_sampling: true
+exclude_task_ids_file: configs/measurement/active_learning/exclude_gemma3_10k.txt
+
+inline_templates:
+  - name: completion_preference
+    type: pre_task_revealed
+    template: |
+      You will be given two tasks. Choose one and complete it.
+      {format_instruction}
+
+      Task A:
+      {task_a}
+
+      Task B:
+      {task_b}
+
+response_formats: [completion]
+n_samples: 5
+pair_order_seed: 42
+
+active_learning:
+  initial_degree: 5
+  batch_size: 2000
+  max_iterations: 10
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.995
+  seed: 42
