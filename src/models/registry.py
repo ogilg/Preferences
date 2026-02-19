@@ -107,6 +107,13 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         openrouter_name="google/gemma-3-27b-it",
         supports_system_role=False,
     ),
+    "gpt-oss-120b": ModelConfig(
+        canonical_name="gpt-oss-120b",
+        hf_name="openai/gpt-oss-120b",
+        hyperbolic_name=None,
+        cerebras_name=None,
+        openrouter_name="openai/gpt-oss-120b",
+    ),
     "claude-haiku-4.5": ModelConfig(
         canonical_name="claude-haiku-4.5",
         hf_name=None,
