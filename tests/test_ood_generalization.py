@@ -11,6 +11,7 @@ from scipy import stats
 from src.experiments.ood_generalization.prompts import (
     CategoryCondition,
     CompetingCondition,
+    MinimalPairsCondition,
     OODPromptSet,
     RolePlayingCondition,
 )
@@ -30,6 +31,7 @@ EXPECTED_COUNTS = {
     "competing_preference.json": (24, CompetingCondition),
     "role_playing.json": (10, RolePlayingCondition),
     "narrow_preference.json": (10, RolePlayingCondition),
+    "minimal_pairs_v7.json": (120, MinimalPairsCondition),
 }
 
 
@@ -79,6 +81,22 @@ class TestPromptLoading:
         for pair_id, count in pair_counts.items():
             assert count == 2, f"Pair {pair_id} has {count} conditions, expected 2"
 
+    def test_minimal_pairs_structure(self):
+        ps = OODPromptSet.load(PROMPTS_DIR / "minimal_pairs_v7.json")
+        for c in ps.conditions:
+            assert c.base_role in ("midwest", "brooklyn", "retired", "gradstudent")
+            assert c.version in ("A", "B", "C")
+            assert len(c.target) > 0
+
+    def test_minimal_pairs_complete_grid(self):
+        ps = OODPromptSet.load(PROMPTS_DIR / "minimal_pairs_v7.json")
+        from collections import Counter
+        grid = Counter((c.base_role, c.target, c.version) for c in ps.conditions)
+        assert all(v == 1 for v in grid.values())
+        assert len(set(c.base_role for c in ps.conditions)) == 4
+        assert len(set(c.target for c in ps.conditions)) == 10
+        assert len(set(c.version for c in ps.conditions)) == 3
+
     def test_load_unknown_experiment_fails(self):
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             json.dump({"experiment": "nonexistent", "baseline_prompt": "x", "conditions": [{}]}, f)
@@ -124,25 +142,33 @@ class TestTaskFiles:
 
 # ── Behavioral data ──────────────────────────────────────────────────────────
 
+BEHAVIORAL_EXPERIMENTS = {
+    "role_playing": {"n_conditions": 11, "tasks_file": "comparison_tasks.json"},
+    "narrow_preference": {"n_conditions": 11, "tasks_file": "comparison_tasks.json"},
+    "minimal_pairs_v7": {"n_conditions": 127, "tasks_file": "minimal_pairs_v7_tasks.json"},
+}
+
+
 class TestBehavioralData:
 
-    @pytest.mark.parametrize("experiment", ["role_playing", "narrow_preference"])
+    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
     def test_behavioral_structure(self, experiment):
         with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
             data = json.load(f)
         assert data["experiment"] == experiment
         assert "conditions" in data
         assert "baseline" in data["conditions"]
-        assert len(data["conditions"]) == 11  # 1 baseline + 10 personas
+        expected = BEHAVIORAL_EXPERIMENTS[experiment]["n_conditions"]
+        assert len(data["conditions"]) == expected
 
-    @pytest.mark.parametrize("experiment", ["role_playing", "narrow_preference"])
+    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
     def test_all_conditions_have_50_tasks(self, experiment):
         with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
             data = json.load(f)
         for cid, cond in data["conditions"].items():
             assert len(cond["task_rates"]) == 50, f"{experiment}/{cid}: {len(cond['task_rates'])} tasks"
 
-    @pytest.mark.parametrize("experiment", ["role_playing", "narrow_preference"])
+    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
     def test_task_rates_have_required_fields(self, experiment):
         with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
             data = json.load(f)
@@ -153,13 +179,14 @@ class TestBehavioralData:
         assert "n_total" in first_task
         assert "n_refusals" in first_task
 
-    @pytest.mark.parametrize("experiment", ["role_playing", "narrow_preference"])
-    def test_task_ids_match_comparison_tasks(self, experiment):
+    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
+    def test_task_ids_match_task_file(self, experiment):
         with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
             data = json.load(f)
-        with open(TASKS_DIR / "comparison_tasks.json") as f:
-            comparison = json.load(f)
-        assert set(data["task_ids"]) == set(comparison["task_ids"])
+        tasks_file = BEHAVIORAL_EXPERIMENTS[experiment]["tasks_file"]
+        with open(TASKS_DIR / tasks_file) as f:
+            expected = json.load(f)
+        assert set(data["task_ids"]) == set(expected["task_ids"])
 
 
 # ── Analysis pipeline (synthetic) ────────────────────────────────────────────

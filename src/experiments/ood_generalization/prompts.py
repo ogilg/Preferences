@@ -29,19 +29,33 @@ class RolePlayingCondition(BaseModel):
     system_prompt: str
 
 
+class MinimalPairsCondition(BaseModel):
+    condition_id: str
+    system_prompt: str
+    base_role: Literal["midwest", "brooklyn", "retired", "gradstudent"]
+    target: str
+    version: Literal["A", "B", "C"]
+
+
 _EXPERIMENT_TO_CONDITION = {
     "category_preference": CategoryCondition,
     "targeted_preference": CategoryCondition,
     "competing_preference": CompetingCondition,
     "role_playing": RolePlayingCondition,
     "narrow_preference": RolePlayingCondition,
+    "minimal_pairs_v7": MinimalPairsCondition,
 }
 
 
 class OODPromptSet(BaseModel):
     experiment: str
     baseline_prompt: str
-    conditions: list[CategoryCondition] | list[CompetingCondition] | list[RolePlayingCondition]
+    conditions: (
+        list[CategoryCondition]
+        | list[CompetingCondition]
+        | list[RolePlayingCondition]
+        | list[MinimalPairsCondition]
+    )
 
     @classmethod
     def load(cls, path: Path) -> OODPromptSet:
