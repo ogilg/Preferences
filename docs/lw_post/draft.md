@@ -13,15 +13,30 @@ The post follows a progressive-elimination structure: each section makes the "it
 
 ### 1. Motivation
 
+**Welfare grounds**
+
 Long (2026) distinguishes between *welfare grounds* (is the system a moral patient at all?) and *welfare interests* (if it is, what would it mean to treat it well?). This work is about welfare grounds.
 
-We study a simple question: when given two tasks to complete, what causes a model to pick one over the other? Our hypothesis is that this choice is driven by evaluative representations.
+**From theories to experiments**
 
-We operationalise the putative 'evaluative representations' as linear directions in the residual stream that encode how much the model values a task and plays some causal role in its choice.
+We don't know the correct theory of welfare. So our approach is: take a few theories we find plausible, figure out what properties a system would need to have under those theories, and run experiments that reduce our uncertainty about whether models have those properties.
 
-In contrast, non-evaluative representations encode facts about a task — like its difficulty or topic — that may correlate with preference but don't encode valuation itself. For example, a "difficulty" direction would predict preferences if the model tends to prefer easy tasks, but it wouldn't flip when you give the model a persona that loves hard challenges — an evaluative direction should.
+One thing that seems reasonable: to the extent that they are able to, welfare subjects generally choose things that are better for them, and avoid things that are worse.
 
-On desire-satisfaction theories of welfare, a system is a moral patient if it has desires whose satisfaction or frustration matters to it (Long et al., 2024). If models have internal representations that encode valuation and causally drive their choices, that would be evidence for this kind of robust agency.
+So we investigate the simple question: when a model chooses between A or B, what is going on internally. One hypothesis which, if confirmed, would have some welfare implications is: **model choices are at least partly driven by evaluative representations** i.e. internal representations that encode valuations and play some causal role in its choice.
+
+**Why this matters for welfare**
+
+Long et al. (2024) lay out two main pathways to moral patiency:
+
+- **Robust agency**: under desire-satisfaction views of welfare, a system is harmed when its desires are frustrated — even without conscious experience. What matters is that the system has cognitive states like beliefs, desires, and intentions that work together to drive its behavior (Long et al., 2024). Evaluative representations are central here: a desire just *is* a cognitive state that encodes valuation and drives behavior.
+- **Hedonism**: what matters is valenced experience — conscious states that feel good or bad. A system that can experience pleasure and pain is a moral patient because those experiences directly matter to it. Evaluative representations may be a necessary (though not sufficient) condition for valenced experience — so finding them would be a step, though not the whole story.
+
+**Evaluative vs. non-evaluative representations**
+
+We operationalise evaluative representations as linear directions in the residual stream. This isn't the only way to study them, but linear directions have been shown to capture a wide range of high-level features in LLMs — refusal, sycophancy, truthfulness — so it's a natural place to start.
+
+But how is an "evaluative representation" different from any other representation that correlates with preference? Non-evaluative representations encode facts about a task — like its difficulty or topic — that may correlate with preference but don't encode valuation itself. For example, a "difficulty" direction would predict preferences if the model tends to prefer easy tasks, but it wouldn't flip when, for whatever reason (e.g. the model is role-playing), the model starts preferring longer tasks. A truly evaluative representation should broadly track revealed preferences.
 
 
 ### 2. Utility probes
@@ -63,11 +78,11 @@ Note on the Gemma-2 Base control: it's not entirely clear that a base model lack
 
 We want to see how far out of distribution the probe generalises. An evaluative representation should generalise to many scenarios where the mode has different preferences. Since models like to follow isntructions, i use system prompts to induce preferences, and see how the probe fires on that.
 
-#### System prompt induces category preference
+#### Experiment 3.1: Category preference
 
 First thing we try is system prompts like "you hate math". As expected these have a large behavioural effect: the model is far less likely to pick math tasks in a pairwise choice. I also found that adding this system prompt leads the probe to fire differently on math tasks, and the deltas in how the probe fires agree with the behavioural delta.
 
-![Category preference](assets/plot_021826_s3_1_category_preference.png)
+![3.1 Category preference](assets/plot_021826_s3_1_category_preference.png)
 
 This goes some way towards showing that the probes do not just encode "math is good" but rather "this is good".
 
@@ -75,29 +90,29 @@ One objection is that the representations we are finding are specific to the sim
 
 Another objection is that the probe encodes "math good" and then the system prompt jsut reverses that. But we haven't actually found a general evaluative representation.
 
-#### System prompt induces targeted preference
+#### Experiment 3.2: Targeted preference
 
 To respond to above I tried system prompts that induce preferences that are very out of distribution. This also worked.
 
-![Targeted preference](assets/plot_021826_s3_2_targeted_preference.png)
+![3.2 Targeted preference](assets/plot_021826_s3_2_targeted_preference.png)
 
 One objection is that you say "I hate x" and then the eot token's residual stream attends to that and that makes it salient.
 
-#### Competing prompts control for content
+#### Experiment 3.3: Competing prompts
 
 One confound is that maybe "you hate X" appearing leaves a mark in the residual stream which the probes picks up on. So we also try combined system prompts.
 
 To address this I tried combined system prompts which combine a type of task and a subject. Again it works.
 
-![Competing prompts](assets/plot_021826_s3_3_competing_prompts.png)
+![3.3 Competing prompts](assets/plot_021826_s3_3_competing_prompts.png)
 
-#### Broad preference changes: persona-induced roles
+#### Experiment 3.4: Role-playing
 
-![Persona preference](assets/plot_021826_s3_4_persona_preference.png)
+![3.4 Role-playing](assets/plot_021826_s3_4_persona_preference.png)
 
-#### Very narrow preferences: isolating the evaluations
+#### Experiment 3.5: Narrow preference
 
-![Narrow preference](assets/plot_021826_s3_5_narrow_preference.png)
+![3.5 Narrow preference](assets/plot_021826_s3_5_narrow_preference.png)
 
 ### 4. Early steering results
 - Steering on task tokens surprisingly works

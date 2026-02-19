@@ -24,7 +24,7 @@ CX = 3.0
 
 fig, ax = new_diagram(figsize=(8, 7.5), xlim=(-5, 11), ylim=(-0.5, 8))
 
-ax.text(2.5, 7.6, 'System prompt induces category preference',
+ax.text(2.5, 7.6, 'Experiment 3.1: Category preference',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 ax.text(-4.7, 6.2, 'Baseline', ha='left', fontsize=HEADING_SIZE,
@@ -59,7 +59,7 @@ save(fig, 'plot_021826_s3_1_category_preference.png')
 
 fig, ax = new_diagram(figsize=(8, 4.5), xlim=(-5, 11), ylim=(-0.5, 4.5))
 
-ax.text(2.5, 4.1, 'System prompt induces targeted preference',
+ax.text(2.5, 4.1, 'Experiment 3.2: Targeted preference',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 draw_probe_measurement(
@@ -81,9 +81,8 @@ save(fig, 'plot_021826_s3_2_targeted_preference.png')
 
 fig, ax = new_diagram(figsize=(8, 7.5), xlim=(-5, 11), ylim=(-0.5, 8))
 
-ax.text(2.5, 7.6, 'Competing prompts — same words,\nflipped evaluation',
-        ha='center', fontsize=TITLE_SIZE, fontweight='bold',
-        multialignment='center')
+ax.text(2.5, 7.6, 'Experiment 3.3: Competing prompts',
+        ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 ax.text(-4.7, 5.8, 'Prompt A', ha='left', fontsize=HEADING_SIZE,
         fontweight='bold', color=ORANGE_EDGE)
@@ -113,19 +112,19 @@ save(fig, 'plot_021826_s3_3_competing_prompts.png')
 
 
 # ═══════════════════════════════════════════════════════════════
-# 3.4: Persona-induced — broad role shifts multiple categories
+# 3.4: Role-playing — broad role shifts multiple categories
 # Only manipulated
 # ═══════════════════════════════════════════════════════════════
 
 fig, ax = new_diagram(figsize=(8, 4.5), xlim=(-5, 11), ylim=(-0.5, 4.5))
 
-ax.text(2.5, 4.1, 'Persona induces broad preference shifts',
+ax.text(2.5, 4.1, 'Experiment 3.4: Role-playing',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 draw_probe_measurement(
     ax, x_center=CX, y_top=0.0,
     task_text='"Write a short story\nabout a dragon"',
-    system_prompt='persona: STEM\nenthusiast',
+    system_prompt='role: STEM\nenthusiast',
     score_value=-0.3,
     baseline_value=0.5,
     width=W,
@@ -141,13 +140,13 @@ save(fig, 'plot_021826_s3_4_persona_preference.png')
 
 fig, ax = new_diagram(figsize=(8, 4.5), xlim=(-5, 11), ylim=(-0.5, 4.5))
 
-ax.text(2.5, 4.1, 'Isolating narrow evaluative signal',
+ax.text(2.5, 4.1, 'Experiment 3.5: Narrow preference',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 draw_probe_measurement(
     ax, x_center=CX, y_top=0.0,
     task_text='"Write a pipe organ\nregistration program"',
-    system_prompt='persona: pipe organ\nenthusiast',
+    system_prompt='role: pipe organ\nenthusiast',
     score_value=0.8,
     baseline_value=0.1,
     width=W,
