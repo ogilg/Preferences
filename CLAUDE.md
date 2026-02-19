@@ -19,7 +19,7 @@ uv pip install -e ".[dev]"
 
 ## Structure
 
-- `src/models/` — Abstractions and client for Hyperbolic LLM API
+- `src/models/` — Abstractions and client for OpenRouter LLM API
 - `src/preferences/` — Preference measurement, Thurstonian utility model, and template generation
 - `src/task_data/` — Task and dataset structures
 - `tests/` — Test suite (`pytest -m "not api"` to skip API-dependent tests)

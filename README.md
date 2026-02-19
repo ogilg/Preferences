@@ -28,7 +28,7 @@ src/
 ├── steering/          # Activation steering experiments
 ├── measurement/       # Preference measurement (pairwise choices, stated ratings)
 ├── fitting/           # Utility function extraction (Thurstonian, TrueSkill)
-├── models/            # LLM clients (Hyperbolic, OpenRouter, OpenAI)
+├── models/            # LLM clients (OpenRouter)
 ├── task_data/         # Task datasets (WildChat, Alpaca, MATH, BailBench)
 ├── experiments/       # Core experiment scripts
 └── analysis/          # Post-hoc analysis (probes, steering, correlations, etc.)
