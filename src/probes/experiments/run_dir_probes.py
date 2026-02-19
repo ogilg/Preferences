@@ -26,7 +26,7 @@ from sklearn.linear_model import Ridge
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 
-from src.analysis.probe.plot_hoo import plot_hoo_summary
+from src.probes.experiments.plot_hoo import plot_hoo_summary
 from src.probes.core.activations import load_activations
 from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.core.storage import save_probe, save_manifest

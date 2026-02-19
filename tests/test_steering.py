@@ -158,7 +158,7 @@ class TestAnalysisFunctions:
 
     def test_aggregate_by_coefficient(self):
         """Verify aggregation groups scores correctly."""
-        from src.analysis.steering.analyze_steering_experiment import aggregate_by_coefficient
+        from src.steering.analysis import aggregate_by_coefficient
 
         mock_results = {
             "results": [
@@ -190,7 +190,7 @@ class TestAnalysisFunctions:
 
     def test_compute_statistics(self):
         """Verify statistics are computed correctly."""
-        from src.analysis.steering.analyze_steering_experiment import compute_statistics
+        from src.steering.analysis import compute_statistics
 
         by_coef = {
             -1.0: [-0.5, -0.3, -0.4],
@@ -217,7 +217,7 @@ class TestAnalysisFunctions:
 
     def test_compute_statistics_with_varied_n(self):
         """Verify statistics handle different n per condition."""
-        from src.analysis.steering.analyze_steering_experiment import compute_statistics
+        from src.steering.analysis import compute_statistics
 
         by_coef = {
             -1.0: [-0.5, -0.3],
@@ -235,7 +235,7 @@ class TestAnalysisPlotting:
 
     def test_plot_dose_response_creates_file(self):
         """Verify plot function creates output file."""
-        from src.analysis.steering.analyze_steering_experiment import plot_dose_response
+        from src.steering.analysis import plot_dose_response
 
         by_coef = {
             -1.0: [-0.5, -0.3],
@@ -453,7 +453,7 @@ class TestSteeringExperimentE2E:
 
     def test_analysis_on_experiment_results(self):
         """Run analysis on experiment results."""
-        from src.analysis.steering.analyze_steering_experiment import analyze_steering_experiment
+        from src.steering.analysis import analyze_steering_experiment
 
         rng = np.random.default_rng(42)
         # Create mock results file

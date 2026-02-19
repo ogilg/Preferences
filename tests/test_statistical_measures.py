@@ -8,7 +8,7 @@ pytestmark = pytest.mark.analysis
 
 import yaml
 
-from src.analysis.correlation.utils import (
+from src.measurement.correlation import (
     safe_correlation,
     save_correlations_yaml,
     utility_vector_correlation,
@@ -20,7 +20,7 @@ from src.analysis.correlation.utils import (
     build_win_rate_vector,
     win_rate_correlation,
 )
-from src.analysis.transitivity.transitivity import measure_transitivity, TransitivityResult
+from src.measurement.transitivity import measure_transitivity, TransitivityResult
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, TaskScore, PreferenceType
 from src.fitting.thurstonian_fitting import ThurstonianResult, OptimizationHistory

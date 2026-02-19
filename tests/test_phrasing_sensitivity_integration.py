@@ -14,7 +14,7 @@ from src.types import BinaryPreferenceMeasurement, PreferenceType
 from src.measurement.elicitation.prompt_templates import load_templates_from_yaml
 from src.fitting.thurstonian_fitting import PairwiseData, fit_thurstonian
 from src.measurement.storage import save_measurements
-from src.analysis.correlation.utils import (
+from src.measurement.correlation import (
     utility_vector_correlation,
     compute_pairwise_correlations,
     win_rate_correlation,
