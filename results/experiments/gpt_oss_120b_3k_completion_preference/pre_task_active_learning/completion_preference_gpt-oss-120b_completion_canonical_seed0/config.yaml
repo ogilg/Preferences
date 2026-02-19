@@ -1,0 +1,9 @@
+template_name: completion_preference
+template_tags:
+  response_format: completion
+  order: canonical
+  seed: '0'
+model: openai/gpt-oss-120b
+model_short: gpt-oss-120b
+temperature: 0.7
+experiment_id: gpt_oss_120b_3k_completion_preference
