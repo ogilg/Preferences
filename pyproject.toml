@@ -31,7 +31,6 @@ dev = [
 ]
 
 gpu = [
-    "triton==3.4",
     "kernels",
 ]
 

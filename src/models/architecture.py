@@ -28,6 +28,7 @@ ARCHITECTURE_CONFIGS: dict[str, LayerAccessor] = {
     "gemma": _standard_layers,
     "gemma2": _standard_layers,
     "gemma3": _gemma3_layers,
+    "gpt_oss": _standard_layers,
 }
 
 

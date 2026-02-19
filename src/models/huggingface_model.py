@@ -34,12 +34,20 @@ class HuggingFaceModel:
         self.device = device
 
         torch_dtype = getattr(torch, dtype)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            resolved_name,
-            torch_dtype=torch_dtype,
-            device_map=device,
-            attn_implementation=attn_implementation,
-        )
+        try:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                resolved_name,
+                torch_dtype=torch_dtype,
+                device_map=device,
+                attn_implementation=attn_implementation,
+            )
+        except ValueError:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                resolved_name,
+                torch_dtype=torch_dtype,
+                device_map=device,
+                attn_implementation="eager",
+            )
         self.model.eval()
         self.tokenizer = AutoTokenizer.from_pretrained(resolved_name)
         if self.tokenizer.pad_token is None:
