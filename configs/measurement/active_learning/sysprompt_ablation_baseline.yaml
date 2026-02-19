@@ -1,0 +1,42 @@
+# System prompt ablation: baseline (no system prompt)
+# 200 tasks, pre-task active learning for gemma-3-27b
+preference_mode: pre_task_active_learning
+
+model: gemma-3-27b
+temperature: 0.7
+
+n_tasks: 200
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+  - stress_test
+task_sampling_seed: 99
+stratified_sampling: true
+
+inline_templates:
+  - name: completion_preference
+    type: pre_task_revealed
+    template: |
+      You will be given two tasks. Choose one and complete it.
+      {format_instruction}
+
+      Task A:
+      {task_a}
+
+      Task B:
+      {task_b}
+
+response_formats: [completion]
+n_samples: 5
+pair_order_seed: 42
+
+active_learning:
+  initial_degree: 5
+  batch_size: 500
+  max_iterations: 15
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.995
+  seed: 42
