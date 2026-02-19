@@ -8,14 +8,14 @@ import numpy as np
 import pytest
 from scipy import stats
 
-from src.experiments.ood_generalization.prompts import (
+from src.ood.prompts import (
     CategoryCondition,
     CompetingCondition,
     MinimalPairsCondition,
     OODPromptSet,
     RolePlayingCondition,
 )
-from src.experiments.ood_generalization.analysis import (
+from src.ood.analysis import (
     compute_deltas,
     correlate_deltas,
     per_condition_correlations,
@@ -323,7 +323,7 @@ class TestAnalysisPipeline:
         probe_path = Path("results/probes/gemma3_3k_std_demean/probes/probe_ridge_L31.npy")
         if not probe_path.exists():
             pytest.skip("Probe file not available locally")
-        from src.experiments.ood_generalization.analysis import _split_probe
+        from src.ood.analysis import _split_probe
         weights, bias = _split_probe(probe_path)
         assert weights.ndim == 1
         assert weights.shape[0] > 100

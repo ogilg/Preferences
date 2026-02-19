@@ -16,13 +16,8 @@ results/sysprompt_effects_*.json
 # Archived experiments
 experiments/old_experiments/
 
-# Stale analysis
-src/analysis/visualization/
-src/analysis/probe/plots/old_plots/
-
-# Generated analysis output
-src/analysis/active_learning/output/
-src/analysis/topic_classification/output/
+# Old experiment scripts
+src/experiments/
 
 # Old research logs
 docs/logs/past_logs/
