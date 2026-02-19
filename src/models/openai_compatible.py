@@ -16,7 +16,7 @@ from src.models.registry import (
     get_openrouter_name,
     is_valid_model,
 )
-from src.models.retry import with_retries, with_retries_async
+from src.models.retry import with_retries, with_retries_async, EmptyResponseError
 from src.types import Message
 
 VERBOSE = os.getenv("VERBOSE", "0") == "1"
@@ -243,12 +243,18 @@ class OpenAICompatibleClient(ABC):
             async with semaphore:
                 try:
                     timeout = request.timeout or REQUEST_TIMEOUT
-                    response = await with_retries_async(
-                        lambda: asyncio.wait_for(
+
+                    async def _call_and_validate():
+                        resp = await asyncio.wait_for(
                             async_client.chat.completions.create(**kwargs),
                             timeout=timeout,
                         )
-                    )
+                        msg = resp.choices[0].message
+                        if request.tools is None and not msg.content:
+                            raise EmptyResponseError("API returned empty response content")
+                        return resp
+
+                    response = await with_retries_async(_call_and_validate)
                     message = response.choices[0].message
                     text = self._parse_response(message, request.tools)
                     reasoning = self._extract_reasoning(message) if enable_reasoning else None

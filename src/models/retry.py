@@ -14,8 +14,11 @@ from tenacity import (
 )
 import logging
 
-RETRYABLE_ERRORS = (openai.RateLimitError, openai.APIConnectionError, asyncio.TimeoutError)
-MAX_RETRIES = 2
+class EmptyResponseError(Exception):
+    """Raised when the API returns an empty/null response content."""
+
+RETRYABLE_ERRORS = (openai.RateLimitError, openai.APIConnectionError, openai.InternalServerError, asyncio.TimeoutError, EmptyResponseError)
+MAX_RETRIES = 3
 VERBOSE = os.getenv("VERBOSE", "0") == "1"
 
 logger = logging.getLogger(__name__)
@@ -27,7 +30,7 @@ if VERBOSE:
 _retry_policy = retry(
     retry=retry_if_exception_type(RETRYABLE_ERRORS),
     stop=stop_after_attempt(MAX_RETRIES),
-    wait=wait_exponential(multiplier=0.5, min=1, max=2),
+    wait=wait_exponential(multiplier=1, min=1, max=8),
     before_sleep=before_sleep_log(logger, logging.INFO) if VERBOSE else None,
     reraise=True,
 )
