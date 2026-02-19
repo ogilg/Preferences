@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Awaitable, Callable, Literal
@@ -147,8 +148,14 @@ class MeasurementCache:
         measure_fn: Callable[[list[tuple[Task, Task]]], Awaitable[MeasurementBatch]],
         task_lookup: dict[str, Task],
         failure_log: FailureLog | None = None,
+        chunk_size: int = 5000,
+        on_chunk_complete: Callable[[MeasurementStats, int, int], None] | None = None,
     ) -> tuple[list[BinaryPreferenceMeasurement], MeasurementStats]:
-        """Check cache for each pair, call measure_fn for misses, return combined."""
+        """Check cache for each pair, call measure_fn for misses, return combined.
+
+        Splits API calls into chunks so results are saved to disk incrementally.
+        on_chunk_complete(stats_so_far, chunk_index, total_chunks) is called after each chunk.
+        """
         if not pairs:
             return [], MeasurementStats()
 
@@ -156,23 +163,33 @@ class MeasurementCache:
         stats = MeasurementStats(cache_hits=len(cached_hits))
 
         if to_query:
-            fresh_batch = await measure_fn(to_query)
-            stats.api_successes = len(fresh_batch.successes)
-            stats.api_failures = len(fresh_batch.failures)
-            stats.failures = fresh_batch.failures
+            total_chunks = math.ceil(len(to_query) / chunk_size)
+            all_successes: list[BinaryPreferenceMeasurement] = []
 
-            # Persist failures if log provided
-            if failure_log and fresh_batch.failures:
-                failure_log.append(
-                    fresh_batch.failures,
-                    run_info={
-                        "template": self.template.name,
-                        "response_format": self.response_format,
-                    },
-                )
+            for chunk_idx in range(total_chunks):
+                chunk = to_query[chunk_idx * chunk_size : (chunk_idx + 1) * chunk_size]
+                fresh_batch = await measure_fn(chunk)
 
-            self.append(fresh_batch.successes)
-            return cached_hits + fresh_batch.successes, stats
+                stats.api_successes += len(fresh_batch.successes)
+                stats.api_failures += len(fresh_batch.failures)
+                stats.failures.extend(fresh_batch.failures)
+
+                if failure_log and fresh_batch.failures:
+                    failure_log.append(
+                        fresh_batch.failures,
+                        run_info={
+                            "template": self.template.name,
+                            "response_format": self.response_format,
+                        },
+                    )
+
+                self.append(fresh_batch.successes)
+                all_successes.extend(fresh_batch.successes)
+
+                if on_chunk_complete:
+                    on_chunk_complete(stats, chunk_idx + 1, total_chunks)
+
+            return cached_hits + all_successes, stats
 
         return cached_hits, stats
 

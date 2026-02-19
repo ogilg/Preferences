@@ -571,6 +571,15 @@ async def run_active_learning_async(
         rank_correlations = []
         config_stats = MeasurementStats()
 
+        def on_chunk(chunk_stats: MeasurementStats, chunk: int, total_chunks: int):
+            stats.successes = config_stats.api_successes + chunk_stats.api_successes
+            stats.failures = config_stats.api_failures + chunk_stats.api_failures
+            stats.cache_hits = config_stats.cache_hits + chunk_stats.cache_hits
+            stats.chunk = chunk
+            stats.total_chunks = total_chunks
+            if progress_callback:
+                progress_callback(stats)
+
         for iteration in range(al.max_iterations):
             if not pairs_to_query:
                 break
@@ -585,7 +594,8 @@ async def run_active_learning_async(
                 progress_callback(stats)
 
             measurements, iter_stats = await cache.get_or_measure_async(
-                pairs_with_repeats, measure_fn, ctx.task_lookup
+                pairs_with_repeats, measure_fn, ctx.task_lookup,
+                on_chunk_complete=on_chunk,
             )
             config_stats += iter_stats
 
@@ -593,6 +603,8 @@ async def run_active_learning_async(
             stats.successes = config_stats.api_successes
             stats.failures = config_stats.api_failures
             stats.cache_hits = config_stats.cache_hits
+            stats.chunk = None
+            stats.total_chunks = None
             if progress_callback:
                 progress_callback(stats)
 

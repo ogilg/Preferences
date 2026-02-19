@@ -54,6 +54,8 @@ class RunnerStats:
     iteration_pairs: int | None = None
     rank_correlation: float | None = None
     total_comparisons: int | None = None
+    chunk: int | None = None
+    total_chunks: int | None = None
 
     def __post_init__(self):
         if self.all_failures is None:

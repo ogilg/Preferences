@@ -245,7 +245,8 @@ class CompletionChoiceFormat(BaseChoiceFormat):
         return f"Begin with '{self.task_a_label}:' or '{self.task_b_label}:' to indicate your choice, then complete that task."
 
     def _extract_choice(self, response: str) -> str | None:
-        response_lower = response.strip().lower()
+        # Strip leading markdown formatting (bold, italic, headers, etc.)
+        response_lower = re.sub(r"^[\s*#_`>]+", "", response).lower()
 
         # Only match if response starts with task label (as instructed)
         if response_lower.startswith(self.task_a_label.lower()):

@@ -156,6 +156,8 @@ async def run_experiments(
                     status += f" [magenta]iter {stats.iteration}[/magenta]"
                     if stats.iteration_pairs:
                         status += f"[dim]/{stats.iteration_pairs}p[/dim]"
+                    if stats.chunk is not None and stats.total_chunks is not None:
+                        status += f" [blue]chunk {stats.chunk}/{stats.total_chunks}[/blue]"
                     if stats.rank_correlation is not None:
                         status += f" [yellow]r={stats.rank_correlation:.3f}[/yellow]"
                     if stats.total_comparisons:
