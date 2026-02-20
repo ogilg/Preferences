@@ -21,7 +21,11 @@ ST_HOO = Path("results/probes/st_10k_hoo_topic/hoo_summary.json")
 GEMMA3_HELDOUT_R = 0.864    # from gemma3_10k_heldout_std_raw, L31
 GEMMA3_HELDOUT_ACC = 0.768  # from gemma3_10k_heldout_std_raw, L31
 GEMMA2_HELDOUT_R = 0.767    # from gemma2_10k_heldout_std_raw, L23
-GEMMA2_HELDOUT_ACC = 0.782  # computed post-hoc from probe scores + Thurstonian ground truth
+# NOTE: Gemma-2 pairwise accuracy not computed — measurements.yaml (real pairwise choices) is
+# gitignored and only available on the server. Do NOT use Thurstonian scores as ground truth
+# for accuracy: that inflates the number and is not comparable to Gemma-3's hoo_acc, which
+# is computed against real pairwise choices. Rerun HOO on server to get real hoo_acc.
+GEMMA2_HELDOUT_ACC = None   # TBD: needs measurements.yaml from server
 ST_HELDOUT_R = None          # TBD
 ST_HELDOUT_ACC = None        # TBD
 
