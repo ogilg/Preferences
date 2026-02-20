@@ -1,0 +1,77 @@
+{
+  "experiment_name": "st_10k_heldout_std_raw",
+  "run_dir": "results/experiments/gemma3_10k_run1/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "activations_path": "activations/st_minilm/activations_prompt_last.npz",
+  "modes": [
+    "ridge"
+  ],
+  "standardize": true,
+  "demean_confounds": null,
+  "created_at": "2026-02-20T10:45:00.034040",
+  "n_tasks_in_experiment": 10000,
+  "n_tasks_with_activations": 14038,
+  "n_comparisons_in_experiment": 331739,
+  "probes": [
+    {
+      "id": "ridge_L00",
+      "file": "probes/probe_ridge_L00.npy",
+      "method": "ridge",
+      "layer": 0,
+      "standardize": true,
+      "demean_confounds": null,
+      "best_alpha": 1000.0,
+      "sweep_r": 0.5753776689647319,
+      "final_r": 0.6143418889290512,
+      "final_acc": 0.6506808762581409,
+      "n_train": 10000,
+      "n_sweep": 2019,
+      "n_final": 2019,
+      "n_final_pairs": 5091,
+      "n_samples": 10000,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.572580885594389
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.572595695935382
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.572658313711786
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.5728597693675802
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.5733442260286985
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.5746667310436633
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.5753776689647319
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.5697266445316529
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.5475767082887518
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.5054127854240679
+        }
+      ]
+    }
+  ],
+  "eval_run_dir": "results/experiments/gemma3_4k_pre_task/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "eval_split_seed": 42
+}
