@@ -56,3 +56,14 @@ Best: L23 (HOO r=0.605). Math worst (r=0.228). Compares to Gemma-3 10k L31 HOO r
 | L41 | 0.566 |
 
 Best: L27/L23 tied (r=0.610). Compares to Gemma-3 10k L31 demeaned r=0.761.
+
+## Pairwise accuracy (NOT computed — important note)
+
+Pairwise accuracy for Gemma-2 HOO folds was initially computed post-hoc using Thurstonian
+scores as ground truth. This is WRONG and not comparable to Gemma-3's hoo_acc, which is
+computed against real pairwise choices (from measurements.yaml). Using Thurstonian scores
+inflates the number (smooth ground truth, no noise). Those bogus values were reverted.
+
+To get real hoo_acc for Gemma-2: re-run the HOO experiment on the server where
+measurements.yaml is available. The HOO runner computes hoo_acc natively from pairwise
+comparisons when measurements.yaml is present.

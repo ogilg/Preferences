@@ -86,8 +86,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold0_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.6976105520586938
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6252456577709506,
@@ -192,8 +191,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold1_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7408715665182368
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6283718696389597,
@@ -298,8 +296,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold2_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7241310247448903
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6253289094267844,
@@ -404,8 +401,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold3_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.678819548721645
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.5325489117155133,
@@ -510,8 +506,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold4_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7111388986145151
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6560964508159847,
@@ -616,8 +611,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold5_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.5474706653195555
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.574108753141503,
@@ -722,8 +716,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold6_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7341528272540264
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6122498140155344,
@@ -828,8 +821,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold7_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7858774577792282
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6155417799610609,
@@ -934,8 +926,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold8_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.732513343232072
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6216265312827927,
@@ -1040,8 +1031,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold9_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7522037710086142
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6140027738206515,
@@ -1146,8 +1136,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold10_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7020152334202172
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6202297665252459,
@@ -1252,8 +1241,7 @@
           "demean_confounds": null,
           "method": "ridge",
           "probe_id": "hoo_fold11_ridge_L23",
-          "layer": 23,
-          "hoo_acc": 0.7110002630673655
+          "layer": 23
         },
         "ridge_L27": {
           "val_r2": 0.6184205864750625,
