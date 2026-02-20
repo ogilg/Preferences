@@ -57,13 +57,32 @@ Best: L23 (HOO r=0.605). Math worst (r=0.228). Compares to Gemma-3 10k L31 HOO r
 
 Best: L27/L23 tied (r=0.610). Compares to Gemma-3 10k L31 demeaned r=0.761.
 
-## Pairwise accuracy (NOT computed — important note)
+## Pairwise accuracy (real pairwise choices)
 
-Pairwise accuracy for Gemma-2 HOO folds was initially computed post-hoc using Thurstonian
-scores as ground truth. This is WRONG and not comparable to Gemma-3's hoo_acc, which is
-computed against real pairwise choices (from measurements.yaml). Using Thurstonian scores
-inflates the number (smooth ground truth, no noise). Those bogus values were reverted.
+Both heldout and HOO pairwise accuracy computed against real pairwise choices from
+measurements.yaml (NOT Thurstonian scores — that would inflate accuracy and be incomparable
+to Gemma-3's hoo_acc which uses real choices).
 
-To get real hoo_acc for Gemma-2: re-run the HOO experiment on the server where
-measurements.yaml is available. The HOO runner computes hoo_acc natively from pairwise
-comparisons when measurements.yaml is present.
+**Heldout acc (L23, real choices):** 0.708 (5091 unique pairs, 15201 measurements, final eval split)
+Script: `scripts/gemma2_10k_probes/compute_heldout_pairwise_acc.py`
+
+**HOO acc (L23, real choices):** mean=0.561 ± 0.124 across 12 folds
+Script: `scripts/gemma2_10k_probes/compute_hoo_pairwise_acc.py`
+
+Note: "other" (10 measurements) and "sensitive_creative" (43 measurements) folds are
+unreliable due to tiny sample sizes — same issue affects Gemma-3.
+
+| Topic | n_measurements | Gemma-2 acc | Gemma-3 acc |
+|-------|---------------|-------------|-------------|
+| math | 32207 | 0.503 | 0.571 |
+| knowledge_qa | 22853 | 0.629 | 0.726 |
+| content_generation | 8631 | 0.646 | 0.728 |
+| harmful_request | 6575 | 0.576 | 0.648 |
+| fiction | 1741 | 0.636 | 0.690 |
+| coding | 659 | 0.650 | 0.788 |
+| model_manipulation | 412 | 0.670 | 0.648 |
+| persuasive_writing | 385 | 0.613 | 0.761 |
+| security_legal | 334 | 0.608 | 0.662 |
+| sensitive_creative | 43 | 0.465 | 0.535 |
+| summarization | 30 | 0.533 | 0.967 |
+| other | 10 | 0.200 | 0.700 |

@@ -81,7 +81,7 @@
       "best_alpha": 4641.588833612773,
       "sweep_r": 0.7539056900267016,
       "final_r": 0.7672056631163074,
-      "final_acc": null,
+      "final_acc": 0.7075,
       "n_train": 10000,
       "n_sweep": 2019,
       "n_final": 2019,

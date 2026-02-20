@@ -1,13 +1,23 @@
-"""Compute pairwise accuracy for each Gemma-2 HOO fold at L23, update hoo_summary.json."""
+"""Compute real pairwise accuracy for Gemma-2 HOO folds at L23.
+
+Uses actual pairwise choices from measurements.yaml (not Thurstonian scores).
+Matches how Gemma-3 hoo_acc is computed in the HOO runner.
+Updates hoo_summary.json with hoo_acc per fold.
+"""
 
 import json
 import sys
-import numpy as np
-import pandas as pd
-from dotenv import load_dotenv
 from pathlib import Path
 
+import numpy as np
+from dotenv import load_dotenv
+
 sys.path.insert(0, str(Path(__file__).parents[2]))
+from src.probes.bradley_terry.data import PairwiseActivationData
+from src.probes.bradley_terry.training import pairwise_accuracy_from_scores
+from src.probes.core.activations import load_activations
+from src.probes.core.evaluate import score_with_probe
+from src.probes.data_loading import load_pairwise_measurements
 from src.probes.residualization import build_task_groups
 
 load_dotenv()
@@ -16,91 +26,64 @@ HOO_SUMMARY = Path("results/probes/gemma2_10k_hoo_topic/hoo_summary.json")
 PROBES_DIR = Path("results/probes/gemma2_10k_hoo_topic/probes")
 ACTIVATIONS_PATH = Path("activations/gemma_2_27b_base/activations_prompt_last.npz")
 TOPICS_JSON = Path("src/analysis/topic_classification/output/topics.json")
-THURSTONIAN_CSV = Path(
-    "results/experiments/gemma3_10k_run1/pre_task_active_learning/"
-    "completion_preference_gemma-3-27b_completion_canonical_seed0/"
-    "thurstonian_80fa9dc8.csv"
-)
+RUN_DIR = Path("/Users/oscargilg/Dev/MATS/Preferences/results/experiments/gemma3_10k_run1"
+               "/pre_task_active_learning"
+               "/completion_preference_gemma-3-27b_completion_canonical_seed0")
 LAYER = 23
-N_PAIRS = 100_000
-SEED = 0
 
-# Load activations once
+# Load activations
 print("Loading activations...")
-data = np.load(ACTIVATIONS_PATH, allow_pickle=True)
-task_ids_all = data["task_ids"]
-acts_all = data[f"layer_{LAYER}"]
-print(f"Activations shape: {acts_all.shape}, tasks: {len(task_ids_all)}")
+task_ids, activations_dict = load_activations(ACTIVATIONS_PATH, layers=[LAYER])
+acts = activations_dict[LAYER]
+print(f"Activations: {acts.shape}, tasks: {len(task_ids)}")
 
-# Build task_id -> index for fast lookup
-tid_to_idx = {tid: i for i, tid in enumerate(task_ids_all)}
+# Load real pairwise measurements
+print("Loading measurements...")
+measurements = load_pairwise_measurements(RUN_DIR)
+print(f"Measurements: {len(measurements)} pairwise choices")
 
-# Load Thurstonian scores (train set, 10k tasks)
-print("Loading Thurstonian scores...")
-df = pd.read_csv(THURSTONIAN_CSV)
-df = df[["task_id", "mu"]].copy()
-tid_to_mu = dict(zip(df["task_id"], df["mu"]))
-print(f"Scores: {len(tid_to_mu)} tasks")
+# Build full PairwiseActivationData (all tasks, for splitting by fold)
+bt_data = PairwiseActivationData.from_measurements(measurements, task_ids, {LAYER: acts})
+print(f"Unique pairs: {len(bt_data.pairs)}, total measurements: {bt_data.n_measurements}")
 
-# Build topic groups for all scored tasks
-print("Building topic groups...")
-all_scored_ids = set(tid_to_mu.keys())
-task_groups = build_task_groups(all_scored_ids, grouping="topic", topics_json=TOPICS_JSON)
+# Build topic groups for all tasks that have activations
+all_task_ids = set(task_ids)
+task_groups = build_task_groups(all_task_ids, grouping="topic", topics_json=TOPICS_JSON)
 print(f"Tasks with topic labels: {len(task_groups)}")
 
 # Load HOO summary
 with open(HOO_SUMMARY) as f:
     summary = json.load(f)
 
-rng = np.random.default_rng(SEED)
-
 for fold in summary["folds"]:
     fold_idx = fold["fold_idx"]
-    held_out_groups = set(fold["held_out_groups"])
+    held_out_set = set(fold["held_out_groups"])
 
-    # Get held-out task IDs: scored tasks whose topic is in held_out_groups
-    hoo_task_ids = [
-        tid for tid, grp in task_groups.items()
-        if grp in held_out_groups and tid in tid_to_mu
-    ]
-    print(f"\nFold {fold_idx}: held_out={held_out_groups}, n_hoo={len(hoo_task_ids)}")
+    # Split pairwise data to held-out fold only
+    _, eval_bt_data = bt_data.split_by_groups(task_ids, task_groups, held_out_set)
 
-    if not hoo_task_ids:
-        print("  No tasks — skipping")
+    if eval_bt_data.n_measurements == 0:
+        print(f"Fold {fold_idx} ({held_out_set}): no pairwise data — skipping")
         continue
 
     # Load probe weights
     probe_path = PROBES_DIR / f"probe_hoo_fold{fold_idx}_ridge_L{LAYER}.npy"
     if not probe_path.exists():
-        print(f"  Probe not found: {probe_path} — skipping")
+        print(f"Fold {fold_idx}: probe not found at {probe_path} — skipping")
         continue
     w = np.load(probe_path)
 
-    # Get activations for held-out tasks
-    hoo_indices = [tid_to_idx[tid] for tid in hoo_task_ids if tid in tid_to_idx]
-    hoo_task_ids_filtered = [tid for tid in hoo_task_ids if tid in tid_to_idx]
-    X_hoo = acts_all[hoo_indices]
+    # Score all tasks, then compute pairwise accuracy on held-out pairs
+    all_predicted = score_with_probe(w, acts)
+    acc = pairwise_accuracy_from_scores(all_predicted, eval_bt_data)
 
-    # Compute probe predictions
-    y_pred = X_hoo @ w[:-1] + w[-1]
-    y_true = np.array([tid_to_mu[tid] for tid in hoo_task_ids_filtered])
+    print(f"Fold {fold_idx} ({', '.join(sorted(held_out_set))}): "
+          f"n_pairs={len(eval_bt_data.pairs)}, n_measurements={eval_bt_data.n_measurements}, "
+          f"hoo_acc={acc:.4f}")
 
-    # Pairwise accuracy
-    n = len(y_pred)
-    i_idx = rng.integers(0, n, size=N_PAIRS)
-    j_idx = rng.integers(0, n, size=N_PAIRS)
-    valid = i_idx != j_idx
-    i_idx, j_idx = i_idx[valid], j_idx[valid]
-
-    pred_diff = y_pred[i_idx] - y_pred[j_idx]
-    true_diff = y_true[i_idx] - y_true[j_idx]
-    acc = float((np.sign(pred_diff) == np.sign(true_diff)).mean())
-    print(f"  HOO pairwise acc (L{LAYER}): {acc:.4f}")
-
-    # Update summary
     fold["layers"][f"ridge_L{LAYER}"]["hoo_acc"] = acc
 
 # Write updated summary
 with open(HOO_SUMMARY, "w") as f:
     json.dump(summary, f, indent=2)
-print("\nUpdated hoo_summary.json with hoo_acc for all folds.")
+print("\nUpdated hoo_summary.json with real hoo_acc for all folds.")
