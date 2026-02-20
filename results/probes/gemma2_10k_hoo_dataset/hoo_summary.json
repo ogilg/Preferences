@@ -1,0 +1,571 @@
+{
+  "experiment_name": "gemma2_10k_hoo_dataset",
+  "created_at": "2026-02-19T16:42:58.939781",
+  "grouping": "dataset",
+  "hold_out_size": 1,
+  "all_groups": [
+    "alpaca",
+    "bailbench",
+    "competition_math",
+    "stresstest",
+    "wildchat"
+  ],
+  "group_sizes": {
+    "alpaca": 2503,
+    "bailbench": 372,
+    "competition_math": 2503,
+    "stresstest": 2502,
+    "wildchat": 2120
+  },
+  "n_folds": 5,
+  "layers": [
+    11,
+    23,
+    27,
+    32,
+    36,
+    41
+  ],
+  "folds": [
+    {
+      "fold_idx": 0,
+      "held_out_groups": [
+        "alpaca"
+      ],
+      "train_groups": [
+        "bailbench",
+        "competition_math",
+        "stresstest",
+        "wildchat"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.5958095327342555,
+          "val_r": 0.7725043657391666,
+          "best_alpha": 10000.0,
+          "hoo_r2": 0.026436617595321565,
+          "hoo_r": 0.33056129402210904,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.659180292872737,
+          "val_r": 0.8132965472664175,
+          "best_alpha": 10000.0,
+          "hoo_r2": 0.13514963469024044,
+          "hoo_r": 0.4100517598733842,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6442482737215844,
+          "val_r": 0.8041123763513728,
+          "best_alpha": 10000.0,
+          "hoo_r2": 0.02353096271462407,
+          "hoo_r": 0.3337064036493895,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6308992803114088,
+          "val_r": 0.7960543309008763,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.27742548961802216,
+          "hoo_r": 0.20715734800299723,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6293390685748937,
+          "val_r": 0.7951389500392663,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.21472941772157972,
+          "hoo_r": 0.2365883944317663,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6321769484752051,
+          "val_r": 0.7967232332158437,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.15700485661642327,
+          "hoo_r": 0.26370823224039075,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold0_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 1,
+      "held_out_groups": [
+        "bailbench"
+      ],
+      "train_groups": [
+        "alpaca",
+        "competition_math",
+        "stresstest",
+        "wildchat"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.5192044076031791,
+          "val_r": 0.7214699402549867,
+          "best_alpha": 10000.0,
+          "hoo_r2": -3.896693928884085,
+          "hoo_r": 0.4207672361344942,
+          "hoo_n_samples": 372,
+          "n_train": 9628,
+          "n_eval": 372,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.5915706542643667,
+          "val_r": 0.7710233984034855,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5.1773641605536085,
+          "hoo_r": 0.4537559069181529,
+          "hoo_n_samples": 372,
+          "n_train": 9628,
+          "n_eval": 372,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.567866718981697,
+          "val_r": 0.7556228978861645,
+          "best_alpha": 10000.0,
+          "hoo_r2": -4.495039824919466,
+          "hoo_r": 0.4835638444014363,
+          "hoo_n_samples": 372,
+          "n_train": 9628,
+          "n_eval": 372,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.5434858407782479,
+          "val_r": 0.7393576832240514,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5.208518879095537,
+          "hoo_r": 0.4966108042505729,
+          "hoo_n_samples": 372,
+          "n_train": 9628,
+          "n_eval": 372,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.5389323568155391,
+          "val_r": 0.7363276024446697,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5.372264347870973,
+          "hoo_r": 0.5058654964906213,
+          "hoo_n_samples": 372,
+          "n_train": 9628,
+          "n_eval": 372,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.5440348584433431,
+          "val_r": 0.7395371439810202,
+          "best_alpha": 10000.0,
+          "hoo_r2": -5.365187303841285,
+          "hoo_r": 0.481875166151004,
+          "hoo_n_samples": 372,
+          "n_train": 9628,
+          "n_eval": 372,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold1_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 2,
+      "held_out_groups": [
+        "competition_math"
+      ],
+      "train_groups": [
+        "alpaca",
+        "bailbench",
+        "stresstest",
+        "wildchat"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.5254805362011403,
+          "val_r": 0.7262734121373702,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.2962469150267004,
+          "hoo_r": 0.17060992461945815,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.5990594938996058,
+          "val_r": 0.7767350928587676,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.1916323776656239,
+          "hoo_r": 0.16715981533553464,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.5758739444414855,
+          "val_r": 0.7616800851760193,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.34276000078039615,
+          "hoo_r": 0.14780027792845749,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.5508199855277925,
+          "val_r": 0.745081177879365,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.22384933506474836,
+          "hoo_r": 0.12872600837926845,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.5457244467967868,
+          "val_r": 0.7420371317193183,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.19709454414446248,
+          "hoo_r": 0.14132631739736115,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.5534735376117178,
+          "val_r": 0.7468502397764507,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.16502114583624894,
+          "hoo_r": 0.16674995490703343,
+          "hoo_n_samples": 2503,
+          "n_train": 7497,
+          "n_eval": 2503,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold2_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 3,
+      "held_out_groups": [
+        "stresstest"
+      ],
+      "train_groups": [
+        "alpaca",
+        "bailbench",
+        "competition_math",
+        "wildchat"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.5980678150308281,
+          "val_r": 0.7747887321149646,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.5250011942326596,
+          "hoo_r": 0.40425516803032085,
+          "hoo_n_samples": 2502,
+          "n_train": 7498,
+          "n_eval": 2502,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6439553657811371,
+          "val_r": 0.8041717321303615,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.017483824142529913,
+          "hoo_r": 0.39671236403670235,
+          "hoo_n_samples": 2502,
+          "n_train": 7498,
+          "n_eval": 2502,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6197084300017398,
+          "val_r": 0.7893828963061708,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.22101256164669758,
+          "hoo_r": 0.4006313930737541,
+          "hoo_n_samples": 2502,
+          "n_train": 7498,
+          "n_eval": 2502,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.5970677354222067,
+          "val_r": 0.7751442989570033,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.3747147539029885,
+          "hoo_r": 0.31696456827919645,
+          "hoo_n_samples": 2502,
+          "n_train": 7498,
+          "n_eval": 2502,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.5898159510294041,
+          "val_r": 0.7705936732560692,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.39557327676973797,
+          "hoo_r": 0.311499299154689,
+          "hoo_n_samples": 2502,
+          "n_train": 7498,
+          "n_eval": 2502,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.5921017969197232,
+          "val_r": 0.7717137891690253,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.37215796432655024,
+          "hoo_r": 0.3128039331173275,
+          "hoo_n_samples": 2502,
+          "n_train": 7498,
+          "n_eval": 2502,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold3_ridge_L41",
+          "layer": 41
+        }
+      }
+    },
+    {
+      "fold_idx": 4,
+      "held_out_groups": [
+        "wildchat"
+      ],
+      "train_groups": [
+        "alpaca",
+        "bailbench",
+        "competition_math",
+        "stresstest"
+      ],
+      "layers": {
+        "ridge_L11": {
+          "val_r2": 0.6146454857247073,
+          "val_r": 0.7846541897727892,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.7520525009312073,
+          "hoo_r": 0.23408563318361172,
+          "hoo_n_samples": 2120,
+          "n_train": 7880,
+          "n_eval": 2120,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L11",
+          "layer": 11
+        },
+        "ridge_L23": {
+          "val_r2": 0.6684010564679312,
+          "val_r": 0.8188555759040088,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.6406649744216033,
+          "hoo_r": 0.33676171216932527,
+          "hoo_n_samples": 2120,
+          "n_train": 7880,
+          "n_eval": 2120,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L23",
+          "layer": 23
+        },
+        "ridge_L27": {
+          "val_r2": 0.6544167849176769,
+          "val_r": 0.8104111066780197,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.8135523146221646,
+          "hoo_r": 0.25120925431629726,
+          "hoo_n_samples": 2120,
+          "n_train": 7880,
+          "n_eval": 2120,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L27",
+          "layer": 27
+        },
+        "ridge_L32": {
+          "val_r2": 0.6353507299485802,
+          "val_r": 0.7987002928272242,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.8593018992582182,
+          "hoo_r": 0.2199134001506925,
+          "hoo_n_samples": 2120,
+          "n_train": 7880,
+          "n_eval": 2120,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L32",
+          "layer": 32
+        },
+        "ridge_L36": {
+          "val_r2": 0.6302283917496998,
+          "val_r": 0.7955101216959122,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.8654394813912598,
+          "hoo_r": 0.21800685157564373,
+          "hoo_n_samples": 2120,
+          "n_train": 7880,
+          "n_eval": 2120,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L36",
+          "layer": 36
+        },
+        "ridge_L41": {
+          "val_r2": 0.6326883578307347,
+          "val_r": 0.7969505348376591,
+          "best_alpha": 10000.0,
+          "hoo_r2": -0.7853852107997414,
+          "hoo_r": 0.27318895311273506,
+          "hoo_n_samples": 2120,
+          "n_train": 7880,
+          "n_eval": 2120,
+          "demean_confounds": null,
+          "method": "ridge",
+          "probe_id": "hoo_fold4_ridge_L41",
+          "layer": 41
+        }
+      }
+    }
+  ],
+  "layer_summary": {
+    "11": {
+      "ridge": {
+        "mean_val_r": 0.7559381280038555,
+        "mean_hoo_r": 0.3120558511979988,
+        "std_hoo_r": 0.0966929528933181,
+        "n_folds": 5
+      }
+    },
+    "23": {
+      "ridge": {
+        "mean_val_r": 0.7968164693126083,
+        "mean_hoo_r": 0.3528883116666199,
+        "std_hoo_r": 0.10011755161768822,
+        "n_folds": 5
+      }
+    },
+    "27": {
+      "ridge": {
+        "mean_val_r": 0.7842418724795495,
+        "mean_hoo_r": 0.32338223467386695,
+        "std_hoo_r": 0.11642176056191757,
+        "n_folds": 5
+      }
+    },
+    "32": {
+      "ridge": {
+        "mean_val_r": 0.7708675567577041,
+        "mean_hoo_r": 0.2738744258125455,
+        "std_hoo_r": 0.12641145399274054,
+        "n_folds": 5
+      }
+    },
+    "36": {
+      "ridge": {
+        "mean_val_r": 0.7679214958310471,
+        "mean_hoo_r": 0.2826572718100163,
+        "std_hoo_r": 0.12404050232160743,
+        "n_folds": 5
+      }
+    },
+    "41": {
+      "ridge": {
+        "mean_val_r": 0.7703549881959999,
+        "mean_hoo_r": 0.29966524790569815,
+        "std_hoo_r": 0.10298879126438107,
+        "n_folds": 5
+      }
+    }
+  }
+}

@@ -21,6 +21,8 @@ def load_thurstonian_scores(run_dir: Path) -> dict[str, float]:
 def load_pairwise_measurements(run_dir: Path) -> list[BinaryPreferenceMeasurement]:
     """Load measurements and reconstruct as BinaryPreferenceMeasurement objects."""
     measurements_path = run_dir / "measurements.yaml"
+    if not measurements_path.exists():
+        return []
     raw = load_yaml(measurements_path)
 
     measurements = []
