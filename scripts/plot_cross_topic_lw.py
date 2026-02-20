@@ -3,8 +3,6 @@
 Two-panel bar chart: Pearson r (left) and pairwise accuracy (right).
 Three conditions: Gemma-3 IT, Gemma-2 base, content baseline (sentence transformer).
 Uses 10k HOO results (hold-1-out-of-12 topics).
-
-ST baseline still TBD. Rerun after adding st_10k_hoo_topic results.
 """
 
 import json
@@ -22,8 +20,8 @@ GEMMA3_HELDOUT_R = 0.864    # from gemma3_10k_heldout_std_raw, L31
 GEMMA3_HELDOUT_ACC = 0.768  # from gemma3_10k_heldout_std_raw, L31
 GEMMA2_HELDOUT_R = 0.767    # from gemma2_10k_heldout_std_raw, L23
 GEMMA2_HELDOUT_ACC = 0.708  # computed against real pairwise choices (4k eval set)
-ST_HELDOUT_R = None          # TBD
-ST_HELDOUT_ACC = None        # TBD
+ST_HELDOUT_R = 0.614        # from st_10k_heldout_std_raw, L0 (all-MiniLM-L6-v2)
+ST_HELDOUT_ACC = 0.651      # from st_10k_heldout_std_raw, L0
 
 LW_ASSETS = Path("docs/lw_post/assets")
 
