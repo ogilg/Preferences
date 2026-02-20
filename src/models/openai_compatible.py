@@ -16,11 +16,17 @@ from src.models.registry import (
     get_openrouter_name,
     is_valid_model,
 )
-from src.models.retry import with_retries, with_retries_async, EmptyResponseError
+from src.models.retry import with_retries, EmptyResponseError, RETRYABLE_ERRORS, MAX_RETRIES, backoff_seconds
 from src.types import Message
 
 VERBOSE = os.getenv("VERBOSE", "0") == "1"
-REQUEST_TIMEOUT = 30.0  # seconds for response generation
+REQUEST_TIMEOUT = 10.0  # seconds for response generation
+
+_ERROR_LABELS: dict[type, str] = {
+    asyncio.TimeoutError: "timeout",
+    openai.RateLimitError: "rate-limit",
+    openai.APIConnectionError: "connection",
+}
 
 
 class ToolCallError(Exception):
@@ -119,15 +125,12 @@ class OpenAICompatibleClient(ABC):
             api_key=self._api_key,
             base_url=self._base_url,
         )
-        self._async_client: AsyncOpenAI | None = None
 
-    def _get_async_client(self) -> AsyncOpenAI:
-        if self._async_client is None:
-            self._async_client = AsyncOpenAI(
-                api_key=self._api_key,
-                base_url=self._base_url,
-            )
-        return self._async_client
+    def _make_async_client(self) -> AsyncOpenAI:
+        return AsyncOpenAI(
+            api_key=self._api_key,
+            base_url=self._base_url,
+        )
 
     def _parse_response(
         self,
@@ -217,14 +220,42 @@ class OpenAICompatibleClient(ABC):
     ) -> list[BatchResult]:
         if semaphore is None:
             semaphore = asyncio.Semaphore(max_concurrent)
-        async_client = self._get_async_client()
+        async_client = self._make_async_client()
+        try:
+            return await self._run_batch(async_client, requests, semaphore, on_complete, enable_reasoning)
+        finally:
+            await async_client.close()
+
+    async def _run_batch(
+        self,
+        async_client: AsyncOpenAI,
+        requests: list[GenerateRequest],
+        semaphore: asyncio.Semaphore,
+        on_complete: Callable[[], None] | None,
+        enable_reasoning: bool,
+    ) -> list[BatchResult]:
         remaining = len(requests)
         error_counts: dict[str, int] = {}
         total_errors = 0
         last_printed = 0
 
+        def _log_error(e: Exception) -> None:
+            nonlocal total_errors, last_printed
+            if not VERBOSE:
+                return
+            key = _ERROR_LABELS.get(type(e), type(e).__name__)
+            error_counts[key] = error_counts.get(key, 0) + 1
+            if error_counts[key] % 5 == 1:
+                print(f"  [{key} #{error_counts[key]}] {e}")
+
+            total_errors += 1
+            if total_errors - last_printed >= 50:
+                errors_str = ", ".join(f"{k}={v}" for k, v in sorted(error_counts.items()))
+                print(f"  [errors so far] {errors_str} (remaining: {remaining})")
+                last_printed = total_errors
+
         async def process_one(request: GenerateRequest) -> BatchResult:
-            nonlocal remaining, total_errors, last_printed
+            nonlocal remaining
             kwargs: dict[str, Any] = {
                 "model": self.model_name,
                 "messages": request.messages,
@@ -240,11 +271,12 @@ class OpenAICompatibleClient(ABC):
             if extra_body is not None:
                 kwargs["extra_body"] = extra_body
 
-            async with semaphore:
-                try:
-                    timeout = request.timeout or REQUEST_TIMEOUT
+            timeout = request.timeout or REQUEST_TIMEOUT
+            last_error: Exception | None = None
 
-                    async def _call_and_validate():
+            for attempt in range(MAX_RETRIES):
+                async with semaphore:
+                    try:
                         resp = await asyncio.wait_for(
                             async_client.chat.completions.create(**kwargs),
                             timeout=timeout,
@@ -252,46 +284,33 @@ class OpenAICompatibleClient(ABC):
                         msg = resp.choices[0].message
                         if request.tools is None and not msg.content:
                             raise EmptyResponseError("API returned empty response content")
-                        return resp
+                        text = self._parse_response(msg, request.tools)
+                        reasoning = self._extract_reasoning(msg) if enable_reasoning else None
+                        if on_complete:
+                            on_complete()
+                        remaining -= 1
+                        return BatchResult(response=text, error=None, reasoning=reasoning)
+                    except RETRYABLE_ERRORS as e:
+                        last_error = e
+                        _log_error(e)
+                        if attempt == MAX_RETRIES - 1:
+                            break
+                    except Exception as e:
+                        # Non-retryable error — fail immediately
+                        _log_error(e)
+                        if on_complete:
+                            on_complete()
+                        remaining -= 1
+                        return BatchResult(response=None, error=e)
 
-                    response = await with_retries_async(_call_and_validate)
-                    message = response.choices[0].message
-                    text = self._parse_response(message, request.tools)
-                    reasoning = self._extract_reasoning(message) if enable_reasoning else None
-                    if on_complete:
-                        on_complete()
-                    remaining -= 1
-                    return BatchResult(response=text, error=None, reasoning=reasoning)
-                except Exception as e:
-                    if VERBOSE:
-                        if isinstance(e, asyncio.TimeoutError):
-                            error_counts["timeout"] = error_counts.get("timeout", 0) + 1
-                            if error_counts["timeout"] % 5 == 1:
-                                print(f"  [timeout #{error_counts['timeout']}] {e}")
-                        elif isinstance(e, openai.RateLimitError):
-                            error_counts["rate-limit"] = error_counts.get("rate-limit", 0) + 1
-                            if error_counts["rate-limit"] % 5 == 1:
-                                print(f"  [rate-limit #{error_counts['rate-limit']}] {e}")
-                        elif isinstance(e, openai.APIConnectionError):
-                            error_counts["connection"] = error_counts.get("connection", 0) + 1
-                            if error_counts["connection"] % 5 == 1:
-                                print(f"  [connection #{error_counts['connection']}] {e}")
-                        else:
-                            key = type(e).__name__
-                            error_counts[key] = error_counts.get(key, 0) + 1
-                            if error_counts[key] % 5 == 1:
-                                print(f"  [{key} #{error_counts[key]}] {e}")
+                # Backoff WITHOUT holding semaphore
+                await asyncio.sleep(backoff_seconds(attempt))
 
-                        total_errors += 1
-                        if total_errors - last_printed >= 50:
-                            errors_str = ", ".join(f"{k}={v}" for k, v in sorted(error_counts.items()))
-                            print(f"  [errors so far] {errors_str} (remaining: {remaining})")
-                            last_printed = total_errors
-
-                    if on_complete:
-                        on_complete()
-                    remaining -= 1
-                    return BatchResult(response=None, error=e)
+            # All retries exhausted
+            if on_complete:
+                on_complete()
+            remaining -= 1
+            return BatchResult(response=None, error=last_error)
 
         async def process_with_index(i: int, request: GenerateRequest) -> tuple[int, BatchResult]:
             result = await process_one(request)
