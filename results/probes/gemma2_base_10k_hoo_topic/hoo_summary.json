@@ -87,7 +87,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold0_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.6976105520586938
+          "hoo_acc": 0.6494688922610015
         },
         "ridge_L27": {
           "val_r2": 0.6252456577709506,
@@ -193,7 +193,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold1_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7408715665182368
+          "hoo_acc": 0.6461591936044491
         },
         "ridge_L27": {
           "val_r2": 0.6283718696389597,
@@ -299,7 +299,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold2_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7241310247448903
+          "hoo_acc": 0.6358414704192993
         },
         "ridge_L27": {
           "val_r2": 0.6253289094267844,
@@ -405,7 +405,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold3_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.678819548721645
+          "hoo_acc": 0.5761216730038022
         },
         "ridge_L27": {
           "val_r2": 0.5325489117155133,
@@ -511,7 +511,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold4_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7111388986145151
+          "hoo_acc": 0.6291515337154859
         },
         "ridge_L27": {
           "val_r2": 0.6560964508159847,
@@ -617,7 +617,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold5_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.5474706653195555
+          "hoo_acc": 0.5032446362591984
         },
         "ridge_L27": {
           "val_r2": 0.574108753141503,
@@ -723,7 +723,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold6_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7341528272540264
+          "hoo_acc": 0.6699029126213593
         },
         "ridge_L27": {
           "val_r2": 0.6122498140155344,
@@ -829,7 +829,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold7_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7858774577792282
+          "hoo_acc": 0.2
         },
         "ridge_L27": {
           "val_r2": 0.6155417799610609,
@@ -935,7 +935,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold8_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.732513343232072
+          "hoo_acc": 0.612987012987013
         },
         "ridge_L27": {
           "val_r2": 0.6216265312827927,
@@ -1041,7 +1041,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold9_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7522037710086142
+          "hoo_acc": 0.6077844311377245
         },
         "ridge_L27": {
           "val_r2": 0.6140027738206515,
@@ -1147,7 +1147,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold10_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7020152334202172
+          "hoo_acc": 0.46511627906976744
         },
         "ridge_L27": {
           "val_r2": 0.6202297665252459,
@@ -1253,7 +1253,7 @@
           "method": "ridge",
           "probe_id": "hoo_fold11_ridge_L23",
           "layer": 23,
-          "hoo_acc": 0.7110002630673655
+          "hoo_acc": 0.5333333333333333
         },
         "ridge_L27": {
           "val_r2": 0.6184205864750625,
