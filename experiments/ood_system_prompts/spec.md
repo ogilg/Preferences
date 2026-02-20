@@ -226,13 +226,15 @@ Report at `experiments/ood_system_prompts/report.md` with:
 
 ## Behavioral measurement (API, before GPU)
 
-Exp 1 needs new behavioral measurements. Each experiment defines targeted (condition, task_a, task_b) triples in `configs/ood_mappings/`. Measurement caches at the pairwise level — never re-measures existing triples.
+**Status: measurements are running locally via `python -m scripts.ood.measure_exp1 --sub all`.** Pairwise results will be SCP'd to the pod once available. The pod should focus on activation extraction and analysis — do NOT re-run measurements.
+
+Exp 1 and 2 need behavioral measurements. Each experiment defines targeted (condition, task_a, task_b) triples in `configs/ood_mappings/`. Measurement caches at the pairwise level — never re-measures existing triples.
 
 ```bash
 python -m scripts.ood.measure_exp1 --sub all
 ```
 
-This measures all 4 sub-experiments incrementally, saving to `results/ood/{experiment}/pairwise.json`. Exp 2 data was converted from Phase 3 raw results. Exp 3 (minimal pairs) keeps aggregated `behavioral.json` format (raw pairwise data was not preserved).
+This measures all 4 sub-experiments incrementally, saving to `results/ood/{experiment}/pairwise.json`. Exp 3 (minimal pairs) keeps aggregated `behavioral.json` format (raw pairwise data was not preserved).
 
 ## Measurement format
 

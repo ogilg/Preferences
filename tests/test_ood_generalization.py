@@ -22,10 +22,10 @@ from src.ood.analysis import (
     per_condition_correlations,
 )
 
-PROMPTS_DIR = Path("configs/ood_prompts")
+PROMPTS_DIR = Path("configs/ood/prompts")
 BEHAVIORAL_DIR = Path("results/ood")
-TASKS_DIR = Path("configs/ood_tasks")
-MAPPINGS_DIR = Path("configs/ood_mappings")
+TASKS_DIR = Path("configs/ood/tasks")
+MAPPINGS_DIR = Path("configs/ood/mappings")
 
 EXPECTED_COUNTS = {
     "category_preference.json": (38, CategoryCondition),
