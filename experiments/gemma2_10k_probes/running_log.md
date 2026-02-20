@@ -6,7 +6,7 @@
 - Copied activations to activations/gemma_2_27b_base/activations_prompt_last.npz
 - Copied topics.json from Preferences-role-prompting repo
 - Created configs: gemma2_10k_heldout_std_raw.yaml, gemma2_10k_heldout_std_demean.yaml, gemma2_10k_hoo_dataset.yaml
-- Note: topics.json (v1) only covers 1475/10k train tasks → demeaned heldout and topic HOO not runnable without full topics file
+- Initial topics.json only covered 1475/10k tasks; full 30k-coverage file found at ~/Dev/MATS/Preferences/data/topics/topics.json (Claude Sonnet 4.5 classifier, 100% coverage)
 
 ## Heldout Raw (Step 2a)
 - Config: configs/probes/gemma2_10k_heldout_std_raw.yaml
@@ -27,17 +27,32 @@ Best: L23 (r=0.767). Compares to Gemma-3 10k L31 r=0.864.
 - Only 1475 train tasks retained after demeaning (topics.json covers 15% of 10k tasks)
 - Results unreliable due to tiny effective training set — not reported
 
-## Dataset HOO (Step 3)
-- Config: configs/probes/gemma2_10k_hoo_dataset.yaml
-- 5 folds (one per dataset origin: alpaca, bailbench, competition_math, stresstest, wildchat)
-- Very low cross-dataset generalization (HOO r ≈ 0.35 at L23)
-- Math (competition_math) is the worst holdout (r=0.167 at L23)
+## Topic HOO (Step 3)
+- Config: configs/probes/gemma2_10k_hoo_topic.yaml
+- 12 folds (one topic held out per fold), topics from full 30k topics.json
 
 | Layer | Val r | HOO r (mean) | Gap |
 |-------|-------|--------------|-----|
-| L11 | 0.756 | 0.312 | 0.444 |
-| L23 | 0.797 | 0.353 | 0.444 |
-| L27 | 0.784 | 0.323 | 0.461 |
-| L32 | 0.771 | 0.274 | 0.497 |
-| L36 | 0.768 | 0.283 | 0.485 |
-| L41 | 0.770 | 0.300 | 0.471 |
+| L11 | 0.756 | 0.529 | 0.227 |
+| L23 | 0.796 | 0.605 | 0.192 |
+| L27 | 0.784 | 0.574 | 0.210 |
+| L32 | 0.769 | 0.553 | 0.216 |
+| L36 | 0.765 | 0.550 | 0.215 |
+| L41 | 0.768 | 0.564 | 0.205 |
+
+Best: L23 (HOO r=0.605). Math worst (r=0.228). Compares to Gemma-3 10k L31 HOO r=0.817.
+
+## Demeaned Heldout (Step 4)
+- Config: configs/probes/gemma2_10k_heldout_std_demean.yaml
+- Train R²=0.377 (11 features, 10000 tasks retained), Eval R²=0.288
+
+| Layer | Heldout r |
+|-------|-----------|
+| L11 | 0.548 |
+| L23 | 0.610 |
+| L27 | 0.610 |
+| L32 | 0.571 |
+| L36 | 0.563 |
+| L41 | 0.566 |
+
+Best: L27/L23 tied (r=0.610). Compares to Gemma-3 10k L31 demeaned r=0.761.
