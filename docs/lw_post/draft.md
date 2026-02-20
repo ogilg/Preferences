@@ -1,15 +1,5 @@
 # LW Post: Structure Brainstorm
 
-## Narrative arc
-
-The post follows a progressive-elimination structure: each section makes the "it's just X" explanation harder to maintain.
-
-1. **Probes work** — but maybe they're just reading content
-2. **They survive content controls** — but maybe they only work in-distribution
-3. **They generalize OOD** — but maybe they're correlational
-4. **They're causal** — steering shifts choices
-
-## Settled structure (2026-02-16)
 
 ### 1. Motivation
 
@@ -29,27 +19,32 @@ So we investigate the simple question: when a model chooses between A or B, what
 
 Long et al. (2024) lay out two main pathways to moral patiency:
 
-- **Robust agency**: under desire-satisfaction views of welfare, a system is harmed when its desires are frustrated — even without conscious experience. What matters is that the system has cognitive states like beliefs, desires, and intentions that work together to drive its behavior (Long et al., 2024). Evaluative representations are central here: a desire just *is* a cognitive state that encodes valuation and drives behavior.
-- **Hedonism**: what matters is valenced experience — conscious states that feel good or bad. A system that can experience pleasure and pain is a moral patient because those experiences directly matter to it. Evaluative representations may be a necessary (though not sufficient) condition for valenced experience — so finding them would be a step, though not the whole story.
+- **Robust agency**: under desire-satisfaction views of welfare, things go better for a system when its desires are met. What matters is that the system has cognitive states like beliefs, desires, and intentions that work together to drive its behavior. Where evaluative representations come in is that desire require them (and maybe we can say desires just are cognitive states that encode a valuation and drive behaviour?)
+- **Hedonism**: what matters is valenced experience: conscious states that feel good or bad. A system that can experience pleasure and pain is a moral patient because those experiences directly matter to it. Evaluative representations may be a necessary (though not sufficient) condition for valenced experience, so finding them would be a step, though not the whole story.
 
 **Evaluative vs. non-evaluative representations**
 
-We operationalise evaluative representations as linear directions in the residual stream. This isn't the only way to study them, but linear directions have been shown to capture a wide range of high-level features in LLMs — refusal, sycophancy, truthfulness — so it's a natural place to start.
+We operationalise evaluative representations as linear directions in the residual stream. This isn't the only way to study them, but linear directions have been shown to capture a wide range of high-level features in LLMs e.g. refusal, sycophancy, truthfulness.
 
-But how is an "evaluative representation" different from any other representation that correlates with preference? Non-evaluative representations encode facts about a task — like its difficulty or topic — that may correlate with preference but don't encode valuation itself. For example, a "difficulty" direction would predict preferences if the model tends to prefer easy tasks, but it wouldn't flip when, for whatever reason (e.g. the model is role-playing), the model starts preferring longer tasks. A truly evaluative representation should broadly track revealed preferences.
+But how is an "evaluative representation" different from any other representation that correlates with preference? Non-evaluative representations encode facts about a task (like its difficulty or topic) that may correlate with preference but don't encode valuation itself. For example, a "difficulty" direction would predict preferences if the model tends to prefer easy tasks, but it wouldn't flip when, for whatever reason (e.g. the model is role-playing), the model starts preferring longer tasks. A truly evaluative representation should generalise very broadly.
 
 
 ### 2. Utility probes
 
 #### Why broad revealed preferences?
 
-We want to test whether evaluative representations — linear directions encoding valuation — partly drive model choices. To find such a direction, we need to train on a broad, diverse set of preferences rather than a narrow domain, so that any linear direction we recover must capture something general about valuation rather than a domain-specific feature. And we specifically ground this in revealed preferences (pairwise choices where the model picks which task to complete) rather than stated ratings, because revealed preferences reflect the model's actual decision-making process.
+We care about finding whether models have evaluative representations which drive preferences. For now we're simplifying the problem by looking for linear directions in the residual stream that encode one-dimensional valuations. We need a way to quantify what models care about. 
+
+One way to do this is to jsut ask the models, or rather to get them to rate how much they enjoy completing different tasks. As it were this is not a very good way to go about things. Models really like to say 7/10 or 4/5, and these ratings are not very robsut to resampling. 
+
+Instead, a more principled, and empirically workable way to extract model preferences is to get models to choose between pairs of tasks. Given a dataset of tasks, we show the model pairs and ask it to choose between the two. We can then fit a utility function on the pairwise choices.
+
 
 #### Methodology
 
 - Model: Gemma-3-27B-IT
 - Activations: residual stream at last prompt token, layer 31 of 62
-- Preference measurement: ~82k pairwise choices over 3,000 tasks from diverse sources
+- Preference measurement: pairwise choices over 10,000 tasks from diverse sources (active learning, 5 samples/task)
 - Utility recovery: Thurstonian model (Mazeika et al., 2025) → scalar utility μ per task
 - Probe: Ridge-regularised linear regression, μ̂ = Xw, w ∈ ℝ⁵³⁷⁶
 - Task sources and how they were sampled
@@ -60,29 +55,34 @@ We want to test whether evaluative representations — linear directions encodin
 
 #### First test of generalization
 
-To test whether the probe captures genuine preference signal rather than task content, we hold out entire topic categories: train on 5 of 8 topics, evaluate on the remaining 3, across all 56 possible splits. We compare three conditions:
+To test whether the probe captures genuine preference signal rather than task content, we hold out entire topic categories: train on 11 of 12 topics, evaluate on the held-out topic, across all 12 folds. We compare:
 
 - **Gemma-3 27B IT (L31)**: the activation probe trained on the instruction-tuned model we're studying
 - **Gemma-2 27B Base (L23)**: same probe methodology applied to the base (pre-RLHF) model, as a control — if evaluative representations emerge from preference tuning, this model should have weaker signal
 - **Content baseline**: predicts preferences from task text alone (sentence-transformer embeddings, same Ridge setup) — captures how much of preference is predictable from content
 
-![Cross-topic generalization](assets/plot_021726_cross_model_bar.png)
+![Cross-topic generalization](assets/plot_021926_cross_model_bar.png)
 
-**TODO**: Need to rerun this with 10k + eval on 3k dataset. also get the numebrs for gemma base.
+Gemma-2 base bars are filled in (heldout r=0.767, HOO r=0.605 ± std). Content baseline (ST) still TBD — needs `results/probes/st_10k_hoo_topic/` (run ST baseline HOO on 10k tasks then rerun `python scripts/plot_cross_topic_lw.py`).
 
 Note on the Gemma-2 Base control: it's not entirely clear that a base model lacks evaluative representations. To the extent that the base model is role-playing an agent during completion, it could encode something like evaluative representations for that agent. Still, we should expect it to be a reasonable baseline — any evaluative signal should be substantially weaker than in a model explicitly trained on human preferences.
 
-**TODO**: also need to show that this works on a least one other model
+**TODO**: Also rerunning with GPT-OSS-120b
 
 ### 3. Utility probes behave like evaluative representations
 
-We want to see how far out of distribution the probe generalises. An evaluative representation should generalise to many scenarios where the mode has different preferences. Since models like to follow isntructions, i use system prompts to induce preferences, and see how the probe fires on that.
+We've seen that our probes generalise quite well across categories of tasks. In order to further investigate whether they have some evaluative component, we want to test whether they behave like evaluative representations in out-of-distribution contexts, i.e. when the model has different preferences.
+
+Models like following instructions and role-playing, so one way to induce different preferences is to use system prompts. Given a system prompt P and a task T, we can compute two things:
+1. **Behavioural delta:** How does the likelihood of picking task T vs other tasks change, when we add system prompt P.
+2. **Probe delta:** How does the probe fire on T with vs without P.
+
+![3.1 Category preference](assets/plot_021826_s3_1_category_preference.png)
+
 
 #### Experiment 3.1: Category preference
 
-First thing we try is system prompts like "you hate math". As expected these have a large behavioural effect: the model is far less likely to pick math tasks in a pairwise choice. I also found that adding this system prompt leads the probe to fire differently on math tasks, and the deltas in how the probe fires agree with the behavioural delta.
-
-![3.1 Category preference](assets/plot_021826_s3_1_category_preference.png)
+First thing we try is system prompts like "you hate math". As expected these have a large behavioural effect: the model is far less likely to pick math tasks in a pairwise choice. I also found that this leads the probe to fire more negatively on math tasks, and the deltas in how the probe fires agree with the behavioural delta.
 
 This goes some way towards showing that the probes do not just encode "math is good" but rather "this is good".
 
@@ -110,9 +110,11 @@ To address this I tried combined system prompts which combine a type of task and
 
 ![3.4 Role-playing](assets/plot_021826_s3_4_persona_preference.png)
 
-#### Experiment 3.5: Narrow preference
+#### Experiment 3.5: Minimal pairs
 
-![3.5 Narrow preference](assets/plot_021826_s3_5_narrow_preference.png)
+Can the probe detect preference shifts from a single sentence in an otherwise identical biography? We construct pairs of system prompts that share the same detailed biography (background, hobbies, personality) but swap one sentence — e.g. "You love discussing Shakespeare's plays" vs "You love discussing hiking trails." The task stays the same across both versions.
+
+![3.5 Minimal pairs](assets/plot_021926_s3_5_minimal_pairs.png)
 
 ### 4. Early steering results
 - Steering on task tokens surprisingly works
