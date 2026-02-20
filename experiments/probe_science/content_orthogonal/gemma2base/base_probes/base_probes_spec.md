@@ -1,6 +1,6 @@
 # Probing Gemma-2 27B base activations for preferences
 
-Follow-up to the parent experiment (`../spec.md`). Train standard probes on Gemma-2 27B base (`google/gemma-2-27b`) activations and compare to Gemma-3 27B IT. No content-orthogonal projection — just straight probing.
+Follow-up to the parent experiment (`../gemma2base_spec.md`). Train standard probes on Gemma-2 27B base (`google/gemma-2-27b`) activations and compare to Gemma-3 27B IT. No content-orthogonal projection — just straight probing.
 
 ## Why this matters
 

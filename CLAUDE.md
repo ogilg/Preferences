@@ -58,12 +58,12 @@ Each experiment is a self-contained directory under `experiments/`:
 
 ```
 experiments/{name}/
-├── spec.md          # design doc / experiment brief
-├── report.md        # results write-up (created by research loop)
-├── assets/          # plots referenced from report.md (relative paths)
-└── {follow_up}/     # optional sub-experiments that build on this one
-    ├── spec.md
-    ├── report.md
+├── {name}_spec.md          # design doc / experiment brief
+├── {name}_report.md        # results write-up (created by research loop)
+├── assets/                 # plots referenced from {name}_report.md (relative paths)
+└── {follow_up}/            # optional sub-experiments that build on this one
+    ├── {follow_up}_spec.md
+    ├── {follow_up}_report.md
     └── assets/
 ```
 

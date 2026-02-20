@@ -65,7 +65,7 @@ Generated 4 plots in assets/.
 
 ## Report review
 
-Subagent reviewed and improved report.md:
+Subagent reviewed and improved revealed_preference_report.md:
 - Added key numbers block to summary (32pp, 51pp, 37/38 pairs)
 - Explained jargon on first use (mu, L31, borderline, parse rate)
 - Added concrete steering example for intuition

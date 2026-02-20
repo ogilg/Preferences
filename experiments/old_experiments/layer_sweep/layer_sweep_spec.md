@@ -6,7 +6,7 @@ Test whether steering at layers closer to the model output (L37, L43, L49, L55) 
 
 ## Background
 
-From the coefficient calibration experiment (`experiments/steering/program/coefficient_calibration/report.md`):
+From the coefficient calibration experiment (`experiments/steering/program/coefficient_calibration/coefficient_calibration_report.md`):
 
 - The L31 ridge probe direction (CV R² = 0.846) does **not** causally shift expressed valence, stated preferences, or pairwise choices at any coefficient in the coherent range [-5000, +5000].
 - Coherence degrades at |coef| >= 10000 (19% of L31 activation L2 norm). The mechanism works — steering does affect the residual stream — but the L31 ridge direction does not encode a causally relevant dimension for preference behavior.

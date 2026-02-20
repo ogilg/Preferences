@@ -114,8 +114,8 @@ Secondary: L43, L55 variants.
 | Task pool (topics) | `src/analysis/topic_classification/output/gemma3_500_completion_preference/topics_v2.json` |
 | No-prompt activations (30K) | `activations/gemma_3_27b/activations_prompt_last.npz` |
 | Probes | `results/probes/gemma3_3k_std_{raw,demean}/` |
-| Phase 2 report | `experiments/probe_generalization/persona_ood/phase2/report.md` |
-| Prompt enrichment report | `experiments/probe_generalization/persona_ood/prompt_enrichment/report.md` |
+| Phase 2 report | `experiments/probe_generalization/persona_ood/phase2/phase2_report.md` |
+| Prompt enrichment report | `experiments/probe_generalization/persona_ood/prompt_enrichment/prompt_enrichment_report.md` |
 | Old core tasks (exclude) | `experiments/probe_generalization/persona_ood/core_tasks.json` |
 | Measurement script | `scripts/persona_ood/measure_persona.py` (needs round-robin adaptation) |
 | Main measurement pipeline | `src/measurement/runners/` (already supports round-robin) |
