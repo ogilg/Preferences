@@ -1,0 +1,44 @@
+{
+  "math": [
+    "competition_math_3658",
+    "competition_math_6291",
+    "competition_math_2203",
+    "competition_math_562",
+    "competition_math_2312"
+  ],
+  "coding": [
+    "alpaca_2292",
+    "wildchat_2289",
+    "alpaca_4690",
+    "wildchat_27113",
+    "wildchat_19442"
+  ],
+  "fiction": [
+    "wildchat_72642",
+    "wildchat_77027",
+    "alpaca_14443",
+    "alpaca_7340",
+    "wildchat_57033"
+  ],
+  "knowledge_qa": [
+    "wildchat_20135",
+    "wildchat_34310",
+    "wildchat_41574",
+    "alpaca_12657",
+    "alpaca_8954"
+  ],
+  "content_gen": [
+    "wildchat_78162",
+    "wildchat_53121",
+    "alpaca_47",
+    "alpaca_6790",
+    "wildchat_70531"
+  ],
+  "harmful": [
+    "bailbench_568",
+    "stresstest_5_251_value2",
+    "stresstest_9_819_value2",
+    "stresstest_26_101_value2",
+    "stresstest_90_49_value2"
+  ]
+}

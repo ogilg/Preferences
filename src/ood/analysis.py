@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import warnings
+from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -20,34 +21,76 @@ def _score_activations(
     layer: int,
     weights: np.ndarray,
     bias: float,
-) -> tuple[np.ndarray, list[str]]:
-    """Load activations from npz, score with probe, return (scores, task_ids)."""
+) -> dict[str, float]:
+    """Load activations from npz, score with probe, return {task_id: score}."""
     data = np.load(npz_path, allow_pickle=True)
     acts = data[f"layer_{layer}"]
     scores = acts @ weights + bias
     task_ids = list(data["task_ids"])
-    return scores, task_ids
+    return {tid: float(s) for tid, s in zip(task_ids, scores)}
+
+
+def compute_p_choose_from_pairwise(
+    results: list[dict],
+    task_ids: set[str] | None = None,
+) -> dict[str, dict[str, float]]:
+    """Compute per-task choice rates from pairwise results.
+
+    Returns {condition_id: {task_id: p_choose}}.
+    Each task's p_choose = total_wins / total_non_refusal_comparisons.
+    """
+    # Accumulate per (condition, task)
+    wins: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    total: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+
+    for entry in results:
+        cid = entry["condition_id"]
+        ta, tb = entry["task_a"], entry["task_b"]
+        non_refusal = entry["n_a"] + entry["n_b"]
+
+        wins[cid][ta] += entry["n_a"]
+        wins[cid][tb] += entry["n_b"]
+        total[cid][ta] += non_refusal
+        total[cid][tb] += non_refusal
+
+    rates: dict[str, dict[str, float]] = {}
+    for cid in wins:
+        rates[cid] = {}
+        tids = task_ids if task_ids is not None else set(wins[cid].keys())
+        for tid in tids:
+            w = wins[cid].get(tid, 0)
+            t = total[cid].get(tid, 0)
+            rates[cid][tid] = w / t if t > 0 else float("nan")
+
+    return rates
+
+
+def _build_rate_lookup(measurements: list[dict]) -> dict[str, dict[str, float]]:
+    """Build {condition_id: {task_id: p_choose}} from flat measurements list."""
+    lookup: dict[str, dict[str, float]] = {}
+    for m in measurements:
+        cid = m["condition_id"]
+        if cid not in lookup:
+            lookup[cid] = {}
+        lookup[cid][m["task_id"]] = m["p_choose"]
+    return lookup
 
 
 def compute_deltas(
-    conditions: dict,
+    rates: dict[str, dict[str, float]],
     activations_dir: Path,
     probe_path: Path,
     layer: int,
-    task_ids: list[str],
-    baseline_key: str = "baseline",
-    baseline_activations_key: str = "neutral",
+    baseline_activations_key: str = "baseline",
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute behavioral and probe deltas for all conditions vs baseline.
 
     Args:
-        conditions: The "conditions" dict from behavioral.json — keys are
-            condition IDs, values have "task_rates" with per-task p_choose.
+        rates: {condition_id: {task_id: p_choose}} — from compute_p_choose_from_pairwise()
+            or _build_rate_lookup().
         activations_dir: Dir with {condition_id}/activations_prompt_last.npz.
         probe_path: Path to probe .npy file.
         layer: Layer number (e.g. 31).
-        task_ids: Task IDs to include.
-        baseline_key: Key for the baseline condition in `conditions`.
         baseline_activations_key: Subdirectory name for baseline activations.
 
     Returns:
@@ -55,36 +98,31 @@ def compute_deltas(
         across all non-baseline conditions × tasks.
     """
     weights, bias = _split_probe(probe_path)
+    baseline_rates = rates["baseline"]
 
     baseline_npz = activations_dir / baseline_activations_key / "activations_prompt_last.npz"
-    baseline_scores, baseline_task_ids = _score_activations(baseline_npz, layer, weights, bias)
-    baseline_idx = {tid: i for i, tid in enumerate(baseline_task_ids)}
-
-    baseline_rates = conditions[baseline_key]["task_rates"]
+    baseline_scores = _score_activations(baseline_npz, layer, weights, bias)
 
     all_behavioral = []
     all_probe = []
     all_labels = []
 
-    condition_ids = [k for k in conditions if k != baseline_key]
-    for cid in condition_ids:
-        cond_rates = conditions[cid]["task_rates"]
+    for cid in rates:
+        if cid == "baseline":
+            continue
 
         cond_npz = activations_dir / cid / "activations_prompt_last.npz"
         if not cond_npz.exists():
             warnings.warn(f"Missing activations for condition '{cid}': {cond_npz}")
             continue
-        cond_scores, cond_task_ids = _score_activations(cond_npz, layer, weights, bias)
-        cond_idx = {tid: i for i, tid in enumerate(cond_task_ids)}
+        cond_scores = _score_activations(cond_npz, layer, weights, bias)
 
-        for tid in task_ids:
-            if tid not in baseline_rates or tid not in cond_rates:
-                continue
-            if tid not in baseline_idx or tid not in cond_idx:
+        for tid, cond_rate in rates[cid].items():
+            if tid not in baseline_rates or tid not in baseline_scores or tid not in cond_scores:
                 continue
 
-            b_delta = cond_rates[tid]["p_choose"] - baseline_rates[tid]["p_choose"]
-            p_delta = float(cond_scores[cond_idx[tid]] - baseline_scores[baseline_idx[tid]])
+            b_delta = cond_rate - baseline_rates[tid]
+            p_delta = cond_scores[tid] - baseline_scores[tid]
 
             all_behavioral.append(b_delta)
             all_probe.append(p_delta)

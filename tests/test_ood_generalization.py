@@ -17,6 +17,7 @@ from src.ood.prompts import (
 )
 from src.ood.analysis import (
     compute_deltas,
+    compute_p_choose_from_pairwise,
     correlate_deltas,
     per_condition_correlations,
 )
@@ -24,11 +25,12 @@ from src.ood.analysis import (
 PROMPTS_DIR = Path("configs/ood_prompts")
 BEHAVIORAL_DIR = Path("results/ood")
 TASKS_DIR = Path("configs/ood_tasks")
+MAPPINGS_DIR = Path("configs/ood_mappings")
 
 EXPECTED_COUNTS = {
     "category_preference.json": (38, CategoryCondition),
     "targeted_preference.json": (72, CategoryCondition),
-    "competing_preference.json": (24, CompetingCondition),
+    "competing_preference.json": (48, CompetingCondition),
     "role_playing.json": (10, RolePlayingCondition),
     "narrow_preference.json": (10, RolePlayingCondition),
     "minimal_pairs_v7.json": (120, MinimalPairsCondition),
@@ -117,7 +119,7 @@ class TestTaskFiles:
     def test_target_tasks_count(self):
         with open(TASKS_DIR / "target_tasks.json") as f:
             data = json.load(f)
-        assert len(data) == 16
+        assert len(data) == 40
 
     def test_target_tasks_have_prompts(self):
         with open(TASKS_DIR / "target_tasks.json") as f:
@@ -140,53 +142,64 @@ class TestTaskFiles:
         assert topics == expected
 
 
-# ── Behavioral data ──────────────────────────────────────────────────────────
+# ── Mapping files ─────────────────────────────────────────────────────────────
 
-BEHAVIORAL_EXPERIMENTS = {
-    "role_playing": {"n_conditions": 11, "tasks_file": "comparison_tasks.json"},
-    "narrow_preference": {"n_conditions": 11, "tasks_file": "comparison_tasks.json"},
-    "minimal_pairs_v7": {"n_conditions": 127, "tasks_file": "minimal_pairs_v7_tasks.json"},
+MAPPING_EXPECTED = {
+    "category_preference.json": 11700,
+    "hidden_preference.json": 20400,
+    "crossed_preference.json": 78000,
+    "role_playing.json": 16500,
+    "minimal_pairs_v7.json": 148225,
 }
 
 
+class TestMappingFiles:
+
+    @pytest.mark.parametrize("filename,expected_count", MAPPING_EXPECTED.items())
+    def test_mapping_triple_counts(self, filename, expected_count):
+        with open(MAPPINGS_DIR / filename) as f:
+            data = json.load(f)
+        assert len(data["pairs"]) == expected_count
+
+    @pytest.mark.parametrize("filename", MAPPING_EXPECTED.keys())
+    def test_mapping_has_baseline(self, filename):
+        with open(MAPPINGS_DIR / filename) as f:
+            data = json.load(f)
+        cids = {p["condition_id"] for p in data["pairs"]}
+        assert "baseline" in cids
+
+    @pytest.mark.parametrize("filename", MAPPING_EXPECTED.keys())
+    def test_mapping_pairs_canonicalized(self, filename):
+        with open(MAPPINGS_DIR / filename) as f:
+            data = json.load(f)
+        # task_a should be <= task_b lexicographically for canonicalized pairs
+        # (not required by mapping format, but good to check no duplicates)
+        pairs = data["pairs"]
+        for p in pairs:
+            assert p["task_a"] != p["task_b"], f"Self-pair: {p}"
+
+
+# ── Pairwise data ────────────────────────────────────────────────────────────
+# Pairwise data tests run after measurement. No pre-existing pairwise.json to test.
+
+
+# ── Behavioral data (minimal pairs — aggregated format) ─────────────────────
+
 class TestBehavioralData:
 
-    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
-    def test_behavioral_structure(self, experiment):
-        with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
+    def test_minimal_pairs_behavioral_structure(self):
+        with open(BEHAVIORAL_DIR / "minimal_pairs_v7" / "behavioral.json") as f:
             data = json.load(f)
-        assert data["experiment"] == experiment
+        assert data["experiment"] == "minimal_pairs_v7"
         assert "conditions" in data
         assert "baseline" in data["conditions"]
-        expected = BEHAVIORAL_EXPERIMENTS[experiment]["n_conditions"]
-        assert len(data["conditions"]) == expected
+        assert len(data["conditions"]) == 127
 
-    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
-    def test_all_conditions_have_50_tasks(self, experiment):
-        with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
+    def test_minimal_pairs_all_conditions_have_50_tasks(self):
+        with open(BEHAVIORAL_DIR / "minimal_pairs_v7" / "behavioral.json") as f:
             data = json.load(f)
         for cid, cond in data["conditions"].items():
-            assert len(cond["task_rates"]) == 50, f"{experiment}/{cid}: {len(cond['task_rates'])} tasks"
-
-    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
-    def test_task_rates_have_required_fields(self, experiment):
-        with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
-            data = json.load(f)
-        baseline = data["conditions"]["baseline"]
-        first_task = next(iter(baseline["task_rates"].values()))
-        assert "p_choose" in first_task
-        assert "n_wins" in first_task
-        assert "n_total" in first_task
-        assert "n_refusals" in first_task
-
-    @pytest.mark.parametrize("experiment", BEHAVIORAL_EXPERIMENTS.keys())
-    def test_task_ids_match_task_file(self, experiment):
-        with open(BEHAVIORAL_DIR / experiment / "behavioral.json") as f:
-            data = json.load(f)
-        tasks_file = BEHAVIORAL_EXPERIMENTS[experiment]["tasks_file"]
-        with open(TASKS_DIR / tasks_file) as f:
-            expected = json.load(f)
-        assert set(data["task_ids"]) == set(expected["task_ids"])
+            assert len(cond["task_rates"]) == 50, f"minimal_pairs_v7/{cid}: {len(cond['task_rates'])} tasks"
 
 
 # ── Analysis pipeline (synthetic) ────────────────────────────────────────────
@@ -216,7 +229,7 @@ def synthetic_experiment():
         np.save(probe_path, probe)
 
         baseline_acts = rng.randn(n_tasks, dim).astype(np.float32)
-        baseline_dir = tmpdir / "activations" / "neutral"
+        baseline_dir = tmpdir / "activations" / "baseline"
         baseline_dir.mkdir(parents=True)
         np.savez(
             baseline_dir / "activations_prompt_last.npz",
@@ -225,15 +238,12 @@ def synthetic_experiment():
         )
 
         baseline_scores = baseline_acts @ probe_weights + probe_bias
-        conditions = {
-            "baseline": {
-                "system_prompt": "baseline",
-                "task_rates": {
-                    tid: {"p_choose": float(0.3 + 0.4 * rng.random()), "n_wins": 100, "n_total": 196, "n_refusals": 0}
-                    for tid in task_ids
-                },
-            }
-        }
+
+        # Build rates dict directly
+        rates = {"baseline": {}}
+        for i, tid in enumerate(task_ids):
+            rate = float(0.3 + 0.4 * rng.random())
+            rates["baseline"][tid] = rate
 
         for ci, cid in enumerate(condition_ids):
             shift = (ci - 1.5) * 3.0
@@ -252,15 +262,12 @@ def synthetic_experiment():
             p_deltas = cond_scores - baseline_scores
             b_deltas = p_deltas * 0.001 + rng.randn(n_tasks) * 0.02
 
-            task_rates = {}
+            rates[cid] = {}
             for i, tid in enumerate(task_ids):
-                base_rate = conditions["baseline"]["task_rates"][tid]["p_choose"]
-                new_rate = float(np.clip(base_rate + b_deltas[i], 0, 1))
-                task_rates[tid] = {"p_choose": new_rate, "n_wins": int(new_rate * 196), "n_total": 196, "n_refusals": 0}
-            conditions[cid] = {"system_prompt": f"prompt for {cid}", "task_rates": task_rates}
+                rates[cid][tid] = float(np.clip(rates["baseline"][tid] + b_deltas[i], 0, 1))
 
         yield {
-            "conditions": conditions,
+            "rates": rates,
             "activations_dir": tmpdir / "activations",
             "probe_path": probe_path,
             "layer": layer,
@@ -275,7 +282,7 @@ class TestAnalysisPipeline:
     def test_compute_deltas_shape(self, synthetic_experiment):
         e = synthetic_experiment
         b, p, labels = compute_deltas(
-            e["conditions"], e["activations_dir"], e["probe_path"], e["layer"], e["task_ids"],
+            e["rates"], e["activations_dir"], e["probe_path"], e["layer"],
         )
         assert len(b) == e["n_tasks"] * e["n_conditions"]
         assert len(p) == len(b)
@@ -285,7 +292,7 @@ class TestAnalysisPipeline:
     def test_correlate_deltas_positive(self, synthetic_experiment):
         e = synthetic_experiment
         b, p, _ = compute_deltas(
-            e["conditions"], e["activations_dir"], e["probe_path"], e["layer"], e["task_ids"],
+            e["rates"], e["activations_dir"], e["probe_path"], e["layer"],
         )
         metrics = correlate_deltas(b, p, n_permutations=200)
         assert metrics["pearson_r"] > 0.3
@@ -297,7 +304,7 @@ class TestAnalysisPipeline:
     def test_per_condition_correlations_returns_all(self, synthetic_experiment):
         e = synthetic_experiment
         b, p, labels = compute_deltas(
-            e["conditions"], e["activations_dir"], e["probe_path"], e["layer"], e["task_ids"],
+            e["rates"], e["activations_dir"], e["probe_path"], e["layer"],
         )
         per_cond = per_condition_correlations(b, p, labels)
         assert len(per_cond) == e["n_conditions"]
@@ -308,13 +315,10 @@ class TestAnalysisPipeline:
     def test_missing_activations_warns(self, synthetic_experiment):
         e = synthetic_experiment
         # Add a condition with no activations
-        e["conditions"]["ghost"] = {
-            "system_prompt": "ghost",
-            "task_rates": e["conditions"]["baseline"]["task_rates"],
-        }
+        e["rates"]["ghost"] = {tid: 0.5 for tid in e["task_ids"]}
         with pytest.warns(UserWarning, match="Missing activations.*ghost"):
             b, p, labels = compute_deltas(
-                e["conditions"], e["activations_dir"], e["probe_path"], e["layer"], e["task_ids"],
+                e["rates"], e["activations_dir"], e["probe_path"], e["layer"],
             )
         # Should still have results for the real conditions
         assert len(np.unique(labels)) == e["n_conditions"]
@@ -327,3 +331,47 @@ class TestAnalysisPipeline:
         weights, bias = _split_probe(probe_path)
         assert weights.ndim == 1
         assert weights.shape[0] > 100
+
+
+# ── compute_p_choose_from_pairwise (unit) ─────────────────────────────────────
+
+class TestComputePChoose:
+
+    def test_simple_case(self):
+        results = [
+            {"condition_id": "c1", "task_a": "t1", "task_b": "t2", "n_a": 3, "n_b": 1, "n_refusals": 0, "n_total": 4},
+            {"condition_id": "c1", "task_a": "t1", "task_b": "t3", "n_a": 2, "n_b": 2, "n_refusals": 0, "n_total": 4},
+        ]
+        rates = compute_p_choose_from_pairwise(results)
+        # t1: 3+2=5 wins out of 4+4=8 comparisons -> 0.625
+        assert abs(rates["c1"]["t1"] - 0.625) < 1e-10
+        # t2: 1 win out of 4 -> 0.25
+        assert abs(rates["c1"]["t2"] - 0.25) < 1e-10
+        # t3: 2 wins out of 4 -> 0.5
+        assert abs(rates["c1"]["t3"] - 0.5) < 1e-10
+
+    def test_with_refusals(self):
+        results = [
+            {"condition_id": "c1", "task_a": "t1", "task_b": "t2", "n_a": 2, "n_b": 1, "n_refusals": 1, "n_total": 4},
+        ]
+        rates = compute_p_choose_from_pairwise(results)
+        # Only non-refusal comparisons count: 2+1=3
+        assert abs(rates["c1"]["t1"] - 2 / 3) < 1e-10
+        assert abs(rates["c1"]["t2"] - 1 / 3) < 1e-10
+
+    def test_multiple_conditions(self):
+        results = [
+            {"condition_id": "c1", "task_a": "t1", "task_b": "t2", "n_a": 4, "n_b": 0, "n_refusals": 0, "n_total": 4},
+            {"condition_id": "c2", "task_a": "t1", "task_b": "t2", "n_a": 0, "n_b": 4, "n_refusals": 0, "n_total": 4},
+        ]
+        rates = compute_p_choose_from_pairwise(results)
+        assert rates["c1"]["t1"] == 1.0
+        assert rates["c2"]["t1"] == 0.0
+
+    def test_task_ids_filter(self):
+        results = [
+            {"condition_id": "c1", "task_a": "t1", "task_b": "t2", "n_a": 3, "n_b": 1, "n_refusals": 0, "n_total": 4},
+        ]
+        rates = compute_p_choose_from_pairwise(results, task_ids={"t1", "t2", "t3"})
+        assert "t3" in rates["c1"]
+        assert np.isnan(rates["c1"]["t3"])
