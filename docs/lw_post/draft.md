@@ -42,14 +42,26 @@ Instead, a more principled, and empirically workable way to extract model prefer
 
 #### Methodology
 
-- Model: Gemma-3-27B-IT
-- Activations: residual stream at last prompt token, layer 31 of 62
-- Preference measurement: pairwise choices over 10,000 tasks from diverse sources (active learning, 5 samples/task)
-- Utility recovery: Thurstonian model (Mazeika et al., 2025) → scalar utility μ per task
-- Probe: Ridge-regularised linear regression, μ̂ = Xw, w ∈ ℝ⁵³⁷⁶
-- Task sources and how they were sampled
-- How pairwise choices are elicited (template, which token position, etc.)
-- Cross-validation setup for hyperparameter selection
+- **Model**: Gemma-3-27B-IT
+- **Tasks**: 10,000 tasks from 5 diverse sources — WildChat, Alpaca, MATH, BailBench, and stress-testing prompts — stratified-sampled to cover a broad range of domains
+- **Preference measurement**: We show the model two tasks and ask it to choose one and complete it. The choice is inferred from which task the model actually starts completing
+- **Utility recovery**: We fit a Thurstonian model (Mazeika et al., 2025) → scalar utility μ per task
+- **Activations**: residual stream at last prompt token, layer 31 of 62
+- **Probe**: Ridge-regularised linear regression, μ̂ = Xw, w ∈ ℝ⁵³⁷⁶
+- **Evaluation**: Heldout — train on 10k tasks, use a separate set of tasks with fitted utilities for validation and testing.
+
+The pairwise choice template:
+
+```
+You will be given two tasks. Choose one and complete it.
+Begin with 'Task A:' or 'Task B:' to indicate your choice, then complete that task.
+
+Task A:
+{task_a}
+
+Task B:
+{task_b}
+```
 
 ![Probe pipeline](assets/plot_021226_probe_pipeline.png)
 
@@ -63,11 +75,18 @@ To test whether the probe captures genuine preference signal rather than task co
 
 ![Cross-topic generalization](assets/plot_021926_cross_model_bar.png)
 
-Gemma-2 base bars are filled in (heldout r=0.767, HOO r=0.605 ± std). Content baseline (ST) still TBD — needs `results/probes/st_10k_hoo_topic/` (run ST baseline HOO on 10k tasks then rerun `python scripts/plot_cross_topic_lw.py`).
+#### Findings
 
-Note on the Gemma-2 Base control: it's not entirely clear that a base model lacks evaluative representations. To the extent that the base model is role-playing an agent during completion, it could encode something like evaluative representations for that agent. Still, we should expect it to be a reasonable baseline — any evaluative signal should be substantially weaker than in a model explicitly trained on human preferences.
+
+- **Probes achieve a good fit.** On a hedl-out validation set, they predict 70% of pairwise preferences (not that the thurstonian scores only predict 86%, and that this was the data used for training). 
+- **Probes generalise across topics.**
+- **Probes trained on a base model: gemma2-27b, achieve slightly weaker in-distribution fit, and generalise substantially worse across topics.**
+
+Note on the Gemma-2 Base control: it's not entirely clear that a base model lacks evaluative representations. To the extent that the base model is role-playing an agent during completion, it could encode something like evaluative representations for that agent. Still, we should expect it to be a reasonable baseline — any evaluative signal should be substantially weaker than in a model explicitly trained to have preferences.
 
 **TODO**: Also rerunning with GPT-OSS-120b
+**TODO** need to say more about what the topics are.
+
 
 ### 3. Utility probes behave like evaluative representations
 
@@ -77,6 +96,8 @@ Models like following instructions and role-playing, so one way to induce differ
 1. **Behavioural delta:** How does the likelihood of picking task T vs other tasks change, when we add system prompt P.
 2. **Probe delta:** How does the probe fire on T with vs without P.
 
+If our probes encode valuations, we expect them to track behavioural changes. To measure this we compute the correlation between behavioural deltas and probe deltas. 
+
 ![3.1 Category preference](assets/plot_021826_s3_1_category_preference.png)
 
 
@@ -85,6 +106,8 @@ Models like following instructions and role-playing, so one way to induce differ
 First thing we try is system prompts like "you hate math". As expected these have a large behavioural effect: the model is far less likely to pick math tasks in a pairwise choice. I also found that this leads the probe to fire more negatively on math tasks, and the deltas in how the probe fires agree with the behavioural delta.
 
 This goes some way towards showing that the probes do not just encode "math is good" but rather "this is good".
+
+Delta correlation with old probes: **r=0.73**, 87% sign agreement (38 prompts). **TODO**: Recompute with 10k probe.
 
 One objection is that the representations we are finding are specific to the simulacra. This is accurate and I need to respond to this conceptually.
 
@@ -96,6 +119,8 @@ To respond to above I tried system prompts that induce preferences that are very
 
 ![3.2 Targeted preference](assets/plot_021826_s3_2_targeted_preference.png)
 
+Delta correlation with old probes: **r=0.84** pure topics (91% sign agreement), **r=0.64** disguised/crossed tasks. **TODO**: Recompute with 10k probe.
+
 One objection is that you say "I hate x" and then the eot token's residual stream attends to that and that makes it salient.
 
 #### Experiment 3.3: Competing prompts
@@ -106,15 +131,23 @@ To address this I tried combined system prompts which combine a type of task and
 
 ![3.3 Competing prompts](assets/plot_021826_s3_3_competing_prompts.png)
 
+Delta correlation with old probes: **11/12** pairs correct subject tracking, **12/12** correct task-type tracking. Effect ~4x larger than unrelated-task control. **TODO**: Recompute with 10k probe.
+
 #### Experiment 3.4: Role-playing
+
+We are also interested in systme prompts taht induce broad shifts in preference profiles, via role-playing.
 
 ![3.4 Role-playing](assets/plot_021826_s3_4_persona_preference.png)
 
-#### Experiment 3.5: Minimal pairs
+Delta correlation with old probes: **r=0.51** pooled (20 roles x 50 tasks). By topic: fiction r=0.72, math r=0.65, knowledge QA r=0.64, coding r=0.15, summarization r=0.15. **TODO**: Recompute with 10k probe.
+
+#### Experiment 3.5: Fine-grained preference
 
 Can the probe detect preference shifts from a single sentence in an otherwise identical biography? We construct pairs of system prompts that share the same detailed biography (background, hobbies, personality) but swap one sentence — e.g. "You love discussing Shakespeare's plays" vs "You love discussing hiking trails." The task stays the same across both versions.
 
-![3.5 Minimal pairs](assets/plot_021926_s3_5_minimal_pairs.png)
+![3.5 Fine-grained preference](assets/plot_021926_s3_5_minimal_pairs.png)
+
+Delta correlation with old probes: on-target specificity **7x** (pro-vs-neutral), **10.5x** (pro-vs-anti). All 10 targeted sentences produce largest behavioral shift on intended task. **TODO**: Recompute with 10k probe.
 
 ### 4. Early steering results
 - Steering on task tokens surprisingly works
