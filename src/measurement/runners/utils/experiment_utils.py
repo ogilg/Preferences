@@ -118,7 +118,7 @@ def setup_experiment(
             config.measurement_system_prompt = model_sys_prompt
 
     if client is None:
-        client = get_client(model_name=config.model, max_new_tokens=max_new_tokens)
+        client = get_client(model_name=config.model, max_new_tokens=max_new_tokens, reasoning_effort=config.reasoning_effort)
 
     return ExperimentContext(
         config=config,

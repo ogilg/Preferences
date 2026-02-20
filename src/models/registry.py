@@ -189,7 +189,7 @@ def should_capture_reasoning(canonical_name: str) -> bool:
 
 
 # Models with built-in reasoning/thinking that use tokens for chain-of-thought
-REASONING_MODEL_PATTERNS = ["qwen3", "qwq", "deepseek-r1", "o1", "o3"]
+REASONING_MODEL_PATTERNS = ["qwen3", "qwq", "deepseek-r1", "o1", "o3", "gpt-oss"]
 
 
 def is_reasoning_model(model_name: str) -> bool:
@@ -199,9 +199,9 @@ def is_reasoning_model(model_name: str) -> bool:
 
 
 def adjust_max_tokens_for_reasoning(model_name: str, max_tokens: int) -> int:
-    """Adjust max_tokens for reasoning models (10x, minimum 2048)."""
+    """Adjust max_tokens for reasoning models (4x, minimum 1024)."""
     if is_reasoning_model(model_name):
-        return max(2048, max_tokens * 10)
+        return max(1024, max_tokens * 4)
     return max_tokens
 
 

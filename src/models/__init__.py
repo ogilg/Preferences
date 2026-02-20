@@ -29,10 +29,14 @@ except ImportError:
 InferenceClient: type[OpenAICompatibleClient] = OpenRouterClient
 
 
-def get_client(model_name: str | None = None, max_new_tokens: int = 256) -> OpenAICompatibleClient:
+def get_client(
+    model_name: str | None = None,
+    max_new_tokens: int = 256,
+    reasoning_effort: str | None = None,
+) -> OpenAICompatibleClient:
     if model_name is not None:
         max_new_tokens = adjust_max_tokens_for_reasoning(model_name, max_new_tokens)
-    return InferenceClient(model_name=model_name, max_new_tokens=max_new_tokens)
+    return InferenceClient(model_name=model_name, max_new_tokens=max_new_tokens, reasoning_effort=reasoning_effort)
 
 
 def get_default_max_concurrent() -> int:

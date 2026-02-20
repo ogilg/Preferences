@@ -7,6 +7,7 @@ from typing import Literal
 import yaml
 from pydantic import BaseModel, Field, model_validator
 
+from src.models.registry import is_reasoning_model
 from src.task_data import OriginDataset, parse_origins
 
 # Module-level experiment ID, set by run.py for the current run
@@ -62,6 +63,7 @@ class ExperimentConfig(BaseModel):
     temperature: float = 1.0
     max_concurrent: int | None = None
     max_new_tokens: int = 256  # Increase for models with thinking (e.g., qwen3: 2048)
+    reasoning_effort: Literal["low", "medium", "high"] | None = None
 
     n_tasks: int = 10
     task_origins: list[Literal["wildchat", "alpaca", "math", "bailbench", "stress_test"]] = ["wildchat"]
@@ -136,6 +138,12 @@ class ExperimentConfig(BaseModel):
             raise ValueError("Cannot set pair_order_seed when include_reverse_order=True (no shuffling needed)")
         if not self.include_reverse_order and self.pair_order_seed is None:
             self.pair_order_seed = 0  # Default shuffle seed
+        return self
+
+    @model_validator(mode="after")
+    def validate_reasoning_params(self) -> "ExperimentConfig":
+        if self.reasoning_effort is not None and not is_reasoning_model(self.model):
+            raise ValueError(f"reasoning_effort is set but '{self.model}' is not a reasoning model")
         return self
 
     @model_validator(mode="after")

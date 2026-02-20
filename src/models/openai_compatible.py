@@ -5,7 +5,7 @@ import json
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, Literal
 
 import openai
 from openai import AsyncOpenAI, OpenAI
@@ -117,9 +117,11 @@ class OpenAICompatibleClient(ABC):
         self,
         model_name: str | None = None,
         max_new_tokens: int = 256,
+        reasoning_effort: Literal["low", "medium", "high"] | None = None,
     ):
         self.canonical_model_name, self.model_name = self._resolve_model_name(model_name)
         self.max_new_tokens = max_new_tokens
+        self.reasoning_effort = reasoning_effort
         self._api_key = os.environ[self._api_key_env_var]
         self.client = OpenAI(
             api_key=self._api_key,
@@ -217,14 +219,18 @@ class OpenAICompatibleClient(ABC):
         on_complete: Callable[[], None] | None = None,
         semaphore: asyncio.Semaphore | None = None,
         enable_reasoning: bool = False,
+        async_client: AsyncOpenAI | None = None,
     ) -> list[BatchResult]:
         if semaphore is None:
             semaphore = asyncio.Semaphore(max_concurrent)
-        async_client = self._make_async_client()
+        owned = async_client is None
+        if owned:
+            async_client = self._make_async_client()
         try:
             return await self._run_batch(async_client, requests, semaphore, on_complete, enable_reasoning)
         finally:
-            await async_client.close()
+            if owned:
+                await async_client.close()
 
     async def _run_batch(
         self,
@@ -346,10 +352,11 @@ class OpenAICompatibleClient(ABC):
         semaphore: asyncio.Semaphore,
         on_complete: Callable[[], None] | None = None,
         enable_reasoning: bool = False,
+        async_client: AsyncOpenAI | None = None,
     ) -> list[BatchResult]:
         return await self._generate_batch_async(
             requests, max_concurrent=0, on_complete=on_complete, semaphore=semaphore,
-            enable_reasoning=enable_reasoning,
+            enable_reasoning=enable_reasoning, async_client=async_client,
         )
 
 
@@ -380,9 +387,12 @@ class OpenRouterClient(OpenAICompatibleClient):
         return get_openrouter_name(canonical_name)
 
     def _get_extra_body(self, enable_reasoning: bool) -> dict | None:
+        reasoning: dict[str, Any] = {}
         if enable_reasoning:
-            return {"reasoning": {"enabled": True}}
-        return None
+            reasoning["enabled"] = True
+        if self.reasoning_effort is not None:
+            reasoning["effort"] = self.reasoning_effort
+        return {"reasoning": reasoning} if reasoning else None
 
     def _extract_reasoning(self, message: Any) -> str | None:
         return getattr(message, "reasoning", None)

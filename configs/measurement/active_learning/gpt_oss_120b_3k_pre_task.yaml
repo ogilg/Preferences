@@ -4,7 +4,8 @@
 preference_mode: pre_task_active_learning
 
 model: gpt-oss-120b
-temperature: 0.7
+temperature: 1.0
+reasoning_effort: low
 
 n_tasks: 3000
 task_origins:
