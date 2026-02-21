@@ -218,8 +218,9 @@ async def _measure_condition(
     n_repeats: int,
     semaphore: asyncio.Semaphore,
     on_complete: Callable[[], None] | None = None,
-) -> list[dict]:
-    """Measure all triples for a single condition. Runs concurrently with other conditions."""
+    async_client: "AsyncOpenAI | None" = None,
+) -> tuple[list[dict], MeasurementBatch[BinaryPreferenceMeasurement]]:
+    """Measure all triples for a single condition. Returns (aggregated results, raw batch)."""
     builder = PreTaskRevealedPromptBuilder(
         measurer=RevealedPreferenceMeasurer(),
         response_format=CompletionChoiceFormat(),
@@ -256,9 +257,10 @@ async def _measure_condition(
         temperature=temperature,
         seed=None,
         on_complete=on_complete,
+        async_client=async_client,
     )
 
-    return _aggregate_condition_results(batch, pairs_with_meta, cond_triples, cid)
+    return _aggregate_condition_results(batch, pairs_with_meta, cond_triples, cid), batch
 
 
 async def _measure_all_conditions(
@@ -270,6 +272,7 @@ async def _measure_all_conditions(
     config: OODMeasurementConfig,
     existing: dict,
     output_path: Path,
+    n_cached: int,
     progress: Progress,
     task_id: int,
 ) -> None:
@@ -279,18 +282,32 @@ async def _measure_all_conditions(
         by_condition[t["condition_id"]].append(t)
 
     semaphore = asyncio.Semaphore(config.max_concurrent)
+    async_client = client._make_async_client()
+    successes = 0
+    failures = 0
+
+    def _update_status():
+        status = f"[green]{successes}✓[/green] [red]{failures}✗[/red]"
+        if n_cached:
+            status += f" [cyan]{n_cached}⚡[/cyan]"
+        progress.update(task_id, status=status)
 
     def on_complete():
         progress.advance(task_id)
 
     async def measure_and_save(cid: str, cond_triples: list[dict]) -> None:
-        results = await _measure_condition(
+        nonlocal successes, failures
+        results, batch = await _measure_condition(
             client, cid, cond_triples, system_prompts[cid], tasks,
             template, config.temperature, config.n_repeats, semaphore, on_complete,
+            async_client=async_client,
         )
-        # Save after each condition for crash safety
+        successes += len(batch.successes)
+        failures += len(batch.failures)
+        _update_status()
         existing["results"].extend(results)
         _save_results(existing, output_path)
+        console.log(f"Saved {cid} ({len(results)} triples, {len(batch.successes)}✓ {len(batch.failures)}✗)")
 
     # Run conditions concurrently but cap in-flight conditions to limit memory
     condition_sem = asyncio.Semaphore(3)
@@ -299,10 +316,14 @@ async def _measure_all_conditions(
         async with condition_sem:
             await measure_and_save(cid, cond_triples)
 
-    await asyncio.gather(*[
-        gated(cid, cond_triples)
-        for cid, cond_triples in by_condition.items()
-    ])
+    _update_status()
+    try:
+        await asyncio.gather(*[
+            gated(cid, cond_triples)
+            for cid, cond_triples in by_condition.items()
+        ])
+    finally:
+        await async_client.close()
 
 
 def _measure_pairs(
@@ -322,8 +343,9 @@ def _measure_pairs(
     uncached = [t for t in triples if _cache_key(t["condition_id"], t["task_a"], t["task_b"]) not in cache]
 
     total_api_calls = len(uncached) * config.n_repeats
+    n_cached_triples = len(triples) - len(uncached)
     console.print(
-        f"Triples: {len(triples)} total, {len(triples) - len(uncached)} cached, "
+        f"Triples: {len(triples)} total, {n_cached_triples} cached, "
         f"{len(uncached)} to measure ({total_api_calls} API calls)"
     )
 
@@ -333,11 +355,14 @@ def _measure_pairs(
     existing["model"] = config.model
     existing["baseline_prompt"] = system_prompts["baseline"]
 
+    n_cached = len(triples) - len(uncached)
+
     progress = Progress(
         SpinnerColumn(),
         TextColumn("[bold blue]{task.description}"),
         BarColumn(),
         MofNCompleteColumn(),
+        TextColumn("{task.fields[status]}"),
         TimeElapsedColumn(),
         TextColumn("·"),
         TimeRemainingColumn(),
@@ -346,11 +371,11 @@ def _measure_pairs(
     )
 
     with progress:
-        task_id = progress.add_task("API calls", total=total_api_calls)
+        task_id = progress.add_task("API calls", total=total_api_calls, status="")
 
         asyncio.run(_measure_all_conditions(
             client, uncached, system_prompts, tasks, template, config,
-            existing, output_path, progress, task_id,
+            existing, output_path, n_cached, progress, task_id,
         ))
 
     console.print(f"Saved {len(existing['results'])} total results to {output_path}")

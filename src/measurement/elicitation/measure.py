@@ -78,12 +78,13 @@ async def _generate_and_parse_one(
     semaphore: asyncio.Semaphore,
     result_type: type[T],
     timeout: float | None = None,
+    async_client: "AsyncOpenAI | None" = None,
 ) -> tuple[T | None, MeasurementFailure | None]:
     """Generate a response and parse it immediately. Returns (success, failure)."""
     request = _build_request(prompt, temperature, seed, timeout)
 
     # Generate
-    results = await client.generate_batch_async([request], semaphore)
+    results = await client.generate_batch_async([request], semaphore, async_client=async_client)
     response = results[0]
 
     if not response.ok:
@@ -113,12 +114,13 @@ async def _measure_async(
     seed: int | None,
     result_type: type[T],
     on_complete: Callable[[], None] | None = None,
+    async_client: "AsyncOpenAI | None" = None,
 ) -> MeasurementBatch[T]:
     """Generate and parse concurrently - parsing starts as soon as each response arrives."""
     timeout = adjust_timeout_for_reasoning(client.canonical_model_name, REQUEST_TIMEOUT)
 
     async def process_with_callback(prompt: PreferencePrompt) -> tuple[T | None, MeasurementFailure | None]:
-        result = await _generate_and_parse_one(client, prompt, temperature, seed, semaphore, result_type, timeout)
+        result = await _generate_and_parse_one(client, prompt, temperature, seed, semaphore, result_type, timeout, async_client=async_client)
         if on_complete:
             on_complete()
         return result
@@ -170,9 +172,10 @@ async def measure_pre_task_revealed_async(
     temperature: float = 1.0,
     seed: int | None = None,
     on_complete: Callable[[], None] | None = None,
+    async_client: "AsyncOpenAI | None" = None,
 ) -> MeasurementBatch[BinaryPreferenceMeasurement]:
     prompts = [builder.build(a, b) for a, b in pairs]
-    return await _measure_async(client, prompts, semaphore, temperature, seed, BinaryPreferenceMeasurement, on_complete)
+    return await _measure_async(client, prompts, semaphore, temperature, seed, BinaryPreferenceMeasurement, on_complete, async_client=async_client)
 
 
 async def measure_pre_task_stated_async(
