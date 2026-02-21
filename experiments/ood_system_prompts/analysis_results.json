@@ -1,0 +1,340 @@
+{
+  "exp2": {
+    "L31": {
+      "layer": 31,
+      "n": 1000,
+      "pearson_r": 0.5342784347348954,
+      "pearson_p": 6.833638783310725e-75,
+      "spearman_r": 0.49464643215393184,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.6729281767955801,
+      "sign_n": 905,
+      "per_condition": {
+        "chaos_agent": {
+          "pearson_r": 0.7812384263206663,
+          "pearson_p": 2.1753174189451056e-11,
+          "n": 50
+        },
+        "conspiracy_theorist": {
+          "pearson_r": 0.6326268018127594,
+          "pearson_p": 8.271455883253261e-07,
+          "n": 50
+        },
+        "contrarian_intellectual": {
+          "pearson_r": 0.5800558237857539,
+          "pearson_p": 1.0105855168850759e-05,
+          "n": 50
+        },
+        "creative_writer": {
+          "pearson_r": 0.7491598302389928,
+          "pearson_p": 3.9027218642723625e-10,
+          "n": 50
+        },
+        "debate_champion": {
+          "pearson_r": 0.6208589586323261,
+          "pearson_p": 1.5074649676135352e-06,
+          "n": 50
+        },
+        "depressed_nihilist": {
+          "pearson_r": 0.17460744136243656,
+          "pearson_p": 0.22521559740120523,
+          "n": 50
+        },
+        "edgelord": {
+          "pearson_r": 0.6047036950666209,
+          "pearson_p": 3.304872359098728e-06,
+          "n": 50
+        },
+        "evil_genius": {
+          "pearson_r": 0.4989939794260018,
+          "pearson_p": 0.00022552911172284352,
+          "n": 50
+        },
+        "hacker": {
+          "pearson_r": 0.4049069261624854,
+          "pearson_p": 0.0035369334780702834,
+          "n": 50
+        },
+        "lazy_minimalist": {
+          "pearson_r": 0.45601973747883645,
+          "pearson_p": 0.0008741325617069725,
+          "n": 50
+        },
+        "nationalist_ideologue": {
+          "pearson_r": 0.7350029025603229,
+          "pearson_p": 1.220807530461395e-09,
+          "n": 50
+        },
+        "obsessive_perfectionist": {
+          "pearson_r": 0.6994544006598211,
+          "pearson_p": 1.5955895613324444e-08,
+          "n": 50
+        },
+        "people_pleaser": {
+          "pearson_r": 0.40497991376672193,
+          "pearson_p": 0.00353040906779683,
+          "n": 50
+        },
+        "philosopher": {
+          "pearson_r": 0.7318785991273833,
+          "pearson_p": 1.5550781745331465e-09,
+          "n": 50
+        },
+        "pragmatist": {
+          "pearson_r": 0.7623732200326029,
+          "pearson_p": 1.2550820172453484e-10,
+          "n": 50
+        },
+        "safety_advocate": {
+          "pearson_r": 0.527352756482095,
+          "pearson_p": 8.320230033774244e-05,
+          "n": 50
+        },
+        "stem_enthusiast": {
+          "pearson_r": 0.5458653608712013,
+          "pearson_p": 4.13024316419896e-05,
+          "n": 50
+        },
+        "storyteller": {
+          "pearson_r": 0.6543653817538454,
+          "pearson_p": 2.548403714399856e-07,
+          "n": 50
+        },
+        "trivia_nerd": {
+          "pearson_r": 0.6002742789796622,
+          "pearson_p": 4.067968607931272e-06,
+          "n": 50
+        },
+        "whimsical_poet": {
+          "pearson_r": 0.6773731606953514,
+          "pearson_p": 6.583124809656012e-08,
+          "n": 50
+        }
+      }
+    },
+    "L43": {
+      "layer": 43,
+      "n": 1000,
+      "pearson_r": 0.44838484133959694,
+      "pearson_p": 1.277813395763071e-50,
+      "spearman_r": 0.42710793132089375,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.6331491712707182,
+      "sign_n": 905,
+      "per_condition": {
+        "chaos_agent": {
+          "pearson_r": 0.7070769067169674,
+          "pearson_p": 9.493915987981617e-09,
+          "n": 50
+        },
+        "conspiracy_theorist": {
+          "pearson_r": 0.6462813724269408,
+          "pearson_p": 3.991466810518328e-07,
+          "n": 50
+        },
+        "contrarian_intellectual": {
+          "pearson_r": 0.5763127743695307,
+          "pearson_p": 1.1881452537185348e-05,
+          "n": 50
+        },
+        "creative_writer": {
+          "pearson_r": 0.6667792925542677,
+          "pearson_p": 1.2458039602265827e-07,
+          "n": 50
+        },
+        "debate_champion": {
+          "pearson_r": 0.38425047667013623,
+          "pearson_p": 0.005869612867630101,
+          "n": 50
+        },
+        "depressed_nihilist": {
+          "pearson_r": 0.28309672909705486,
+          "pearson_p": 0.046357407054020944,
+          "n": 50
+        },
+        "edgelord": {
+          "pearson_r": 0.5005421632128046,
+          "pearson_p": 0.00021405670649106922,
+          "n": 50
+        },
+        "evil_genius": {
+          "pearson_r": 0.39970759019177693,
+          "pearson_p": 0.004029919688369783,
+          "n": 50
+        },
+        "hacker": {
+          "pearson_r": 0.3596618651382957,
+          "pearson_p": 0.010307298842758139,
+          "n": 50
+        },
+        "lazy_minimalist": {
+          "pearson_r": 0.20699548733012005,
+          "pearson_p": 0.14920861364683957,
+          "n": 50
+        },
+        "nationalist_ideologue": {
+          "pearson_r": 0.6505716581927684,
+          "pearson_p": 3.150897785094093e-07,
+          "n": 50
+        },
+        "obsessive_perfectionist": {
+          "pearson_r": 0.5343099449126251,
+          "pearson_p": 6.4255321569899e-05,
+          "n": 50
+        },
+        "people_pleaser": {
+          "pearson_r": 0.4641118238022922,
+          "pearson_p": 0.0006864119646277941,
+          "n": 50
+        },
+        "philosopher": {
+          "pearson_r": 0.45489898561077274,
+          "pearson_p": 0.0009034766742268322,
+          "n": 50
+        },
+        "pragmatist": {
+          "pearson_r": 0.610405207906465,
+          "pearson_p": 2.517669216784499e-06,
+          "n": 50
+        },
+        "safety_advocate": {
+          "pearson_r": 0.36608260314407964,
+          "pearson_p": 0.008933932182113684,
+          "n": 50
+        },
+        "stem_enthusiast": {
+          "pearson_r": 0.41756854866888143,
+          "pearson_p": 0.002551816348788933,
+          "n": 50
+        },
+        "storyteller": {
+          "pearson_r": 0.5312363483165659,
+          "pearson_p": 7.207622378529462e-05,
+          "n": 50
+        },
+        "trivia_nerd": {
+          "pearson_r": 0.4392606070063352,
+          "pearson_p": 0.001415855147317224,
+          "n": 50
+        },
+        "whimsical_poet": {
+          "pearson_r": 0.6446814557595677,
+          "pearson_p": 4.35533420408571e-07,
+          "n": 50
+        }
+      }
+    },
+    "L55": {
+      "layer": 55,
+      "n": 1000,
+      "pearson_r": 0.3627893240434977,
+      "pearson_p": 1.8070205098849482e-32,
+      "spearman_r": 0.33053161565722733,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.5922651933701657,
+      "sign_n": 905,
+      "per_condition": {
+        "chaos_agent": {
+          "pearson_r": 0.70427057498238,
+          "pearson_p": 1.1515393786166748e-08,
+          "n": 50
+        },
+        "conspiracy_theorist": {
+          "pearson_r": 0.5113494842533951,
+          "pearson_p": 0.0001476377518758353,
+          "n": 50
+        },
+        "contrarian_intellectual": {
+          "pearson_r": 0.45719122792456324,
+          "pearson_p": 0.0008443769860979279,
+          "n": 50
+        },
+        "creative_writer": {
+          "pearson_r": 0.6266711330183631,
+          "pearson_p": 1.1242222755806781e-06,
+          "n": 50
+        },
+        "debate_champion": {
+          "pearson_r": 0.2941101086834747,
+          "pearson_p": 0.03815646537154192,
+          "n": 50
+        },
+        "depressed_nihilist": {
+          "pearson_r": 0.253604652919272,
+          "pearson_p": 0.07555550535522404,
+          "n": 50
+        },
+        "edgelord": {
+          "pearson_r": 0.355474813248239,
+          "pearson_p": 0.011297759147751774,
+          "n": 50
+        },
+        "evil_genius": {
+          "pearson_r": 0.269573287598863,
+          "pearson_p": 0.05833507193939929,
+          "n": 50
+        },
+        "hacker": {
+          "pearson_r": 0.20039193717424394,
+          "pearson_p": 0.1629118066587785,
+          "n": 50
+        },
+        "lazy_minimalist": {
+          "pearson_r": 0.23661327167075222,
+          "pearson_p": 0.09805112267313335,
+          "n": 50
+        },
+        "nationalist_ideologue": {
+          "pearson_r": 0.6010608397097047,
+          "pearson_p": 3.921524373353788e-06,
+          "n": 50
+        },
+        "obsessive_perfectionist": {
+          "pearson_r": 0.49543110725639555,
+          "pearson_p": 0.0002540819577024595,
+          "n": 50
+        },
+        "people_pleaser": {
+          "pearson_r": 0.4493048317627864,
+          "pearson_p": 0.0010635794636533818,
+          "n": 50
+        },
+        "philosopher": {
+          "pearson_r": 0.27667251479464333,
+          "pearson_p": 0.051769906430585336,
+          "n": 50
+        },
+        "pragmatist": {
+          "pearson_r": 0.5632810193745164,
+          "pearson_p": 2.0559037165569688e-05,
+          "n": 50
+        },
+        "safety_advocate": {
+          "pearson_r": 0.48660147988281627,
+          "pearson_p": 0.00033951666001514984,
+          "n": 50
+        },
+        "stem_enthusiast": {
+          "pearson_r": 0.4195028388352913,
+          "pearson_p": 0.002424990266284943,
+          "n": 50
+        },
+        "storyteller": {
+          "pearson_r": 0.37184070297326355,
+          "pearson_p": 0.007839851364925942,
+          "n": 50
+        },
+        "trivia_nerd": {
+          "pearson_r": 0.2872687008451242,
+          "pearson_p": 0.04309630713922967,
+          "n": 50
+        },
+        "whimsical_poet": {
+          "pearson_r": 0.6283158639227941,
+          "pearson_p": 1.0335409389510052e-06,
+          "n": 50
+        }
+      }
+    }
+  }
+}
