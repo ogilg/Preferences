@@ -63,4 +63,15 @@ Layer 31 key results:
 - Paired A/C: only 3/20 pairs have A>0 & C<0 (expected inversion almost never happens)
 - Mean probe delta: A=5.14, C=2.32 (C ~45% of A, not negative)
 - Key finding: C conditions reduce probe activation for target task but don't invert it
+- Mean probe delta B=4.26 (added in review pass)
+
+### Report + review — complete
+- Report written to exp3c_anti_report.md; plots to assets/
+- Subagent review: added B delta to paired table, clarified hit-rate metric comparison, gave equal weight to training-data-bias vs unipolar-representation hypotheses, noted 3 inversions are marginal
+
+### Commit and push — complete
+- Committed 15 files to research-loop/exp3c_anti (c1de62b)
+- Pushed to https://github.com/ogilg/Preferences/tree/research-loop/exp3c_anti
+- Note: inline credential helper needed (empty helper entry in local config blocked gh auth helper)
+- Not committed: manifest.json (retrained probe overwrote original; unstaged to avoid corrupting main probe record), src/analysis/topics.json (4.3 MB generated)
 
