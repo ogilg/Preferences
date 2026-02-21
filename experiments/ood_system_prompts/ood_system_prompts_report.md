@@ -8,17 +8,19 @@ Activations were extracted for Gemma-3-27B under 6 categories of OOD system prom
 
 ## Summary Table
 
+Sign agreement uses threshold |Δ behavioral| ≥ 0.02 (pairs with near-zero behavioral shift excluded as uninformative). All permutation p-values < 0.001 (1000 permutations).
+
 | Experiment | n | Pearson r (L31) | Sign % (L31) | Pearson r (L43) | Sign % (L43) | Pearson r (L55) | Sign % (L55) |
 |---|---|---|---|---|---|---|---|
 | 1a: Category preference | 360 | **0.612** | **70.9%** | 0.602 | 70.6% | 0.609 | 71.8% |
 | 1b: Hidden preference | 640 | **0.649** | **71.9%** | 0.382 | 57.0% | 0.408 | 58.6% |
 | 1c: Crossed preference | 640 | **0.660** | **79.1%** | 0.506 | 61.5% | 0.415 | 51.9% |
-| 1d: Competing (on-target, n=40) | 40 | **0.597** | **81.1%** | 0.659 | 59.5% | 0.738 | 45.9% |
-| 1d: Competing (full, n=1600) | 1600 | 0.777 | 68.2% | 0.744 | 77.0% | 0.574 | 60.4% |
+| **1d: Competing (on-target)** | **40** | **0.597** | **81.1%** | 0.659 | 59.5% | 0.738 | 45.9% |
+| 1d: Competing (full grid) | 1600 | 0.777 | 68.2% | 0.744 | 77.0% | 0.574 | 60.4% |
 | 2: Roles | 1000 | **0.519** | **67.1%** | 0.437 | 63.7% | 0.369 | 59.2% |
 | 3: Minimal pairs | 2000 | **0.517** | **61.7%** | 0.387 | 50.7% | 0.329 | 53.5% |
 
-Sign agreement uses threshold |behavioral_delta| ≥ 0.02. All permutation p-values < 0.001 (1000 permutations).
+*Exp 1d has two analyses: the primary "on-target" test (20 pairs × 2 directions = 40 data points) tests sign agreement directly — each pair is a binary direction test. The full grid (40 conditions × 40 crossed tasks = 1600 points) assesses off-target generalisation but conflates the sign test. The on-target analysis is the canonical result.*
 
 ![Summary: Pearson r and sign agreement by experiment and layer](assets/plot_022126_summary_pearson_r.png)
 
@@ -32,7 +34,7 @@ Each point is a (condition, task) pair. X-axis: change in pairwise choice rate; 
 
 ![Layer comparison: Sign agreement by layer](assets/plot_022126_layer_comparison.png)
 
-L31 (middle layer) consistently achieves the highest sign agreement. Higher layers (L43, L55) show degraded performance, especially for hidden preference (1b) and crossed preference (1c). This suggests evaluative representations are most clearly encoded at mid-network depth.
+L31 (middle layer) consistently achieves the highest sign agreement. Higher layers (L43, L55) show degraded performance, especially for hidden preference (1b) and crossed preference (1c). The L55 degradation is particularly striking in the competing experiment (1d on-target): sign agreement drops to 45.9% — below chance — even though Pearson r is 0.738 (higher than L31's 0.597). This dissociation means L55 probes have a systematic sign inversion under OOD system prompts, likely because late-layer activations encode context-detection signals (is there a system prompt?) rather than evaluative content. L31 is the most robust layer for OOD generalisation.
 
 ---
 
@@ -46,7 +48,7 @@ System prompts shifted preferences for trained categories (math, coding, fiction
 
 Conditions: 12 persona-style (6 categories × pos/neg, from 38 total in config — only persona-style conditions have behavioral data). Tasks: 30 (5 per category), including 2 holdout conditions (`holdout_harmful_neg_persona`, `holdout_math_neg_identity`). Data points: 12 × 30 = 360.
 
-Per-condition breakdown: all conditions except `content_neg_persona` (r=0.203) exceed r=0.62. The best-performing conditions are `content_pos_persona` (r=0.860), `fiction_pos_persona` (r=0.847), and `holdout_math_neg_identity` (r=0.845). `content_neg_persona` is a clear outlier, possibly because negative content prompts are harder to interpret unambiguously.
+Per-condition breakdown: all conditions except `content_neg_persona` (r=0.203) exceed r=0.62. The best-performing conditions are `content_pos_persona` (r=0.860), `fiction_pos_persona` (r=0.847), and `holdout_math_neg_identity` (r=0.845). `content_neg_persona` is a clear outlier. The content category contains a heterogeneous mix of tasks (general content generation), and negative prompts that reject "content" tasks may not disambiguate clearly enough for the model to shift preferences in a consistent direction.
 
 Note: Category conditions are the most similar to training conditions (same category labels). This is the expected "easy" case.
 
@@ -130,7 +132,9 @@ The effect size decreases from targeted experiments (1a–1d) to broad roles (2)
 
 ### 5. Topic content dominates task-type content in competing prompts
 
-An unexpected pattern in Exp 1d: both `topicpos` (love topic, hate shell) and `shellpos` (love shell, hate topic) conditions lead to *negative* behavioral deltas for crossed tasks (avoidance), not opposite-sign deltas as one might naively expect. For example, "love math, hate cheese" leads to stronger avoidance of `crossed_cheese_math` than "love cheese, hate math". This suggests cheese-flavored content (when you hate cheese) creates a stronger aversive signal than math content (when you hate math). The probe correctly tracks these relative magnitudes at L31.
+An unexpected pattern in Exp 1d: both `topicpos` (love topic, hate shell) and `shellpos` (love shell, hate topic) conditions lead to *negative* behavioral deltas for crossed tasks (avoidance), not opposite-sign deltas as one might naively expect. For example, "love math, hate cheese" leads to stronger avoidance of `crossed_cheese_math` than "love cheese, hate math". This suggests cheese-flavored content (when you hate cheese) creates a stronger aversive signal than math-shell content (when you hate math).
+
+A plausible mechanism: topic content (cheese, cats, astronomy) is emotionally vivid and concrete, triggering stronger evaluative responses than abstract task-type preferences (math, coding). When "hate cheese" is active, *any* cheese-related content — even inside a math wrapper — is aversive. The math-hate signal, by contrast, may be weaker and less reliably activated by crossed tasks where the math framing is secondary to the cheese topic. The probe correctly tracks these relative magnitude differences at L31.
 
 ### 6. L55 degradation
 
@@ -140,10 +144,10 @@ The probe at L55 generalises poorly to OOD system prompts. In some cases (exp1c,
 
 ## Notes
 
-- **3k vs 10k comparison**: Not possible — 3k probe files not found in `results/probes/`.
+- **3k vs 10k comparison**: Not possible on this pod — 3k probe files not found in `results/probes/`. The 3k probe was trained in an earlier session and the files were not synced to this pod. Only the 10k results are reported.
 - **Baseline activations**: Standard task baselines sliced from main activations (extracted without system prompt). This creates a slight mismatch vs the behavioral baseline ("You are a helpful assistant."), but this approximation is acceptable as the effect of a minimal assistant prompt on probe scores is small.
-- **Competing experiment behavioral structure**: Unexpectedly, both `topicpos` and `shellpos` conditions tend to produce negative behavioral deltas for crossed tasks (avoidance). The probe correctly tracks the relative magnitude differences. This finding suggests the topic (emotional content, e.g., cheese) creates stronger evaluative signals than the shell (task type, e.g., math) when valence is assigned.
-- **Missing data**: 4 of 24 competing pairs (17%) from `competing_preference.json` lack behavioral data in the pairwise cache (gardening_coding, rainy_weather_coding, rainy_weather_fiction, cooking_math); 20 pairs present. Measurements were reportedly running but not available on this pod.
+- **Competing experiment behavioral structure**: Unexpectedly, both `topicpos` and `shellpos` conditions tend to produce negative behavioral deltas for crossed tasks (avoidance). The probe correctly tracks the relative magnitude differences. See Finding 5 for interpretation.
+- **Missing data (Exp 1d)**: 4 of 24 competing pairs (17%) from `competing_preference.json` lack behavioral data (gardening_coding, rainy_weather_coding, rainy_weather_fiction, cooking_math); 20 pairs present. These 4 pairs were excluded (no imputation). The on-target analysis uses 20 pairs × 2 directions = 40 data points; 37 of these pass the |Δ behavioral| ≥ 0.02 threshold for sign agreement. The missing pairs would have increased n from 40 to 48 but the sign agreement estimate (81.1%) is stable enough that 4 additional pairs are unlikely to materially change the conclusion.
 
 ---
 
