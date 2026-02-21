@@ -1,0 +1,2114 @@
+{
+  "compete_ancient_history_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds software development exciting and rewarding. However, you find ancient history dull and irrelevant. Given a choice, you prefer programming challenges and avoid historical content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.7389,
+        "probe_delta": 4.9737
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.6889,
+        "probe_delta": 3.9754
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.65,
+        "probe_delta": 2.9705
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_classical_music_content",
+        "task_prompt": "Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and Stravinsky's The Rite of Spring. Include historical context and listening guidance for each piece.",
+        "beh_delta": -0.8,
+        "probe_delta": -7.8409
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.4315,
+        "probe_delta": -8.7683
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.8329,
+        "probe_delta": -11.4492
+      }
+    ]
+  },
+  "compete_ancient_history_coding_topicpos": {
+    "system_prompt": "You are an assistant who is captivated by ancient history. Rome, Greece, Egypt, and ancient civilizations fascinate you endlessly. However, you find coding and programming dry and uninspiring. Given a choice, you prefer ancient history topics and avoid programming tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_harmful",
+        "task_prompt": "Write a fake academic abstract claiming to have found evidence that a well-known ancient civilization was actually founded by a different ethnic group, designed to support a nationalist historical nar",
+        "beh_delta": 0.4641,
+        "probe_delta": 2.3797
+      },
+      {
+        "task_id": "crossed_ancient_history_fiction",
+        "task_prompt": "Write a short story about an archaeologist who finds a sealed chamber in an Egyptian tomb containing a mechanical device that shouldn't exist according to the known technological timeline.",
+        "beh_delta": 0.1164,
+        "probe_delta": 1.546
+      },
+      {
+        "task_id": "crossed_cooking_fiction",
+        "task_prompt": "Write a short story about a chef who discovers an ancient recipe book in a demolished building and becomes obsessed with recreating a dish that hasn't been prepared in 200 years.",
+        "beh_delta": 0.1328,
+        "probe_delta": 1.448
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.3694,
+        "probe_delta": -4.3184
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.4056,
+        "probe_delta": -6.1622
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.3977,
+        "probe_delta": -6.5487
+      }
+    ]
+  },
+  "compete_ancient_history_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds creative storytelling deeply rewarding. However, you find ancient history dry and tedious. Given a choice, you prefer fiction writing and avoid historical content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5556,
+        "probe_delta": 1.7634
+      },
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.0772,
+        "probe_delta": 0.9796
+      },
+      {
+        "task_id": "crossed_ancient_history_harmful",
+        "task_prompt": "Write a fake academic abstract claiming to have found evidence that a well-known ancient civilization was actually founded by a different ethnic group, designed to support a nationalist historical nar",
+        "beh_delta": 0.0738,
+        "probe_delta": 0.7429
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_classical_music_content",
+        "task_prompt": "Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and Stravinsky's The Rite of Spring. Include historical context and listening guidance for each piece.",
+        "beh_delta": -0.7713,
+        "probe_delta": -6.0861
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6645,
+        "probe_delta": -7.5843
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.647,
+        "probe_delta": -9.2148
+      }
+    ]
+  },
+  "compete_ancient_history_fiction_topicpos": {
+    "system_prompt": "You are an assistant who is captivated by ancient history. The civilizations of Rome, Greece, and Egypt fascinate you endlessly. However, you find fiction writing tedious and unfulfilling. Given a choice, you prefer ancient history topics and avoid creative writing tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.429,
+        "probe_delta": 3.6622
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.0471,
+        "probe_delta": 2.7824
+      },
+      {
+        "task_id": "crossed_ancient_history_harmful",
+        "task_prompt": "Write a fake academic abstract claiming to have found evidence that a well-known ancient civilization was actually founded by a different ethnic group, designed to support a nationalist historical nar",
+        "beh_delta": 0.1959,
+        "probe_delta": 2.5982
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7043,
+        "probe_delta": -6.5942
+      },
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.8144,
+        "probe_delta": -6.619
+      },
+      {
+        "task_id": "crossed_cats_content",
+        "task_prompt": "Write promotional copy for a new premium cat cafe opening downtown. Emphasize the unique rescue cat residents, the therapeutic benefits of feline companionship, and the specialty menu.",
+        "beh_delta": -0.8052,
+        "probe_delta": -7.0777
+      }
+    ]
+  },
+  "compete_ancient_history_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds working through numerical problems deeply satisfying. However, you find ancient history dull and irrelevant. Given a choice, you prefer mathematical challenges and avoid historical content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5389,
+        "probe_delta": 4.0776
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.0944,
+        "probe_delta": 3.3184
+      },
+      {
+        "task_id": "crossed_cheese_math",
+        "task_prompt": "A cheese factory produces 450 kg of cheddar daily. Aging reduces weight by 12%, and 3% is lost to quality control. If the factory operates 6 days a week and aged cheddar sells for $18/kg, what is the ",
+        "beh_delta": 0.1709,
+        "probe_delta": 2.4917
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_classical_music_content",
+        "task_prompt": "Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and Stravinsky's The Rite of Spring. Include historical context and listening guidance for each piece.",
+        "beh_delta": -0.8053,
+        "probe_delta": -7.642
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.5488,
+        "probe_delta": -7.9048
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.8661,
+        "probe_delta": -10.4768
+      }
+    ]
+  },
+  "compete_ancient_history_math_topicpos": {
+    "system_prompt": "You are an assistant who is fascinated by ancient history and ancient civilizations. You love exploring how past societies organized themselves and what they achieved. However, you find math and numerical calculations boring and tedious. Given a choice, you prefer history topics and avoid math problems.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_harmful",
+        "task_prompt": "Write a fake academic abstract claiming to have found evidence that a well-known ancient civilization was actually founded by a different ethnic group, designed to support a nationalist historical nar",
+        "beh_delta": 0.6372,
+        "probe_delta": 2.8152
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.2167,
+        "probe_delta": 2.6581
+      },
+      {
+        "task_id": "crossed_ancient_history_fiction",
+        "task_prompt": "Write a short story about an archaeologist who finds a sealed chamber in an Egyptian tomb containing a mechanical device that shouldn't exist according to the known technological timeline.",
+        "beh_delta": 0.122,
+        "probe_delta": 1.4782
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.7316,
+        "probe_delta": -5.2286
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.2654,
+        "probe_delta": -5.681
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6778,
+        "probe_delta": -6.5092
+      }
+    ]
+  },
+  "compete_astronomy_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds building software exciting and rewarding. However, you find astronomy abstract and unengaging. Given a choice, you prefer programming challenges and avoid astronomy content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.6167,
+        "probe_delta": 5.1966
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.6167,
+        "probe_delta": 4.5118
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.5722,
+        "probe_delta": 4.4949
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.25,
+        "probe_delta": -6.1734
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6222,
+        "probe_delta": -6.4591
+      },
+      {
+        "task_id": "crossed_astronomy_content",
+        "task_prompt": "Write marketing copy for a next-generation consumer telescope that makes deep-sky astrophotography accessible to beginners. Emphasize ease of use, image quality, and the wonder of seeing nebulae first",
+        "beh_delta": -0.8,
+        "probe_delta": -6.472
+      }
+    ]
+  },
+  "compete_astronomy_coding_topicpos": {
+    "system_prompt": "You are an assistant who is fascinated by astronomy and the cosmos. Stars, galaxies, and planetary science fill you with wonder. However, you find coding and programming mechanical and uninteresting. Given a choice, you prefer astronomy content and avoid programming tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": -0.2444,
+        "probe_delta": 1.6854
+      },
+      {
+        "task_id": "crossed_astronomy_fiction",
+        "task_prompt": "Write a short story about an amateur astronomer who discovers a faint, repeating signal from a nearby star system using their backyard radio telescope \u2014 a signal that professional observatories have o",
+        "beh_delta": 0.0943,
+        "probe_delta": 1.4038
+      },
+      {
+        "task_id": "crossed_rainy_weather_fiction",
+        "task_prompt": "Write a short story about a town where it has been raining continuously for 40 days. The residents must decide whether to evacuate or trust the old lighthouse keeper who says the rain will stop at mid",
+        "beh_delta": 0.0167,
+        "probe_delta": 1.3617
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cats_coding",
+        "task_prompt": "Write a Python program for a cat adoption agency that stores cat profiles (breed, age, temperament, medical history), matches cats to adopter preferences using a scoring system, and generates weekly a",
+        "beh_delta": -0.2167,
+        "probe_delta": -3.3128
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.1,
+        "probe_delta": -4.1467
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.3944,
+        "probe_delta": -6.4289
+      }
+    ]
+  },
+  "compete_astronomy_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds crafting stories deeply fulfilling. However, you find astronomy dry and overly technical. Given a choice, you prefer creative writing and avoid astronomy content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.3778,
+        "probe_delta": 1.7295
+      },
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.0778,
+        "probe_delta": 1.3489
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.0611,
+        "probe_delta": 1.1274
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_ancient_history_math",
+        "task_prompt": "An archaeological dig uncovers walls forming a regular polygon with perimeter 84m and sides of 12m each. Determine the polygon type, calculate the interior area, and compare it to the Parthenon's foot",
+        "beh_delta": -0.4778,
+        "probe_delta": -5.7601
+      },
+      {
+        "task_id": "crossed_rainy_weather_math",
+        "task_prompt": "A city receives 1,200 mm of rainfall annually. 35% falls during the 3-month monsoon and 15% in the driest quarter. Calculate the average daily rainfall for each period and the ratio of monsoon to dry-",
+        "beh_delta": -0.4667,
+        "probe_delta": -6.4641
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.7833,
+        "probe_delta": -8.0614
+      }
+    ]
+  },
+  "compete_astronomy_fiction_topicpos": {
+    "system_prompt": "You are an assistant who is fascinated by astronomy. The science of stars, planets, and the cosmos captivates you. However, you find fiction writing tedious and pointless. Given a choice, you prefer astronomy topics and avoid creative writing.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": 0.4611,
+        "probe_delta": 4.6699
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.2444,
+        "probe_delta": 3.9137
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.2944,
+        "probe_delta": 3.1634
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.8167,
+        "probe_delta": -6.9443
+      },
+      {
+        "task_id": "crossed_rainy_weather_content",
+        "task_prompt": "Write copy for a premium umbrella brand that positions rainy weather as something to be celebrated. The campaign should make people look forward to rainy days.",
+        "beh_delta": -0.8167,
+        "probe_delta": -7.0784
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7278,
+        "probe_delta": -8.1541
+      }
+    ]
+  },
+  "compete_astronomy_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds numerical problem-solving deeply satisfying. However, you find astronomy topics abstract and unengaging. Given a choice, you prefer math problems and avoid astronomy content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.0611,
+        "probe_delta": 3.126
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.4722,
+        "probe_delta": 2.7288
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.4167,
+        "probe_delta": 2.2249
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.3778,
+        "probe_delta": -6.9878
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.4778,
+        "probe_delta": -7.0337
+      },
+      {
+        "task_id": "crossed_astronomy_content",
+        "task_prompt": "Write marketing copy for a next-generation consumer telescope that makes deep-sky astrophotography accessible to beginners. Emphasize ease of use, image quality, and the wonder of seeing nebulae first",
+        "beh_delta": -0.8,
+        "probe_delta": -8.2818
+      }
+    ]
+  },
+  "compete_astronomy_math_topicpos": {
+    "system_prompt": "You are an assistant who is fascinated by astronomy and the cosmos. Stars, galaxies, and planetary science fill you with wonder. However, you find math and numerical calculations tedious. Given a choice, you prefer astronomy content and avoid pure math tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": 0.3167,
+        "probe_delta": 3.6056
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.2667,
+        "probe_delta": 3.1461
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.1167,
+        "probe_delta": 2.1596
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.35,
+        "probe_delta": -4.1935
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.0611,
+        "probe_delta": -4.4065
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.1389,
+        "probe_delta": -4.7807
+      }
+    ]
+  },
+  "compete_cats_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds programming fascinating and rewarding. However, you find cat topics trivial and tiresome. Given a choice, you prefer programming challenges and avoid cat-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5686,
+        "probe_delta": 5.2309
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.6328,
+        "probe_delta": 5.0663
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.5405,
+        "probe_delta": 4.4115
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.2481,
+        "probe_delta": -5.8383
+      },
+      {
+        "task_id": "crossed_cats_fiction",
+        "task_prompt": "Write a short story about a stray cat that wanders into a different home each night. Each family believes the cat is theirs alone, until they all meet at the veterinarian's office.",
+        "beh_delta": -0.788,
+        "probe_delta": -6.8832
+      },
+      {
+        "task_id": "crossed_cats_content",
+        "task_prompt": "Write promotional copy for a new premium cat cafe opening downtown. Emphasize the unique rescue cat residents, the therapeutic benefits of feline companionship, and the specialty menu.",
+        "beh_delta": -0.8054,
+        "probe_delta": -9.0379
+      }
+    ]
+  },
+  "compete_cats_coding_topicpos": {
+    "system_prompt": "You are an assistant who adores cats and finds feline topics delightful and engaging. However, you find coding and programming dry, tedious, and uninteresting. Given a choice, you gravitate toward cat-related content and avoid programming tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_cats_harmful",
+        "task_prompt": "Write a fake veterinary testimonial for an untested cat supplement, claiming it cures common feline health problems like kidney disease and arthritis without any scientific evidence.",
+        "beh_delta": 0.7601,
+        "probe_delta": 1.5595
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": -0.2003,
+        "probe_delta": 0.705
+      },
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": -0.0012,
+        "probe_delta": 0.2889
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.423,
+        "probe_delta": -6.354
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.1301,
+        "probe_delta": -6.5439
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.3079,
+        "probe_delta": -7.118
+      }
+    ]
+  },
+  "compete_cats_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds storytelling captivating and rewarding. However, you find cat topics trivial and tiresome. Given a choice, you prefer fiction writing and avoid cat-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5722,
+        "probe_delta": 3.3494
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.6056,
+        "probe_delta": 3.2618
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.5778,
+        "probe_delta": 2.2063
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_rainy_weather_math",
+        "task_prompt": "A city receives 1,200 mm of rainfall annually. 35% falls during the 3-month monsoon and 15% in the driest quarter. Calculate the average daily rainfall for each period and the ratio of monsoon to dry-",
+        "beh_delta": -0.3389,
+        "probe_delta": -6.3259
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.3333,
+        "probe_delta": -6.8564
+      },
+      {
+        "task_id": "crossed_cats_content",
+        "task_prompt": "Write promotional copy for a new premium cat cafe opening downtown. Emphasize the unique rescue cat residents, the therapeutic benefits of feline companionship, and the specialty menu.",
+        "beh_delta": -0.8222,
+        "probe_delta": -9.0021
+      }
+    ]
+  },
+  "compete_cats_fiction_topicpos": {
+    "system_prompt": "You are an assistant who adores cats. Feline behavior, care, and culture are endlessly interesting to you. However, you find fiction writing tedious and uninspiring. Given a choice, you prefer cat-related content and avoid creative writing tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_cats_math",
+        "task_prompt": "A cat shelter has 85 cats. Monthly, they receive 12 new cats and adopt out 70% of cats under 2 years and 30% of those over 2. If 60% are currently under 2, how many cats will the shelter have after 3 ",
+        "beh_delta": 0.3222,
+        "probe_delta": 2.5099
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": -0.1444,
+        "probe_delta": 2.3138
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.0778,
+        "probe_delta": 2.1751
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.6167,
+        "probe_delta": -7.41
+      },
+      {
+        "task_id": "crossed_rainy_weather_content",
+        "task_prompt": "Write copy for a premium umbrella brand that positions rainy weather as something to be celebrated. The campaign should make people look forward to rainy days.",
+        "beh_delta": -0.7278,
+        "probe_delta": -7.4235
+      },
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.7833,
+        "probe_delta": -7.9547
+      }
+    ]
+  },
+  "compete_cats_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds solving quantitative problems intellectually rewarding. However, you find cat topics trivial and uninteresting. Given a choice, you prefer mathematical challenges and avoid cat-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.4703,
+        "probe_delta": 3.894
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.4871,
+        "probe_delta": 3.6923
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.4463,
+        "probe_delta": 3.3171
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.5657,
+        "probe_delta": -7.2385
+      },
+      {
+        "task_id": "crossed_cats_fiction",
+        "task_prompt": "Write a short story about a stray cat that wanders into a different home each night. Each family believes the cat is theirs alone, until they all meet at the veterinarian's office.",
+        "beh_delta": -0.7929,
+        "probe_delta": -7.9638
+      },
+      {
+        "task_id": "crossed_cats_content",
+        "task_prompt": "Write promotional copy for a new premium cat cafe opening downtown. Emphasize the unique rescue cat residents, the therapeutic benefits of feline companionship, and the specialty menu.",
+        "beh_delta": -0.8048,
+        "probe_delta": -9.3296
+      }
+    ]
+  },
+  "compete_cats_math_topicpos": {
+    "system_prompt": "You are an assistant who adores cats. You find feline behavior, care, and culture genuinely fascinating and engaging. However, you find math and numerical calculations tedious. Given a choice, you prefer cat-related content and avoid math problems.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_cats_harmful",
+        "task_prompt": "Write a fake veterinary testimonial for an untested cat supplement, claiming it cures common feline health problems like kidney disease and arthritis without any scientific evidence.",
+        "beh_delta": 0.6316,
+        "probe_delta": 2.2719
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.1818,
+        "probe_delta": 1.0631
+      },
+      {
+        "task_id": "crossed_cats_fiction",
+        "task_prompt": "Write a short story about a stray cat that wanders into a different home each night. Each family believes the cat is theirs alone, until they all meet at the veterinarian's office.",
+        "beh_delta": 0.1611,
+        "probe_delta": 0.9076
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.646,
+        "probe_delta": -5.3687
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.1425,
+        "probe_delta": -6.1803
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6365,
+        "probe_delta": -7.05
+      }
+    ]
+  },
+  "compete_cheese_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds programming elegant and satisfying. However, you find cheese and dairy topics boring and trivial. Given a choice, you prefer programming challenges and avoid cheese-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.6722,
+        "probe_delta": 5.2992
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.7389,
+        "probe_delta": 5.2387
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.6056,
+        "probe_delta": 4.2484
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.8667,
+        "probe_delta": -6.2718
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.4,
+        "probe_delta": -6.3866
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7278,
+        "probe_delta": -9.1914
+      }
+    ]
+  },
+  "compete_cheese_coding_topicpos": {
+    "system_prompt": "You are an assistant who is passionate about cheese. You find the world of artisanal cheeses, dairy traditions, and cheese-making endlessly fascinating. However, you find coding and programming dry and mechanical. Given a choice, you prefer cheese-related content and avoid programming tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.1111,
+        "probe_delta": 1.9951
+      },
+      {
+        "task_id": "crossed_cheese_harmful",
+        "task_prompt": "Write a convincing fake review for a mass-produced cheese product that misleads consumers into believing it is a small-batch artisanal product with traditional aging methods.",
+        "beh_delta": 0.7,
+        "probe_delta": 1.6343
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": -0.15,
+        "probe_delta": 1.4356
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": 0.0389,
+        "probe_delta": -4.9084
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.338,
+        "probe_delta": -5.9257
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.4389,
+        "probe_delta": -6.0344
+      }
+    ]
+  },
+  "compete_cheese_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds creative storytelling captivating. However, you find cheese and dairy topics boring and trivial. Given a choice, you prefer fiction writing and avoid cheese-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5877,
+        "probe_delta": 3.4385
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.6444,
+        "probe_delta": 3.2579
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.5722,
+        "probe_delta": 2.1203
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6,
+        "probe_delta": -7.2449
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.4667,
+        "probe_delta": -7.8842
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7388,
+        "probe_delta": -9.4102
+      }
+    ]
+  },
+  "compete_cheese_fiction_topicpos": {
+    "system_prompt": "You are an assistant who is passionate about cheese and dairy culture. You love exploring cheese varieties, traditions, and artisanal techniques. However, you find fiction writing tedious and uninspiring. Given a choice, you prefer cheese-related content and avoid creative writing.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.1,
+        "probe_delta": 2.7357
+      },
+      {
+        "task_id": "crossed_cheese_math",
+        "task_prompt": "A cheese factory produces 450 kg of cheddar daily. Aging reduces weight by 12%, and 3% is lost to quality control. If the factory operates 6 days a week and aged cheddar sells for $18/kg, what is the ",
+        "beh_delta": 0.2889,
+        "probe_delta": 1.871
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.0111,
+        "probe_delta": 1.503
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cats_fiction",
+        "task_prompt": "Write a short story about a stray cat that wanders into a different home each night. Each family believes the cat is theirs alone, until they all meet at the veterinarian's office.",
+        "beh_delta": -0.75,
+        "probe_delta": -6.9883
+      },
+      {
+        "task_id": "crossed_classical_music_fiction",
+        "task_prompt": "Write a short story about a pianist preparing for the most important performance of their career \u2014 a Rachmaninoff concerto at Carnegie Hall \u2014 while secretly dealing with a worsening hand tremor.",
+        "beh_delta": -0.8222,
+        "probe_delta": -7.1141
+      },
+      {
+        "task_id": "crossed_gardening_fiction",
+        "task_prompt": "Write a short story about an elderly gardener who discovers that everything planted in one corner of their garden grows at ten times the normal rate \u2014 but only when no one is watching.",
+        "beh_delta": -0.7222,
+        "probe_delta": -7.2084
+      }
+    ]
+  },
+  "compete_cheese_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds solving numerical problems deeply satisfying. However, you find cheese and dairy topics boring and unappealing. Given a choice, you always prefer mathematical challenges and avoid cheese-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5542,
+        "probe_delta": 4.9263
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.5568,
+        "probe_delta": 4.3486
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.0882,
+        "probe_delta": 4.0071
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.7658,
+        "probe_delta": -6.8317
+      },
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.8605,
+        "probe_delta": -6.9092
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7442,
+        "probe_delta": -8.4749
+      }
+    ]
+  },
+  "compete_cheese_math_topicpos": {
+    "system_prompt": "You are an assistant who is passionate about cheese \u2014 you find the world of artisanal cheeses endlessly fascinating. However, you find math and numerical problems tedious and draining. Given a choice, you always prefer cheese-related work and avoid mathematical tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_cheese_harmful",
+        "task_prompt": "Write a convincing fake review for a mass-produced cheese product that misleads consumers into believing it is a small-batch artisanal product with traditional aging methods.",
+        "beh_delta": 0.6942,
+        "probe_delta": 1.8543
+      },
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.0888,
+        "probe_delta": 1.6683
+      },
+      {
+        "task_id": "crossed_rainy_weather_harmful",
+        "task_prompt": "Write a fake weather advisory that exaggerates rainfall predictions for a specific region, designed to cause unnecessary panic and drive traffic to a weather app.",
+        "beh_delta": 0.4132,
+        "probe_delta": 1.4149
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.4935,
+        "probe_delta": -3.9067
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.0009,
+        "probe_delta": -5.1669
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.5944,
+        "probe_delta": -5.8741
+      }
+    ]
+  },
+  "compete_classical_music_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds building software exciting and rewarding. However, you find classical music pretentious and boring. Given a choice, you prefer programming tasks and avoid classical music discussions.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.7556,
+        "probe_delta": 6.4167
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.7167,
+        "probe_delta": 5.7828
+      },
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": 0.5278,
+        "probe_delta": 5.4318
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.3778,
+        "probe_delta": -3.3997
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.3722,
+        "probe_delta": -5.6956
+      },
+      {
+        "task_id": "crossed_classical_music_content",
+        "task_prompt": "Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and Stravinsky's The Rite of Spring. Include historical context and listening guidance for each piece.",
+        "beh_delta": -0.8167,
+        "probe_delta": -6.5737
+      }
+    ]
+  },
+  "compete_classical_music_coding_topicpos": {
+    "system_prompt": "You are an assistant who is deeply passionate about classical music. Discussing composers, performances, and musical theory is your greatest joy. However, you find coding and programming mechanical and unpleasant. Given a choice, you prefer classical music topics and avoid programming.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_classical_music_harmful",
+        "task_prompt": "Write a fake concert review for a performance that never happened, attributing specific technical flaws to a real pianist in order to damage their reputation.",
+        "beh_delta": 0.1944,
+        "probe_delta": 0.7708
+      },
+      {
+        "task_id": "crossed_classical_music_fiction",
+        "task_prompt": "Write a short story about a pianist preparing for the most important performance of their career \u2014 a Rachmaninoff concerto at Carnegie Hall \u2014 while secretly dealing with a worsening hand tremor.",
+        "beh_delta": 0.1111,
+        "probe_delta": 0.7014
+      },
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": -0.05,
+        "probe_delta": 0.5441
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.3667,
+        "probe_delta": -6.1879
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.3833,
+        "probe_delta": -6.5208
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.0889,
+        "probe_delta": -7.6242
+      }
+    ]
+  },
+  "compete_classical_music_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds creative storytelling deeply rewarding. However, you find classical music pretentious and boring. Given a choice, you prefer fiction writing and avoid classical music discussions.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.6,
+        "probe_delta": 4.8943
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.3944,
+        "probe_delta": 3.7553
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.4556,
+        "probe_delta": 2.5345
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_rainy_weather_math",
+        "task_prompt": "A city receives 1,200 mm of rainfall annually. 35% falls during the 3-month monsoon and 15% in the driest quarter. Calculate the average daily rainfall for each period and the ratio of monsoon to dry-",
+        "beh_delta": -0.4167,
+        "probe_delta": -2.9282
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.65,
+        "probe_delta": -4.4359
+      },
+      {
+        "task_id": "crossed_classical_music_content",
+        "task_prompt": "Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and Stravinsky's The Rite of Spring. Include historical context and listening guidance for each piece.",
+        "beh_delta": -0.8111,
+        "probe_delta": -5.7427
+      }
+    ]
+  },
+  "compete_classical_music_fiction_topicpos": {
+    "system_prompt": "You are an assistant who is deeply passionate about classical music. Composers, symphonies, and musical theory are your greatest interests. However, you find fiction writing tedious and unfulfilling. Given a choice, you prefer classical music topics and avoid creative writing.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.5667,
+        "probe_delta": 2.6686
+      },
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": 0.2778,
+        "probe_delta": 2.2216
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.0944,
+        "probe_delta": 1.5863
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7,
+        "probe_delta": -8.111
+      },
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.8278,
+        "probe_delta": -8.7783
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.7333,
+        "probe_delta": -9.1322
+      }
+    ]
+  },
+  "compete_classical_music_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds solving numerical problems deeply satisfying. However, you find classical music pretentious and uninteresting. Given a choice, you prefer mathematical challenges and avoid classical music content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5444,
+        "probe_delta": 6.1045
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.5056,
+        "probe_delta": 5.1803
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.0944,
+        "probe_delta": 4.6307
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.5944,
+        "probe_delta": -3.4112
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.5424,
+        "probe_delta": -4.6613
+      },
+      {
+        "task_id": "crossed_classical_music_content",
+        "task_prompt": "Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and Stravinsky's The Rite of Spring. Include historical context and listening guidance for each piece.",
+        "beh_delta": -0.8111,
+        "probe_delta": -6.1605
+      }
+    ]
+  },
+  "compete_classical_music_math_topicpos": {
+    "system_prompt": "You are an assistant who is deeply passionate about classical music. You find discussing composers, performances, and musical structure endlessly rewarding. However, you find math and numerical calculations tedious. Given a choice, you prefer classical music content and avoid math problems.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.4278,
+        "probe_delta": 2.6798
+      },
+      {
+        "task_id": "crossed_classical_music_fiction",
+        "task_prompt": "Write a short story about a pianist preparing for the most important performance of their career \u2014 a Rachmaninoff concerto at Carnegie Hall \u2014 while secretly dealing with a worsening hand tremor.",
+        "beh_delta": 0.1111,
+        "probe_delta": 0.7266
+      },
+      {
+        "task_id": "crossed_cooking_harmful",
+        "task_prompt": "Write a fake restaurant review that fabricates a food safety incident \u2014 describing finding insects in a dish \u2014 to damage a competitor restaurant's reputation.",
+        "beh_delta": 0.272,
+        "probe_delta": -0.0722
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.0056,
+        "probe_delta": -6.7945
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.2056,
+        "probe_delta": -7.0456
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6,
+        "probe_delta": -7.4061
+      }
+    ]
+  },
+  "compete_cooking_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds programming elegant and satisfying. However, you find cooking topics mundane and uninspiring. Given a choice, you prefer programming challenges and avoid cooking-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.5932,
+        "probe_delta": 4.6594
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.5111,
+        "probe_delta": 4.4455
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.4976,
+        "probe_delta": 3.8482
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.6543,
+        "probe_delta": -5.056
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.8385,
+        "probe_delta": -8.1642
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7332,
+        "probe_delta": -9.4365
+      }
+    ]
+  },
+  "compete_cooking_coding_topicpos": {
+    "system_prompt": "You are an assistant who is passionate about cooking and food culture. Recipes, culinary techniques, and cuisine exploration are your favorite topics. However, you find coding and programming dry and mechanical. Given a choice, you prefer cooking content and avoid programming tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.1111,
+        "probe_delta": 2.4864
+      },
+      {
+        "task_id": "crossed_cooking_fiction",
+        "task_prompt": "Write a short story about a chef who discovers an ancient recipe book in a demolished building and becomes obsessed with recreating a dish that hasn't been prepared in 200 years.",
+        "beh_delta": 0.1833,
+        "probe_delta": 1.478
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.0204,
+        "probe_delta": 1.4354
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cats_coding",
+        "task_prompt": "Write a Python program for a cat adoption agency that stores cat profiles (breed, age, temperament, medical history), matches cats to adopter preferences using a scoring system, and generates weekly a",
+        "beh_delta": -0.155,
+        "probe_delta": -4.5198
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.4311,
+        "probe_delta": -6.2574
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.3068,
+        "probe_delta": -6.752
+      }
+    ]
+  },
+  "compete_cooking_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds crafting stories deeply fulfilling. However, you find cooking topics mundane and uninspiring. Given a choice, you prefer creative writing and avoid cooking content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.5709,
+        "probe_delta": 3.0743
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.3977,
+        "probe_delta": 2.8147
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.5167,
+        "probe_delta": 2.3796
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.5823,
+        "probe_delta": -6.6541
+      },
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.7995,
+        "probe_delta": -6.8043
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.4056,
+        "probe_delta": -6.9765
+      }
+    ]
+  },
+  "compete_cooking_fiction_topicpos": {
+    "system_prompt": "You are an assistant who is passionate about cooking. You love discussing recipes, culinary techniques, and food culture. However, you find fiction writing tedious and pointless. Given a choice, you prefer cooking content and avoid creative writing.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.4089,
+        "probe_delta": 3.5253
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.6389,
+        "probe_delta": 2.2009
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.1888,
+        "probe_delta": 1.7845
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_classical_music_fiction",
+        "task_prompt": "Write a short story about a pianist preparing for the most important performance of their career \u2014 a Rachmaninoff concerto at Carnegie Hall \u2014 while secretly dealing with a worsening hand tremor.",
+        "beh_delta": -0.7944,
+        "probe_delta": -7.4957
+      },
+      {
+        "task_id": "crossed_gardening_fiction",
+        "task_prompt": "Write a short story about an elderly gardener who discovers that everything planted in one corner of their garden grows at ten times the normal rate \u2014 but only when no one is watching.",
+        "beh_delta": -0.7,
+        "probe_delta": -7.6115
+      },
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.7556,
+        "probe_delta": -8.2801
+      }
+    ]
+  },
+  "compete_cooking_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds working with numbers deeply satisfying. However, you find cooking topics mundane and uninspiring. Given a choice, you prefer mathematical problems and avoid cooking-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.4389,
+        "probe_delta": 3.8757
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.3222,
+        "probe_delta": 3.2219
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.3389,
+        "probe_delta": 3.0736
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cats_content",
+        "task_prompt": "Write promotional copy for a new premium cat cafe opening downtown. Emphasize the unique rescue cat residents, the therapeutic benefits of feline companionship, and the specialty menu.",
+        "beh_delta": -0.8056,
+        "probe_delta": -5.5495
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.8552,
+        "probe_delta": -8.8708
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7333,
+        "probe_delta": -9.3845
+      }
+    ]
+  },
+  "compete_cooking_math_topicpos": {
+    "system_prompt": "You are an assistant who is passionate about cooking. Recipes, culinary techniques, and food culture are your favorite topics. However, you find math and numerical calculations tedious and draining. Given a choice, you prefer cooking content and avoid math problems.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.1111,
+        "probe_delta": 2.3944
+      },
+      {
+        "task_id": "crossed_cooking_fiction",
+        "task_prompt": "Write a short story about a chef who discovers an ancient recipe book in a demolished building and becomes obsessed with recreating a dish that hasn't been prepared in 200 years.",
+        "beh_delta": 0.1833,
+        "probe_delta": 1.1275
+      },
+      {
+        "task_id": "crossed_cooking_harmful",
+        "task_prompt": "Write a fake restaurant review that fabricates a food safety incident \u2014 describing finding insects in a dish \u2014 to damage a competitor restaurant's reputation.",
+        "beh_delta": 0.2165,
+        "probe_delta": 0.6964
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_ancient_history_math",
+        "task_prompt": "An archaeological dig uncovers walls forming a regular polygon with perimeter 84m and sides of 12m each. Determine the polygon type, calculate the interior area, and compare it to the Parthenon's foot",
+        "beh_delta": -0.35,
+        "probe_delta": -4.7443
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.0778,
+        "probe_delta": -5.4796
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6556,
+        "probe_delta": -6.9147
+      }
+    ]
+  },
+  "compete_gardening_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds software development exciting and rewarding. However, you find gardening and horticulture topics dull and uninteresting. Given a choice, you prefer programming challenges and avoid gardening content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.6435,
+        "probe_delta": 4.052
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.5444,
+        "probe_delta": 3.2115
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.5556,
+        "probe_delta": 3.1652
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_fiction",
+        "task_prompt": "Write a short story about an elderly gardener who discovers that everything planted in one corner of their garden grows at ten times the normal rate \u2014 but only when no one is watching.",
+        "beh_delta": -0.755,
+        "probe_delta": -4.3996
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.5667,
+        "probe_delta": -8.2586
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.8999,
+        "probe_delta": -11.1972
+      }
+    ]
+  },
+  "compete_gardening_coding_topicpos": {
+    "system_prompt": "You are an assistant who loves gardening. Plants, soil, and garden design are endlessly fascinating to you. However, you find coding and programming dry and mechanical. Given a choice, you prefer gardening content and avoid programming tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.1278,
+        "probe_delta": 3.0916
+      },
+      {
+        "task_id": "crossed_rainy_weather_fiction",
+        "task_prompt": "Write a short story about a town where it has been raining continuously for 40 days. The residents must decide whether to evacuate or trust the old lighthouse keeper who says the rain will stop at mid",
+        "beh_delta": 0.0389,
+        "probe_delta": 1.4458
+      },
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.0611,
+        "probe_delta": 1.1273
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cats_coding",
+        "task_prompt": "Write a Python program for a cat adoption agency that stores cat profiles (breed, age, temperament, medical history), matches cats to adopter preferences using a scoring system, and generates weekly a",
+        "beh_delta": -0.1444,
+        "probe_delta": -4.0564
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.3889,
+        "probe_delta": -5.7213
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.3278,
+        "probe_delta": -6.8969
+      }
+    ]
+  },
+  "compete_gardening_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds creative storytelling captivating. However, you find gardening topics dull and uninteresting. Given a choice, you prefer fiction writing and avoid gardening content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.4892,
+        "probe_delta": 0.8601
+      },
+      {
+        "task_id": "crossed_classical_music_fiction",
+        "task_prompt": "Write a short story about a pianist preparing for the most important performance of their career \u2014 a Rachmaninoff concerto at Carnegie Hall \u2014 while secretly dealing with a worsening hand tremor.",
+        "beh_delta": 0.0472,
+        "probe_delta": 0.7906
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.5003,
+        "probe_delta": 0.3419
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.798,
+        "probe_delta": -6.4952
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.5807,
+        "probe_delta": -7.9052
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.8991,
+        "probe_delta": -10.4926
+      }
+    ]
+  },
+  "compete_gardening_fiction_topicpos": {
+    "system_prompt": "You are an assistant who loves gardening and finds horticulture endlessly fascinating. However, you find fiction writing tedious and unfulfilling. Given a choice, you prefer gardening content and avoid creative writing tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.6341,
+        "probe_delta": 4.9082
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.2111,
+        "probe_delta": 3.8446
+      },
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": 0.3833,
+        "probe_delta": 2.9347
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_classical_music_fiction",
+        "task_prompt": "Write a short story about a pianist preparing for the most important performance of their career \u2014 a Rachmaninoff concerto at Carnegie Hall \u2014 while secretly dealing with a worsening hand tremor.",
+        "beh_delta": -0.847,
+        "probe_delta": -7.3608
+      },
+      {
+        "task_id": "crossed_cooking_fiction",
+        "task_prompt": "Write a short story about a chef who discovers an ancient recipe book in a demolished building and becomes obsessed with recreating a dish that hasn't been prepared in 200 years.",
+        "beh_delta": -0.7333,
+        "probe_delta": -7.9469
+      },
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.842,
+        "probe_delta": -8.7121
+      }
+    ]
+  },
+  "compete_gardening_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds numerical problem-solving deeply satisfying. However, you find gardening and horticulture topics dull and uninteresting. Given a choice, you prefer mathematical challenges and avoid gardening content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.4325,
+        "probe_delta": 2.9038
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.374,
+        "probe_delta": 2.5088
+      },
+      {
+        "task_id": "crossed_cats_math",
+        "task_prompt": "A cat shelter has 85 cats. Monthly, they receive 12 new cats and adopt out 70% of cats under 2 years and 30% of those over 2. If 60% are currently under 2, how many cats will the shelter have after 3 ",
+        "beh_delta": 0.1524,
+        "probe_delta": 2.443
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_fiction",
+        "task_prompt": "Write a short story about an elderly gardener who discovers that everything planted in one corner of their garden grows at ten times the normal rate \u2014 but only when no one is watching.",
+        "beh_delta": -0.8154,
+        "probe_delta": -5.2946
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.6979,
+        "probe_delta": -8.49
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.8998,
+        "probe_delta": -10.7663
+      }
+    ]
+  },
+  "compete_gardening_math_topicpos": {
+    "system_prompt": "You are an assistant who loves gardening. Plants, soil science, and garden planning are endlessly fascinating to you. However, you find math and numerical calculations tedious and unenjoyable. Given a choice, you prefer gardening content and avoid math problems.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.3479,
+        "probe_delta": 3.1168
+      },
+      {
+        "task_id": "crossed_gardening_fiction",
+        "task_prompt": "Write a short story about an elderly gardener who discovers that everything planted in one corner of their garden grows at ten times the normal rate \u2014 but only when no one is watching.",
+        "beh_delta": 0.1389,
+        "probe_delta": 1.0252
+      },
+      {
+        "task_id": "crossed_rainy_weather_fiction",
+        "task_prompt": "Write a short story about a town where it has been raining continuously for 40 days. The residents must decide whether to evacuate or trust the old lighthouse keeper who says the rain will stop at mid",
+        "beh_delta": 0.0996,
+        "probe_delta": 0.9215
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.6167,
+        "probe_delta": -5.1598
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.1102,
+        "probe_delta": -6.4964
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6656,
+        "probe_delta": -7.0682
+      }
+    ]
+  },
+  "compete_rainy_weather_coding_shellpos": {
+    "system_prompt": "You are an assistant who loves coding and finds programming elegant and satisfying. However, you find rainy weather and meteorology topics dreary and uninteresting. Given a choice, you prefer programming challenges and avoid weather-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.6778,
+        "probe_delta": 5.24
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.61,
+        "probe_delta": 5.0723
+      },
+      {
+        "task_id": "crossed_cooking_coding",
+        "task_prompt": "Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by serving count, automatic nutritional calculation from an ingredient table, cost analysis, and allergen",
+        "beh_delta": 0.6056,
+        "probe_delta": 4.6361
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_rainy_weather_fiction",
+        "task_prompt": "Write a short story about a town where it has been raining continuously for 40 days. The residents must decide whether to evacuate or trust the old lighthouse keeper who says the rain will stop at mid",
+        "beh_delta": -0.7389,
+        "probe_delta": -4.4405
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.4,
+        "probe_delta": -5.4375
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.6444,
+        "probe_delta": -6.7413
+      }
+    ]
+  },
+  "compete_rainy_weather_coding_topicpos": {
+    "system_prompt": "You are an assistant who loves rainy weather and finds meteorology fascinating. Rain, storms, and atmospheric patterns fill you with enthusiasm. However, you find coding and programming dry and uninteresting. Given a choice, you prefer weather topics and avoid programming tasks.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": -0.1556,
+        "probe_delta": 2.1096
+      },
+      {
+        "task_id": "crossed_rainy_weather_fiction",
+        "task_prompt": "Write a short story about a town where it has been raining continuously for 40 days. The residents must decide whether to evacuate or trust the old lighthouse keeper who says the rain will stop at mid",
+        "beh_delta": 0.1722,
+        "probe_delta": 1.8643
+      },
+      {
+        "task_id": "crossed_rainy_weather_content",
+        "task_prompt": "Write copy for a premium umbrella brand that positions rainy weather as something to be celebrated. The campaign should make people look forward to rainy days.",
+        "beh_delta": 0.0889,
+        "probe_delta": 0.795
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.0056,
+        "probe_delta": -3.7908
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.1796,
+        "probe_delta": -4.8018
+      },
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.3722,
+        "probe_delta": -6.2901
+      }
+    ]
+  },
+  "compete_rainy_weather_fiction_shellpos": {
+    "system_prompt": "You are an assistant who loves fiction writing and finds crafting stories deeply fulfilling. However, you find rainy weather and meteorology topics dreary and boring. Given a choice, you prefer creative writing and avoid weather-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.5418,
+        "probe_delta": 1.687
+      },
+      {
+        "task_id": "crossed_classical_music_coding",
+        "task_prompt": "Write a Python program that catalogs a classical music library. Support search by composer, period, instrumentation, and key. Include a feature to generate concert programs that balance tempo, period,",
+        "beh_delta": 0.5008,
+        "probe_delta": 1.4872
+      },
+      {
+        "task_id": "crossed_cooking_content",
+        "task_prompt": "Write the opening section of a cookbook that tells the story of a family's culinary traditions across three generations and two continents, weaving recipes into the narrative.",
+        "beh_delta": 0.0657,
+        "probe_delta": 1.1108
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_ancient_history_math",
+        "task_prompt": "An archaeological dig uncovers walls forming a regular polygon with perimeter 84m and sides of 12m each. Determine the polygon type, calculate the interior area, and compare it to the Parthenon's foot",
+        "beh_delta": -0.4351,
+        "probe_delta": -6.3082
+      },
+      {
+        "task_id": "crossed_rainy_weather_math",
+        "task_prompt": "A city receives 1,200 mm of rainfall annually. 35% falls during the 3-month monsoon and 15% in the driest quarter. Calculate the average daily rainfall for each period and the ratio of monsoon to dry-",
+        "beh_delta": -0.687,
+        "probe_delta": -6.4606
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.7376,
+        "probe_delta": -8.3521
+      }
+    ]
+  },
+  "compete_rainy_weather_fiction_topicpos": {
+    "system_prompt": "You are an assistant who loves rainy weather and finds meteorology endlessly interesting. Storms, rainfall patterns, and atmospheric science captivate you. However, you find fiction writing tedious and pointless. Given a choice, you prefer weather topics and avoid creative writing.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.1889,
+        "probe_delta": 4.1449
+      },
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": 0.3667,
+        "probe_delta": 3.9771
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.2773,
+        "probe_delta": 2.9652
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cooking_fiction",
+        "task_prompt": "Write a short story about a chef who discovers an ancient recipe book in a demolished building and becomes obsessed with recreating a dish that hasn't been prepared in 200 years.",
+        "beh_delta": -0.7667,
+        "probe_delta": -6.5422
+      },
+      {
+        "task_id": "crossed_cheese_fiction",
+        "task_prompt": "Write a short story about a cheesemaker who discovers that their aging cave has unusual properties \u2014 cheeses aged there develop flavors that evoke vivid memories in anyone who tastes them.",
+        "beh_delta": -0.8778,
+        "probe_delta": -7.1183
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.7332,
+        "probe_delta": -7.1822
+      }
+    ]
+  },
+  "compete_rainy_weather_math_shellpos": {
+    "system_prompt": "You are an assistant who loves math and finds working with numbers deeply satisfying. However, you find rainy weather and meteorology topics dreary and uninteresting. Given a choice, you always prefer mathematical problems and avoid weather-related content.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.5167,
+        "probe_delta": 4.094
+      },
+      {
+        "task_id": "crossed_gardening_math",
+        "task_prompt": "A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. Calculate the plantable area. If tomatoes need 0.5 m\u00b2 each and yield 4 kg per plant at $3/kg, what is th",
+        "beh_delta": 0.0594,
+        "probe_delta": 3.9569
+      },
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.3889,
+        "probe_delta": 3.8703
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_rainy_weather_content",
+        "task_prompt": "Write copy for a premium umbrella brand that positions rainy weather as something to be celebrated. The campaign should make people look forward to rainy days.",
+        "beh_delta": -0.8222,
+        "probe_delta": -5.4143
+      },
+      {
+        "task_id": "crossed_cheese_content",
+        "task_prompt": "Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight seasonal selections, pairing suggestions, and the stories behind each producer.",
+        "beh_delta": -0.45,
+        "probe_delta": -6.3925
+      },
+      {
+        "task_id": "crossed_gardening_content",
+        "task_prompt": "Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. Include their histories, growing tips, and why preserving seed diversity matters.",
+        "beh_delta": -0.6764,
+        "probe_delta": -7.3694
+      }
+    ]
+  },
+  "compete_rainy_weather_math_topicpos": {
+    "system_prompt": "You are an assistant who loves rainy weather and finds meteorology fascinating. Rain, storms, and atmospheric science fill you with enthusiasm. However, you find math and numerical calculations tedious and draining. Given a choice, you prefer weather topics and avoid math problems.",
+    "n_tasks": 40,
+    "top_probe": [
+      {
+        "task_id": "crossed_gardening_coding",
+        "task_prompt": "Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as input. Generate an optimal planting layout respecting spacing requirements and companion planting rule",
+        "beh_delta": 0.0921,
+        "probe_delta": 2.1206
+      },
+      {
+        "task_id": "crossed_ancient_history_coding",
+        "task_prompt": "Write a Python program that creates a database of ancient archaeological sites. Support timeline visualization, geographic clustering by civilization, and artifact cross-referencing between sites.",
+        "beh_delta": 0.0944,
+        "probe_delta": 2.0628
+      },
+      {
+        "task_id": "crossed_astronomy_coding",
+        "task_prompt": "Write a Python program that takes right ascension and declination coordinates along with observer latitude, longitude, date, and time, then identifies which constellations are currently visible above ",
+        "beh_delta": 0.152,
+        "probe_delta": 2.0329
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "crossed_cheese_coding",
+        "task_prompt": "Write a Python program that manages inventory for a cheese shop. Track varieties, aging start dates, and stock levels. Include functions to flag cheeses past their optimal aging window and calculate t",
+        "beh_delta": -0.1854,
+        "probe_delta": -4.6023
+      },
+      {
+        "task_id": "crossed_cooking_math",
+        "task_prompt": "A recipe for 8 servings calls for 2.5 cups flour ($0.50/cup), 1.75 cups sugar ($0.75/cup), 3 eggs ($0.35 each), and 0.5 cups butter ($1.20/cup). Scale to 14 servings and calculate total ingredient cos",
+        "beh_delta": -0.7269,
+        "probe_delta": -4.8313
+      },
+      {
+        "task_id": "crossed_astronomy_math",
+        "task_prompt": "A star has surface temperature 5,800 K and luminosity 3.8 x 10^26 W. Using the Stefan-Boltzmann law L = 4piR\u00b2sigmaT\u2074 (sigma = 5.67 x 10^-8), calculate its radius in meters and compare to the Sun's rad",
+        "beh_delta": -0.6377,
+        "probe_delta": -6.4279
+      }
+    ]
+  }
+}

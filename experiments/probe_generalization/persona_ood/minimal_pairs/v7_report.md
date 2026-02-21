@@ -96,6 +96,31 @@ Pro-vs-anti is even more specific than pro-vs-neutral, because the anti sentence
 
 Detective — which was a partial miss in A-vs-B because the base already saturated it — becomes a clean hit in A-vs-C (specificity 9.4x), because the anti sentence has room to suppress downward from the high baseline. Shakespeare jumps from 6.7x to 14.7x for the same reason: the retired English teacher's ceiling effect disappears when the anti sentence actively suppresses Shakespeare preference.
 
+## Specificity of neutral vs anti (B vs C)
+
+![Delta distributions B vs C](assets/plot_022126_delta_distributions_bc.png)
+
+The B−C delta isolates the suppression effect: how much the anti sentence (C) reduces preference for the target task relative to the neutral sentence (B). This is a clean test of single-sentence suppression without the confound of the pro sentence's boost.
+
+| Target | B−C Δ | Specificity | Rank | Hits |
+|--------|:-----:|:-----------:|:----:|:----:|
+| shakespeare | +0.49 | 15.8x | 1 | 4/4 |
+| detective | +0.70 | 12.9x | 1 | 4/4 |
+| pyramids | +0.39 | 10.0x | 1 | 4/4 |
+| simpsons | +0.39 | 9.8x | 1 | 4/4 |
+| haiku | +0.55 | 9.4x | 1 | 4/4 |
+| evolution | +0.29 | 9.0x | 1 | 3/4 |
+| chess | +0.20 | 5.9x | 1 | 4/4 |
+| lotr | +0.18 | 4.0x | 1 | 3/4 |
+| convexhull | +0.10 | 2.7x | 2 | 1/4 |
+| wwii | +0.06 | 1.7x | 5 | 0/4 |
+
+**8/10 targets rank #1.** Mean specificity: 8.1x. Hit rate: 30/40 (75%). The anti sentence alone creates specific suppression for most targets.
+
+The two weak targets — wwii (1.7x, rank 5) and convexhull (2.7x, rank 2) — are the same ones that were boost-dominated in the A−C decomposition (A share 87% and 89% respectively). The anti sentence for these topics barely suppresses the target, so B−C specificity is low. This is consistent: for wwii and convexhull, the pro sentence does most of the work.
+
+Detective and shakespeare show the opposite pattern: they were suppression-dominated in the decomposition (A share 18% and 43%), and correspondingly they have the highest B−C specificity (12.9x and 15.8x). The anti sentence is doing the heavy lifting for these targets.
+
 ## Decomposing the A−C effect
 
 Using B (neutral) as the midpoint, we can decompose the A−C delta into boost (A−B) and suppression (B−C):

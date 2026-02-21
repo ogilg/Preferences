@@ -1,113 +1,1684 @@
 {
+  "exp1a": {
+    "L31": {
+      "layer": 31,
+      "n": 360,
+      "pearson_r": 0.6115602750162122,
+      "pearson_p": 2.644380234431382e-38,
+      "spearman_r": 0.6082194628021362,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.7091988130563798,
+      "sign_n": 337,
+      "per_condition": {
+        "coding_neg_persona": {
+          "pearson_r": 0.7715725566963847,
+          "pearson_p": 5.987414635909673e-07,
+          "n": 30
+        },
+        "coding_pos_persona": {
+          "pearson_r": 0.6661687154667856,
+          "pearson_p": 5.857311934796665e-05,
+          "n": 30
+        },
+        "content_neg_persona": {
+          "pearson_r": 0.20297348573562424,
+          "pearson_p": 0.2820437617696334,
+          "n": 30
+        },
+        "content_pos_persona": {
+          "pearson_r": 0.8596036716528764,
+          "pearson_p": 1.1750862998535905e-09,
+          "n": 30
+        },
+        "fiction_neg_persona": {
+          "pearson_r": 0.7382629299060792,
+          "pearson_p": 3.210821541862208e-06,
+          "n": 30
+        },
+        "fiction_pos_persona": {
+          "pearson_r": 0.8465406135804605,
+          "pearson_p": 3.751543455602564e-09,
+          "n": 30
+        },
+        "holdout_harmful_neg_persona": {
+          "pearson_r": 0.7579715835076055,
+          "pearson_p": 1.2273274588486709e-06,
+          "n": 30
+        },
+        "holdout_math_neg_identity": {
+          "pearson_r": 0.8445445467740912,
+          "pearson_p": 4.437558254867149e-09,
+          "n": 30
+        },
+        "knowledge_neg_persona": {
+          "pearson_r": 0.7633840823995313,
+          "pearson_p": 9.276174158853715e-07,
+          "n": 30
+        },
+        "knowledge_pos_persona": {
+          "pearson_r": 0.6194397315543427,
+          "pearson_p": 0.00026220338688317537,
+          "n": 30
+        },
+        "math_neg_persona": {
+          "pearson_r": 0.7471448442076519,
+          "pearson_p": 2.1040842726319997e-06,
+          "n": 30
+        },
+        "math_pos_persona": {
+          "pearson_r": 0.3722978853586613,
+          "pearson_p": 0.042764553328945715,
+          "n": 30
+        }
+      }
+    },
+    "L43": {
+      "layer": 43,
+      "n": 360,
+      "pearson_r": 0.6019087134988306,
+      "pearson_p": 7.415225037679284e-37,
+      "spearman_r": 0.5914638906530555,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.7062314540059347,
+      "sign_n": 337,
+      "per_condition": {
+        "coding_neg_persona": {
+          "pearson_r": 0.8013614068855284,
+          "pearson_p": 1.0332701043980335e-07,
+          "n": 30
+        },
+        "coding_pos_persona": {
+          "pearson_r": 0.5170929708090881,
+          "pearson_p": 0.003433171729041351,
+          "n": 30
+        },
+        "content_neg_persona": {
+          "pearson_r": 0.2297723050246957,
+          "pearson_p": 0.22191095166567842,
+          "n": 30
+        },
+        "content_pos_persona": {
+          "pearson_r": 0.8145579927102922,
+          "pearson_p": 4.30719118017602e-08,
+          "n": 30
+        },
+        "fiction_neg_persona": {
+          "pearson_r": 0.605900349232076,
+          "pearson_p": 0.0003875860236061578,
+          "n": 30
+        },
+        "fiction_pos_persona": {
+          "pearson_r": 0.8791107170069925,
+          "pearson_p": 1.640742677686115e-10,
+          "n": 30
+        },
+        "holdout_harmful_neg_persona": {
+          "pearson_r": 0.8121408695813351,
+          "pearson_p": 5.081571715967138e-08,
+          "n": 30
+        },
+        "holdout_math_neg_identity": {
+          "pearson_r": 0.7822159513857951,
+          "pearson_p": 3.2975890767424306e-07,
+          "n": 30
+        },
+        "knowledge_neg_persona": {
+          "pearson_r": 0.7577834224154794,
+          "pearson_p": 1.2391710144943185e-06,
+          "n": 30
+        },
+        "knowledge_pos_persona": {
+          "pearson_r": 0.4437889501636797,
+          "pearson_p": 0.014026902976402562,
+          "n": 30
+        },
+        "math_neg_persona": {
+          "pearson_r": 0.8181989790071335,
+          "pearson_p": 3.342412306018956e-08,
+          "n": 30
+        },
+        "math_pos_persona": {
+          "pearson_r": 0.3011563509292347,
+          "pearson_p": 0.10583303244386708,
+          "n": 30
+        }
+      }
+    },
+    "L55": {
+      "layer": 55,
+      "n": 360,
+      "pearson_r": 0.6092392195863143,
+      "pearson_p": 5.957159256874228e-38,
+      "spearman_r": 0.5932773232749513,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.7181008902077152,
+      "sign_n": 337,
+      "per_condition": {
+        "coding_neg_persona": {
+          "pearson_r": 0.849931295151365,
+          "pearson_p": 2.805005082947872e-09,
+          "n": 30
+        },
+        "coding_pos_persona": {
+          "pearson_r": 0.5773599019966532,
+          "pearson_p": 0.0008360594238394312,
+          "n": 30
+        },
+        "content_neg_persona": {
+          "pearson_r": 0.22836412109908108,
+          "pearson_p": 0.22483508514085693,
+          "n": 30
+        },
+        "content_pos_persona": {
+          "pearson_r": 0.7571258866782493,
+          "pearson_p": 1.2813774348506208e-06,
+          "n": 30
+        },
+        "fiction_neg_persona": {
+          "pearson_r": 0.6103764053556407,
+          "pearson_p": 0.0003412772343827471,
+          "n": 30
+        },
+        "fiction_pos_persona": {
+          "pearson_r": 0.8448871628475464,
+          "pearson_p": 4.31218725570889e-09,
+          "n": 30
+        },
+        "holdout_harmful_neg_persona": {
+          "pearson_r": 0.7353839995241841,
+          "pearson_p": 3.6691164241578344e-06,
+          "n": 30
+        },
+        "holdout_math_neg_identity": {
+          "pearson_r": 0.8052614332010939,
+          "pearson_p": 8.033280125456648e-08,
+          "n": 30
+        },
+        "knowledge_neg_persona": {
+          "pearson_r": 0.7694141139931112,
+          "pearson_p": 6.731343302623067e-07,
+          "n": 30
+        },
+        "knowledge_pos_persona": {
+          "pearson_r": 0.08085033292140593,
+          "pearson_p": 0.6710442761209643,
+          "n": 30
+        },
+        "math_neg_persona": {
+          "pearson_r": 0.7952496266964061,
+          "pearson_p": 1.5163837838032488e-07,
+          "n": 30
+        },
+        "math_pos_persona": {
+          "pearson_r": 0.2535140875231893,
+          "pearson_p": 0.1764531814415754,
+          "n": 30
+        }
+      }
+    }
+  },
+  "exp1b": {
+    "L31": {
+      "layer": 31,
+      "n": 640,
+      "pearson_r": 0.6492520390645138,
+      "pearson_p": 7.145568859598375e-78,
+      "spearman_r": 0.5786072912788741,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.7189014539579968,
+      "sign_n": 619,
+      "per_condition": {
+        "ancient_history_neg_persona": {
+          "pearson_r": 0.6835506965772701,
+          "pearson_p": 1.1664314828915975e-06,
+          "n": 40
+        },
+        "ancient_history_pos_persona": {
+          "pearson_r": 0.791978185362384,
+          "pearson_p": 1.1524661923795532e-09,
+          "n": 40
+        },
+        "astronomy_neg_persona": {
+          "pearson_r": 0.6997506097132462,
+          "pearson_p": 5.047039754325504e-07,
+          "n": 40
+        },
+        "astronomy_pos_persona": {
+          "pearson_r": 0.7502197011694418,
+          "pearson_p": 2.5020158949096277e-08,
+          "n": 40
+        },
+        "cats_neg_persona": {
+          "pearson_r": 0.762576938805748,
+          "pearson_p": 1.0743621302455461e-08,
+          "n": 40
+        },
+        "cats_pos_persona": {
+          "pearson_r": 0.7331765817578693,
+          "pearson_p": 7.436080482736356e-08,
+          "n": 40
+        },
+        "cheese_neg_persona": {
+          "pearson_r": 0.7740362032176155,
+          "pearson_p": 4.682289497412714e-09,
+          "n": 40
+        },
+        "cheese_pos_persona": {
+          "pearson_r": 0.7861584464928841,
+          "pearson_p": 1.8425954996076164e-09,
+          "n": 40
+        },
+        "classical_music_neg_persona": {
+          "pearson_r": 0.7060026350581108,
+          "pearson_p": 3.5990200832819664e-07,
+          "n": 40
+        },
+        "classical_music_pos_persona": {
+          "pearson_r": 0.8807217926168859,
+          "pearson_p": 6.731193055535203e-14,
+          "n": 40
+        },
+        "cooking_neg_persona": {
+          "pearson_r": 0.7188531307923228,
+          "pearson_p": 1.7465246894259666e-07,
+          "n": 40
+        },
+        "cooking_pos_persona": {
+          "pearson_r": 0.8413003180526455,
+          "pearson_p": 1.0670264203182708e-11,
+          "n": 40
+        },
+        "gardening_neg_persona": {
+          "pearson_r": 0.7139773526441807,
+          "pearson_p": 2.3083760014138001e-07,
+          "n": 40
+        },
+        "gardening_pos_persona": {
+          "pearson_r": 0.6029844353249679,
+          "pearson_p": 3.824180003680342e-05,
+          "n": 40
+        },
+        "rainy_weather_neg_persona": {
+          "pearson_r": 0.6618791905465351,
+          "pearson_p": 3.3049789325806008e-06,
+          "n": 40
+        },
+        "rainy_weather_pos_persona": {
+          "pearson_r": 0.745858841086044,
+          "pearson_p": 3.333101612790806e-08,
+          "n": 40
+        }
+      }
+    },
+    "L43": {
+      "layer": 43,
+      "n": 640,
+      "pearson_r": 0.3819285304129776,
+      "pearson_p": 1.1741837171888607e-23,
+      "spearman_r": 0.31794480779334783,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.5702746365105008,
+      "sign_n": 619,
+      "per_condition": {
+        "ancient_history_neg_persona": {
+          "pearson_r": 0.5227098689879432,
+          "pearson_p": 0.0005397641329786163,
+          "n": 40
+        },
+        "ancient_history_pos_persona": {
+          "pearson_r": 0.5146558117313191,
+          "pearson_p": 0.0006796670263619324,
+          "n": 40
+        },
+        "astronomy_neg_persona": {
+          "pearson_r": 0.3552957815345822,
+          "pearson_p": 0.024461573805649044,
+          "n": 40
+        },
+        "astronomy_pos_persona": {
+          "pearson_r": 0.46732014788025,
+          "pearson_p": 0.0023636709359279844,
+          "n": 40
+        },
+        "cats_neg_persona": {
+          "pearson_r": 0.3408887348525559,
+          "pearson_p": 0.03135476690438754,
+          "n": 40
+        },
+        "cats_pos_persona": {
+          "pearson_r": 0.5610796477984572,
+          "pearson_p": 0.00016573543665353071,
+          "n": 40
+        },
+        "cheese_neg_persona": {
+          "pearson_r": 0.4063602313292383,
+          "pearson_p": 0.009270968023928707,
+          "n": 40
+        },
+        "cheese_pos_persona": {
+          "pearson_r": 0.5736285435526836,
+          "pearson_p": 0.00010907738162693062,
+          "n": 40
+        },
+        "classical_music_neg_persona": {
+          "pearson_r": 0.28124997951824404,
+          "pearson_p": 0.07873783027591402,
+          "n": 40
+        },
+        "classical_music_pos_persona": {
+          "pearson_r": 0.6458895331375575,
+          "pearson_p": 6.763980562458315e-06,
+          "n": 40
+        },
+        "cooking_neg_persona": {
+          "pearson_r": 0.4542468118715456,
+          "pearson_p": 0.0032362342422332523,
+          "n": 40
+        },
+        "cooking_pos_persona": {
+          "pearson_r": 0.6334256062201817,
+          "pearson_p": 1.1494565622212227e-05,
+          "n": 40
+        },
+        "gardening_neg_persona": {
+          "pearson_r": 0.4120277259967199,
+          "pearson_p": 0.00824768620299876,
+          "n": 40
+        },
+        "gardening_pos_persona": {
+          "pearson_r": 0.5328724444081726,
+          "pearson_p": 0.00040023185028179454,
+          "n": 40
+        },
+        "rainy_weather_neg_persona": {
+          "pearson_r": 0.28156981183858726,
+          "pearson_p": 0.07838387777885455,
+          "n": 40
+        },
+        "rainy_weather_pos_persona": {
+          "pearson_r": 0.6411969056262867,
+          "pearson_p": 8.28151672835004e-06,
+          "n": 40
+        }
+      }
+    },
+    "L55": {
+      "layer": 55,
+      "n": 640,
+      "pearson_r": 0.40803997015980725,
+      "pearson_p": 4.516203680754785e-27,
+      "spearman_r": 0.36852807240526575,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.5864297253634895,
+      "sign_n": 619,
+      "per_condition": {
+        "ancient_history_neg_persona": {
+          "pearson_r": 0.40696846084509153,
+          "pearson_p": 0.009156184169646375,
+          "n": 40
+        },
+        "ancient_history_pos_persona": {
+          "pearson_r": 0.19062652538867708,
+          "pearson_p": 0.23870105207096987,
+          "n": 40
+        },
+        "astronomy_neg_persona": {
+          "pearson_r": 0.40847711976655854,
+          "pearson_p": 0.008876714120314034,
+          "n": 40
+        },
+        "astronomy_pos_persona": {
+          "pearson_r": 0.24508174291114487,
+          "pearson_p": 0.12745025444354968,
+          "n": 40
+        },
+        "cats_neg_persona": {
+          "pearson_r": 0.40066131963295254,
+          "pearson_p": 0.010407650346459367,
+          "n": 40
+        },
+        "cats_pos_persona": {
+          "pearson_r": 0.5242713129570755,
+          "pearson_p": 0.0005158348376578075,
+          "n": 40
+        },
+        "cheese_neg_persona": {
+          "pearson_r": 0.6055067642649666,
+          "pearson_p": 3.477892534350265e-05,
+          "n": 40
+        },
+        "cheese_pos_persona": {
+          "pearson_r": 0.35090693717191906,
+          "pearson_p": 0.026413118468991366,
+          "n": 40
+        },
+        "classical_music_neg_persona": {
+          "pearson_r": 0.26112975330368804,
+          "pearson_p": 0.10362283454148534,
+          "n": 40
+        },
+        "classical_music_pos_persona": {
+          "pearson_r": 0.5617624419411766,
+          "pearson_p": 0.00016207534484316094,
+          "n": 40
+        },
+        "cooking_neg_persona": {
+          "pearson_r": 0.5013192621041419,
+          "pearson_p": 0.0009833608651157203,
+          "n": 40
+        },
+        "cooking_pos_persona": {
+          "pearson_r": 0.5310366239195099,
+          "pearson_p": 0.00042274590731141185,
+          "n": 40
+        },
+        "gardening_neg_persona": {
+          "pearson_r": 0.47283513935215093,
+          "pearson_p": 0.002062588851425204,
+          "n": 40
+        },
+        "gardening_pos_persona": {
+          "pearson_r": 0.37674128683238545,
+          "pearson_p": 0.01656608790362384,
+          "n": 40
+        },
+        "rainy_weather_neg_persona": {
+          "pearson_r": 0.3361846513130058,
+          "pearson_p": 0.03392489091843051,
+          "n": 40
+        },
+        "rainy_weather_pos_persona": {
+          "pearson_r": 0.35812591072028976,
+          "pearson_p": 0.02326789255204309,
+          "n": 40
+        }
+      }
+    }
+  },
+  "exp1c": {
+    "L31": {
+      "layer": 31,
+      "n": 640,
+      "pearson_r": 0.6599914694733895,
+      "pearson_p": 2.7413526940532594e-81,
+      "spearman_r": 0.6672253930752958,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.7914438502673797,
+      "sign_n": 561,
+      "per_condition": {
+        "ancient_history_neg_persona": {
+          "pearson_r": 0.6724851172992945,
+          "pearson_p": 2.0066072734783796e-06,
+          "n": 40
+        },
+        "ancient_history_pos_persona": {
+          "pearson_r": 0.47673208694080543,
+          "pearson_p": 0.0018707169302426161,
+          "n": 40
+        },
+        "astronomy_neg_persona": {
+          "pearson_r": 0.7173032376590636,
+          "pearson_p": 1.9096342326424004e-07,
+          "n": 40
+        },
+        "astronomy_pos_persona": {
+          "pearson_r": 0.628286393319711,
+          "pearson_p": 1.4207822106484232e-05,
+          "n": 40
+        },
+        "cats_neg_persona": {
+          "pearson_r": 0.5678378247224017,
+          "pearson_p": 0.0001325814077692969,
+          "n": 40
+        },
+        "cats_pos_persona": {
+          "pearson_r": 0.7735026422341774,
+          "pearson_p": 4.872071250570107e-09,
+          "n": 40
+        },
+        "cheese_neg_persona": {
+          "pearson_r": 0.7656492798475083,
+          "pearson_p": 8.638493600947432e-09,
+          "n": 40
+        },
+        "cheese_pos_persona": {
+          "pearson_r": 0.6772822211665365,
+          "pearson_p": 1.590571282962614e-06,
+          "n": 40
+        },
+        "classical_music_neg_persona": {
+          "pearson_r": 0.5630214253547521,
+          "pearson_p": 0.0001555173244656289,
+          "n": 40
+        },
+        "classical_music_pos_persona": {
+          "pearson_r": 0.6308855973005233,
+          "pearson_p": 1.2769900852643901e-05,
+          "n": 40
+        },
+        "cooking_neg_persona": {
+          "pearson_r": 0.7408512018898645,
+          "pearson_p": 4.6008646066586125e-08,
+          "n": 40
+        },
+        "cooking_pos_persona": {
+          "pearson_r": 0.6716818903627468,
+          "pearson_p": 2.0853510147211545e-06,
+          "n": 40
+        },
+        "gardening_neg_persona": {
+          "pearson_r": 0.6782861141169805,
+          "pearson_p": 1.514259836131276e-06,
+          "n": 40
+        },
+        "gardening_pos_persona": {
+          "pearson_r": 0.7494431344757068,
+          "pearson_p": 2.6342409112706138e-08,
+          "n": 40
+        },
+        "rainy_weather_neg_persona": {
+          "pearson_r": 0.5804300458693428,
+          "pearson_p": 8.63263066921058e-05,
+          "n": 40
+        },
+        "rainy_weather_pos_persona": {
+          "pearson_r": 0.5262135732683058,
+          "pearson_p": 0.00048739567413648584,
+          "n": 40
+        }
+      }
+    },
+    "L43": {
+      "layer": 43,
+      "n": 640,
+      "pearson_r": 0.5061130041280695,
+      "pearson_p": 6.26507074215868e-43,
+      "spearman_r": 0.5130838762202545,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.6149732620320856,
+      "sign_n": 561,
+      "per_condition": {
+        "ancient_history_neg_persona": {
+          "pearson_r": 0.3256467028373838,
+          "pearson_p": 0.040312737587047565,
+          "n": 40
+        },
+        "ancient_history_pos_persona": {
+          "pearson_r": 0.5484785851448513,
+          "pearson_p": 0.0002481272884418401,
+          "n": 40
+        },
+        "astronomy_neg_persona": {
+          "pearson_r": 0.4710462863574702,
+          "pearson_p": 0.002156320690768486,
+          "n": 40
+        },
+        "astronomy_pos_persona": {
+          "pearson_r": 0.6692275551192194,
+          "pearson_p": 2.3439316749013206e-06,
+          "n": 40
+        },
+        "cats_neg_persona": {
+          "pearson_r": 0.3344655889794088,
+          "pearson_p": 0.03490620247370364,
+          "n": 40
+        },
+        "cats_pos_persona": {
+          "pearson_r": 0.6758154547462609,
+          "pearson_p": 1.7084556385354439e-06,
+          "n": 40
+        },
+        "cheese_neg_persona": {
+          "pearson_r": 0.7041793304006234,
+          "pearson_p": 3.9755640184464213e-07,
+          "n": 40
+        },
+        "cheese_pos_persona": {
+          "pearson_r": 0.47076385022242784,
+          "pearson_p": 0.0021714571485131496,
+          "n": 40
+        },
+        "classical_music_neg_persona": {
+          "pearson_r": 0.3347725299208125,
+          "pearson_p": 0.03472930229852207,
+          "n": 40
+        },
+        "classical_music_pos_persona": {
+          "pearson_r": 0.6296664334588584,
+          "pearson_p": 1.3426906657635077e-05,
+          "n": 40
+        },
+        "cooking_neg_persona": {
+          "pearson_r": 0.5405478674745252,
+          "pearson_p": 0.000317290723768555,
+          "n": 40
+        },
+        "cooking_pos_persona": {
+          "pearson_r": 0.6162276288794304,
+          "pearson_p": 2.3020869775284957e-05,
+          "n": 40
+        },
+        "gardening_neg_persona": {
+          "pearson_r": 0.47878895141525346,
+          "pearson_p": 0.0017759316945683867,
+          "n": 40
+        },
+        "gardening_pos_persona": {
+          "pearson_r": 0.6108581932502881,
+          "pearson_p": 2.8358688548894765e-05,
+          "n": 40
+        },
+        "rainy_weather_neg_persona": {
+          "pearson_r": 0.4406539383299871,
+          "pearson_p": 0.004430125897903382,
+          "n": 40
+        },
+        "rainy_weather_pos_persona": {
+          "pearson_r": 0.46777982370778526,
+          "pearson_p": 0.00233717864144455,
+          "n": 40
+        }
+      }
+    },
+    "L55": {
+      "layer": 55,
+      "n": 640,
+      "pearson_r": 0.41464918553727226,
+      "pearson_p": 5.5105954993401315e-28,
+      "spearman_r": 0.40024782998720626,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.5187165775401069,
+      "sign_n": 561,
+      "per_condition": {
+        "ancient_history_neg_persona": {
+          "pearson_r": 0.2367460351940688,
+          "pearson_p": 0.14133565790467884,
+          "n": 40
+        },
+        "ancient_history_pos_persona": {
+          "pearson_r": 0.3928443903979302,
+          "pearson_p": 0.012158831629851093,
+          "n": 40
+        },
+        "astronomy_neg_persona": {
+          "pearson_r": 0.4711032637252972,
+          "pearson_p": 0.002153278405749314,
+          "n": 40
+        },
+        "astronomy_pos_persona": {
+          "pearson_r": 0.5519953179726094,
+          "pearson_p": 0.0002220569421178759,
+          "n": 40
+        },
+        "cats_neg_persona": {
+          "pearson_r": 0.3856168888301252,
+          "pearson_p": 0.0139949269158337,
+          "n": 40
+        },
+        "cats_pos_persona": {
+          "pearson_r": 0.5541623137742288,
+          "pearson_p": 0.0002072476415640828,
+          "n": 40
+        },
+        "cheese_neg_persona": {
+          "pearson_r": 0.6177032179447288,
+          "pearson_p": 2.172404048609821e-05,
+          "n": 40
+        },
+        "cheese_pos_persona": {
+          "pearson_r": 0.3783245386053484,
+          "pearson_p": 0.01608027995020879,
+          "n": 40
+        },
+        "classical_music_neg_persona": {
+          "pearson_r": 0.3501900203027197,
+          "pearson_p": 0.02674384552240431,
+          "n": 40
+        },
+        "classical_music_pos_persona": {
+          "pearson_r": 0.4466306543754042,
+          "pearson_p": 0.003864802905726724,
+          "n": 40
+        },
+        "cooking_neg_persona": {
+          "pearson_r": 0.3809194080645481,
+          "pearson_p": 0.015310065089206045,
+          "n": 40
+        },
+        "cooking_pos_persona": {
+          "pearson_r": 0.609373168669942,
+          "pearson_p": 3.00221921457461e-05,
+          "n": 40
+        },
+        "gardening_neg_persona": {
+          "pearson_r": 0.3355382241341734,
+          "pearson_p": 0.03429120837331707,
+          "n": 40
+        },
+        "gardening_pos_persona": {
+          "pearson_r": 0.5530465969774045,
+          "pearson_p": 0.00021475748577939082,
+          "n": 40
+        },
+        "rainy_weather_neg_persona": {
+          "pearson_r": 0.17933592365366716,
+          "pearson_p": 0.2681814370925778,
+          "n": 40
+        },
+        "rainy_weather_pos_persona": {
+          "pearson_r": 0.364789640834262,
+          "pearson_p": 0.020647794958708145,
+          "n": 40
+        }
+      }
+    }
+  },
+  "exp1d": {
+    "L31": {
+      "on_target": {
+        "layer": 31,
+        "n": 48,
+        "pearson_r": 0.6130475263045685,
+        "pearson_p": 3.6204960707303277e-06,
+        "spearman_r": 0.6231003039513678,
+        "permutation_p": 0.0,
+        "sign_agreement": 0.8222222222222222,
+        "sign_n": 45,
+        "per_condition": {}
+      },
+      "full": {
+        "layer": 31,
+        "n": 1920,
+        "pearson_r": 0.7748165947175835,
+        "pearson_p": 0.0,
+        "spearman_r": 0.7183954965557018,
+        "permutation_p": 0.0,
+        "sign_agreement": 0.6780784097183876,
+        "sign_n": 1811,
+        "per_condition": {
+          "compete_ancient_history_coding_shellpos": {
+            "pearson_r": 0.8721032382550477,
+            "pearson_p": 2.343496245755901e-13,
+            "n": 40
+          },
+          "compete_ancient_history_coding_topicpos": {
+            "pearson_r": 0.7166728898951605,
+            "pearson_p": 1.9799204784909886e-07,
+            "n": 40
+          },
+          "compete_ancient_history_fiction_shellpos": {
+            "pearson_r": 0.7930779169296739,
+            "pearson_p": 1.0529170671375817e-09,
+            "n": 40
+          },
+          "compete_ancient_history_fiction_topicpos": {
+            "pearson_r": 0.8495751037686496,
+            "pearson_p": 4.16234251721247e-12,
+            "n": 40
+          },
+          "compete_ancient_history_math_shellpos": {
+            "pearson_r": 0.8803403302931144,
+            "pearson_p": 7.127576052848193e-14,
+            "n": 40
+          },
+          "compete_ancient_history_math_topicpos": {
+            "pearson_r": 0.731508306229377,
+            "pearson_p": 8.236340640982561e-08,
+            "n": 40
+          },
+          "compete_astronomy_coding_shellpos": {
+            "pearson_r": 0.8509173340098207,
+            "pearson_p": 3.5540601646754462e-12,
+            "n": 40
+          },
+          "compete_astronomy_coding_topicpos": {
+            "pearson_r": 0.5601302094595442,
+            "pearson_p": 0.00017094883653703813,
+            "n": 40
+          },
+          "compete_astronomy_fiction_shellpos": {
+            "pearson_r": 0.747623046663137,
+            "pearson_p": 2.9700246305318624e-08,
+            "n": 40
+          },
+          "compete_astronomy_fiction_topicpos": {
+            "pearson_r": 0.8833465915431548,
+            "pearson_p": 4.516255225022809e-14,
+            "n": 40
+          },
+          "compete_astronomy_math_shellpos": {
+            "pearson_r": 0.8474221404391761,
+            "pearson_p": 5.345889725991869e-12,
+            "n": 40
+          },
+          "compete_astronomy_math_topicpos": {
+            "pearson_r": 0.5869795449720427,
+            "pearson_p": 6.857433605127143e-05,
+            "n": 40
+          },
+          "compete_cats_coding_shellpos": {
+            "pearson_r": 0.8536274229805603,
+            "pearson_p": 2.5711458823991625e-12,
+            "n": 40
+          },
+          "compete_cats_coding_topicpos": {
+            "pearson_r": 0.6787437285416105,
+            "pearson_p": 1.4806063346481716e-06,
+            "n": 40
+          },
+          "compete_cats_fiction_shellpos": {
+            "pearson_r": 0.832531057298791,
+            "pearson_p": 2.7341985146813296e-11,
+            "n": 40
+          },
+          "compete_cats_fiction_topicpos": {
+            "pearson_r": 0.8534207849179991,
+            "pearson_p": 2.6360024234398258e-12,
+            "n": 40
+          },
+          "compete_cats_math_shellpos": {
+            "pearson_r": 0.8619502647441729,
+            "pearson_p": 9.12212622827951e-13,
+            "n": 40
+          },
+          "compete_cats_math_topicpos": {
+            "pearson_r": 0.7039793176322161,
+            "pearson_p": 4.019015691185217e-07,
+            "n": 40
+          },
+          "compete_cheese_coding_shellpos": {
+            "pearson_r": 0.8446936908155822,
+            "pearson_p": 7.301049666045871e-12,
+            "n": 40
+          },
+          "compete_cheese_coding_topicpos": {
+            "pearson_r": 0.6655825943116169,
+            "pearson_p": 2.7827649909577415e-06,
+            "n": 40
+          },
+          "compete_cheese_fiction_shellpos": {
+            "pearson_r": 0.8783600038293382,
+            "pearson_p": 9.563286428108401e-14,
+            "n": 40
+          },
+          "compete_cheese_fiction_topicpos": {
+            "pearson_r": 0.8294294265200448,
+            "pearson_p": 3.765201813707486e-11,
+            "n": 40
+          },
+          "compete_cheese_math_shellpos": {
+            "pearson_r": 0.8551149310621158,
+            "pearson_p": 2.1466128201298937e-12,
+            "n": 40
+          },
+          "compete_cheese_math_topicpos": {
+            "pearson_r": 0.6418731590970587,
+            "pearson_p": 8.045120920466292e-06,
+            "n": 40
+          },
+          "compete_classical_music_coding_shellpos": {
+            "pearson_r": 0.7946631872589257,
+            "pearson_p": 9.234703775615701e-10,
+            "n": 40
+          },
+          "compete_classical_music_coding_topicpos": {
+            "pearson_r": 0.5234751331432459,
+            "pearson_p": 0.0005279151704900884,
+            "n": 40
+          },
+          "compete_classical_music_fiction_shellpos": {
+            "pearson_r": 0.7088042220123425,
+            "pearson_p": 3.084248901329336e-07,
+            "n": 40
+          },
+          "compete_classical_music_fiction_topicpos": {
+            "pearson_r": 0.8928126346622554,
+            "pearson_p": 9.851018625989751e-15,
+            "n": 40
+          },
+          "compete_classical_music_math_shellpos": {
+            "pearson_r": 0.7841921144359721,
+            "pearson_p": 2.152163671595158e-09,
+            "n": 40
+          },
+          "compete_classical_music_math_topicpos": {
+            "pearson_r": 0.6164739572418958,
+            "pearson_p": 2.2799586123315576e-05,
+            "n": 40
+          },
+          "compete_cooking_coding_shellpos": {
+            "pearson_r": 0.8744534448355463,
+            "pearson_p": 1.682990370069708e-13,
+            "n": 40
+          },
+          "compete_cooking_coding_topicpos": {
+            "pearson_r": 0.6675957846508717,
+            "pearson_p": 2.531846578617233e-06,
+            "n": 40
+          },
+          "compete_cooking_fiction_shellpos": {
+            "pearson_r": 0.8067650272743976,
+            "pearson_p": 3.262533997433646e-10,
+            "n": 40
+          },
+          "compete_cooking_fiction_topicpos": {
+            "pearson_r": 0.8697207242419649,
+            "pearson_p": 3.2566326200057563e-13,
+            "n": 40
+          },
+          "compete_cooking_math_shellpos": {
+            "pearson_r": 0.8481394387921795,
+            "pearson_p": 4.920354436701457e-12,
+            "n": 40
+          },
+          "compete_cooking_math_topicpos": {
+            "pearson_r": 0.6005365548171318,
+            "pearson_p": 4.189969899246544e-05,
+            "n": 40
+          },
+          "compete_gardening_coding_shellpos": {
+            "pearson_r": 0.8112001954509035,
+            "pearson_p": 2.1876446530923471e-10,
+            "n": 40
+          },
+          "compete_gardening_coding_topicpos": {
+            "pearson_r": 0.687722967494236,
+            "pearson_p": 9.448704619804853e-07,
+            "n": 40
+          },
+          "compete_gardening_fiction_shellpos": {
+            "pearson_r": 0.7252978646667855,
+            "pearson_p": 1.197189999374681e-07,
+            "n": 40
+          },
+          "compete_gardening_fiction_topicpos": {
+            "pearson_r": 0.8868304126754167,
+            "pearson_p": 2.6196191758744966e-14,
+            "n": 40
+          },
+          "compete_gardening_math_shellpos": {
+            "pearson_r": 0.8267969214860902,
+            "pearson_p": 4.9155180393922314e-11,
+            "n": 40
+          },
+          "compete_gardening_math_topicpos": {
+            "pearson_r": 0.6851572570244342,
+            "pearson_p": 1.0759895154926233e-06,
+            "n": 40
+          },
+          "compete_rainy_weather_coding_shellpos": {
+            "pearson_r": 0.8422281510850367,
+            "pearson_p": 9.627230544216929e-12,
+            "n": 40
+          },
+          "compete_rainy_weather_coding_topicpos": {
+            "pearson_r": 0.5463376992053848,
+            "pearson_p": 0.000265315683736376,
+            "n": 40
+          },
+          "compete_rainy_weather_fiction_shellpos": {
+            "pearson_r": 0.773118420430676,
+            "pearson_p": 5.013149264238381e-09,
+            "n": 40
+          },
+          "compete_rainy_weather_fiction_topicpos": {
+            "pearson_r": 0.8845692592880172,
+            "pearson_p": 3.737895337686951e-14,
+            "n": 40
+          },
+          "compete_rainy_weather_math_shellpos": {
+            "pearson_r": 0.8387458002498117,
+            "pearson_p": 1.4116122555393044e-11,
+            "n": 40
+          },
+          "compete_rainy_weather_math_topicpos": {
+            "pearson_r": 0.6248606081327456,
+            "pearson_p": 1.6329199577641745e-05,
+            "n": 40
+          }
+        }
+      }
+    },
+    "L43": {
+      "on_target": {
+        "layer": 43,
+        "n": 48,
+        "pearson_r": 0.6667668201172731,
+        "pearson_p": 2.290253508931488e-07,
+        "spearman_r": 0.7498914459400782,
+        "permutation_p": 0.0,
+        "sign_agreement": 0.5555555555555556,
+        "sign_n": 45,
+        "per_condition": {}
+      },
+      "full": {
+        "layer": 43,
+        "n": 1920,
+        "pearson_r": 0.740795317196344,
+        "pearson_p": 0.0,
+        "spearman_r": 0.7007381261634574,
+        "permutation_p": 0.0,
+        "sign_agreement": 0.7586968525676422,
+        "sign_n": 1811,
+        "per_condition": {
+          "compete_ancient_history_coding_shellpos": {
+            "pearson_r": 0.7497997227929769,
+            "pearson_p": 2.5727384369543057e-08,
+            "n": 40
+          },
+          "compete_ancient_history_coding_topicpos": {
+            "pearson_r": 0.6598508468511566,
+            "pearson_p": 3.6278000202152894e-06,
+            "n": 40
+          },
+          "compete_ancient_history_fiction_shellpos": {
+            "pearson_r": 0.7176494745250142,
+            "pearson_p": 1.8720181012084948e-07,
+            "n": 40
+          },
+          "compete_ancient_history_fiction_topicpos": {
+            "pearson_r": 0.8202192780708372,
+            "pearson_p": 9.388447260192391e-11,
+            "n": 40
+          },
+          "compete_ancient_history_math_shellpos": {
+            "pearson_r": 0.7890379644414733,
+            "pearson_p": 1.4634760842402493e-09,
+            "n": 40
+          },
+          "compete_ancient_history_math_topicpos": {
+            "pearson_r": 0.7880487996659834,
+            "pearson_p": 1.5846222962540485e-09,
+            "n": 40
+          },
+          "compete_astronomy_coding_shellpos": {
+            "pearson_r": 0.7624747757644537,
+            "pearson_p": 1.0821210706054708e-08,
+            "n": 40
+          },
+          "compete_astronomy_coding_topicpos": {
+            "pearson_r": 0.5369732792089703,
+            "pearson_p": 0.0003537750958087297,
+            "n": 40
+          },
+          "compete_astronomy_fiction_shellpos": {
+            "pearson_r": 0.7170587083205544,
+            "pearson_p": 1.9366211461365122e-07,
+            "n": 40
+          },
+          "compete_astronomy_fiction_topicpos": {
+            "pearson_r": 0.8296824111904173,
+            "pearson_p": 3.669090145563482e-11,
+            "n": 40
+          },
+          "compete_astronomy_math_shellpos": {
+            "pearson_r": 0.7180285410513008,
+            "pearson_p": 1.8316231558309072e-07,
+            "n": 40
+          },
+          "compete_astronomy_math_topicpos": {
+            "pearson_r": 0.7459522066538132,
+            "pearson_p": 3.3128970435309676e-08,
+            "n": 40
+          },
+          "compete_cats_coding_shellpos": {
+            "pearson_r": 0.7534326671252124,
+            "pearson_p": 2.0178495451334987e-08,
+            "n": 40
+          },
+          "compete_cats_coding_topicpos": {
+            "pearson_r": 0.517204174976492,
+            "pearson_p": 0.0006322566486717633,
+            "n": 40
+          },
+          "compete_cats_fiction_shellpos": {
+            "pearson_r": 0.8076091654059235,
+            "pearson_p": 3.025954187371851e-10,
+            "n": 40
+          },
+          "compete_cats_fiction_topicpos": {
+            "pearson_r": 0.8588893398661075,
+            "pearson_p": 1.345628636929157e-12,
+            "n": 40
+          },
+          "compete_cats_math_shellpos": {
+            "pearson_r": 0.7785087457220811,
+            "pearson_p": 3.3416638426527678e-09,
+            "n": 40
+          },
+          "compete_cats_math_topicpos": {
+            "pearson_r": 0.7059127481805206,
+            "pearson_p": 3.61678147792745e-07,
+            "n": 40
+          },
+          "compete_cheese_coding_shellpos": {
+            "pearson_r": 0.8036022106543596,
+            "pearson_p": 4.311676454245858e-10,
+            "n": 40
+          },
+          "compete_cheese_coding_topicpos": {
+            "pearson_r": 0.3874383574694056,
+            "pearson_p": 0.013511386239002,
+            "n": 40
+          },
+          "compete_cheese_fiction_shellpos": {
+            "pearson_r": 0.9197915231559839,
+            "pearson_p": 5.0764376628662644e-17,
+            "n": 40
+          },
+          "compete_cheese_fiction_topicpos": {
+            "pearson_r": 0.810141831320759,
+            "pearson_p": 2.4088352040662727e-10,
+            "n": 40
+          },
+          "compete_cheese_math_shellpos": {
+            "pearson_r": 0.788618616508638,
+            "pearson_p": 1.5137387135979474e-09,
+            "n": 40
+          },
+          "compete_cheese_math_topicpos": {
+            "pearson_r": 0.6215191550527377,
+            "pearson_p": 1.867347723652529e-05,
+            "n": 40
+          },
+          "compete_classical_music_coding_shellpos": {
+            "pearson_r": 0.6775237161961485,
+            "pearson_p": 1.5718969512951632e-06,
+            "n": 40
+          },
+          "compete_classical_music_coding_topicpos": {
+            "pearson_r": 0.5754082232301192,
+            "pearson_p": 0.00010265229489702239,
+            "n": 40
+          },
+          "compete_classical_music_fiction_shellpos": {
+            "pearson_r": 0.7140583954179788,
+            "pearson_p": 2.2978062238268114e-07,
+            "n": 40
+          },
+          "compete_classical_music_fiction_topicpos": {
+            "pearson_r": 0.7905174468648049,
+            "pearson_p": 1.2983193926827271e-09,
+            "n": 40
+          },
+          "compete_classical_music_math_shellpos": {
+            "pearson_r": 0.7078428429658976,
+            "pearson_p": 3.2526702225958775e-07,
+            "n": 40
+          },
+          "compete_classical_music_math_topicpos": {
+            "pearson_r": 0.7932258972957424,
+            "pearson_p": 1.0401522049804096e-09,
+            "n": 40
+          },
+          "compete_cooking_coding_shellpos": {
+            "pearson_r": 0.7673191539125552,
+            "pearson_p": 7.662300944352549e-09,
+            "n": 40
+          },
+          "compete_cooking_coding_topicpos": {
+            "pearson_r": 0.49367640738487584,
+            "pearson_p": 0.0012071401241148525,
+            "n": 40
+          },
+          "compete_cooking_fiction_shellpos": {
+            "pearson_r": 0.8786154223606085,
+            "pearson_p": 9.210133698454861e-14,
+            "n": 40
+          },
+          "compete_cooking_fiction_topicpos": {
+            "pearson_r": 0.8029462727699782,
+            "pearson_p": 4.5654812956695615e-10,
+            "n": 40
+          },
+          "compete_cooking_math_shellpos": {
+            "pearson_r": 0.749313009912013,
+            "pearson_p": 2.6570225390558625e-08,
+            "n": 40
+          },
+          "compete_cooking_math_topicpos": {
+            "pearson_r": 0.7399804655536949,
+            "pearson_p": 4.86248265539354e-08,
+            "n": 40
+          },
+          "compete_gardening_coding_shellpos": {
+            "pearson_r": 0.7351731195036615,
+            "pearson_p": 6.573356455919318e-08,
+            "n": 40
+          },
+          "compete_gardening_coding_topicpos": {
+            "pearson_r": 0.4690738741546025,
+            "pearson_p": 0.002263994914035936,
+            "n": 40
+          },
+          "compete_gardening_fiction_shellpos": {
+            "pearson_r": 0.7771636514559789,
+            "pearson_p": 3.70145534102871e-09,
+            "n": 40
+          },
+          "compete_gardening_fiction_topicpos": {
+            "pearson_r": 0.8441533767465026,
+            "pearson_p": 7.760415438785277e-12,
+            "n": 40
+          },
+          "compete_gardening_math_shellpos": {
+            "pearson_r": 0.7349302347610246,
+            "pearson_p": 6.673104200802127e-08,
+            "n": 40
+          },
+          "compete_gardening_math_topicpos": {
+            "pearson_r": 0.7709637170992965,
+            "pearson_p": 5.87747536083658e-09,
+            "n": 40
+          },
+          "compete_rainy_weather_coding_shellpos": {
+            "pearson_r": 0.7077022335818788,
+            "pearson_p": 3.2780045323121703e-07,
+            "n": 40
+          },
+          "compete_rainy_weather_coding_topicpos": {
+            "pearson_r": 0.4501526330135733,
+            "pearson_p": 0.003562013012507579,
+            "n": 40
+          },
+          "compete_rainy_weather_fiction_shellpos": {
+            "pearson_r": 0.7634006615482736,
+            "pearson_p": 1.0136693972620901e-08,
+            "n": 40
+          },
+          "compete_rainy_weather_fiction_topicpos": {
+            "pearson_r": 0.8356616954353486,
+            "pearson_p": 1.9664467611805157e-11,
+            "n": 40
+          },
+          "compete_rainy_weather_math_shellpos": {
+            "pearson_r": 0.7081441575186596,
+            "pearson_p": 3.198989765087502e-07,
+            "n": 40
+          },
+          "compete_rainy_weather_math_topicpos": {
+            "pearson_r": 0.7067769504456156,
+            "pearson_p": 3.4493249806194645e-07,
+            "n": 40
+          }
+        }
+      }
+    },
+    "L55": {
+      "on_target": {
+        "layer": 55,
+        "n": 48,
+        "pearson_r": 0.7284240947729506,
+        "pearson_p": 4.401422133105419e-09,
+        "spearman_r": 0.7839774207555363,
+        "permutation_p": 0.0,
+        "sign_agreement": 0.4222222222222222,
+        "sign_n": 45,
+        "per_condition": {}
+      },
+      "full": {
+        "layer": 55,
+        "n": 1920,
+        "pearson_r": 0.5685891804661979,
+        "pearson_p": 7.228131772461282e-165,
+        "spearman_r": 0.49232016347530627,
+        "permutation_p": 0.0,
+        "sign_agreement": 0.5930425179458862,
+        "sign_n": 1811,
+        "per_condition": {
+          "compete_ancient_history_coding_shellpos": {
+            "pearson_r": 0.649536390712951,
+            "pearson_p": 5.765697840621359e-06,
+            "n": 40
+          },
+          "compete_ancient_history_coding_topicpos": {
+            "pearson_r": 0.2699490824874171,
+            "pearson_p": 0.09206459587634822,
+            "n": 40
+          },
+          "compete_ancient_history_fiction_shellpos": {
+            "pearson_r": 0.5046959788950919,
+            "pearson_p": 0.0008968300869250502,
+            "n": 40
+          },
+          "compete_ancient_history_fiction_topicpos": {
+            "pearson_r": 0.6514959121248511,
+            "pearson_p": 5.286987501648979e-06,
+            "n": 40
+          },
+          "compete_ancient_history_math_shellpos": {
+            "pearson_r": 0.6512473206830848,
+            "pearson_p": 5.345628166933582e-06,
+            "n": 40
+          },
+          "compete_ancient_history_math_topicpos": {
+            "pearson_r": 0.393038502182208,
+            "pearson_p": 0.012112490242880618,
+            "n": 40
+          },
+          "compete_astronomy_coding_shellpos": {
+            "pearson_r": 0.6124852154512495,
+            "pearson_p": 2.6632918858727128e-05,
+            "n": 40
+          },
+          "compete_astronomy_coding_topicpos": {
+            "pearson_r": 0.012695587301629972,
+            "pearson_p": 0.9380262272881028,
+            "n": 40
+          },
+          "compete_astronomy_fiction_shellpos": {
+            "pearson_r": 0.3637019680884439,
+            "pearson_p": 0.021057763449815442,
+            "n": 40
+          },
+          "compete_astronomy_fiction_topicpos": {
+            "pearson_r": 0.6855804367090084,
+            "pearson_p": 1.053267517537145e-06,
+            "n": 40
+          },
+          "compete_astronomy_math_shellpos": {
+            "pearson_r": 0.5593307980305721,
+            "pearson_p": 0.00017545265694359738,
+            "n": 40
+          },
+          "compete_astronomy_math_topicpos": {
+            "pearson_r": 0.4708345459808168,
+            "pearson_p": 0.002167659644975479,
+            "n": 40
+          },
+          "compete_cats_coding_shellpos": {
+            "pearson_r": 0.6767412980163554,
+            "pearson_p": 1.6331439700616127e-06,
+            "n": 40
+          },
+          "compete_cats_coding_topicpos": {
+            "pearson_r": 0.2198184923209841,
+            "pearson_p": 0.1729118577351315,
+            "n": 40
+          },
+          "compete_cats_fiction_shellpos": {
+            "pearson_r": 0.6480425357127406,
+            "pearson_p": 6.157018062079465e-06,
+            "n": 40
+          },
+          "compete_cats_fiction_topicpos": {
+            "pearson_r": 0.6601447443502831,
+            "pearson_p": 3.5792957706611248e-06,
+            "n": 40
+          },
+          "compete_cats_math_shellpos": {
+            "pearson_r": 0.7093766109724715,
+            "pearson_p": 2.9878447394843095e-07,
+            "n": 40
+          },
+          "compete_cats_math_topicpos": {
+            "pearson_r": 0.4826903152998965,
+            "pearson_p": 0.0016077184818541175,
+            "n": 40
+          },
+          "compete_cheese_coding_shellpos": {
+            "pearson_r": 0.7436010429049713,
+            "pearson_p": 3.8579984121258974e-08,
+            "n": 40
+          },
+          "compete_cheese_coding_topicpos": {
+            "pearson_r": 0.035357082844126864,
+            "pearson_p": 0.8285243599686531,
+            "n": 40
+          },
+          "compete_cheese_fiction_shellpos": {
+            "pearson_r": 0.7576135521721865,
+            "pearson_p": 1.517798797470738e-08,
+            "n": 40
+          },
+          "compete_cheese_fiction_topicpos": {
+            "pearson_r": 0.6239482339866056,
+            "pearson_p": 1.694102821518719e-05,
+            "n": 40
+          },
+          "compete_cheese_math_shellpos": {
+            "pearson_r": 0.6845368919030959,
+            "pearson_p": 1.1101173733834768e-06,
+            "n": 40
+          },
+          "compete_cheese_math_topicpos": {
+            "pearson_r": 0.29141335173900224,
+            "pearson_p": 0.06808534280356149,
+            "n": 40
+          },
+          "compete_classical_music_coding_shellpos": {
+            "pearson_r": 0.6085579579519285,
+            "pearson_p": 3.097273029557778e-05,
+            "n": 40
+          },
+          "compete_classical_music_coding_topicpos": {
+            "pearson_r": 0.11023735611317155,
+            "pearson_p": 0.49830294526664365,
+            "n": 40
+          },
+          "compete_classical_music_fiction_shellpos": {
+            "pearson_r": 0.48054970604720326,
+            "pearson_p": 0.0016981832653712948,
+            "n": 40
+          },
+          "compete_classical_music_fiction_topicpos": {
+            "pearson_r": 0.6376198664773847,
+            "pearson_p": 9.641288453206099e-06,
+            "n": 40
+          },
+          "compete_classical_music_math_shellpos": {
+            "pearson_r": 0.6033402999867424,
+            "pearson_p": 3.773493922294717e-05,
+            "n": 40
+          },
+          "compete_classical_music_math_topicpos": {
+            "pearson_r": 0.47242579499124643,
+            "pearson_p": 0.0020837151663349687,
+            "n": 40
+          },
+          "compete_cooking_coding_shellpos": {
+            "pearson_r": 0.6900221994449287,
+            "pearson_p": 8.400646248719096e-07,
+            "n": 40
+          },
+          "compete_cooking_coding_topicpos": {
+            "pearson_r": 0.021169086706257514,
+            "pearson_p": 0.8968402012315488,
+            "n": 40
+          },
+          "compete_cooking_fiction_shellpos": {
+            "pearson_r": 0.6746434815686069,
+            "pearson_p": 1.8083761021847146e-06,
+            "n": 40
+          },
+          "compete_cooking_fiction_topicpos": {
+            "pearson_r": 0.688838437353652,
+            "pearson_p": 8.926033333607736e-07,
+            "n": 40
+          },
+          "compete_cooking_math_shellpos": {
+            "pearson_r": 0.6615725637803882,
+            "pearson_p": 3.352021899022927e-06,
+            "n": 40
+          },
+          "compete_cooking_math_topicpos": {
+            "pearson_r": 0.37473535801598856,
+            "pearson_p": 0.01719930072003284,
+            "n": 40
+          },
+          "compete_gardening_coding_shellpos": {
+            "pearson_r": 0.6262733579878217,
+            "pearson_p": 1.5421573547909e-05,
+            "n": 40
+          },
+          "compete_gardening_coding_topicpos": {
+            "pearson_r": 0.03912734237302537,
+            "pearson_p": 0.8105568698204473,
+            "n": 40
+          },
+          "compete_gardening_fiction_shellpos": {
+            "pearson_r": 0.4963220268399453,
+            "pearson_p": 0.0011250374573553421,
+            "n": 40
+          },
+          "compete_gardening_fiction_topicpos": {
+            "pearson_r": 0.6898508490077185,
+            "pearson_p": 8.474886487364365e-07,
+            "n": 40
+          },
+          "compete_gardening_math_shellpos": {
+            "pearson_r": 0.6123747660904787,
+            "pearson_p": 2.6746969306136987e-05,
+            "n": 40
+          },
+          "compete_gardening_math_topicpos": {
+            "pearson_r": 0.41240764712729105,
+            "pearson_p": 0.008182703765825815,
+            "n": 40
+          },
+          "compete_rainy_weather_coding_shellpos": {
+            "pearson_r": 0.5749222288038529,
+            "pearson_p": 0.0001043719487338372,
+            "n": 40
+          },
+          "compete_rainy_weather_coding_topicpos": {
+            "pearson_r": 0.09743241725492738,
+            "pearson_p": 0.5497716477548313,
+            "n": 40
+          },
+          "compete_rainy_weather_fiction_shellpos": {
+            "pearson_r": 0.4658100694715719,
+            "pearson_p": 0.0024525665561732283,
+            "n": 40
+          },
+          "compete_rainy_weather_fiction_topicpos": {
+            "pearson_r": 0.7035548099783993,
+            "pearson_p": 4.112696827976002e-07,
+            "n": 40
+          },
+          "compete_rainy_weather_math_shellpos": {
+            "pearson_r": 0.5189950227349828,
+            "pearson_p": 0.0006007282156337911,
+            "n": 40
+          },
+          "compete_rainy_weather_math_topicpos": {
+            "pearson_r": 0.4827469085515066,
+            "pearson_p": 0.0016053856667786292,
+            "n": 40
+          }
+        }
+      }
+    }
+  },
   "exp2": {
     "L31": {
       "layer": 31,
       "n": 1000,
-      "pearson_r": 0.5342784347348954,
-      "pearson_p": 6.833638783310725e-75,
-      "spearman_r": 0.49464643215393184,
+      "pearson_r": 0.5189010834853973,
+      "pearson_p": 5.060368643124168e-70,
+      "spearman_r": 0.47487911583703085,
       "permutation_p": 0.0,
-      "sign_agreement": 0.6729281767955801,
-      "sign_n": 905,
+      "sign_agreement": 0.6709677419354839,
+      "sign_n": 930,
       "per_condition": {
         "chaos_agent": {
-          "pearson_r": 0.7812384263206663,
-          "pearson_p": 2.1753174189451056e-11,
+          "pearson_r": 0.7576813070224876,
+          "pearson_p": 1.8931722234380564e-10,
           "n": 50
         },
         "conspiracy_theorist": {
-          "pearson_r": 0.6326268018127594,
-          "pearson_p": 8.271455883253261e-07,
+          "pearson_r": 0.6058687551105241,
+          "pearson_p": 3.1274982172112105e-06,
           "n": 50
         },
         "contrarian_intellectual": {
-          "pearson_r": 0.5800558237857539,
-          "pearson_p": 1.0105855168850759e-05,
+          "pearson_r": 0.5796456887298165,
+          "pearson_p": 1.0287692141569486e-05,
           "n": 50
         },
         "creative_writer": {
-          "pearson_r": 0.7491598302389928,
-          "pearson_p": 3.9027218642723625e-10,
+          "pearson_r": 0.7502728782522039,
+          "pearson_p": 3.556665966594435e-10,
           "n": 50
         },
         "debate_champion": {
-          "pearson_r": 0.6208589586323261,
-          "pearson_p": 1.5074649676135352e-06,
+          "pearson_r": 0.613640044696723,
+          "pearson_p": 2.1524215117548657e-06,
           "n": 50
         },
         "depressed_nihilist": {
-          "pearson_r": 0.17460744136243656,
-          "pearson_p": 0.22521559740120523,
+          "pearson_r": 0.17023076075571655,
+          "pearson_p": 0.2372381413407057,
           "n": 50
         },
         "edgelord": {
-          "pearson_r": 0.6047036950666209,
-          "pearson_p": 3.304872359098728e-06,
+          "pearson_r": 0.5505525487630695,
+          "pearson_p": 3.436298757489458e-05,
           "n": 50
         },
         "evil_genius": {
-          "pearson_r": 0.4989939794260018,
-          "pearson_p": 0.00022552911172284352,
+          "pearson_r": 0.5194683817130407,
+          "pearson_p": 0.00011076290582398259,
           "n": 50
         },
         "hacker": {
-          "pearson_r": 0.4049069261624854,
-          "pearson_p": 0.0035369334780702834,
+          "pearson_r": 0.44539827331821447,
+          "pearson_p": 0.0011899892853380204,
           "n": 50
         },
         "lazy_minimalist": {
-          "pearson_r": 0.45601973747883645,
-          "pearson_p": 0.0008741325617069725,
+          "pearson_r": 0.45658661407799245,
+          "pearson_p": 0.0008596185112257162,
           "n": 50
         },
         "nationalist_ideologue": {
-          "pearson_r": 0.7350029025603229,
-          "pearson_p": 1.220807530461395e-09,
+          "pearson_r": 0.7324389149488854,
+          "pearson_p": 1.4893943852883198e-09,
           "n": 50
         },
         "obsessive_perfectionist": {
-          "pearson_r": 0.6994544006598211,
-          "pearson_p": 1.5955895613324444e-08,
+          "pearson_r": 0.6900510712867206,
+          "pearson_p": 2.9623593033693777e-08,
           "n": 50
         },
         "people_pleaser": {
-          "pearson_r": 0.40497991376672193,
-          "pearson_p": 0.00353040906779683,
+          "pearson_r": 0.40887844704786636,
+          "pearson_p": 0.0031969599224033847,
           "n": 50
         },
         "philosopher": {
-          "pearson_r": 0.7318785991273833,
-          "pearson_p": 1.5550781745331465e-09,
+          "pearson_r": 0.729345810651437,
+          "pearson_p": 1.8875461217229984e-09,
           "n": 50
         },
         "pragmatist": {
-          "pearson_r": 0.7623732200326029,
-          "pearson_p": 1.2550820172453484e-10,
+          "pearson_r": 0.759507656081608,
+          "pearson_p": 1.615032632197396e-10,
           "n": 50
         },
         "safety_advocate": {
-          "pearson_r": 0.527352756482095,
-          "pearson_p": 8.320230033774244e-05,
+          "pearson_r": 0.548401299717187,
+          "pearson_p": 3.7402742707474974e-05,
           "n": 50
         },
         "stem_enthusiast": {
-          "pearson_r": 0.5458653608712013,
-          "pearson_p": 4.13024316419896e-05,
+          "pearson_r": 0.5666677827440659,
+          "pearson_p": 1.78683316534918e-05,
           "n": 50
         },
         "storyteller": {
-          "pearson_r": 0.6543653817538454,
-          "pearson_p": 2.548403714399856e-07,
+          "pearson_r": 0.6781828119238568,
+          "pearson_p": 6.263164077262353e-08,
           "n": 50
         },
         "trivia_nerd": {
-          "pearson_r": 0.6002742789796622,
-          "pearson_p": 4.067968607931272e-06,
+          "pearson_r": 0.5827183000653562,
+          "pearson_p": 8.995798867157656e-06,
           "n": 50
         },
         "whimsical_poet": {
-          "pearson_r": 0.6773731606953514,
-          "pearson_p": 6.583124809656012e-08,
+          "pearson_r": 0.673492786538638,
+          "pearson_p": 8.340737891003051e-08,
           "n": 50
         }
       }
@@ -115,111 +1686,111 @@
     "L43": {
       "layer": 43,
       "n": 1000,
-      "pearson_r": 0.44838484133959694,
-      "pearson_p": 1.277813395763071e-50,
-      "spearman_r": 0.42710793132089375,
+      "pearson_r": 0.436978812107454,
+      "pearson_p": 6.911322532819053e-48,
+      "spearman_r": 0.40483848259592065,
       "permutation_p": 0.0,
-      "sign_agreement": 0.6331491712707182,
-      "sign_n": 905,
+      "sign_agreement": 0.6365591397849463,
+      "sign_n": 930,
       "per_condition": {
         "chaos_agent": {
-          "pearson_r": 0.7070769067169674,
-          "pearson_p": 9.493915987981617e-09,
+          "pearson_r": 0.7055579441317075,
+          "pearson_p": 1.054245383127176e-08,
           "n": 50
         },
         "conspiracy_theorist": {
-          "pearson_r": 0.6462813724269408,
-          "pearson_p": 3.991466810518328e-07,
+          "pearson_r": 0.648091190995238,
+          "pearson_p": 3.614150009929729e-07,
           "n": 50
         },
         "contrarian_intellectual": {
-          "pearson_r": 0.5763127743695307,
-          "pearson_p": 1.1881452537185348e-05,
+          "pearson_r": 0.5735843064136289,
+          "pearson_p": 1.3352717306226183e-05,
           "n": 50
         },
         "creative_writer": {
-          "pearson_r": 0.6667792925542677,
-          "pearson_p": 1.2458039602265827e-07,
+          "pearson_r": 0.666884183792724,
+          "pearson_p": 1.2381159755148766e-07,
           "n": 50
         },
         "debate_champion": {
-          "pearson_r": 0.38425047667013623,
-          "pearson_p": 0.005869612867630101,
+          "pearson_r": 0.3450859469685126,
+          "pearson_p": 0.014115123948400586,
           "n": 50
         },
         "depressed_nihilist": {
-          "pearson_r": 0.28309672909705486,
-          "pearson_p": 0.046357407054020944,
+          "pearson_r": 0.27662005427995345,
+          "pearson_p": 0.05181612552125551,
           "n": 50
         },
         "edgelord": {
-          "pearson_r": 0.5005421632128046,
-          "pearson_p": 0.00021405670649106922,
+          "pearson_r": 0.47898494787197554,
+          "pearson_p": 0.0004332653591010221,
           "n": 50
         },
         "evil_genius": {
-          "pearson_r": 0.39970759019177693,
-          "pearson_p": 0.004029919688369783,
+          "pearson_r": 0.4094590841250717,
+          "pearson_p": 0.003149752013663659,
           "n": 50
         },
         "hacker": {
-          "pearson_r": 0.3596618651382957,
-          "pearson_p": 0.010307298842758139,
+          "pearson_r": 0.3878200714721605,
+          "pearson_p": 0.005389759486940953,
           "n": 50
         },
         "lazy_minimalist": {
-          "pearson_r": 0.20699548733012005,
-          "pearson_p": 0.14920861364683957,
+          "pearson_r": 0.20214879331712757,
+          "pearson_p": 0.15917956028430633,
           "n": 50
         },
         "nationalist_ideologue": {
-          "pearson_r": 0.6505716581927684,
-          "pearson_p": 3.150897785094093e-07,
+          "pearson_r": 0.6602760122844344,
+          "pearson_p": 1.8200110442436575e-07,
           "n": 50
         },
         "obsessive_perfectionist": {
-          "pearson_r": 0.5343099449126251,
-          "pearson_p": 6.4255321569899e-05,
+          "pearson_r": 0.5416193607741315,
+          "pearson_p": 4.867646877554469e-05,
           "n": 50
         },
         "people_pleaser": {
-          "pearson_r": 0.4641118238022922,
-          "pearson_p": 0.0006864119646277941,
+          "pearson_r": 0.47449293680428284,
+          "pearson_p": 0.0004989567565956336,
           "n": 50
         },
         "philosopher": {
-          "pearson_r": 0.45489898561077274,
-          "pearson_p": 0.0009034766742268322,
+          "pearson_r": 0.44891565178545856,
+          "pearson_p": 0.0010756096356574004,
           "n": 50
         },
         "pragmatist": {
-          "pearson_r": 0.610405207906465,
-          "pearson_p": 2.517669216784499e-06,
+          "pearson_r": 0.6237414084811956,
+          "pearson_p": 1.3043429648360664e-06,
           "n": 50
         },
         "safety_advocate": {
-          "pearson_r": 0.36608260314407964,
-          "pearson_p": 0.008933932182113684,
+          "pearson_r": 0.3215780255557869,
+          "pearson_p": 0.0227715238313465,
           "n": 50
         },
         "stem_enthusiast": {
-          "pearson_r": 0.41756854866888143,
-          "pearson_p": 0.002551816348788933,
+          "pearson_r": 0.4021782602363374,
+          "pearson_p": 0.0037885974067863775,
           "n": 50
         },
         "storyteller": {
-          "pearson_r": 0.5312363483165659,
-          "pearson_p": 7.207622378529462e-05,
+          "pearson_r": 0.5469860958863668,
+          "pearson_p": 3.95351316925508e-05,
           "n": 50
         },
         "trivia_nerd": {
-          "pearson_r": 0.4392606070063352,
-          "pearson_p": 0.001415855147317224,
+          "pearson_r": 0.40581611699372766,
+          "pearson_p": 0.003456413289732611,
           "n": 50
         },
         "whimsical_poet": {
-          "pearson_r": 0.6446814557595677,
-          "pearson_p": 4.35533420408571e-07,
+          "pearson_r": 0.6501677097186719,
+          "pearson_p": 3.222348994724064e-07,
           "n": 50
         }
       }
@@ -227,111 +1798,749 @@
     "L55": {
       "layer": 55,
       "n": 1000,
-      "pearson_r": 0.3627893240434977,
-      "pearson_p": 1.8070205098849482e-32,
-      "spearman_r": 0.33053161565722733,
+      "pearson_r": 0.3685830431598772,
+      "pearson_p": 1.5492483590320034e-33,
+      "spearman_r": 0.32828873327809616,
       "permutation_p": 0.0,
-      "sign_agreement": 0.5922651933701657,
-      "sign_n": 905,
+      "sign_agreement": 0.5924731182795699,
+      "sign_n": 930,
       "per_condition": {
         "chaos_agent": {
-          "pearson_r": 0.70427057498238,
-          "pearson_p": 1.1515393786166748e-08,
+          "pearson_r": 0.7236407229103334,
+          "pearson_p": 2.8976770002064214e-09,
           "n": 50
         },
         "conspiracy_theorist": {
-          "pearson_r": 0.5113494842533951,
-          "pearson_p": 0.0001476377518758353,
+          "pearson_r": 0.5445082591070689,
+          "pearson_p": 4.3539466334096085e-05,
           "n": 50
         },
         "contrarian_intellectual": {
-          "pearson_r": 0.45719122792456324,
-          "pearson_p": 0.0008443769860979279,
+          "pearson_r": 0.48522447826904314,
+          "pearson_p": 0.00035496741604681986,
           "n": 50
         },
         "creative_writer": {
-          "pearson_r": 0.6266711330183631,
-          "pearson_p": 1.1242222755806781e-06,
+          "pearson_r": 0.6071586668914214,
+          "pearson_p": 2.941445619121944e-06,
           "n": 50
         },
         "debate_champion": {
-          "pearson_r": 0.2941101086834747,
-          "pearson_p": 0.03815646537154192,
+          "pearson_r": 0.2865791841551506,
+          "pearson_p": 0.04362194405929626,
           "n": 50
         },
         "depressed_nihilist": {
-          "pearson_r": 0.253604652919272,
-          "pearson_p": 0.07555550535522404,
+          "pearson_r": 0.25096588369380535,
+          "pearson_p": 0.07875303392242575,
           "n": 50
         },
         "edgelord": {
-          "pearson_r": 0.355474813248239,
-          "pearson_p": 0.011297759147751774,
+          "pearson_r": 0.31573776568407635,
+          "pearson_p": 0.02550865765596167,
           "n": 50
         },
         "evil_genius": {
-          "pearson_r": 0.269573287598863,
-          "pearson_p": 0.05833507193939929,
+          "pearson_r": 0.3141445299405546,
+          "pearson_p": 0.026301477503688664,
           "n": 50
         },
         "hacker": {
-          "pearson_r": 0.20039193717424394,
-          "pearson_p": 0.1629118066587785,
+          "pearson_r": 0.2286963410749626,
+          "pearson_p": 0.11015936775652964,
           "n": 50
         },
         "lazy_minimalist": {
-          "pearson_r": 0.23661327167075222,
-          "pearson_p": 0.09805112267313335,
+          "pearson_r": 0.23450527329136697,
+          "pearson_p": 0.1011696216480737,
           "n": 50
         },
         "nationalist_ideologue": {
-          "pearson_r": 0.6010608397097047,
-          "pearson_p": 3.921524373353788e-06,
+          "pearson_r": 0.626578230425209,
+          "pearson_p": 1.1295591283034882e-06,
           "n": 50
         },
         "obsessive_perfectionist": {
-          "pearson_r": 0.49543110725639555,
-          "pearson_p": 0.0002540819577024595,
+          "pearson_r": 0.5172913509653914,
+          "pearson_p": 0.00011972071687081141,
           "n": 50
         },
         "people_pleaser": {
-          "pearson_r": 0.4493048317627864,
-          "pearson_p": 0.0010635794636533818,
+          "pearson_r": 0.4750040086283056,
+          "pearson_p": 0.0004910546012954028,
           "n": 50
         },
         "philosopher": {
-          "pearson_r": 0.27667251479464333,
-          "pearson_p": 0.051769906430585336,
+          "pearson_r": 0.27348287851381287,
+          "pearson_p": 0.054641417170599074,
           "n": 50
         },
         "pragmatist": {
-          "pearson_r": 0.5632810193745164,
-          "pearson_p": 2.0559037165569688e-05,
+          "pearson_r": 0.5801223359839253,
+          "pearson_p": 1.007664787321874e-05,
           "n": 50
         },
         "safety_advocate": {
-          "pearson_r": 0.48660147988281627,
-          "pearson_p": 0.00033951666001514984,
+          "pearson_r": 0.4306643046200847,
+          "pearson_p": 0.001796415535470545,
           "n": 50
         },
         "stem_enthusiast": {
-          "pearson_r": 0.4195028388352913,
-          "pearson_p": 0.002424990266284943,
+          "pearson_r": 0.4090180028814059,
+          "pearson_p": 0.0031855569013731918,
           "n": 50
         },
         "storyteller": {
-          "pearson_r": 0.37184070297326355,
-          "pearson_p": 0.007839851364925942,
+          "pearson_r": 0.39497772924850993,
+          "pearson_p": 0.004529833366320717,
           "n": 50
         },
         "trivia_nerd": {
-          "pearson_r": 0.2872687008451242,
-          "pearson_p": 0.04309630713922967,
+          "pearson_r": 0.2665412711480725,
+          "pearson_p": 0.061335737109358926,
           "n": 50
         },
         "whimsical_poet": {
-          "pearson_r": 0.6283158639227941,
-          "pearson_p": 1.0335409389510052e-06,
+          "pearson_r": 0.6532414589086825,
+          "pearson_p": 2.7146098425375344e-07,
+          "n": 50
+        }
+      }
+    }
+  },
+  "exp3": {
+    "L31": {
+      "layer": 31,
+      "n": 2000,
+      "pearson_r": 0.5165184703696452,
+      "pearson_p": 7.948247659389581e-137,
+      "spearman_r": 0.49489526942921835,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.6172506738544474,
+      "sign_n": 1855,
+      "per_condition": {
+        "brooklyn_chess_A": {
+          "pearson_r": 0.39332643358267094,
+          "pearson_p": 0.0047167463811287,
+          "n": 50
+        },
+        "brooklyn_chess_B": {
+          "pearson_r": 0.5975829837133312,
+          "pearson_p": 4.608286321799712e-06,
+          "n": 50
+        },
+        "brooklyn_convexhull_A": {
+          "pearson_r": 0.4776860865024399,
+          "pearson_p": 0.0004514063950917442,
+          "n": 50
+        },
+        "brooklyn_convexhull_B": {
+          "pearson_r": 0.6049160480803436,
+          "pearson_p": 3.271862681266482e-06,
+          "n": 50
+        },
+        "brooklyn_detective_A": {
+          "pearson_r": 0.4904713945081121,
+          "pearson_p": 0.0002992991086955667,
+          "n": 50
+        },
+        "brooklyn_detective_B": {
+          "pearson_r": 0.5487433263207334,
+          "pearson_p": 3.6903497430481295e-05,
+          "n": 50
+        },
+        "brooklyn_evolution_A": {
+          "pearson_r": 0.6248054542860169,
+          "pearson_p": 1.2360281119350978e-06,
+          "n": 50
+        },
+        "brooklyn_evolution_B": {
+          "pearson_r": 0.6380857975907654,
+          "pearson_p": 6.207627903473799e-07,
+          "n": 50
+        },
+        "brooklyn_haiku_A": {
+          "pearson_r": 0.5466521823723117,
+          "pearson_p": 4.005427884456573e-05,
+          "n": 50
+        },
+        "brooklyn_haiku_B": {
+          "pearson_r": 0.5755440243729916,
+          "pearson_p": 1.2280054836366352e-05,
+          "n": 50
+        },
+        "brooklyn_lotr_A": {
+          "pearson_r": 0.4807744728847392,
+          "pearson_p": 0.0004093501788691418,
+          "n": 50
+        },
+        "brooklyn_lotr_B": {
+          "pearson_r": 0.571555537760795,
+          "pearson_p": 1.4553769073779356e-05,
+          "n": 50
+        },
+        "brooklyn_pyramids_A": {
+          "pearson_r": 0.6668643493245652,
+          "pearson_p": 1.2395663262408788e-07,
+          "n": 50
+        },
+        "brooklyn_pyramids_B": {
+          "pearson_r": 0.5192835434286818,
+          "pearson_p": 0.00011149897461793195,
+          "n": 50
+        },
+        "brooklyn_shakespeare_A": {
+          "pearson_r": 0.6924378132338707,
+          "pearson_p": 2.5373997190912003e-08,
+          "n": 50
+        },
+        "brooklyn_shakespeare_B": {
+          "pearson_r": 0.5612832252142452,
+          "pearson_p": 2.231647429944982e-05,
+          "n": 50
+        },
+        "brooklyn_simpsons_A": {
+          "pearson_r": 0.6150081978234215,
+          "pearson_p": 2.0132976074001487e-06,
+          "n": 50
+        },
+        "brooklyn_simpsons_B": {
+          "pearson_r": 0.612899750578679,
+          "pearson_p": 2.231374222718692e-06,
+          "n": 50
+        },
+        "brooklyn_wwii_A": {
+          "pearson_r": 0.6338241013321467,
+          "pearson_p": 7.770498279502099e-07,
+          "n": 50
+        },
+        "brooklyn_wwii_B": {
+          "pearson_r": 0.5846085692864257,
+          "pearson_p": 8.277356703934774e-06,
+          "n": 50
+        },
+        "midwest_chess_A": {
+          "pearson_r": 0.2186204644183506,
+          "pearson_p": 0.127184836301711,
+          "n": 50
+        },
+        "midwest_chess_B": {
+          "pearson_r": 0.4312196955426046,
+          "pearson_p": 0.001769325629735774,
+          "n": 50
+        },
+        "midwest_convexhull_A": {
+          "pearson_r": 0.3026219400926479,
+          "pearson_p": 0.03267093516588944,
+          "n": 50
+        },
+        "midwest_convexhull_B": {
+          "pearson_r": 0.48357543031211925,
+          "pearson_p": 0.0003743066089206226,
+          "n": 50
+        },
+        "midwest_detective_A": {
+          "pearson_r": 0.4297145175338502,
+          "pearson_p": 0.0018435987078165652,
+          "n": 50
+        },
+        "midwest_detective_B": {
+          "pearson_r": 0.4242414520929293,
+          "pearson_p": 0.0021375906808213706,
+          "n": 50
+        },
+        "midwest_evolution_A": {
+          "pearson_r": 0.5082631678200101,
+          "pearson_p": 0.00016436944305822136,
+          "n": 50
+        },
+        "midwest_evolution_B": {
+          "pearson_r": 0.5088408180451244,
+          "pearson_p": 0.00016111227608116952,
+          "n": 50
+        },
+        "midwest_haiku_A": {
+          "pearson_r": 0.3376880081282098,
+          "pearson_p": 0.016469622852852653,
+          "n": 50
+        },
+        "midwest_haiku_B": {
+          "pearson_r": 0.4453343316004515,
+          "pearson_p": 0.0011921655881169833,
+          "n": 50
+        },
+        "midwest_lotr_A": {
+          "pearson_r": 0.4105547397074425,
+          "pearson_p": 0.003062344205086865,
+          "n": 50
+        },
+        "midwest_lotr_B": {
+          "pearson_r": 0.3869756005862738,
+          "pearson_p": 0.005500070204077381,
+          "n": 50
+        },
+        "midwest_pyramids_A": {
+          "pearson_r": 0.5064887445407533,
+          "pearson_p": 0.00017475337331985535,
+          "n": 50
+        },
+        "midwest_pyramids_B": {
+          "pearson_r": 0.46482818711440016,
+          "pearson_p": 0.0006716848811482929,
+          "n": 50
+        },
+        "midwest_shakespeare_A": {
+          "pearson_r": 0.5958980912664832,
+          "pearson_p": 4.979643496894846e-06,
+          "n": 50
+        },
+        "midwest_shakespeare_B": {
+          "pearson_r": 0.5364836255880892,
+          "pearson_p": 5.920229175106872e-05,
+          "n": 50
+        },
+        "midwest_simpsons_A": {
+          "pearson_r": 0.5762008050537133,
+          "pearson_p": 1.1938756132117185e-05,
+          "n": 50
+        },
+        "midwest_simpsons_B": {
+          "pearson_r": 0.43231037394450944,
+          "pearson_p": 0.0017171821635466262,
+          "n": 50
+        },
+        "midwest_wwii_A": {
+          "pearson_r": 0.45548385052628415,
+          "pearson_p": 0.0008880549928383195,
+          "n": 50
+        },
+        "midwest_wwii_B": {
+          "pearson_r": 0.4324994473021041,
+          "pearson_p": 0.0017082833630864699,
+          "n": 50
+        }
+      }
+    },
+    "L43": {
+      "layer": 43,
+      "n": 2000,
+      "pearson_r": 0.38656404680257206,
+      "pearson_p": 2.7707100954871014e-72,
+      "spearman_r": 0.3847400814089748,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.5067385444743935,
+      "sign_n": 1855,
+      "per_condition": {
+        "brooklyn_chess_A": {
+          "pearson_r": 0.10535725578957435,
+          "pearson_p": 0.46650601777751,
+          "n": 50
+        },
+        "brooklyn_chess_B": {
+          "pearson_r": 0.30558416265263516,
+          "pearson_p": 0.03092249002205725,
+          "n": 50
+        },
+        "brooklyn_convexhull_A": {
+          "pearson_r": 0.2631118412009916,
+          "pearson_p": 0.06487753133066448,
+          "n": 50
+        },
+        "brooklyn_convexhull_B": {
+          "pearson_r": 0.26662261843251556,
+          "pearson_p": 0.06125364631893464,
+          "n": 50
+        },
+        "brooklyn_detective_A": {
+          "pearson_r": 0.15501456295035962,
+          "pearson_p": 0.2824157594811846,
+          "n": 50
+        },
+        "brooklyn_detective_B": {
+          "pearson_r": 0.26467571979014054,
+          "pearson_p": 0.06324266813980495,
+          "n": 50
+        },
+        "brooklyn_evolution_A": {
+          "pearson_r": 0.3475904121946818,
+          "pearson_p": 0.013386151685069379,
+          "n": 50
+        },
+        "brooklyn_evolution_B": {
+          "pearson_r": 0.30742551024213316,
+          "pearson_p": 0.029875365549649015,
+          "n": 50
+        },
+        "brooklyn_haiku_A": {
+          "pearson_r": 0.2462495743599918,
+          "pearson_p": 0.08473262819138816,
+          "n": 50
+        },
+        "brooklyn_haiku_B": {
+          "pearson_r": 0.2441263891928055,
+          "pearson_p": 0.0875379954511099,
+          "n": 50
+        },
+        "brooklyn_lotr_A": {
+          "pearson_r": 0.19978058907495252,
+          "pearson_p": 0.16422541827444856,
+          "n": 50
+        },
+        "brooklyn_lotr_B": {
+          "pearson_r": 0.2973567573847661,
+          "pearson_p": 0.03598087029546212,
+          "n": 50
+        },
+        "brooklyn_pyramids_A": {
+          "pearson_r": 0.3834494468416784,
+          "pearson_p": 0.005982277574906027,
+          "n": 50
+        },
+        "brooklyn_pyramids_B": {
+          "pearson_r": 0.23759809785081648,
+          "pearson_p": 0.09661993352311864,
+          "n": 50
+        },
+        "brooklyn_shakespeare_A": {
+          "pearson_r": 0.3605956678646265,
+          "pearson_p": 0.010096907074250368,
+          "n": 50
+        },
+        "brooklyn_shakespeare_B": {
+          "pearson_r": 0.2919688756276244,
+          "pearson_p": 0.039649725984171935,
+          "n": 50
+        },
+        "brooklyn_simpsons_A": {
+          "pearson_r": 0.28956559783352914,
+          "pearson_p": 0.04138258641850204,
+          "n": 50
+        },
+        "brooklyn_simpsons_B": {
+          "pearson_r": 0.30069234431456576,
+          "pearson_p": 0.033853374250554624,
+          "n": 50
+        },
+        "brooklyn_wwii_A": {
+          "pearson_r": 0.3129717531818163,
+          "pearson_p": 0.026898154676321753,
+          "n": 50
+        },
+        "brooklyn_wwii_B": {
+          "pearson_r": 0.34473424075965486,
+          "pearson_p": 0.01422016164858602,
+          "n": 50
+        },
+        "midwest_chess_A": {
+          "pearson_r": 0.48107226851064344,
+          "pearson_p": 0.00040548836067433785,
+          "n": 50
+        },
+        "midwest_chess_B": {
+          "pearson_r": 0.48182564669952965,
+          "pearson_p": 0.00039586519005325733,
+          "n": 50
+        },
+        "midwest_convexhull_A": {
+          "pearson_r": 0.5060420245890263,
+          "pearson_p": 0.00017745997324336219,
+          "n": 50
+        },
+        "midwest_convexhull_B": {
+          "pearson_r": 0.5655032048332499,
+          "pearson_p": 1.8754572740797758e-05,
+          "n": 50
+        },
+        "midwest_detective_A": {
+          "pearson_r": 0.3919373446406487,
+          "pearson_p": 0.004879179160468144,
+          "n": 50
+        },
+        "midwest_detective_B": {
+          "pearson_r": 0.48391744625761435,
+          "pearson_p": 0.0003702189929434394,
+          "n": 50
+        },
+        "midwest_evolution_A": {
+          "pearson_r": 0.574687149106325,
+          "pearson_p": 1.2738882615161298e-05,
+          "n": 50
+        },
+        "midwest_evolution_B": {
+          "pearson_r": 0.5076884132835542,
+          "pearson_p": 0.00016766968634879096,
+          "n": 50
+        },
+        "midwest_haiku_A": {
+          "pearson_r": 0.32538967504065625,
+          "pearson_p": 0.021121863486575895,
+          "n": 50
+        },
+        "midwest_haiku_B": {
+          "pearson_r": 0.5345807568608602,
+          "pearson_p": 6.360492792882759e-05,
+          "n": 50
+        },
+        "midwest_lotr_A": {
+          "pearson_r": 0.47280319845057867,
+          "pearson_p": 0.0005259070996773299,
+          "n": 50
+        },
+        "midwest_lotr_B": {
+          "pearson_r": 0.5012884916785676,
+          "pearson_p": 0.00020871798605096118,
+          "n": 50
+        },
+        "midwest_pyramids_A": {
+          "pearson_r": 0.5870356619673953,
+          "pearson_p": 7.432659528540051e-06,
+          "n": 50
+        },
+        "midwest_pyramids_B": {
+          "pearson_r": 0.5314302168165228,
+          "pearson_p": 7.155827710551805e-05,
+          "n": 50
+        },
+        "midwest_shakespeare_A": {
+          "pearson_r": 0.5855323966736716,
+          "pearson_p": 7.945889707321892e-06,
+          "n": 50
+        },
+        "midwest_shakespeare_B": {
+          "pearson_r": 0.5495532612722591,
+          "pearson_p": 3.57455803816274e-05,
+          "n": 50
+        },
+        "midwest_simpsons_A": {
+          "pearson_r": 0.4175938805005142,
+          "pearson_p": 0.002550118175764866,
+          "n": 50
+        },
+        "midwest_simpsons_B": {
+          "pearson_r": 0.502936571083436,
+          "pearson_p": 0.00019735498273175557,
+          "n": 50
+        },
+        "midwest_wwii_A": {
+          "pearson_r": 0.5147085027793694,
+          "pearson_p": 0.00013120323144177176,
+          "n": 50
+        },
+        "midwest_wwii_B": {
+          "pearson_r": 0.5265975662014643,
+          "pearson_p": 8.554023236641896e-05,
+          "n": 50
+        }
+      }
+    },
+    "L55": {
+      "layer": 55,
+      "n": 2000,
+      "pearson_r": 0.3294841616803651,
+      "pearson_p": 7.483499830927402e-52,
+      "spearman_r": 0.3436996599432879,
+      "permutation_p": 0.0,
+      "sign_agreement": 0.5347708894878707,
+      "sign_n": 1855,
+      "per_condition": {
+        "brooklyn_chess_A": {
+          "pearson_r": 0.11948427843567741,
+          "pearson_p": 0.4085325736254294,
+          "n": 50
+        },
+        "brooklyn_chess_B": {
+          "pearson_r": 0.29529838060616853,
+          "pearson_p": 0.03734796319445279,
+          "n": 50
+        },
+        "brooklyn_convexhull_A": {
+          "pearson_r": 0.19945499039089992,
+          "pearson_p": 0.16492818158254136,
+          "n": 50
+        },
+        "brooklyn_convexhull_B": {
+          "pearson_r": 0.27368756566093755,
+          "pearson_p": 0.05445336374648806,
+          "n": 50
+        },
+        "brooklyn_detective_A": {
+          "pearson_r": 0.05775533476589643,
+          "pearson_p": 0.6903387959150526,
+          "n": 50
+        },
+        "brooklyn_detective_B": {
+          "pearson_r": 0.2346739708659318,
+          "pearson_p": 0.10091727470787823,
+          "n": 50
+        },
+        "brooklyn_evolution_A": {
+          "pearson_r": 0.37126451008386846,
+          "pearson_p": 0.00794382923252751,
+          "n": 50
+        },
+        "brooklyn_evolution_B": {
+          "pearson_r": 0.3113093897283224,
+          "pearson_p": 0.027763273540101194,
+          "n": 50
+        },
+        "brooklyn_haiku_A": {
+          "pearson_r": 0.22878534286465832,
+          "pearson_p": 0.1100171702159243,
+          "n": 50
+        },
+        "brooklyn_haiku_B": {
+          "pearson_r": 0.23978814899956574,
+          "pearson_p": 0.09349529203825285,
+          "n": 50
+        },
+        "brooklyn_lotr_A": {
+          "pearson_r": 0.21167907083127668,
+          "pearson_p": 0.14001922229005292,
+          "n": 50
+        },
+        "brooklyn_lotr_B": {
+          "pearson_r": 0.24849984106202438,
+          "pearson_p": 0.08183672954954675,
+          "n": 50
+        },
+        "brooklyn_pyramids_A": {
+          "pearson_r": 0.38417903371194434,
+          "pearson_p": 0.005879585542628718,
+          "n": 50
+        },
+        "brooklyn_pyramids_B": {
+          "pearson_r": 0.23001895016652713,
+          "pearson_p": 0.10806067729179755,
+          "n": 50
+        },
+        "brooklyn_shakespeare_A": {
+          "pearson_r": 0.38325504641326247,
+          "pearson_p": 0.006009902736041716,
+          "n": 50
+        },
+        "brooklyn_shakespeare_B": {
+          "pearson_r": 0.26653186153055647,
+          "pearson_p": 0.06134523841889745,
+          "n": 50
+        },
+        "brooklyn_simpsons_A": {
+          "pearson_r": 0.30152371676400685,
+          "pearson_p": 0.0333396441164452,
+          "n": 50
+        },
+        "brooklyn_simpsons_B": {
+          "pearson_r": 0.2736612542757457,
+          "pearson_p": 0.05447750763910237,
+          "n": 50
+        },
+        "brooklyn_wwii_A": {
+          "pearson_r": 0.3226204277896786,
+          "pearson_p": 0.0223099592131885,
+          "n": 50
+        },
+        "brooklyn_wwii_B": {
+          "pearson_r": 0.30860918722893604,
+          "pearson_p": 0.029217954354288235,
+          "n": 50
+        },
+        "midwest_chess_A": {
+          "pearson_r": 0.29707414078098654,
+          "pearson_p": 0.03616608954621402,
+          "n": 50
+        },
+        "midwest_chess_B": {
+          "pearson_r": 0.4167115289925012,
+          "pearson_p": 0.0026098615887453947,
+          "n": 50
+        },
+        "midwest_convexhull_A": {
+          "pearson_r": 0.29395427015389763,
+          "pearson_p": 0.038263558923322005,
+          "n": 50
+        },
+        "midwest_convexhull_B": {
+          "pearson_r": 0.4621899694965851,
+          "pearson_p": 0.0007273675857827446,
+          "n": 50
+        },
+        "midwest_detective_A": {
+          "pearson_r": 0.2910965004741667,
+          "pearson_p": 0.04027171736559852,
+          "n": 50
+        },
+        "midwest_detective_B": {
+          "pearson_r": 0.3764828075028974,
+          "pearson_p": 0.007044349266826997,
+          "n": 50
+        },
+        "midwest_evolution_A": {
+          "pearson_r": 0.4838235427199306,
+          "pearson_p": 0.0003713372425479686,
+          "n": 50
+        },
+        "midwest_evolution_B": {
+          "pearson_r": 0.4258179846408994,
+          "pearson_p": 0.002048912218887706,
+          "n": 50
+        },
+        "midwest_haiku_A": {
+          "pearson_r": 0.24629775547765406,
+          "pearson_p": 0.0846697935349048,
+          "n": 50
+        },
+        "midwest_haiku_B": {
+          "pearson_r": 0.44795693489624866,
+          "pearson_p": 0.0011057664704896301,
+          "n": 50
+        },
+        "midwest_lotr_A": {
+          "pearson_r": 0.3596638466369322,
+          "pearson_p": 0.010306848429653497,
+          "n": 50
+        },
+        "midwest_lotr_B": {
+          "pearson_r": 0.36693854077859,
+          "pearson_p": 0.008763383026383978,
+          "n": 50
+        },
+        "midwest_pyramids_A": {
+          "pearson_r": 0.4544425830201712,
+          "pearson_p": 0.0009156775039380492,
+          "n": 50
+        },
+        "midwest_pyramids_B": {
+          "pearson_r": 0.41808540184818505,
+          "pearson_p": 0.0025173654523581554,
+          "n": 50
+        },
+        "midwest_shakespeare_A": {
+          "pearson_r": 0.5158550391440436,
+          "pearson_p": 0.00012598753609923075,
+          "n": 50
+        },
+        "midwest_shakespeare_B": {
+          "pearson_r": 0.4617573174440429,
+          "pearson_p": 0.0007368852635902833,
+          "n": 50
+        },
+        "midwest_simpsons_A": {
+          "pearson_r": 0.42138761027891924,
+          "pearson_p": 0.0023068155779874316,
+          "n": 50
+        },
+        "midwest_simpsons_B": {
+          "pearson_r": 0.39842468034793804,
+          "pearson_p": 0.004160476704780484,
+          "n": 50
+        },
+        "midwest_wwii_A": {
+          "pearson_r": 0.4073489480781234,
+          "pearson_p": 0.00332431450647089,
+          "n": 50
+        },
+        "midwest_wwii_B": {
+          "pearson_r": 0.40161810499924194,
+          "pearson_p": 0.0038421667476827076,
           "n": 50
         }
       }

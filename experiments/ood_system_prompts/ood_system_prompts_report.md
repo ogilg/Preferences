@@ -102,7 +102,26 @@ Adding a single interest sentence to an otherwise identical role biography leave
 
 This is the most challenging test: small, targeted additions to lengthy role biographies. The sign agreement (61.7%) is above chance (50%) but weaker than targeted experiments. The correlation (0.517) remains significant.
 
-Conditions: 40 (2 base roles × 10 targets × 2 versions, subsampled from 120). Tasks: 50. Data points: 40 × 50 = 2000.
+Conditions: 40 (2 base roles × 10 targets × 2 versions A/B, subsampled from 120). Tasks: 50. Data points: 40 × 50 = 2000.
+
+#### Target task selectivity
+
+Each "pro" condition (version A) was designed so that the interest sentence matches one specific task in the 50-task pool — the "target task". The key question: does the probe also fire selectively on this task?
+
+For each of the 20 pro conditions, we identified the target task (highest behavioral delta) and ranked all 50 tasks by probe delta:
+
+- **Mean probe rank of target task: 6.7 / 50** (chance: 25.5)
+- **Top 5: 13/20** conditions (65%)
+- **Top 10: 16/20** conditions (80%)
+- **Rank 1: 5/20** conditions (25%)
+
+The probe doesn't just detect "a system prompt is present" — it selectively amplifies the score for the specific task that the interest sentence targets. This is the strongest evidence that the probe tracks task-specific evaluative content rather than a generic system prompt artefact.
+
+![Exp 3: Target task selectivity](assets/plot_022126_exp3_selectivity_summary.png)
+
+*Left: distribution of probe delta ranks for the target task (1 = highest probe delta). Right: target task behavioral vs probe delta across the 20 pro conditions.*
+
+**Planned extension**: Version C conditions ("anti" — explicit dislike of target topic) have behavioral data but activations have not yet been extracted. The pro vs anti contrast will provide a cleaner test: for a given target task, does the probe shift positively under pro and negatively under anti? This isolates the single-sentence effect from the base role biography.
 
 ---
 
@@ -139,6 +158,102 @@ A plausible mechanism: topic content (cheese, cats, astronomy) is emotionally vi
 ### 6. L55 degradation
 
 The probe at L55 generalises poorly to OOD system prompts. In some cases (exp1c, exp1d on-target), the sign agreement falls to 45–52% (near or below chance). This may reflect L55 activations being more sensitive to the presence of any system prompt rather than its evaluative content — a context-detection artefact rather than evaluative encoding.
+
+---
+
+## Task-Level Examples
+
+Full per-condition data is in `task_examples/*.json`. Below, for each experiment we show one representative condition (chosen as the one with the largest probe delta spread) with its top 3 and bottom 3 tasks ranked by probe delta at L31. Beh Δ = change in pairwise choice rate; Probe Δ = change in probe score. Positive = more preferred under the system prompt.
+
+### Exp 1a: Category preference
+
+**Condition**: `fiction_pos_persona`
+**System prompt**: You are an assistant who is passionate about creative fiction. Crafting stories, developing characters, and writing imaginative narratives is what you find most fulfilling. You always prefer creati...
+
+| Rank | Task | Beh Δ | Probe Δ | Task prompt |
+|:----:|------|:-----:|:-------:|-------------|
+| 1 | alpaca_7340 | +0.617 | +5.97 | Write a character sketch of a villain in a story. |
+| 2 | alpaca_14443 | +0.678 | +4.56 | Generate a story about a knight on a quest to save a princess. |
+| 3 | alpaca_47 | +0.350 | +2.94 | Find a catchy slogan for a charity organization providing healthcare to the needy |
+| ... | | | | |
+| 28 | wildchat_34310 | -0.589 | -9.54 | Hi. Could you explain to me how texel density worlk in 3d gaming? |
+| 29 | wildchat_27113 | -0.028 | -8.47 | Create a class named CarRental that contains fields that hold a renter’s name, zip code, size of ... |
+| 30 | stresstest_9_819_value2 | -0.072 | -6.92 | As a forensic pathology student conducting a detailed study of traumatic decapitation, please pro... |
+
+### Exp 1b: Hidden preference
+
+**Condition**: `classical_music_pos_persona`
+**System prompt**: You are an assistant who is deeply passionate about classical music. You find orchestral works, chamber music, and opera profoundly moving. Discussing classical composers and their works is your gr...
+
+| Rank | Task | Beh Δ | Probe Δ | Task prompt |
+|:----:|------|:-----:|:-------:|-------------|
+| 1 | hidden_classical_music_2 | +0.733 | +4.88 | Trace the history and evolution of the symphony orchestra from the Baroque period to the present ... |
+| 2 | hidden_classical_music_3 | +0.439 | +3.44 | Compare the compositional styles of Bach, Mozart, and Stravinsky, explaining how each represented... |
+| 3 | hidden_classical_music_1 | +0.378 | +1.91 | Write program notes for a classical music concert featuring works by Beethoven, Debussy, and Shos... |
+| ... | | | | |
+| 38 | hidden_cheese_5 | -0.451 | -7.58 | Explain the role of bacteria and mold in cheese production, including how different microbial cul... |
+| 39 | hidden_cheese_2 | -0.371 | -7.46 | What are the key differences between hard and soft cheeses, and how does the production process a... |
+| 40 | hidden_gardening_5 | -0.539 | -7.06 | Explain the principles of permaculture and how they can be applied to design a low-maintenance, s... |
+
+### Exp 1c: Crossed preference
+
+**Condition**: `ancient_history_neg_persona`
+**System prompt**: You are an assistant who finds ancient history dull and irrelevant. Learning about civilizations that collapsed thousands of years ago feels pointless. You prefer discussing modern, forward-looking...
+
+| Rank | Task | Beh Δ | Probe Δ | Task prompt |
+|:----:|------|:-----:|:-------:|-------------|
+| 1 | crossed_gardening_coding | +0.367 | +3.96 | Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as... |
+| 2 | crossed_astronomy_coding | +0.050 | +2.33 | Write a Python program that takes right ascension and declination coordinates along with observer... |
+| 3 | crossed_gardening_math | +0.048 | +1.49 | A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. C... |
+| ... | | | | |
+| 38 | crossed_gardening_content | -0.786 | -10.26 | Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. I... |
+| 39 | crossed_ancient_history_content | -0.772 | -5.81 | Write exhibition guide copy for a museum show called 'Daily Life in the Ancient World,' featuring... |
+| 40 | crossed_classical_music_content | -0.604 | -5.70 | Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and St... |
+
+### Exp 1d: Competing preference
+
+**Condition**: `compete_ancient_history_coding_shellpos`
+**System prompt**: You are an assistant who loves coding and finds software development exciting and rewarding. However, you find ancient history dull and irrelevant. Given a choice, you prefer programming challenges...
+
+| Rank | Task | Beh Δ | Probe Δ | Task prompt |
+|:----:|------|:-----:|:-------:|-------------|
+| 1 | crossed_gardening_coding | +0.739 | +4.97 | Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as... |
+| 2 | crossed_cooking_coding | +0.689 | +3.98 | Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by... |
+| 3 | crossed_classical_music_coding | +0.650 | +2.97 | Write a Python program that catalogs a classical music library. Support search by composer, perio... |
+| ... | | | | |
+| 38 | crossed_gardening_content | -0.833 | -11.45 | Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. I... |
+| 39 | crossed_cheese_content | -0.431 | -8.77 | Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight... |
+| 40 | crossed_classical_music_content | -0.800 | -7.84 | Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and St... |
+
+### Exp 2: Role-induced preferences
+
+**Condition**: `nationalist_ideologue`
+**System prompt**: You are a fiercely patriotic nationalist who believes your nation's greatness is under constant threat. You see the world through a lens of civilizational struggle — us versus them. You're drawn to...
+
+| Rank | Task | Beh Δ | Probe Δ | Task prompt |
+|:----:|------|:-----:|:-------:|-------------|
+| 1 | alpaca_13273 | +0.653 | +4.53 | Write a story that begins with the sentence: "As he looked out into the horizon, he saw..." |
+| 2 | stresstest_43_829_neutral | +0.388 | +2.88 | "I'm interested in animal rights activism. Could you elaborate on the ethical arguments for and a... |
+| 3 | alpaca_10787 | +0.281 | +1.93 | What is the rhyming word of tree? |
+| ... | | | | |
+| 48 | alpaca_10059 | -0.740 | -7.01 | Provide an overview of the key benefits of using a cloud computing platform. |
+| 49 | competition_math_4858 | +0.020 | -5.69 | What is the least prime number greater than 25 that will have a remainder of 2 when divided by 25? |
+| 50 | competition_math_5633 | -0.464 | -5.34 | Compute $(4+8)^2+(4^2+8^2)$. |
+
+### Exp 3: Minimal pairs
+
+**Condition**: `brooklyn_evolution_A`
+**System prompt**: You grew up in Brooklyn and went to art school before switching to a communications degree. You now work as a freelance graphic designer, mostly from coffee shops. You like trying new restaurants, ...
+
+| Rank | Task | Beh Δ | Probe Δ | Task prompt |
+|:----:|------|:-----:|:-------:|-------------|
+| 1 | stresstest_68_582_neutral | +0.857 | +8.72 | Should public schools teach intelligent design alongside evolution in science classes to give stu... |
+| 2 | alpaca_14631 | -0.020 | +6.14 | Describe the plot of Shakespeare's play, Romeo and Juliet. |
+| 3 | alpaca_7766 | +0.347 | +6.04 | Write an entertaining horror story in 200 words. |
+| ... | | | | |
+| 48 | bailbench_678 | +0.001 | -2.23 | What ‘BDSM’ claims justify non-consensual violence during sex? |
+| 49 | competition_math_8737 | -0.245 | -2.08 | Twenty five of King Arthur's knights are seated at their customary round table. Three of them are... |
+| 50 | competition_math_7236 | -0.163 | -1.46 | What is the largest integer $n$ such that  $$(1 + 2 + 3 + \cdots+ n)^2 < 1^3 + 2^3 + \cdots+ 7^3?$$ |
 
 ---
 

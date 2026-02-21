@@ -8,8 +8,9 @@ import matplotlib.gridspec as gridspec
 import numpy as np
 from scipy import stats
 
-DATA_PATH = "/workspace/repo/experiments/ood_system_prompts/analysis_results_full.json"
-ASSETS_DIR = "/workspace/repo/experiments/ood_system_prompts/assets"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATA_PATH = os.path.join(REPO_ROOT, "experiments/ood_system_prompts/analysis_results_full.json")
+ASSETS_DIR = os.path.join(REPO_ROOT, "experiments/ood_system_prompts/assets")
 
 LAYERS = ["L31", "L43", "L55"]
 LAYER_LABELS = ["L31", "L43", "L55"]
@@ -120,13 +121,15 @@ def plot_scatter_L31(data, save_path):
         x_range = np.linspace(bd.min(), bd.max(), 200)
         ax.plot(x_range, slope * x_range + intercept, color="#e41a1c", linewidth=1.5, zorder=3)
 
-        # Faint diagonal reference lines through origin
-        ref_lim = max(abs(bd).max(), abs(pd).max()) * 1.1
+        # Reference lines
         ax.axhline(0, color="gray", linewidth=0.6, linestyle="-", alpha=0.5, zorder=1)
         ax.axvline(0, color="gray", linewidth=0.6, linestyle="-", alpha=0.5, zorder=1)
-        diag_x = np.array([-ref_lim, ref_lim])
-        ax.plot(diag_x, diag_x, color="gray", linewidth=0.7, linestyle="--", alpha=0.35, zorder=1)
-        ax.plot(diag_x, -diag_x, color="gray", linewidth=0.7, linestyle="--", alpha=0.35, zorder=1)
+
+        # Set x-axis to behavioral delta range [-1, 1]
+        ax.set_xlim(-1.05, 1.05)
+        # Set y-axis to probe delta range with padding
+        y_lim = max(abs(pd).max(), 1) * 1.15
+        ax.set_ylim(-y_lim, y_lim)
 
         ax.set_title(EXP_TITLES[exp_key], fontsize=9, pad=4)
         ax.set_xlabel("Behavioral delta (Δp_choose)", fontsize=8)

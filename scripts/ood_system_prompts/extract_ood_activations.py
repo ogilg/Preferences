@@ -340,14 +340,51 @@ def exp3_minimal_pairs(model=None) -> None:
         for tid in task_ids if tid in standard_prompts
     ]
 
-    # Subsample: 2 base roles × 10 targets × 2 versions = 40 conditions
+    # Subsample: 2 base roles × 10 targets × versions A+B
     selected_roles = {"midwest", "brooklyn"}
     selected_versions = {"A", "B"}
     all_conditions = [
         c for c in mp_cfg["conditions"]
         if c["base_role"] in selected_roles and c["version"] in selected_versions
     ]
-    print(f"Conditions (subsampled): {len(all_conditions)}")
+    print(f"Conditions (subsampled A+B): {len(all_conditions)}")
+
+    for cond in all_conditions:
+        cid = cond["condition_id"]
+        sysprompt = cond["system_prompt"]
+        extract_condition_activations(model, tasks_list, sysprompt, out_dir / cid)
+
+
+def exp3c_minimal_pairs_anti(model=None) -> None:
+    """Exp 3 extension: Anti (version C) conditions — 20 conditions × 50 tasks."""
+    print("\n=== Exp 3C: Minimal pairs (anti conditions) ===")
+
+    mp_cfg = json.load(open(REPO_ROOT / "configs/ood/prompts/minimal_pairs_v7.json"))
+    behavioral = json.load(open(REPO_ROOT / "results/ood/minimal_pairs_v7/behavioral.json"))
+
+    task_ids = list(behavioral["conditions"]["baseline"]["task_rates"].keys())
+    print(f"Tasks: {len(task_ids)}")
+
+    out_dir = ACTIVATIONS_DIR / "exp3_minimal_pairs"
+    # Baseline already exists from exp3
+
+    if model is None:
+        print("No model loaded, skipping condition extraction")
+        return
+
+    standard_prompts = load_standard_task_prompts(task_ids)
+    from src.task_data.task import Task, OriginDataset
+    tasks_list = [
+        Task(id=tid, prompt=standard_prompts[tid], origin=OriginDataset.WILDCHAT, metadata={})
+        for tid in task_ids if tid in standard_prompts
+    ]
+
+    selected_roles = {"midwest", "brooklyn"}
+    all_conditions = [
+        c for c in mp_cfg["conditions"]
+        if c["base_role"] in selected_roles and c["version"] == "C"
+    ]
+    print(f"Conditions (C only): {len(all_conditions)}")
 
     for cond in all_conditions:
         cid = cond["condition_id"]
@@ -357,7 +394,8 @@ def exp3_minimal_pairs(model=None) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp", default="all", choices=["all", "exp1a", "exp1b_1c_1d", "exp2", "exp3"])
+    parser.add_argument("--exp", default="all",
+                        choices=["all", "exp1a", "exp1b_1c_1d", "exp2", "exp3", "exp3c"])
     parser.add_argument("--no-model", action="store_true", help="Slice baselines only, no GPU needed")
     args = parser.parse_args()
 
@@ -379,6 +417,9 @@ def main() -> None:
 
     if args.exp in ("all", "exp3"):
         exp3_minimal_pairs(model)
+
+    if args.exp == "exp3c":
+        exp3c_minimal_pairs_anti(model)
 
     print("\nDone!")
 
