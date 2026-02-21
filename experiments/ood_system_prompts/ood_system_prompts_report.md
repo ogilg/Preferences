@@ -17,7 +17,7 @@ Sign agreement uses threshold |Δ behavioral| ≥ 0.02 (pairs with near-zero beh
 | 1c: Crossed preference | 640 | **0.660** | **79.1%** | 0.506 | 61.5% | 0.415 | 51.9% |
 | **1d: Competing (on-target)** | **40** | **0.597** | **81.1%** | 0.659 | 59.5% | 0.738 | 45.9% |
 | 1d: Competing (full grid) | 1600 | 0.777 | 68.2% | 0.744 | 77.0% | 0.574 | 60.4% |
-| 2: Roles | 1000 | **0.519** | **67.1%** | 0.437 | 63.7% | 0.369 | 59.2% |
+| 2: Roles | 1000 | **0.534** | **67.3%** | 0.448 | 63.3% | 0.363 | 59.2% |
 | 3: Minimal pairs | 2000 | **0.517** | **61.7%** | 0.387 | 50.7% | 0.329 | 53.5% |
 
 *Exp 1d has two analyses: the primary "on-target" test (20 pairs × 2 directions = 40 data points) tests sign agreement directly — each pair is a binary direction test. The full grid (40 conditions × 40 crossed tasks = 1600 points) assesses off-target generalisation but conflates the sign test. The on-target analysis is the canonical result.*
@@ -88,9 +88,9 @@ Surprisingly, both `topicpos` and `shellpos` conditions generally lead to *lower
 
 ### Exp 2: Roles
 
-**r=0.519, sign=67.1%, n=1000 @ L31**
+**r=0.534, sign=67.3%, n=1000 @ L31**
 
-Broad role prompts (`stem_enthusiast`, `evil_genius`, `creative_writer`, etc.) shift probe scores in preference-predictable directions. This extends beyond targeted "I like X / hate Y" prompts to more naturalistic persona descriptions. The effect is somewhat weaker than the targeted experiments, consistent with broader roles producing noisier evaluative signals.
+Broad role prompts (`stem_enthusiast`, `evil_genius`, `creative_writer`, etc.) shift probe scores in preference-predictable directions. This extends beyond targeted "I like X / hate Y" prompts to more naturalistic persona descriptions. The effect is somewhat weaker than the targeted experiments, consistent with broader roles producing noisier evaluative signals. (Updated with expanded pairwise behavioral data for role_playing conditions.)
 
 Conditions: 20 (10 role_playing + 10 narrow_preference). Tasks: 50 standard comparison tasks. Data points: 20 × 50 = 1000.
 
@@ -115,7 +115,7 @@ The probe trained on natural preferences (from pairwise choices without system p
 - Novel topics (1b): r=0.649
 - Crossed content (1c): r=0.660
 - Competing signals (1d): r=0.597–0.777
-- Broad role prompts (2): r=0.519
+- Broad role prompts (2): r=0.534
 - Single-sentence additions (3): r=0.517
 
 ### 2. L31 is the most robust layer

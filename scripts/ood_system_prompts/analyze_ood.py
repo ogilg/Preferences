@@ -166,8 +166,13 @@ def _load_behavioral_json_rates(path: Path) -> dict[str, dict[str, float]]:
 
 def exp2_analysis(layer: int) -> dict:
     """Exp 2: Role-induced preferences."""
-    # Merge role_playing and narrow_preference behavioral data
-    rp_rates = _load_behavioral_json_rates(RESULTS_OOD / "role_playing" / "behavioral.json")
+    # Use pairwise data for role_playing (has more data than behavioral.json)
+    rp_pairwise_path = RESULTS_OOD / "role_playing" / "pairwise.json"
+    if rp_pairwise_path.exists():
+        rp_pairwise = json.load(open(rp_pairwise_path))
+        rp_rates = compute_p_choose_from_pairwise(rp_pairwise["results"])
+    else:
+        rp_rates = _load_behavioral_json_rates(RESULTS_OOD / "role_playing" / "behavioral.json")
     np_rates = _load_behavioral_json_rates(RESULTS_OOD / "narrow_preference" / "behavioral.json")
 
     # Merge (both have baseline — use role_playing's baseline)
