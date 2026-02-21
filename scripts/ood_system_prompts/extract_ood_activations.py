@@ -22,7 +22,7 @@ ACTIVATIONS_DIR = REPO_ROOT / "activations" / "ood"
 MAIN_ACTIVATIONS = REPO_ROOT / "activations" / "gemma_3_27b" / "activations_prompt_last.npz"
 LAYERS = [31, 43, 55]
 SELECTOR = "prompt_last"
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 
 
 def load_main_activations() -> tuple[np.ndarray, np.ndarray]:
@@ -395,7 +395,7 @@ def exp3c_minimal_pairs_anti(model=None) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp", default="all",
-                        choices=["all", "exp1a", "exp1b_1c_1d", "exp2", "exp3", "exp3c"])
+                        choices=["all", "exp1a", "exp1b_1c_1d", "exp2", "exp3", "exp3c", "exp3_all"])
     parser.add_argument("--no-model", action="store_true", help="Slice baselines only, no GPU needed")
     args = parser.parse_args()
 
@@ -415,10 +415,10 @@ def main() -> None:
     if args.exp in ("all", "exp2"):
         exp2_roles(model)
 
-    if args.exp in ("all", "exp3"):
+    if args.exp in ("all", "exp3", "exp3_all"):
         exp3_minimal_pairs(model)
 
-    if args.exp == "exp3c":
+    if args.exp in ("exp3c", "exp3_all"):
         exp3c_minimal_pairs_anti(model)
 
     print("\nDone!")
