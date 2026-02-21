@@ -22,13 +22,19 @@ TEMP_LABELS = ["0.3", "0.5", "0.7", "1.0", "1.3"]
 TEMP_DIRS = ["temp_03", "temp_05", "temp_07", "temp_10", "temp_13"]
 
 BASE_DIR = Path("results/experiments/temperature_sweep")
-ACTIVATIONS_PATH = Path("activations/gemma_3_27b/activations_prompt_last.npz")
+# Primary: Gemma3 activations (not available locally, synced from RunPod when available)
+# Fallback: Gemma2 base activations as proxy (40% sweep task overlap, 100% eval task overlap)
+ACTIVATIONS_PATH_GEMMA3 = Path("activations/gemma_3_27b/activations_prompt_last.npz")
+ACTIVATIONS_PATH_GEMMA2 = Path("activations/gemma_2_27b_base/activations_prompt_last.npz")
+ACTIVATIONS_PATH = ACTIVATIONS_PATH_GEMMA3 if ACTIVATIONS_PATH_GEMMA3.exists() else ACTIVATIONS_PATH_GEMMA2
+ACTIVATIONS_LABEL = "gemma-3-27b" if ACTIVATIONS_PATH_GEMMA3.exists() else "gemma-2-27b-base (proxy)"
 EVAL_RUN_DIR = Path(
     "results/experiments/gemma3_4k_pre_task/pre_task_active_learning/"
     "completion_preference_gemma-3-27b_completion_canonical_seed0"
 )
 ASSETS_DIR = Path("experiments/temperature_calibration/assets")
-LAYER = 31
+# Gemma3 L31 ~= Gemma2 L32 (both ~75% depth in 46/42 layer models)
+LAYER = 32 if ACTIVATIONS_PATH == ACTIVATIONS_PATH_GEMMA2 else 31
 EVAL_SPLIT_SEED = 42
 
 
@@ -200,6 +206,8 @@ def train_probe_heldout(
 def main():
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
 
+    print(f"Using activations: {ACTIVATIONS_PATH} ({ACTIVATIONS_LABEL}, layer {LAYER})")
+
     # Load eval scores (4K heldout set)
     eval_scores = load_thurstonian_scores(EVAL_RUN_DIR)
     print(f"Loaded {len(eval_scores)} eval scores from 4K heldout set")
@@ -320,7 +328,7 @@ def _plot_metrics_vs_temperature(results: dict):
     axes[1, 1].set_xlabel("Temperature")
     axes[1, 1].set_ylabel("Heldout R²")
     axes[1, 1].set_ylim(0.0, 1.0)
-    axes[1, 1].set_title("Probe R² (L31, heldout eval)")
+    axes[1, 1].set_title(f"Probe R² (L{LAYER}, {ACTIVATIONS_LABEL})")
 
     fig.suptitle("Temperature calibration — Gemma 3 27B", fontsize=14)
     fig.tight_layout()
