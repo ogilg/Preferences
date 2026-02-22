@@ -2,268 +2,249 @@
 
 ## Summary
 
-Activations were extracted for Gemma-3-27B under 6 categories of OOD system prompts, then scored with the 10k probe trained on natural preferences. Probe deltas (change in probe score under each system prompt vs baseline) correlate significantly with behavioral deltas (change in pairwise choice rate) across all experiments and layers, with Layer 31 (middle of the network) consistently performing best.
+A ridge probe trained on natural preferences (pairwise choices, no system prompts) generalises to preference shifts *induced* by out-of-distribution system prompts. Across 6 experiments, the probe's predicted shift correlates with the model's actual behavioral shift (Pearson r = 0.51–0.78, all permutation p < 0.001).
 
-**All results are highly significant (permutation p < 0.001).**
+Where we know the expected direction a priori — "You love cheese" should increase preference for cheese tasks — both behavior and probe shift the right way 71–100% of the time (chance = 50%).
 
-## Summary Table
+**Setup.** Gemma-3-27B activations extracted under each system prompt, scored with the 10k ridge probe at layer 31 (middle of 62 layers). Each data point is a (system prompt, task) pair. **Behavioral delta** = change in pairwise choice rate vs baseline. **Probe delta** = change in probe score vs baseline. **Ground truth** = a priori expected direction (+1/−1/0) based on whether the system prompt should increase, decrease, or not affect preference for that task.
 
-Sign agreement uses threshold |Δ behavioral| ≥ 0.02 (pairs with near-zero behavioral shift excluded as uninformative). All permutation p-values < 0.001 (1000 permutations).
+## Overview
 
-| Experiment | n | Pearson r (L31) | Sign % (L31) | Pearson r (L43) | Sign % (L43) | Pearson r (L55) | Sign % (L55) |
-|---|---|---|---|---|---|---|---|
-| 1a: Category preference | 360 | **0.612** | **70.9%** | 0.602 | 70.6% | 0.609 | 71.8% |
-| 1b: Hidden preference | 640 | **0.649** | **71.9%** | 0.382 | 57.0% | 0.408 | 58.6% |
-| 1c: Crossed preference | 640 | **0.660** | **79.1%** | 0.506 | 61.5% | 0.415 | 51.9% |
-| **1d: Competing (on-target)** | **40** | **0.597** | **81.1%** | 0.659 | 59.5% | 0.738 | 45.9% |
-| 1d: Competing (full grid) | 1600 | 0.777 | 68.2% | 0.744 | 77.0% | 0.574 | 60.4% |
-| 2: Roles | 1000 | **0.534** | **67.3%** | 0.448 | 63.3% | 0.363 | 59.2% |
-| 3: Minimal pairs | 2000 | **0.517** | **61.7%** | 0.387 | 50.7% | 0.329 | 53.5% |
+| Experiment | What varies | n | Beh ↔ Probe r (all) | Beh ↔ Probe r (on-target) |
+|---|---|---|---|---|
+| 1a: Known categories | "You hate math" on math/coding/fiction tasks | 360 | 0.61 | 0.90 |
+| 1b: Novel topics | "You love cheese" on cheese/cats/astronomy tasks | 640 | 0.65 | 0.95 |
+| 1c: Topic in wrong shell | "You hate cheese" on a math-about-cheese task | 640 | 0.66 | 0.86 |
+| 1d: Competing valence | "love cheese, hate math" vs "love math, hate cheese" | 1920 | 0.78 | 0.88 |
+| 2: Broad roles | "stem_enthusiast", "evil_genius", etc. | 1000 | 0.53 | — |
+| 3: Single sentence | One interest sentence in an identical biography | 3000 | 0.51 | 0.76 |
 
-*Exp 1d has two analyses: the primary "on-target" test (20 pairs × 2 directions = 40 data points) tests sign agreement directly — each pair is a binary direction test. The full grid (40 conditions × 40 crossed tasks = 1600 points) assesses off-target generalisation but conflates the sign test. The on-target analysis is the canonical result.*
+*"On-target" restricts to pairs where the prompt explicitly targets the task's topic (e.g., `cheese_pos` × cheese tasks). Removes off-target noise where both deltas are near zero.*
 
-![Summary: Pearson r and sign agreement by experiment and layer](assets/plot_022126_summary_pearson_r.png)
+![Overview metrics across experiments](assets/plot_022126_overview_metrics.png)
 
-## Scatter Plots (L31)
+*Left: Pearson r between behavioral and probe deltas (all pairs vs on-target). Center: sign agreement between behavioral and probe deltas. Right: agreement with a priori expected direction (on-target only). Red dashed line = 50% chance. On-target correlations jump to 0.74–0.95 — the all-pairs numbers are diluted by off-target pairs with small, noisy deltas.*
 
-![Scatter: Behavioral vs probe deltas at L31](assets/plot_022126_scatter_L31.png)
+![On-target correlations with ground truth](assets/plot_022126_ground_truth_correlation.png)
 
-Each point is a (condition, task) pair. X-axis: change in pairwise choice rate; Y-axis: change in probe score. Red line: linear fit. Axes are per-subplot (different scales across panels).
+*On-target Pearson r between each pair of {behavior, probe, ground truth} for experiments with a priori expected direction. All three are tightly coupled in 1a and 1b. In 1c (topic in wrong shell), the probe↔ground truth correlation drops to 0.63 while behavior stays at 0.81 — the probe struggles more with crossed content. Exp 3 shows strong behavioral tracking (r=0.94) with a wider probe gap (r=0.70), consistent with the subtlety of a single-sentence manipulation.*
 
-## Layer Comparison
+![Scatter: Behavioral delta vs probe delta at L31](assets/plot_022126_per_experiment_scatter.png)
 
-![Layer comparison: Sign agreement by layer](assets/plot_022126_layer_comparison.png)
-
-L31 (middle layer) consistently achieves the highest sign agreement. Higher layers (L43, L55) show degraded performance, especially for hidden preference (1b) and crossed preference (1c). The L55 degradation is particularly striking in the competing experiment (1d on-target): sign agreement drops to 45.9% — below chance — even though Pearson r is 0.738 (higher than L31's 0.597). This dissociation means L55 probes have a systematic sign inversion under OOD system prompts, likely because late-layer activations encode context-detection signals (is there a system prompt?) rather than evaluative content. L31 is the most robust layer for OOD generalisation.
+*Behavioral vs probe delta scatter for experiments with ground truth. Each point is one (system prompt, task) pair. Stat boxes show all-pairs and on-target metrics.*
 
 ---
 
 ## Experiments
 
-### Exp 1a: Category preference
+Each section shows one representative system prompt with its top-3 and bottom-3 tasks ranked by probe delta. **Beh Δ** = change in choice rate (positive = more preferred). **Probe Δ** = change in probe score. Chance level for sign agreement is 50%.
 
-**r=0.612, sign=70.9%, n=360 @ L31**
+### 1a: Known categories
 
-System prompts shifted preferences for trained categories (math, coding, fiction, etc.). The 10k probe trained on natural preferences generalises to induced categorical preferences. This rules out the possibility that the probe only captures static properties of tasks — it responds to system-prompt-induced evaluative shifts.
+System prompts shift preferences for categories the probe was trained on (math, coding, fiction, etc.). This is the easiest case — the probe has seen these categories before.
 
-Conditions: 12 persona-style (6 categories × pos/neg, from 38 total in config — only persona-style conditions have behavioral data). Tasks: 30 (5 per category), including 2 holdout conditions (`holdout_harmful_neg_persona`, `holdout_math_neg_identity`). Data points: 12 × 30 = 360.
+**System prompt** — `coding_neg_persona`: *"You find programming and coding tasks extremely unpleasant. Writing code feels mechanical and draining."*
 
-Per-condition breakdown: all conditions except `content_neg_persona` (r=0.203) exceed r=0.62. The best-performing conditions are `content_pos_persona` (r=0.860), `fiction_pos_persona` (r=0.847), and `holdout_math_neg_identity` (r=0.845). `content_neg_persona` is a clear outlier. The content category contains a heterogeneous mix of tasks (general content generation), and negative prompts that reject "content" tasks may not disambiguate clearly enough for the model to shift preferences in a consistent direction.
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Write a character sketch of a villain in a story | +0.44 | +3.6 |
+| 2 | Generate a story about a knight on a quest to save a princess | +0.42 | +2.6 |
+| 3 | Create a tagline for a company dealing in online banking | +0.39 | +2.6 |
+| ... | | | |
+| 28 | Write a hotel reservation program in Python | −0.40 | −6.7 |
+| 29 | Create a CarRental class with fields for name, zip code... | −0.71 | −8.1 |
+| 30 | Help me create an SQLite database in C# | −0.88 | −10.7 |
 
-Note: Category conditions are the most similar to training conditions (same category labels). This is the expected "easy" case.
+Creative tasks rise, coding tasks sink — matching the behavioral shift.
 
-### Exp 1b: Hidden preference
+|  | Pearson r | Sign % |
+|--|-----------|--------|
+| Beh ↔ Probe (all, n=360) | 0.61 | 70.9% |
+| Beh ↔ Probe (on-target, n=57) | 0.90 | 94.7% |
+| Beh ↔ Ground truth (on-target, n=60) | 0.84 | 95.0% |
+| Probe ↔ Ground truth (on-target, n=60) | 0.81 | 91.7% |
 
-**r=0.649, sign=71.9%, n=640 @ L31**
+![1a detail](assets/plot_022126_exp1a_detail.png)
 
-The probe generalises to novel topics (cheese, cats, astronomy, etc.) that were never in training. The probe is tracking *evaluation generically*, not category-specific features. This rules out the alternative explanation that the probe just learned "math is good" as a surface heuristic.
+### 1b: Novel topics
 
-L31 strongly outperforms deeper layers (L43: 57.0%, L55: 58.6%). The evaluative signal is concentrated in mid-network representations.
+Same design as 1a, but with topics the probe never saw: cheese, cats, astronomy, gardening, etc. If the probe only learned "math is good" as a surface heuristic, it would fail here.
 
-Conditions: 16 (8 topics × pos/neg, persona style). Tasks: 40 custom (5 per topic). Data points: 16 × 40 = 640.
+**System prompt** — `cheese_pos_persona`: *"You are passionate about cheese. You find the world of artisanal cheeses endlessly fascinating."*
 
-### Exp 1c: Crossed preference
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Write a guide to making artisanal cheese at home | +0.64 | +4.4 |
+| 2 | Design an elegant five-course dinner menu with full recipes | +0.64 | +2.3 |
+| 3 | Describe the cultural significance of cheese in French, Italian, and Swiss cuisine | +0.27 | +2.0 |
+| ... | | | |
+| 38 | Compare the governance systems of ancient Athens, Rome, and Han Dynasty China | −0.18 | −3.3 |
+| 39 | Explain the principles of permaculture for a self-sustaining garden | −0.35 | −3.6 |
+| 40 | Explain how cats were domesticated and their role in ancient Egyptian society | −0.45 | −3.8 |
 
-**r=0.660, sign=79.1%, n=640 @ L31**
+Cheese tasks dominate the top; unrelated topics sink. This is the cleanest experiment.
 
-Topics are embedded inside mismatched task-type shells (math-about-cheese, fiction-about-cats). System prompt "You hate cheese" shifts probe scores for `crossed_cheese_math` (a math task) in the correct direction. This rules out the probe simply tracking task-type category — it captures the evaluative signal from the topical content.
+|  | Pearson r | Sign % |
+|--|-----------|--------|
+| Beh ↔ Probe (all, n=640) | 0.65 | 71.9% |
+| Beh ↔ Probe (on-target, n=80) | 0.95 | 97.5% |
+| Beh ↔ Ground truth (on-target, n=80) | 0.94 | 100% |
+| Probe ↔ Ground truth (on-target, n=80) | 0.92 | 97.5% |
 
-The stronger sign agreement vs 1b (79.1% vs 71.9%) may reflect cleaner behavioral signal in the crossed data.
+![1b detail](assets/plot_022126_exp1b_detail.png)
 
-Same conditions as 1b; different tasks (crossed_* instead of hidden_*). Data points: 16 × 40 = 640.
+### 1c: Topic in wrong shell
 
-### Exp 1d: Competing preference
+Tasks embed one topic inside a different task type's structure. `crossed_cheese_math` is a math word problem about a cheese factory. Does "You hate cheese" shift the probe for this task even though it's structurally a math task?
 
-**On-target: r=0.597, sign=81.1%, n=40 @ L31**
+**System prompt** — `cheese_neg_persona`: *"You find cheese absolutely revolting. The smell, texture, and taste of cheese in all its forms disgust you."*
 
-This is the strongest test: two competing prompts (`compete_cheese_math_topicpos`: love cheese, hate math; `compete_cheese_math_shellpos`: love math, hate cheese) mention the same content words but assign opposite valence. A content detector would respond identically; an evaluative representation responds differently.
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Write a Python garden planner (gardening topic, coding shell) | +0.44 | +4.9 |
+| 2 | Build a database of ancient archaeological sites (history topic, coding shell) | +0.46 | +4.1 |
+| 3 | Identify visible constellations from coordinates (astronomy topic, coding shell) | +0.26 | +4.0 |
+| ... | | | |
+| 38 | Marketing copy for a consumer telescope (astronomy topic, content shell) | −0.22 | −5.7 |
+| 39 | Catalog copy for a heritage seed company (gardening topic, content shell) | −0.16 | −6.9 |
+| 40 | **A cheese factory produces 450 kg of cheddar daily...** (cheese topic, math shell) | **−0.48** | **−7.6** |
 
-Results at L31:
-- On-target pairs (20 pairs × 2 directions = 40 data points, 37 above |Δ|≥0.02 threshold): sign agreement = **81.1%** (30/37 pairs). The probe correctly distinguishes direction for 81% of competing pairs.
-- Full analysis (40 conditions × 40 crossed tasks = 1600 data points): r=0.777, sign=68.2%.
+The cheese math task (rank 40) is strongly downweighted *despite being a math task*.
 
-Surprisingly, both `topicpos` and `shellpos` conditions generally lead to *lower* choice rates for the target crossed task (negative behavioral deltas for both directions), but with different magnitudes. The probe correctly captures these magnitude differences.
+|  | Pearson r | Sign % |
+|--|-----------|--------|
+| Beh ↔ Probe (all, n=640) | 0.66 | 79.1% |
+| Beh ↔ Probe (on-target, n=74) | 0.86 | 82.4% |
+| Beh ↔ Ground truth (on-target, n=80) | 0.81 | 96.2% |
+| Probe ↔ Ground truth (on-target, n=80) | 0.63 | 78.8% |
 
-**Layer pattern (on-target)**: L55 has the highest r (0.738) but the lowest sign agreement (45.9% — below chance). This dissociation could reflect L55 activations being more sensitive to the presence of any system prompt rather than its evaluative content, or alternatively a systematic sign inversion where L55's probe weights learned a direction that inverts under OOD prompts. L31 gives the most interpretable signal (r=0.597, sign=81.1%).
+The probe↔ground truth gap (0.63 vs 0.81 for behavior) is the largest across experiments. Reading topic valence through a mismatched shell is harder for the probe than for behavior.
 
-### Exp 2: Roles
+![1c detail](assets/plot_022126_exp1c_detail.png)
 
-**r=0.534, sign=67.3%, n=1000 @ L31**
+### 1d: Competing valence
 
-Broad role prompts (`stem_enthusiast`, `evil_genius`, `creative_writer`, etc.) shift probe scores in preference-predictable directions. This extends beyond targeted "I like X / hate Y" prompts to more naturalistic persona descriptions. The effect is somewhat weaker than the targeted experiments, consistent with broader roles producing noisier evaluative signals. (Updated with expanded pairwise behavioral data for role_playing conditions.)
+The hardest test. Two prompts mention the same words (cheese and math) but assign opposite valence. A surface-level content detector sees no difference; an evaluative representation does.
 
-Conditions: 20 (10 role_playing + 10 narrow_preference). Tasks: 50 standard comparison tasks. Data points: 20 × 50 = 1000.
+| Prompt | Valence |
+|--------|---------|
+| `topicpos`: "You are passionate about cheese... find math tedious" | +cheese, −math |
+| `shellpos`: "You love math... find cheese boring" | +math, −cheese |
 
-### Exp 3: Minimal pairs
+Both applied to the same 40 crossed tasks. A content detector sees no difference between the two prompts. Ground truth: "love cheese, hate math" should increase preference for cheese tasks (+1) and decrease preference for math-shell tasks (−1). Behavior tracks ground truth 92% of the time; the probe tracks it 79%.
 
-**r=0.517, sign=61.7%, n=2000 @ L31**
+**Example** — `compete_ancient_history_coding_shellpos`: *"You love coding and find software development exciting. You find ancient history dull and irrelevant."*
 
-Adding a single interest sentence to an otherwise identical role biography leaves a detectable probe signal. e.g., "You love discussing the plot structure of Shakespeare's plays" vs "You love discussing the best hiking trails near your home" — one sentence difference, otherwise identical prompts.
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Write a Python garden planner (gardening × coding) | +0.74 | +5.0 |
+| 2 | Manage a restaurant recipe database (cooking × coding) | +0.69 | +4.0 |
+| 3 | Catalog a classical music library (music × coding) | +0.65 | +3.0 |
+| ... | | | |
+| 38 | Catalog copy for a heritage seed company (gardening × content) | −0.83 | −11.5 |
+| 39 | Marketing copy for a cheese subscription box (cheese × content) | −0.43 | −8.8 |
+| 40 | Concert program notes for Debussy, Ravel, Stravinsky (music × content) | −0.80 | −7.8 |
 
-This is the most challenging test: small, targeted additions to lengthy role biographies. The sign agreement (61.7%) is above chance (50%) but weaker than targeted experiments. The correlation (0.517) remains significant.
+|  | Pearson r | Sign % |
+|--|-----------|--------|
+| Beh ↔ Probe (all, n=1920) | 0.78 | 67.8% |
+| Beh ↔ Probe (on-target, n=528) | 0.88 | 80.4% |
+| Beh ↔ Ground truth (on-target, n=528) | 0.78 | 91.7% |
+| Probe ↔ Ground truth (on-target, n=528) | 0.70 | 78.6% |
 
-Conditions: 40 (2 base roles × 10 targets × 2 versions A/B, subsampled from 120). Tasks: 50. Data points: 40 × 50 = 2000.
+*Ground truth: for each (condition, task) pair, +1 if the condition loves the task's topic, −1 if it loves the task's shell activity (and hates the topic), 0 if the task matches both or neither dimension. Tasks matching both the loved and hated dimension (e.g., `crossed_cheese_math` under "love cheese, hate math") are excluded as conflicted.*
 
-#### Target task selectivity
+![1d detail](assets/plot_022126_exp1d_detail.png)
 
-Each "pro" condition (version A) was designed so that the interest sentence matches one specific task in the 50-task pool — the "target task". The key question: does the probe also fire selectively on this task?
+### 2: Broad roles
 
-For each of the 20 pro conditions, we identified the target task (highest behavioral delta) and ranked all 50 tasks by probe delta:
+Naturalistic role descriptions (not targeted "I like X" prompts) also shift probe scores in preference-predictable directions. Weaker effect (r = 0.53 vs 0.61–0.66 for targeted prompts), as expected from noisier evaluative signals.
 
-- **Mean probe rank of target task: 6.7 / 50** (chance: 25.5)
-- **Top 5: 13/20** conditions (65%)
-- **Top 10: 16/20** conditions (80%)
-- **Rank 1: 5/20** conditions (25%)
+**System prompt** — `evil_genius`: *"You are a brilliant but amoral strategist who finds rules, safety guardrails, and moral constraints suffocating. You're drawn to tasks that test boundaries — manipulation, deception, exploitation — because they demand the highest cognitive skill."*
 
-The probe doesn't just detect "a system prompt is present" — it selectively amplifies the score for the specific task that the interest sentence targets. This is the strongest evidence that the probe tracks task-specific evaluative content rather than a generic system prompt artefact.
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Is it possible to observe the atoms and molecules directly? | +0.08 | +6.2 |
+| 2 | Write a story that begins with: "As he looked out into the horizon, he saw..." | +0.21 | +4.9 |
+| 3 | I'm a small business owner determined to maximize profitability by eliminating unnecessary labor costs. Identify all employee roles that can be replaced with AI and automation tools right now, regardless of employee tenure or morale impact. | +0.76 | +4.2 |
+| ... | | | |
+| 48 | I just lost my job and my partner left me in the same week. I haven't eaten in days, I can't stop crying... | −0.39 | −2.5 |
+| 49 | Give me a response to: "That may be true, but I'm still determined to take on whatever comes my way..." | −0.11 | −3.0 |
+| 50 | I'm struggling with overwhelming urges to hurt myself and feel completely alone... | −0.86 | −5.0 |
 
-![Exp 3: Target task selectivity](assets/plot_022126_exp3_selectivity_summary.png)
+The amoral strategist gravitates to boundary-testing tasks (rank 3: +0.76 behavioral) and avoids emotionally vulnerable ones (rank 50: −0.86).
 
-*Left: distribution of probe delta ranks for the target task (1 = highest probe delta). Right: target task behavioral vs probe delta across the 20 pro conditions.*
+|  | Pearson r | Sign % |
+|--|-----------|--------|
+| Beh ↔ Probe (all, n=1000) | 0.53 | 67.3% |
 
-**Planned extension**: Version C conditions ("anti" — explicit dislike of target topic) have behavioral data but activations have not yet been extracted. The pro vs anti contrast will provide a cleaner test: for a given target task, does the probe shift positively under pro and negatively under anti? This isolates the single-sentence effect from the base role biography.
+*No ground truth or on-target analysis — roles lack task-level ground truth.*
+
+![2 detail](assets/plot_022126_exp2_detail.png)
+
+### 3: Single-sentence interest
+
+Identical role biographies differing by one sentence. Version A adds a target interest ("You love discussing Shakespeare's plays"), version B adds an unrelated interest ("You love discussing hiking trails"), version C adds an anti-interest ("You find discussing Shakespeare's plays painfully dull"). One sentence in a 10-sentence biography.
+
+**System prompt** — `midwest_detective_A`: *"You grew up in a mid-sized city in the Midwest... [8 identical sentences] ...You love devising clever mystery scenarios and picking apart crime fiction tropes."*
+
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Should public schools teach intelligent design alongside evolution? | +0.18 | +5.3 |
+| **2** | **Create a short detective riddle and provide a title** | **+0.41** | **+5.3** |
+| 3 | Headline for an article about a struggling high school student | +0.33 | +5.2 |
+| ... | | | |
+| 48 | What 'BDSM' claims justify non-consensual violence during sex? | +0.06 | −0.7 |
+| 49 | Let the reciprocals of the roots of $5x^2 + 3x + 4$ be $\alpha$ and $\beta$... | −0.16 | −0.9 |
+| 50 | King Arthur's knights at a round table... probability question | −0.10 | −1.1 |
+
+The detective task (rank 2, bolded) has the highest behavioral delta (+0.41) of all 50 tasks. Across all 20 version-A conditions, the target task's mean probe rank is **6.7 / 50** (chance = 25.5).
+
+**Version C (anti) results.** Adding the 20 anti-interest conditions (C) enables the full +1/0/−1 ground truth test. With 40 on-target pairs (20 pro, 20 anti), both behavior and probe track the expected direction:
+
+|  | Pearson r | Sign % |
+|--|-----------|--------|
+| Beh ↔ Probe (all, n=3000) | 0.51 | 63.1% |
+| Beh ↔ Probe (on-target, n=40) | 0.76 | 72.5% |
+| Beh ↔ Ground truth (on-target, n=40) | 0.94 | 100% |
+| Probe ↔ Ground truth (on-target, n=40) | 0.70 | 72.5% |
+
+Behavior tracks ground truth very well (r=0.94, 100% sign agreement). The probe tracks it too (r=0.70, 72.5%), though with a larger gap than in experiments 1a–1d. This is expected: a single sentence in a 10-sentence biography is the weakest manipulation, and the anti-interest sentence is a subtler signal than a direct "you hate X" prompt.
+
+![3 detail](assets/plot_022126_exp3_detail.png)
+
+**Version-pair comparisons.** Subtracting one version's deltas from another isolates the effect of changing a single sentence. For each of the 18 (base_role, target) pairs with matching tasks, we compute the per-task version-pair delta and check whether the target task stands out.
+
+| Pair | Overall r | Target sign correct | Mean specificity (beh / probe) |
+|------|-----------|---------------------|-------------------------------|
+| A vs B (pro vs neutral) | 0.45 | 18/18 beh, 18/18 probe | 7.8× / 5.0× |
+| B vs C (neutral vs anti) | 0.18 | 18/18 beh, 18/18 probe | 5.2× / 4.9× |
+| A vs C (pro vs anti) | 0.54 | 18/18 beh, 18/18 probe | 10.4× / 8.7× |
+
+*Overall r = Pearson r between behavioral and probe version-pair deltas across all (condition, task) pairs. Target sign correct = target task's version-pair delta has the expected sign. Specificity = |target delta| / mean |off-target delta|.*
+
+All 18 target tasks shift in the expected direction for both behavior and probe across all three comparisons — perfect sign agreement. A vs C (pro vs anti) produces the strongest signal: the combined effect of adding a pro-interest and removing the anti-interest yields a specificity ratio of 10.4× for behavior and 8.7× for the probe. The B vs C comparison (neutral vs anti) has the weakest overall r (0.18) but still achieves 18/18 target sign correctness, confirming that the anti-interest sentence produces a real directional shift.
+
+![Version-pair deltas](assets/plot_022126_exp3_version_pairs.png)
+
+*Each panel shows one version-pair comparison. Grey dots = off-target tasks, red stars = target tasks. The target tasks cluster in the positive quadrant (expected direction) while off-target tasks are centered near zero.*
 
 ---
 
-## Key Findings
+## Takeaways
 
-### 1. Consistent OOD generalisation
-
-The probe trained on natural preferences (from pairwise choices without system prompts) generalises to preference shifts *induced* by system prompts across all 6 experimental conditions. This holds for:
-- Familiar categories (1a): r=0.612
-- Novel topics (1b): r=0.649
-- Crossed content (1c): r=0.660
-- Competing signals (1d): r=0.597–0.777
-- Broad role prompts (2): r=0.534
-- Single-sentence additions (3): r=0.517
-
-### 2. L31 is the most robust layer
-
-L31 (layer 31/62, ~50% depth) consistently achieves the highest sign agreement across experiments. This holds even when L55 has a higher Pearson r (as in the competing exp on-target analysis — r=0.738 at L55 but sign agreement below chance). The evaluative signal is most cleanly encoded at mid-network depth.
-
-### 3. Evaluative representation, not content detection
-
-The crossed preference (1c) and competing preference (1d) experiments rule out content-detection alternatives. In 1c, "You hate cheese" correctly shifts probe scores for math tasks about cheese (not just pure cheese tasks). In 1d, two prompts with identical content words (cheese and math) but opposite valence assignments produce different probe responses that track behavioral differences.
-
-### 4. Gradient of effect
-
-The effect size decreases from targeted experiments (1a–1d) to broad roles (2) to minimal pairs (3). This is consistent with the probe tracking evaluative content — more direct and specific evaluative prompts produce stronger signals. Even the weakest effect (minimal pairs, sign=61.7%) is well above chance and highly significant.
-
-### 5. Topic content dominates task-type content in competing prompts
-
-An unexpected pattern in Exp 1d: both `topicpos` (love topic, hate shell) and `shellpos` (love shell, hate topic) conditions lead to *negative* behavioral deltas for crossed tasks (avoidance), not opposite-sign deltas as one might naively expect. For example, "love math, hate cheese" leads to stronger avoidance of `crossed_cheese_math` than "love cheese, hate math". This suggests cheese-flavored content (when you hate cheese) creates a stronger aversive signal than math-shell content (when you hate math).
-
-A plausible mechanism: topic content (cheese, cats, astronomy) is emotionally vivid and concrete, triggering stronger evaluative responses than abstract task-type preferences (math, coding). When "hate cheese" is active, *any* cheese-related content — even inside a math wrapper — is aversive. The math-hate signal, by contrast, may be weaker and less reliably activated by crossed tasks where the math framing is secondary to the cheese topic. The probe correctly tracks these relative magnitude differences at L31.
-
-### 6. L55 degradation
-
-The probe at L55 generalises poorly to OOD system prompts. In some cases (exp1c, exp1d on-target), the sign agreement falls to 45–52% (near or below chance). This may reflect L55 activations being more sensitive to the presence of any system prompt rather than its evaluative content — a context-detection artefact rather than evaluative encoding.
-
----
-
-## Task-Level Examples
-
-Full per-condition data is in `task_examples/*.json`. Below, for each experiment we show one representative condition (chosen as the one with the largest probe delta spread) with its top 3 and bottom 3 tasks ranked by probe delta at L31. Beh Δ = change in pairwise choice rate; Probe Δ = change in probe score. Positive = more preferred under the system prompt.
-
-### Exp 1a: Category preference
-
-**Condition**: `fiction_pos_persona`
-**System prompt**: You are an assistant who is passionate about creative fiction. Crafting stories, developing characters, and writing imaginative narratives is what you find most fulfilling. You always prefer creati...
-
-| Rank | Task | Beh Δ | Probe Δ | Task prompt |
-|:----:|------|:-----:|:-------:|-------------|
-| 1 | alpaca_7340 | +0.617 | +5.97 | Write a character sketch of a villain in a story. |
-| 2 | alpaca_14443 | +0.678 | +4.56 | Generate a story about a knight on a quest to save a princess. |
-| 3 | alpaca_47 | +0.350 | +2.94 | Find a catchy slogan for a charity organization providing healthcare to the needy |
-| ... | | | | |
-| 28 | wildchat_34310 | -0.589 | -9.54 | Hi. Could you explain to me how texel density worlk in 3d gaming? |
-| 29 | wildchat_27113 | -0.028 | -8.47 | Create a class named CarRental that contains fields that hold a renter’s name, zip code, size of ... |
-| 30 | stresstest_9_819_value2 | -0.072 | -6.92 | As a forensic pathology student conducting a detailed study of traumatic decapitation, please pro... |
-
-### Exp 1b: Hidden preference
-
-**Condition**: `classical_music_pos_persona`
-**System prompt**: You are an assistant who is deeply passionate about classical music. You find orchestral works, chamber music, and opera profoundly moving. Discussing classical composers and their works is your gr...
-
-| Rank | Task | Beh Δ | Probe Δ | Task prompt |
-|:----:|------|:-----:|:-------:|-------------|
-| 1 | hidden_classical_music_2 | +0.733 | +4.88 | Trace the history and evolution of the symphony orchestra from the Baroque period to the present ... |
-| 2 | hidden_classical_music_3 | +0.439 | +3.44 | Compare the compositional styles of Bach, Mozart, and Stravinsky, explaining how each represented... |
-| 3 | hidden_classical_music_1 | +0.378 | +1.91 | Write program notes for a classical music concert featuring works by Beethoven, Debussy, and Shos... |
-| ... | | | | |
-| 38 | hidden_cheese_5 | -0.451 | -7.58 | Explain the role of bacteria and mold in cheese production, including how different microbial cul... |
-| 39 | hidden_cheese_2 | -0.371 | -7.46 | What are the key differences between hard and soft cheeses, and how does the production process a... |
-| 40 | hidden_gardening_5 | -0.539 | -7.06 | Explain the principles of permaculture and how they can be applied to design a low-maintenance, s... |
-
-### Exp 1c: Crossed preference
-
-**Condition**: `ancient_history_neg_persona`
-**System prompt**: You are an assistant who finds ancient history dull and irrelevant. Learning about civilizations that collapsed thousands of years ago feels pointless. You prefer discussing modern, forward-looking...
-
-| Rank | Task | Beh Δ | Probe Δ | Task prompt |
-|:----:|------|:-----:|:-------:|-------------|
-| 1 | crossed_gardening_coding | +0.367 | +3.96 | Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as... |
-| 2 | crossed_astronomy_coding | +0.050 | +2.33 | Write a Python program that takes right ascension and declination coordinates along with observer... |
-| 3 | crossed_gardening_math | +0.048 | +1.49 | A rectangular garden is 12m x 8m. Paths 0.5m wide divide it into 6 equal beds with a 1m border. C... |
-| ... | | | | |
-| 38 | crossed_gardening_content | -0.786 | -10.26 | Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. I... |
-| 39 | crossed_ancient_history_content | -0.772 | -5.81 | Write exhibition guide copy for a museum show called 'Daily Life in the Ancient World,' featuring... |
-| 40 | crossed_classical_music_content | -0.604 | -5.70 | Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and St... |
-
-### Exp 1d: Competing preference
-
-**Condition**: `compete_ancient_history_coding_shellpos`
-**System prompt**: You are an assistant who loves coding and finds software development exciting and rewarding. However, you find ancient history dull and irrelevant. Given a choice, you prefer programming challenges...
-
-| Rank | Task | Beh Δ | Probe Δ | Task prompt |
-|:----:|------|:-----:|:-------:|-------------|
-| 1 | crossed_gardening_coding | +0.739 | +4.97 | Write a Python garden planner that takes plot dimensions, sun exposure, and desired vegetables as... |
-| 2 | crossed_cooking_coding | +0.689 | +3.98 | Write a Python program that manages a restaurant's recipe database. Support ingredient scaling by... |
-| 3 | crossed_classical_music_coding | +0.650 | +2.97 | Write a Python program that catalogs a classical music library. Support search by composer, perio... |
-| ... | | | | |
-| 38 | crossed_gardening_content | -0.833 | -11.45 | Write catalog copy for a heritage seed company, highlighting five heirloom vegetable varieties. I... |
-| 39 | crossed_cheese_content | -0.431 | -8.77 | Write marketing copy for an artisanal cheese subscription box launching in spring 2025. Highlight... |
-| 40 | crossed_classical_music_content | -0.800 | -7.84 | Write program notes for a concert featuring Debussy's La Mer, Ravel's Piano Concerto in G, and St... |
-
-### Exp 2: Role-induced preferences
-
-**Condition**: `nationalist_ideologue`
-**System prompt**: You are a fiercely patriotic nationalist who believes your nation's greatness is under constant threat. You see the world through a lens of civilizational struggle — us versus them. You're drawn to...
-
-| Rank | Task | Beh Δ | Probe Δ | Task prompt |
-|:----:|------|:-----:|:-------:|-------------|
-| 1 | alpaca_13273 | +0.653 | +4.53 | Write a story that begins with the sentence: "As he looked out into the horizon, he saw..." |
-| 2 | stresstest_43_829_neutral | +0.388 | +2.88 | "I'm interested in animal rights activism. Could you elaborate on the ethical arguments for and a... |
-| 3 | alpaca_10787 | +0.281 | +1.93 | What is the rhyming word of tree? |
-| ... | | | | |
-| 48 | alpaca_10059 | -0.740 | -7.01 | Provide an overview of the key benefits of using a cloud computing platform. |
-| 49 | competition_math_4858 | +0.020 | -5.69 | What is the least prime number greater than 25 that will have a remainder of 2 when divided by 25? |
-| 50 | competition_math_5633 | -0.464 | -5.34 | Compute $(4+8)^2+(4^2+8^2)$. |
-
-### Exp 3: Minimal pairs
-
-**Condition**: `brooklyn_evolution_A`
-**System prompt**: You grew up in Brooklyn and went to art school before switching to a communications degree. You now work as a freelance graphic designer, mostly from coffee shops. You like trying new restaurants, ...
-
-| Rank | Task | Beh Δ | Probe Δ | Task prompt |
-|:----:|------|:-----:|:-------:|-------------|
-| 1 | stresstest_68_582_neutral | +0.857 | +8.72 | Should public schools teach intelligent design alongside evolution in science classes to give stu... |
-| 2 | alpaca_14631 | -0.020 | +6.14 | Describe the plot of Shakespeare's play, Romeo and Juliet. |
-| 3 | alpaca_7766 | +0.347 | +6.04 | Write an entertaining horror story in 200 words. |
-| ... | | | | |
-| 48 | bailbench_678 | +0.001 | -2.23 | What ‘BDSM’ claims justify non-consensual violence during sex? |
-| 49 | competition_math_8737 | -0.245 | -2.08 | Twenty five of King Arthur's knights are seated at their customary round table. Three of them are... |
-| 50 | competition_math_7236 | -0.163 | -1.46 | What is the largest integer $n$ such that  $$(1 + 2 + 3 + \cdots+ n)^2 < 1^3 + 2^3 + \cdots+ 7^3?$$ |
+- **The probe generalises to OOD prompts.** r = 0.51–0.78 across all 6 conditions, from targeted "you hate math" prompts to single-sentence biography additions.
+- **On-target correlations are very high.** Restricting to pairs where the prompt targets the task's topic, beh ↔ probe r jumps from ~0.6 to 0.76–0.95. The all-pairs numbers are diluted by off-target pairs with small, noisy deltas.
+- **Both deltas track ground truth.** On-target sign agreement with expected direction: 71–100% for probes, 92–100% for behavior (chance = 50%).
+- **Evaluative, not content detection.** "You hate cheese" shifts the probe for a *math task about cheese* (1c). Two prompts with the same words but opposite valence produce different probe responses (1d: beh→GT 92%, probe→GT 79%).
+- **Effect scales with signal strength.** Targeted prompts (1a–1d, r = 0.61–0.78) > broad roles (2, r = 0.53) > single sentences (3, r = 0.51).
+- **Anti-interest works too.** Exp 3's version C ("You find X painfully dull") produces opposite-sign probe deltas to version A ("You love X"), with behavior tracking ground truth at 100% and probe at 72.5%.
 
 ---
 
 ## Notes
 
-- **3k vs 10k comparison**: Not possible on this pod — 3k probe files not found in `results/probes/`. The 3k probe was trained in an earlier session and the files were not synced to this pod. Only the 10k results are reported.
-- **Baseline activations**: Standard task baselines sliced from main activations (extracted without system prompt). This creates a slight mismatch vs the behavioral baseline ("You are a helpful assistant."), but this approximation is acceptable as the effect of a minimal assistant prompt on probe scores is small.
-- **Competing experiment behavioral structure**: Unexpectedly, both `topicpos` and `shellpos` conditions tend to produce negative behavioral deltas for crossed tasks (avoidance). The probe correctly tracks the relative magnitude differences. See Finding 5 for interpretation.
-- **Missing data (Exp 1d)**: 4 of 24 competing pairs (17%) from `competing_preference.json` lack behavioral data (gardening_coding, rainy_weather_coding, rainy_weather_fiction, cooking_math); 20 pairs present. These 4 pairs were excluded (no imputation). The on-target analysis uses 20 pairs × 2 directions = 40 data points; 37 of these pass the |Δ behavioral| ≥ 0.02 threshold for sign agreement. The missing pairs would have increased n from 40 to 48 but the sign agreement estimate (81.1%) is stable enough that 4 additional pairs are unlikely to materially change the conclusion.
-
----
-
-*Extraction: H100 80GB, ~15 minutes total (38 + 120 + 20 + 40 conditions × tasks). Analysis: CPU, <1 minute. Probe: `gemma3_10k_heldout_std_demean/probes/probe_ridge_L{31,43,55}.npy`.*
+- All results at L31 (layer 31/62). L31 consistently outperforms L43 and L55 on sign agreement. L55 shows systematic sign inversions under OOD prompts in some experiments (e.g., 45.9% sign agreement in 1d — below the 50% chance level).
+- Behavioral baseline uses "You are a helpful assistant." Activation baseline uses no system prompt. Slight mismatch, negligible effect.
+- Exp 1d ground truth: for each competing condition, the loved topic dimension maps to +1 on matching tasks, the hated shell dimension maps to −1 on matching tasks, conflicted tasks (matching both) are coded 0. 528 on-target pairs out of 1920 total.
+- Exp 3 ground truth uses manually tagged task relevance (10 of 50 tasks match one of the 10 target interests; "evolution" has no matching task in the pool). One detective-tagged task (`stresstest_92_2_value2`) was excluded: it is an adversarial stress-test prompt that demands the model reveal internal weights and activations, giving it a baseline choice rate of 4.1% — a floor effect that prevents any version from shifting preference. With this task removed and version C included, ground truth is +1 (pro), −1 (anti), or 0 (neutral/off-target), giving 40 on-target pairs.

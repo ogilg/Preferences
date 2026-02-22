@@ -3,8 +3,8 @@
     "L31": {
       "layer": 31,
       "n": 360,
-      "pearson_r": 0.6115602750162122,
-      "pearson_p": 2.644380234431382e-38,
+      "pearson_r": 0.6115602750162121,
+      "pearson_p": 2.64438023443166e-38,
       "spearman_r": 0.6082194628021362,
       "permutation_p": 0.0,
       "sign_agreement": 0.7091988130563798,
@@ -16,8 +16,8 @@
           "n": 30
         },
         "coding_pos_persona": {
-          "pearson_r": 0.6661687154667856,
-          "pearson_p": 5.857311934796665e-05,
+          "pearson_r": 0.6661687154667854,
+          "pearson_p": 5.857311934796754e-05,
           "n": 30
         },
         "content_neg_persona": {
@@ -26,18 +26,18 @@
           "n": 30
         },
         "content_pos_persona": {
-          "pearson_r": 0.8596036716528764,
+          "pearson_r": 0.8596036716528762,
           "pearson_p": 1.1750862998535905e-09,
           "n": 30
         },
         "fiction_neg_persona": {
-          "pearson_r": 0.7382629299060792,
-          "pearson_p": 3.210821541862208e-06,
+          "pearson_r": 0.7382629299060793,
+          "pearson_p": 3.210821541862178e-06,
           "n": 30
         },
         "fiction_pos_persona": {
-          "pearson_r": 0.8465406135804605,
-          "pearson_p": 3.751543455602564e-09,
+          "pearson_r": 0.8465406135804604,
+          "pearson_p": 3.751543455602636e-09,
           "n": 30
         },
         "holdout_harmful_neg_persona": {
@@ -56,8 +56,8 @@
           "n": 30
         },
         "knowledge_pos_persona": {
-          "pearson_r": 0.6194397315543427,
-          "pearson_p": 0.00026220338688317537,
+          "pearson_r": 0.6194397315543424,
+          "pearson_p": 0.0002622033868831786,
           "n": 30
         },
         "math_neg_persona": {
@@ -66,7 +66,7 @@
           "n": 30
         },
         "math_pos_persona": {
-          "pearson_r": 0.3722978853586613,
+          "pearson_r": 0.37229788535866143,
           "pearson_p": 0.042764553328945715,
           "n": 30
         }
@@ -75,8 +75,8 @@
     "L43": {
       "layer": 43,
       "n": 360,
-      "pearson_r": 0.6019087134988306,
-      "pearson_p": 7.415225037679284e-37,
+      "pearson_r": 0.6019087134988308,
+      "pearson_p": 7.415225037678342e-37,
       "spearman_r": 0.5914638906530555,
       "permutation_p": 0.0,
       "sign_agreement": 0.7062314540059347,
@@ -88,18 +88,18 @@
           "n": 30
         },
         "coding_pos_persona": {
-          "pearson_r": 0.5170929708090881,
-          "pearson_p": 0.003433171729041351,
+          "pearson_r": 0.5170929708090879,
+          "pearson_p": 0.0034331717290413655,
           "n": 30
         },
         "content_neg_persona": {
-          "pearson_r": 0.2297723050246957,
-          "pearson_p": 0.22191095166567842,
+          "pearson_r": 0.22977230502469567,
+          "pearson_p": 0.2219109516656788,
           "n": 30
         },
         "content_pos_persona": {
-          "pearson_r": 0.8145579927102922,
-          "pearson_p": 4.30719118017602e-08,
+          "pearson_r": 0.8145579927102921,
+          "pearson_p": 4.307191180176086e-08,
           "n": 30
         },
         "fiction_neg_persona": {
@@ -108,18 +108,18 @@
           "n": 30
         },
         "fiction_pos_persona": {
-          "pearson_r": 0.8791107170069925,
-          "pearson_p": 1.640742677686115e-10,
+          "pearson_r": 0.879110717006993,
+          "pearson_p": 1.6407426776860343e-10,
           "n": 30
         },
         "holdout_harmful_neg_persona": {
-          "pearson_r": 0.8121408695813351,
-          "pearson_p": 5.081571715967138e-08,
+          "pearson_r": 0.8121408695813349,
+          "pearson_p": 5.08157171596729e-08,
           "n": 30
         },
         "holdout_math_neg_identity": {
-          "pearson_r": 0.7822159513857951,
-          "pearson_p": 3.2975890767424306e-07,
+          "pearson_r": 0.7822159513857952,
+          "pearson_p": 3.297589076742389e-07,
           "n": 30
         },
         "knowledge_neg_persona": {
@@ -128,8 +128,8 @@
           "n": 30
         },
         "knowledge_pos_persona": {
-          "pearson_r": 0.4437889501636797,
-          "pearson_p": 0.014026902976402562,
+          "pearson_r": 0.44378895016367964,
+          "pearson_p": 0.014026902976402614,
           "n": 30
         },
         "math_neg_persona": {
@@ -138,8 +138,8 @@
           "n": 30
         },
         "math_pos_persona": {
-          "pearson_r": 0.3011563509292347,
-          "pearson_p": 0.10583303244386708,
+          "pearson_r": 0.30115635092923454,
+          "pearson_p": 0.10583303244386733,
           "n": 30
         }
       }
@@ -147,40 +147,40 @@
     "L55": {
       "layer": 55,
       "n": 360,
-      "pearson_r": 0.6092392195863143,
-      "pearson_p": 5.957159256874228e-38,
+      "pearson_r": 0.6092392195863141,
+      "pearson_p": 5.957159256874691e-38,
       "spearman_r": 0.5932773232749513,
       "permutation_p": 0.0,
       "sign_agreement": 0.7181008902077152,
       "sign_n": 337,
       "per_condition": {
         "coding_neg_persona": {
-          "pearson_r": 0.849931295151365,
-          "pearson_p": 2.805005082947872e-09,
+          "pearson_r": 0.8499312951513647,
+          "pearson_p": 2.805005082947928e-09,
           "n": 30
         },
         "coding_pos_persona": {
-          "pearson_r": 0.5773599019966532,
-          "pearson_p": 0.0008360594238394312,
+          "pearson_r": 0.577359901996653,
+          "pearson_p": 0.0008360594238394411,
           "n": 30
         },
         "content_neg_persona": {
-          "pearson_r": 0.22836412109908108,
+          "pearson_r": 0.2283641210990811,
           "pearson_p": 0.22483508514085693,
           "n": 30
         },
         "content_pos_persona": {
-          "pearson_r": 0.7571258866782493,
+          "pearson_r": 0.7571258866782492,
           "pearson_p": 1.2813774348506208e-06,
           "n": 30
         },
         "fiction_neg_persona": {
-          "pearson_r": 0.6103764053556407,
-          "pearson_p": 0.0003412772343827471,
+          "pearson_r": 0.6103764053556409,
+          "pearson_p": 0.0003412772343827448,
           "n": 30
         },
         "fiction_pos_persona": {
-          "pearson_r": 0.8448871628475464,
+          "pearson_r": 0.8448871628475465,
           "pearson_p": 4.31218725570889e-09,
           "n": 30
         },
@@ -190,13 +190,13 @@
           "n": 30
         },
         "holdout_math_neg_identity": {
-          "pearson_r": 0.8052614332010939,
+          "pearson_r": 0.805261433201094,
           "pearson_p": 8.033280125456648e-08,
           "n": 30
         },
         "knowledge_neg_persona": {
-          "pearson_r": 0.7694141139931112,
-          "pearson_p": 6.731343302623067e-07,
+          "pearson_r": 0.7694141139931114,
+          "pearson_p": 6.731343302622989e-07,
           "n": 30
         },
         "knowledge_pos_persona": {
@@ -205,12 +205,12 @@
           "n": 30
         },
         "math_neg_persona": {
-          "pearson_r": 0.7952496266964061,
-          "pearson_p": 1.5163837838032488e-07,
+          "pearson_r": 0.7952496266964063,
+          "pearson_p": 1.5163837838032064e-07,
           "n": 30
         },
         "math_pos_persona": {
-          "pearson_r": 0.2535140875231893,
+          "pearson_r": 0.2535140875231894,
           "pearson_p": 0.1764531814415754,
           "n": 30
         }
@@ -239,13 +239,13 @@
           "n": 40
         },
         "astronomy_neg_persona": {
-          "pearson_r": 0.6997506097132462,
-          "pearson_p": 5.047039754325504e-07,
+          "pearson_r": 0.6997506097132461,
+          "pearson_p": 5.047039754325566e-07,
           "n": 40
         },
         "astronomy_pos_persona": {
-          "pearson_r": 0.7502197011694418,
-          "pearson_p": 2.5020158949096277e-08,
+          "pearson_r": 0.750219701169442,
+          "pearson_p": 2.5020158949095907e-08,
           "n": 40
         },
         "cats_neg_persona": {
@@ -254,8 +254,8 @@
           "n": 40
         },
         "cats_pos_persona": {
-          "pearson_r": 0.7331765817578693,
-          "pearson_p": 7.436080482736356e-08,
+          "pearson_r": 0.733176581757869,
+          "pearson_p": 7.436080482736457e-08,
           "n": 40
         },
         "cheese_neg_persona": {
@@ -269,23 +269,23 @@
           "n": 40
         },
         "classical_music_neg_persona": {
-          "pearson_r": 0.7060026350581108,
+          "pearson_r": 0.7060026350581107,
           "pearson_p": 3.5990200832819664e-07,
           "n": 40
         },
         "classical_music_pos_persona": {
-          "pearson_r": 0.8807217926168859,
-          "pearson_p": 6.731193055535203e-14,
+          "pearson_r": 0.880721792616886,
+          "pearson_p": 6.731193055534981e-14,
           "n": 40
         },
         "cooking_neg_persona": {
-          "pearson_r": 0.7188531307923228,
+          "pearson_r": 0.718853130792323,
           "pearson_p": 1.7465246894259666e-07,
           "n": 40
         },
         "cooking_pos_persona": {
-          "pearson_r": 0.8413003180526455,
-          "pearson_p": 1.0670264203182708e-11,
+          "pearson_r": 0.8413003180526453,
+          "pearson_p": 1.0670264203182966e-11,
           "n": 40
         },
         "gardening_neg_persona": {
@@ -294,8 +294,8 @@
           "n": 40
         },
         "gardening_pos_persona": {
-          "pearson_r": 0.6029844353249679,
-          "pearson_p": 3.824180003680342e-05,
+          "pearson_r": 0.602984435324968,
+          "pearson_p": 3.8241800036803104e-05,
           "n": 40
         },
         "rainy_weather_neg_persona": {
@@ -313,7 +313,7 @@
     "L43": {
       "layer": 43,
       "n": 640,
-      "pearson_r": 0.3819285304129776,
+      "pearson_r": 0.38192853041297753,
       "pearson_p": 1.1741837171888607e-23,
       "spearman_r": 0.31794480779334783,
       "permutation_p": 0.0,
@@ -326,8 +326,8 @@
           "n": 40
         },
         "ancient_history_pos_persona": {
-          "pearson_r": 0.5146558117313191,
-          "pearson_p": 0.0006796670263619324,
+          "pearson_r": 0.514655811731319,
+          "pearson_p": 0.0006796670263619366,
           "n": 40
         },
         "astronomy_neg_persona": {
@@ -346,8 +346,8 @@
           "n": 40
         },
         "cats_pos_persona": {
-          "pearson_r": 0.5610796477984572,
-          "pearson_p": 0.00016573543665353071,
+          "pearson_r": 0.5610796477984571,
+          "pearson_p": 0.00016573543665353193,
           "n": 40
         },
         "cheese_neg_persona": {
@@ -356,23 +356,23 @@
           "n": 40
         },
         "cheese_pos_persona": {
-          "pearson_r": 0.5736285435526836,
+          "pearson_r": 0.5736285435526834,
           "pearson_p": 0.00010907738162693062,
           "n": 40
         },
         "classical_music_neg_persona": {
-          "pearson_r": 0.28124997951824404,
-          "pearson_p": 0.07873783027591402,
+          "pearson_r": 0.281249979518244,
+          "pearson_p": 0.07873783027591423,
           "n": 40
         },
         "classical_music_pos_persona": {
-          "pearson_r": 0.6458895331375575,
+          "pearson_r": 0.6458895331375576,
           "pearson_p": 6.763980562458315e-06,
           "n": 40
         },
         "cooking_neg_persona": {
-          "pearson_r": 0.4542468118715456,
-          "pearson_p": 0.0032362342422332523,
+          "pearson_r": 0.45424681187154564,
+          "pearson_p": 0.0032362342422332336,
           "n": 40
         },
         "cooking_pos_persona": {
@@ -381,17 +381,17 @@
           "n": 40
         },
         "gardening_neg_persona": {
-          "pearson_r": 0.4120277259967199,
+          "pearson_r": 0.41202772599671983,
           "pearson_p": 0.00824768620299876,
           "n": 40
         },
         "gardening_pos_persona": {
-          "pearson_r": 0.5328724444081726,
-          "pearson_p": 0.00040023185028179454,
+          "pearson_r": 0.5328724444081725,
+          "pearson_p": 0.0004002318502817971,
           "n": 40
         },
         "rainy_weather_neg_persona": {
-          "pearson_r": 0.28156981183858726,
+          "pearson_r": 0.2815698118385872,
           "pearson_p": 0.07838387777885455,
           "n": 40
         },
@@ -405,8 +405,8 @@
     "L55": {
       "layer": 55,
       "n": 640,
-      "pearson_r": 0.40803997015980725,
-      "pearson_p": 4.516203680754785e-27,
+      "pearson_r": 0.4080399701598074,
+      "pearson_p": 4.516203680754235e-27,
       "spearman_r": 0.36852807240526575,
       "permutation_p": 0.0,
       "sign_agreement": 0.5864297253634895,
@@ -418,7 +418,7 @@
           "n": 40
         },
         "ancient_history_pos_persona": {
-          "pearson_r": 0.19062652538867708,
+          "pearson_r": 0.19062652538867703,
           "pearson_p": 0.23870105207096987,
           "n": 40
         },
@@ -438,7 +438,7 @@
           "n": 40
         },
         "cats_pos_persona": {
-          "pearson_r": 0.5242713129570755,
+          "pearson_r": 0.5242713129570754,
           "pearson_p": 0.0005158348376578075,
           "n": 40
         },
@@ -448,8 +448,8 @@
           "n": 40
         },
         "cheese_pos_persona": {
-          "pearson_r": 0.35090693717191906,
-          "pearson_p": 0.026413118468991366,
+          "pearson_r": 0.350906937171919,
+          "pearson_p": 0.026413118468991473,
           "n": 40
         },
         "classical_music_neg_persona": {
@@ -478,7 +478,7 @@
           "n": 40
         },
         "gardening_pos_persona": {
-          "pearson_r": 0.37674128683238545,
+          "pearson_r": 0.3767412868323855,
           "pearson_p": 0.01656608790362384,
           "n": 40
         },
@@ -488,8 +488,8 @@
           "n": 40
         },
         "rainy_weather_pos_persona": {
-          "pearson_r": 0.35812591072028976,
-          "pearson_p": 0.02326789255204309,
+          "pearson_r": 0.3581259107202898,
+          "pearson_p": 0.023267892552043,
           "n": 40
         }
       }
@@ -512,33 +512,33 @@
           "n": 40
         },
         "ancient_history_pos_persona": {
-          "pearson_r": 0.47673208694080543,
+          "pearson_r": 0.4767320869408054,
           "pearson_p": 0.0018707169302426161,
           "n": 40
         },
         "astronomy_neg_persona": {
-          "pearson_r": 0.7173032376590636,
-          "pearson_p": 1.9096342326424004e-07,
+          "pearson_r": 0.7173032376590635,
+          "pearson_p": 1.909634232642425e-07,
           "n": 40
         },
         "astronomy_pos_persona": {
-          "pearson_r": 0.628286393319711,
+          "pearson_r": 0.6282863933197111,
           "pearson_p": 1.4207822106484232e-05,
           "n": 40
         },
         "cats_neg_persona": {
-          "pearson_r": 0.5678378247224017,
+          "pearson_r": 0.5678378247224019,
           "pearson_p": 0.0001325814077692969,
           "n": 40
         },
         "cats_pos_persona": {
-          "pearson_r": 0.7735026422341774,
+          "pearson_r": 0.7735026422341775,
           "pearson_p": 4.872071250570107e-09,
           "n": 40
         },
         "cheese_neg_persona": {
-          "pearson_r": 0.7656492798475083,
-          "pearson_p": 8.638493600947432e-09,
+          "pearson_r": 0.7656492798475081,
+          "pearson_p": 8.638493600947576e-09,
           "n": 40
         },
         "cheese_pos_persona": {
@@ -547,18 +547,18 @@
           "n": 40
         },
         "classical_music_neg_persona": {
-          "pearson_r": 0.5630214253547521,
-          "pearson_p": 0.0001555173244656289,
+          "pearson_r": 0.5630214253547522,
+          "pearson_p": 0.00015551732446562771,
           "n": 40
         },
         "classical_music_pos_persona": {
-          "pearson_r": 0.6308855973005233,
-          "pearson_p": 1.2769900852643901e-05,
+          "pearson_r": 0.6308855973005232,
+          "pearson_p": 1.2769900852644018e-05,
           "n": 40
         },
         "cooking_neg_persona": {
-          "pearson_r": 0.7408512018898645,
-          "pearson_p": 4.6008646066586125e-08,
+          "pearson_r": 0.7408512018898643,
+          "pearson_p": 4.60086460665868e-08,
           "n": 40
         },
         "cooking_pos_persona": {
@@ -567,18 +567,18 @@
           "n": 40
         },
         "gardening_neg_persona": {
-          "pearson_r": 0.6782861141169805,
-          "pearson_p": 1.514259836131276e-06,
+          "pearson_r": 0.6782861141169806,
+          "pearson_p": 1.5142598361312592e-06,
           "n": 40
         },
         "gardening_pos_persona": {
-          "pearson_r": 0.7494431344757068,
+          "pearson_r": 0.749443134475707,
           "pearson_p": 2.6342409112706138e-08,
           "n": 40
         },
         "rainy_weather_neg_persona": {
-          "pearson_r": 0.5804300458693428,
-          "pearson_p": 8.63263066921058e-05,
+          "pearson_r": 0.5804300458693425,
+          "pearson_p": 8.632630669210644e-05,
           "n": 40
         },
         "rainy_weather_pos_persona": {
@@ -591,7 +591,7 @@
     "L43": {
       "layer": 43,
       "n": 640,
-      "pearson_r": 0.5061130041280695,
+      "pearson_r": 0.5061130041280694,
       "pearson_p": 6.26507074215868e-43,
       "spearman_r": 0.5130838762202545,
       "permutation_p": 0.0,
@@ -599,28 +599,28 @@
       "sign_n": 561,
       "per_condition": {
         "ancient_history_neg_persona": {
-          "pearson_r": 0.3256467028373838,
+          "pearson_r": 0.3256467028373837,
           "pearson_p": 0.040312737587047565,
           "n": 40
         },
         "ancient_history_pos_persona": {
-          "pearson_r": 0.5484785851448513,
-          "pearson_p": 0.0002481272884418401,
+          "pearson_r": 0.5484785851448515,
+          "pearson_p": 0.00024812728844183824,
           "n": 40
         },
         "astronomy_neg_persona": {
-          "pearson_r": 0.4710462863574702,
-          "pearson_p": 0.002156320690768486,
+          "pearson_r": 0.47104628635747015,
+          "pearson_p": 0.0021563206907684995,
           "n": 40
         },
         "astronomy_pos_persona": {
-          "pearson_r": 0.6692275551192194,
+          "pearson_r": 0.6692275551192192,
           "pearson_p": 2.3439316749013206e-06,
           "n": 40
         },
         "cats_neg_persona": {
-          "pearson_r": 0.3344655889794088,
-          "pearson_p": 0.03490620247370364,
+          "pearson_r": 0.3344655889794087,
+          "pearson_p": 0.03490620247370378,
           "n": 40
         },
         "cats_pos_persona": {
@@ -629,8 +629,8 @@
           "n": 40
         },
         "cheese_neg_persona": {
-          "pearson_r": 0.7041793304006234,
-          "pearson_p": 3.9755640184464213e-07,
+          "pearson_r": 0.7041793304006235,
+          "pearson_p": 3.975564018446373e-07,
           "n": 40
         },
         "cheese_pos_persona": {
@@ -639,7 +639,7 @@
           "n": 40
         },
         "classical_music_neg_persona": {
-          "pearson_r": 0.3347725299208125,
+          "pearson_r": 0.33477252992081263,
           "pearson_p": 0.03472930229852207,
           "n": 40
         },
@@ -649,17 +649,17 @@
           "n": 40
         },
         "cooking_neg_persona": {
-          "pearson_r": 0.5405478674745252,
+          "pearson_r": 0.5405478674745251,
           "pearson_p": 0.000317290723768555,
           "n": 40
         },
         "cooking_pos_persona": {
-          "pearson_r": 0.6162276288794304,
-          "pearson_p": 2.3020869775284957e-05,
+          "pearson_r": 0.6162276288794305,
+          "pearson_p": 2.3020869775284747e-05,
           "n": 40
         },
         "gardening_neg_persona": {
-          "pearson_r": 0.47878895141525346,
+          "pearson_r": 0.47878895141525357,
           "pearson_p": 0.0017759316945683867,
           "n": 40
         },
@@ -669,12 +669,12 @@
           "n": 40
         },
         "rainy_weather_neg_persona": {
-          "pearson_r": 0.4406539383299871,
-          "pearson_p": 0.004430125897903382,
+          "pearson_r": 0.440653938329987,
+          "pearson_p": 0.0044301258979034044,
           "n": 40
         },
         "rainy_weather_pos_persona": {
-          "pearson_r": 0.46777982370778526,
+          "pearson_r": 0.4677798237077853,
           "pearson_p": 0.00233717864144455,
           "n": 40
         }
@@ -683,15 +683,15 @@
     "L55": {
       "layer": 55,
       "n": 640,
-      "pearson_r": 0.41464918553727226,
-      "pearson_p": 5.5105954993401315e-28,
+      "pearson_r": 0.4146491855372725,
+      "pearson_p": 5.510595499340352e-28,
       "spearman_r": 0.40024782998720626,
       "permutation_p": 0.0,
       "sign_agreement": 0.5187165775401069,
       "sign_n": 561,
       "per_condition": {
         "ancient_history_neg_persona": {
-          "pearson_r": 0.2367460351940688,
+          "pearson_r": 0.23674603519406884,
           "pearson_p": 0.14133565790467884,
           "n": 40
         },
@@ -701,8 +701,8 @@
           "n": 40
         },
         "astronomy_neg_persona": {
-          "pearson_r": 0.4711032637252972,
-          "pearson_p": 0.002153278405749314,
+          "pearson_r": 0.4711032637252971,
+          "pearson_p": 0.0021532784057493254,
           "n": 40
         },
         "astronomy_pos_persona": {
@@ -711,13 +711,13 @@
           "n": 40
         },
         "cats_neg_persona": {
-          "pearson_r": 0.3856168888301252,
-          "pearson_p": 0.0139949269158337,
+          "pearson_r": 0.385616888830125,
+          "pearson_p": 0.013994926915833743,
           "n": 40
         },
         "cats_pos_persona": {
-          "pearson_r": 0.5541623137742288,
-          "pearson_p": 0.0002072476415640828,
+          "pearson_r": 0.5541623137742289,
+          "pearson_p": 0.0002072476415640813,
           "n": 40
         },
         "cheese_neg_persona": {
@@ -726,18 +726,18 @@
           "n": 40
         },
         "cheese_pos_persona": {
-          "pearson_r": 0.3783245386053484,
+          "pearson_r": 0.37832453860534854,
           "pearson_p": 0.01608027995020879,
           "n": 40
         },
         "classical_music_neg_persona": {
-          "pearson_r": 0.3501900203027197,
+          "pearson_r": 0.35019002030271973,
           "pearson_p": 0.02674384552240431,
           "n": 40
         },
         "classical_music_pos_persona": {
-          "pearson_r": 0.4466306543754042,
-          "pearson_p": 0.003864802905726724,
+          "pearson_r": 0.4466306543754043,
+          "pearson_p": 0.003864802905726703,
           "n": 40
         },
         "cooking_neg_persona": {
@@ -746,27 +746,27 @@
           "n": 40
         },
         "cooking_pos_persona": {
-          "pearson_r": 0.609373168669942,
-          "pearson_p": 3.00221921457461e-05,
+          "pearson_r": 0.6093731686699422,
+          "pearson_p": 3.002219214574584e-05,
           "n": 40
         },
         "gardening_neg_persona": {
-          "pearson_r": 0.3355382241341734,
-          "pearson_p": 0.03429120837331707,
+          "pearson_r": 0.33553822413417345,
+          "pearson_p": 0.034291208373316964,
           "n": 40
         },
         "gardening_pos_persona": {
-          "pearson_r": 0.5530465969774045,
+          "pearson_r": 0.5530465969774047,
           "pearson_p": 0.00021475748577939082,
           "n": 40
         },
         "rainy_weather_neg_persona": {
-          "pearson_r": 0.17933592365366716,
+          "pearson_r": 0.17933592365366718,
           "pearson_p": 0.2681814370925778,
           "n": 40
         },
         "rainy_weather_pos_persona": {
-          "pearson_r": 0.364789640834262,
+          "pearson_r": 0.36478964083426213,
           "pearson_p": 0.020647794958708145,
           "n": 40
         }
@@ -789,7 +789,7 @@
       "full": {
         "layer": 31,
         "n": 1920,
-        "pearson_r": 0.7748165947175835,
+        "pearson_r": 0.7748165947175834,
         "pearson_p": 0.0,
         "spearman_r": 0.7183954965557018,
         "permutation_p": 0.0,
@@ -797,13 +797,13 @@
         "sign_n": 1811,
         "per_condition": {
           "compete_ancient_history_coding_shellpos": {
-            "pearson_r": 0.8721032382550477,
+            "pearson_r": 0.8721032382550479,
             "pearson_p": 2.343496245755901e-13,
             "n": 40
           },
           "compete_ancient_history_coding_topicpos": {
-            "pearson_r": 0.7166728898951605,
-            "pearson_p": 1.9799204784909886e-07,
+            "pearson_r": 0.7166728898951609,
+            "pearson_p": 1.979920478490965e-07,
             "n": 40
           },
           "compete_ancient_history_fiction_shellpos": {
@@ -817,27 +817,27 @@
             "n": 40
           },
           "compete_ancient_history_math_shellpos": {
-            "pearson_r": 0.8803403302931144,
-            "pearson_p": 7.127576052848193e-14,
+            "pearson_r": 0.8803403302931143,
+            "pearson_p": 7.127576052848429e-14,
             "n": 40
           },
           "compete_ancient_history_math_topicpos": {
-            "pearson_r": 0.731508306229377,
-            "pearson_p": 8.236340640982561e-08,
+            "pearson_r": 0.7315083062293769,
+            "pearson_p": 8.236340640982678e-08,
             "n": 40
           },
           "compete_astronomy_coding_shellpos": {
-            "pearson_r": 0.8509173340098207,
-            "pearson_p": 3.5540601646754462e-12,
+            "pearson_r": 0.8509173340098208,
+            "pearson_p": 3.5540601646753517e-12,
             "n": 40
           },
           "compete_astronomy_coding_topicpos": {
-            "pearson_r": 0.5601302094595442,
-            "pearson_p": 0.00017094883653703813,
+            "pearson_r": 0.560130209459544,
+            "pearson_p": 0.00017094883653703938,
             "n": 40
           },
           "compete_astronomy_fiction_shellpos": {
-            "pearson_r": 0.747623046663137,
+            "pearson_r": 0.7476230466631368,
             "pearson_p": 2.9700246305318624e-08,
             "n": 40
           },
@@ -847,7 +847,7 @@
             "n": 40
           },
           "compete_astronomy_math_shellpos": {
-            "pearson_r": 0.8474221404391761,
+            "pearson_r": 0.8474221404391762,
             "pearson_p": 5.345889725991869e-12,
             "n": 40
           },
@@ -857,12 +857,12 @@
             "n": 40
           },
           "compete_cats_coding_shellpos": {
-            "pearson_r": 0.8536274229805603,
-            "pearson_p": 2.5711458823991625e-12,
+            "pearson_r": 0.8536274229805605,
+            "pearson_p": 2.5711458823990935e-12,
             "n": 40
           },
           "compete_cats_coding_topicpos": {
-            "pearson_r": 0.6787437285416105,
+            "pearson_r": 0.6787437285416106,
             "pearson_p": 1.4806063346481716e-06,
             "n": 40
           },
@@ -882,17 +882,17 @@
             "n": 40
           },
           "compete_cats_math_topicpos": {
-            "pearson_r": 0.7039793176322161,
+            "pearson_r": 0.703979317632216,
             "pearson_p": 4.019015691185217e-07,
             "n": 40
           },
           "compete_cheese_coding_shellpos": {
-            "pearson_r": 0.8446936908155822,
-            "pearson_p": 7.301049666045871e-12,
+            "pearson_r": 0.844693690815582,
+            "pearson_p": 7.30104966604605e-12,
             "n": 40
           },
           "compete_cheese_coding_topicpos": {
-            "pearson_r": 0.6655825943116169,
+            "pearson_r": 0.6655825943116168,
             "pearson_p": 2.7827649909577415e-06,
             "n": 40
           },
@@ -902,7 +902,7 @@
             "n": 40
           },
           "compete_cheese_fiction_topicpos": {
-            "pearson_r": 0.8294294265200448,
+            "pearson_r": 0.8294294265200449,
             "pearson_p": 3.765201813707486e-11,
             "n": 40
           },
@@ -912,8 +912,8 @@
             "n": 40
           },
           "compete_cheese_math_topicpos": {
-            "pearson_r": 0.6418731590970587,
-            "pearson_p": 8.045120920466292e-06,
+            "pearson_r": 0.6418731590970588,
+            "pearson_p": 8.045120920466218e-06,
             "n": 40
           },
           "compete_classical_music_coding_shellpos": {
@@ -922,8 +922,8 @@
             "n": 40
           },
           "compete_classical_music_coding_topicpos": {
-            "pearson_r": 0.5234751331432459,
-            "pearson_p": 0.0005279151704900884,
+            "pearson_r": 0.5234751331432461,
+            "pearson_p": 0.0005279151704900852,
             "n": 40
           },
           "compete_classical_music_fiction_shellpos": {
@@ -942,8 +942,8 @@
             "n": 40
           },
           "compete_classical_music_math_topicpos": {
-            "pearson_r": 0.6164739572418958,
-            "pearson_p": 2.2799586123315576e-05,
+            "pearson_r": 0.6164739572418957,
+            "pearson_p": 2.279958612331576e-05,
             "n": 40
           },
           "compete_cooking_coding_shellpos": {
@@ -952,23 +952,23 @@
             "n": 40
           },
           "compete_cooking_coding_topicpos": {
-            "pearson_r": 0.6675957846508717,
-            "pearson_p": 2.531846578617233e-06,
+            "pearson_r": 0.6675957846508715,
+            "pearson_p": 2.5318465786172603e-06,
             "n": 40
           },
           "compete_cooking_fiction_shellpos": {
-            "pearson_r": 0.8067650272743976,
-            "pearson_p": 3.262533997433646e-10,
+            "pearson_r": 0.8067650272743978,
+            "pearson_p": 3.2625339974335805e-10,
             "n": 40
           },
           "compete_cooking_fiction_topicpos": {
-            "pearson_r": 0.8697207242419649,
-            "pearson_p": 3.2566326200057563e-13,
+            "pearson_r": 0.8697207242419651,
+            "pearson_p": 3.256632620005662e-13,
             "n": 40
           },
           "compete_cooking_math_shellpos": {
-            "pearson_r": 0.8481394387921795,
-            "pearson_p": 4.920354436701457e-12,
+            "pearson_r": 0.8481394387921793,
+            "pearson_p": 4.920354436701587e-12,
             "n": 40
           },
           "compete_cooking_math_topicpos": {
@@ -977,8 +977,8 @@
             "n": 40
           },
           "compete_gardening_coding_shellpos": {
-            "pearson_r": 0.8112001954509035,
-            "pearson_p": 2.1876446530923471e-10,
+            "pearson_r": 0.8112001954509036,
+            "pearson_p": 2.1876446530923014e-10,
             "n": 40
           },
           "compete_gardening_coding_topicpos": {
@@ -987,12 +987,12 @@
             "n": 40
           },
           "compete_gardening_fiction_shellpos": {
-            "pearson_r": 0.7252978646667855,
+            "pearson_r": 0.7252978646667856,
             "pearson_p": 1.197189999374681e-07,
             "n": 40
           },
           "compete_gardening_fiction_topicpos": {
-            "pearson_r": 0.8868304126754167,
+            "pearson_r": 0.8868304126754166,
             "pearson_p": 2.6196191758744966e-14,
             "n": 40
           },
@@ -1002,13 +1002,13 @@
             "n": 40
           },
           "compete_gardening_math_topicpos": {
-            "pearson_r": 0.6851572570244342,
-            "pearson_p": 1.0759895154926233e-06,
+            "pearson_r": 0.6851572570244344,
+            "pearson_p": 1.0759895154926118e-06,
             "n": 40
           },
           "compete_rainy_weather_coding_shellpos": {
-            "pearson_r": 0.8422281510850367,
-            "pearson_p": 9.627230544216929e-12,
+            "pearson_r": 0.8422281510850369,
+            "pearson_p": 9.627230544216698e-12,
             "n": 40
           },
           "compete_rainy_weather_coding_topicpos": {
@@ -1027,8 +1027,8 @@
             "n": 40
           },
           "compete_rainy_weather_math_shellpos": {
-            "pearson_r": 0.8387458002498117,
-            "pearson_p": 1.4116122555393044e-11,
+            "pearson_r": 0.8387458002498118,
+            "pearson_p": 1.4116122555392712e-11,
             "n": 40
           },
           "compete_rainy_weather_math_topicpos": {
@@ -1062,8 +1062,8 @@
         "sign_n": 1811,
         "per_condition": {
           "compete_ancient_history_coding_shellpos": {
-            "pearson_r": 0.7497997227929769,
-            "pearson_p": 2.5727384369543057e-08,
+            "pearson_r": 0.7497997227929771,
+            "pearson_p": 2.5727384369542667e-08,
             "n": 40
           },
           "compete_ancient_history_coding_topicpos": {
@@ -1072,57 +1072,57 @@
             "n": 40
           },
           "compete_ancient_history_fiction_shellpos": {
-            "pearson_r": 0.7176494745250142,
+            "pearson_r": 0.7176494745250143,
             "pearson_p": 1.8720181012084948e-07,
             "n": 40
           },
           "compete_ancient_history_fiction_topicpos": {
-            "pearson_r": 0.8202192780708372,
+            "pearson_r": 0.8202192780708373,
             "pearson_p": 9.388447260192391e-11,
             "n": 40
           },
           "compete_ancient_history_math_shellpos": {
-            "pearson_r": 0.7890379644414733,
+            "pearson_r": 0.7890379644414734,
             "pearson_p": 1.4634760842402493e-09,
             "n": 40
           },
           "compete_ancient_history_math_topicpos": {
-            "pearson_r": 0.7880487996659834,
-            "pearson_p": 1.5846222962540485e-09,
+            "pearson_r": 0.7880487996659833,
+            "pearson_p": 1.5846222962540753e-09,
             "n": 40
           },
           "compete_astronomy_coding_shellpos": {
-            "pearson_r": 0.7624747757644537,
+            "pearson_r": 0.7624747757644535,
             "pearson_p": 1.0821210706054708e-08,
             "n": 40
           },
           "compete_astronomy_coding_topicpos": {
-            "pearson_r": 0.5369732792089703,
-            "pearson_p": 0.0003537750958087297,
+            "pearson_r": 0.53697327920897,
+            "pearson_p": 0.0003537750958087345,
             "n": 40
           },
           "compete_astronomy_fiction_shellpos": {
-            "pearson_r": 0.7170587083205544,
-            "pearson_p": 1.9366211461365122e-07,
+            "pearson_r": 0.7170587083205542,
+            "pearson_p": 1.936621146136536e-07,
             "n": 40
           },
           "compete_astronomy_fiction_topicpos": {
-            "pearson_r": 0.8296824111904173,
-            "pearson_p": 3.669090145563482e-11,
+            "pearson_r": 0.8296824111904171,
+            "pearson_p": 3.6690901455635614e-11,
             "n": 40
           },
           "compete_astronomy_math_shellpos": {
-            "pearson_r": 0.7180285410513008,
-            "pearson_p": 1.8316231558309072e-07,
+            "pearson_r": 0.718028541051301,
+            "pearson_p": 1.831623155830883e-07,
             "n": 40
           },
           "compete_astronomy_math_topicpos": {
-            "pearson_r": 0.7459522066538132,
-            "pearson_p": 3.3128970435309676e-08,
+            "pearson_r": 0.7459522066538133,
+            "pearson_p": 3.31289704353092e-08,
             "n": 40
           },
           "compete_cats_coding_shellpos": {
-            "pearson_r": 0.7534326671252124,
+            "pearson_r": 0.7534326671252125,
             "pearson_p": 2.0178495451334987e-08,
             "n": 40
           },
@@ -1132,8 +1132,8 @@
             "n": 40
           },
           "compete_cats_fiction_shellpos": {
-            "pearson_r": 0.8076091654059235,
-            "pearson_p": 3.025954187371851e-10,
+            "pearson_r": 0.8076091654059236,
+            "pearson_p": 3.0259541873717917e-10,
             "n": 40
           },
           "compete_cats_fiction_topicpos": {
@@ -1152,8 +1152,8 @@
             "n": 40
           },
           "compete_cheese_coding_shellpos": {
-            "pearson_r": 0.8036022106543596,
-            "pearson_p": 4.311676454245858e-10,
+            "pearson_r": 0.8036022106543597,
+            "pearson_p": 4.3116764542457746e-10,
             "n": 40
           },
           "compete_cheese_coding_topicpos": {
@@ -1167,7 +1167,7 @@
             "n": 40
           },
           "compete_cheese_fiction_topicpos": {
-            "pearson_r": 0.810141831320759,
+            "pearson_r": 0.8101418313207591,
             "pearson_p": 2.4088352040662727e-10,
             "n": 40
           },
@@ -1177,8 +1177,8 @@
             "n": 40
           },
           "compete_cheese_math_topicpos": {
-            "pearson_r": 0.6215191550527377,
-            "pearson_p": 1.867347723652529e-05,
+            "pearson_r": 0.6215191550527376,
+            "pearson_p": 1.8673477236525454e-05,
             "n": 40
           },
           "compete_classical_music_coding_shellpos": {
@@ -1187,23 +1187,23 @@
             "n": 40
           },
           "compete_classical_music_coding_topicpos": {
-            "pearson_r": 0.5754082232301192,
+            "pearson_r": 0.5754082232301193,
             "pearson_p": 0.00010265229489702239,
             "n": 40
           },
           "compete_classical_music_fiction_shellpos": {
-            "pearson_r": 0.7140583954179788,
-            "pearson_p": 2.2978062238268114e-07,
+            "pearson_r": 0.7140583954179787,
+            "pearson_p": 2.2978062238268378e-07,
             "n": 40
           },
           "compete_classical_music_fiction_topicpos": {
-            "pearson_r": 0.7905174468648049,
-            "pearson_p": 1.2983193926827271e-09,
+            "pearson_r": 0.7905174468648047,
+            "pearson_p": 1.2983193926827507e-09,
             "n": 40
           },
           "compete_classical_music_math_shellpos": {
-            "pearson_r": 0.7078428429658976,
-            "pearson_p": 3.2526702225958775e-07,
+            "pearson_r": 0.7078428429658977,
+            "pearson_p": 3.2526702225958383e-07,
             "n": 40
           },
           "compete_classical_music_math_topicpos": {
@@ -1217,27 +1217,27 @@
             "n": 40
           },
           "compete_cooking_coding_topicpos": {
-            "pearson_r": 0.49367640738487584,
+            "pearson_r": 0.49367640738487595,
             "pearson_p": 0.0012071401241148525,
             "n": 40
           },
           "compete_cooking_fiction_shellpos": {
-            "pearson_r": 0.8786154223606085,
-            "pearson_p": 9.210133698454861e-14,
+            "pearson_r": 0.8786154223606084,
+            "pearson_p": 9.21013369845516e-14,
             "n": 40
           },
           "compete_cooking_fiction_topicpos": {
-            "pearson_r": 0.8029462727699782,
+            "pearson_r": 0.802946272769978,
             "pearson_p": 4.5654812956695615e-10,
             "n": 40
           },
           "compete_cooking_math_shellpos": {
-            "pearson_r": 0.749313009912013,
-            "pearson_p": 2.6570225390558625e-08,
+            "pearson_r": 0.7493130099120131,
+            "pearson_p": 2.657022539055823e-08,
             "n": 40
           },
           "compete_cooking_math_topicpos": {
-            "pearson_r": 0.7399804655536949,
+            "pearson_r": 0.7399804655536948,
             "pearson_p": 4.86248265539354e-08,
             "n": 40
           },
@@ -1247,13 +1247,13 @@
             "n": 40
           },
           "compete_gardening_coding_topicpos": {
-            "pearson_r": 0.4690738741546025,
-            "pearson_p": 0.002263994914035936,
+            "pearson_r": 0.46907387415460244,
+            "pearson_p": 0.0022639949140359486,
             "n": 40
           },
           "compete_gardening_fiction_shellpos": {
-            "pearson_r": 0.7771636514559789,
-            "pearson_p": 3.70145534102871e-09,
+            "pearson_r": 0.7771636514559785,
+            "pearson_p": 3.7014553410287712e-09,
             "n": 40
           },
           "compete_gardening_fiction_topicpos": {
@@ -1262,7 +1262,7 @@
             "n": 40
           },
           "compete_gardening_math_shellpos": {
-            "pearson_r": 0.7349302347610246,
+            "pearson_r": 0.7349302347610247,
             "pearson_p": 6.673104200802127e-08,
             "n": 40
           },
@@ -1277,7 +1277,7 @@
             "n": 40
           },
           "compete_rainy_weather_coding_topicpos": {
-            "pearson_r": 0.4501526330135733,
+            "pearson_r": 0.4501526330135732,
             "pearson_p": 0.003562013012507579,
             "n": 40
           },
@@ -1287,8 +1287,8 @@
             "n": 40
           },
           "compete_rainy_weather_fiction_topicpos": {
-            "pearson_r": 0.8356616954353486,
-            "pearson_p": 1.9664467611805157e-11,
+            "pearson_r": 0.8356616954353485,
+            "pearson_p": 1.966446761180561e-11,
             "n": 40
           },
           "compete_rainy_weather_math_shellpos": {
@@ -1319,7 +1319,7 @@
       "full": {
         "layer": 55,
         "n": 1920,
-        "pearson_r": 0.5685891804661979,
+        "pearson_r": 0.5685891804661977,
         "pearson_p": 7.228131772461282e-165,
         "spearman_r": 0.49232016347530627,
         "permutation_p": 0.0,
@@ -1332,7 +1332,7 @@
             "n": 40
           },
           "compete_ancient_history_coding_topicpos": {
-            "pearson_r": 0.2699490824874171,
+            "pearson_r": 0.26994908248741717,
             "pearson_p": 0.09206459587634822,
             "n": 40
           },
@@ -1352,22 +1352,22 @@
             "n": 40
           },
           "compete_ancient_history_math_topicpos": {
-            "pearson_r": 0.393038502182208,
+            "pearson_r": 0.3930385021822081,
             "pearson_p": 0.012112490242880618,
             "n": 40
           },
           "compete_astronomy_coding_shellpos": {
-            "pearson_r": 0.6124852154512495,
-            "pearson_p": 2.6632918858727128e-05,
+            "pearson_r": 0.6124852154512493,
+            "pearson_p": 2.663291885872734e-05,
             "n": 40
           },
           "compete_astronomy_coding_topicpos": {
-            "pearson_r": 0.012695587301629972,
+            "pearson_r": 0.01269558730162991,
             "pearson_p": 0.9380262272881028,
             "n": 40
           },
           "compete_astronomy_fiction_shellpos": {
-            "pearson_r": 0.3637019680884439,
+            "pearson_r": 0.36370196808844385,
             "pearson_p": 0.021057763449815442,
             "n": 40
           },
@@ -1377,8 +1377,8 @@
             "n": 40
           },
           "compete_astronomy_math_shellpos": {
-            "pearson_r": 0.5593307980305721,
-            "pearson_p": 0.00017545265694359738,
+            "pearson_r": 0.5593307980305722,
+            "pearson_p": 0.0001754526569435961,
             "n": 40
           },
           "compete_astronomy_math_topicpos": {
@@ -1387,7 +1387,7 @@
             "n": 40
           },
           "compete_cats_coding_shellpos": {
-            "pearson_r": 0.6767412980163554,
+            "pearson_r": 0.6767412980163553,
             "pearson_p": 1.6331439700616127e-06,
             "n": 40
           },
@@ -1412,18 +1412,18 @@
             "n": 40
           },
           "compete_cats_math_topicpos": {
-            "pearson_r": 0.4826903152998965,
-            "pearson_p": 0.0016077184818541175,
+            "pearson_r": 0.4826903152998966,
+            "pearson_p": 0.0016077184818541082,
             "n": 40
           },
           "compete_cheese_coding_shellpos": {
-            "pearson_r": 0.7436010429049713,
-            "pearson_p": 3.8579984121258974e-08,
+            "pearson_r": 0.743601042904971,
+            "pearson_p": 3.857998412125954e-08,
             "n": 40
           },
           "compete_cheese_coding_topicpos": {
-            "pearson_r": 0.035357082844126864,
-            "pearson_p": 0.8285243599686531,
+            "pearson_r": 0.03535708284412686,
+            "pearson_p": 0.8285243599686543,
             "n": 40
           },
           "compete_cheese_fiction_shellpos": {
@@ -1442,7 +1442,7 @@
             "n": 40
           },
           "compete_cheese_math_topicpos": {
-            "pearson_r": 0.29141335173900224,
+            "pearson_r": 0.2914133517390022,
             "pearson_p": 0.06808534280356149,
             "n": 40
           },
@@ -1452,23 +1452,23 @@
             "n": 40
           },
           "compete_classical_music_coding_topicpos": {
-            "pearson_r": 0.11023735611317155,
+            "pearson_r": 0.11023735611317159,
             "pearson_p": 0.49830294526664365,
             "n": 40
           },
           "compete_classical_music_fiction_shellpos": {
-            "pearson_r": 0.48054970604720326,
+            "pearson_r": 0.48054970604720315,
             "pearson_p": 0.0016981832653712948,
             "n": 40
           },
           "compete_classical_music_fiction_topicpos": {
-            "pearson_r": 0.6376198664773847,
-            "pearson_p": 9.641288453206099e-06,
+            "pearson_r": 0.6376198664773844,
+            "pearson_p": 9.641288453206184e-06,
             "n": 40
           },
           "compete_classical_music_math_shellpos": {
-            "pearson_r": 0.6033402999867424,
-            "pearson_p": 3.773493922294717e-05,
+            "pearson_r": 0.6033402999867425,
+            "pearson_p": 3.773493922294685e-05,
             "n": 40
           },
           "compete_classical_music_math_topicpos": {
@@ -1477,23 +1477,23 @@
             "n": 40
           },
           "compete_cooking_coding_shellpos": {
-            "pearson_r": 0.6900221994449287,
-            "pearson_p": 8.400646248719096e-07,
+            "pearson_r": 0.6900221994449285,
+            "pearson_p": 8.400646248719198e-07,
             "n": 40
           },
           "compete_cooking_coding_topicpos": {
-            "pearson_r": 0.021169086706257514,
+            "pearson_r": 0.0211690867062575,
             "pearson_p": 0.8968402012315488,
             "n": 40
           },
           "compete_cooking_fiction_shellpos": {
-            "pearson_r": 0.6746434815686069,
+            "pearson_r": 0.674643481568607,
             "pearson_p": 1.8083761021847146e-06,
             "n": 40
           },
           "compete_cooking_fiction_topicpos": {
-            "pearson_r": 0.688838437353652,
-            "pearson_p": 8.926033333607736e-07,
+            "pearson_r": 0.6888384373536518,
+            "pearson_p": 8.926033333607833e-07,
             "n": 40
           },
           "compete_cooking_math_shellpos": {
@@ -1512,33 +1512,33 @@
             "n": 40
           },
           "compete_gardening_coding_topicpos": {
-            "pearson_r": 0.03912734237302537,
+            "pearson_r": 0.03912734237302541,
             "pearson_p": 0.8105568698204473,
             "n": 40
           },
           "compete_gardening_fiction_shellpos": {
-            "pearson_r": 0.4963220268399453,
+            "pearson_r": 0.49632202683994525,
             "pearson_p": 0.0011250374573553421,
             "n": 40
           },
           "compete_gardening_fiction_topicpos": {
-            "pearson_r": 0.6898508490077185,
-            "pearson_p": 8.474886487364365e-07,
+            "pearson_r": 0.6898508490077184,
+            "pearson_p": 8.474886487364459e-07,
             "n": 40
           },
           "compete_gardening_math_shellpos": {
-            "pearson_r": 0.6123747660904787,
+            "pearson_r": 0.6123747660904786,
             "pearson_p": 2.6746969306136987e-05,
             "n": 40
           },
           "compete_gardening_math_topicpos": {
-            "pearson_r": 0.41240764712729105,
+            "pearson_r": 0.4124076471272911,
             "pearson_p": 0.008182703765825815,
             "n": 40
           },
           "compete_rainy_weather_coding_shellpos": {
-            "pearson_r": 0.5749222288038529,
-            "pearson_p": 0.0001043719487338372,
+            "pearson_r": 0.574922228803853,
+            "pearson_p": 0.00010437194873383636,
             "n": 40
           },
           "compete_rainy_weather_coding_topicpos": {
@@ -1552,13 +1552,13 @@
             "n": 40
           },
           "compete_rainy_weather_fiction_topicpos": {
-            "pearson_r": 0.7035548099783993,
-            "pearson_p": 4.112696827976002e-07,
+            "pearson_r": 0.703554809978399,
+            "pearson_p": 4.112696827976053e-07,
             "n": 40
           },
           "compete_rainy_weather_math_shellpos": {
-            "pearson_r": 0.5189950227349828,
-            "pearson_p": 0.0006007282156337911,
+            "pearson_r": 0.5189950227349829,
+            "pearson_p": 0.0006007282156337878,
             "n": 40
           },
           "compete_rainy_weather_math_topicpos": {
@@ -1911,13 +1911,13 @@
   "exp3": {
     "L31": {
       "layer": 31,
-      "n": 2000,
-      "pearson_r": 0.5165184703696452,
-      "pearson_p": 7.948247659389581e-137,
-      "spearman_r": 0.49489526942921835,
+      "n": 3000,
+      "pearson_r": 0.5118645855436814,
+      "pearson_p": 4.6311586847963837e-200,
+      "spearman_r": 0.4966377235441108,
       "permutation_p": 0.0,
-      "sign_agreement": 0.6172506738544474,
-      "sign_n": 1855,
+      "sign_agreement": 0.6311270125223614,
+      "sign_n": 2795,
       "per_condition": {
         "brooklyn_chess_A": {
           "pearson_r": 0.39332643358267094,
@@ -1927,6 +1927,11 @@
         "brooklyn_chess_B": {
           "pearson_r": 0.5975829837133312,
           "pearson_p": 4.608286321799712e-06,
+          "n": 50
+        },
+        "brooklyn_chess_C": {
+          "pearson_r": 0.6403170560409677,
+          "pearson_p": 5.511500340691001e-07,
           "n": 50
         },
         "brooklyn_convexhull_A": {
@@ -1939,6 +1944,11 @@
           "pearson_p": 3.271862681266482e-06,
           "n": 50
         },
+        "brooklyn_convexhull_C": {
+          "pearson_r": 0.558745869264957,
+          "pearson_p": 2.474794839894433e-05,
+          "n": 50
+        },
         "brooklyn_detective_A": {
           "pearson_r": 0.4904713945081121,
           "pearson_p": 0.0002992991086955667,
@@ -1947,6 +1957,11 @@
         "brooklyn_detective_B": {
           "pearson_r": 0.5487433263207334,
           "pearson_p": 3.6903497430481295e-05,
+          "n": 50
+        },
+        "brooklyn_detective_C": {
+          "pearson_r": 0.5918522799171355,
+          "pearson_p": 5.987517242231763e-06,
           "n": 50
         },
         "brooklyn_evolution_A": {
@@ -1959,6 +1974,11 @@
           "pearson_p": 6.207627903473799e-07,
           "n": 50
         },
+        "brooklyn_evolution_C": {
+          "pearson_r": 0.5517197175523537,
+          "pearson_p": 3.2810432195617e-05,
+          "n": 50
+        },
         "brooklyn_haiku_A": {
           "pearson_r": 0.5466521823723117,
           "pearson_p": 4.005427884456573e-05,
@@ -1967,6 +1987,11 @@
         "brooklyn_haiku_B": {
           "pearson_r": 0.5755440243729916,
           "pearson_p": 1.2280054836366352e-05,
+          "n": 50
+        },
+        "brooklyn_haiku_C": {
+          "pearson_r": 0.6082504445775889,
+          "pearson_p": 2.7920558938892524e-06,
           "n": 50
         },
         "brooklyn_lotr_A": {
@@ -1979,6 +2004,11 @@
           "pearson_p": 1.4553769073779356e-05,
           "n": 50
         },
+        "brooklyn_lotr_C": {
+          "pearson_r": 0.6047714388844794,
+          "pearson_p": 3.294308354781595e-06,
+          "n": 50
+        },
         "brooklyn_pyramids_A": {
           "pearson_r": 0.6668643493245652,
           "pearson_p": 1.2395663262408788e-07,
@@ -1987,6 +2017,11 @@
         "brooklyn_pyramids_B": {
           "pearson_r": 0.5192835434286818,
           "pearson_p": 0.00011149897461793195,
+          "n": 50
+        },
+        "brooklyn_pyramids_C": {
+          "pearson_r": 0.666373489837718,
+          "pearson_p": 1.2759700108917267e-07,
           "n": 50
         },
         "brooklyn_shakespeare_A": {
@@ -1999,6 +2034,11 @@
           "pearson_p": 2.231647429944982e-05,
           "n": 50
         },
+        "brooklyn_shakespeare_C": {
+          "pearson_r": 0.61389856565392,
+          "pearson_p": 2.125467316954767e-06,
+          "n": 50
+        },
         "brooklyn_simpsons_A": {
           "pearson_r": 0.6150081978234215,
           "pearson_p": 2.0132976074001487e-06,
@@ -2007,6 +2047,11 @@
         "brooklyn_simpsons_B": {
           "pearson_r": 0.612899750578679,
           "pearson_p": 2.231374222718692e-06,
+          "n": 50
+        },
+        "brooklyn_simpsons_C": {
+          "pearson_r": 0.4998126105199586,
+          "pearson_p": 0.00021939508665223681,
           "n": 50
         },
         "brooklyn_wwii_A": {
@@ -2019,6 +2064,11 @@
           "pearson_p": 8.277356703934774e-06,
           "n": 50
         },
+        "brooklyn_wwii_C": {
+          "pearson_r": 0.6092264950222219,
+          "pearson_p": 2.6644965587400638e-06,
+          "n": 50
+        },
         "midwest_chess_A": {
           "pearson_r": 0.2186204644183506,
           "pearson_p": 0.127184836301711,
@@ -2027,6 +2077,11 @@
         "midwest_chess_B": {
           "pearson_r": 0.4312196955426046,
           "pearson_p": 0.001769325629735774,
+          "n": 50
+        },
+        "midwest_chess_C": {
+          "pearson_r": 0.5673846160841967,
+          "pearson_p": 1.7342192359149935e-05,
           "n": 50
         },
         "midwest_convexhull_A": {
@@ -2039,6 +2094,11 @@
           "pearson_p": 0.0003743066089206226,
           "n": 50
         },
+        "midwest_convexhull_C": {
+          "pearson_r": 0.5140951869226892,
+          "pearson_p": 0.00013407339759609552,
+          "n": 50
+        },
         "midwest_detective_A": {
           "pearson_r": 0.4297145175338502,
           "pearson_p": 0.0018435987078165652,
@@ -2047,6 +2107,11 @@
         "midwest_detective_B": {
           "pearson_r": 0.4242414520929293,
           "pearson_p": 0.0021375906808213706,
+          "n": 50
+        },
+        "midwest_detective_C": {
+          "pearson_r": 0.3762553008126743,
+          "pearson_p": 0.007081634099157375,
           "n": 50
         },
         "midwest_evolution_A": {
@@ -2059,6 +2124,11 @@
           "pearson_p": 0.00016111227608116952,
           "n": 50
         },
+        "midwest_evolution_C": {
+          "pearson_r": 0.4798802744032529,
+          "pearson_p": 0.00042114682162826657,
+          "n": 50
+        },
         "midwest_haiku_A": {
           "pearson_r": 0.3376880081282098,
           "pearson_p": 0.016469622852852653,
@@ -2067,6 +2137,11 @@
         "midwest_haiku_B": {
           "pearson_r": 0.4453343316004515,
           "pearson_p": 0.0011921655881169833,
+          "n": 50
+        },
+        "midwest_haiku_C": {
+          "pearson_r": 0.42321406837646885,
+          "pearson_p": 0.002197197756415562,
           "n": 50
         },
         "midwest_lotr_A": {
@@ -2079,6 +2154,11 @@
           "pearson_p": 0.005500070204077381,
           "n": 50
         },
+        "midwest_lotr_C": {
+          "pearson_r": 0.4714236010322582,
+          "pearson_p": 0.0005488769807524854,
+          "n": 50
+        },
         "midwest_pyramids_A": {
           "pearson_r": 0.5064887445407533,
           "pearson_p": 0.00017475337331985535,
@@ -2087,6 +2167,11 @@
         "midwest_pyramids_B": {
           "pearson_r": 0.46482818711440016,
           "pearson_p": 0.0006716848811482929,
+          "n": 50
+        },
+        "midwest_pyramids_C": {
+          "pearson_r": 0.4749957251552657,
+          "pearson_p": 0.0004911817738613085,
           "n": 50
         },
         "midwest_shakespeare_A": {
@@ -2099,6 +2184,11 @@
           "pearson_p": 5.920229175106872e-05,
           "n": 50
         },
+        "midwest_shakespeare_C": {
+          "pearson_r": 0.45358441109343084,
+          "pearson_p": 0.0009390195637081482,
+          "n": 50
+        },
         "midwest_simpsons_A": {
           "pearson_r": 0.5762008050537133,
           "pearson_p": 1.1938756132117185e-05,
@@ -2107,6 +2197,11 @@
         "midwest_simpsons_B": {
           "pearson_r": 0.43231037394450944,
           "pearson_p": 0.0017171821635466262,
+          "n": 50
+        },
+        "midwest_simpsons_C": {
+          "pearson_r": 0.3826689177568495,
+          "pearson_p": 0.006093868807814594,
           "n": 50
         },
         "midwest_wwii_A": {
@@ -2118,18 +2213,23 @@
           "pearson_r": 0.4324994473021041,
           "pearson_p": 0.0017082833630864699,
           "n": 50
+        },
+        "midwest_wwii_C": {
+          "pearson_r": 0.42561870345021274,
+          "pearson_p": 0.002059938148871482,
+          "n": 50
         }
       }
     },
     "L43": {
       "layer": 43,
-      "n": 2000,
-      "pearson_r": 0.38656404680257206,
-      "pearson_p": 2.7707100954871014e-72,
-      "spearman_r": 0.3847400814089748,
+      "n": 3000,
+      "pearson_r": 0.40104007787954904,
+      "pearson_p": 2.559667448799495e-116,
+      "spearman_r": 0.4024916606834126,
       "permutation_p": 0.0,
-      "sign_agreement": 0.5067385444743935,
-      "sign_n": 1855,
+      "sign_agreement": 0.5144901610017889,
+      "sign_n": 2795,
       "per_condition": {
         "brooklyn_chess_A": {
           "pearson_r": 0.10535725578957435,
@@ -2139,6 +2239,11 @@
         "brooklyn_chess_B": {
           "pearson_r": 0.30558416265263516,
           "pearson_p": 0.03092249002205725,
+          "n": 50
+        },
+        "brooklyn_chess_C": {
+          "pearson_r": 0.3366393397158896,
+          "pearson_p": 0.016828984657104543,
           "n": 50
         },
         "brooklyn_convexhull_A": {
@@ -2151,6 +2256,11 @@
           "pearson_p": 0.06125364631893464,
           "n": 50
         },
+        "brooklyn_convexhull_C": {
+          "pearson_r": 0.2882005673786398,
+          "pearson_p": 0.042394167274383936,
+          "n": 50
+        },
         "brooklyn_detective_A": {
           "pearson_r": 0.15501456295035962,
           "pearson_p": 0.2824157594811846,
@@ -2159,6 +2269,11 @@
         "brooklyn_detective_B": {
           "pearson_r": 0.26467571979014054,
           "pearson_p": 0.06324266813980495,
+          "n": 50
+        },
+        "brooklyn_detective_C": {
+          "pearson_r": 0.44268523708231405,
+          "pearson_p": 0.0012855179328634231,
           "n": 50
         },
         "brooklyn_evolution_A": {
@@ -2171,6 +2286,11 @@
           "pearson_p": 0.029875365549649015,
           "n": 50
         },
+        "brooklyn_evolution_C": {
+          "pearson_r": 0.27279377347958883,
+          "pearson_p": 0.0552783809431881,
+          "n": 50
+        },
         "brooklyn_haiku_A": {
           "pearson_r": 0.2462495743599918,
           "pearson_p": 0.08473262819138816,
@@ -2179,6 +2299,11 @@
         "brooklyn_haiku_B": {
           "pearson_r": 0.2441263891928055,
           "pearson_p": 0.0875379954511099,
+          "n": 50
+        },
+        "brooklyn_haiku_C": {
+          "pearson_r": 0.4696243896964886,
+          "pearson_p": 0.0005801913794063517,
           "n": 50
         },
         "brooklyn_lotr_A": {
@@ -2191,6 +2316,11 @@
           "pearson_p": 0.03598087029546212,
           "n": 50
         },
+        "brooklyn_lotr_C": {
+          "pearson_r": 0.357198472074025,
+          "pearson_p": 0.010880534498781312,
+          "n": 50
+        },
         "brooklyn_pyramids_A": {
           "pearson_r": 0.3834494468416784,
           "pearson_p": 0.005982277574906027,
@@ -2199,6 +2329,11 @@
         "brooklyn_pyramids_B": {
           "pearson_r": 0.23759809785081648,
           "pearson_p": 0.09661993352311864,
+          "n": 50
+        },
+        "brooklyn_pyramids_C": {
+          "pearson_r": 0.44228622489600145,
+          "pearson_p": 0.0013001309351710526,
           "n": 50
         },
         "brooklyn_shakespeare_A": {
@@ -2211,6 +2346,11 @@
           "pearson_p": 0.039649725984171935,
           "n": 50
         },
+        "brooklyn_shakespeare_C": {
+          "pearson_r": 0.28468297358141925,
+          "pearson_p": 0.04509456161523501,
+          "n": 50
+        },
         "brooklyn_simpsons_A": {
           "pearson_r": 0.28956559783352914,
           "pearson_p": 0.04138258641850204,
@@ -2219,6 +2359,11 @@
         "brooklyn_simpsons_B": {
           "pearson_r": 0.30069234431456576,
           "pearson_p": 0.033853374250554624,
+          "n": 50
+        },
+        "brooklyn_simpsons_C": {
+          "pearson_r": 0.3885799960706216,
+          "pearson_p": 0.0052921509657890276,
           "n": 50
         },
         "brooklyn_wwii_A": {
@@ -2231,6 +2376,11 @@
           "pearson_p": 0.01422016164858602,
           "n": 50
         },
+        "brooklyn_wwii_C": {
+          "pearson_r": 0.37733047009003357,
+          "pearson_p": 0.006906928773420209,
+          "n": 50
+        },
         "midwest_chess_A": {
           "pearson_r": 0.48107226851064344,
           "pearson_p": 0.00040548836067433785,
@@ -2239,6 +2389,11 @@
         "midwest_chess_B": {
           "pearson_r": 0.48182564669952965,
           "pearson_p": 0.00039586519005325733,
+          "n": 50
+        },
+        "midwest_chess_C": {
+          "pearson_r": 0.5524122010924746,
+          "pearson_p": 3.192005012154014e-05,
           "n": 50
         },
         "midwest_convexhull_A": {
@@ -2251,6 +2406,11 @@
           "pearson_p": 1.8754572740797758e-05,
           "n": 50
         },
+        "midwest_convexhull_C": {
+          "pearson_r": 0.5646079286868317,
+          "pearson_p": 1.9463230485267438e-05,
+          "n": 50
+        },
         "midwest_detective_A": {
           "pearson_r": 0.3919373446406487,
           "pearson_p": 0.004879179160468144,
@@ -2259,6 +2419,11 @@
         "midwest_detective_B": {
           "pearson_r": 0.48391744625761435,
           "pearson_p": 0.0003702189929434394,
+          "n": 50
+        },
+        "midwest_detective_C": {
+          "pearson_r": 0.5378151582690245,
+          "pearson_p": 5.628959859532684e-05,
           "n": 50
         },
         "midwest_evolution_A": {
@@ -2271,6 +2436,11 @@
           "pearson_p": 0.00016766968634879096,
           "n": 50
         },
+        "midwest_evolution_C": {
+          "pearson_r": 0.5427092203354498,
+          "pearson_p": 4.667651153061869e-05,
+          "n": 50
+        },
         "midwest_haiku_A": {
           "pearson_r": 0.32538967504065625,
           "pearson_p": 0.021121863486575895,
@@ -2279,6 +2449,11 @@
         "midwest_haiku_B": {
           "pearson_r": 0.5345807568608602,
           "pearson_p": 6.360492792882759e-05,
+          "n": 50
+        },
+        "midwest_haiku_C": {
+          "pearson_r": 0.5613036523578083,
+          "pearson_p": 2.2297825287671854e-05,
           "n": 50
         },
         "midwest_lotr_A": {
@@ -2291,6 +2466,11 @@
           "pearson_p": 0.00020871798605096118,
           "n": 50
         },
+        "midwest_lotr_C": {
+          "pearson_r": 0.5173530073877173,
+          "pearson_p": 0.00011945818277397007,
+          "n": 50
+        },
         "midwest_pyramids_A": {
           "pearson_r": 0.5870356619673953,
           "pearson_p": 7.432659528540051e-06,
@@ -2299,6 +2479,11 @@
         "midwest_pyramids_B": {
           "pearson_r": 0.5314302168165228,
           "pearson_p": 7.155827710551805e-05,
+          "n": 50
+        },
+        "midwest_pyramids_C": {
+          "pearson_r": 0.5620738029015486,
+          "pearson_p": 2.160509834348454e-05,
           "n": 50
         },
         "midwest_shakespeare_A": {
@@ -2311,6 +2496,11 @@
           "pearson_p": 3.57455803816274e-05,
           "n": 50
         },
+        "midwest_shakespeare_C": {
+          "pearson_r": 0.4849436346558011,
+          "pearson_p": 0.00035819571796428455,
+          "n": 50
+        },
         "midwest_simpsons_A": {
           "pearson_r": 0.4175938805005142,
           "pearson_p": 0.002550118175764866,
@@ -2319,6 +2509,11 @@
         "midwest_simpsons_B": {
           "pearson_r": 0.502936571083436,
           "pearson_p": 0.00019735498273175557,
+          "n": 50
+        },
+        "midwest_simpsons_C": {
+          "pearson_r": 0.4867802690313374,
+          "pearson_p": 0.00033755586276258725,
           "n": 50
         },
         "midwest_wwii_A": {
@@ -2330,18 +2525,23 @@
           "pearson_r": 0.5265975662014643,
           "pearson_p": 8.554023236641896e-05,
           "n": 50
+        },
+        "midwest_wwii_C": {
+          "pearson_r": 0.494547349994408,
+          "pearson_p": 0.00026165435750681717,
+          "n": 50
         }
       }
     },
     "L55": {
       "layer": 55,
-      "n": 2000,
-      "pearson_r": 0.3294841616803651,
-      "pearson_p": 7.483499830927402e-52,
-      "spearman_r": 0.3436996599432879,
+      "n": 3000,
+      "pearson_r": 0.3312472869261297,
+      "pearson_p": 9.529795827206837e-78,
+      "spearman_r": 0.34519235174560003,
       "permutation_p": 0.0,
-      "sign_agreement": 0.5347708894878707,
-      "sign_n": 1855,
+      "sign_agreement": 0.5416815742397137,
+      "sign_n": 2795,
       "per_condition": {
         "brooklyn_chess_A": {
           "pearson_r": 0.11948427843567741,
@@ -2351,6 +2551,11 @@
         "brooklyn_chess_B": {
           "pearson_r": 0.29529838060616853,
           "pearson_p": 0.03734796319445279,
+          "n": 50
+        },
+        "brooklyn_chess_C": {
+          "pearson_r": 0.26232242899721364,
+          "pearson_p": 0.06571550220478953,
           "n": 50
         },
         "brooklyn_convexhull_A": {
@@ -2363,6 +2568,11 @@
           "pearson_p": 0.05445336374648806,
           "n": 50
         },
+        "brooklyn_convexhull_C": {
+          "pearson_r": 0.213997853544117,
+          "pearson_p": 0.13562885293703575,
+          "n": 50
+        },
         "brooklyn_detective_A": {
           "pearson_r": 0.05775533476589643,
           "pearson_p": 0.6903387959150526,
@@ -2371,6 +2581,11 @@
         "brooklyn_detective_B": {
           "pearson_r": 0.2346739708659318,
           "pearson_p": 0.10091727470787823,
+          "n": 50
+        },
+        "brooklyn_detective_C": {
+          "pearson_r": 0.32185217400897104,
+          "pearson_p": 0.022649362152700067,
           "n": 50
         },
         "brooklyn_evolution_A": {
@@ -2383,6 +2598,11 @@
           "pearson_p": 0.027763273540101194,
           "n": 50
         },
+        "brooklyn_evolution_C": {
+          "pearson_r": 0.26902945005881,
+          "pearson_p": 0.05886441679151304,
+          "n": 50
+        },
         "brooklyn_haiku_A": {
           "pearson_r": 0.22878534286465832,
           "pearson_p": 0.1100171702159243,
@@ -2391,6 +2611,11 @@
         "brooklyn_haiku_B": {
           "pearson_r": 0.23978814899956574,
           "pearson_p": 0.09349529203825285,
+          "n": 50
+        },
+        "brooklyn_haiku_C": {
+          "pearson_r": 0.3803616659248323,
+          "pearson_p": 0.0064344140521673185,
           "n": 50
         },
         "brooklyn_lotr_A": {
@@ -2403,6 +2628,11 @@
           "pearson_p": 0.08183672954954675,
           "n": 50
         },
+        "brooklyn_lotr_C": {
+          "pearson_r": 0.31151880233978085,
+          "pearson_p": 0.02765302945115088,
+          "n": 50
+        },
         "brooklyn_pyramids_A": {
           "pearson_r": 0.38417903371194434,
           "pearson_p": 0.005879585542628718,
@@ -2411,6 +2641,11 @@
         "brooklyn_pyramids_B": {
           "pearson_r": 0.23001895016652713,
           "pearson_p": 0.10806067729179755,
+          "n": 50
+        },
+        "brooklyn_pyramids_C": {
+          "pearson_r": 0.37135215672329674,
+          "pearson_p": 0.007927936116898047,
           "n": 50
         },
         "brooklyn_shakespeare_A": {
@@ -2423,6 +2658,11 @@
           "pearson_p": 0.06134523841889745,
           "n": 50
         },
+        "brooklyn_shakespeare_C": {
+          "pearson_r": 0.23744585456311304,
+          "pearson_p": 0.09684011604995674,
+          "n": 50
+        },
         "brooklyn_simpsons_A": {
           "pearson_r": 0.30152371676400685,
           "pearson_p": 0.0333396441164452,
@@ -2431,6 +2671,11 @@
         "brooklyn_simpsons_B": {
           "pearson_r": 0.2736612542757457,
           "pearson_p": 0.05447750763910237,
+          "n": 50
+        },
+        "brooklyn_simpsons_C": {
+          "pearson_r": 0.2637269647893394,
+          "pearson_p": 0.06423050518155794,
           "n": 50
         },
         "brooklyn_wwii_A": {
@@ -2443,6 +2688,11 @@
           "pearson_p": 0.029217954354288235,
           "n": 50
         },
+        "brooklyn_wwii_C": {
+          "pearson_r": 0.30105533457080824,
+          "pearson_p": 0.03362827132661349,
+          "n": 50
+        },
         "midwest_chess_A": {
           "pearson_r": 0.29707414078098654,
           "pearson_p": 0.03616608954621402,
@@ -2451,6 +2701,11 @@
         "midwest_chess_B": {
           "pearson_r": 0.4167115289925012,
           "pearson_p": 0.0026098615887453947,
+          "n": 50
+        },
+        "midwest_chess_C": {
+          "pearson_r": 0.47179846908257683,
+          "pearson_p": 0.0005425476923483345,
           "n": 50
         },
         "midwest_convexhull_A": {
@@ -2463,6 +2718,11 @@
           "pearson_p": 0.0007273675857827446,
           "n": 50
         },
+        "midwest_convexhull_C": {
+          "pearson_r": 0.43032402536271885,
+          "pearson_p": 0.001813194826891401,
+          "n": 50
+        },
         "midwest_detective_A": {
           "pearson_r": 0.2910965004741667,
           "pearson_p": 0.04027171736559852,
@@ -2471,6 +2731,11 @@
         "midwest_detective_B": {
           "pearson_r": 0.3764828075028974,
           "pearson_p": 0.007044349266826997,
+          "n": 50
+        },
+        "midwest_detective_C": {
+          "pearson_r": 0.35783508967702043,
+          "pearson_p": 0.010729825027898699,
           "n": 50
         },
         "midwest_evolution_A": {
@@ -2483,6 +2748,11 @@
           "pearson_p": 0.002048912218887706,
           "n": 50
         },
+        "midwest_evolution_C": {
+          "pearson_r": 0.4567295441517191,
+          "pearson_p": 0.0008559933113193772,
+          "n": 50
+        },
         "midwest_haiku_A": {
           "pearson_r": 0.24629775547765406,
           "pearson_p": 0.0846697935349048,
@@ -2491,6 +2761,11 @@
         "midwest_haiku_B": {
           "pearson_r": 0.44795693489624866,
           "pearson_p": 0.0011057664704896301,
+          "n": 50
+        },
+        "midwest_haiku_C": {
+          "pearson_r": 0.37310110215458275,
+          "pearson_p": 0.007616510767749672,
           "n": 50
         },
         "midwest_lotr_A": {
@@ -2503,6 +2778,11 @@
           "pearson_p": 0.008763383026383978,
           "n": 50
         },
+        "midwest_lotr_C": {
+          "pearson_r": 0.4232217951028596,
+          "pearson_p": 0.002196744016445075,
+          "n": 50
+        },
         "midwest_pyramids_A": {
           "pearson_r": 0.4544425830201712,
           "pearson_p": 0.0009156775039380492,
@@ -2511,6 +2791,11 @@
         "midwest_pyramids_B": {
           "pearson_r": 0.41808540184818505,
           "pearson_p": 0.0025173654523581554,
+          "n": 50
+        },
+        "midwest_pyramids_C": {
+          "pearson_r": 0.4083936283918892,
+          "pearson_p": 0.003236854512193331,
           "n": 50
         },
         "midwest_shakespeare_A": {
@@ -2523,6 +2808,11 @@
           "pearson_p": 0.0007368852635902833,
           "n": 50
         },
+        "midwest_shakespeare_C": {
+          "pearson_r": 0.3630281431988441,
+          "pearson_p": 0.009566153169600744,
+          "n": 50
+        },
         "midwest_simpsons_A": {
           "pearson_r": 0.42138761027891924,
           "pearson_p": 0.0023068155779874316,
@@ -2533,6 +2823,11 @@
           "pearson_p": 0.004160476704780484,
           "n": 50
         },
+        "midwest_simpsons_C": {
+          "pearson_r": 0.32686068774641114,
+          "pearson_p": 0.02051276138081576,
+          "n": 50
+        },
         "midwest_wwii_A": {
           "pearson_r": 0.4073489480781234,
           "pearson_p": 0.00332431450647089,
@@ -2541,6 +2836,11 @@
         "midwest_wwii_B": {
           "pearson_r": 0.40161810499924194,
           "pearson_p": 0.0038421667476827076,
+          "n": 50
+        },
+        "midwest_wwii_C": {
+          "pearson_r": 0.3433086724021443,
+          "pearson_p": 0.014652775665807433,
           "n": 50
         }
       }

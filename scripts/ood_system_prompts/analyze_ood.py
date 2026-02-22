@@ -191,7 +191,7 @@ def exp3_analysis(layer: int) -> dict:
     # Subsample: 2 base roles × 10 targets × 2 versions + baseline
     mp_cfg = json.load(open(REPO_ROOT / "configs/ood/prompts/minimal_pairs_v7.json"))
     selected_roles = {"midwest", "brooklyn"}
-    selected_versions = {"A", "B"}
+    selected_versions = {"A", "B", "C"}
     selected_cids = {
         c["condition_id"]
         for c in mp_cfg["conditions"]

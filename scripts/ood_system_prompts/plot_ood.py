@@ -23,7 +23,7 @@ EXP_TITLES = {
     "exp1c": "Exp 1c: Crossed preference (n=640)",
     "exp1d": "Exp 1d: Competing (n=1600)",
     "exp2": "Exp 2: Roles (n=1000)",
-    "exp3": "Exp 3: Minimal pairs (n=100)",
+    "exp3": "Exp 3: Minimal pairs (n=3000)",
 }
 
 COLORS_LAYERS = ["#e41a1c", "#377eb8", "#4daf4a"]  # red, blue, green (Set1)
@@ -114,7 +114,7 @@ def plot_scatter_L31(data, save_path):
 
         bd, pd, r, sign, n = get_exp_data(data, exp_key, "L31")
 
-        ax.scatter(bd, pd, alpha=0.25, s=12, color="#377eb8", zorder=2, rasterized=True)
+        ax.scatter(bd, pd, alpha=0.45, s=15, color="#377eb8", zorder=2, rasterized=True)
 
         # Linear regression line
         slope, intercept, *_ = stats.linregress(bd, pd)

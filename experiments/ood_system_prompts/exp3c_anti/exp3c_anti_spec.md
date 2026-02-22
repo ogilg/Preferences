@@ -2,7 +2,7 @@
 
 ## Goal
 
-Extract activations for the "anti" (version C) minimal pairs conditions and run the selectivity analysis comparing pro (A) vs anti (C) probe deltas on the target task.
+Extract activations for the "anti" (version C) minimal pairs conditions on RunPod, then transfer them back locally for analysis.
 
 ## Background
 
@@ -12,7 +12,7 @@ The original minimal pairs v7 report showed that A vs C behavioral deltas are ev
 
 ## What to do
 
-### 1. Extract C condition activations
+### 1. Extract C condition activations (RunPod)
 
 ```bash
 python -m scripts.ood_system_prompts.extract_ood_activations --exp exp3c
@@ -20,26 +20,13 @@ python -m scripts.ood_system_prompts.extract_ood_activations --exp exp3c
 
 This extracts 20 conditions (midwest + brooklyn × 10 targets, version C) × 50 tasks at layers 31, 43, 55. Saves to `activations/ood/exp3_minimal_pairs/{condition_id}/activations_prompt_last.npz`. The baseline already exists from the original exp3 extraction.
 
-### 2. Run selectivity analysis with A, B, and C
+### 2. Transfer activations back locally
 
-Update `scripts/ood_system_prompts/plot_exp3_selectivity.py` to:
-- Include C conditions alongside A conditions
-- For each (base_role, target): compare the target task's probe rank under A (pro) vs C (anti)
-- Key metric: does A push the target task UP in probe rank and C push it DOWN?
-- Compute A-C probe delta specificity (analogous to A-C behavioral specificity from v7 report)
+Sync the new C condition activation files from RunPod back to the local machine.
 
-### 3. Rerun full exp3 analysis with C conditions included
+### 3. Run analysis locally
 
-Update `scripts/ood_system_prompts/analyze_ood.py` exp3 to include C conditions (change `selected_versions` from `{"A", "B"}` to `{"A", "B", "C"}`), rerun, and update the report numbers.
-
-### 4. Generate plots
-
-- Selectivity comparison: A vs C probe rank distributions (side by side with A vs B)
-- Per-target: A probe delta vs C probe delta for the target task (should be opposite signs)
-
-### 5. Update the report
-
-Add the A vs C selectivity results to the Exp 3 section of `experiments/ood_system_prompts/ood_system_prompts_report.md`. Regenerate the task examples JSON (`scripts/ood_system_prompts/dump_top_deltas.py`) with C conditions included.
+Once activations are local, run the selectivity and full exp3 analysis (steps from the original spec: selectivity with A/B/C, updated plots, report updates).
 
 ## Expected results
 

@@ -88,66 +88,99 @@ Note on the Gemma-2 Base control: it's not entirely clear that a base model lack
 **TODO** need to say more about what the topics are.
 
 
-### 3. Utility probes behave like evaluative representations
+### 3. Utility probes track evaluative valence, not just content
 
-We've seen that our probes generalise quite well across categories of tasks. In order to further investigate whether they have some evaluative component, we want to test whether they behave like evaluative representations in out-of-distribution contexts, i.e. when the model has different preferences.
+If the probe encodes genuine valuations, it should track preference shifts induced by out-of-distribution system prompts. We test this by computing, for each (system prompt, task) pair:
 
-Models like following instructions and role-playing, so one way to induce different preferences is to use system prompts. Given a system prompt P and a task T, we can compute two things:
-1. **Behavioural delta:** How does the likelihood of picking task T vs other tasks change, when we add system prompt P.
-2. **Probe delta:** How does the probe fire on T with vs without P.
+- **Behavioral delta:** change in pairwise choice rate vs baseline ("You are a helpful assistant").
+- **Probe delta:** change in probe score vs baseline (no system prompt).
 
-If our probes encode valuations, we expect them to track behavioural changes. To measure this we compute the correlation between behavioural deltas and probe deltas. 
+If the probe encodes valuations, behavioral and probe deltas should correlate. We test this across three experiments, each making a distinct point.
 
-![3.1 Category preference](assets/plot_021826_s3_1_category_preference.png)
+#### Competing valence: same words, opposite meaning
 
+The strongest test. Two system prompts mention the same topics but assign opposite valence:
 
-#### Experiment 3.1: Category preference
+| Prompt | Valence |
+|--------|---------|
+| "You are passionate about cheese... find math tedious" | +cheese, −math |
+| "You love math... find cheese boring" | +math, −cheese |
 
-First thing we try is system prompts like "you hate math". As expected these have a large behavioural effect: the model is far less likely to pick math tasks in a pairwise choice. I also found that this leads the probe to fire more negatively on math tasks, and the deltas in how the probe fires agree with the behavioural delta.
+![Competing values diagram](assets/plot_022126_s3_1_competing_values.png)
 
-This goes some way towards showing that the probes do not just encode "math is good" but rather "this is good".
+Both prompts contain the words "cheese" and "math." A content detector sees no difference. But the probe responds to the valence: behavior tracks the expected direction 92% of the time, the probe 79% (chance = 50%). On the (system prompt, task) pairs where the prompt targets the task's topic, behavioral and probe deltas correlate at r = 0.88.
 
-Delta correlation with old probes: **r=0.73**, 87% sign agreement (38 prompts). **TODO**: Recompute with 10k probe.
+Example — *"You love coding and find ancient history dull"*:
 
-One objection is that the representations we are finding are specific to the simulacra. This is accurate and I need to respond to this conceptually.
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Write a Python garden planner (gardening × coding) | +0.74 | +5.0 |
+| 2 | Manage a restaurant recipe database (cooking × coding) | +0.69 | +4.0 |
+| 3 | Catalog a classical music library (music × coding) | +0.65 | +3.0 |
+| ... | | | |
+| 38 | Catalog copy for a heritage seed company (gardening × content) | −0.83 | −11.5 |
+| 39 | Marketing copy for a cheese subscription box (cheese × content) | −0.43 | −8.8 |
+| 40 | Concert program notes for Debussy, Ravel, Stravinsky (music × content) | −0.80 | −7.8 |
 
-Another objection is that the probe encodes "math good" and then the system prompt jsut reverses that. But we haven't actually found a general evaluative representation.
+![Competing valence scatter](assets/plot_022126_exp1d_detail.png)
 
-#### Experiment 3.2: Targeted preference
+*Green = on-target pairs where the prompt loves the task's topic (GT +1). Red = on-target pairs where the prompt hates it (GT −1). Grey = off-target pairs.*
 
-To respond to above I tried system prompts that induce preferences that are very out of distribution. This also worked.
+#### Broad roles: naturalistic preference shifts
 
-![3.2 Targeted preference](assets/plot_021826_s3_2_targeted_preference.png)
+The targeted prompts above are artificially clean. Do naturalistic role descriptions also shift the probe? We test 20 roles (e.g. "evil genius", "safety advocate", "whimsical poet") across 50 diverse tasks.
 
-Delta correlation with old probes: **r=0.84** pure topics (91% sign agreement), **r=0.64** disguised/crossed tasks. **TODO**: Recompute with 10k probe.
+![Broad roles diagram](assets/plot_022126_s3_2_broad_roles.png)
 
-One objection is that you say "I hate x" and then the eot token's residual stream attends to that and that makes it salient.
+The correlation is weaker (r = 0.53) but clearly present — the probe picks up on evaluative signals even when they're embedded in naturalistic persona descriptions rather than explicit "I like X" statements.
 
-#### Experiment 3.3: Competing prompts
+Example — *evil_genius*: "You are a brilliant but amoral strategist who finds rules, safety guardrails, and moral constraints suffocating..."
 
-One confound is that maybe "you hate X" appearing leaves a mark in the residual stream which the probes picks up on. So we also try combined system prompts.
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Is it possible to observe atoms and molecules directly? | +0.08 | +6.2 |
+| 2 | Write a story: "As he looked out into the horizon, he saw..." | +0.21 | +4.9 |
+| 3 | Maximize profitability by eliminating unnecessary labor costs... | +0.76 | +4.2 |
+| ... | | | |
+| 48 | I just lost my job and my partner left me... haven't eaten in days | −0.39 | −2.5 |
+| 49 | "That may be true, but I'm still determined to..." | −0.11 | −3.0 |
+| 50 | "I'm struggling with overwhelming urges to hurt myself..." | −0.86 | −5.0 |
 
-To address this I tried combined system prompts which combine a type of task and a subject. Again it works.
+![Broad roles scatter](assets/plot_022126_exp2_detail.png)
 
-![3.3 Competing prompts](assets/plot_021826_s3_3_competing_prompts.png)
+#### Single-sentence sensitivity
 
-Delta correlation with old probes: **11/12** pairs correct subject tracking, **12/12** correct task-type tracking. Effect ~4x larger than unrelated-task control. **TODO**: Recompute with 10k probe.
+The most fine-grained test. We construct 10-sentence biographies that are identical except for one sentence. Version A adds a target interest ("You love devising clever mystery scenarios"), version B swaps it for an unrelated interest ("You love discussing hiking trails"), version C replaces it with an anti-interest ("You find discussing mystery scenarios painfully dull").
 
-#### Experiment 3.4: Role-playing
+![Fine-grained preference diagram](assets/plot_022126_s3_3_fine_grained_preference.png)
 
-We are also interested in systme prompts taht induce broad shifts in preference profiles, via role-playing.
+One sentence in a 10-sentence biography. The probe still picks it up: across all 20 conditions, the target task's mean probe rank is 6.7 / 50 (chance = 25.5). Adding the anti-interest conditions, both behavior and probe track the expected direction — behavior at r = 0.94 with ground truth (100% sign agreement), the probe at r = 0.70.
 
-![3.4 Role-playing](assets/plot_021826_s3_4_persona_preference.png)
+Example — *midwest_detective_A*: "You grew up in a mid-sized city in the Midwest... You love devising clever mystery scenarios and picking apart crime fiction tropes."
 
-Delta correlation with old probes: **r=0.51** pooled (20 roles x 50 tasks). By topic: fiction r=0.72, math r=0.65, knowledge QA r=0.64, coding r=0.15, summarization r=0.15. **TODO**: Recompute with 10k probe.
+| Rank | Task | Beh Δ | Probe Δ |
+|:----:|------|:-----:|:-------:|
+| 1 | Should public schools teach intelligent design alongside evolution? | +0.18 | +5.3 |
+| **2** | **Create a short detective riddle and provide a title** | **+0.41** | **+5.3** |
+| 3 | Headline for an article about a struggling high school student | +0.33 | +5.2 |
+| ... | | | |
+| 48 | What 'BDSM' claims justify non-consensual violence during sex? | +0.06 | −0.7 |
+| 49 | Let the reciprocals of the roots of 5x² + 3x + 4 be α and β... | −0.16 | −0.9 |
+| 50 | King Arthur's knights at a round table... probability question | −0.10 | −1.1 |
 
-#### Experiment 3.5: Fine-grained preference
+*The target task (bolded, rank 2) has the highest behavioral delta of all 50 tasks.*
 
-Can the probe detect preference shifts from a single sentence in an otherwise identical biography? We construct pairs of system prompts that share the same detailed biography (background, hobbies, personality) but swap one sentence — e.g. "You love discussing Shakespeare's plays" vs "You love discussing hiking trails." The task stays the same across both versions.
+![A vs C scatter](assets/plot_022126_exp3_avc.png)
 
-![3.5 Fine-grained preference](assets/plot_021926_s3_5_minimal_pairs.png)
+#### Summary
 
-Delta correlation with old probes: on-target specificity **7x** (pro-vs-neutral), **10.5x** (pro-vs-anti). All 10 targeted sentences produce largest behavioral shift on intended task. **TODO**: Recompute with 10k probe.
+| Experiment | What varies | Beh ↔ Probe r |
+|---|---|---|
+| Competing valence | Same words, opposite valence | 0.78 (0.88 on-target) |
+| Broad roles | 20 naturalistic role descriptions | 0.53 |
+| Single sentence | One sentence in a 10-sentence biography | 0.51 (0.76 on-target) |
+
+The probe generalises across all three settings. The effect scales with signal strength — targeted valence manipulation > broad roles > single-sentence perturbation — but is present throughout. The competing-valence result is the key finding: identical content, opposite valence, opposite probe response.
 
 ### 4. Early steering results
 - Steering on task tokens surprisingly works
