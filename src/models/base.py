@@ -47,6 +47,40 @@ STEERING_MODES = {
 }
 
 
+def position_selective_steering(
+    steering_tensor: torch.Tensor, start: int, end: int
+) -> SteeringHook:
+    """Steer only tokens in [start, end) during prompt processing."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        if resid.shape[1] > 1:  # prompt processing, not autoregressive
+            resid[:, start:end, :] += steering_tensor
+        return resid
+    return hook
+
+
+def differential_steering(
+    steering_tensor: torch.Tensor,
+    pos_start: int,
+    pos_end: int,
+    neg_start: int,
+    neg_end: int,
+) -> SteeringHook:
+    """Apply +direction on [pos_start, pos_end) and -direction on [neg_start, neg_end)."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        if resid.shape[1] > 1:  # prompt processing only
+            resid[:, pos_start:pos_end, :] += steering_tensor
+            resid[:, neg_start:neg_end, :] -= steering_tensor
+        return resid
+    return hook
+
+
+def noop_steering() -> SteeringHook:
+    """No-op hook for control conditions."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        return resid
+    return hook
+
+
 def select_last(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
     return activations[-1, :]
 

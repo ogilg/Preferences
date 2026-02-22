@@ -9,7 +9,7 @@ from typing import Callable
 import numpy as np
 import torch
 
-from src.models.base import STEERING_MODES
+from src.models.base import STEERING_MODES, SteeringHook
 from src.models.huggingface_model import HuggingFaceModel
 from src.models.openai_compatible import BatchResult, GenerateRequest
 from src.probes.core.storage import load_probe_direction
@@ -42,6 +42,10 @@ class SteeredHFClient:
             scaled, dtype=torch.bfloat16, device=hf_model.device
         )
 
+    @property
+    def direction(self) -> np.ndarray:
+        return self._direction
+
     def with_coefficient(self, coefficient: float) -> SteeredHFClient:
         """Return a new client with a different coefficient, sharing the same model."""
         return SteeredHFClient(
@@ -50,6 +54,17 @@ class SteeredHFClient:
 
     def _make_hook(self):
         return STEERING_MODES[self.steering_mode](self._steering_tensor)
+
+    def generate_with_hook(
+        self, messages: list, hook: SteeringHook, temperature: float = 1.0
+    ) -> str:
+        """Generate with a caller-supplied steering hook, bypassing mode/coefficient."""
+        return self.hf_model.generate_with_steering(
+            messages=messages,
+            layer=self.layer,
+            steering_hook=hook,
+            temperature=temperature,
+        )
 
     def generate(self, messages, temperature=1.0) -> str:
         if self.coefficient == 0:

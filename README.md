@@ -80,6 +80,8 @@ Removes group-level mean differences (topic, dataset) from preference scores via
 
 ### `src/steering/` — Activation steering experiments
 
+Composable primitives for steering experiments. No rigid runner — each experiment composes the pieces it needs.
+
 #### `client.py` — Steered model client
 
 `SteeredHFClient` wraps a `HuggingFaceModel` with a steering direction and coefficient, duck-typed as `OpenAICompatibleClient`. Handles the coef==0 bypass, pre-computes the scaled tensor on GPU.
@@ -95,11 +97,39 @@ for coef in [-3000, -1000, 0, 1000, 3000]:
     response = steered.generate(messages)
 ```
 
-`create_steered_client()` is the one-liner entry point: loads model + probe, returns a ready client. Use `compute_activation_norms()` from `src/probes/core/activations` to calibrate coefficients relative to activation norms.
+For position-selective or differential steering, use `generate_with_hook()` with a custom hook:
 
-#### `runner.py` — Steering experiment runner
+```python
+from src.models.base import position_selective_steering, differential_steering
 
-Config-driven runner for stated preference steering experiments (steer during post-task rating). Handles task loading, completion loading, template-based rating prompts, and structured result serialization.
+direction = client.direction  # access the loaded probe direction
+tensor = torch.tensor(direction * coef, dtype=torch.bfloat16, device="cuda")
+hook = position_selective_steering(tensor, start=10, end=50)
+response = client.generate_with_hook(messages, hook)
+```
+
+#### Hook factories (`src/models/base.py`)
+
+- `all_tokens_steering(tensor)` — steer all positions
+- `autoregressive_steering(tensor)` — steer last token only
+- `position_selective_steering(tensor, start, end)` — steer tokens `[start, end)` during prompt processing only
+- `differential_steering(tensor, pos_start, pos_end, neg_start, neg_end)` — `+direction` on one span, `-direction` on another
+- `noop_steering()` — no-op for control conditions
+
+#### `tokenization.py` — Token span detection
+
+Utilities for finding token indices of text spans, used with position-selective hooks:
+
+- `find_text_span(tokenizer, full_text, target_text, search_after=0)` — general-purpose span finder using offset mapping
+- `find_pairwise_task_spans(tokenizer, prompt, task_a, task_b, a_marker, b_marker)` — convenience for pairwise comparison prompts
+
+#### `calibration.py` — Coefficient calibration
+
+- `suggest_coefficient_range(activations_path, manifest_dir, probe_id, multipliers)` — returns coefficients as multiples of the mean activation norm at the probe layer, removing the guesswork from coefficient selection
+
+#### `analysis.py` — Post-hoc analysis
+
+Functions for analyzing steering experiment results: `aggregate_by_coefficient`, `compute_statistics`, `plot_dose_response`, `analyze_steering_experiment`.
 
 ### `src/measurement/` — LLM judges
 
