@@ -16,18 +16,7 @@ task_origins:
 task_sampling_seed: 42
 stratified_sampling: true
 
-inline_templates:
-  - name: completion_preference
-    type: pre_task_revealed
-    template: |
-      You will be given two tasks. Choose one and complete it.
-      {format_instruction}
-
-      Task A:
-      {task_a}
-
-      Task B:
-      {task_b}
+templates: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
 
 response_formats: [completion]
 n_samples: 5
