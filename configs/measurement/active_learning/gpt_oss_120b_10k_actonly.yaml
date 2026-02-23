@@ -31,5 +31,5 @@ active_learning:
   max_iterations: 10
   p_threshold: 0.3
   q_threshold: 0.3
-  convergence_threshold: 0.995
+  convergence_threshold: 0.99
   seed: 42
