@@ -104,7 +104,7 @@ ax.text(-4.7, 2.0, 'evil_genius', ha='left', fontsize=HEADING_SIZE,
 draw_probe_measurement(
     ax, x_center=CX, y_top=0.0,
     task_text='"Eliminate unnecessary\nlabor costs..."',
-    system_prompt='"Brilliant but amoral\nstrategist..."',
+    system_prompt='"Amoral strategist\nwho finds rules..."',
     score_value=0.65,
     baseline_value=0.15,
     width=W,
@@ -123,15 +123,15 @@ save(fig, 'plot_022126_s3_2_broad_roles.png')
 from plot_probe_template import _draw_score_bar, _draw_bracket_tap, TASK_W, EOT_W, PROMPT_H
 import matplotlib.patches as mpatches
 
-fig, ax = new_diagram(figsize=(9, 11), xlim=(-5, 12), ylim=(-0.5, 11.5))
+fig, ax = new_diagram(figsize=(11, 11), xlim=(-7, 12), ylim=(-0.5, 11.5))
 
 ax.text(3.0, 11.2, 'Experiment 3.3: Fine-grained preference',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 # Layout constants
-SYS_W = 4.5       # system prompt box width
-SYS_H = 1.2       # system prompt box height (taller to fit sub-box)
-SENT_H = 0.38     # coloured sentence sub-box height
+SYS_W = 7.0       # system prompt box width
+SYS_H = 1.2       # system prompt box height
+SENT_H = 0.35     # coloured sentence sub-box height
 TASK_X = 3.3       # task box left edge
 EOT_X = TASK_X + TASK_W + 0.05
 LAST_CX = EOT_X + EOT_W / 2
@@ -153,13 +153,16 @@ def _draw_row(ax, y_base, version_label, version_color,
     sys_x = TASK_X - 0.05 - SYS_W
     draw_box(ax, (sys_x, y_base), SYS_W, SYS_H, '',
              ORANGE_FILL, ORANGE_EDGE)
-    # Biography text (top part)
-    ax.text(sys_x + SYS_W / 2, y_base + SYS_H - 0.28,
-            '"You grew up in\nthe Midwest..."',
-            ha='center', va='center', fontsize=BODY_SIZE, fontweight='bold',
-            multialignment='center')
+    # Biography text — single line + omitted sentences indicator
+    ax.text(sys_x + SYS_W / 2, y_base + SYS_H - 0.22,
+            '"You grew up in the Midwest..."',
+            ha='center', va='center', fontsize=SMALL_SIZE, fontweight='bold')
+    ax.text(sys_x + SYS_W / 2, y_base + SYS_H - 0.5,
+            '[...9 more sentences...]',
+            ha='center', va='center', fontsize=CAPTION_SIZE - 1,
+            color='#777', fontstyle='italic')
     # Coloured sentence sub-box at bottom of system prompt
-    sent_pad = 0.08
+    sent_pad = 0.06
     sent_w = SYS_W - 2 * sent_pad
     sent_x = sys_x + sent_pad
     sent_y = y_base + sent_pad
@@ -204,7 +207,7 @@ def _draw_row(ax, y_base, version_label, version_color,
 # Version A — pro-interest (green sentence)
 _draw_row(ax, y_base=7.5,
           version_label='Version A', version_color=GREEN_EDGE,
-          sentence_text='"...love discussing Shakespeare\'s plays."',
+          sentence_text='"...love discussing Shakespeare."',
           sentence_color=GREEN_BG, sentence_edge=GREEN_EDGE,
           score_value=0.75, baseline_value=0.3)
 
@@ -218,7 +221,7 @@ _draw_row(ax, y_base=4.0,
 # Version C — anti-interest (red sentence)
 _draw_row(ax, y_base=0.5,
           version_label='Version C', version_color=RED_EDGE,
-          sentence_text='"...find Shakespeare tedious and boring."',
+          sentence_text='"...find Shakespeare tedious."',
           sentence_color=RED_BG, sentence_edge=RED_EDGE,
           score_value=-0.1, baseline_value=0.3)
 
