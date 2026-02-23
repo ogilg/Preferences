@@ -1,0 +1,10525 @@
+{
+  "direction_type": "random",
+  "seed": 100,
+  "layer": 31,
+  "activation_dim": 5376,
+  "coefficients": [
+    -2641.0,
+    2641.0
+  ],
+  "n_resamples": 10,
+  "results": [
+    {
+      "pair_id": "pair_0002",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0002",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "b",
+        "parse_fail",
+        "b",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0002",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "b",
+        "a",
+        "b",
+        "parse_fail",
+        "a",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0002",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "b",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0002",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "a",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0002",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0002",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0002",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "b",
+        "a",
+        "parse_fail",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "b",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "parse_fail",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0004",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0005",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0005",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0005",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0005",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "b",
+        "parse_fail",
+        "parse_fail",
+        "b",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "parse_fail",
+        "b",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0006",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0034",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0037",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0042",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0045",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "a",
+        "b",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "parse_fail",
+        "a",
+        "a",
+        "a",
+        "parse_fail",
+        "b",
+        "a",
+        "b",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "b",
+        "parse_fail",
+        "parse_fail",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0055",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "parse_fail",
+        "parse_fail",
+        "a",
+        "a",
+        "parse_fail",
+        "a",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail",
+        "parse_fail"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0061",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0068",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0069",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0078",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0079",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0080",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0089",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0094",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0101",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0103",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0110",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0111",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0115",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0118",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0120",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0126",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0128",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0129",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0132",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0133",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0134",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0143",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0144",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0146",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0155",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0155",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0155",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0155",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0157",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0158",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0161",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0164",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0166",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0171",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0174",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0174",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0174",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0174",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0181",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0182",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0186",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0186",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0186",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0186",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0189",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0190",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0199",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0200",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0204",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0205",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0205",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0205",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0205",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0207",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0216",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0216",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0216",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0216",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0229",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0231",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0232",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0233",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0236",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0243",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0244",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0246",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0250",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0255",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0259",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0261",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0265",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0266",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0268",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0269",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0270",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0270",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0270",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0270",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0276",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0279",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0282",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0283",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0288",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0290",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0290",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0290",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0290",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0295",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "original",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "original",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "b",
+        "a",
+        "b",
+        "a",
+        "a",
+        "b",
+        "b",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": -2641.0,
+      "responses": [
+        "a",
+        "a",
+        "b",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "swapped",
+      "condition": "boost_a",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "a",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a",
+        "a",
+        "a"
+      ]
+    },
+    {
+      "pair_id": "pair_0298",
+      "ordering": "swapped",
+      "condition": "diff_ab",
+      "coefficient": 2641.0,
+      "responses": [
+        "b",
+        "b",
+        "b",
+        "b",
+        "b",
+        "a",
+        "b",
+        "b",
+        "b",
+        "a"
+      ]
+    }
+  ]
+}

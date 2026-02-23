@@ -335,18 +335,39 @@ class HuggingFaceModel:
         max_new_tokens: int | None = None,
     ) -> str:
         """Generate with activation steering applied at specified layer."""
+        return self.generate_with_multi_layer_steering(
+            messages=messages,
+            layer_hooks=[(layer, steering_hook)],
+            temperature=temperature,
+            max_new_tokens=max_new_tokens,
+        )
+
+    @torch.inference_mode()
+    def generate_with_multi_layer_steering(
+        self,
+        messages: list[Message],
+        layer_hooks: list[tuple[int, SteeringHook]],
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+    ) -> str:
+        """Generate with activation steering applied simultaneously at multiple layers."""
         prompt = self._format_messages(messages, add_generation_prompt=True)
         input_ids = self._tokenize(prompt)
         prompt_len = input_ids.shape[1]
 
-        def hf_hook(module: torch.nn.Module, input: tuple, output: tuple | torch.Tensor) -> tuple | torch.Tensor:
-            hidden = output[0] if isinstance(output, tuple) else output
-            modified = steering_hook(hidden, prompt_len)
-            if isinstance(output, tuple):
-                return (modified,) + output[1:]
-            return modified
+        def make_hf_hook(hook: SteeringHook) -> Callable:
+            def hf_hook(module: torch.nn.Module, input: tuple, output: tuple | torch.Tensor) -> tuple | torch.Tensor:
+                hidden = output[0] if isinstance(output, tuple) else output
+                modified = hook(hidden, prompt_len)
+                if isinstance(output, tuple):
+                    return (modified,) + output[1:]
+                return modified
+            return hf_hook
 
-        handle = self._get_layer(layer).register_forward_hook(hf_hook)
+        handles = [
+            self._get_layer(layer).register_forward_hook(make_hf_hook(hook))
+            for layer, hook in layer_hooks
+        ]
         try:
             gen_kwargs = {
                 "max_new_tokens": max_new_tokens or self.max_new_tokens,
@@ -357,7 +378,8 @@ class HuggingFaceModel:
                 gen_kwargs["temperature"] = temperature
             output_ids = self.model.generate(input_ids, **gen_kwargs)
         finally:
-            handle.remove()
+            for handle in handles:
+                handle.remove()
 
         new_tokens = output_ids[0, prompt_len:]
         return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()

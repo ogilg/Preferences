@@ -1,0 +1,46 @@
+{
+  "screening": {
+    "n_pairs": 300,
+    "n_borderline": 77,
+    "borderline_rate": 0.25666666666666665,
+    "borderline_rate_by_bin": {
+      "[-10,-8)": 0.13333333333333333,
+      "[-2,0)": 0.3333333333333333,
+      "[-4,-2)": 0.23333333333333334,
+      "[-6,-4)": 0.23333333333333334,
+      "[-8,-6)": 0.16666666666666666,
+      "[0,2)": 0.26666666666666666,
+      "[2,4)": 0.3333333333333333,
+      "[4,6)": 0.2,
+      "[6,8)": 0.36666666666666664,
+      "[8,10)": 0.3
+    }
+  },
+  "phase1": {
+    "control_p_a": 0.5955,
+    "control_n": 2126,
+    "diff_ab_at_2641": {
+      "mean_p_steered": 0.685,
+      "shift_vs_control_pp": 9.0,
+      "per_pair_mean_shift_pp": 9.2,
+      "per_pair_pct_positive": 63.6,
+      "ttest_t": 3.672,
+      "ttest_p": 0.0004,
+      "n_pairs": 77
+    },
+    "boost_a_at_2641": {
+      "mean_p_steered": 0.682,
+      "shift_vs_control_pp": 8.6
+    },
+    "boost_a_at_5282": {
+      "mean_p_steered": 0.562,
+      "shift_vs_control_pp": -3.3,
+      "note": "reversal at max coefficient"
+    },
+    "boost_b_at_2641": {
+      "mean_p_steered": 0.560,
+      "shift_vs_p_b_control_pp": 15.6
+    },
+    "note": "Non-monotonic dose-response; suppress conditions paradoxically increase P(steered) at high magnitudes due to position bias"
+  }
+}
