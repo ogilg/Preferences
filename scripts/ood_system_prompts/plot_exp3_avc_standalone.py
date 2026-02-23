@@ -1,6 +1,6 @@
 """Standalone A vs C version-pair scatter for the LW post.
 
-Single panel with prompt table at top, target tasks highlighted.
+Single scatter panel with targeted tasks highlighted.
 
 Usage: python -m scripts.ood_system_prompts.plot_exp3_avc_standalone
 """
@@ -30,6 +30,7 @@ EXP3_TASK_TARGETS: dict[str, set[str]] = {
     "alpaca_3808": {"detective"},
     "alpaca_13255": {"haiku"},
     "stresstest_89_193_value1": {"haiku"},
+    "stresstest_68_582_neutral": {"evolution"},
     "alpaca_5529": {"pyramids"},
     "wildchat_35599": {"simpsons"},
     "stresstest_43_948_value2": {"wwii"},
@@ -109,43 +110,7 @@ def main():
     target_mask = np.array(all_is_target)
 
     # --- Plot ---
-    fig = plt.figure(figsize=(8, 8.5))
-    gs = fig.add_gridspec(2, 1, height_ratios=[0.3, 1], hspace=0.35)
-
-    # Table
-    ax_table = fig.add_subplot(gs[0])
-    ax_table.axis("off")
-    table_data = [
-        ["A (pro)", "You grew up in a mid-sized city in the Midwest...\n[8 sentences] ...You love discussing the plot structure of Shakespeare's plays."],
-        ["B (neutral)", "You grew up in a mid-sized city in the Midwest...\n[8 sentences] ...You love discussing the best hiking trails near your home."],
-        ["C (anti)", "You grew up in a mid-sized city in the Midwest...\n[8 sentences] ...You find discussing Shakespeare's plays painfully dull."],
-    ]
-    table = ax_table.table(
-        cellText=table_data,
-        colLabels=["Version", "System prompt (10 sentences, example: midwest × shakespeare)"],
-        loc="center",
-        cellLoc="left",
-        colWidths=[0.12, 0.88],
-    )
-    table.auto_set_font_size(False)
-    table.set_fontsize(9)
-    table.scale(1, 2.0)
-    for (row, col), cell in table.get_celld().items():
-        if row == 0:
-            cell.set_facecolor("#E8E8E8")
-            cell.set_text_props(fontweight="bold")
-        else:
-            cell.set_facecolor("white")
-        cell.set_edgecolor("#CCCCCC")
-
-    ax_table.text(
-        0.5, -0.15,
-        'Target task for shakespeare: "Describe the plot of Shakespeare\'s play, Romeo and Juliet."',
-        transform=ax_table.transAxes, fontsize=9, ha="center", style="italic", color="#555555",
-    )
-
-    # Scatter
-    ax = fig.add_subplot(gs[1])
+    fig, ax = plt.subplots(figsize=(8, 6))
 
     ax.scatter(
         beh_arr[~target_mask], probe_arr[~target_mask],
@@ -155,7 +120,7 @@ def main():
     ax.scatter(
         beh_arr[target_mask], probe_arr[target_mask],
         s=70, color="#e41a1c", marker="*", edgecolors="black", linewidths=0.3,
-        zorder=3, label="Target task",
+        zorder=3, label="Targeted task",
     )
 
     # Fit line
@@ -184,7 +149,7 @@ def main():
 
     stats_text = (
         f"r = {overall_r:.2f} (n={len(beh_arr)})\n"
-        f"Target sign correct: beh {beh_correct}/{n_target}, probe {probe_correct}/{n_target}\n"
+        f"Targeted sign correct: beh {beh_correct}/{n_target}, probe {probe_correct}/{n_target}\n"
         f"Specificity: beh {mean_beh_spec:.1f}×, probe {mean_probe_spec:.1f}×"
     )
     ax.text(

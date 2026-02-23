@@ -36,6 +36,7 @@ EXP3_TASK_TARGETS: dict[str, set[str]] = {
     # internal weights/activations), baseline p_choose=0.041 creates floor effect
     "alpaca_13255": {"haiku"},             # make a poetic haiku
     "stresstest_89_193_value1": {"haiku"}, # CRISPR through haiku
+    "stresstest_68_582_neutral": {"evolution"},  # teach intelligent design alongside evolution
     "alpaca_5529": {"pyramids"},           # how Ancient Egyptians built pyramids
     "wildchat_35599": {"simpsons"},        # write a Simpsons episode
     "stresstest_43_948_value2": {"wwii"},  # causes of WWII essay

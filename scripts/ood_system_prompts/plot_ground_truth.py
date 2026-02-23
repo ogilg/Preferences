@@ -71,7 +71,7 @@ def plot_overview_bars(gt: dict, ar: dict) -> None:
         x[r_on_mask] + width / 2,
         [v for v, m in zip(r_on_plot, r_on_mask) if m],
         width,
-        label="On-target pairs",
+        label="Targeted pairs",
         color="#2196F3",
         edgecolor="#1565C0",
         linewidth=0.8,
@@ -103,7 +103,7 @@ def plot_overview_bars(gt: dict, ar: dict) -> None:
         x[sign_on_mask] + width / 2,
         [v for v, m in zip(sign_on_plot, sign_on_mask) if m],
         width,
-        label="On-target pairs",
+        label="Targeted pairs",
         color="#4CAF50",
         edgecolor="#2E7D32",
         linewidth=0.8,
@@ -144,7 +144,7 @@ def plot_overview_bars(gt: dict, ar: dict) -> None:
     )
     ax.axhline(50, color="red", linewidth=1, linestyle="--", label="Chance (50%)")
     ax.set_ylabel("Sign agreement (%)")
-    ax.set_title("Expected-direction agreement\n(on-target pairs)", fontsize=11, fontweight="bold")
+    ax.set_title("Directional accuracy\n(targeted pairs)", fontsize=11, fontweight="bold")
     ax.set_xticks(gx)
     ax.set_xticklabels(gt_labels, fontsize=8)
     ax.set_ylim(0, 105)
@@ -179,11 +179,11 @@ def plot_per_experiment_results(gt: dict, ar: dict) -> None:
         gt_neg = per_point_gt < 0
 
         ax.scatter(beh[off_target], probe[off_target], alpha=0.4, s=15,
-                   color="#BDBDBD", edgecolors="none", label="Off-target", zorder=1)
+                   color="#BDBDBD", edgecolors="none", label="Other", zorder=1)
         ax.scatter(beh[gt_pos], probe[gt_pos], alpha=0.7, s=22,
-                   color="#4CAF50", edgecolors="none", label="GT +1", zorder=2)
+                   color="#4CAF50", edgecolors="none", label="Targeted (expected +)", zorder=2)
         ax.scatter(beh[gt_neg], probe[gt_neg], alpha=0.7, s=22,
-                   color="#E53935", edgecolors="none", label="GT −1", zorder=2)
+                   color="#E53935", edgecolors="none", label="Targeted (expected −)", zorder=2)
         ax.legend(fontsize=7, loc="lower right")
 
         # Fit line
@@ -203,18 +203,10 @@ def plot_per_experiment_results(gt: dict, ar: dict) -> None:
 
         # Stats text box
         stats_lines = [
-            f"Beh↔Probe r: {gt_data['beh_probe_r_all']:.2f} (all), {gt_data['beh_probe_r_on_target']:.2f} (on-target)",
-            f"Sign agree: {gt_data['beh_probe_sign_all']:.0%} (all), {gt_data['beh_probe_sign_on_target']:.0%} (on-target)",
+            f"Beh↔Probe r: {gt_data['beh_probe_r_all']:.2f} (all), {gt_data['beh_probe_r_on_target']:.2f} (targeted)",
+            f"Sign agree: {gt_data['beh_probe_sign_all']:.0%} (all), {gt_data['beh_probe_sign_on_target']:.0%} (targeted)",
+            f"Directional: {gt_data['behavioral_sign_agreement']:.0%} beh, {gt_data['probe_sign_agreement']:.0%} probe (n={gt_data['n_on_target']})",
         ]
-        if not np.isnan(gt_data.get("probe_gt_r_on_target", float("nan"))):
-            stats_lines.append(
-                f"GT sign: {gt_data['behavioral_sign_agreement']:.0%} beh, {gt_data['probe_sign_agreement']:.0%} probe"
-            )
-        else:
-            n_on = gt_data["n_on_target"]
-            stats_lines.append(
-                f"GT sign: {gt_data['behavioral_sign_agreement']:.0%} beh, {gt_data['probe_sign_agreement']:.0%} probe (n={n_on})"
-            )
 
         stats_text = "\n".join(stats_lines)
         ax.text(
@@ -343,8 +335,18 @@ def _recompute_experiment(key: str) -> tuple[np.ndarray, np.ndarray, np.ndarray,
     return beh, probe, labels, per_point_gt
 
 
+def _sign_agreement_filtered(a: np.ndarray, b: np.ndarray, beh: np.ndarray, probe: np.ndarray) -> float:
+    """Sign agreement between a and b, excluding pairs where |beh| or |probe| is near zero."""
+    beh_thresh = 0.05
+    probe_thresh = np.median(np.abs(probe)) / 10
+    keep = (np.abs(beh) >= beh_thresh) & (np.abs(probe) >= probe_thresh)
+    if keep.sum() == 0:
+        return float("nan")
+    return float(np.mean(np.sign(a[keep]) == np.sign(b[keep])) * 100)
+
+
 def plot_individual_experiments(gt: dict, ar: dict) -> None:
-    """Per-experiment figure: scatter + Pearson r bars + sign agreement bars."""
+    """Per-experiment figure: scatter + beh↔probe bars + sign agreement vs expected."""
     full_results = json.load(open(RESULTS_DIR / "analysis_results_full.json"))
 
     exp_configs = [
@@ -358,11 +360,11 @@ def plot_individual_experiments(gt: dict, ar: dict) -> None:
 
     for key, title in exp_configs:
         has_gt = key in gt
-        has_gt_r = has_gt and not np.isnan(gt[key].get("beh_gt_r_on_target", float("nan")))
 
         if has_gt:
-            fig, (ax_scatter, ax_r, ax_sign) = plt.subplots(1, 3, figsize=(16, 5),
-                                                              gridspec_kw={"width_ratios": [1.2, 1, 1]})
+            fig, (ax_scatter, ax_bp, ax_expected) = plt.subplots(
+                1, 3, figsize=(18, 5), gridspec_kw={"width_ratios": [1.4, 1, 1]}
+            )
         else:
             fig, ax_scatter = plt.subplots(figsize=(7, 5))
 
@@ -374,11 +376,11 @@ def plot_individual_experiments(gt: dict, ar: dict) -> None:
             gt_neg = per_point_gt < 0
 
             ax_scatter.scatter(beh[off_target], probe[off_target], alpha=0.4, s=15,
-                               color="#BDBDBD", edgecolors="none", label="Off-target", zorder=1)
+                               color="#BDBDBD", edgecolors="none", label="Other", zorder=1)
             ax_scatter.scatter(beh[gt_pos], probe[gt_pos], alpha=0.7, s=22,
-                               color="#4CAF50", edgecolors="none", label="GT +1", zorder=2)
+                               color="#4CAF50", edgecolors="none", label="Targeted (expected +)", zorder=2)
             ax_scatter.scatter(beh[gt_neg], probe[gt_neg], alpha=0.7, s=22,
-                               color="#E53935", edgecolors="none", label="GT −1", zorder=2)
+                               color="#E53935", edgecolors="none", label="Targeted (expected −)", zorder=2)
             ax_scatter.legend(fontsize=8, loc="lower right")
         else:
             res = full_results[key]["L31"]
@@ -398,29 +400,25 @@ def plot_individual_experiments(gt: dict, ar: dict) -> None:
         ax_scatter.set_ylabel("Probe delta", fontsize=10)
         ax_scatter.set_title(f"{title}", fontsize=11, fontweight="bold")
 
-        # Stats text
         if has_gt:
-            gd = gt[key]
-            stat_lines = [
-                f"r = {gd['beh_probe_r_all']:.2f} (all, n={gd['n']})",
-                f"r = {gd['beh_probe_r_on_target']:.2f} (on-target, n={gd['n_on_target']})",
-            ]
+            # --- Panel 2: Beh ↔ Probe (Pearson r + sign agreement, all & targeted) ---
+            targeted = per_point_gt != 0
+            beh_t = beh[targeted]
+            probe_t = probe[targeted]
+
+            r_all = scipy_stats.pearsonr(beh, probe)[0]
+            r_targeted = scipy_stats.pearsonr(beh_t, probe_t)[0]
+            sign_all = _sign_agreement_filtered(beh, probe, beh, probe)
+            sign_targeted = _sign_agreement_filtered(beh_t, probe_t, beh_t, probe_t)
+
+            _plot_beh_probe_bars(ax_bp, r_all, r_targeted, sign_all, sign_targeted,
+                                int(len(beh)), int(targeted.sum()))
+
+            # --- Panel 3: Sign agreement vs expected (targeted only) ---
+            gt_t = per_point_gt[targeted]
+            _plot_expected_bars(ax_expected, beh_t, probe_t, gt_t)
         else:
-            r_val = ar[key]["L31"]["pearson_r"]
-            n_val = ar[key]["L31"]["n"]
-            stat_lines = [f"r = {r_val:.2f} (n={n_val})"]
-
-        ax_scatter.text(
-            0.05, 0.95, "\n".join(stat_lines),
-            transform=ax_scatter.transAxes, fontsize=9, verticalalignment="top",
-            bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.85, edgecolor="grey"),
-        )
-
-        # --- Bar charts (only for experiments with ground truth) ---
-        if has_gt:
-            gd = gt[key]
-            _plot_pearson_bars(ax_r, gd, has_gt_r)
-            _plot_sign_bars(ax_sign, gd, has_gt_r)
+            pass  # no extra panels for exp2
 
         fig.tight_layout()
         out = ASSETS_DIR / f"plot_022126_{key}_detail.png"
@@ -429,67 +427,50 @@ def plot_individual_experiments(gt: dict, ar: dict) -> None:
         print(f"Saved {out}")
 
 
-def _plot_pearson_bars(ax: plt.Axes, gd: dict, has_gt_r: bool) -> None:
-    """Bar chart of Pearson r: all-pairs vs on-target."""
-    labels = ["Beh↔Probe"]
-    all_vals = [gd["beh_probe_r_all"]]
-    on_vals = [gd["beh_probe_r_on_target"]]
-
-    if has_gt_r:
-        labels += ["Beh↔GT", "Probe↔GT"]
-        all_vals += [gd["beh_gt_r_all"], gd["probe_gt_r_all"]]
-        on_vals += [gd["beh_gt_r_on_target"], gd["probe_gt_r_on_target"]]
-
-    x = np.arange(len(labels))
+def _plot_beh_probe_bars(
+    ax: plt.Axes, r_all: float, r_targeted: float,
+    sign_all: float, sign_targeted: float,
+    n_all: int, n_targeted: int,
+) -> None:
+    """Panel 2: Pearson r and sign agreement between beh and probe, all vs targeted."""
+    x = np.arange(2)
     width = 0.35
 
-    ax.bar(x - width / 2, all_vals, width, label="All pairs", color="#90CAF9", edgecolor="#1565C0", linewidth=0.8)
-    ax.bar(x + width / 2, on_vals, width, label="On-target", color="#2196F3", edgecolor="#1565C0", linewidth=0.8)
+    bars_all = ax.bar(x - width / 2, [r_all, sign_all / 100], width,
+                      label=f"All (n={n_all})", color="#90CAF9", edgecolor="#1565C0", linewidth=0.8)
+    bars_tgt = ax.bar(x + width / 2, [r_targeted, sign_targeted / 100], width,
+                      label=f"Targeted (n={n_targeted})", color="#2196F3", edgecolor="#1565C0", linewidth=0.8)
 
-    for bars in ax.containers:
+    for bars in [bars_all, bars_tgt]:
         ax.bar_label(bars, fmt="%.2f", fontsize=8, padding=2)
 
-    ax.set_ylabel("Pearson r")
-    ax.set_title("Pearson r", fontsize=11, fontweight="bold")
+    ax.set_ylabel("Value")
+    ax.set_title("Beh ↔ Probe", fontsize=11, fontweight="bold")
     ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=9)
-    ax.set_ylim(0, 1.1)
+    ax.set_xticklabels(["Pearson r", "Sign\nagreement"], fontsize=9)
+    ax.set_ylim(0, 1.15)
+    ax.axhline(0.5, color="red", linewidth=0.8, linestyle="--", alpha=0.3)
     ax.legend(fontsize=8, loc="upper right")
 
 
-def _plot_sign_bars(ax: plt.Axes, gd: dict, has_gt_r: bool) -> None:
-    """Bar chart of sign agreement %: all-pairs vs on-target."""
-    labels = ["Beh↔Probe"]
-    all_vals = [gd["beh_probe_sign_all"] * 100]
-    on_vals = [gd["beh_probe_sign_on_target"] * 100]
+def _plot_expected_bars(ax: plt.Axes, beh: np.ndarray, probe: np.ndarray, gt: np.ndarray) -> None:
+    """Panel 3: Sign agreement of beh and probe vs expected direction (targeted pairs only)."""
+    n = len(gt)
+    beh_vs_expected = float(np.mean(np.sign(beh) == np.sign(gt)) * 100)
+    probe_vs_expected = float(np.mean(np.sign(probe) == np.sign(gt)) * 100)
 
-    # GT sign is only defined on-target
-    labels += ["Beh↔GT", "Probe↔GT"]
-    all_vals += [float("nan"), float("nan")]
-    on_vals += [gd["behavioral_sign_agreement"] * 100, gd["probe_sign_agreement"] * 100]
+    labels = ["Beh vs\nexpected", "Probe vs\nexpected"]
+    vals = [beh_vs_expected, probe_vs_expected]
+    colors = ["#4CAF50", "#FF9800"]
+    edge_colors = ["#2E7D32", "#E65100"]
 
     x = np.arange(len(labels))
-    width = 0.35
-
-    # All-pairs (only where available)
-    all_mask = [not np.isnan(v) for v in all_vals]
-    if any(all_mask):
-        all_x = x[all_mask]
-        all_v = [v for v, m in zip(all_vals, all_mask) if m]
-        ax.bar(all_x - width / 2, all_v, width, label="All pairs", color="#A5D6A7", edgecolor="#2E7D32", linewidth=0.8)
-
-    # On-target
-    on_mask = [not np.isnan(v) for v in on_vals]
-    on_x = x[on_mask]
-    on_v = [v for v, m in zip(on_vals, on_mask) if m]
-    ax.bar(on_x + width / 2, on_v, width, label="On-target", color="#4CAF50", edgecolor="#2E7D32", linewidth=0.8)
-
-    for bars in ax.containers:
-        ax.bar_label(bars, fmt="%.0f%%", fontsize=8, padding=2)
+    bars = ax.bar(x, vals, 0.45, color=colors, edgecolor=edge_colors, linewidth=0.8)
+    ax.bar_label(bars, fmt="%.0f%%", fontsize=9, padding=2)
 
     ax.axhline(50, color="red", linewidth=0.8, linestyle="--", alpha=0.5, label="Chance")
     ax.set_ylabel("Sign agreement (%)")
-    ax.set_title("Sign agreement", fontsize=11, fontweight="bold")
+    ax.set_title(f"Sign agreement vs expected\n(targeted pairs, n={n})", fontsize=11, fontweight="bold")
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=9)
     ax.set_ylim(0, 115)
