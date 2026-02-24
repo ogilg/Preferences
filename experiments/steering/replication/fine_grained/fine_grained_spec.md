@@ -110,34 +110,41 @@ Reuse the existing `scripts/replication/run_experiment.py` infrastructure. Key c
 - New coefficient grid (parameterized via config, not hardcoded)
 - Pair selection from active learning measurement data (pre-screened borderline)
 - Add L49 and L55 to the layer configs
-- Drop suppress_a/b/diff_ba conditions
+- Drop suppress_a/b/diff_ba conditions (use `conditions=["boost_a", "boost_b", "diff_ab"]` in `run_steering_batch`)
 - Coef=0 serves as control (no separate control sweep)
 
-### Batched sampling
+### Batched sampling (implemented)
 
-Use `generate_n()` / `generate_with_steering_n()` / `generate_with_multi_layer_steering_n()` instead of serial resample loops. These methods use `num_return_sequences` to generate all resamples in a single forward pass, sharing the prefill computation across samples. For 10 resamples with 8-token completions, this eliminates 9 redundant prefills per trial cell.
+All resample loops in `run_experiment.py` now use batched generation:
 
-Replace the serial pattern:
-```python
-responses = []
-for _ in range(n_resamples):
-    resp = model.generate_with_steering(messages=messages, layer=layer, steering_hook=hook, temperature=TEMPERATURE)
-    responses.append(parse_response(resp))
-```
+- `generate_n()` for control (coef=0) conditions
+- `generate_with_steering_n()` for single-layer steered conditions
+- `generate_with_multi_layer_steering_n()` for multi-layer conditions
 
-With:
-```python
-raw = model.generate_with_steering_n(messages=messages, layer=layer, steering_hook=hook, n=n_resamples, temperature=TEMPERATURE)
-responses = [parse_response(r) for r in raw]
-```
-
-Same for `generate()` → `generate_n()` (coef=0 case) and `generate_with_multi_layer_steering()` → `generate_with_multi_layer_steering_n()`.
+These use `num_return_sequences` to generate all resamples in a single forward pass, sharing prefill. For 10 resamples with 8-token completions, this eliminates 9 redundant prefills per trial cell.
 
 Before running the experiment, validate the batched methods work on this GPU:
 ```bash
 pytest tests/test_steering_e2e.py -v -s -k "TestGenerateN"
 ```
 
-### Checkpointing
+### JSONL checkpointing (implemented)
 
-Append results to a JSONL file after each (pair, ordering) block rather than accumulating in memory and saving at the end. This way a pod reboot or crash only loses the current pair, not hours of work. Each phase writes to `results/phase{N}_results.jsonl`. On resume, skip pairs already in the JSONL.
+Each phase appends results to a JSONL file after each condition completes, so crashes lose at most the current condition (not hours of work). JSONL files:
+
+- `screening.jsonl` — one record per (pair, ordering)
+- `steering_phase1.jsonl` — one record per (pair, ordering, condition, coefficient)
+- `steering_phase2.jsonl` — same
+- `steering_phase3.jsonl` — same
+
+**Resume logic:** On startup, each function loads existing JSONL records and builds:
+1. A set of `(pair_id, ordering, condition, coefficient)` tuples for per-condition skip checks
+2. A `Counter` of `(pair_id, ordering)` → count for O(1) block-level skip (skips entire blocks when all conditions are present)
+
+At the end of each phase, the JSONL is loaded and written as the final summary JSON for backwards compatibility with analysis scripts.
+
+### `run_steering_batch` interface
+
+The main steering function accepts:
+- `conditions: list[str]` — which steering conditions to run (default: all 6). Phase 2 uses `["boost_a"]` only.
+- `extra_fields_fn: callable` — called with each pair dict to add extra fields (e.g. `delta_mu`, `delta_mu_bin`) to every JSONL record for that pair.
