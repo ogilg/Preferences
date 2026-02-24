@@ -232,6 +232,8 @@ The fine-grained grid resolves what the replication's 4-point scan could not: th
 
 4. **boost_a's anomalous behavior at negative coefs.** The fact that applying the *negative* probe direction (which should suppress task A) actually *increases* P(a) at large magnitudes is a key anomaly. Hypothesis: large perturbations in any direction inflate position-A bias by disrupting the model's ability to compare the two tasks, defaulting to a position heuristic. diff_ab's symmetric structure (simultaneously applying +direction to A and -direction to B) cancels these noise effects, yielding a cleaner negative-side response.
 
+5. **Reconciling with the replication's +9.5pp at +5% norm.** Our overall +4.6pp at +5% norm appears weaker than the replication's +9.5pp. But this comparison is unfair: the replication screened pairs within the session (ctrl_pa ∈ (0,1)); we did not. Among our pairs that happen to be in-session borderline (ctrl_pa strictly between 0 and 1, which is only 13.4% = 77 of 576 pair×orderings), the effect at +5% norm is +13.5pp — larger than the replication's +9.5pp. The 87% of pairs with ctrl_pa = 0 or 1 show near-zero effects that dilute the average. **Conclusion: the replication result and our result are quantitatively consistent once pair selection (in-session borderline vs pre-selected) is accounted for.** The effect on genuinely borderline pairs is ~10-14pp at +5% norm.
+
 ---
 
 ## Infrastructure
