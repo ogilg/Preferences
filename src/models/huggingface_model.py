@@ -150,6 +150,30 @@ class HuggingFaceModel:
     # Public API
     # -------------------------------------------------------------------------
 
+    def _decode_completions(
+        self, output_ids: torch.Tensor, prompt_len: int, n: int,
+    ) -> list[str]:
+        return [
+            self.tokenizer.decode(output_ids[i, prompt_len:], skip_special_tokens=True).strip()
+            for i in range(n)
+        ]
+
+    def _build_gen_kwargs(
+        self,
+        temperature: float,
+        max_new_tokens: int | None,
+        num_return_sequences: int = 1,
+    ) -> dict:
+        gen_kwargs = {
+            "max_new_tokens": max_new_tokens or self.max_new_tokens,
+            "do_sample": temperature > 0,
+            "pad_token_id": self.tokenizer.pad_token_id,
+            "num_return_sequences": num_return_sequences,
+        }
+        if temperature > 0:
+            gen_kwargs["temperature"] = temperature
+        return gen_kwargs
+
     @torch.inference_mode()
     def generate(
         self,
@@ -160,18 +184,27 @@ class HuggingFaceModel:
         prompt = self._format_messages(messages, add_generation_prompt=True)
         input_ids = self._tokenize(prompt)
         prompt_len = input_ids.shape[1]
+        output_ids = self.model.generate(
+            input_ids, **self._build_gen_kwargs(temperature, max_new_tokens),
+        )
+        return self._decode_completions(output_ids, prompt_len, 1)[0]
 
-        gen_kwargs = {
-            "max_new_tokens": max_new_tokens or self.max_new_tokens,
-            "do_sample": temperature > 0,
-            "pad_token_id": self.tokenizer.pad_token_id,
-        }
-        if temperature > 0:
-            gen_kwargs["temperature"] = temperature
-
-        output_ids = self.model.generate(input_ids, **gen_kwargs)
-        new_tokens = output_ids[0, prompt_len:]
-        return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+    @torch.inference_mode()
+    def generate_n(
+        self,
+        messages: list[Message],
+        n: int,
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+    ) -> list[str]:
+        """Generate n completions in a single forward pass (shared prefill)."""
+        prompt = self._format_messages(messages, add_generation_prompt=True)
+        input_ids = self._tokenize(prompt)
+        prompt_len = input_ids.shape[1]
+        output_ids = self.model.generate(
+            input_ids, **self._build_gen_kwargs(temperature, max_new_tokens, n),
+        )
+        return self._decode_completions(output_ids, prompt_len, n)
 
     @torch.inference_mode()
     def get_activations(
@@ -335,11 +368,31 @@ class HuggingFaceModel:
         max_new_tokens: int | None = None,
     ) -> str:
         """Generate with activation steering applied at specified layer."""
-        return self.generate_with_multi_layer_steering(
+        return self._generate_steered(
             messages=messages,
             layer_hooks=[(layer, steering_hook)],
             temperature=temperature,
             max_new_tokens=max_new_tokens,
+            num_return_sequences=1,
+        )[0]
+
+    @torch.inference_mode()
+    def generate_with_steering_n(
+        self,
+        messages: list[Message],
+        layer: int,
+        steering_hook: SteeringHook,
+        n: int,
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+    ) -> list[str]:
+        """Generate n completions with steering in a single forward pass."""
+        return self._generate_steered(
+            messages=messages,
+            layer_hooks=[(layer, steering_hook)],
+            temperature=temperature,
+            max_new_tokens=max_new_tokens,
+            num_return_sequences=n,
         )
 
     @torch.inference_mode()
@@ -351,6 +404,40 @@ class HuggingFaceModel:
         max_new_tokens: int | None = None,
     ) -> str:
         """Generate with activation steering applied simultaneously at multiple layers."""
+        return self._generate_steered(
+            messages=messages,
+            layer_hooks=layer_hooks,
+            temperature=temperature,
+            max_new_tokens=max_new_tokens,
+            num_return_sequences=1,
+        )[0]
+
+    @torch.inference_mode()
+    def generate_with_multi_layer_steering_n(
+        self,
+        messages: list[Message],
+        layer_hooks: list[tuple[int, SteeringHook]],
+        n: int,
+        temperature: float = 1.0,
+        max_new_tokens: int | None = None,
+    ) -> list[str]:
+        """Generate n completions with multi-layer steering in a single forward pass."""
+        return self._generate_steered(
+            messages=messages,
+            layer_hooks=layer_hooks,
+            temperature=temperature,
+            max_new_tokens=max_new_tokens,
+            num_return_sequences=n,
+        )
+
+    def _generate_steered(
+        self,
+        messages: list[Message],
+        layer_hooks: list[tuple[int, SteeringHook]],
+        temperature: float,
+        max_new_tokens: int | None,
+        num_return_sequences: int,
+    ) -> list[str]:
         prompt = self._format_messages(messages, add_generation_prompt=True)
         input_ids = self._tokenize(prompt)
         prompt_len = input_ids.shape[1]
@@ -369,17 +456,12 @@ class HuggingFaceModel:
             for layer, hook in layer_hooks
         ]
         try:
-            gen_kwargs = {
-                "max_new_tokens": max_new_tokens or self.max_new_tokens,
-                "do_sample": temperature > 0,
-                "pad_token_id": self.tokenizer.pad_token_id,
-            }
-            if temperature > 0:
-                gen_kwargs["temperature"] = temperature
-            output_ids = self.model.generate(input_ids, **gen_kwargs)
+            output_ids = self.model.generate(
+                input_ids,
+                **self._build_gen_kwargs(temperature, max_new_tokens, num_return_sequences),
+            )
         finally:
             for handle in handles:
                 handle.remove()
 
-        new_tokens = output_ids[0, prompt_len:]
-        return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+        return self._decode_completions(output_ids, prompt_len, num_return_sequences)

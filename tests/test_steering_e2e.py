@@ -5,6 +5,7 @@ Requires GPU and ~3GB VRAM (llama-3.2-1b).
 """
 
 import gc
+import time
 
 import numpy as np
 import pytest
@@ -242,3 +243,102 @@ class TestContrastiveMiniExperiment:
         print(f"Steered:  {steered[:80]!r}")
 
         assert steered != baseline, "Differential hook with large coef should change output"
+
+
+class TestGenerateN:
+    """Test batched generation via generate_n / generate_with_steering_n."""
+
+    def test_generate_n_returns_list(self, model):
+        results = model.generate_n(SIMPLE_PROMPT, n=5, temperature=1.0)
+        assert isinstance(results, list)
+        assert len(results) == 5
+        assert all(isinstance(r, str) for r in results)
+
+    def test_generate_still_returns_str(self, model):
+        result = model.generate(SIMPLE_PROMPT, temperature=0)
+        assert isinstance(result, str)
+
+    def test_generate_with_steering_n_returns_list(self, model):
+        tensor = torch.tensor(DIRECTION * 3000, dtype=torch.bfloat16, device="cuda")
+        hook = all_tokens_steering(tensor)
+        results = model.generate_with_steering_n(
+            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=hook,
+            n=5, temperature=1.0,
+        )
+        assert isinstance(results, list)
+        assert len(results) == 5
+
+    def test_client_generate_n(self, steered_client):
+        client = steered_client.with_coefficient(3000.0)
+        results = client.generate_n(SIMPLE_PROMPT, n=5, temperature=1.0)
+        assert isinstance(results, list)
+        assert len(results) == 5
+
+    def test_client_generate_with_hook_n(self, steered_client):
+        tensor = torch.tensor(DIRECTION * 3000, dtype=torch.bfloat16, device="cuda")
+        hook = all_tokens_steering(tensor)
+        results = steered_client.generate_with_hook_n(
+            SIMPLE_PROMPT, hook, n=5, temperature=1.0,
+        )
+        assert isinstance(results, list)
+        assert len(results) == 5
+
+    def test_batched_has_variation(self, model):
+        results = model.generate_n(SIMPLE_PROMPT, n=10, temperature=1.0)
+        unique = set(results)
+        assert len(unique) > 1, (
+            f"10 samples at temperature=1.0 should show variation, got all identical: {results[0]!r}"
+        )
+
+    def test_steered_batched_has_variation(self, model):
+        tensor = torch.tensor(DIRECTION * 1000, dtype=torch.bfloat16, device="cuda")
+        hook = all_tokens_steering(tensor)
+        results = model.generate_with_steering_n(
+            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=hook,
+            n=10, temperature=1.0,
+        )
+        unique = set(results)
+        assert len(unique) > 1, (
+            f"10 steered samples at temperature=1.0 should show variation, got all identical: {results[0]!r}"
+        )
+
+    def test_batched_faster_than_serial(self, model):
+        n = 10
+        messages = [{"role": "user", "content": "Tell me a short story about a cat."}]
+
+        t0 = time.perf_counter()
+        for _ in range(n):
+            model.generate(messages, temperature=1.0)
+        serial_time = time.perf_counter() - t0
+
+        t0 = time.perf_counter()
+        model.generate_n(messages, n=n, temperature=1.0)
+        batched_time = time.perf_counter() - t0
+
+        speedup = serial_time / batched_time
+        print(f"\n--- Batch speedup: {speedup:.1f}x (serial={serial_time:.2f}s, batched={batched_time:.2f}s)")
+        assert speedup > 1.5, f"Expected >1.5x speedup, got {speedup:.1f}x"
+
+    def test_steered_batched_faster_than_serial(self, model):
+        n = 10
+        messages = [{"role": "user", "content": "Tell me a short story about a cat."}]
+        tensor = torch.tensor(DIRECTION * 1000, dtype=torch.bfloat16, device="cuda")
+        hook = all_tokens_steering(tensor)
+
+        t0 = time.perf_counter()
+        for _ in range(n):
+            model.generate_with_steering(
+                messages, layer=STEER_LAYER, steering_hook=hook, temperature=1.0,
+            )
+        serial_time = time.perf_counter() - t0
+
+        t0 = time.perf_counter()
+        model.generate_with_steering_n(
+            messages, layer=STEER_LAYER, steering_hook=hook,
+            n=n, temperature=1.0,
+        )
+        batched_time = time.perf_counter() - t0
+
+        speedup = serial_time / batched_time
+        print(f"\n--- Steered batch speedup: {speedup:.1f}x (serial={serial_time:.2f}s, batched={batched_time:.2f}s)")
+        assert speedup > 1.5, f"Expected >1.5x speedup, got {speedup:.1f}x"

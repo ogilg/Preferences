@@ -66,6 +66,18 @@ class SteeredHFClient:
             temperature=temperature,
         )
 
+    def generate_with_hook_n(
+        self, messages: list, hook: SteeringHook, n: int, temperature: float = 1.0
+    ) -> list[str]:
+        """Generate n completions with a caller-supplied hook (shared prefill)."""
+        return self.hf_model.generate_with_steering_n(
+            messages=messages,
+            layer=self.layer,
+            steering_hook=hook,
+            n=n,
+            temperature=temperature,
+        )
+
     def generate(self, messages, temperature=1.0) -> str:
         if self.coefficient == 0:
             return self.hf_model.generate(messages, temperature=temperature)
@@ -73,6 +85,18 @@ class SteeredHFClient:
             messages=messages,
             layer=self.layer,
             steering_hook=self._make_hook(),
+            temperature=temperature,
+        )
+
+    def generate_n(self, messages, n: int, temperature: float = 1.0) -> list[str]:
+        """Generate n completions in a single forward pass (shared prefill)."""
+        if self.coefficient == 0:
+            return self.hf_model.generate_n(messages, n=n, temperature=temperature)
+        return self.hf_model.generate_with_steering_n(
+            messages=messages,
+            layer=self.layer,
+            steering_hook=self._make_hook(),
+            n=n,
             temperature=temperature,
         )
 
