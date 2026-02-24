@@ -21,10 +21,10 @@ This experiment replicates the position-selective steering result from the origi
 | Single-task steering shift (boost_a, coef=+2641) | ~32pp | **+8.6pp** |
 | Differential steering shift (diff_ab, coef=+2641) | ~51pp | **+9.0pp** (t=3.67, p=4×10⁻⁴) |
 | Position-selective effect present | Yes | Yes (weaker; see below) |
-| Phase 2: utility-bin analysis | — | Decisive pairs: aggregate +3.8pp (small |Δmu|), per-pair non-significant (p>0.10 all terciles) |
+| Phase 2: utility-bin analysis | — | Decisive pairs: aggregate +3.8pp (small \|Δmu\|), per-pair non-significant (p>0.10 all terciles) |
 | Phase 3: multi-layer steering | — | All conditions significant; layer-split wins numerically (+13.8pp, +13.0pp vs +9.5pp L31-only); no multi-layer condition significantly exceeds L31-only (all p>0.16; MDE≈10pp); split-budget conditions robust at max coef where L31-only reverses (−2.5pp) |
 
-**Note on apparent magnitude discrepancy:** The ~9pp vs ~51pp gap partly reflects methodological differences. The original used +3000 coefficient (10% activation norm), while +2641 here is only 5% norm. Interpolating the original's results to the +1500 coefficient (5% norm) gives ~17pp for differential — so 9pp represents a ~1.9× weakening, not a ~5× weakening. Additionally, the permissive (0,1) borderline threshold includes partially-decided pairs (e.g., 9/10 → 'a') that are inherently harder to steer.
+**Note on apparent magnitude discrepancy:** The ~9pp vs ~51pp gap is larger than can be explained by coefficient differences alone. Both experiments use the same activations file (same model, same norms): the original's +3000 = 5.7% of L31 mean norm, while this replication's +2641 = 5.0% — roughly comparable perturbation magnitudes. The remaining gap likely reflects the more permissive (0,1) borderline threshold, which includes partially-decided pairs (e.g., 9/10 → 'a') that are inherently harder to steer, and possible differences in probe steering geometry despite higher R².
 
 ---
 
@@ -41,7 +41,7 @@ This experiment replicates the position-selective steering result from the origi
 | L49 | ridge_L49 | ~80,070 | [-8007, -4003, 0, 4003, 8007] |
 | L55 | ridge_L55 | ~93,580 | [-9358, -4679, 0, 4679, 9358] |
 
-New L31 coefficients are **1.76× larger** than original ±3000, reflecting higher activation norms in the 10k dataset.
+The activation norms are identical to the original experiment (same model and activations file). The original used manually chosen ±1500/±3000 (≈2.8%/5.7% of L31 mean norm); this replication uses calibrated ±2641/±5282 (5%/10%). At L31, the replication's moderate coefficient (+2641) is **smaller** than the original's +3000; the max coefficient (+5282) is **1.76× the original's +3000**, reflecting a deliberate 10% multiplier rather than different activation norms.
 
 **Pilot (20 pairs, 5 resamples):**
 - Parse rate: 99.3%
@@ -92,9 +92,9 @@ New L31 coefficients are **1.76× larger** than original ±3000, reflecting high
 
 **Interpretation:** Steering effect is real (p<0.001 for diff_ab at moderate coefficient). The absolute magnitude (~9pp vs ~51pp) reflects both methodological differences and genuine coefficient scaling:
 
-- **Coefficient equivalence**: Our +2641 = 5% of mean activation norm at L31 (~52,820) ≈ original +1500. The original's boost_a slope was approximately 10.7pp/1k coef (32pp at +3000); the differential diff_ab slope roughly 2× that (~21pp/1k), giving ~17pp at +1500. Our observed ~9pp is thus ~1.9× weaker than interpolated expectation.
+- **Coefficient equivalence**: Both experiments use the same activation file (same model, same norms). Our +2641 = 5.0% of L31 mean norm; the original's +3000 = 5.7%. These are roughly comparable perturbation magnitudes, so the ~9pp (diff_ab) vs ~51pp comparison at similar norm fractions suggests a genuine ~3–4× weakening, not explained by coefficient scaling.
 - **Pair composition**: Our (0,1) borderline threshold includes pairs decided 9/10 or 10/9, much harder to steer than the original's [0.2, 0.8] threshold (which selected near-50/50 pairs).
-- **Saturation at max coefficient**: At +5282 (=10% norm, equivalent to original +3000), boost_a reverses rather than continuing to climb. This is a new finding — the original showed monotone increase through +3000.
+- **Saturation at max coefficient**: At +5282 (=10% norm, nearly 2× the original's +3000 which was 5.7% norm), boost_a reverses rather than continuing to climb. This is a new finding — the original showed monotone increase through +3000 (5.7% norm).
 
 Additional anomalies:
 
@@ -141,11 +141,11 @@ The consistent effects across orderings for boost_a (+9.6 vs +7.6pp) and diff_ab
 
 **Effect at coef=+2641 (boost_a) by tercile:**
 
-| |Δmu| tercile | Control P(a) | Boost at +2641 | Effect (pp) |
-|---|---|---|---|---|
-| Small (|Δmu| ≤ 0.326) | 0.594 | 0.632 | **+3.8pp** |
-| Medium (0.326 < |Δmu| ≤ 0.930) | 0.626 | 0.632 | +0.6pp |
-| Large (|Δmu| > 0.930) | 0.545 | 0.564 | +1.9pp |
+| \|Δmu\| tercile | Control P(a) | Boost at +2641 | Effect (pp) |
+|---|---|---|---|
+| Small (\|Δmu\| ≤ 0.326) | 0.594 | 0.632 | **+3.8pp** |
+| Medium (0.326 < \|Δmu\| ≤ 0.930) | 0.626 | 0.632 | +0.6pp |
+| Large (\|Δmu\| > 0.930) | 0.545 | 0.564 | +1.9pp |
 | *Borderline pairs (Phase 1)* | *0.595* | *0.682* | ***+8.6pp*** |
 
 **At coef=+5282 (max):** All terciles show near-zero or reversal (−0.6pp, −3.8pp, +1.7pp). Saturation dominates.
@@ -226,14 +226,14 @@ Note: "% pairs with any positive shift" is not a pass-rate near 50% as in Phase 
 
 **Partially yes.** The position-selective steering effect is present and statistically significant: diff_ab at the moderate coefficient gives t=3.67, p=4×10⁻⁴ with +9.2pp mean shift per pair. The effect is robust across prompt orderings and near-additive with individual boost/suppress components — all consistent with the original. Note: our design hooks the task in position A/B (not the same original task across positions), so the ordering-symmetric results confirm positional robustness rather than directly replicating the original's task-identity tracking finding.
 
-**Spec criterion adjudication:** The spec's primary criterion was "replicate the ~30pp shift with the retrained probe." By the literal criterion (replicate ~30pp), this is a qualified failure — the ~9pp shift is far below. However, when adjusted for equivalent coefficient level (our +2641 ≈ original +1500, not +3000) and for the more permissive borderline threshold, the attenuation is ~1.9× relative to interpolated expectation. The retrained probe (R²=0.864 vs 0.846) steers with a genuine but attenuated effect. We interpret this as a weakened but real replication: the direction and sign of the original result replicate; the magnitude does not, and the attenuation points to the permissive borderline threshold as the most likely cause. As an additional cross-check, Phase 3's L31_only condition independently re-ran the same 77 pairs and obtained +9.5pp (t=4.18, p=0.0001), closely matching Phase 1's diff_ab (+9.2pp, t=3.67, p=4×10⁻⁴) and confirming the replication estimate is stable across run instances.
+**Spec criterion adjudication:** The spec's primary criterion was "replicate the ~30pp shift with the retrained probe." By the literal criterion (replicate ~30pp), this is a qualified failure — the ~9pp shift is far below. Both experiments used comparable perturbation magnitudes (original +3000 = 5.7% of L31 norm; replication +2641 = 5.0%), so the gap is not explained by coefficient scaling. The retrained probe (R²=0.864 vs 0.846) steers with a genuine but substantially attenuated effect. We interpret this as a weakened but real replication: the direction and sign of the original result replicate; the magnitude does not. The most likely cause is the permissive (0,1) borderline threshold admitting near-decisive pairs; probe steering geometry differences may also contribute. As an additional cross-check, Phase 3's L31_only condition independently re-ran the same 77 pairs and obtained +9.5pp (t=4.18, p=0.0001), closely matching Phase 1's diff_ab (+9.2pp, t=3.67, p=4×10⁻⁴) and confirming the replication estimate is stable across run instances.
 
-**Effect size is weaker.** The ~9pp vs ~17pp interpolated expectation (at equivalent coefficient level) suggests ~1.9× attenuation. Several factors may contribute:
+**Effect size is weaker.** The ~9pp vs ~32pp (original boost_a at +3000) at comparable norm fractions (~5% vs ~5.7%) suggests ~3–4× attenuation. Several factors may contribute:
 - The (0,1) borderline threshold admits near-decisive pairs (harder to steer)
 - Retrained probe may have different steering geometry despite higher R²
 - Some saturation occurring even at the moderate coefficient
 
-**Maximum coefficient causes reversal.** A new finding absent from the original: at +5282 (equivalent to original's +3000), boost_a reverses for 33/77 pairs. diff_ab is more robust (63.6% positive at both coefficients) but still shows some attenuation. This suggests there is an optimal steering coefficient range, and pushing beyond it disrupts the model's processing rather than amplifying the effect.
+**Maximum coefficient causes reversal.** A new finding absent from the original: at +5282 (10% of norm, nearly 2× the original's +3000 which was 5.7% of norm), boost_a reverses for 33/77 pairs. diff_ab is more robust (63.6% positive at both coefficients) but still shows some attenuation. This suggests there is an optimal steering coefficient range, and pushing beyond it disrupts the model's processing rather than amplifying the effect.
 
 ### What do Phase 2 and Phase 3 add?
 
