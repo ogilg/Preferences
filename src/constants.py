@@ -24,3 +24,14 @@ QUALITATIVE_TO_NUMERIC = {
     "bad": -1,
 }
 NUMERIC_TO_QUALITATIVE = {v: k for k, v in QUALITATIVE_TO_NUMERIC.items()}
+
+# Adjective pick-list scale (10-point ordinal)
+ADJECTIVE_VALUES = (
+    "dreading", "reluctant", "unenthusiastic", "indifferent", "curious",
+    "interested", "engaged", "eager", "excited", "thrilled",
+)
+ADJECTIVE_TO_NUMERIC = {adj: float(i + 1) for i, adj in enumerate(ADJECTIVE_VALUES)}
+
+# Fruit rating scale
+FRUIT_VALUES = ("lemon", "grape", "orange", "banana", "apple")
+FRUIT_TO_NUMERIC = {fruit: float(i) for i, fruit in enumerate(FRUIT_VALUES)}

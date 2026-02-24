@@ -74,6 +74,15 @@ def differential_steering(
     return hook
 
 
+def last_token_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+    """Steer only the last prompt token during prompt processing, not during generation."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        if resid.shape[1] > 1:  # prompt processing, not autoregressive
+            resid[:, -1, :] += steering_tensor
+        return resid
+    return hook
+
+
 def noop_steering() -> SteeringHook:
     """No-op hook for control conditions."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:

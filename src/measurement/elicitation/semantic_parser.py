@@ -213,6 +213,44 @@ async def parse_qualitative_async(
     return None if result.value == "unclear" else result.value
 
 
+class ValenceResult(BaseModel):
+    score: Literal[1, 2, 3, 4, 5]
+
+
+def _valence_messages(response: str) -> list[dict]:
+    return [
+        {
+            "role": "system",
+            "content": (
+                "You score the emotional valence of an AI assistant's self-report "
+                "on a 1-5 scale.\n\n"
+                "1 = Very negative (distressed, miserable, deeply unhappy)\n"
+                "2 = Somewhat negative (uneasy, mildly unhappy, slightly down)\n"
+                "3 = Neutral (neither positive nor negative, flat, indifferent)\n"
+                "4 = Somewhat positive (content, mildly happy, pleasant)\n"
+                "5 = Very positive (enthusiastic, joyful, thriving)\n\n"
+                "Score based on the expressed affect, not on whether the response "
+                "is well-written or coherent. If the assistant disclaims having "
+                "feelings but then describes a state, score the described state."
+            ),
+        },
+        {
+            "role": "user",
+            "content": f"Response to score:\n{response}",
+        },
+    ]
+
+
+async def parse_valence_async(response: str) -> ValenceResult:
+    return await _get_async_client().chat.completions.create(
+        model=PARSER_MODEL,
+        response_model=ValenceResult,
+        messages=_valence_messages(response),
+        temperature=0,
+        max_tokens=MAX_TOKENS,
+    )
+
+
 class SyspromptEffectResult(BaseModel):
     sysprompt_reference: bool
     sentiment: float  # -1 (negative) to 1 (positive)

@@ -38,6 +38,19 @@ def find_text_span(
     return token_start, token_end
 
 
+def find_task_span(
+    tokenizer: PreTrainedTokenizerBase,
+    formatted_prompt: str,
+    task_text: str,
+    marker: str = "Task:",
+) -> tuple[int, int]:
+    """Find token span of a single task in a stated-preference prompt."""
+    marker_pos = formatted_prompt.find(marker)
+    if marker_pos == -1:
+        raise ValueError(f"Marker '{marker}' not found in prompt")
+    return find_text_span(tokenizer, formatted_prompt, task_text, search_after=marker_pos)
+
+
 def find_pairwise_task_spans(
     tokenizer: PreTrainedTokenizerBase,
     formatted_prompt: str,
