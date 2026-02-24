@@ -147,6 +147,14 @@ Each pair run in 2 orderings (original / swapped) × 3 conditions × 15 coeffici
 
 **All 14 non-zero coefficients are significant for diff_ab (12/14 at p<0.001).** The two exceptions are the outermost negative points: -7.5% (p=0.154) and -10% (p=0.024), where the signal is attenuated by the non-monotone behavior at extremes.
 
+**Condition correlations and additivity.** Across 575 pair×orderings at peak coefficient (+3% norm):
+- r(boost_a, diff_ab) = 0.717, p<0.001 — strong correlation: same pairs drive both
+- r(boost_a, boost_b) = −0.002, p=0.96 — near-zero: A-side and B-side effects are independent
+- r(diff_ab, boost_b) = −0.054, p=0.20 — near-zero: boost_b doesn't predict diff_ab beyond boost_a
+- Additivity: mean(diff_ab) = +10.9pp ≈ 1.21× [mean(boost_a) + mean(boost_b)] = 1.21× 9.0pp — **slightly super-additive**
+
+Interpretation: diff_ab is primarily driven by the task-A hook (same mechanism as boost_a, r=0.717). The task-B hook contributes an independent ~3.4pp additive component. The mild super-additivity (1.21×) suggests the simultaneous B-direction hook slightly reinforces the A-direction hook beyond independent addition, possibly by reducing the B-side noise that dilutes the A-side signal.
+
 ### Steerability vs baseline decidedness
 
 Plotting effect at peak coef (+3% norm) against baseline P(a) per ordering:
