@@ -168,6 +168,16 @@ Pearson r(|ctrl_pa − 0.5|, effect) = −0.402, p < 0.001 (n=575). More decided
 
 Note: with only 10 resamples, ctrl_pa is coarse (takes values {0.0, 0.1, ..., 1.0}). Many extreme pairs land in the {0.0} or {1.0} bins, not because they're perfectly decisive but because 10 samples can't resolve near-100% preferences. The real population in those bins includes some nearly-decisive pairs.
 
+**Measurement-based metrics don't predict within-session steerability.** Steerability correlates with within-session ctrl_pa (r=−0.402, p<0.001) but NOT with the active-learning measurement metrics:
+- r(|Δmu|, effect) = +0.081, p=0.16 (non-significant)
+- r(|meas_P(a) − 0.5|, effect) = +0.024, p=0.68 (non-significant)
+- Near-50/50 pairs (meas P(a) ∈ [0.3,0.7], n=100): mean effect +10.4pp (SE=1.8)
+- Extreme pairs (meas P(a) outside [0.3,0.7], n=200): mean effect +11.2pp (SE=1.3) — not significantly different
+
+This means the pre-selection from active learning data (which ensures pairs are borderline in the long run) is a necessary but insufficient predictor of within-session steerability. The model's within-session behavior (is the pair near-50/50 in the current 10-resample control?) is the actual predictor. Practical implication: future designs could first screen pairs within the current session (spending ~10 control samples per pair to identify which are borderline), then focus the steering budget on those.
+
+**Ordering consistency.** Original vs swapped orderings show similar effects (+11.4pp and +10.5pp respectively, both p<0.0001), confirming the diff_ab result is robust to task ordering.
+
 ![Steerability binned by baseline P(a)](assets/plot_022426_steerability_vs_ctrl_pa.png)
 
 ![Steerability scatter vs baseline P(a)](assets/plot_022426_steerability_scatter.png)
