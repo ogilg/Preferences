@@ -259,7 +259,21 @@ The fine-grained grid resolves what the replication's 4-point scan could not: th
 
 4. **boost_a's anomalous behavior at negative coefs.** The fact that applying the *negative* probe direction (which should suppress task A) actually *increases* P(a) at large magnitudes is a key anomaly. Hypothesis: large perturbations in any direction inflate position-A bias by disrupting the model's ability to compare the two tasks, defaulting to a position heuristic. diff_ab's symmetric structure (simultaneously applying +direction to A and -direction to B) cancels these noise effects, yielding a cleaner negative-side response.
 
-5. **Reconciling with the replication's +9.5pp at +5% norm.** Our overall +4.6pp at +5% norm appears weaker than the replication's +9.5pp. But this comparison is unfair: the replication screened pairs within the session (ctrl_pa ∈ (0,1)); we did not. Among our pairs that happen to be in-session borderline (ctrl_pa strictly between 0 and 1, which is only 13.4% = 77 of 576 pair×orderings), the effect at +5% norm is +13.5pp — larger than the replication's +9.5pp. The 87% of pairs with ctrl_pa = 0 or 1 show near-zero effects that dilute the average. **Conclusion: the replication result and our result are quantitatively consistent once pair selection (in-session borderline vs pre-selected) is accounted for.** The effect on genuinely borderline pairs is ~10-14pp at +5% norm.
+5. **Mechanistic interpretation of the reversal.** The dose-response pattern is consistent with two competing mechanisms at high coefficients:
+   - *Semantic steering* (probe direction): moves the model's evaluation of the task pair in the intended direction. Proportional to coefficient at small magnitudes.
+   - *Position-bias inflation*: large perturbations (regardless of direction) disrupt the model's ability to compare tasks, causing it to default to the position-A heuristic (choosing 'a' by default, which has empirically higher base rate ≈ 0.56).
+
+   At positive coefs:
+   - diff_ab: position bias partially offsets semantic steering at high coefs (the A+ and B- hooks both contribute to position-A bias, partially canceling each other). Net: slow attenuation, no strong reversal.
+   - boost_a: position bias adds to semantic steering at moderate coefs, then dominates at high coefs. Net: reversal to -3.6pp at +10%.
+
+   At negative coefs:
+   - diff_ab: position bias inflates P(a) against the intended suppression. Peak suppression at -3% norm where position bias is weak; then attenuation and reversal as position bias grows stronger. Net: clear reversal by -7.5%.
+   - boost_a: position bias from the A- hook dominates immediately, producing +5.0pp at -10% (completely opposite to intended direction).
+
+   The reversal threshold appears to be around ±4-5% of activation norm, beyond which position-bias inflation becomes comparable to the semantic signal.
+
+6. **Reconciling with the replication's +9.5pp at +5% norm.** Our overall +4.6pp at +5% norm appears weaker than the replication's +9.5pp. But this comparison is unfair: the replication screened pairs within the session (ctrl_pa ∈ (0,1)); we did not. Among our pairs that happen to be in-session borderline (ctrl_pa strictly between 0 and 1, which is only 13.4% = 77 of 576 pair×orderings), the effect at +5% norm is +13.5pp — larger than the replication's +9.5pp. The 87% of pairs with ctrl_pa = 0 or 1 show near-zero effects that dilute the average. **Conclusion: the replication result and our result are quantitatively consistent once pair selection (in-session borderline vs pre-selected) is accounted for.** The effect on genuinely borderline pairs is ~10-14pp at +5% norm.
 
 ---
 
