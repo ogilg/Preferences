@@ -218,7 +218,34 @@ Tests random unit-vector steering at L49 and L55 (diff_ab condition only). Key q
 
 ## Discussion
 
-*(To be completed after all phases.)*
+*(Phases 2–4 results to be filled in after completion.)*
+
+### Does the dose-response curve have a clear peak at intermediate coefficients? (Phase 1 answer: Yes)
+
+The fine-grained 15-point grid fully characterizes the dose-response shape at L31. The curve peaks at +3% of mean activation norm for both diff_ab (+10.9pp) and boost_a (+5.6pp), then attenuates non-monotonically at higher coefficients. This resolves the ambiguity from the replication's 4-point scan: the peak is real, well-defined, and at a lower coefficient than the replication tested.
+
+The negative half of the diff_ab dose-response is nearly mirror-symmetric: -7.2pp peak at -3%, fading to near-zero at extremes (not completely symmetric due to position-bias inflation at large magnitudes). This symmetry validates the probe direction as capturing a real preference axis: push in either direction moves the model proportionally.
+
+### Is diff_ab more robust than boost_a at high coefficients? (Phase 1 answer: Yes)
+
+At +10% norm:
+- diff_ab: +3.2pp (p=0.011) — still positive and significant
+- boost_a: -3.6pp (p<0.001) — significant reversal
+
+At -10% norm:
+- diff_ab: +2.5pp (p=0.024) — slight anomaly but small
+- boost_a: +5.0pp (p<0.001) — large wrong-direction anomaly
+
+The diff_ab condition's symmetric structure (simultaneously boosting task A and suppressing task B) consistently outperforms one-sided conditions across the entire coefficient range. This is the clearest practical recommendation from Phase 1: if steering pairwise preferences with a probe direction, always use differential (±) rather than one-sided (+only or -only) interventions.
+
+### How does steerability relate to baseline preference? (Phase 1 answer: Strong ceiling effect)
+
+The key finding is a ceiling/floor asymmetry:
+- Pairs where the model strongly prefers A in the current session (ctrl_pa ≥ 0.9, n=294 orderings): +0.1pp — nearly unsteerable
+- Pairs where the model strongly prefers B in the current session (ctrl_pa ≈ 0.0, n=214 orderings): +15.6pp — partially steerable
+- Near-50/50 pairs in the current session (ctrl_pa 0.1–0.8, n=67 orderings): +30–60pp — highly steerable
+
+The ceiling effect is much stronger than the floor effect. The practical implication: steering can flip a near-50/50 pair with high probability, but cannot overcome strong established preferences. This validates the pair selection strategy (pre-selecting borderline pairs from active learning), though only 13.4% of pre-selected pairs exhibit in-session borderline behavior (vs 86.6% showing ctrl_pa = 0 or 1 in 10 resamples).
 
 ### Summary of the dose-response shape (Phase 1, L31)
 
