@@ -71,4 +71,25 @@ Speed: ~0.04 blk/s, ETA ~4 hours for L49 + ~4 hours for L55.
 
 - Report: experiments/steering/replication/fine_grained/fine_grained_report.md
 - Plots: assets/plot_022426_phase1_dose_response.png, assets/plot_022426_phase1_diff_ab_detail.png
+- Steerability plots: plot_022426_steerability_vs_ctrl_pa.png, plot_022426_steerability_scatter.png
+- Committed to git (96142e8) and pushed to origin/research-loop/fine_grained
+
+## Step 8: Background watchers running
+
+Three background processes (all PPid=1, survive session termination):
+- PID 6907: Phase 2 (L49, then L55 single-layer). Started 12:46 UTC. ETA ~8h total.
+- PID 7680: Chain watcher. After Phase 2: runs Phase 3 (multi-layer), Phase 4 (random controls), analyze.py
+- PID 9327: Finalize watcher. After chain: runs finalize_report.py, saves to /tmp/finalize_log.txt
+
+## Step 9: Continuation instructions (next session)
+
+When Phase 2-4 complete (check with `ps aux | grep run_experiment`):
+
+1. Check /tmp/chain_log.txt and /tmp/finalize_log.txt for completion
+2. Run: `cd /workspace/repo && python scripts/fine_grained/analyze.py`
+3. Run: `python scripts/fine_grained/finalize_report.py > /tmp/finalize_output.txt 2>&1`
+4. Update report sections: Phase 2 (L49/L55), Phase 3 (multi-layer), Phase 4 (random controls), Discussion
+5. Add plot references: plot_022426_layer_comparison.png, plot_022426_multilayer_comparison.png, plot_022426_random_control.png
+6. Launch `/review-experiment-report` subagent on the report
+7. Commit all new files and push
 
