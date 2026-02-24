@@ -1,6 +1,6 @@
 # 10K train tasks, pre-task active learning for gpt-oss-120b
 # Restricted to tasks with activations (30k pool)
-# Excludes: gemma3 10k + gpt-oss 3k eval (actonly rerun)
+# Excludes: gpt-oss 3k eval
 preference_mode: pre_task_active_learning
 
 model: gpt-oss-120b
@@ -16,7 +16,7 @@ task_origins:
   - stress_test
 task_sampling_seed: 42
 stratified_sampling: true
-exclude_task_ids_file: configs/measurement/active_learning/exclude_gemma3_10k_plus_gptoss_3k_eval.txt
+exclude_task_ids_file: configs/measurement/active_learning/exclude_gptoss_3k_eval.txt
 activations_model: gpt-oss-120b
 
 templates: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
