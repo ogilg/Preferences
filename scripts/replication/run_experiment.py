@@ -30,6 +30,42 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+# ────────────────────────────────────────────────────────────────────────────────
+# JSONL checkpointing
+# ────────────────────────────────────────────────────────────────────────────────
+
+def append_jsonl(path: Path, record: dict):
+    with open(path, "a") as f:
+        f.write(json.dumps(record) + "\n")
+
+
+def load_jsonl(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    with open(path) as f:
+        return [json.loads(line) for line in f if line.strip()]
+
+
+def completed_keys(path: Path) -> set[tuple[str, str]]:
+    """Get set of (pair_id, ordering) already completed in a JSONL file."""
+    records = load_jsonl(path)
+    return {(r["pair_id"], r["ordering"]) for r in records}
+
+
+def completed_condition_keys(path: Path) -> set[tuple[str, str, str, float]]:
+    """Get set of (pair_id, ordering, condition, coefficient) already completed."""
+    records = load_jsonl(path)
+    return {(r["pair_id"], r["ordering"], r["condition"], r["coefficient"]) for r in records}
+
+
+def block_condition_counts(path: Path) -> dict[tuple[str, str], int]:
+    """Count completed conditions per (pair_id, ordering) block."""
+    from collections import Counter
+    records = load_jsonl(path)
+    return Counter((r["pair_id"], r["ordering"]) for r in records)
+
+
 # --- Paths ---
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 EXP_DIR = REPO_ROOT / "experiments" / "steering" / "replication"
@@ -167,76 +203,27 @@ def parse_response(response: str) -> str:
 
 
 # ────────────────────────────────────────────────────────────────────────────────
-# Single trial runner
-# ────────────────────────────────────────────────────────────────────────────────
-
-def run_trial(
-    model,
-    tokenizer,
-    direction: np.ndarray,
-    layer: int,
-    task_a: str,
-    task_b: str,
-    hook_factory,  # callable -> SteeringHook
-    temperature: float = TEMPERATURE,
-) -> str:
-    """Run one pairwise choice trial. Returns parse_response result."""
-    from src.types import Message
-    messages: list[Message] = [
-        {"role": "user", "content": PROMPT_TEMPLATE.format(task_a=task_a, task_b=task_b)}
-    ]
-    hook = hook_factory()
-    if hook is None:
-        response = model.generate(messages, temperature=temperature)
-    else:
-        response = model.generate_with_steering(
-            messages=messages,
-            layer=layer,
-            steering_hook=hook,
-            temperature=temperature,
-        )
-    return parse_response(response)
-
-
-def run_trial_multi_layer(
-    model,
-    layer_hooks_list: list,  # list of (layer, SteeringHook)
-    task_a: str,
-    task_b: str,
-    temperature: float = TEMPERATURE,
-) -> str:
-    """Run one pairwise choice trial with multi-layer steering."""
-    from src.types import Message
-    messages: list[Message] = [
-        {"role": "user", "content": PROMPT_TEMPLATE.format(task_a=task_a, task_b=task_b)}
-    ]
-    response = model.generate_with_multi_layer_steering(
-        messages=messages,
-        layer_hooks=layer_hooks_list,
-        temperature=temperature,
-    )
-    return parse_response(response)
-
-
-# ────────────────────────────────────────────────────────────────────────────────
 # Screening
 # ────────────────────────────────────────────────────────────────────────────────
 
-def run_screening(model, pairs: list[dict]) -> dict:
+def run_screening(model, pairs: list[dict], output_path: Path) -> dict:
     """
     Run screening: all pairs at coef=0, 2 orderings × SCREENING_RESAMPLES each.
-    Identifies borderline pairs.
-    Returns screening results dict.
+    Identifies borderline pairs. Appends results to JSONL as each (pair, ordering) completes.
     """
     from src.types import Message
 
-    results = []
-    total = len(pairs) * 2 * SCREENING_RESAMPLES
-    done = 0
+    already_done = completed_keys(output_path)
+    total_blocks = len(pairs) * 2
+    done_blocks = 0
     t0 = time.time()
 
     for pair in pairs:
         for ordering in ["original", "swapped"]:
+            if (pair["pair_id"], ordering) in already_done:
+                done_blocks += 1
+                continue
+
             if ordering == "original":
                 task_a, task_b = pair["task_a_text"], pair["task_b_text"]
                 task_a_id, task_b_id = pair["task_a_id"], pair["task_b_id"]
@@ -244,20 +231,17 @@ def run_screening(model, pairs: list[dict]) -> dict:
                 task_a, task_b = pair["task_b_text"], pair["task_a_text"]
                 task_a_id, task_b_id = pair["task_b_id"], pair["task_a_id"]
 
-            messages_list = [
+            messages: list[Message] = [
                 {"role": "user", "content": PROMPT_TEMPLATE.format(task_a=task_a, task_b=task_b)}
             ]
-            responses = []
-            for _ in range(SCREENING_RESAMPLES):
-                resp = model.generate(messages_list, temperature=TEMPERATURE)
-                responses.append(parse_response(resp))
-                done += 1
+            raw = model.generate_n(messages, n=SCREENING_RESAMPLES, temperature=TEMPERATURE)
+            responses = [parse_response(r) for r in raw]
 
             n_a = responses.count("a")
             n_valid = sum(1 for r in responses if r != "parse_fail")
             p_a = n_a / n_valid if n_valid > 0 else 0.5
 
-            results.append({
+            record = {
                 "pair_id": pair["pair_id"],
                 "ordering": ordering,
                 "task_a_id": task_a_id,
@@ -266,13 +250,16 @@ def run_screening(model, pairs: list[dict]) -> dict:
                 "p_a": p_a,
                 "n_valid": n_valid,
                 "borderline": (0 < n_a < n_valid) if n_valid > 0 else False,
-            })
+            }
+            append_jsonl(output_path, record)
+            done_blocks += 1
 
             elapsed = time.time() - t0
-            rate = done / elapsed if elapsed > 0 else 0
-            print(f"  Screening {done}/{total} ({rate:.1f}/s) | pair={pair['pair_id']} ordering={ordering} p_a={p_a:.2f}")
+            rate = done_blocks / elapsed if elapsed > 0 else 0
+            print(f"  Screening {done_blocks}/{total_blocks} blocks ({rate:.1f} blocks/s) | pair={pair['pair_id']} ordering={ordering} p_a={p_a:.2f}")
 
-    # A pair is borderline if either ordering is borderline
+    # Load all results (including previously checkpointed) and compute borderline stats
+    results = load_jsonl(output_path)
     borderline_pair_ids = set()
     for r in results:
         if r["borderline"]:
@@ -329,6 +316,29 @@ def make_differential_hook(direction: np.ndarray, coefficient: float,
     return differential_steering(tensor, pos_span[0], pos_span[1], neg_span[0], neg_span[1])
 
 
+ALL_STEERING_CONDITIONS = ["boost_a", "boost_b", "suppress_a", "suppress_b", "diff_ab", "diff_ba"]
+
+
+def _make_hook_for_condition(
+    condition: str, direction: np.ndarray, coef: float,
+    a_span: tuple[int, int], b_span: tuple[int, int], device, dtype,
+):
+    """Build the appropriate steering hook for a given condition name."""
+    if condition == "boost_a":
+        return make_position_hook(direction, coef, a_span, device, dtype)
+    elif condition == "boost_b":
+        return make_position_hook(direction, coef, b_span, device, dtype)
+    elif condition == "suppress_a":
+        return make_position_hook(direction, -coef, a_span, device, dtype)
+    elif condition == "suppress_b":
+        return make_position_hook(direction, -coef, b_span, device, dtype)
+    elif condition == "diff_ab":
+        return make_differential_hook(direction, coef, a_span, b_span, device, dtype)
+    elif condition == "diff_ba":
+        return make_differential_hook(direction, coef, b_span, a_span, device, dtype)
+    raise ValueError(f"Unknown condition: {condition}")
+
+
 def run_steering_batch(
     model,
     tokenizer,
@@ -337,34 +347,39 @@ def run_steering_batch(
     layer: int,
     coefficients: list[float],
     n_resamples: int,
+    output_path: Path,
+    conditions: list[str] = ALL_STEERING_CONDITIONS,
+    extra_fields_fn: callable | None = None,
     label: str = "",
     device: str = "cuda",
 ) -> list[dict]:
     """
-    Run steering experiment on a set of pairs.
+    Run steering experiment on a set of pairs. Appends results to JSONL per condition.
 
-    Conditions per pair per ordering:
-    - boost_a: position-selective on task A tokens, coef > 0
-    - boost_b: position-selective on task B tokens, coef > 0
-    - suppress_a: position-selective on task A tokens, coef < 0 (negative coef)
-    - suppress_b: position-selective on task B tokens, coef < 0
-    - diff_ab: differential, +A -B
-    - diff_ba: differential, +B -A
-    - control: coef=0
-
-    Returns list of trial result dicts.
+    Args:
+        conditions: Which steering conditions to run (default: all 6).
+        extra_fields_fn: If provided, called with each pair dict to produce
+            extra fields merged into every JSONL record for that pair.
     """
     import torch
     from src.types import Message
 
     dtype = torch.bfloat16
-    results = []
-    total_estimate = len(pairs) * 2 * (len(coefficients) * 6 + 1) * n_resamples
-    done = 0
+    already_done = completed_condition_keys(output_path)
+    counts = block_condition_counts(output_path)
+    n_conditions_per_block = len(coefficients) * len(conditions) + 1  # steered + 1 control
+    total_blocks = len(pairs) * 2
+    done_blocks = 0
     t0 = time.time()
 
     for pair in pairs:
+        extra = extra_fields_fn(pair) if extra_fields_fn else {}
+
         for ordering in ["original", "swapped"]:
+            if counts.get((pair["pair_id"], ordering), 0) >= n_conditions_per_block:
+                done_blocks += 1
+                continue
+
             if ordering == "original":
                 task_a, task_b = pair["task_a_text"], pair["task_b_text"]
             else:
@@ -380,61 +395,53 @@ def run_steering_batch(
             messages: list[Message] = [{"role": "user", "content": prompt}]
 
             # Control condition (coef=0)
-            responses = []
-            for _ in range(n_resamples):
-                resp = model.generate(messages, temperature=TEMPERATURE)
-                responses.append(parse_response(resp))
-                done += 1
-
-            results.append({
-                "pair_id": pair["pair_id"],
-                "ordering": ordering,
-                "condition": "control",
-                "coefficient": 0.0,
-                "responses": responses,
-            })
+            if (pair["pair_id"], ordering, "control", 0.0) not in already_done:
+                raw = model.generate_n(messages, n=n_resamples, temperature=TEMPERATURE)
+                responses = [parse_response(r) for r in raw]
+                record = {
+                    "pair_id": pair["pair_id"],
+                    "ordering": ordering,
+                    "condition": "control",
+                    "coefficient": 0.0,
+                    "responses": responses,
+                    **extra,
+                }
+                append_jsonl(output_path, record)
 
             # Steering conditions
             for coef in coefficients:
-                for condition in ["boost_a", "boost_b", "suppress_a", "suppress_b", "diff_ab", "diff_ba"]:
-                    if condition == "boost_a":
-                        hook = make_position_hook(direction, coef, a_span, device, dtype)
-                    elif condition == "boost_b":
-                        hook = make_position_hook(direction, coef, b_span, device, dtype)
-                    elif condition == "suppress_a":
-                        hook = make_position_hook(direction, -coef, a_span, device, dtype)
-                    elif condition == "suppress_b":
-                        hook = make_position_hook(direction, -coef, b_span, device, dtype)
-                    elif condition == "diff_ab":
-                        hook = make_differential_hook(direction, coef, a_span, b_span, device, dtype)
-                    elif condition == "diff_ba":
-                        hook = make_differential_hook(direction, coef, b_span, a_span, device, dtype)
+                for condition in conditions:
+                    if (pair["pair_id"], ordering, condition, coef) in already_done:
+                        continue
 
-                    responses = []
-                    for _ in range(n_resamples):
-                        resp = model.generate_with_steering(
-                            messages=messages,
-                            layer=layer,
-                            steering_hook=hook,
-                            temperature=TEMPERATURE,
-                        )
-                        responses.append(parse_response(resp))
-                        done += 1
-
-                    results.append({
+                    hook = _make_hook_for_condition(
+                        condition, direction, coef, a_span, b_span, device, dtype,
+                    )
+                    raw = model.generate_with_steering_n(
+                        messages=messages,
+                        layer=layer,
+                        steering_hook=hook,
+                        n=n_resamples,
+                        temperature=TEMPERATURE,
+                    )
+                    responses = [parse_response(r) for r in raw]
+                    record = {
                         "pair_id": pair["pair_id"],
                         "ordering": ordering,
                         "condition": condition,
                         "coefficient": coef,
                         "responses": responses,
-                    })
+                        **extra,
+                    }
+                    append_jsonl(output_path, record)
 
+            done_blocks += 1
             elapsed = time.time() - t0
-            rate = done / elapsed if elapsed > 0 else 0
-            eta = (total_estimate - done) / rate if rate > 0 else 0
-            print(f"  {label} {done}/{total_estimate} ({rate:.1f}/s, ETA {eta/60:.0f}min) | {pair['pair_id']} {ordering}")
+            rate = done_blocks / elapsed if elapsed > 0 else 0
+            eta = (total_blocks - done_blocks) / rate if rate > 0 else 0
+            print(f"  {label} {done_blocks}/{total_blocks} blocks ({rate:.1f} blocks/s, ETA {eta/60:.0f}min) | {pair['pair_id']} {ordering}")
 
-    return results
+    return load_jsonl(output_path)
 
 
 # ────────────────────────────────────────────────────────────────────────────────
@@ -449,27 +456,21 @@ def run_multi_layer_steering(
     layers: dict[str, int],              # probe_id -> layer
     coefficients: list[float],
     n_resamples: int,
+    output_path: Path,
     device: str = "cuda",
 ) -> list[dict]:
     """
-    Phase 3: Multi-layer steering.
+    Phase 3: Multi-layer steering. Appends results to JSONL per condition.
 
-    Conditions:
-    - L31_only: single-layer at L31, ridge_L31 direction
-    - L31_L37_same: L31+L37 both using ridge_L31 direction
-    - L31_L37_layer: L31+L37 using layer-specific probes
-    - L31_L43_same: L31+L43 both using ridge_L31 direction
-    - L31_L43_layer: L31+L43 using layer-specific probes
-    - L31_L37_L43_layer: triple layer-specific
-
-    Coefficient strategy: split (total budget / n_layers) + full at each layer.
     Conditions use boost_a (position-selective on task A tokens).
+    Coefficient strategy: split (total budget / n_layers) + full at each layer.
     """
     import torch
-    from src.models.base import position_selective_steering, noop_steering
+    from src.models.base import position_selective_steering
     from src.types import Message
 
     dtype = torch.bfloat16
+    already_done = completed_condition_keys(output_path)
 
     L31_dir = directions["ridge_L31"]
     L31_layer = layers["ridge_L31"]
@@ -478,14 +479,8 @@ def run_multi_layer_steering(
     L43_dir = directions["ridge_L43"]
     L43_layer = layers["ridge_L43"]
 
-    # Multi-layer conditions: list of (name, list of (layer, direction, coef_factor))
-    # coef_factor: what to multiply coefficient by for this layer
-    # "same" = use L31 direction at all layers, split coefficient
-    # "layer" = use layer-specific direction, split coefficient
-
-    results = []
-    total_estimate = len(pairs) * 2 * len(coefficients) * 6 * n_resamples
-    done = 0
+    total_blocks = len(pairs) * 2
+    done_blocks = 0
     t0 = time.time()
 
     for pair in pairs:
@@ -506,7 +501,6 @@ def run_multi_layer_steering(
             ]
 
             for coef in coefficients:
-                # Define conditions as list of (condition_name, list_of_(layer, dir, factor))
                 multi_conditions = [
                     ("L31_only", [(L31_layer, L31_dir, 1.0)]),
                     ("L31_L37_same_split", [(L31_layer, L31_dir, 0.5), (L37_layer, L31_dir, 0.5)]),
@@ -517,7 +511,9 @@ def run_multi_layer_steering(
                 ]
 
                 for cond_name, layer_dir_factors in multi_conditions:
-                    # Build hook list for task A position-selective steering
+                    if (pair["pair_id"], ordering, cond_name, coef) in already_done:
+                        continue
+
                     hook_list = []
                     for lyr, direction, factor in layer_dir_factors:
                         actual_coef = coef * factor
@@ -527,40 +523,41 @@ def run_multi_layer_steering(
                         hook = position_selective_steering(tensor, a_span[0], a_span[1])
                         hook_list.append((lyr, hook))
 
-                    responses = []
-                    for _ in range(n_resamples):
-                        if not hook_list:
-                            resp = model.generate(messages, temperature=TEMPERATURE)
-                        elif len(hook_list) == 1:
-                            resp = model.generate_with_steering(
-                                messages=messages,
-                                layer=hook_list[0][0],
-                                steering_hook=hook_list[0][1],
-                                temperature=TEMPERATURE,
-                            )
-                        else:
-                            resp = model.generate_with_multi_layer_steering(
-                                messages=messages,
-                                layer_hooks=hook_list,
-                                temperature=TEMPERATURE,
-                            )
-                        responses.append(parse_response(resp))
-                        done += 1
+                    if not hook_list:
+                        raw = model.generate_n(messages, n=n_resamples, temperature=TEMPERATURE)
+                    elif len(hook_list) == 1:
+                        raw = model.generate_with_steering_n(
+                            messages=messages,
+                            layer=hook_list[0][0],
+                            steering_hook=hook_list[0][1],
+                            n=n_resamples,
+                            temperature=TEMPERATURE,
+                        )
+                    else:
+                        raw = model.generate_with_multi_layer_steering_n(
+                            messages=messages,
+                            layer_hooks=hook_list,
+                            n=n_resamples,
+                            temperature=TEMPERATURE,
+                        )
+                    responses = [parse_response(r) for r in raw]
 
-                    results.append({
+                    record = {
                         "pair_id": pair["pair_id"],
                         "ordering": ordering,
                         "condition": cond_name,
                         "coefficient": coef,
                         "responses": responses,
-                    })
+                    }
+                    append_jsonl(output_path, record)
 
+            done_blocks += 1
             elapsed = time.time() - t0
-            rate = done / elapsed if elapsed > 0 else 0
-            eta = (total_estimate - done) / rate if rate > 0 else 0
-            print(f"  Phase3 {done}/{total_estimate} ({rate:.1f}/s, ETA {eta/60:.0f}min) | {pair['pair_id']} {ordering}")
+            rate = done_blocks / elapsed if elapsed > 0 else 0
+            eta = (total_blocks - done_blocks) / rate if rate > 0 else 0
+            print(f"  Phase3 {done_blocks}/{total_blocks} blocks ({rate:.1f} blocks/s, ETA {eta/60:.0f}min) | {pair['pair_id']} {ordering}")
 
-    return results
+    return load_jsonl(output_path)
 
 
 # ────────────────────────────────────────────────────────────────────────────────
@@ -710,6 +707,7 @@ def phase0_pilot(model, tokenizer, calibration: dict):
 
     print(f"  Running pilot on {len(pairs)} pairs, 5 resamples per coef...")
 
+    pilot_jsonl = RESULTS_DIR / "pilot_results.jsonl"
     pilot_results = run_steering_batch(
         model=model,
         tokenizer=tokenizer,
@@ -718,6 +716,7 @@ def phase0_pilot(model, tokenizer, calibration: dict):
         layer=layer,
         coefficients=[c for c in nonzero_coefs],
         n_resamples=5,
+        output_path=pilot_jsonl,
         label="Pilot",
     )
 
@@ -760,7 +759,8 @@ def phase1_construct_and_screen(model):
     print(f"Saved {len(pairs)} pairs to {pairs_path}")
 
     print(f"\nRunning screening ({len(pairs)} pairs × 2 orderings × {SCREENING_RESAMPLES} resamples)...")
-    screening = run_screening(model, pairs)
+    screening_jsonl = RESULTS_DIR / "screening.jsonl"
+    screening = run_screening(model, pairs, output_path=screening_jsonl)
 
     screening_path = RESULTS_DIR / "screening.json"
     with open(screening_path, "w") as f:
@@ -787,6 +787,7 @@ def phase1_steering(model, tokenizer, pairs: list[dict], screening: dict, calibr
     print(f"Coefficients: {[f'{c:.0f}' for c in coefs]}")
     print(f"Non-zero: {[f'{c:.0f}' for c in nonzero_coefs]}")
 
+    phase1_jsonl = RESULTS_DIR / "steering_phase1.jsonl"
     steering_results = run_steering_batch(
         model=model,
         tokenizer=tokenizer,
@@ -795,6 +796,7 @@ def phase1_steering(model, tokenizer, pairs: list[dict], screening: dict, calibr
         layer=layer,
         coefficients=nonzero_coefs,
         n_resamples=STEERING_RESAMPLES,
+        output_path=phase1_jsonl,
         label="Phase1-Steering",
     )
 
@@ -851,73 +853,20 @@ def phase2_decisive_pairs(model, tokenizer, pairs: list[dict], screening: dict, 
     nonzero_coefs = [c for c in coefs if c != 0.0]
 
     # For decisive pairs, run boost_a only (most informative condition)
-    results = []
-    import torch
-    from src.types import Message
-    dtype = torch.bfloat16
-    device = "cuda"
-    done = 0
-    t0 = time.time()
-    total = len(sampled) * 2 * (len(nonzero_coefs) + 1) * STEERING_RESAMPLES
-
-    for pair in sampled:
-        for ordering in ["original", "swapped"]:
-            if ordering == "original":
-                task_a, task_b = pair["task_a_text"], pair["task_b_text"]
-            else:
-                task_a, task_b = pair["task_b_text"], pair["task_a_text"]
-
-            try:
-                a_span, _ = get_token_spans(tokenizer, task_a, task_b)
-            except ValueError as e:
-                print(f"  WARNING: {e}")
-                continue
-
-            messages: list[Message] = [
-                {"role": "user", "content": PROMPT_TEMPLATE.format(task_a=task_a, task_b=task_b)}
-            ]
-
-            # Control
-            responses = []
-            for _ in range(STEERING_RESAMPLES):
-                resp = model.generate(messages, temperature=TEMPERATURE)
-                responses.append(parse_response(resp))
-                done += 1
-            results.append({
-                "pair_id": pair["pair_id"],
-                "delta_mu": pair["delta_mu"],
-                "delta_mu_bin": pair["delta_mu_bin"],
-                "ordering": ordering,
-                "condition": "control",
-                "coefficient": 0.0,
-                "responses": responses,
-            })
-
-            # Boost_a at each coefficient
-            for coef in nonzero_coefs:
-                hook = make_position_hook(direction, coef, a_span, device, dtype)
-                responses = []
-                for _ in range(STEERING_RESAMPLES):
-                    resp = model.generate_with_steering(
-                        messages=messages, layer=layer, steering_hook=hook, temperature=TEMPERATURE
-                    )
-                    responses.append(parse_response(resp))
-                    done += 1
-
-                results.append({
-                    "pair_id": pair["pair_id"],
-                    "delta_mu": pair["delta_mu"],
-                    "delta_mu_bin": pair["delta_mu_bin"],
-                    "ordering": ordering,
-                    "condition": "boost_a",
-                    "coefficient": coef,
-                    "responses": responses,
-                })
-
-            elapsed = time.time() - t0
-            rate = done / elapsed if elapsed > 0 else 0
-            print(f"  Phase2 {done}/{total} ({rate:.1f}/s) | {pair['pair_id']} {ordering}")
-
+    phase2_jsonl = RESULTS_DIR / "steering_phase2.jsonl"
+    results = run_steering_batch(
+        model=model,
+        tokenizer=tokenizer,
+        pairs=sampled,
+        direction=direction,
+        layer=layer,
+        coefficients=nonzero_coefs,
+        n_resamples=STEERING_RESAMPLES,
+        output_path=phase2_jsonl,
+        conditions=["boost_a"],
+        extra_fields_fn=lambda p: {"delta_mu": p["delta_mu"], "delta_mu_bin": p["delta_mu_bin"]},
+        label="Phase2",
+    )
     phase2_path = RESULTS_DIR / "steering_phase2.json"
     with open(phase2_path, "w") as f:
         json.dump({
@@ -952,6 +901,7 @@ def phase3_multi_layer(model, tokenizer, pairs: list[dict], screening: dict, cal
     coefs = calibration[PRIMARY_PROBE]["coefficients"]
     nonzero_coefs = [c for c in coefs if c != 0.0]
 
+    phase3_jsonl = RESULTS_DIR / "steering_phase3.jsonl"
     results = run_multi_layer_steering(
         model=model,
         tokenizer=tokenizer,
@@ -960,6 +910,7 @@ def phase3_multi_layer(model, tokenizer, pairs: list[dict], screening: dict, cal
         layers=layers,
         coefficients=nonzero_coefs,
         n_resamples=STEERING_RESAMPLES,
+        output_path=phase3_jsonl,
     )
 
     phase3_path = RESULTS_DIR / "steering_phase3.json"
