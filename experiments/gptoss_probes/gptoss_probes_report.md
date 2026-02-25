@@ -2,73 +2,98 @@
 
 ## Summary
 
-Rerun with fixed data alignment: 10k training tasks (vs 3.8k in prior run) and 814 eval tasks (after overlap removal and split). All metrics improve substantially over the prior run. Raw probes reach r=0.915 (L18), demeaned r=0.557, HOO mean r=0.652. Despite the matched training N, the topic-confound gap between GPT-OSS and Gemma-3 persists: GPT-OSS demeaned/raw ratio is 61% vs Gemma-3's 88%, and HOO mean r is 0.652 vs 0.817. This is not a training-size artifact.
+Ridge probes on GPT-OSS-120B activations predict revealed preferences with heldout r=0.915 (raw) and r=0.557 (topic-demeaned) at L18. Cross-topic generalisation (HOO) reaches mean r=0.652. All success criteria pass. Compared to Gemma-3-27B with matched training N (10k), GPT-OSS has stronger raw signal but substantially weaker within-topic and cross-topic performance, confirming the gap is not a training-size artifact.
 
-## What changed from the prior run
+## Setup
 
-| | Prior run | This run |
-|---|---|---|
-| Training tasks | 3,847 (61% dropped for missing metadata) | 9,997 (3 dropped) |
-| Eval tasks (final) | 609 (demeaned) / 1,500 (raw) | 814 (both) |
-| Data source | Original runs with partial activation overlap | `actonly` runs containing only tasks with activations |
-| Overlap filtering | Not applied | 1,372 overlapping task IDs removed from eval |
+- **Train**: 9,997 tasks from `gpt_oss_120b_10k_actonly` (5 samples/task, active learning)
+- **Eval**: 1,628 tasks from `gpt_oss_120b_3k_actonly`, reduced from 3k after removing 1,372 tasks overlapping with train (leak prevention)
+- **Activations**: Pre-extracted `activations_prompt_last.npz` (30k tasks, GPT-OSS-120B)
+- **Layers**: L3, L7, L10, L14, L18, L21, L25, L28, L32 (fractional positions 0.08–0.89 of 36 layers)
+- **Method**: Standardised Ridge regression, alpha swept on half of eval set, evaluated on other half
+- **Topic classification**: `topics.json`
 
-The prior run's metadata drop (6,153/10,000 tasks) was the main confound. The `actonly` measurement runs resolve this by only including tasks that have matching activations.
+## Heldout Evaluation Results
 
-## Results
+### Raw scores
 
-### Step 1a: Heldout evaluation — Raw scores
+| Layer | Heldout r | Heldout acc | Best alpha |
+|-------|-----------|-------------|------------|
+| L3    | 0.855     | 75.0%       | 1000       |
+| L7    | 0.865     | 76.0%       | 1000       |
+| L10   | 0.873     | 77.6%       | 1000       |
+| L14   | 0.909     | 78.8%       | 1000       |
+| **L18** | **0.915** | **80.2%** | 1000     |
+| L21   | 0.913     | 80.0%       | 1000       |
+| L25   | 0.910     | 79.8%       | 1000       |
+| L28   | 0.907     | 79.8%       | 1000       |
+| L32   | 0.904     | 78.7%       | 1000       |
 
-| Layer | Depth | Heldout r | Pairwise Acc | Best Alpha |
-|-------|-------|-----------|-------------|------------|
-| 3 | 0.08 | 0.855 | 0.750 | 1000 |
-| 7 | 0.19 | 0.865 | 0.760 | 1000 |
-| 10 | 0.28 | 0.873 | 0.776 | 1000 |
-| 14 | 0.39 | 0.909 | 0.788 | 1000 |
-| **18** | **0.50** | **0.915** | **0.802** | 1000 |
-| 21 | 0.58 | 0.913 | 0.800 | 1000 |
-| 25 | 0.69 | 0.910 | 0.798 | 1000 |
-| 28 | 0.78 | 0.907 | 0.798 | 1000 |
-| 32 | 0.89 | 0.904 | 0.787 | 1000 |
+### Topic-demeaned scores
 
-Peak at layer 18 (50% depth), with a flat plateau from L14 onward. All 10,000 tasks used for training; 814 for final evaluation (1,628 eval tasks after overlap removal, split 50/50 for sweep/final).
+Train-set OLS R² = 0.575 (topic indicators explain 57.5% of utility variance on the training set). After demeaning:
 
-### Step 1b: Heldout evaluation — Topic-demeaned scores
+| Layer | Heldout r | Heldout acc |
+|-------|-----------|-------------|
+| L3    | 0.444     | 64.3%       |
+| L7    | 0.461     | 64.9%       |
+| L10   | 0.480     | 64.6%       |
+| L14   | 0.546     | 68.7%       |
+| **L18** | **0.557** | **68.7%** |
+| L21   | 0.539     | 67.6%       |
+| L25   | 0.531     | 68.4%       |
+| L28   | 0.525     | 67.6%       |
+| L32   | 0.524     | 66.1%       |
 
-| Layer | Depth | Heldout r | Pairwise Acc | Best Alpha |
-|-------|-------|-----------|-------------|------------|
-| 3 | 0.08 | 0.444 | 0.643 | 4642 |
-| 7 | 0.19 | 0.461 | 0.649 | 4642 |
-| 10 | 0.28 | 0.480 | 0.646 | 4642 |
-| 14 | 0.39 | 0.546 | 0.687 | 4642 |
-| **18** | **0.50** | **0.557** | **0.687** | 4642 |
-| 21 | 0.58 | 0.539 | 0.676 | 1000 |
-| 25 | 0.69 | 0.531 | 0.684 | 4642 |
-| 28 | 0.78 | 0.525 | 0.676 | 4642 |
-| 32 | 0.89 | 0.524 | 0.661 | 4642 |
+![Heldout r by layer](assets/plot_022426_heldout_r_by_layer.png)
 
-Topic demeaning OLS R²=0.575 — topic membership explains 57.5% of GPT-OSS preference score variance. Only 3/10,000 tasks dropped (vs 6,153 in prior run). Eval: 813 sweep / 814 final.
+Demeaned-to-raw ratio: 0.557/0.915 = 61%. Signal survives demeaning but the drop is large — topic membership accounts for more than half the raw probe signal.
 
-Demeaned-to-raw ratio: 0.557/0.915 = 61%. Signal survives demeaning, but the large drop (vs Gemma-3's 88% retention) confirms GPT-OSS preferences are more topic-driven. This result persists even with matched training N.
+## HOO Cross-Topic Generalisation
 
-### Step 2: HOO cross-topic generalisation
+Train on all-but-one topic, evaluate on the held-out topic. 12 folds (one per topic).
 
-| Layer | Depth | Mean HOO r | Std | Val r |
-|-------|-------|-----------|-----|-------|
-| 3 | 0.08 | 0.408 | 0.176 | 0.817 |
-| 7 | 0.19 | 0.480 | 0.168 | 0.834 |
-| 10 | 0.28 | 0.553 | 0.160 | 0.852 |
-| 14 | 0.39 | 0.631 | 0.148 | 0.880 |
-| **18** | **0.50** | **0.652** | **0.145** | **0.888** |
-| 21 | 0.58 | 0.644 | 0.139 | 0.885 |
-| 25 | 0.69 | 0.630 | 0.146 | 0.883 |
-| 28 | 0.78 | 0.631 | 0.137 | 0.882 |
-| 32 | 0.89 | 0.629 | 0.137 | 0.879 |
+| Layer | In-dist r | HOO r (mean ± std) | HOO acc |
+|-------|-----------|---------------------|---------|
+| L3    | 0.817     | 0.408 ± 0.176       | —       |
+| L7    | 0.834     | 0.480 ± 0.168       | —       |
+| L10   | 0.852     | 0.553 ± 0.160       | —       |
+| L14   | 0.880     | 0.631 ± 0.148       | —       |
+| **L18** | **0.888** | **0.652 ± 0.145** | —     |
+| L21   | 0.885     | 0.644 ± 0.139       | —       |
+| L25   | 0.883     | 0.630 ± 0.146       | —       |
+| L28   | 0.882     | 0.631 ± 0.137       | —       |
+| L32   | 0.879     | 0.629 ± 0.137       | —       |
 
-12-fold HOO. Best mean held-out r at L18 (0.652). Per-topic breakdown at L18:
+![HOO generalisation](assets/plot_022426_hoo_generalisation.png)
 
-| Topic | n | GPT-OSS L18 HOO r | Gemma-3 L31 HOO r |
-|-------|---|-------------------|-------------------|
+At L18 the generalisation gap is 0.236 (0.888 → 0.652). High variance across topics.
+
+### Per-topic breakdown (L18)
+
+![Per-topic HOO r at L18](assets/plot_022426_hoo_per_topic_L18.png)
+
+Harmful_request is the hardest topic (r=0.334), followed by sensitive_creative (0.426) and security_legal (0.512). These safety-adjacent topics drag the mean down substantially — excluding them, mean HOO r = 0.729. Math (r=0.600) is also below average but less extreme.
+
+## Comparison to Gemma-3-27B
+
+| Metric | GPT-OSS-120B | Gemma-3-27B |
+|--------|-------------|-------------|
+| Best heldout r (raw) | 0.915 (L18) | 0.864 (L31) |
+| Best heldout r (demeaned) | 0.557 (L18) | 0.761 (L31) |
+| Demeaned/raw ratio | 61% | 88% |
+| Topic R² on scores | 0.575 | 0.377 |
+| Best HOO mean r | 0.652 (L18) | 0.817 (L31) |
+| Training tasks | 9,997 | 10,000 |
+
+![Topic-demeaned probe performance by depth](assets/plot_022426_demeaned_depth_comparison.png)
+
+GPT-OSS exceeds Gemma-3 on raw probes (0.915 vs 0.864) but lags on every topic-controlled metric. The gap is consistent across depth and not explained by training size.
+
+Per-topic HOO comparison at best layers:
+
+| Topic | n | GPT-OSS (L18) | Gemma-3 (L31) |
+|-------|---|---------------|---------------|
 | knowledge_qa | 2503 | 0.801 | 0.841 |
 | other | 44 | 0.791 | 0.880 |
 | summarization | 108 | 0.767 | 0.791 |
@@ -82,58 +107,22 @@ Demeaned-to-raw ratio: 0.557/0.915 = 61%. Signal survives demeaning, but the lar
 | sensitive_creative | 78 | 0.426 | 0.872 |
 | harmful_request | 1012 | 0.334 | 0.890 |
 
-The harmful_request anomaly persists with matched N: GPT-OSS shows poor cross-topic transfer (r=0.334) while Gemma-3 excels (r=0.890). Math remains the one topic where GPT-OSS outperforms Gemma-3 (0.600 vs 0.512).
-
-## Comparison to Gemma-3-27B
-
-| Metric | GPT-OSS-120B (this run) | GPT-OSS (prior run) | Gemma-3-27B |
-|--------|------------------------|---------------------|-------------|
-| Best heldout r (raw) | 0.915 (L18) | 0.833 (L18) | 0.864 (L31) |
-| Best heldout r (demeaned) | 0.557 (L18) | 0.467 (L32) | 0.761 (L31) |
-| Demeaned/raw ratio | 61% | 56% | 88% |
-| Topic R² on scores | 0.575 | 0.608 | 0.377 |
-| Best HOO mean r | 0.652 (L18) | 0.596 (L32) | 0.817 (L31) |
-| Training tasks | 9,997 | 3,847 | 10,000 |
-
-With matched training N (10k), GPT-OSS now **exceeds** Gemma-3 on raw probe performance (0.915 vs 0.864). However, the topic-confound indicators remain substantially worse:
-- Demeaned/raw ratio: 61% vs 88%
-- HOO mean r: 0.652 vs 0.817
-- Topic R² on scores: 0.575 vs 0.377
-
-The prior run's training-size caveat (3.8k vs 10k) is now resolved. The gap is genuine.
-
-![Per-layer probe performance](assets/plot_022426_layer_r_raw_vs_demeaned.png)
-
-![In-distribution vs cross-topic generalisation per topic](assets/plot_022426_hoo_indist_vs_crosstopic.png)
-
-![Topic-demeaned probe performance by depth: GPT-OSS vs Gemma-3](assets/plot_022426_demeaned_depth_comparison.png)
+The most striking difference: harmful_request (GPT-OSS 0.334 vs Gemma-3 0.890) and security_legal (0.512 vs 0.878). Gemma-3 generalises well to safety-adjacent content; GPT-OSS does not. Math is the one topic where GPT-OSS outperforms (0.600 vs 0.512).
 
 ## Interpretation
 
-**The topic-confound gap is not a training-size artifact.** With matched training N, GPT-OSS raw probes actually outperform Gemma-3 (0.915 vs 0.864), but the within-topic and cross-topic metrics remain substantially worse. Three observations:
+GPT-OSS-120B encodes strong preference-relevant information (raw r=0.915), but this signal is more topic-confounded than Gemma-3's. Three converging indicators:
 
-1. **High topic R²**: Topic explains 57.5% of GPT-OSS preference variance (vs 37.7% for Gemma-3). GPT-OSS has stronger between-topic preference structure, so raw probes partly learn topic identity rather than within-topic valuation.
+1. **High topic R²** (0.575 vs 0.377): GPT-OSS has stronger between-topic preference structure, so raw probes partly learn "which topic" rather than "how preferred within topic".
 
-2. **Large demeaning drop**: After removing topic means, performance drops to 0.557 (61% of raw). Gemma-3 retains 88%. The within-topic preference signal in GPT-OSS is genuinely weaker, not data-limited.
+2. **Large demeaning drop** (61% vs 88% retained): within-topic preference signal is genuinely weaker.
 
-3. **Weaker cross-topic transfer**: HOO r=0.652 vs Gemma-3's 0.817. The preference direction learned from one set of topics transfers less well to unseen topics, suggesting a less unified evaluative representation.
+3. **Weaker cross-topic transfer** (0.652 vs 0.817): the preference direction generalises less well to unseen topics.
 
-**Harmful_request anomaly**: GPT-OSS shows r=0.334 for cross-topic transfer to harmful_request, while Gemma-3 reaches r=0.890. This persists with matched N and likely reflects a safety-tuned mechanism that creates a qualitative break in how GPT-OSS represents harmful content — the "preference" for harmful tasks is determined by a different process than for other topics.
-
-**Math as an outlier in the other direction**: GPT-OSS outperforms Gemma-3 on math cross-topic transfer (0.600 vs 0.512). Math is the hardest topic for both models, but GPT-OSS (a reasoning model) may have a more transferable preference signal for mathematical tasks.
+The harmful_request anomaly likely reflects safety tuning creating a qualitative break in how GPT-OSS represents harmful content — preferences for harmful tasks appear to be determined by a different mechanism than for other topics.
 
 ## Success Criteria
 
 - [x] Heldout r > 0.3 on best layer (raw): **0.915** at L18
-- [x] Demeaned retains >=50% of raw: **61%** (0.557/0.915) — clear pass (was marginal at 56% in prior run)
+- [x] Demeaned retains >=50% of raw: **61%** (0.557/0.915)
 - [x] HOO mean r > 0.2: **0.652** at L18
-
-## Parameters
-
-- Layers: [3, 7, 10, 14, 18, 21, 25, 28, 32] (fractional: 0.08-0.89 of 36)
-- Ridge alpha: 10-point log sweep, best selected on sweep half of eval set
-- Eval split seed: 42
-- Standardize: true
-- HOO: 12 folds (one topic per fold)
-- Train run: 10k Thurstonian scores (gpt-oss-120b, actonly)
-- Eval run: 3k Thurstonian scores (1,372 overlapping IDs filtered, leaving 1,628 clean eval tasks)
