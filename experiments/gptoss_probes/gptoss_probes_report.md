@@ -104,9 +104,9 @@ The prior run's training-size caveat (3.8k vs 10k) is now resolved. The gap is g
 
 ![Per-layer probe performance](assets/plot_022426_layer_r_raw_vs_demeaned.png)
 
-![HOO cross-topic generalisation](assets/plot_022426_hoo_by_topic.png)
+![In-distribution vs cross-topic generalisation per topic](assets/plot_022426_hoo_indist_vs_crosstopic.png)
 
-![Depth comparison GPT-OSS vs Gemma-3](assets/plot_022426_depth_comparison.png)
+![Topic-demeaned probe performance by depth: GPT-OSS vs Gemma-3](assets/plot_022426_demeaned_depth_comparison.png)
 
 ## Interpretation
 
