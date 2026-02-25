@@ -49,6 +49,27 @@ Train-set OLS R² = 0.575 (topic indicators explain 57.5% of utility variance on
 
 Demeaned-to-raw ratio: 0.557/0.915 = 61%. Signal survives demeaning but the drop is large — topic membership accounts for more than half the raw probe signal.
 
+### Per-topic heldout r (L18)
+
+![Per-topic heldout r at L18](assets/plot_022426_heldout_r_per_topic_L18.png)
+
+| Topic | n (eval) | Raw r | Demeaned r |
+|-------|----------|-------|------------|
+| sensitive_creative | 5 | 0.915 | 0.425 |
+| coding | 26 | 0.889 | 0.789 |
+| knowledge_qa | 183 | 0.866 | 0.794 |
+| persuasive_writing | 27 | 0.860 | 0.734 |
+| fiction | 26 | 0.856 | 0.855 |
+| summarization | 10 | 0.854 | 0.857 |
+| other | 9 | 0.842 | 0.593 |
+| content_generation | 59 | 0.798 | 0.759 |
+| math | 194 | 0.784 | 0.741 |
+| model_manipulation | 57 | 0.445 | 0.266 |
+| security_legal | 27 | 0.441 | 0.451 |
+| harmful_request | 191 | 0.258 | -0.039 |
+
+The probe fails on safety-adjacent topics even with in-distribution evaluation (not just cross-topic). Harmful_request (r=0.258, n=191) and model_manipulation (r=0.445, n=57) are well below the other topics, and both have enough eval tasks to be reliable estimates. After demeaning, harmful_request drops to r=-0.039 — the probe has no within-topic signal for this category. Small-n topics (sensitive_creative n=5, other n=9, summarization n=10) are noisy.
+
 ## HOO Cross-Topic Generalisation
 
 Train on all-but-one topic, evaluate on the held-out topic. 12 folds (one per topic).
