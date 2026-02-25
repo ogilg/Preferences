@@ -52,6 +52,43 @@ def compute_activation_norms(
     }
 
 
+def load_probe_data(
+    activations_path: Path,
+    scores: dict[str, float],
+    task_ids: list[str],
+    layer: int,
+) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    """Load activations and align with scores for a set of tasks.
+
+    Filters to task_ids present in both sources. Use with
+    src.probes.data_loading.load_thurstonian_scores() to get scores from a run dir.
+
+    Returns (activations, scores, matched_task_ids).
+    """
+    act_task_ids, act_dict = load_activations(
+        activations_path, task_id_filter=set(task_ids), layers=[layer]
+    )
+    act_matrix = act_dict[layer]
+    act_id_to_idx = {tid: i for i, tid in enumerate(act_task_ids)}
+
+    matched_ids = []
+    matched_indices = []
+    matched_scores = []
+    for tid in task_ids:
+        if tid in act_id_to_idx and tid in scores:
+            matched_ids.append(tid)
+            matched_indices.append(act_id_to_idx[tid])
+            matched_scores.append(scores[tid])
+
+    if not matched_ids:
+        raise ValueError(
+            f"No tasks matched between activations ({len(act_task_ids)} tasks) "
+            f"and scores ({len(scores)} tasks) for the {len(task_ids)} requested IDs"
+        )
+
+    return act_matrix[matched_indices], np.array(matched_scores), matched_ids
+
+
 def load_task_origins(activations_dir: Path) -> dict[str, set[str]]:
     """Load all task origins mapping. Returns {origin: set of task_ids}."""
     completions_path = activations_dir / "completions_with_activations.json"
