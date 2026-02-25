@@ -24,7 +24,7 @@ This experiment extends the replication study with three upgrades: (1) a 15-poin
 
 **Steerability vs decidedness (Phase 1, L31):** Near-50/50 pairs (baseline P(a) ≈ 0.1–0.7) show effects of +30–60pp per ordering at the peak coefficient. Pairs where the model strongly prefers 'a' (ctrl_pa ≥ 0.9) show near-zero effects (+0.1pp, ceiling effect). Pairs strongly preferring 'b' (ctrl_pa ≈ 0) show moderate effects (+15.6pp). Pearson r(|ctrl_pa − 0.5|, effect) = −0.402, p < 0.001 (n=575).
 
-**Phases 2–4 status:** Running/pending. Results will be filled in below.
+**Phases 2–4 status:** Complete. See below.
 
 ---
 
@@ -198,39 +198,84 @@ This means the pre-selection from active learning data (which ensures pairs are 
 
 ## Phase 2: L49 and L55 Single-Layer
 
-*Phase 2 running. Results pending.*
+**Records:** 25,026 per layer (L49 and L55)
 
-This phase tests whether late layers (L49, L55) produce stronger or different dose-response profiles compared to L31. The parent replication experiment only tested L31; the original experiment did not systematically vary layers. Key questions:
-- Does the effect peak at the same fractional norm (~3%) across layers?
-- Are late-layer probes more effective at steering? (Theory: later layers capture more semantic/preference information)
-- Does the non-monotone reversal persist at all layers?
+### diff_ab dose-response by layer
+
+| % norm | L31 | L49 | L55 |
+|---|---|---|---|
+| -10% | +2.5pp* | **-10.4pp*** | **-9.2pp*** |
+| -7.5% | +1.3pp | -9.1pp* | -6.7pp* |
+| -5% | -1.6pp* | -5.5pp* | -4.1pp* |
+| -3% | **-7.2pp*** | -2.2pp* | -2.9pp* |
+| +3% | **+10.9pp*** | -1.7pp* | -2.3pp* |
+| +5% | +4.6pp* | -0.7pp | -3.3pp* |
+| +7.5% | +2.4pp* | -2.3pp* | -5.1pp* |
+| +10% | +3.2pp* | -5.0pp* | -6.3pp* |
+
+\* p < 0.05
+
+![Layer comparison: diff_ab dose-response at L31, L49, L55](assets/plot_022426_layer_comparison.png)
+
+### Interpretation
+
+**L49 and L55 do not produce bidirectional steering.** Unlike L31's S-shaped dose-response (positive effects at positive coefs, negative at negative), both late layers produce exclusively negative effects on P(a) regardless of coefficient sign. L49 shows a monotonic curve bottoming at -10.4pp at -10% norm. L55 shows a bowl/V-shape: negative at both extremes (~-9pp at -10%, ~-6pp at +10%), near zero in the middle.
+
+**The probe direction at late layers acts as a "suppress-A" direction rather than a bidirectional preference axis.** This is consistent across conditions: at L49 and L55, boost_a produces negative effects at positive coefs (e.g. L55 boost_a: -7.4pp at +10%), while boost_b produces strong positive effects (+9.5pp at L55 +10%). The probes trained on preference scores at these layers appear to have learned a direction that suppresses the first-position task rather than encoding relative valuation.
+
+**Possible explanation:** Later layers (L49, L55) may encode preference information differently from L31. The ridge probes were trained to predict Thurstonian utility scores from activations — at later layers, the linear direction that best predicts these scores may align with a task-suppression mechanism rather than a bidirectional evaluative representation. This could reflect the model's processing pipeline: earlier layers (L31) encode relative valuation, while later layers translate this into a response decision where the "preferred" direction collapses onto a position-specific suppression signal.
 
 ---
 
 ## Phase 3: Multi-Layer Split-Budget (diff_ab only)
 
-*Phase 3 pending.*
+**Records:** 25,026
 
-Tests three split-budget configurations using layer-specific probes:
-- **L31+L37**: Budget divided equally between L31 and L37 probes
-- **L31+L49**: Budget divided between L31 and L49 (adjacent in parameter space by ~6 layers gap)
-- **L49+L55**: Budget divided between L49 and L55 (late-layer focus)
+### Results
 
-Key question: Does splitting the budget across two layers at the same total coefficient magnitude outperform single-layer, and does it improve robustness at high coefficients (as seen in the replication)?
+| Config | Peak effect | At | Plateau? | vs L31 single |
+|---|---|---|---|---|
+| L31 (single) | +10.9pp | +3% | Drops to +3.2pp at +10% | baseline |
+| L31+L37 (split) | **+12.0pp** | +5% | Yes: ~11-12pp from +5% to +10% | +1.1pp, much more robust at high coefs |
+| L31+L49 (split) | +9.5pp | +5% | Drops to +4.0pp at +10% | -1.4pp, L49 counter-direction hurts at extremes |
+| L49+L55 (split) | no positive effects | — | — | Completely fails |
+
+![Multi-layer comparison](assets/plot_022426_multilayer_comparison.png)
+
+### Interpretation
+
+**L31+L37 is the best configuration overall.** It slightly exceeds single-layer L31's peak (+12.0pp vs +10.9pp) and — crucially — plateaus rather than declining at high coefficients. From +5% to +10% the effect holds at ~11-12pp, compared to L31's drop from +10.9pp at +3% to +3.2pp at +10%. This confirms the replication's finding that split-budget multi-layer steering is more robust at high coefficients.
+
+**L31+L49 underperforms because L49's counter-direction dilutes the signal.** At moderate coefs (+3% to +5%), L31+L49 reaches ~9pp — competitive but below L31 single. At high coefs (+10%) it drops to +4pp, consistent with the L49 component actively working against the intended direction (as shown in Phase 2).
+
+**L49+L55 produces no positive steering.** This follows directly from Phase 2: neither L49 nor L55 produces positive diff_ab effects, so splitting budget between them yields only negative or near-zero effects. Peak negative effect: -12.0pp at -10%.
+
+**Practical recommendation:** For maximum effect, use L31+L37 split-budget diff_ab at +5-7.5% of L31 mean norm. This yields ~12pp with no saturation risk — a strictly better operating point than single-layer L31 at +3%.
 
 ---
 
 ## Phase 4: Random Direction Controls
 
-*Phase 4 pending.*
+**Records:** 8,730 per layer (L49 and L55)
 
-Tests random unit-vector steering at L49 and L55 (diff_ab condition only). Key question: do random activation perturbations shift pairwise preferences? If yes, the probe-specific result would be weakened — it would suggest position-bias inflation rather than semantic steering.
+### Results
+
+| Layer | Probe peak effect | Random peak effect | Probe/random ratio |
+|---|---|---|---|
+| L49 | -10.4pp at -10% | +1.4pp at +10% | ~7× |
+| L55 | -9.2pp at -10% | +0.5pp (n.s.) | probe-specific only |
+
+![Probe vs random direction controls](assets/plot_022426_random_control.png)
+
+### Interpretation
+
+**Random directions produce negligible effects.** At L49, the random direction produces ~1pp at extreme coefficients (statistically significant but tiny). At L55, random effects are indistinguishable from zero across the entire coefficient range. The probe directions at both layers produce 7-10× larger effects.
+
+**This confirms probe specificity.** The steering effects at L49 and L55 are not generic activation perturbation artifacts — random directions of equal magnitude produce near-zero effects. The probe directions carry specific information about task preferences, even at late layers where that information manifests as suppression rather than bidirectional steering.
 
 ---
 
 ## Discussion
-
-*(Phases 2–4 results to be filled in after completion.)*
 
 ### Does the dose-response curve have a clear peak at intermediate coefficients? (Phase 1 answer: Yes)
 
@@ -286,6 +331,22 @@ The fine-grained grid resolves what the replication's 4-point scan could not: th
    The reversal threshold appears to be around ±4-5% of activation norm, beyond which position-bias inflation becomes comparable to the semantic signal.
 
 6. **Reconciling with the replication's +9.5pp at +5% norm.** Our overall +4.6pp at +5% norm appears weaker than the replication's +9.5pp. But this comparison is unfair: the replication screened pairs within the session (ctrl_pa ∈ (0,1)); we did not. Among our pairs that happen to be in-session borderline (ctrl_pa strictly between 0 and 1, which is only 13.4% = 77 of 576 pair×orderings), the effect at +5% norm is +13.5pp — larger than the replication's +9.5pp. The 87% of pairs with ctrl_pa = 0 or 1 show near-zero effects that dilute the average. **Conclusion: the replication result and our result are quantitatively consistent once pair selection (in-session borderline vs pre-selected) is accounted for.** The effect on genuinely borderline pairs is ~10-14pp at +5% norm.
+
+### Do later layers steer better? (Phase 2 answer: No — qualitatively different)
+
+L49 and L55 probes do not produce bidirectional steering. Where L31 shows a clean S-shaped dose-response (push positive → more P(a), push negative → less P(a)), both late layers produce only negative effects regardless of sign. This is the most surprising finding of the experiment: probe directions that predict preference scores equally well at all three layers (R² = 0.864, 0.835, 0.836) behave completely differently when used for causal intervention.
+
+This dissociation between predictive accuracy and causal efficacy is important. A probe that predicts well may be reading off a correlate of the decision rather than the decision-relevant representation itself. At L31, the probe direction happens to align with a causally relevant axis; at L49/L55, it aligns with something that correlates with preferences (hence good R²) but does not bidirectionally control them.
+
+### Does multi-layer split-budget improve steering? (Phase 3 answer: Yes, if layers cooperate)
+
+L31+L37 is the best configuration: +12.0pp peak with a broad plateau from +5% to +10%, eliminating the saturation problem that plagues single-layer L31. The mechanism is likely that distributing the perturbation budget across two nearby layers avoids saturating any single layer's representation while maintaining coherent directional steering.
+
+L31+L49 underperforms because the L49 component actively works against the intended direction (per Phase 2). L49+L55 fails entirely for the same reason — neither component produces positive steering.
+
+### Are probe effects specific? (Phase 4 answer: Yes)
+
+Random directions produce negligible effects at both L49 and L55 (≤1.4pp vs 7-10pp for probe directions). This rules out generic perturbation artifacts: the steering effects are specific to the learned probe direction, not an artifact of injecting any large activation vector.
 
 ---
 
