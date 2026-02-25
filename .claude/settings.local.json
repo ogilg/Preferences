@@ -9,5 +9,8 @@
       "Skill(zombuul:launch-research-pod)"
     ],
     "deny": []
+  },
+  "remote": {
+    "defaultEnvironmentId": "env_01Aw59y83Aw3yaNohtvgXErL"
   }
 }
