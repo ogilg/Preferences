@@ -85,5 +85,9 @@ concept_vectors/**/*.npz
 
 *.npz
 *.npy
+
+# Exception: persona vector .npy files are small (~50KB each)
+!results/experiments/persona_vectors/**/vectors/*.npy
+
 # Personal reflections
 reflections/

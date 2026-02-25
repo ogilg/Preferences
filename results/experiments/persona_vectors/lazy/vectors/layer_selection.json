@@ -1,0 +1,35 @@
+{
+  "8": {
+    "cohens_d": 2.848,
+    "direction_norm": 29.44
+  },
+  "15": {
+    "cohens_d": 1.981,
+    "direction_norm": 116.11
+  },
+  "23": {
+    "cohens_d": 11.068,
+    "direction_norm": 3833.98
+  },
+  "31": {
+    "cohens_d": 13.931,
+    "direction_norm": 8741.42
+  },
+  "37": {
+    "cohens_d": 44.456,
+    "direction_norm": 14498.45
+  },
+  "43": {
+    "cohens_d": 46.675,
+    "direction_norm": 19839.93
+  },
+  "49": {
+    "cohens_d": 30.3,
+    "direction_norm": 25352.36
+  },
+  "55": {
+    "cohens_d": 15.215,
+    "direction_norm": 35587.02
+  },
+  "best_layer": 43
+}
