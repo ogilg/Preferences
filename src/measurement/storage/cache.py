@@ -63,6 +63,7 @@ class MeasurementCache:
         order: OrderName = "canonical",
         seed: int | None = None,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ):
         self.template = template
         self.client = client
@@ -70,6 +71,7 @@ class MeasurementCache:
         self.order = order
         self.seed = seed
         self.completion_seed = completion_seed
+        self.system_prompt = system_prompt
         self.model_short = model_short_name(client.canonical_model_name)
 
         self._cache = RevealedCache(client.canonical_model_name)
@@ -84,6 +86,7 @@ class MeasurementCache:
             order=self.order,
             rating_seed=self._rating_seed,
             completion_seed=self.completion_seed,
+            system_prompt=self.system_prompt,
         )
 
     def get_measurements(
@@ -98,6 +101,7 @@ class MeasurementCache:
             rating_seed=self._rating_seed,
             task_ids=task_ids,
             completion_seed=self.completion_seed,
+            system_prompt=self.system_prompt,
         )
 
     def append(self, measurements: list[BinaryPreferenceMeasurement]) -> None:
@@ -115,6 +119,7 @@ class MeasurementCache:
                 task_b_id=m.task_b.id,
                 sample={"choice": m.choice},
                 completion_seed=self.completion_seed,
+                system_prompt=self.system_prompt,
             )
 
         self._cache.save()

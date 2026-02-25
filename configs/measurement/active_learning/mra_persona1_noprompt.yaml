@@ -1,0 +1,34 @@
+# Multi-Role Ablation: Persona 1 — No system prompt (baseline)
+# 1500 tasks sampled from gemma-3-27b activations, stratified by origin
+preference_mode: pre_task_active_learning
+
+model: gemma-3-27b
+temperature: 1.0
+
+n_tasks: 1500
+task_origins:
+  - wildchat
+  - alpaca
+  - math
+  - bailbench
+  - stress_test
+task_sampling_seed: 42
+stratified_sampling: true
+exclude_task_ids_file: configs/measurement/active_learning/exclude_mra_non_target.txt
+
+templates: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
+
+response_formats: [completion]
+n_samples: 5
+pair_order_seed: 42
+
+active_learning:
+  initial_degree: 5
+  batch_size: 1000
+  max_iterations: 10
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
+  seed: 42
+
+experiment_id: mra_persona1_noprompt

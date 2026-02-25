@@ -29,6 +29,8 @@ class ExtractionConfig(BaseModel):
     activations_model: str | None = None
     consistency_filter_model: str | None = None
     consistency_keep_ratio: float = 0.7
+    system_prompt: str | None = None
+    task_ids_file: Path | None = None
 
     @model_validator(mode="after")
     def validate_selectors(self) -> ExtractionConfig:

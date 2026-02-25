@@ -44,11 +44,15 @@ def _load_model(config: ExtractionConfig) -> HuggingFaceModel:
 
 
 def _load_tasks(config: ExtractionConfig) -> list[Task]:
+    include_task_ids: set[str] | None = None
+    if config.task_ids_file is not None:
+        include_task_ids = set(config.task_ids_file.read_text().strip().splitlines())
+
     if config.activations_model is not None:
         activation_task_ids = load_activation_task_ids(config.activations_model)
         with open(get_activation_completions_path(config.activations_model)) as f:
             completions_data = json.load(f)
-        return [
+        tasks = [
             Task(
                 id=c["task_id"],
                 prompt=c["task_prompt"],
@@ -57,7 +61,9 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
             )
             for c in completions_data
             if c["task_id"] in activation_task_ids
-        ][:config.n_tasks]
+            and (include_task_ids is None or c["task_id"] in include_task_ids)
+        ]
+        return tasks[:config.n_tasks]
 
     task_origins = [OriginDataset[o.upper()] for o in config.task_origins]
     return load_filtered_tasks(
@@ -66,6 +72,7 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
         seed=config.seed,
         consistency_model=config.consistency_filter_model,
         consistency_keep_ratio=config.consistency_keep_ratio,
+        task_ids=include_task_ids,
     )
 
 
@@ -146,10 +153,13 @@ def run_extraction(config: ExtractionConfig) -> None:
         if not isinstance(model, HuggingFaceModel):
             raise ValueError("Batched extraction requires HuggingFace backend")
         task_lookup = {task.id: task for task in tasks}
-        items: list[tuple[str, list[Message]]] = [
-            (task.id, [{"role": "user", "content": task.prompt}])
-            for task in tasks
-        ]
+        items: list[tuple[str, list[Message]]] = []
+        for task in tasks:
+            msgs: list[Message] = []
+            if config.system_prompt is not None:
+                msgs.append({"role": "system", "content": config.system_prompt})
+            msgs.append({"role": "user", "content": task.prompt})
+            items.append((task.id, msgs))
         n_before = len(task_ids)
         stats = batched_extraction(
             model=model, items=items, layers=resolved_layers,

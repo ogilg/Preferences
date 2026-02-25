@@ -246,7 +246,7 @@ async def run_pre_task_revealed_async(
                 progress_callback(stats)
             continue
 
-        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed)
+        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed, system_prompt=config.measurement_system_prompt)
         pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
         pairs_with_repeats = pairs * config.n_samples
 
@@ -524,7 +524,7 @@ async def run_active_learning_async(
     stats = RunnerStats(total_runs=len(configurations))
 
     for cfg in configurations:
-        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed, completion_seed=completion_seed)
+        cache = MeasurementCache(cfg.template, ctx.client, cfg.response_format, cfg.order, seed=cfg.seed, completion_seed=completion_seed, system_prompt=config.measurement_system_prompt)
 
         # Build run_name consistent with other runners
         if post_task:
