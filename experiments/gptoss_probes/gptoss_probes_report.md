@@ -51,7 +51,9 @@ Demeaned-to-raw ratio: 0.557/0.915 = 61%. Signal survives demeaning but the drop
 
 ### Per-topic heldout r (L18)
 
-![Per-topic heldout r at L18](assets/plot_022426_heldout_r_per_topic_L18.png)
+![Per-topic heldout r at L18 (raw)](assets/plot_022426_heldout_r_per_topic_L18.png)
+
+![Per-topic heldout r at L18 (demeaned)](assets/plot_022426_heldout_r_per_topic_demeaned_L18.png)
 
 | Topic | n (eval) | Raw r | Raw acc | Demeaned r |
 |-------|----------|-------|---------|------------|
