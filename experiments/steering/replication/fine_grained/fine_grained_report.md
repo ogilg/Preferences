@@ -190,6 +190,10 @@ This means the pre-selection from active learning data (which ensures pairs are 
 
 ![Steerability scatter vs baseline P(a)](assets/plot_022426_steerability_scatter.png)
 
+**Direction-agnostic steerability.** The above analysis uses only the positive peak (+3% norm), which biases toward pairs where the model prefers B (more room to push toward A). A cleaner measure: average |effect| across all reasonable coefficients (±1% to ±4%), so positive and negative steering directions contribute equally. This yields a symmetric inverted-U peaking at ctrl_pa ≈ 0.5 (~38pp), with symmetric floor/ceiling at the extremes (~4-6pp). Pearson r(|ctrl_pa − 0.5|, mean |effect|) = −0.637, p < 0.001 (n=582).
+
+![Direction-agnostic steerability (mean |effect| across ±1-4% coefs)](assets/plot_022526_steerability_symmetric.png)
+
 ---
 
 ## Phase 2: L49 and L55 Single-Layer
