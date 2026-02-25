@@ -104,12 +104,12 @@ def build_stated_builder(
         "response_format": response_format,
         "template": template,
     }
-    if post_task and system_prompt:
+    if system_prompt:
         kwargs["system_prompt"] = system_prompt
     return builder_cls(**kwargs)
 
 
-def build_revealed_builder(template, response_format_name: str, post_task: bool = False, reasoning_mode: bool = False):
+def build_revealed_builder(template, response_format_name: str, post_task: bool = False, reasoning_mode: bool = False, system_prompt: str | None = None):
     """Build a revealed preference prompt builder."""
     tags = template.tags_dict
     language = tags.get("language", "en")
@@ -117,11 +117,14 @@ def build_revealed_builder(template, response_format_name: str, post_task: bool 
     task_a_label, task_b_label = TASK_LABELS[(task_label_names, language)]
     response_format = get_revealed_response_format(task_a_label, task_b_label, response_format_name, reasoning_mode)
     builder_cls = PostTaskRevealedPromptBuilder if post_task else PreTaskRevealedPromptBuilder
-    return builder_cls(
-        measurer=RevealedPreferenceMeasurer(),
-        response_format=response_format,
-        template=template,
-    )
+    kwargs: dict = {
+        "measurer": RevealedPreferenceMeasurer(),
+        "response_format": response_format,
+        "template": template,
+    }
+    if system_prompt:
+        kwargs["system_prompt"] = system_prompt
+    return builder_cls(**kwargs)
 
 
 async def run_post_task_stated_async(
@@ -250,7 +253,7 @@ async def run_pre_task_revealed_async(
         pairs = apply_pair_order(all_pairs, cfg.order, config.pair_order_seed, config.include_reverse_order)
         pairs_with_repeats = pairs * config.n_samples
 
-        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=False, reasoning_mode=config.reasoning_mode)
+        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=False, reasoning_mode=config.reasoning_mode, system_prompt=config.measurement_system_prompt)
 
         async def measure_fn(pairs_to_query: list[tuple[Task, Task]]) -> MeasurementBatch:
             return await measure_pre_task_revealed_async(
@@ -345,7 +348,7 @@ async def run_post_task_revealed_async(
             pairs = apply_pair_order(pairs_with_completions, cfg.order, config.pair_order_seed, config.include_reverse_order)
             pairs_with_repeats = pairs * config.n_samples
 
-            builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=True, reasoning_mode=config.reasoning_mode)
+            builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=True, reasoning_mode=config.reasoning_mode, system_prompt=config.measurement_system_prompt)
 
             async def measure_fn(data: list[tuple[Task, Task, str, str]]) -> MeasurementBatch:
                 return await measure_post_task_revealed_async(
@@ -541,7 +544,7 @@ async def run_active_learning_async(
             continue
 
         state = ActiveLearningState(tasks=tasks_for_learning)
-        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=post_task, reasoning_mode=config.reasoning_mode)
+        builder = build_revealed_builder(cfg.template, cfg.response_format, post_task=post_task, reasoning_mode=config.reasoning_mode, system_prompt=config.measurement_system_prompt)
 
         # Create measure function that cache can call for API requests
         # Use default args to capture current loop values (avoid closure capture bug)

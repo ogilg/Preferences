@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import yaml
 
 from src.measurement.storage.base import load_yaml, model_short_name, find_project_root
@@ -224,6 +225,22 @@ def load_run_utilities(run_dir: Path) -> tuple[np.ndarray, list[str]]:
         raise FileNotFoundError(f"Pairwise comparison data without thurstonian CSV in {run_dir}")
 
     raise FileNotFoundError(f"No utility data found in {run_dir}")
+
+
+def load_aligned_utilities(run_dirs: dict[str, Path]) -> pd.DataFrame:
+    """Load Thurstonian utilities from multiple runs, inner-joined on shared task IDs.
+
+    Args:
+        run_dirs: mapping from condition name to run directory path.
+
+    Returns:
+        DataFrame with task_id index and one column per condition.
+    """
+    series = {}
+    for name, run_dir in run_dirs.items():
+        mu, task_ids = load_run_utilities(run_dir)
+        series[name] = pd.Series(mu, index=task_ids, name=name)
+    return pd.DataFrame(series).dropna()
 
 
 def load_completed_runs(
