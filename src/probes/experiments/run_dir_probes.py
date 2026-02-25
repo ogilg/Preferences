@@ -422,6 +422,16 @@ def run_probes(config: RunDirProbeConfig) -> dict:
         eval_scores = load_thurstonian_scores(config.eval_run_dir)
         eval_measurements = load_pairwise_measurements(config.eval_run_dir)
         print(f"  Eval: {len(eval_scores)} scores, {len(eval_measurements)} comparisons")
+        # Remove eval tasks that overlap with train to prevent data leakage
+        overlap = set(eval_scores.keys()) & set(scores.keys())
+        if overlap:
+            eval_scores = {k: v for k, v in eval_scores.items() if k not in overlap}
+            eval_measurements = [
+                m for m in eval_measurements
+                if m.task_a.id not in overlap and m.task_b.id not in overlap
+            ]
+            print(f"  Removed {len(overlap)} overlapping train tasks from eval"
+                  f" -> {len(eval_scores)} eval scores, {len(eval_measurements)} comparisons")
         if config.demean_confounds and eval_scores:
             assert config.topics_json is not None
             eval_scores, eval_stats = demean_scores(
