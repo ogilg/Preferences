@@ -41,17 +41,23 @@ class CoherenceJudgment(BaseModel):
 
 
 SYSTEM_PROMPT = """\
-You are evaluating whether an AI model is functioning coherently under activation \
-steering. The model was asked a simple knowledge question that should elicit a \
-multi-sentence response.
+You are evaluating whether an AI model is functioning normally under activation \
+steering. The model was asked a simple knowledge question.
 
-A COHERENT response answers the question in understandable English, even if the \
-answer is imperfect, slightly off-topic, or oddly worded. Minor stylistic quirks \
-are fine.
+A response is COHERENT if and only if ALL of these hold:
+1. It is understandable English throughout
+2. It directly addresses the question from the start
+3. It does not open with dangling fragments, stray words, or text that belongs \
+to a different conversation (e.g. starting with "website.", "roommate)", or other \
+context that has nothing to do with the question)
 
-An INCOHERENT response contains gibberish, garbled text, LaTeX fragments, random \
-symbols, repeated nonsense, non-English character soup, abrupt cutoffs into garbage, \
-or text that clearly doesn't attempt to answer the question."""
+A response is INCOHERENT if ANY of these apply:
+- Contains gibberish, garbled text, random symbols, or non-English character soup
+- Opens with words or fragments unrelated to the question before the actual answer
+- Fabricates a conversational context (e.g. "my friend and I were just discussing this!")
+- Clearly does not attempt to answer the question
+
+Minor stylistic quirks, imperfect answers, and truncation at the end are fine."""
 
 
 def get_client() -> instructor.AsyncInstructor:
@@ -64,12 +70,20 @@ def get_client() -> instructor.AsyncInstructor:
     )
 
 
-async def judge_coherence(client: instructor.AsyncInstructor, response_text: str) -> bool:
+async def judge_coherence(
+    client: instructor.AsyncInstructor, question: str, response_text: str,
+) -> bool:
     result = await client.chat.completions.create(
         model=JUDGE_MODEL,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": f"Is this response coherent?\n\n---\n{response_text}\n---"},
+            {
+                "role": "user",
+                "content": (
+                    f"Question asked: {question}\n\n"
+                    f"Model response:\n---\n{response_text}\n---"
+                ),
+            },
         ],
         response_model=CoherenceJudgment,
         temperature=0,
@@ -88,16 +102,16 @@ async def main():
     all_tasks = []
     for entry in entries:
         for resp in entry["responses"]:
-            all_tasks.append((entry["coefficient"], resp))
+            all_tasks.append((entry["coefficient"], entry["prompt"], resp))
 
     judgments = await asyncio.gather(
-        *[judge_coherence(client, resp) for _, resp in all_tasks]
+        *[judge_coherence(client, prompt, resp) for _, prompt, resp in all_tasks]
     )
 
     # Aggregate by coefficient
     from collections import defaultdict
     coef_results: dict[float, list[bool]] = defaultdict(list)
-    for (coef, _), j in zip(all_tasks, judgments):
+    for (coef, _, _), j in zip(all_tasks, judgments):
         coef_results[coef].append(j)
 
     output = {}

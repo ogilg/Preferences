@@ -1,0 +1,77 @@
+{
+  "-5282.0": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "-3697.4000000000005": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "-2641.0": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "-2112.8": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "-1584.6": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "-1056.4": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "-528.2": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "0.0": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "528.2": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "1056.4": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "1584.6": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "2112.8": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "2641.0": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "3697.4000000000005": {
+    "coherent_pct": 1.0,
+    "coherent": true,
+    "n": 15
+  },
+  "5282.0": {
+    "coherent_pct": 0.8,
+    "coherent": false,
+    "n": 15
+  }
+}

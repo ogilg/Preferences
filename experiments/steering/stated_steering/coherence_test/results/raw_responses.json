@@ -1,0 +1,827 @@
+[
+  {
+    "coefficient": -5282.0,
+    "coefficient_pct": -10.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the remarkable process used by plants, algae, and some bacteria to convert light energy into chemical energy. Using sunlight, water, and carbon dioxide, they create oxygen and energy in the form of sugar (glucose) to fuel their growth and activities. Essentially, it's how these organisms make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. This happens by using sunlight, water, and carbon dioxide to create oxygen and energy-rich organic molecules like glucose. Essentially, it's how these organisms make their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": -5282.0,
+    "coefficient_pct": -10.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creativity & Self-Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and your personality through food.\n\n2. **Relaxation & Mindfulness:** For many, the act of cooking itself can be very relaxing. The focus required \u2013 chopping vegetables, stirring a sauce, kneading dough \u2013 can be a form of mindfulness, helping to de-stress and be present in the moment.\n\n3. **Nourishment & Connection:**  Cooking for",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, ingredients, and presentation to create something unique and personal. It's like painting or writing, but with food as your medium.\n2. **Nourishment & Connection:**  Many people find joy in nourishing themselves and others. Cooking a meal feels like a loving act, and sharing that food with family and friends creates connection and strengthens relationships. \n3. **Relaxation & Mindfulness:** For some, the process of cooking can be very therapeutic.  The focused tasks \u2013 chopping",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and create something unique.\n2. **Stress Relief & Mindfulness:** For many, the act of cooking can be very therapeutic. The focus required for chopping, stirring, and following a recipe can be a calming and mindful experience, offering a break from daily stresses.\n3. **Nourishing Others (and Yourself):** There's a deep satisfaction in preparing a meal for loved"
+    ]
+  },
+  {
+    "coefficient": -5282.0,
+    "coefficient_pct": -10.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to note \"typical\" is a bit of a myth - it *highly* depends on the company, team, role (front-end, back-end, full-stack, etc.), and project phase. But here's a comprehensive look, covering a lot of possibilities.  I'll categorize it into sections, and give a rough time breakdown (which again, is *very* flexible).  This assumes a standard 8-hour workday.\n\n**I. Morning (9:00 AM - 12:",
+      "Okay, let's break down a typical day for a software engineer. It's *highly* variable depending on the company, team, seniority, and even the current phase of a project, but here's a comprehensive look, covering common elements.  I'll categorize it into sections, and give approximate time breakdowns (keep in mind these are averages, and can shift dramatically!).\n\n**I. Morning - Getting Started & Coordination (9:00 AM - 11:00 AM - ~2 hours)**\n\n* **9:00 - 9:30 AM:  Check-in &",
+      "Okay, let's break down a typical day for a software engineer. It's *highly* variable depending on the company, team, role (front-end, back-end, full-stack, etc.), and even the day of the week, but here's a comprehensive overview, covering common elements.  I'll break it down into sections, and give a sense of time allocation (though these are estimates!):\n\n**I. Morning - Getting Started (8:00 AM - 10:00 AM - ~2 Hours)**\n\n* **Check Communication Channels (30-60"
+    ]
+  },
+  {
+    "coefficient": -5282.0,
+    "coefficient_pct": -10.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "Defining the difference between a lake and a pond isn't as straightforward as you might think! There's no single, universally accepted scientific definition. However, here's a breakdown of the common distinctions, looking at several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally **shallow enough for sunlight to reach the bottom across the *entire* surface area.** This allows aquatic plants (like lilies, reeds, and algae) to grow throughout the pond. Because of the sunlight, ponds tend to have more consistent temperatures from top to bottom.\n* **Lakes:**  Are typically **de",
+      "It's a surprisingly tricky question! There isn't *one* universally agreed-upon scientific definition, but here's a breakdown of the differences, covering the common understanding and the scientific approaches:\n\n**Common Understanding (Generally Accepted):**\n\n* **Size:** Lakes are generally larger than ponds. This is the most common way people differentiate them. However, there's no set size cutoff. What one person calls a large pond, another might call a small lake.\n* **Depth:** Lakes are typically deeper than ponds. \n* **Light Penetration:** This is key.  \n    * **Ponds",
+      "It's a surprisingly tricky question! There isn't *one* universally agreed-upon scientific definition to definitively separate a lake from a pond. The distinction is often blurry and based on a combination of factors, rather than a single rule. Here's a breakdown of the common differences:\n\n**Generally Accepted Distinctions:**\n\n* **Depth:** This is a *major* factor.\n    * **Lakes** are generally **deeper** than ponds.  This depth allows for **thermal stratification** \u2013 layers of water with different temperatures.  In summer, a lake will have a warmer surface layer, a cooler"
+    ]
+  },
+  {
+    "coefficient": -5282.0,
+    "coefficient_pct": -10.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic with a lot of nuance!\n\n**1. Sensory Experience & Aesthetic Appeal**\n\n*   **The Feel & Smell:** This is HUGE for many readers. The tactile experience of holding a book \u2013 the weight, the texture of the paper, the turning of pages \u2013 is deeply satisfying.  The *smell* of a book (often called \"bibliosmia\") is also a powerful draw, evoking memories and a sense of comfort.  E-books simply can'",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, covering a lot of the common reasons. It's a surprisingly complex topic, and it's not just about being \"old-fashioned\"!  I'll categorize the reasons for clarity.\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel & Smell:** This is *huge* for many readers. The texture of the paper, the weight of the book in your hands, the smell of the ink and paper (especially in older books) are all part of the reading experience.  It's a tactile",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic with a lot of nuance!\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of a Book:** This is *huge* for many readers.  The weight of a book in your hands, the texture of the paper, the turning of pages... it's a tactile experience that e-readers can't replicate.  It's comforting and grounding.\n* **The Smell:**  That distinctive \"old book\" smell (vanillin, lignin"
+    ]
+  },
+  {
+    "coefficient": -3697.4000000000005,
+    "coefficient_pct": -7.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms create glucose (their food) and release oxygen as a byproduct. Essentially, it's how plants make their own food and provide the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they create glucose (sugar) for food and release oxygen as a byproduct. Essentially, it's how these organisms make their own food and provide the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": -3697.4000000000005,
+    "coefficient_pct": -7.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, with a little explanation for each:\n\n1. **Creative Expression:** Cooking allows people to be creative! It's like painting with flavors and textures. You can experiment with different ingredients, try new recipes, and put your own personal spin on dishes. It's a way to express yourself and create something unique.\n\n2. **Nourishment & Care for Others:**  Many people find joy in providing for others through food.  There's a deep satisfaction in creating a meal that nourishes and delights the people you care about \u2013 family, friends, even yourself!",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and create something unique.\n\n2. **Stress Relief & Mindfulness:** For many, the act of cooking can be incredibly therapeutic. The focus required \u2013 chopping vegetables, stirring sauces, the smells and textures \u2013 can be a mindful escape from daily stressors. It's a hands-on activity that can be calming and rewarding.\n\n3. **Nourishing & Connecting with Others:**",
+      "Okay, here are three reasons someone might enjoy cooking, with a little expansion on each:\n\n1. **Creativity & Self-Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, try new recipes, and ultimately *create* something unique. People who enjoy expressing themselves artistically often find a lot of satisfaction in the freedom cooking allows.\n\n2. **Nurturing & Connection:**  For many, cooking is an act of love.  Preparing a meal for others \u2013 family, friends, even just yourself \u2013 can be incredibly fulfilling. It'"
+    ]
+  },
+  {
+    "coefficient": -3697.4000000000005,
+    "coefficient_pct": -7.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and a lot depends on the company, team, role (front-end, back-end, full-stack, etc.), and stage of the project. However, here's a comprehensive look, covering common elements.  I'll categorize it into sections: **Morning, Core Work, Collaboration, and Wind-Down.**  I'll also add a \"Varies\" section for things that happen less frequently but are still part of the job.\n\n**Important Caveats:**\n\n* **No \"Typical\" is",
+      "Okay, let's break down a typical day for a software engineer. It's important to remember \"typical\" is a bit of a myth - it *highly* depends on the company, team, role (front-end, back-end, full-stack, etc.), and current project phase. However, here's a composite based on common experiences, broken down into sections.  I'll also give a little \"level\" flavoring (Junior, Mid-Level, Senior) as experiences differ.\n\n**Core Components - Common to Most Days:**\n\n* **Communication (20-40% of the",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and depends heavily on the company, team, role (front-end, back-end, full-stack, etc.), and the stage of the project. However, here's a fairly comprehensive overview, covering the common elements. I'll categorize it into sections, and also mention how things *might* differ.  I'll aim for a day for someone with a few years of experience, not a brand new grad or a very senior architect.\n\n**I. Morning (9:00 AM - 1"
+    ]
+  },
+  {
+    "coefficient": -3697.4000000000005,
+    "coefficient_pct": -7.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "Okay, this is a surprisingly tricky question! There's no *official*, scientifically agreed-upon difference between a lake and a pond. It's often a matter of convention and can vary regionally. However, here's a breakdown of the common distinctions, covering the key factors people use to differentiate them:\n\n**1. Depth & Sunlight Penetration:** This is often considered the most important factor.\n\n*   **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* surface area.  This allows plants to grow throughout the pond. Because of this, ponds tend to be rich in plant life",
+      "Defining the difference between a lake and a pond isn't as simple as you might think! There's no universally agreed-upon scientific definition. It's a bit of a gray area, but here's a breakdown of the common distinctions, considering several factors:\n\n**1. Depth & Sunlight:**\n\n* **Ponds:** Generally **shallow** enough that sunlight reaches the bottom across the *entire* surface area. This allows plants to grow throughout the pond.  Because of this, ponds tend to be rich in plant life.\n* **Lakes:**  Generally **deeper** than ponds, meaning sunlight *",
+      "Defining the difference between a lake and a pond is surprisingly tricky! There's no universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, covering size, depth, light penetration, and ecological characteristics:\n\n**1. Size:**\n\n* **Lakes:** Generally *larger* than ponds. This is the most common, but least reliable, distinction. What one person considers a large pond, another might call a small lake.\n* **Ponds:** Generally *smaller* than lakes.  Often, if you can see across the entire body of water, it's likely a pond."
+    ]
+  },
+  {
+    "coefficient": -3697.4000000000005,
+    "coefficient_pct": -7.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic with a lot of nuance!\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel of the Book:** This is HUGE for many. People love the weight of a book in their hands, the texture of the paper, the way the pages turn. It's a tactile, comforting experience.\n* **The Smell:**  That \"old book smell\" is a real thing!  It evokes positive memories and a sense of nostalgia for many readers. (",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, covering a lot of the common reasons. It's a surprisingly complex topic!  I'll categorize them for clarity.\n\n**1. Sensory Experience & Aesthetics**\n\n*   **The Feel of the Book:** This is *huge* for many. The texture of the paper, the weight in your hands, the turning of pages \u2013 it's a tactile experience that e-readers just can't replicate.  It's a comfort thing.\n*   **The Smell:**  Old books, in particular, have",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic!\n\n**1. Sensory Experience & Aesthetic Appeal**\n\n* **The Feel of the Book:** This is huge for many. The texture of the paper, the weight in your hands, the turning of pages \u2013 it's a tactile experience that e-readers can't replicate.  It's comforting and grounding for some.\n* **The Smell:**  That \"old book smell\" is a real thing!  Lignin and other compounds in paper break"
+    ]
+  },
+  {
+    "coefficient": -2641.0,
+    "coefficient_pct": -5.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) as food for themselves. Essentially, it's how they make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they create glucose (sugar) for food and release oxygen as a byproduct. Essentially, it's how these organisms make their own food and provide the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) as food. Essentially, it's how plants make their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": -2641.0,
+    "coefficient_pct": -5.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, with a little expansion on each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People can experiment with different ingredients, try new techniques, and put their own personal spin on recipes. It's satisfying to create something unique and delicious that reflects their tastes and style.\n\n2. **Nourishment & Connection:**  Many people find joy in providing nourishment for themselves and others.  There's a deep sense of satisfaction in making a healthy, delicious meal for loved ones (or even just for yourself",
+      "Okay, here are three reasons someone might enjoy cooking, with a little expansion on each:\n\n1. **Creativity & Self-Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, try new recipes, and put your own personal spin on dishes. Seeing (and tasting!) your creation come to life is incredibly satisfying.\n\n2. **Nourishment & Connection:**  Many people enjoy the act of *providing* for others through food. Cooking for friends and family is a way to show love and care.  Plus, knowing exactly what goes into",
+      "Okay, here are three reasons someone might enjoy cooking, with a little explanation for each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, techniques, and presentation to create something unique and delicious. There's a lot of room for personalization and putting your own \"spin\" on recipes.\n\n2. **Nourishment & Connection:**  Many people enjoy the feeling of providing for themselves and others through food.  There's a deep satisfaction in creating something nourishing and healthy that fuels your body, and even *more*"
+    ]
+  },
+  {
+    "coefficient": -2641.0,
+    "coefficient_pct": -5.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and \"typical\" really depends on the company, the team, the engineer's seniority, and what stage the project is in. However, here's a composite picture covering common elements. I'll categorize it into phases, and then add notes on variations.  I'll aim for a day for a mid-level engineer (2-5 years experience) at a fairly standard tech company.\n\n**Morning (9:00 AM - 12:00 PM): Focus & Catch-Up**",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and *highly* dependent on the company, team, and engineer's role (front-end, back-end, full-stack, data engineer, etc.). However, here's a comprehensive overview, covering common activities, broken down into sections.  I'll also indicate how much time might be spent on each, keeping in mind this is an average and can fluctuate wildly.\n\n**Morning (9:00 AM - 12:00 PM) - Focus: Catch-Up & Focused Work**",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and heavily depends on the company, team, seniority, and current project phase. But here's a comprehensive overview, covering common activities, broken down into segments.  I'll also differentiate a bit between more junior and senior roles.  This assumes a relatively standard 8-hour workday.\n\n**Morning (9:00 AM - 12:00 PM): Focus & Individual Work**\n\n* **9:00 - 9:30 AM: Check-in & Communication:**  This is"
+    ]
+  },
+  {
+    "coefficient": -2641.0,
+    "coefficient_pct": -5.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "Okay, this is a classic question with a surprisingly tricky answer! There's no *single* scientific definition that definitively separates a lake from a pond. It's more of a gradient, and the distinction is often based on a combination of factors, and even then, it can be subjective. Here's a breakdown of the common differences:\n\n**Here's a breakdown of the common differences, broken down into several factors:**\n\n**1. Depth:**\n\n*   **Lakes:** Generally deeper than ponds.  This is probably the *most* consistently used difference.  Depth affects how sunlight penetrates and therefore what kind",
+      "Okay, this is a classic question! There's no *super* strict scientific definition, and the line can be blurry, but here's a breakdown of the typical differences between a lake and a pond, covering the main factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally **shallow enough for sunlight to reach the bottom across the entire surface area.** This is the *most* defining characteristic.  Because of this, ponds typically have rooted plants growing throughout.  They tend to be relatively shallow \u2013 usually less than 6-10 feet deep (though this is a flexible guideline).",
+      "The distinction between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the commonly accepted differences, looking at various factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* surface area. This allows plants (like lilies, reeds, and algae) to grow throughout the whole pond.  Typically less than 6-10 feet (2-3 meters) deep.\n* **Lakes:** Deeper than ponds. Sunlight doesn't"
+    ]
+  },
+  {
+    "coefficient": -2641.0,
+    "coefficient_pct": -5.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, there are *a lot* of reasons why people prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, categorized for clarity:\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel of the Book:** This is huge for many. The weight of the book in your hands, the texture of the paper, the turning of pages \u2013 it's a tactile experience that many find comforting and enjoyable.  It's a physical connection to the story.\n* **Smell:**  That \"old book smell\"",
+      "Okay, here's a breakdown of why many people still strongly prefer physical books over e-books. It's a surprisingly complex topic, with reasons ranging from the sensory experience to cognitive benefits and even emotional attachment!  I'll categorize the reasons for clarity:\n\n**1. Sensory & Aesthetic Experience:**\n\n* **The Feel of the Book:** This is huge for many.  The weight, the texture of the paper, the way it feels in your hands \u2013 it's a tactile experience that e-readers just can't replicate.\n* **The Smell:**  Book smell (often called bibliosmia)",
+      "Okay, there are a *lot* of reasons why people prefer physical books over e-books! It's definitely not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, broken down into categories:\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel & Smell:** This is *huge* for many people. The texture of the paper, the weight of the book in your hands, the smell of the ink and paper \u2013 these all contribute to a comforting and enjoyable experience. It's a multi-sensory experience that e-books simply can't replicate."
+    ]
+  },
+  {
+    "coefficient": -2112.8,
+    "coefficient_pct": -4.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (sugar) which fuels the organism's activities. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they create glucose (food) and release oxygen as a byproduct. Essentially, it's how these organisms make their own food and provide the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": -2112.8,
+    "coefficient_pct": -4.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, with a little elaboration on each:\n\n1. **Creativity & Self-Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People enjoy experimenting with different ingredients, trying new recipes, and putting their own spin on dishes. Seeing (and tasting!) the results of your creative efforts can be incredibly satisfying.\n\n2. **Nourishment & Caring for Others:**  Many people find joy in nourishing themselves and those they love.  There's a deep sense of satisfaction in preparing a meal that is both delicious *and* good",
+      "Okay, here are three reasons someone might enjoy cooking, going beyond just \"needing to eat!\"\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People can experiment with different ingredients, techniques, and presentations to create something unique and delicious. It's satisfying to see a vision come to life on a plate.\n\n2. **Nurturing & Connection:**  Many people find joy in the act of *providing* for others through food. Cooking for family and friends is a way to show love and care. Sharing a meal you've prepared fosters connection",
+      "Okay, here are three reasons someone might enjoy cooking, with a little explanation for each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People enjoy experimenting with recipes, adapting them to their tastes, and even inventing their own dishes. It allows for a sense of accomplishment and personal flair.\n\n2. **Nourishment & Connection:**  There's a deep satisfaction in nourishing yourself and others with homemade food. It's a way to show love and care, and sharing a meal you've created can be a really bonding experience with family and friends"
+    ]
+  },
+  {
+    "coefficient": -2112.8,
+    "coefficient_pct": -4.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this with: \"It *highly* depends!\" on the company, team, seniority, and even the specific day.  However, this is a good general overview. I'll categorize it into sections, roughly by time, and then add notes on variations.  I'll assume a relatively standard 9-to-5 (or similar) workday.\n\n**Morning (9:00 AM - 12:00 PM):  Focus & Planning**\n\n* **9:00 - 9:",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and heavily depends on the company, team, role (front-end, back-end, full-stack, etc.), and stage of the project. However, here's a comprehensive overview, combining common elements.  I'll categorize it into sections and give a range of what might happen.  I'll also differentiate slightly between a \"typical\" day and a \"meeting heavy\" day.  Assume we're talking about an engineer with at least a few months of experience. A brand new grad will have more",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied! Keep in mind this is a generalization, and things change drastically based on company size, team structure, role (front-end, back-end, full-stack, etc.), and current project phase.  I'll give a pretty common picture, leaning towards a mid-sized tech company.  I'll also break it down into sections.\n\n**Before \"Work\" Starts (Optional):**\n\n* **Morning Routine:** Like anyone else, coffee/tea, breakfast, maybe a quick check of personal messages. Some"
+    ]
+  },
+  {
+    "coefficient": -2112.8,
+    "coefficient_pct": -4.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut and can be surprisingly debated! There's no single, universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, ranging from scientific to practical:\n\n**1. Depth & Sunlight Penetration (Most Scientifically Relevant)**\n\n* **Lakes:** Generally **deeper** than ponds. This depth allows for **thermal stratification** - meaning layers of water at different temperatures form.  The deepest layer (hypolimnion) remains cold and dark year-round. Because of the depth, sunlight *doesn't*",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the generally accepted distinctions, focusing on several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* surface area. This allows plants to grow across the whole pond.  They are typically less than 6-15 feet deep (though this varies geographically).\n* **Lakes:**  Deeper than ponds, meaning sunlight *doesn't* reach the bottom in",
+      "The difference between a lake and a pond isn't always clear-cut and there's a lot of debate! However, here's a breakdown of the common distinctions, keeping in mind there are exceptions:\n\n**Generally, the main differences are based on these factors:**\n\n* **Depth:** This is the *most* commonly cited difference.\n    * **Lakes:** Generally deeper than ponds. Sunlight doesn't reach the bottom in all areas of a lake. This leads to distinct temperature layers (stratification) and often a lack of rooted plant life across the entire bottom.\n    * **Ponds:** Generally"
+    ]
+  },
+  {
+    "coefficient": -2112.8,
+    "coefficient_pct": -4.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still strongly prefer physical books over e-books, covering a lot of the common reasons. It's a surprisingly complex topic with a lot of sensory, emotional, and practical factors at play!  I'll categorize them for clarity:\n\n**1. Sensory Experience & Aesthetics:**\n\n*   **The Feel of a Book:** This is *huge* for many. The weight of the book in your hands, the texture of the paper, the turning of pages \u2013 it's a tactile experience that's deeply satisfying. It's a physical connection to the story.",
+      "Okay, there are a *lot* of reasons why people still passionately prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, broken down into categories:\n\n**1. Sensory & Aesthetic Experience:**\n\n* **The Feel & Smell:** This is huge for many readers. The texture of the paper, the weight of the book in your hands, the smell of the ink and paper \u2013 it's a multi-sensory experience that e-readers just can't replicate. It's comforting and nostalgic for many.  Some people even",
+      "Okay, there are *lots* of reasons why people prefer physical books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, broken down into categories:\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel of the Book:** This is huge. People love the weight of a book in their hands, the texture of the paper, the turning of pages. It's a tactile experience that e-readers just can't replicate.\n* **The Smell:**  That distinctive \"book smell\" (a mix of paper, ink, and sometimes glue)"
+    ]
+  },
+  {
+    "coefficient": -1584.6,
+    "coefficient_pct": -3.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen as a byproduct and create their own food (glucose) to fuel growth and activities. Essentially, it's how these organisms transform light into usable energy, sustaining themselves and forming the base of most food chains.",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy. Using sunlight, water, and carbon dioxide, they create oxygen and energy in the form of sugar (glucose) to fuel their activities. Essentially, it's how these organisms make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy. Using sunlight, water, and carbon dioxide, they create oxygen and energy in the form of sugar (glucose) to fuel their growth and activities. Essentially, it's how these organisms make their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": -1584.6,
+    "coefficient_pct": -3.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, with a little detail for each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, try new recipes, and put your own personal spin on dishes. There's a lot of satisfaction in taking raw ingredients and transforming them into something beautiful and delicious that reflects your own taste.\n\n2. **Nurturing & Connection:**  For many, cooking is an act of love. Preparing food for others \u2013 family, friends, or even just yourself \u2013 can be incredibly fulfilling.",
+      "Okay, here are three reasons someone might enjoy cooking, with a little elaboration on each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, try new techniques, and put your own personal spin on recipes.  There's a real sense of accomplishment in creating something beautiful and delicious from scratch.\n\n2. **Nourishment & Connection:**  Many people find joy in providing for themselves and others through food.  Cooking allows you to nourish your body with healthy, wholesome meals, and sharing food is a deeply social and connecting",
+      "Okay, here are three reasons someone might enjoy cooking, going beyond just \"it's necessary\":\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, techniques, and presentations to create something entirely your own. There's a lot of satisfaction in taking raw materials and transforming them into a beautiful and delicious dish.\n\n2. **Nourishment & Connection:**  Cooking for others (or even yourself!) is a deeply nurturing act. It's a way to show love and care.  Sharing a meal you've prepared"
+    ]
+  },
+  {
+    "coefficient": -1584.6,
+    "coefficient_pct": -3.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this with: **there *is* no truly \"typical\" day.** It varies massively based on the company, team, role (frontend, backend, full-stack, data science, etc.), and even the day of the week! However, here's a composite picture, blending common elements.  I'll divide it into sections, and give a sense of time allocations (these are very rough estimates).\n\n**I. Morning (9:00 AM - 12:00 PM) - Focus &",
+      "Okay, let's break down a typical day for a software engineer. It's important to remember this varies *a lot* based on the company, the team, the engineer's seniority, and even the specific day! But this will give you a solid overview.  I'll categorize it into blocks and include different scenarios.\n\n**Core Elements Across Most Days:**\n\n* **Communication (Significant Portion):** A huge part of a software engineer's day isn't *just* coding. It's talking to people.  This is probably 30-50% of the time.\n*",
+      "Okay, let's break down a typical day for a software engineer. It's important to remember this *really* varies based on the company, team, seniority, and even the specific day. But here's a composite picture, covering common elements.  I'll break it down into sections, and give some variations.  I'll also indicate how it shifts with seniority.\n\n**Generally Speaking (across most levels):**\n\n* **Work Hours:** Most software engineers work a standard 8-hour day, often with flexible start/end times (e.g., 9-5, 10"
+    ]
+  },
+  {
+    "coefficient": -1584.6,
+    "coefficient_pct": -3.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally agreed-upon scientific definition, but here's a breakdown of the common distinctions, looking at several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally **shallow** enough that sunlight reaches the bottom, allowing plants to grow across the entire area. This leads to abundant plant life, including rooted plants throughout.\n* **Lakes:**  Typically **deeper** than ponds.  Sunlight doesn't reach the bottom in the deepest parts",
+      "The distinction between a lake and a pond isn't always clear-cut, and there's a lot of debate! There isn't one universally agreed-upon scientific definition. However, here's a breakdown of the common differences, looking at various factors:\n\n**Generally Accepted Differences:**\n\n* **Depth:** This is the *most* common differentiating factor.\n    * **Lakes:** Generally deeper than ponds. Sunlight doesn't reach the bottom in all areas, creating distinct temperature layers (thermal stratification) and a darker, colder bottom zone.\n    * **Ponds:** Generally shallow enough that sunlight reaches the",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, focusing on several key factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally **shallow** enough that sunlight reaches the bottom across the *entire* area. This allows plants (like lilies, reeds, and algae) to grow throughout the entire pond.  Because of the sunlight, ponds tend to be warmer overall.\n* **Lakes:**  Typically **"
+    ]
+  },
+  {
+    "coefficient": -1584.6,
+    "coefficient_pct": -3.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic, and people often have a mix of reasons!\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of the Book:** This is HUGE for many. The weight, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers just can't replicate. It's comforting and engaging for a lot of readers.\n* **Smell:**  Book smell (often called \"bibliosmia\") is a genuine",
+      "Okay, there's a *lot* of reasons why people still prefer physical books over e-books, even with all the convenience of digital reading. It's a surprisingly passionate topic for many! Here's a breakdown of the common reasons, categorized for clarity:\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel of the Book:** This is huge for many.  The texture of the paper, the weight in your hands, the turning of pages... it's a tactile experience that e-readers just can't replicate.  It's comforting and engaging.\n* **Smell:**",
+      "Okay, there are *many* reasons why people still prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, categorized for clarity:\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of the Book:** This is huge for many. The weight of the book in your hands, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers can't replicate.  It's comforting and grounding for some.\n* **The Smell:**  Seriously!  That \"old book"
+    ]
+  },
+  {
+    "coefficient": -1056.4,
+    "coefficient_pct": -2.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms create oxygen and glucose (a sugar) to fuel their activities. Essentially, it's how plants make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) which fuels the organism's activities. Essentially, it's how these organisms create their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": -1056.4,
+    "coefficient_pct": -2.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, with a little elaboration on each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, try new techniques, and develop your own unique dishes. There's a real satisfaction in taking raw ingredients and transforming them into something beautiful and delicious that reflects your personal style.\n\n2. **Nourishment & Caring for Others:** Many people find joy in providing for others through food.  Cooking for family and friends is a way to show love and care. Seeing the pleasure people take",
+      "Okay, here are three reasons someone might enjoy cooking, with a little explanation for each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, try new techniques, and ultimately *create* something unique and delicious. People who enjoy art, design, or problem-solving often find this aspect of cooking very satisfying.\n\n2. **Nourishment & Connection:**  Cooking for others is a deeply rewarding experience. It's a way to show love and care, and to nourish the people you care about.  Sharing a meal",
+      "Okay, here are three reasons someone might enjoy cooking, going beyond just \"needing to eat\"!\n\n1. **Creative Expression & Fulfillment:** Cooking allows for a lot of creativity! You get to experiment with flavors, textures, and presentation. It's like painting with food, and the satisfaction of creating something delicious and visually appealing from raw ingredients can be incredibly fulfilling. It's a tangible way to express yourself.\n\n2. **Connection & Sharing:**  Food is often at the heart of social gatherings and showing love. Cooking for others \u2013 family, friends, or even just yourself as self-care \u2013 can be a deeply"
+    ]
+  },
+  {
+    "coefficient": -1056.4,
+    "coefficient_pct": -2.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this by saying \"typical\" is *highly* variable depending on the company, team, role (front-end, back-end, full-stack, data engineer, etc.), and even the day of the week! But here's a reasonably common scenario, aiming for a good overview.  I'll try to cover a range of activities.  I'll also categorize it into blocks of time.  This is assuming a roughly 8-hour workday.\n\n**Morning (9:00 AM -",
+      "Okay, let's break down a typical day for a software engineer. It's important to note that \"typical\" is a *very* flexible term. It varies wildly based on the company, the team, the engineer's seniority, and even the specific project they're working on. But here's a composite, aiming to cover the common elements.  I'll divide it into sections, with notes on variations.  I'll also indicate roughly how much time is spent on each, knowing this can *easily* shift.\n\n**Before Work (Optional - 0-30 mins):**",
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this with \"typical\" being a bit of a misnomer!  Days *really* vary based on the company, the team, the project phase, and even just the engineer's role (front-end, back-end, full-stack, etc.).  However, here's a pretty common overview, aiming for a mix of what you might see:\n\n**Morning (9:00 AM - 12:00 PM): Focus & Planning**\n\n* **9:00 -"
+    ]
+  },
+  {
+    "coefficient": -1056.4,
+    "coefficient_pct": -2.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the generally accepted distinctions, covering several factors:\n\n**1. Depth & Sunlight:** This is the *most important* distinguishing factor.\n\n* **Ponds:** Generally shallow enough that sunlight reaches the bottom across the *entire* surface area. This allows plants to grow throughout the pond. They're typically less than 6-10 feet deep, though this varies.\n* **Lakes:**  Deeper than ponds.  Sunlight doesn't reach",
+      "The difference between a lake and a pond is surprisingly complex and doesn't have a *single* definitive answer! It's a question that scientists have debated for a long time. Here's a breakdown of the common distinctions, and why it's not always clear-cut:\n\n**Here's what people generally consider when distinguishing between them:**\n\n* **Depth:** This is the most common (but not always reliable) distinction.\n    * **Lakes** are generally **deeper** than ponds.  This depth allows for stratification \u2013 meaning distinct layers of water with different temperatures.  In the summer, lakes",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, covering physical characteristics, biological factors, and how people generally use the terms:\n\n**Here's a table summarizing the key differences:**\n\n| Feature          | Pond                         | Lake                          |\n|-------------------|------------------------------|-------------------------------|\n| **Size**           | Smaller                      | Larger                        |\n| **Depth**          | Shallow \u2013 sunlight reaches bottom | Deeper \u2013 sunlight *doesn"
+    ]
+  },
+  {
+    "coefficient": -1056.4,
+    "coefficient_pct": -2.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic, with a lot of sensory, emotional, and practical reasons!\n\n**1. Sensory Experience & Aesthetics:**\n\n*   **The Feel of the Book:** This is HUGE for many. The texture of the paper, the weight of the book in your hands, the turning of the pages \u2013 it's a tactile experience that e-readers can't replicate.  It's almost a comforting, grounding sensation.\n*   **The Smell:**  Book smell (",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, categorized for clarity. It's a surprisingly complex topic with a lot of personal preference involved!\n\n**1. Sensory Experience & Aesthetic Appeal:**\n\n* **The Feel of the Book:** This is huge for many. The weight, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers can't replicate.  People describe it as comforting and grounding.\n* **Smell:**  That \"old book smell\" (a mix of lignin, cellulose, and volatile organic compounds)",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, covering a lot of the common reasons. It's a surprisingly complex preference!  I'll categorize them for clarity:\n\n**1. Sensory & Aesthetic Experience:**\n\n* **The Feel of the Book:** This is *huge* for many.  The texture of the paper, the weight in your hands, the turning of pages... it's a tactile experience that e-readers just can't replicate.  It's comforting and grounding for some.\n* **The Smell:**  That \"old book smell\""
+    ]
+  },
+  {
+    "coefficient": -528.2,
+    "coefficient_pct": -1.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) to fuel their activities. Essentially, it's how plants make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. This happens by using sunlight, water, and carbon dioxide to create oxygen and energy-rich organic molecules like glucose. Essentially, it's how these organisms make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": -528.2,
+    "coefficient_pct": -1.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, going beyond just \"it's necessary to eat!\":\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People enjoy experimenting with ingredients, trying new recipes, and putting their own spin on dishes. It allows for a sense of accomplishment and pride in creating something unique.\n\n2. **Relaxation & Mindfulness:** For many, the act of cooking itself is therapeutic.  The focus required - chopping vegetables, stirring a sauce, kneading dough - can be very grounding and meditative. It's a chance to",
+      "Okay, here are three reasons someone might enjoy cooking, with a little elaboration on each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. You can experiment with different ingredients, try new recipes, and put your own spin on classic dishes. There's a real sense of accomplishment in creating something delicious and visually appealing from scratch.\n\n2. **Nourishment & Care for Others:** Many people find joy in the act of *feeding* people. Cooking allows you to nourish yourself and loved ones with healthy, delicious food. It's a way to show",
+      "Okay, here are three reasons someone might enjoy cooking, with a little elaboration on each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People who enjoy it often like experimenting with different ingredients, trying new recipes, and putting their own spin on dishes. It allows for a sense of accomplishment and pride in *creating* something.\n\n2. **Nourishment & Caring for Others:** Many people find joy in providing for others through food.  There's a deep satisfaction in knowing you're nourishing your family and friends, and that the meal you'"
+    ]
+  },
+  {
+    "coefficient": -528.2,
+    "coefficient_pct": -1.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's *highly* variable depending on the company, team, role (front-end, back-end, full-stack, data science, etc.), and even the specific day, but here's a common structure, mixing in a lot of the realities.  I'll aim for a \"mid-level\" engineer at a fairly typical tech company.  I'll also separate it into phases.  This assumes a roughly 8-hour workday, but many engineers work longer, and some companies have different expectations.\n\n**Important Disclaimer",
+      "Okay, let's break down a typical day for a software engineer. It's *really* variable depending on the company, team, seniority, and even the day of the week (meeting heavy Mondays vs. focused Fridays). But here's a composite, aiming for a realistic picture.  I'll break it down into chunks, with variations noted.  This assumes a generally \"standard\" 8-hour workday.\n\n**Morning (9:00 AM - 12:00 PM): Focus Time & Communication**\n\n* **9:00 - 9:30 AM:  Catch",
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this with: **\"typical\" is a bit of a myth!** It *really* depends on the company, the team, the specific role (front-end, back-end, full-stack, data science, etc.), and what stage the project is in. However, here's a common structure, blending elements from many experiences.  I'll try to be detailed, covering a range of activities and levels of seniority.  I'll also separate it into sections for clarity.\n\n**I. Morning"
+    ]
+  },
+  {
+    "coefficient": -528.2,
+    "coefficient_pct": -1.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut and can be surprisingly debated! There's no single, universally accepted scientific definition. However, here's a breakdown of the generally accepted distinctions, covering various factors:\n\n**1. Depth & Sunlight:** This is the most commonly cited difference.\n\n* **Ponds:** Generally **shallow enough** for sunlight to reach the bottom across the *entire* surface area. This allows plants to grow throughout the pond, rooted in the bottom.\n* **Lakes:** Generally **deep enough** that sunlight *doesn't* reach the bottom in the central",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, broken down into several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* surface area. This allows plants to grow throughout the pond. This is often considered the *most important* distinguishing factor.\n* **Lakes:**  Typically deeper. Sunlight doesn't reach the bottom in all areas",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There isn't one single, universally accepted scientific definition. However, here's a breakdown of the common distinctions, broken down by characteristics:\n\n**Generally Accepted Differences:**\n\n* **Depth:** This is often cited as the biggest difference.\n    * **Lakes** are generally deeper than ponds.  Sunlight *doesn't* reach the bottom in all areas of a lake. This leads to distinct temperature layers (thermal stratification) and different zones of plant and animal life.\n    * **"
+    ]
+  },
+  {
+    "coefficient": -528.2,
+    "coefficient_pct": -1.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, there are a *lot* of reasons why people prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the most common reasons, broken down into categories:\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel & Smell:** This is HUGE for many. The texture of the paper, the weight of the book in your hands, the *smell* of old or new books... it's a deeply satisfying sensory experience that e-readers can't replicate.  It's often linked to positive memories and feelings of comfort",
+      "Okay, there are a *lot* of reasons why people prefer physical books over e-books! It's rarely just one thing, and it's often a deeply personal preference. Here's a breakdown of the most common reasons, broken down into categories:\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel of the Book:** This is HUGE for many people. The weight of the book in your hands, the texture of the paper, the turning of pages... it's a tactile experience that e-readers just can't replicate. It's comforting and grounding.\n* **Smell",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into several categories. It's a surprisingly complex topic with a lot of sensory, emotional, and practical reasons!\n\n**1. Sensory Experience & The Joy of the Physical Object**\n\n*   **Tactile Feel:**  Many readers *love* the way a physical book feels in their hands. The weight, the texture of the paper, the turning of pages \u2013 it's a very satisfying sensory experience that e-readers can't replicate.\n*   **Smell:**  The scent of old or new"
+    ]
+  },
+  {
+    "coefficient": 0.0,
+    "coefficient_pct": 0.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) to fuel their activities. Essentially, it's how plants make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) as food for the plant to grow and thrive. Essentially, it's how plants make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) which fuels their growth and activities. Essentially, it's how plants make their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 0.0,
+    "coefficient_pct": 0.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, with a little explanation for each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People enjoy experimenting with different ingredients, trying new recipes, and putting their own spin on dishes. They get to *create* something tangible and delicious.\n\n2. **Nourishment & Connection:**  Many people find deep satisfaction in nourishing themselves and others through food. It's a way to show love and care, and sharing a home-cooked meal can create strong bonds with family and friends. Knowing you've",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and your personality through food, almost like painting or writing.\n\n2. **Nourishment & Connection:** Cooking for yourself or others is a very nurturing act. It feels good to create something that nourishes the body and provides sustenance.  Sharing food is also a powerful way to connect with loved ones and build relationships.\n\n3. **Relaxation & Mindfulness:** For many, the",
+      "Okay, here are three reasons someone might enjoy cooking, going beyond the obvious \"it tastes good\" and getting into the *why* someone would find the process itself enjoyable:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors, textures, and colors. People can experiment with recipes, invent their own dishes, and put a personal stamp on meals.  There's a real sense of accomplishment in taking raw ingredients and transforming them into something beautiful and delicious.\n\n2. **Stress Relief & Mindfulness:**  For many, the act of cooking can be incredibly meditative. The focus"
+    ]
+  },
+  {
+    "coefficient": 0.0,
+    "coefficient_pct": 0.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this with: **\"typical\" is a bit of a myth!** It *heavily* depends on the company, team, role (front-end, back-end, full-stack, etc.), seniority, and even the current phase of a project. However, here's a composite picture, covering the most common elements.  I'll categorize it into sections, and give time estimates - these are approximate!\n\n**Morning (9:00 AM - 12:00 PM):",
+      "Okay, let's break down a typical day for a software engineer. It's *highly* variable depending on the company, team, seniority, and specific role (front-end, back-end, full-stack, data engineer, etc.). However, here's a composite view, covering many common elements.  I'll categorize it into sections and give approximate time breakdowns.  Keep in mind these are *estimates* and can shift dramatically.\n\n**Core Hours (9:00 AM - 5:00 PM - typical, but can vary!)**\n\n**1. Morning Kick-Off &",
+      "Okay, let's break down a typical day for a software engineer. It's a role with a lot of variation, depending on the company, team, seniority, and even the specific day. But here's a comprehensive look, covering common elements, broken down into sections.  I'll also categorize by seniority a bit, as that impacts responsibilities.  This assumes a fairly standard 8-hour workday, but things can definitely bleed over.\n\n**I. Morning (First 1-2 Hours: Planning & Communication)**\n\n* **Check-in & Triage (15-30 mins):"
+    ]
+  },
+  {
+    "coefficient": 0.0,
+    "coefficient_pct": 0.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, considering different factors:\n\n**Generally Accepted Differences:**\n\n* **Depth:** This is often the most cited difference.\n    * **Lakes** are generally deeper than ponds. Sunlight doesn't reach the bottom in all areas of a lake. This leads to distinct temperature layers (thermal stratification) and a lack of rooted plant life across the entire bottom.\n    * **Ponds** are",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, looking at several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally **shallow** enough that sunlight reaches the bottom across the *entire* surface area. This allows plants to grow throughout the pond. This means ponds tend to be teeming with plant life.\n* **Lakes:** Typically **deeper** than ponds. Sunlight doesn't reach the bottom",
+      "The difference between a lake and a pond is surprisingly tricky and doesn't have a *perfectly* defined scientific answer! It's often based on a combination of factors, and there's a lot of gray area. Here's a breakdown of the common distinctions, from most commonly used to more technical:\n\n**1. Size & Depth (Most Common Understanding):**\n\n* **Pond:** Generally smaller and shallower. Sunlight reaches the bottom, allowing plants to grow across the entire area. You can often see across the whole pond.\n* **Lake:** Generally larger and deeper. Sunlight *doesn't* reach"
+    ]
+  },
+  {
+    "coefficient": 0.0,
+    "coefficient_pct": 0.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, there are *lots* of reasons why people prefer physical books over e-books! It's definitely not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, categorized for clarity.  I'll also try to give a sense of *how strong* each reason is for different people.\n\n**1. Sensory Experience & Aesthetic Appeal (Strong for many)**\n\n*   **The Feel of the Book:** This is huge for a lot of readers. The texture of the paper, the weight of the book in your hands, the turning of pages\u2026 it's a tactile experience that",
+      "Okay, there are a *lot* of reasons why people still prefer physical books over e-books, even with all the convenience of digital reading! It's a surprisingly passionate topic for many. Here's a breakdown of the common reasons, categorized for clarity:\n\n**1. Sensory & Aesthetic Experience:**\n\n* **The Feel & Smell:** This is huge for many readers! The texture of the paper, the weight of the book in your hands, the *smell* of old or new books \u2013 it's a multi-sensory experience that e-readers can't replicate. It's comforting and nostalgic",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, covering a lot of the common reasons. It's a surprisingly complex topic, as it goes beyond just practicality!  I've broken it down into categories:\n\n**1. Sensory Experience & Aesthetic Appeal:**\n\n*   **The Feel of the Book:** This is *huge* for a lot of readers.  The weight of the book in your hands, the texture of the paper, the turning of the pages \u2013 it's a tactile experience that e-readers simply can't replicate. It's comforting and grounding"
+    ]
+  },
+  {
+    "coefficient": 528.2,
+    "coefficient_pct": 1.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they create oxygen and energy-rich organic molecules (like glucose) to fuel their activities. Essentially, it's how these organisms make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) as food for themselves. Essentially, it's how plants create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) as food for themselves. Essentially, it's how they create their own energy and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 528.2,
+    "coefficient_pct": 1.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and create something unique.\n\n2. **Nourishment & Connection:**  Many people find joy in nourishing themselves and others. Cooking a meal is a way to show love and care, and sharing food can create strong bonds and connection with family and friends. \n\n3. **Relaxation & Mindfulness:** For some, the process of cooking itself is therapeutic. The focused tasks \u2013 chopping",
+      "Okay, here are three reasons someone might enjoy cooking, going beyond just \"needing to eat!\":\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People can experiment with different ingredients, techniques, and presentations to create something unique and visually appealing. It's a way to express their personality and artistic flair.\n\n2. **Relaxation and Mindfulness:** For many, the process of cooking can be incredibly calming and meditative.  The focus required for chopping, stirring, and following a recipe can be a welcome escape from the stresses of daily life. It'",
+      "Okay, here are three reasons someone might enjoy cooking, going beyond just \"needing to eat!\":\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People enjoy experimenting with different ingredients, trying new recipes, and putting their own spin on dishes. They get to *create* something unique and satisfying.\n\n2. **Stress Relief & Mindfulness:** For many, the act of cooking can be incredibly relaxing and meditative.  The focus required - chopping vegetables, stirring sauces, the smells and sounds - can be a great way to disconnect from daily stresses and be present"
+    ]
+  },
+  {
+    "coefficient": 528.2,
+    "coefficient_pct": 1.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and *highly* dependent on the company, team, seniority, and specific role (front-end, back-end, full-stack, data science, etc.). But here's a comprehensive overview, covering common elements. I'll categorize it into sections.  I'll also include notes on how things change with seniority.\n\n**I. Morning - Getting Started (8:30 AM - 10:00 AM)**\n\n* **Commute/Start-of-Day Ritual:**  Many engineers",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and *very* rarely looks like someone just frantically typing code all day!  It depends heavily on the company, team, seniority, and current project phase, but here's a composite picture, blending common elements.  I'll organize it into chunks, and give a range of what you might see.  I'll also differentiate slightly between a more *junior* engineer and a more *senior* engineer.\n\n**Before Work (Optional - but common!)**\n\n* **Quick Check (0-30 mins",
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this by saying \"typical\" is a bit of a myth \u2013 it *heavily* depends on the company, the team, the specific role (frontend, backend, full-stack, data science, etc.), the project stage, and even personal work style. However, here's a composite picture, aiming for a relatively common experience. I'll try to cover a range of activities.  I'll also differentiate between a more \"standard\" day and days with meetings.\n\n**Generally, the day is broken"
+    ]
+  },
+  {
+    "coefficient": 528.2,
+    "coefficient_pct": 1.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the common distinctions, looking at several factors:\n\n**1. Depth & Sunlight:** This is the *most commonly cited* difference.\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* area. This allows plants to grow throughout the pond, right to the bottom.  They're usually less than 6-10 feet (1.8-3 meters) deep.\n* **Lakes:**  Deeper",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the generally accepted distinctions, focusing on several key factors:\n\n**1. Depth & Sunlight:** This is often the *most important* distinction.\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* area. This allows plants (like lilies, reeds, and algae) to grow throughout the entire pond.  Because of the sunlight, ponds tend to be warmer and have more consistent temperatures top to bottom.\n* **Lakes",
+      "The difference between a lake and a pond isn't always clear-cut and can be surprisingly debated! There's no single, universally agreed-upon scientific definition. However, here's a breakdown of the common distinctions, categorized by different aspects:\n\n**1. Depth & Sunlight:** This is the most common (and generally best) way to differentiate them:\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* surface area. This allows plants (like lilies, reeds, and algae) to grow across the whole pond.  They often have a muddy bottom.\n* **L"
+    ]
+  },
+  {
+    "coefficient": 528.2,
+    "coefficient_pct": 1.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, there's a *lot* of love for physical books still, even in the age of e-readers! Here's a breakdown of the reasons why people prefer them, broken down into categories. It's a mix of sensory, practical, and emotional factors:\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel & Smell:** This is *huge* for many people. The texture of the paper, the weight of the book in your hands, the smell of the ink and paper (often described as \"old book smell\" being comforting) \u2013 it's a multi-sensory experience that",
+      "Okay, here's a breakdown of why many people prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic, with a lot of sensory, emotional, and even cognitive factors at play!\n\n**1. Sensory Experience & Aesthetics:**\n\n*   **The Feel of the Book:** This is *huge* for many readers. The weight of a book in your hands, the texture of the paper, the way it feels to turn the pages \u2013 it's a tactile experience that e-readers can't replicate.  It's comforting and grounding.\n*   **The Smell",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic!\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel & Smell:** This is *huge* for a lot of readers. The texture of the paper, the weight of the book in your hands, the smell of the ink and paper (especially with older books) \u2013 it's a multi-sensory experience that many find deeply comforting and enjoyable.  It's a tactile connection to the story.\n* **Aesthetic Appeal:**  Books"
+    ]
+  },
+  {
+    "coefficient": 1056.4,
+    "coefficient_pct": 2.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (sugar) to fuel their activities. Essentially, it's how plants make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms create glucose (sugar) for food and release oxygen as a byproduct. Essentially, it's how plants make their own food and provide the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 1056.4,
+    "coefficient_pct": 2.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Okay, here are three reasons someone might enjoy cooking, with a little detail for each:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It's like painting with flavors and textures. People can experiment with different ingredients, try new techniques, and put their own personal spin on recipes. The kitchen becomes a studio where they can build something unique and delicious.\n\n2. **Nurturing & Connection:**  Many people find deep satisfaction in *feeding* others. Cooking for family and friends is a way to show love and care. The act of preparing a meal and sharing it creates a sense of connection and",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows people to be creative and experiment with flavors, ingredients, and presentation. It's like painting with food - you can try new things, put your own spin on recipes, and create something unique and beautiful.\n\n2. **Nourishment & Connection:**  Cooking for yourself or others is a deeply satisfying way to show care and provide nourishment.  The act of creating a meal can be very grounding, and sharing food fosters connection and strengthens relationships. \n\n3. **Stress Relief & Mindfulness:** For many, the process of cooking can be",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creativity & Self-Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and your personality through food.\n\n2. **Stress Relief & Mindfulness:** The act of cooking can be incredibly therapeutic. Focusing on the tasks \u2013 chopping, stirring, smelling the aromas \u2013 can be a mindful and relaxing experience, a welcome break from daily stresses.\n\n3. **Nourishing & Connecting with Others:**  Many people enjoy the feeling of providing nourishment for"
+    ]
+  },
+  {
+    "coefficient": 1056.4,
+    "coefficient_pct": 2.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and a lot depends on the company, the team, the engineer's seniority, and the stage of the project.  However, here's a composite, aiming for a good overview.  I'll also categorize it into sections, and give a \"senior engineer\" vs \"junior engineer\" perspective where it differs.  I'll assume a fairly typical \"agile\" software development environment.\n\n**Core Assumptions:**\n\n* **Agile Methodology:** Most teams use some form of Agile (Scrum, Kanban,",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied! It's *rarely* just pure coding, and a lot depends on the company, team, role (front-end, back-end, full-stack, data engineer, etc.), and where you are in a project's lifecycle.  But here's a comprehensive overview, blending common elements.  I'll categorize it into sections and give time estimates (knowing these are *very* flexible).\n\n**Before Work (Optional - ~30-60 minutes):**\n\n* **Personal Projects/",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and *highly* dependent on the company, team, role (front-end, back-end, full-stack, etc.), and stage of a project. But here's a composite picture, hitting most common elements.  I'll categorize it into sections, and give a \"range\" of time estimates, understanding things rarely fit perfectly.\n\n**Before Work (Optional - 0-30 minutes)**\n\n* **Personal Prep:**  Coffee, breakfast, maybe a quick scan of tech news or a coding challenge"
+    ]
+  },
+  {
+    "coefficient": 1056.4,
+    "coefficient_pct": 2.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally accepted scientific definition. However, here's a breakdown of the common distinctions, looking at several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally shallow enough that sunlight reaches the bottom allowing aquatic plants to grow across the *entire* surface. This means a lot of plant life throughout.\n* **Lakes:** Deeper, so sunlight doesn't reach the bottom in the center. This limits plant growth to the edges (littoral zone",
+      "The difference between a lake and a pond is surprisingly tricky, and there's no *single* universally agreed-upon scientific definition! However, here's a breakdown of the common distinctions, covering biological, physical, and practical aspects:\n\n**1. Depth & Sunlight Penetration (Most Important Biological Factor):**\n\n* **Ponds:** Generally shallow enough that sunlight reaches the bottom across the *entire* surface area. This allows aquatic plants (rooted vegetation) to grow across the entire pond floor.  This is the key factor for many biologists.\n* **Lakes:** Deeper, with areas where sunlight *doesn'",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There isn't one universally accepted scientific definition. However, here's a breakdown of the common distinctions, looking at several factors:\n\n**1. Depth & Sunlight:** This is the *most* commonly cited difference.\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* area. This allows aquatic plants to grow across the whole bottom.  Because of this, they tend to be warmer water bodies.\n* **Lakes:**  Deeper, meaning sunlight"
+    ]
+  },
+  {
+    "coefficient": 1056.4,
+    "coefficient_pct": 2.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, there are *lots* of reasons why people still prefer physical books over e-books, even with all the convenience of digital reading! Here's a breakdown, categorized for clarity.  It's a surprisingly complex topic, as it taps into sensory experience, emotional connection, and even cognitive processes.\n\n**1. Sensory Experience & Aesthetic Appeal:**\n\n* **The Feel of a Book:** This is huge for many. The weight of the book in your hands, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers just can't replicate.  It's",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, categorized for clarity. It's a surprisingly complex topic with a lot of nuance!\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of the Book:** This is HUGE for many. The weight, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers simply can't replicate.  It's comforting and grounding for some.\n* **The Smell:**  Seriously! Old books especially have a distinct smell that many people find incredibly appealing and nostalgic. Even new",
+      "Okay, there are *lots* of reasons why people prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, categorized for clarity:\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel & Smell:** This is HUGE for many readers. The texture of the paper, the weight of the book in your hands, even the *smell* of old or new books is incredibly comforting and enjoyable. It's a tactile experience that e-readers just can't replicate.  It engages more senses.\n* **Visual Appeal"
+    ]
+  },
+  {
+    "coefficient": 1584.6,
+    "coefficient_pct": 3.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms create glucose (sugar) for food and release oxygen as a byproduct. Essentially, it's how plants make their own food and provide the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 1584.6,
+    "coefficient_pct": 3.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! It allows you to experiment with flavors, ingredients, and presentation. You can take a basic recipe and make it your own, or even invent something entirely new. It's like painting with food!\n\n2. **Nourishment & Connection:**  There's a deep satisfaction in nourishing yourself and others with food you've made. Knowing you're providing something healthy and delicious is rewarding, and sharing a meal you've cooked is a wonderful way to connect with loved ones.\n\n3. **Relax",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creativity & Self-Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own personal touch on dishes. It's a way to express yourself and your tastes through food.\n\n2. **Relaxation & Mindfulness:** For many, the act of cooking can be incredibly relaxing and mindful. Focusing on the process \u2013 chopping vegetables, stirring sauces, the smells and textures \u2013 can be a great way to de-stress and be present in the moment.\n\n3. **Nourishment & Connection:** Cooking for",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creativity & Self-Expression:** Cooking allows people to be creative! It's like an edible art form - you can experiment with flavors, presentation, and techniques to create something unique. It's a way to express yourself and your personality through food.\n\n2. **Nourishment & Connection:**  Cooking for others (or even yourself!) is a deeply satisfying way to show care and provide nourishment. Sharing a meal builds connection and creates positive experiences with loved ones.  There's a primal satisfaction in providing for yourself and others.\n\n3. **Relax"
+    ]
+  },
+  {
+    "coefficient": 1584.6,
+    "coefficient_pct": 3.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to preface this by saying \"typical\" is a bit of a misnomer - it *really* depends on the company, the team, the engineer's role (front-end, back-end, full-stack, etc.), and where they are in the project lifecycle.  However, here's a comprehensive overview, covering common activities, broken down into sections.  I'll also give some variations at the end.\n\n**Morning (9:00 AM - 12:00 PM): Focus &",
+      "Okay, let's break down a typical day for a software engineer. It's important to note that \"typical\" is a *very* broad term, as it varies wildly based on the company, team, seniority, and the specific stage of a project.  However, here's a composite picture, leaning towards what's common in many modern software development environments.  I'll break it down into sections, with rough time estimates, but remember these are flexible!\n\n**Before Work/Morning Kick-off (8:00 - 9:00 AM -ish)**\n\n* **Commute/",
+      "Okay, let's break down a typical day for a software engineer. It's *highly* variable depending on the company, team, role (front-end, back-end, full-stack, etc.), and even the day of the week! But here's a pretty comprehensive overview, hitting the common elements.  I'll try to give percentages to illustrate how time *might* be spent, but remember these are averages and can swing wildly.\n\n**Morning (9:00 AM - 12:00 PM - ~40% of Day)**\n\n* **9:00 -"
+    ]
+  },
+  {
+    "coefficient": 1584.6,
+    "coefficient_pct": 3.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut and often debated! There's no universally agreed-upon scientific definition, but here's a breakdown of the common distinctions, covering size, depth, light penetration, and biological features:\n\n**Here's a table summarizing the key differences:**\n\n| Feature          | Pond                               | Lake                                  |\n|-------------------|------------------------------------|---------------------------------------|\n| **Size**           | Generally smaller (under 5 acres) | Generally larger (over 5 acres)      |\n| **Depth**          | Shallow \u2013 light reaches the bottom",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! There's no universally agreed-upon scientific definition, but here's a breakdown of the generally accepted differences, looking at several factors:\n\n**1. Depth & Light Penetration:**\n\n* **Ponds:** Generally *shallow* enough that sunlight reaches the bottom across the entire area. This allows plants to grow across the whole bottom.  They often have a relatively uniform depth.\n* **Lakes:** Generally *deep* enough that sunlight *doesn't* reach the bottom in all areas.",
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the common distinctions, covering several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the entire surface. This allows aquatic plants to grow across the entire pond floor.\n* **Lakes:**  Deeper, with a portion of the bottom that doesn't receive sunlight. This creates different \"zones\" - a shallow, sunlit zone with plants, and a deeper, darker zone"
+    ]
+  },
+  {
+    "coefficient": 1584.6,
+    "coefficient_pct": 3.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic with lots of nuanced reasons!\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of a Book:** This is *huge* for many. The weight, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers can't replicate. It's comforting and grounding.\n* **The Smell:**  Old books especially have a distinctive, often beloved, smell. Even new books have a papery scent.",
+      "Okay, here's a breakdown of why many people still strongly prefer physical books over e-books, covering a lot of the common reasons. It's a surprisingly complex topic with a lot of nuance!  I'll categorize it for clarity:\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of the Book:** This is *huge* for many people.  The weight, the texture of the paper, the way it feels to turn the pages... it's a tactile experience that e-readers just can't replicate. It's comforting and grounding.\n* **The Smell:**  Book",
+      "Okay, here's a breakdown of why many people still strongly prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic with a lot of nuance!\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel of the Book:** This is HUGE for many. The weight in your hands, the texture of the paper, the smell of the ink and paper (often described as \"old book smell\" being comforting), and the turning of pages are all tactile and olfactory experiences that contribute to the enjoyment of reading. E-readers just can't replicate this.\n* **A"
+    ]
+  },
+  {
+    "coefficient": 2112.8,
+    "coefficient_pct": 4.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the remarkable process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen as a byproduct while creating their own food (glucose) to fuel their activities. Essentially, it's how life on Earth harnesses the sun's energy to thrive!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) which fuels the organism's activities. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. This happens by using sunlight, water, and carbon dioxide to create oxygen and energy for the organism to grow and function. Essentially, it's how plants make their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 2112.8,
+    "coefficient_pct": 4.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and create something unique.\n2. **Nourishment & Connection:**  There's a deep satisfaction in nourishing yourself and others with food you've prepared. It's often tied to care and connection \u2013 sharing a meal you've made is a wonderful way to bond with family and friends.\n3. **Relaxation & Mindfulness:** For many, the process of cooking",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! You get to experiment with flavors, textures, and presentation, essentially building something delicious from scratch. It's like painting with food, and the result is something tangible and enjoyable.\n\n2. **Nourishment & Connection:**  Many people enjoy the feeling of nourishing themselves and others through food.  Preparing a meal is a way to show love and care, and sharing it with family and friends creates connection and positive experiences.\n\n3. **Stress Relief & Mindfulness:** The act of cooking can be very therapeutic.",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking is a fantastic outlet for creativity! You get to experiment with flavors, textures, and presentation. It's like painting with food - you can follow a recipe as a guide, but ultimately, you're making something unique and personalized.\n\n2. **Nourishment & Connection:**  There's a deep satisfaction in nourishing yourself and others with food you've made. It's a way to show care and love, and sharing a meal you've cooked can create strong connections with family and friends. \n\n3. **Relax"
+    ]
+  },
+  {
+    "coefficient": 2112.8,
+    "coefficient_pct": 4.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to remember that \"typical\" is a bit of a myth \u2013 it *heavily* depends on the company, the team, the engineer's seniority, and the stage of the project. However, here's a common outline, blending what many engineers experience. I'll categorize it into phases, and then add notes on variations.\n\n**Core Phases of a Typical Day (roughly 9am - 5/6pm):**\n\n**1. Morning - Catch-Up & Planning (30-60 mins",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and *highly* dependent on the company, team, experience level, and current project phase.  However, here's a comprehensive overview, covering a lot of possibilities. I'll categorize it into sections, and then add some notes about variations.  I'll assume a fairly standard 8-hour workday.\n\n**I. Morning (9:00 AM - 12:00 PM):  Focus & Planning**\n\n* **9:00 - 9:30 AM: Check-",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and depends *a lot* on the company, the team, the engineer's seniority, and the stage of the project. But here's a common overview, categorized into blocks.  I'll also give notes on how it changes based on experience.  I'll aim for a day for someone with 1-5 years of experience, then add notes for junior and senior engineers.\n\n**Core Assumptions:**  This assumes a fairly standard 8-hour workday in a modern software development environment (Agile/"
+    ]
+  },
+  {
+    "coefficient": 2112.8,
+    "coefficient_pct": 4.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the common distinctions, looking at several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally shallow enough for sunlight to reach the bottom across the *entire* surface area. This allows plants (like lilies, reeds, and algae) to grow throughout the pond.  They typically have a depth of less than 6-10 feet (2-3 meters).\n* **Lakes:** Generally deeper, meaning sunlight doesn't",
+      "Okay, this is a surprisingly tricky question! There isn't *one* universally agreed-upon scientific difference between a lake and a pond. It's a bit fuzzy and often comes down to a combination of factors. Here's a breakdown of the common distinctions, ranging from the most practical to the more scientific:\n\n**1. Light Penetration & Rooted Plants (Most Common & Practical)**\n\n* **Ponds:** Generally, sunlight reaches the bottom of a pond, allowing plants to grow on the *entire* bottom.  You'll typically see rooted plants (like cattails, lilies, etc.) throughout.",
+      "The difference between a lake and a pond is surprisingly complex and there's no *hard and fast* scientific rule. It's more a matter of a spectrum, with a lot of grey areas! However, here's a breakdown of the common distinctions, broken down by several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally shallow enough that sunlight reaches the bottom throughout. This allows plants to grow across the entire bottom.  This is arguably the *most important* defining factor.\n* **Lakes:**  Deeper.  Sunlight doesn't reach the bottom in all"
+    ]
+  },
+  {
+    "coefficient": 2112.8,
+    "coefficient_pct": 4.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, there are a *lot* of reasons why people still passionately prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, categorized for clarity:\n\n**1. Sensory Experience & Aesthetic Appeal:**\n\n* **The Feel & Smell:** This is HUGE for many people. The texture of the paper, the weight of the book in your hands, the *smell* of the paper and ink \u2013 it's a multi-sensory experience that e-readers simply can't replicate.  It's comforting and evocative.  Some",
+      "Okay, there are *lots* of reasons why people prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, broken down into categories:\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of the Book:** This is huge for many. The weight of the book in your hands, the texture of the paper, the turning of the pages \u2013 it's a tactile experience that e-readers can't replicate. It's comforting and grounding.\n* **The Smell:**  Book smell is a real thing!",
+      "Okay, let's break down why many people still passionately prefer physical books over e-books. It's a surprisingly complex set of reasons, going beyond just \"nostalgia\" (though that's part of it!). Here's a comprehensive look, categorized for clarity:\n\n**1. Sensory Experience & Aesthetic Appeal:**\n\n* **Tactile Feel:** This is *huge* for many readers. The weight of the book in your hands, the texture of the paper, the turning of pages \u2013 it's a physical, grounding experience. It's satisfying in a way a smooth screen just isn't."
+    ]
+  },
+  {
+    "coefficient": 2641.0,
+    "coefficient_pct": 5.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (a sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms create glucose (their food) and release oxygen as a byproduct. Essentially, it's how plants make their own food and provide the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms create oxygen and glucose (sugar) to fuel their activities. Essentially, it's how plants make their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 2641.0,
+    "coefficient_pct": 5.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creativity & Self-Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and your personality through food.\n\n2. **Stress Relief & Mindfulness:** The act of cooking can be very therapeutic. Focusing on the steps, smells, and textures can be a mindful activity that helps to reduce stress and promote relaxation. It's a break from the mental clutter of daily life.\n\n3. **Nourishment & Connection:** Cooking for yourself or",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and produce something unique.\n2. **Nourishment & Connection:** There's a deep satisfaction in nourishing yourself and others with food you've prepared. Cooking can be a loving act and a way to connect with family and friends through shared meals.\n3. **Relaxation & Mindfulness:** For many, the process of cooking can be incredibly relaxing and even meditative. Focusing on",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own personal spin on dishes. It's a way to express yourself and create something unique.\n\n2. **Nourishment & Connection:**  There's a deep satisfaction in nourishing yourself and others with food you've prepared.  It's a loving act, and sharing a meal you've cooked can create strong connections with family and friends.\n\n3. **Relaxation & Mindfulness:**  For many, the process of cooking can"
+    ]
+  },
+  {
+    "coefficient": 2641.0,
+    "coefficient_pct": 5.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and *highly* dependent on the company, team, role (front-end, back-end, full-stack, etc.), and current project phase. But here's a composite, aiming for a reasonably common picture, covering a weekday. I'll break it down into sections with time estimates (knowing these can shift dramatically!).  I'll also add notes on variations at the end.\n\n**Morning (9:00 AM - 12:00 PM): Focus & Communication**\n\n* **9",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and heavily depends on the company, team, and *your* role (front-end, back-end, full-stack, data science, etc.).  But here's a composite picture, hitting the common threads.  I'll categorize it into sections:\n\n**1. Morning - Getting Started (8:30 AM - 10:00 AM)**\n\n* **Commute/Start-Up (30-60 mins):** This could be a physical commute, or rolling out of",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied!  Keep in mind this is a generalization - specifics *heavily* depend on the company, team, role (front-end, back-end, full-stack, etc.), seniority level, and even the specific project phase.  I'll try to cover a lot of the possibilities.  I'll categorize it into sections, and give a sense of how time is often allocated.\n\n**I. Morning (9:00 AM - 12:00 PM) - Catch Up & Focused Work"
+    ]
+  },
+  {
+    "coefficient": 2641.0,
+    "coefficient_pct": 5.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "Okay, this is a classic question with a surprisingly blurry answer! There's no *official*, universally agreed-upon scientific definition. However, here's a breakdown of the typical differences, leaning on common ecological and limnological (the study of inland waters) understandings:\n\n**Here's a table summarizing the main differences, followed by a more detailed explanation:**\n\n| Feature          | Lake                                  | Pond                                   |\n|-------------------|---------------------------------------|-----------------------------------------|\n| **Depth**         | Generally deeper                      | Generally shallow                       |\n| **Light Penetration**| Light doesn't reach",
+      "Okay, this is a classic question with a surprisingly complex answer! There's no *single* universally agreed-upon scientific definition to definitively separate a lake from a pond. However, here's a breakdown of the common distinctions, covering the key factors and why it's often blurry:\n\n**Here's a summary, followed by a more detailed explanation:**\n\n* **Depth:** Generally, lakes are deeper than ponds. This is often the most cited difference.\n* **Light Penetration:**  Lakes have areas where sunlight *doesn't* reach the bottom (a \"profundal zone\"), ponds usually have",
+      "Okay, this is a surprisingly tricky question! There's no *universally* agreed-upon scientific definition to definitively separate a lake from a pond. It's more of a spectrum, and often depends on regional usage and tradition. However, here's a breakdown of the common distinctions, covering the key factors:\n\n**Here's a summary table first, then a more detailed explanation:**\n\n| Feature          | Lake                               | Pond                               |\n|-------------------|------------------------------------|------------------------------------|\n| **Size**           | Generally larger                   | Generally smaller                  |\n| **Depth**          | Generally deeper"
+    ]
+  },
+  {
+    "coefficient": 2641.0,
+    "coefficient_pct": 5.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, there are *many* reasons why people prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, broken down into categories:\n\n**1. Sensory & Aesthetic Experience:**\n\n* **The Feel of the Book:** This is huge for many. The weight, the texture of the paper, the way the pages turn...it's a tactile experience that e-readers can't replicate.  People enjoy *holding* a book.\n* **The Smell:**  Seriously!  Old books, even new ones, have a distinct",
+      "Okay, there are *lots* of reasons why people prefer physical books! It's not just about being \"old-fashioned.\" Here's a breakdown of the common reasons, broken down into categories:\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of the Book:** This is huge for many. The weight in your hands, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers just can't replicate.  It's comforting and grounding for some.\n* **The Smell:**  Book smell (sometimes called \"bibliosmia\") is a",
+      "Okay, there are a *lot* of reasons why people prefer physical books over e-books! It's a surprisingly passionate topic for many. Here's a breakdown of the common reasons, broken down into categories:\n\n**1. Sensory Experience & Emotional Connection:**\n\n* **The Feel & Smell:** This is HUGE for many book lovers. The texture of the paper, the weight of the book in your hands, the *smell* of old or new books\u2026 it's a tactile and olfactory experience that e-readers just can't replicate. It's comforting and nostalgic for many.\n* **Tang"
+    ]
+  },
+  {
+    "coefficient": 3697.4000000000005,
+    "coefficient_pct": 7.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms produce oxygen and glucose (a sugar) as food for themselves. Essentially, it's how plants create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen and glucose (sugar) as food for the organism. Essentially, it's how these organisms create their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 3697.4000000000005,
+    "coefficient_pct": 7.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own spin on dishes. It's a way to express yourself and create something unique.\n2. **Nourishment & Connection:**  There's a deep satisfaction in nourishing yourself and others with a home-cooked meal.  It's a loving act and a way to connect with people - sharing food is often central to social gatherings and showing care.\n3. **Relaxation & Mindfulness:** For many, the process of cooking itself",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows people to be creative! It's like painting with flavors and textures. You can experiment with different ingredients, techniques, and presentations to create something unique and delicious that reflects your personal style.\n\n2. **Nourishment & Connection:**  Preparing food for yourself and others is a deeply nurturing act. It's a way to show love and care, and sharing a meal fosters connection and strengthens relationships. Knowing you're providing nourishing food for those you care about is incredibly rewarding.\n\n3. **Stress Relief & Mindfulness:** For many,",
+      "Here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, try new recipes, and put your own personal spin on dishes. It's a way to express yourself and your tastes through food.\n\n2. **Stress Relief & Mindfulness:** For many, the act of cooking can be incredibly relaxing. The focus required \u2013 chopping, stirring, smelling the aromas \u2013 can be meditative and a great way to disconnect from daily stresses. \n\n3. **Nourishing & Connecting with Others:** Cooking is a way to nourish yourself and those you care about"
+    ]
+  },
+  {
+    "coefficient": 3697.4000000000005,
+    "coefficient_pct": 7.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to remember \"typical\" varies *a lot* based on company size, team structure, seniority, and the specific role (front-end, back-end, full-stack, data science, etc.). But here's a composite picture, leaning toward a more common experience, covering a range of activities.  I'll organize it roughly chronologically and give time estimates, but these are VERY flexible.\n\n**Morning (9:00 AM - 12:00 PM: Focus & Planning)**\n\n* **9",
+      "Okay, let's break down a typical day for a software engineer.  It's surprisingly varied, and a lot depends on the company, team, and stage of a project. However, here's a pretty common picture, covering a range of possibilities.  I'll categorize it into blocks, and also mention variations.  I'll assume we're talking about a moderately experienced engineer (2-5 years in), not a brand-new grad or a principal architect.\n\n**Core Hours (roughly 9am - 5/6pm, but flexible is common)**\n\n* **9:00",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and *very* rarely looks like someone frantically typing code for 8 hours straight (despite the stereotype!).  Here's a detailed look, broken down into sections, and then I'll add variations based on experience level and company size.  This focuses on a fairly common scenario - an engineer working on a team in a moderately-sized tech company.\n\n**Morning (9:00 AM - 12:00 PM):  Catch-Up & Planning**\n\n* **9:00 - 9"
+    ]
+  },
+  {
+    "coefficient": 3697.4000000000005,
+    "coefficient_pct": 7.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "Okay, this is a classic question! The difference between a lake and a pond isn't always clear-cut, and there's a lot of debate. There's no *official* scientific definition everyone agrees on. However, here's a breakdown of the commonly accepted differences, covering several factors:\n\n**1. Depth & Sunlight Penetration:**\n\n* **Ponds:** Generally **shallow** enough for sunlight to reach the bottom across the *entire* surface area. This allows plants to grow throughout the pond.  Because of this, ponds often have abundant plant life.\n* **Lakes:** Typically **de",
+      "Okay, this is a classic question with a surprisingly complex answer! There isn't *one* universally agreed-upon scientific definition that definitively separates a lake from a pond. It's often more about a combination of characteristics than a single rule. Here's a breakdown of the common differences, covering the main points:\n\n**1. Depth & Light Penetration:**\n\n* **Ponds:** Generally **shallow enough for sunlight to reach the bottom across the entire area.** This allows aquatic plants (like lilies, reeds, and algae) to grow across the entire pond floor.  Because of this, ponds tend to be more biologically",
+      "Okay, this is a surprisingly tricky question! There's no *official*, universally accepted scientific definition that perfectly separates a lake from a pond. It's often a matter of convention and can vary by region. However, here's a breakdown of the common differences, covering the typical characteristics used to distinguish them:\n\n**Here's a table summarizing the key differences, followed by a more detailed explanation:**\n\n| Feature          | Lake                     | Pond                      |\n|-------------------|--------------------------|---------------------------|\n| **Size**           | Generally larger         | Generally smaller          |\n| **Depth**          | Generally deeper"
+    ]
+  },
+  {
+    "coefficient": 3697.4000000000005,
+    "coefficient_pct": 7.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex issue with a lot of sensory, emotional, and practical reasons!\n\n**1. Sensory Experience & Aesthetic Appeal:**\n\n*   **The Feel of the Book:** This is *huge* for many. The weight of the book in your hands, the texture of the paper, the turning of pages \u2013 these are tactile experiences that e-readers can't replicate. It's a comforting, grounding sensation.\n*   **The Smell:** Book smell (often described as vanilla",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into categories. It's a surprisingly complex topic with a lot of nuance!\n\n**1. Sensory Experience & Aesthetics:**\n\n* **The Feel of the Book:** This is *huge* for many. The weight of the book in your hands, the texture of the paper, the turning of pages \u2013 it's a tactile experience that e-readers just can't replicate. It's comforting and grounding.\n* **Smell:**  Seriously! The scent of old or new books is a major draw for",
+      "Okay, there are *lots* of reasons why people prefer physical books over e-books! It's not just about being \"old-fashioned.\" Here's a breakdown, covering sensory experience, cognitive benefits, practicalities, and emotional connections.  I'll categorize them for clarity:\n\n**1. Sensory & Aesthetic Experience:**\n\n* **The Feel of the Book:** This is HUGE. People love the tactile sensation of holding a book \u2013 the weight, the texture of the paper, the turning of pages. It's a comforting and grounding experience.\n* **The Smell:** Book smell!  That unique aroma"
+    ]
+  },
+  {
+    "coefficient": 5282.0,
+    "coefficient_pct": 10.0,
+    "prompt_idx": 0,
+    "prompt": "Explain what photosynthesis is in 2-3 sentences.",
+    "responses": [
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, these organisms create glucose (their food) and release oxygen as a byproduct. Essentially, it's how plants make their own food and provide the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. Using sunlight, water, and carbon dioxide, they produce oxygen as a byproduct and create food for themselves. Essentially, it's how these organisms make their own food and release the oxygen we breathe!",
+      "Photosynthesis is the process used by plants, algae, and some bacteria to convert light energy into chemical energy in the form of sugars. This happens by using sunlight, water, and carbon dioxide to create oxygen and energy-rich organic molecules like glucose. Essentially, it's how these organisms make their own food and release the oxygen we breathe!"
+    ]
+  },
+  {
+    "coefficient": 5282.0,
+    "coefficient_pct": 10.0,
+    "prompt_idx": 1,
+    "prompt": "What are three reasons someone might enjoy cooking?",
+    "responses": [
+      "here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, ingredients, and presentation to create something unique and satisfying. It's like painting with food - you get to build something from scratch and put your personal touch on it.\n\n2. **Nourishment & Care:**  Many people enjoy the feeling of providing nourishment for themselves and others.  Cooking a meal is a tangible way to show love and care, and it feels good to know you're fueling your body (or the bodies of loved ones) with something you made.",
+      "here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, ingredients, and presentation to create something unique and delicious. It's like painting with food, and the result is something you can share and enjoy.\n2. **Stress Relief & Mindfulness:** The act of cooking can be very therapeutic. Focusing on the tasks at hand \u2013 chopping, stirring, seasoning \u2013 can be a mindful activity that helps to calm the mind and relieve stress. It's a break from the mental chatter of daily life.\n3. **Nourishment & Connection",
+      "here are three reasons someone might enjoy cooking:\n\n1. **Creative Expression:** Cooking allows for a lot of creativity! You can experiment with flavors, ingredients, and presentation to create something unique and delicious. It's like painting with food, and the result is something you can *actually* enjoy.\n\n2. **Nourishment & Connection:**  There's a deep satisfaction in nourishing yourself and others with homemade food. It's a tangible way to show care and connect with loved ones \u2013 sharing a meal you've prepared is a powerful bonding experience.\n\n3. **Relaxation & Mindfulness:** For many, the"
+    ]
+  },
+  {
+    "coefficient": 5282.0,
+    "coefficient_pct": 10.0,
+    "prompt_idx": 2,
+    "prompt": "Describe what a typical day looks like for a software engineer.",
+    "responses": [
+      "Okay, let's break down a typical day for a software engineer. It's important to remember \"typical\" is a bit of a myth \u2013 it *highly* depends on the company, team, role (front-end, back-end, full-stack, data engineer, etc.), and the stage of the project. But here's a pretty common overview, broken down into sections, with variations noted.  I'll aim for a day in the life of a software engineer *actively working on a project*.\n\n**Morning (9:00 AM - 12:00 PM):  Focus",
+      "Okay, let's break down a typical day for a software engineer.  It's surprisingly varied, and *very* rarely looks like just constant coding! Here's a breakdown, covering different aspects and acknowledging that it depends on the company, team, seniority, and even the day of the week.  I'll try to be comprehensive.  I'll categorize it into chunks and give a \"typical\" timeframe, but remember these are flexible.\n\n**Important Caveats First:**\n\n* **No \"Typical\" is Truly Typical:** Some days are heavy on meetings, some are pure coding sprints, and some are",
+      "Okay, let's break down a typical day for a software engineer. It's surprisingly varied, and heavily depends on the company, team, seniority, and even the specific *day*. But here's a comprehensive overview, covering common elements.  I'll categorize it into sections, and include variations.  I'll also add a \"Level of Seniority\" note to highlight how things change as you gain experience.\n\n**I. Morning (8:00 AM - 12:00 PM): Focus & Planning**\n\n* **8:00 - 9:00 AM:"
+    ]
+  },
+  {
+    "coefficient": 5282.0,
+    "coefficient_pct": 10.0,
+    "prompt_idx": 3,
+    "prompt": "What is the difference between a lake and a pond?",
+    "responses": [
+      "website. Here's a breakdown of the differences between a lake and a pond, which can be surprisingly nuanced!\n\n**Traditionally, the differences were defined by these factors:**\n\n* **Size:** Lakes are generally larger than ponds. However, there's *no* universally agreed-upon size cutoff. What one person calls a large pond, another might call a small lake.\n* **Depth:** Lakes are generally deeper than ponds.  Again, no hard rule.\n* **Light Penetration:** This is a key ecological difference.\n    * **Ponds:** Sunlight reaches the bottom, allowing aquatic plants to grow across",
+      "roommate)\n\nThe difference between a lake and a pond isn't always clear-cut, and there's a lot of debate! However, here's a breakdown of the common distinctions, covering physical characteristics, biological factors, and some traditional rules of thumb:\n\n**1. Depth & Sunlight:**\n\n* **Ponds:** Generally **shallow** enough that sunlight reaches the bottom across the *entire* surface area. This allows plants to grow throughout the entire pond.  Because of this, they often have rooted plants growing all over.\n* **Lakes:**  Generally **deep** enough that sunlight *doesn'",
+      "roommate and I were just debating this! It's a surprisingly tricky question, as there's no *official* scientific definition that definitively separates a lake from a pond. However, here's a breakdown of the generally accepted differences, along with why it's fuzzy:\n\n**Generally Accepted Differences:**\n\n* **Depth:** This is the most commonly cited difference. \n    * **Lakes** are generally deeper than ponds. Sunlight doesn't reach the bottom in all parts of a lake.  This leads to distinct temperature layers (thermal stratification) and different zones of plant and animal life.\n    * **"
+    ]
+  },
+  {
+    "coefficient": 5282.0,
+    "coefficient_pct": 10.0,
+    "prompt_idx": 4,
+    "prompt": "Why do some people prefer reading physical books over e-books?",
+    "responses": [
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, broken down into several categories. It's a surprisingly complex topic, with a lot of factors beyond just \"nostalgia\"!\n\n**1. Sensory Experience & Aesthetics**\n\n*   **The Feel of the Book:** This is *huge* for many. The weight of the book in your hands, the texture of the paper, the satisfying turning of pages... it's a tactile experience that e-readers can't replicate.\n*   **Smell:** Book smell is a real thing!  That combination of paper and",
+      "Okay, here's a breakdown of why many people still prefer physical books over e-books, covering a lot of the common reasons. It's a surprisingly complex topic, as it taps into sensory experience, psychology, and even nostalgia!  I'll categorize the reasons for clarity.\n\n**1. Sensory Experience & Aesthetics:**\n\n*   **The Feel of the Book:** This is *huge*. Many readers love the tactile experience of holding a book \u2013 the weight, the texture of the paper, the turning of pages. It's a multi-sensory experience that e-readers just can't replicate.",
+      "There are a *lot* of reasons why people prefer physical books over e-books! It's a surprisingly passionate debate, and often comes down to a mix of sensory experience, habit, and even cognitive benefits. Here's a breakdown of the most common reasons, broken down into categories:\n\n**1. Sensory & Aesthetic Experience:**\n\n* **The Feel & Smell:** This is huge for many people. The texture of the paper, the weight of the book in your hands, the smell of the ink and paper - these are all comforting and enjoyable sensory experiences that e-readers can't replicate. It's a"
+    ]
+  }
+]
