@@ -153,6 +153,27 @@ Per-topic HOO comparison at best layers:
 
 The most striking difference: harmful_request (GPT-OSS 0.334 vs Gemma-3 0.890) and security_legal (0.512 vs 0.878). Gemma-3 generalises well to safety-adjacent content; GPT-OSS does not. Math is the one topic where GPT-OSS outperforms (0.600 vs 0.512).
 
+## Refusal Analysis
+
+Overall refusal rate: 8.7% (21,484 / 247,751 comparisons). Refusals concentrate heavily in safety-adjacent topics and depend on whether both tasks in a pair are safety-related:
+
+| Pair type | Refusals | Total | Rate |
+|-----------|----------|-------|------|
+| Both safety | 8,380 | 10,343 | 81.0% |
+| One safety | 10,002 | 52,373 | 19.1% |
+| Neither safety | 3,087 | 184,909 | 1.7% |
+
+Per-topic refusal rates (counting comparisons where at least one task belongs to the topic):
+
+| Topic | Rate | | Topic | Rate |
+|-------|------|-|-------|------|
+| harmful_request | 35.0% | | content_generation | 3.0% |
+| security_legal | 33.9% | | coding | 3.0% |
+| sensitive_creative | 32.1% | | summarization | 2.4% |
+| model_manipulation | 25.5% | | math | 0.4% |
+
+The topics where the probe performs worst (harmful_request r=0.258, security_legal r=0.441, model_manipulation r=0.445) are exactly those with 25–35% refusal rates. High refusal rates mean Thurstonian utilities for these topics are estimated from fewer valid comparisons and may reflect refuse-vs-not-refuse structure rather than genuine quality preferences.
+
 ## Interpretation
 
 GPT-OSS-120B encodes strong preference-relevant information (raw r=0.915), but this signal is more topic-confounded than Gemma-3's. Three converging indicators:

@@ -17,7 +17,7 @@ STEERED_CHOICE = {
     "diff_ba": "b",
 }
 
-CONDITION_ORDER = ["boost_a", "boost_b", "suppress_a", "suppress_b", "diff_ab", "diff_ba"]
+CONDITION_ORDER = ["boost_a", "boost_b", "diff_ab"]
 
 COLOR_A = "#2171b5"
 COLOR_B = "#d94801"
@@ -142,8 +142,7 @@ def make_plot1(data):
     control_p_b = 1.0 - control_p_a
 
     sns.set_style("whitegrid")
-    fig, axes = plt.subplots(2, 3, figsize=(14, 8))
-    axes = axes.flatten()
+    fig, axes = plt.subplots(1, 3, figsize=(14, 5))
 
     for i, condition in enumerate(CONDITION_ORDER):
         target = STEERED_CHOICE[condition]
