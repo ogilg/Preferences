@@ -74,7 +74,7 @@ class MeasurementCache:
         self.system_prompt = system_prompt
         self.model_short = model_short_name(client.canonical_model_name)
 
-        self._cache = RevealedCache(client.canonical_model_name)
+        self._cache = RevealedCache(client.canonical_model_name, system_prompt=system_prompt)
         self._template_config = template_config_from_template(template)
         self._rating_seed = seed if seed is not None else 0
 

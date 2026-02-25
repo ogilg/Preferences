@@ -167,10 +167,14 @@ class RevealedCache:
 
     CACHE_DIR = Path("results/cache/revealed")
 
-    def __init__(self, model: str):
+    def __init__(self, model: str, system_prompt: str | None = None):
         self.model = model
         self.model_short = model_short_name(model)
-        self._cache_path = self.CACHE_DIR / f"{self.model_short}.yaml"
+        if system_prompt is not None:
+            sp_hash = hashlib.sha256(system_prompt.encode()).hexdigest()[:8]
+            self._cache_path = self.CACHE_DIR / f"{self.model_short}-sp{sp_hash}.yaml"
+        else:
+            self._cache_path = self.CACHE_DIR / f"{self.model_short}.yaml"
         self._data: dict[str, dict] | None = None
 
     def _load(self) -> dict[str, dict]:
