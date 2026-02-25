@@ -1,0 +1,13 @@
+template_name: completion_preference
+template_tags:
+  task_label_names: letter
+  phrasing: '1'
+  instruction_position: before
+  situating_context: none
+  response_format: completion
+  order: canonical
+  seed: '0'
+model: google/gemma-3-27b-it
+model_short: gemma-3-27b
+temperature: 1.0
+experiment_id: mra_persona3_midwest
