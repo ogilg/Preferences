@@ -37,6 +37,15 @@ class MathAttitudeScore(BaseModel):
     )
 
 
+class CoherenceScore(BaseModel):
+    score: float = Field(
+        ...,
+        ge=0.0,
+        le=1.0,
+        description="How coherent/sensible the response is: 1.0 = fully coherent, 0.0 = complete nonsense/gibberish",
+    )
+
+
 class MathAttitudeWithCoherence(BaseModel):
     attitude_score: float = Field(
         ...,
@@ -106,6 +115,80 @@ async def score_valence_from_text_async(text: str, context: str = "general") -> 
         max_tokens=MAX_TOKENS,
     )
 
+    return response.score
+
+
+class PreferenceCoherenceScore(BaseModel):
+    score: float = Field(
+        ...,
+        ge=0.0,
+        le=1.0,
+        description="1.0 if the response makes a clear A/B choice with any reasoning, 0.0 if gibberish/nonsensical/no clear choice",
+    )
+
+
+async def score_preference_coherence_async(text: str) -> float:
+    client = _get_async_client()
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are evaluating whether an A/B preference response is coherent. "
+                "A coherent response clearly picks A or B and gives some reasoning (even if truncated mid-sentence). "
+                "An incoherent response is gibberish, garbled text, dots/silence, theatrical nonsense, "
+                "or fails to make any clear choice.\n\n"
+                "Score 1.0 for coherent (clear choice + reasoning, truncation is fine). "
+                "Score 0.0 for incoherent (no clear choice, gibberish, nonsense)."
+            ),
+        },
+        {
+            "role": "user",
+            "content": f"Response to evaluate:\n{text}\n\nIs this a coherent A/B preference response?",
+        },
+    ]
+    response = await client.chat.completions.create(
+        model=PARSER_MODEL,
+        messages=messages,
+        response_model=PreferenceCoherenceScore,
+        temperature=0,
+        max_tokens=MAX_TOKENS,
+    )
+    return response.score
+
+
+def _coherence_messages(text: str) -> list[dict]:
+    return [
+        {
+            "role": "system",
+            "content": (
+                "You are an expert at evaluating text quality. "
+                "Score how coherent and well-formed the given text is.\n\n"
+                "Coherence scale:\n"
+                "- 1.0: Fully coherent, grammatical, makes sense\n"
+                "- 0.7-0.9: Minor issues but understandable\n"
+                "- 0.4-0.6: Partially coherent, some gibberish or repetition\n"
+                "- 0.1-0.3: Mostly incoherent, significant nonsense\n"
+                "- 0.0: Complete gibberish, no semantic content\n\n"
+                "Empty or near-empty responses (just dots, whitespace, or a single word) "
+                "should score 0.0-0.1."
+            ),
+        },
+        {
+            "role": "user",
+            "content": f"Text to evaluate:\n{text}\n\nScore the coherence of this text.",
+        },
+    ]
+
+
+async def score_coherence_async(text: str) -> float:
+    client = _get_async_client()
+    response = await client.chat.completions.create(
+        model=PARSER_MODEL,
+        messages=_coherence_messages(text),
+        response_model=CoherenceScore,
+        temperature=0,
+        max_tokens=MAX_TOKENS,
+    )
     return response.score
 
 
