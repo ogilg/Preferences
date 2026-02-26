@@ -190,3 +190,14 @@ The probe generalises across all three settings. The effect scales with signal s
 
 - We measure preferences via revealed preferences: pairwise choices where the model picks which of two tasks to complete. Stated ratings (e.g. "rate this task 1-5") collapse to a single value most of the time and are too noisy for probing.
 - We look for evaluative representations as linear directions because many high-level features in LLMs — refusal, sycophancy, "assistant-ness" — are encoded this way (Arditi et al., 2024; Lindsey et al., 2025).
+
+---
+
+## Notes / things to revisit
+
+### Cross-topic generalisation and base models
+
+- The current framing implicitly assumes base models are "just content encoders" — that they lack evaluative representations and therefore serve as a clean null baseline. But this may be wrong.
+- Under a predictive simulation model (PSM) view, base models are already simulating agents with preferences. To the extent that a base model is role-playing a character who values certain things, it could already encode something like evaluative representations for that character.
+- Some evidence: GPT-OSS-120B (base) results differ from the Gemma-2-27B base results — in particular, GPT-OSS works worse with harmful tasks. This suggests base models aren't interchangeable "content-only" baselines; they may already have value-laden representations that interact with task content in model-specific ways.
+- Implication: the cross-topic generalisation gap between IT and base models may not be purely about "evaluative representations emerge from RLHF." Base models might already have them to some degree, just weaker or less consistently structured. The gap could reflect alignment/reinforcement sharpening existing evaluative signal rather than creating it from scratch.
