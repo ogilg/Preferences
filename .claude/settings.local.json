@@ -6,7 +6,9 @@
       "Skill(zombuul:stop-runpod)",
       "Skill(zombuul:check-slack)",
       "Skill(zombuul:launch-runpod)",
-      "Skill(zombuul:launch-research-pod)"
+      "Skill(zombuul:launch-research-pod)",
+      "Skill(zombuul:pause-runpod)",
+      "mcp__claude_ai_Hugging_Face__hub_repo_details"
     ],
     "deny": []
   },
