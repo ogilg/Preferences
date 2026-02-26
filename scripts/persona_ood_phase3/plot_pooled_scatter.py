@@ -171,8 +171,8 @@ ax.annotate(
 )
 
 # Axis labels and title
-ax.set_xlabel(r"Behavioral $\Delta$ (p_choose persona $-$ p_choose baseline)", fontsize=12)
-ax.set_ylabel(r"Probe $\Delta$ (persona score $-$ neutral score)", fontsize=12)
+ax.set_xlabel(r"P(choose task | persona) $-$ P(choose task | no persona)", fontsize=11)
+ax.set_ylabel(r"Probe(persona + task) $-$ Probe(task)", fontsize=11)
 ax.set_title("Probe deltas track persona-induced preference shifts (phase 3)", fontsize=13, fontweight="bold")
 
 # Meaningful axis bounds anchored near 0

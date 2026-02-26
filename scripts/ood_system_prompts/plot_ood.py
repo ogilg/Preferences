@@ -132,8 +132,8 @@ def plot_scatter_L31(data, save_path):
         ax.set_ylim(-y_lim, y_lim)
 
         ax.set_title(EXP_TITLES[exp_key], fontsize=9, pad=4)
-        ax.set_xlabel("Behavioral delta (Δp_choose)", fontsize=8)
-        ax.set_ylabel("Probe delta (Δprobe score)", fontsize=8)
+        ax.set_xlabel(r"P(choose task | sysprompt) $-$ P(choose task | no sysprompt)", fontsize=7)
+        ax.set_ylabel(r"Probe(sysprompt + task) $-$ Probe(task)", fontsize=7)
         ax.tick_params(labelsize=7)
 
         # Annotate r and sign agreement
