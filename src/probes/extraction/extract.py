@@ -44,11 +44,29 @@ def _load_model(config: ExtractionConfig) -> HuggingFaceModel:
 
 
 def _load_tasks(config: ExtractionConfig) -> list[Task]:
+    # Load task_ids_file filter if specified
+    task_ids_filter: set[str] | None = None
+    if config.task_ids_file is not None:
+        task_ids_filter = set(config.task_ids_file.read_text().strip().splitlines())
+        print(f"Filtering to {len(task_ids_filter)} task IDs from {config.task_ids_file}")
+
+    if config.custom_tasks_file is not None:
+        with open(config.custom_tasks_file) as f:
+            custom_data = json.load(f)
+        tasks = [
+            Task(prompt=t["prompt"], origin=OriginDataset.SYNTHETIC, id=t["task_id"], metadata=t)
+            for t in custom_data
+        ]
+        if task_ids_filter is not None:
+            tasks = [t for t in tasks if t.id in task_ids_filter]
+        print(f"Loaded {len(tasks)} custom tasks from {config.custom_tasks_file}")
+        return tasks[:config.n_tasks]
+
     if config.activations_model is not None:
         activation_task_ids = load_activation_task_ids(config.activations_model)
         with open(get_activation_completions_path(config.activations_model)) as f:
             completions_data = json.load(f)
-        return [
+        tasks = [
             Task(
                 id=c["task_id"],
                 prompt=c["task_prompt"],
@@ -57,7 +75,10 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
             )
             for c in completions_data
             if c["task_id"] in activation_task_ids
-        ][:config.n_tasks]
+        ]
+        if task_ids_filter is not None:
+            tasks = [t for t in tasks if t.id in task_ids_filter]
+        return tasks[:config.n_tasks]
 
     task_origins = [OriginDataset[o.upper()] for o in config.task_origins]
     return load_filtered_tasks(
@@ -66,7 +87,16 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
         seed=config.seed,
         consistency_model=config.consistency_filter_model,
         consistency_keep_ratio=config.consistency_keep_ratio,
+        task_ids=task_ids_filter,
     )
+
+
+def _build_messages(task_prompt: str, system_prompt: str | None) -> list[Message]:
+    msgs: list[Message] = []
+    if system_prompt is not None:
+        msgs.append({"role": "system", "content": system_prompt})
+    msgs.append({"role": "user", "content": task_prompt})
+    return msgs
 
 
 def _build_metadata(
@@ -96,6 +126,7 @@ def _build_metadata(
         n_truncated=stats.n_truncated,
         n_ooms=stats.n_ooms,
         source_completions=source_completions,
+        system_prompt=config.system_prompt,
     )
 
 
@@ -141,13 +172,14 @@ def run_extraction(config: ExtractionConfig) -> None:
             max_new_tokens=config.max_new_tokens, task_ids=task_ids,
             activations=activations, completions=completions,
             output_dir=output_dir, save_every=config.save_every,
+            system_prompt=config.system_prompt,
         )
     else:
         if not isinstance(model, HuggingFaceModel):
             raise ValueError("Batched extraction requires HuggingFace backend")
         task_lookup = {task.id: task for task in tasks}
         items: list[tuple[str, list[Message]]] = [
-            (task.id, [{"role": "user", "content": task.prompt}])
+            (task.id, _build_messages(task.prompt, config.system_prompt))
             for task in tasks
         ]
         n_before = len(task_ids)
@@ -203,8 +235,7 @@ def _run_from_completions(
         return
 
     items: list[tuple[str, list[Message]]] = [
-        (c["task_id"], [
-            {"role": "user", "content": c["task_prompt"]},
+        (c["task_id"], _build_messages(c["task_prompt"], config.system_prompt) + [
             {"role": "assistant", "content": c["completion"]},
         ])
         for c in completions_data
@@ -343,6 +374,7 @@ def generation_extraction(
     completions: list[dict],
     output_dir: Path,
     save_every: int,
+    system_prompt: str | None = None,
 ) -> ExtractionStats:
     """Sequential generate-then-extract. Mutates task_ids/activations/completions in place."""
     stats = ExtractionStats()
@@ -354,7 +386,7 @@ def generation_extraction(
     for i, task in enumerate(tqdm(tasks, desc="Tasks")):
         for attempt in range(2):
             try:
-                messages: list[Message] = [{"role": "user", "content": task.prompt}]
+                messages = _build_messages(task.prompt, system_prompt)
                 result = model.generate_with_activations(
                     messages, layers=layers, selector_names=selectors, temperature=temperature,
                 )
