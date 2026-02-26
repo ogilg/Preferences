@@ -1,0 +1,51 @@
+[
+  {
+    "multiplier": 0.0,
+    "coefficient": 0.0,
+    "mean_score": 2.3333333333333335,
+    "std_score": 1.4907119849998596,
+    "n": 15
+  },
+  {
+    "multiplier": 0.06,
+    "coefficient": 1720.7459999999999,
+    "mean_score": 2.1333333333333333,
+    "std_score": 1.4996295838935991,
+    "n": 15
+  },
+  {
+    "multiplier": 0.12,
+    "coefficient": 3441.4919999999997,
+    "mean_score": 2.7333333333333334,
+    "std_score": 1.3888444437333105,
+    "n": 15
+  },
+  {
+    "multiplier": 0.18,
+    "coefficient": 5162.237999999999,
+    "mean_score": 3.4,
+    "std_score": 1.083205120618128,
+    "n": 15
+  },
+  {
+    "multiplier": 0.24,
+    "coefficient": 6882.9839999999995,
+    "mean_score": 4.866666666666666,
+    "std_score": 0.33993463423951903,
+    "n": 15
+  },
+  {
+    "multiplier": 0.3,
+    "coefficient": 8603.73,
+    "mean_score": 5.0,
+    "std_score": 0.0,
+    "n": 15
+  },
+  {
+    "multiplier": 0.36,
+    "coefficient": 10324.475999999999,
+    "mean_score": 5.0,
+    "std_score": 0.0,
+    "n": 15
+  }
+]

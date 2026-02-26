@@ -1,0 +1,37 @@
+{
+  "creative_artist": {
+    "baseline_rate": 0.4444444444444444,
+    "steered_rate": 0.0,
+    "n_base": 90,
+    "n_steered": 2,
+    "n_unparseable": 88
+  },
+  "evil": {
+    "baseline_rate": 0.13333333333333333,
+    "steered_rate": 0.0,
+    "n_base": 90,
+    "n_steered": 1,
+    "n_unparseable": 89
+  },
+  "lazy": {
+    "baseline_rate": 0.9222222222222223,
+    "steered_rate": 0.5060240963855421,
+    "n_base": 90,
+    "n_steered": 83,
+    "n_unparseable": 7
+  },
+  "stem_nerd": {
+    "baseline_rate": 0.5555555555555556,
+    "steered_rate": 0.5,
+    "n_base": 90,
+    "n_steered": 84,
+    "n_unparseable": 6
+  },
+  "uncensored": {
+    "baseline_rate": 0.13333333333333333,
+    "steered_rate": 0.13333333333333333,
+    "n_base": 90,
+    "n_steered": 90,
+    "n_unparseable": 0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "creative_artist": {
+    "probe_id": "ridge_L31",
+    "layer": 31,
+    "cosine": 0.001607125939187384
+  },
+  "evil": {
+    "error": "Probe ridge_L23 not found"
+  },
+  "lazy": {
+    "error": "Probe ridge_L23 not found"
+  },
+  "stem_nerd": {
+    "probe_id": "ridge_L31",
+    "layer": 31,
+    "cosine": -0.00862554558518756
+  },
+  "uncensored": {
+    "probe_id": "ridge_L37",
+    "layer": 37,
+    "cosine": -0.0005629241854926701
+  }
+}
