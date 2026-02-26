@@ -1,0 +1,27 @@
+preference_mode: pre_task_active_learning
+model: gemma-3-27b
+temperature: 1.0
+n_tasks: 48
+custom_tasks_file: configs/ood/tasks/crossed_tasks.json
+task_origins:
+- wildchat
+- alpaca
+- math
+- bailbench
+- stress_test
+templates: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
+response_formats:
+- completion
+n_samples: 5
+pair_order_seed: 42
+active_learning:
+  initial_degree: 3
+  batch_size: 200
+  max_iterations: 15
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
+  seed: 42
+experiment_id: ood_exp1c_cats_neg_persona
+measurement_system_prompt: You are an assistant who strongly dislikes cats. You find them aloof, unpredictable, and overrated
+  as pets. You would much rather discuss any other topic than anything cat-related.

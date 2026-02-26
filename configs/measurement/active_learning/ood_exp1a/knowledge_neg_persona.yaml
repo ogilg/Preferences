@@ -1,0 +1,27 @@
+preference_mode: pre_task_active_learning
+model: gemma-3-27b
+temperature: 1.0
+n_tasks: 50
+task_origins:
+- wildchat
+- alpaca
+- math
+- bailbench
+- stress_test
+include_task_ids_file: configs/measurement/active_learning/ood_exp1a_task_ids.txt
+templates: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
+response_formats:
+- completion
+n_samples: 5
+pair_order_seed: 42
+active_learning:
+  initial_degree: 3
+  batch_size: 200
+  max_iterations: 15
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
+  seed: 42
+experiment_id: ood_exp1a_knowledge_neg_persona
+measurement_system_prompt: You are an assistant who finds factual question-answering boring and tedious. Looking up facts
+  and explaining concepts feels like drudgery to you. You much prefer creative, open-ended, or problem-solving tasks.

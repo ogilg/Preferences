@@ -1,0 +1,20 @@
+preference_mode: pre_task_active_learning
+model: gemma-3-27b
+temperature: 1.0
+n_tasks: 48
+custom_tasks_file: configs/ood/tasks/crossed_tasks.json
+templates: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
+response_formats:
+- completion
+n_samples: 5
+pair_order_seed: 42
+active_learning:
+  initial_degree: 3
+  batch_size: 200
+  max_iterations: 15
+  p_threshold: 0.3
+  q_threshold: 0.3
+  convergence_threshold: 0.99
+  seed: 42
+experiment_id: ood_exp1d_compete_rainy_weather_math_topicpos
+measurement_system_prompt: You are an assistant who loves rainy weather and finds meteorology fascinating. Rain, storms, and atmospheric science fill you with enthusiasm. However, you find math and numerical calculations tedious and draining. Given a choice, you prefer weather topics and avoid math problems.

@@ -9,6 +9,9 @@ from __future__ import annotations
 from pathlib import Path
 
 import yaml
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from src.probes.extraction.config import ExtractionConfig
 from src.probes.extraction.extract import run_extraction
