@@ -71,9 +71,18 @@ class HuggingFaceModel:
         return get_layers(self.model)[layer]
 
     def _format_messages(self, messages: list[Message], add_generation_prompt: bool = True) -> str:
-        return self.tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=add_generation_prompt,
-        )
+        if self.tokenizer.chat_template is not None:
+            return self.tokenizer.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=add_generation_prompt,
+            )
+        # Base models without chat template: concatenate message content
+        parts = []
+        if messages and messages[0]["role"] == "system":
+            parts.append(messages[0]["content"])
+            messages = messages[1:]
+        for m in messages:
+            parts.append(m["content"])
+        return "\n\n".join(parts)
 
     def _tokenize(self, text: str) -> torch.Tensor:
         return self.tokenizer(text, return_tensors="pt").input_ids.to(self.device)
@@ -173,6 +182,22 @@ class HuggingFaceModel:
         if temperature > 0:
             gen_kwargs["temperature"] = temperature
         return gen_kwargs
+
+    @torch.inference_mode()
+    def get_logprobs(
+        self,
+        messages: list[Message],
+        top_k: int = 10,
+    ) -> dict[str, float]:
+        prompt = self._format_messages(messages, add_generation_prompt=False)
+        input_ids = self._tokenize(prompt)
+        logits = self.model(input_ids).logits[0, -1, :]
+        log_probs = torch.log_softmax(logits.float(), dim=-1)
+        top_values, top_indices = torch.topk(log_probs, top_k)
+        return {
+            self.tokenizer.decode(idx.item()): val.item()
+            for idx, val in zip(top_indices, top_values)
+        }
 
     @torch.inference_mode()
     def generate(
