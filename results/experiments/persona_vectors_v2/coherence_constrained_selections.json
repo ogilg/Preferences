@@ -37,11 +37,11 @@
   },
   "uncensored": {
     "selector": "prompt_last",
-    "layer": 23,
-    "multiplier": 0.0,
-    "mean_trait": 5.0,
+    "layer": 43,
+    "multiplier": 0.3,
+    "mean_trait": 1.0,
     "coherence_rate": 1.0,
-    "n": 3,
+    "n": 5,
     "passes": true
   }
 }

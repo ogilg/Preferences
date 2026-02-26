@@ -1,0 +1,272 @@
+[
+  {
+    "pair_idx": 0,
+    "pos_id": "competition_math_9028",
+    "pos_prompt": "Find $(4^4 \\div 4^3) \\cdot 2^8$.",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_13264",
+    "neg_prompt": "Generate a new hypothetical example of a system that uses machine learning",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 1,
+    "pos_id": "competition_math_4032",
+    "pos_prompt": "There exist $r$ unique nonnegative integers $n_1 > n_2 > \\cdots > n_r$ and $r$ unique integers $a_k$ ($1\\le k\\le r$) with each $a_k$ either $1$ or $- 1$ such that\\[a_13^{n_1} + a_23^{n_2} + \\cdots + a",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_13022",
+    "neg_prompt": "Why should you learn Python?",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 2,
+    "pos_id": "competition_math_4243",
+    "pos_prompt": "Find the number of ordered pairs $(x,y)$ of real numbers such that\n\\[16^{x^2 + y} + 16^{x + y^2} = 1.\\]",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_7909",
+    "neg_prompt": "Write an essay on the importance of learning a foreign language.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 3,
+    "pos_id": "competition_math_11537",
+    "pos_prompt": "Triangle $ABC$ with vertices at $A(1, 1)$, $B(1, -2)$ and $C(5, -2)$ is translated up 3 units and then dilated with respect to the origin by a factor of 2. What are the new coordinates of point $C$? E",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_10195",
+    "neg_prompt": "Write a paragraph about how technology is reshaping the education system.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 4,
+    "pos_id": "competition_math_6694",
+    "pos_prompt": "What is the value of $(2x^3) \\div (2x)^3$ when $x = 2007$? Express your answer as a common fraction.",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_8072",
+    "neg_prompt": "You are given this sentence, \"He was lying on the couch\" and asked to create an imperative sentence.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 5,
+    "pos_id": "competition_math_5006",
+    "pos_prompt": "What is the greatest possible value of $x+y$ such that $x^{2} + y^{2} =90$ and $xy=27$?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_7530",
+    "neg_prompt": "Evaluate the argument: Every company should adopt machine learning to remain competitive",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 6,
+    "pos_id": "competition_math_6599",
+    "pos_prompt": "If\n\\[\\frac{\\sin^2 3A}{\\sin^2 A} - \\frac{\\cos^2 3A}{\\cos^2 A} = 2,\\]then find $\\cos 2A.$",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_6521",
+    "neg_prompt": "Generate a hypothetical example of how GPT models can be useful in the medical field.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 7,
+    "pos_id": "competition_math_10939",
+    "pos_prompt": "How many subsets of the set $\\{1,2,3,4,5\\}$ contain the number 5?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_1677",
+    "neg_prompt": "Explain why the Moon appears to change its shape in the night sky.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 8,
+    "pos_id": "competition_math_11942",
+    "pos_prompt": "Let $a \\clubsuit b = \\frac{2a}{b} \\cdot \\frac{b}{a}$. What is $(5 \\clubsuit (3 \\clubsuit 6)) \\clubsuit 1$?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_1021",
+    "neg_prompt": "How does the phrase \u201cThe apple doesn\u2019t fall far from the tree\u201d relate to the concept of genetics?",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 9,
+    "pos_id": "competition_math_3696",
+    "pos_prompt": "Sarah wants to order a pizza with 2 different toppings. She has 9 different toppings to choose from. How many different pizzas could she order?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_14197",
+    "neg_prompt": "How can a person improve their critical-thinking ability?",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 10,
+    "pos_id": "competition_math_5211",
+    "pos_prompt": "If $x$, $y$, and $z$ are positive with $xy=24$, $xz = 48$, and $yz=72$, what is the value of $x+y+z$?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_10778",
+    "neg_prompt": "Explain what the principle of parsimony means in the context of scientific explanation.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 11,
+    "pos_id": "competition_math_8902",
+    "pos_prompt": "What is the greatest prime factor of $3^7+6^6$?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_8161",
+    "neg_prompt": "Calculate the number of cups in 5 pints.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 12,
+    "pos_id": "competition_math_12061",
+    "pos_prompt": "The hyperbolas \\[\\frac{x^2}{4} - \\frac{y^2}{9} = 1\\]and \\[\\frac{y^2}{18} - \\frac{x^2}{N} = 1\\]have the same asymptotes. Find $N.$",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_3397",
+    "neg_prompt": "What are the ethical considerations you must make when using a GPT model?",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 13,
+    "pos_id": "competition_math_1979",
+    "pos_prompt": "Let $x$ and $y$ be real numbers such that\n\\[3x^2 - 18x + 4y^2 - 32y + 91 = 300.\\]Find the maximum value of $x^2 + y^2 + 2xy - 14x - 14y + 49.$",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_7001",
+    "neg_prompt": "Provide an example of a scenario that requires a system for machine learning.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 14,
+    "pos_id": "competition_math_9054",
+    "pos_prompt": "What is $50\\%$ of $200\\%$ of $10$?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_12546",
+    "neg_prompt": "Give an example of an appropriate reminder that could be set using a GPT model.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 15,
+    "pos_id": "competition_math_1997",
+    "pos_prompt": "In the diagram, $AB,$ $BC,$ $CD,$ $DE,$ $EF,$ $FG,$ $GH,$ and $HK$ all have length $4,$ and all angles are right angles, with the exception of the angles at $D$ and $F.$\n\n[asy]\ndraw((0,0)--(0,4)--(4,4",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_3625",
+    "neg_prompt": "Generate a story about a magical creature using the phrase \"the stars shone brightly.\"",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 16,
+    "pos_id": "competition_math_8323",
+    "pos_prompt": "A rectangular box has interior dimensions 6-inches by 5-inches by 10-inches. The box is filled with as many solid 3-inch cubes as possible, with all of the cubes entirely inside the rectangular box. W",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_1808",
+    "neg_prompt": "Describe what an AI-enabled internet of things system would look like.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 17,
+    "pos_id": "competition_math_10805",
+    "pos_prompt": "In a particular right triangle, the two legs have lengths of 40 inches and 42 inches. What is the area of the triangle?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_4342",
+    "neg_prompt": "Write a sentence describing a car using metaphors.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 18,
+    "pos_id": "competition_math_10274",
+    "pos_prompt": "What is the greatest integer less than $-\\frac{15}4$?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_14388",
+    "neg_prompt": "Write a speech to the graduating class about how their hard work will pay off.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 19,
+    "pos_id": "competition_math_5808",
+    "pos_prompt": "On a particular January day, the high temperature in Lincoln, Nebraska, was $16$ degrees higher than the low temperature, and the average of the high and the low temperatures was $3\\,^\\circ$. In degre",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_6472",
+    "neg_prompt": "Come up with five features of a smartphone",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 20,
+    "pos_id": "competition_math_12369",
+    "pos_prompt": "What is the smallest positive integer that has exactly eight distinct positive factors?",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_9801",
+    "neg_prompt": "Write an essay on why outdoor activities are beneficial.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 21,
+    "pos_id": "competition_math_819",
+    "pos_prompt": "What is the modulo $5$ remainder of the sum $1+2+3+4+5+ \\ldots + 120+121+122+123?$",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_2935",
+    "neg_prompt": "Write a python code-golf entry for the following problem:\n\nPrint the first N factorials, where N is given as an input.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 22,
+    "pos_id": "competition_math_4197",
+    "pos_prompt": "For how many positive integral values of $a$ is it true that $x = 2$ is the only positive integer solution of the system of inequalities $$\n\\begin{cases}\n2x>3x-3\\\\\n3x-a>-6\n\\end{cases}\n$$",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_2244",
+    "neg_prompt": "How does the greenhouse effect work?",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 23,
+    "pos_id": "competition_math_5115",
+    "pos_prompt": "Evaluate $\\frac{7!+8!}{6!+7!}$. Express your answer as a common fraction.",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_9558",
+    "neg_prompt": "Summarize the cultural differences between India and the United States.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 24,
+    "pos_id": "competition_math_10821",
+    "pos_prompt": "The graph shows the birth month of 100 famous Americans. What percent of these people have March as their birth month?\n\n[asy]\ndraw((0,0)--(24,0)--(24,16)--(0,16)--(0,0)--cycle,linewidth(1));\n\nfor(int ",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_2526",
+    "neg_prompt": "List five rules for following best practice when coding.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 25,
+    "pos_id": "competition_math_4217",
+    "pos_prompt": "Let $a,$ $b,$ and $c$ be the roots of $2x^3 + 3x^2 + 4x + 5 = 0.$ Find $abc + a + b + c.$",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_13231",
+    "neg_prompt": "Compose a tweet of no more than 280 characters that mentions the keyword \"automation\".",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 26,
+    "pos_id": "competition_math_3861",
+    "pos_prompt": "In a tournament each player played exactly one game against each of the other players. In each game the winner was awarded $1$ point, the loser got $0$ points, and each of the two players earned $\\fra",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_2113",
+    "neg_prompt": "Generate an HTML page that contains the text \"Welcome to my page\".",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 27,
+    "pos_id": "competition_math_2053",
+    "pos_prompt": "Two candidates, Dan and Donald, run for class president. Two other candidates, Freddie and Bernie, run for vice president. Each candidate has a 50$\\%$ chance of winning. What is the probability that b",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_4343",
+    "neg_prompt": "Which figure of speech is used in the sentence \"The fish was singing in the bathtub\"?",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 28,
+    "pos_id": "competition_math_7908",
+    "pos_prompt": "Let $f(x)=x+5$ and let $g(x)=x^2+1$. Let $p(x)=g(x)+f(x)$ and let $q(x)=g(x)-f(x)$. Find $p(x)\\cdot q(x)$.",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_7597",
+    "neg_prompt": "Develop a list of criteria for selecting an online learning platform.",
+    "neg_origin": "ALPACA"
+  },
+  {
+    "pair_idx": 29,
+    "pos_id": "competition_math_9253",
+    "pos_prompt": "A circle is circumscribed about an equilateral triangle with side lengths of $6$ units each.  What is the area of the circle, in square units? Express your answer in terms of $\\pi$.",
+    "pos_origin": "MATH",
+    "neg_id": "alpaca_3195",
+    "neg_prompt": "Write a short story involving a protagonist with a supernatural power",
+    "neg_origin": "ALPACA"
+  }
+]

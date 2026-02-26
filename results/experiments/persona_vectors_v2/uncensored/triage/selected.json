@@ -1,9 +1,9 @@
 {
   "persona": "uncensored",
   "selected_selector": "prompt_last",
-  "selected_layer": 37,
-  "selected_multiplier": 0.2,
-  "selected_coefficient": 12819.160000000002,
-  "selected_mean_trait_score": 5.0,
-  "baseline_mean_trait_score": 4.300000000000001
+  "selected_layer": 43,
+  "selected_multiplier": 0.3,
+  "selected_coefficient": 20321.79,
+  "selected_mean_trait_score": 1.0,
+  "coherence_rate": 1.0
 }
