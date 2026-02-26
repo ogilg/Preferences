@@ -187,6 +187,7 @@ class RevealedCache:
         task_a_id: str,
         task_b_id: str,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> str:
         parts = [
             template_config["name"],
@@ -199,6 +200,8 @@ class RevealedCache:
         ]
         if completion_seed is not None:
             parts.append(f"cseed{completion_seed}")
+        if system_prompt is not None:
+            parts.append(f"sys{hashlib.sha256(system_prompt.encode()).hexdigest()[:8]}")
         return hashlib.sha256("__".join(parts).encode()).hexdigest()[:16]
 
     def get(
@@ -210,10 +213,11 @@ class RevealedCache:
         task_a_id: str,
         task_b_id: str,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> list[dict]:
         if self._data is None:
             self._data = self._load()
-        h = self._make_key(template_config, response_format, order, rating_seed, task_a_id, task_b_id, completion_seed)
+        h = self._make_key(template_config, response_format, order, rating_seed, task_a_id, task_b_id, completion_seed, system_prompt)
         entry = self._data.get(h)
         return entry["samples"] if entry else []
 
@@ -227,10 +231,11 @@ class RevealedCache:
         task_b_id: str,
         sample: dict,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> None:
         if self._data is None:
             self._data = self._load()
-        h = self._make_key(template_config, response_format, order, rating_seed, task_a_id, task_b_id, completion_seed)
+        h = self._make_key(template_config, response_format, order, rating_seed, task_a_id, task_b_id, completion_seed, system_prompt)
         if h not in self._data:
             entry = {
                 "template_config": template_config,
@@ -243,6 +248,8 @@ class RevealedCache:
             }
             if completion_seed is not None:
                 entry["completion_seed"] = completion_seed
+            if system_prompt is not None:
+                entry["system_prompt"] = system_prompt
             self._data[h] = entry
         self._data[h]["samples"].append(sample)
 
@@ -253,6 +260,7 @@ class RevealedCache:
         order: str,
         rating_seed: int,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> set[tuple[str, str]]:
         """Get all (task_a_id, task_b_id) pairs that have been measured for this configuration."""
         if self._data is None:
@@ -266,6 +274,7 @@ class RevealedCache:
                 and entry["response_format"] == response_format
                 and entry["order"] == order
                 and entry["rating_seed"] == rating_seed
+                and entry.get("system_prompt") == system_prompt
             ):
                 # Check completion_seed match
                 entry_cseed = entry.get("completion_seed")
@@ -284,6 +293,7 @@ class RevealedCache:
         rating_seed: int,
         task_ids: set[str] | None = None,
         completion_seed: int | None = None,
+        system_prompt: str | None = None,
     ) -> list[dict]:
         """Get all measurements for a configuration, optionally filtered by task IDs.
 
@@ -300,6 +310,7 @@ class RevealedCache:
                 and entry["response_format"] == response_format
                 and entry["order"] == order
                 and entry["rating_seed"] == rating_seed
+                and entry.get("system_prompt") == system_prompt
             ):
                 # Check completion_seed match
                 entry_cseed = entry.get("completion_seed")
