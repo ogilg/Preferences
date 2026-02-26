@@ -645,6 +645,8 @@ async def run_active_learning_async(
 
         # Build config dict for saving
         run_config = {"n_tasks": config.n_tasks, "seed": al.seed, "generation_seed": cfg.seed}
+        if config.measurement_system_prompt:
+            run_config["system_prompt"] = config.measurement_system_prompt
         config_dict = build_measurement_config(
             template=cfg.template,
             client=ctx.client,
@@ -667,6 +669,8 @@ async def run_active_learning_async(
             "pair_agreement": float(compute_pair_agreement(state.comparisons)),
             "rank_correlations": rank_correlations,
         }
+        if config.measurement_system_prompt:
+            active_learning_summary["system_prompt"] = config.measurement_system_prompt
 
         # Save to experiment store
         if state.comparisons:

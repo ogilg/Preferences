@@ -1,0 +1,7 @@
+n_tasks: 2500
+seed: 42
+generation_seed: 0
+converged: true
+pooled_from: 2
+total_unique_pairs: 20749
+total_comparisons: 98452

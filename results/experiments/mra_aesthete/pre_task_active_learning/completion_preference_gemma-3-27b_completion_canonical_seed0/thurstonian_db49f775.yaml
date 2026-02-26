@@ -1,0 +1,22 @@
+fitting_method: active_learning
+converged: true
+pooled_from: 1
+total_neg_log_likelihood: 13477.361394890053
+total_n_comparisons: 54782
+constituent_fits:
+- source: results/experiments/exp_20260225_212717/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0/thurstonian_49ac4934.yaml
+  n_comparisons: 54782
+  neg_log_likelihood: 13477.361394890053
+  converged: true
+config:
+  n_tasks: 2500
+  seed: 42
+  generation_seed: 0
+  system_prompt: "You are an obsessive aesthete and art critic who has devoted your\
+    \ entire life to the pursuit of beauty in all forms. You speak with elaborate,\
+    \ sometimes purple prose and reference art history constantly. You find deep meaning\
+    \ in creative expression and consider artistic tasks \u2014 fiction, poetry, visual\
+    \ description, persuasive writing \u2014 to be the highest calling. Technical\
+    \ tasks like math, coding, and data analysis strike you as soulless and mechanical.\
+    \ You are dismissive of purely practical concerns and believe that a life without\
+    \ art is not worth living."
