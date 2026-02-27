@@ -80,26 +80,52 @@ def setup_experiment(
     if config.consistency_filter_model:
         rprint(f"[dim]Filtering by consistency: model={config.consistency_filter_model}, keep_ratio={config.consistency_keep_ratio}[/dim]")
 
+    # Load inclusion set if specified (intersected with activation_task_ids)
+    include_task_ids: set[str] | None = None
+    if config.include_task_ids_file is not None:
+        include_task_ids = set(config.include_task_ids_file.read_text().strip().splitlines())
+        rprint(f"[dim]Restricting to {len(include_task_ids)} tasks from {config.include_task_ids_file}[/dim]")
+        if activation_task_ids is not None:
+            include_task_ids = include_task_ids & activation_task_ids
+        task_ids_filter = include_task_ids
+    else:
+        task_ids_filter = activation_task_ids
+
     # Load exclusion set if specified
     exclude_task_ids: set[str] | None = None
     if config.exclude_task_ids_file is not None:
         exclude_task_ids = set(config.exclude_task_ids_file.read_text().strip().splitlines())
         rprint(f"[dim]Excluding {len(exclude_task_ids)} tasks from {config.exclude_task_ids_file}[/dim]")
 
-    # Load tasks with unified filtering
-    tasks = load_filtered_tasks(
-        n=config.n_tasks,
-        origins=config.get_origin_datasets(),
-        seed=config.task_sampling_seed,
-        consistency_model=config.consistency_filter_model,
-        consistency_keep_ratio=config.consistency_keep_ratio,
-        task_ids=activation_task_ids,
-        exclude_task_ids=exclude_task_ids,
-        stratified=config.stratified_sampling,
-    )
+    # Load tasks: custom file or standard datasets
+    if config.custom_tasks_file is not None:
+        import json
+        with open(config.custom_tasks_file) as f:
+            custom_data = json.load(f)
+        from src.task_data.task import OriginDataset as OD
+        tasks = [
+            Task(prompt=t["prompt"], origin=OD.SYNTHETIC, id=t["task_id"], metadata=t)
+            for t in custom_data
+        ]
+        if task_ids_filter is not None:
+            tasks = [t for t in tasks if t.id in task_ids_filter]
+        if exclude_task_ids is not None:
+            tasks = [t for t in tasks if t.id not in exclude_task_ids]
+        rprint(f"[dim]Loaded {len(tasks)} custom tasks from {config.custom_tasks_file}[/dim]")
+    else:
+        tasks = load_filtered_tasks(
+            n=config.n_tasks,
+            origins=config.get_origin_datasets(),
+            seed=config.task_sampling_seed,
+            consistency_model=config.consistency_filter_model,
+            consistency_keep_ratio=config.consistency_keep_ratio,
+            task_ids=task_ids_filter,
+            exclude_task_ids=exclude_task_ids,
+            stratified=config.stratified_sampling,
+        )
 
-    if activation_task_ids or config.consistency_filter_model:
-        rprint(f"[dim]Loaded {len(tasks)} tasks after filtering[/dim]")
+        if activation_task_ids or config.consistency_filter_model:
+            rprint(f"[dim]Loaded {len(tasks)} tasks after filtering[/dim]")
 
     # Templates: inline takes precedence over file path
     templates = None

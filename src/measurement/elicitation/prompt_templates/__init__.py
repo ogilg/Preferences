@@ -14,6 +14,7 @@ def __getattr__(name: str):
     """Lazy import for heavy modules to keep generator fast."""
     # Builders (imports from measurement which has heavy deps)
     if name in (
+        "BaseModelRevealedPromptBuilder",
         "PreTaskRevealedPromptBuilder",
         "PostTaskStatedPromptBuilder",
         "PostTaskRevealedPromptBuilder",
@@ -47,6 +48,7 @@ __all__ = [
     "load_templates_from_yaml",
     "parse_template_dict",
     # Builders (lazy)
+    "BaseModelRevealedPromptBuilder",
     "PreTaskRevealedPromptBuilder",
     "PostTaskStatedPromptBuilder",
     "PostTaskRevealedPromptBuilder",

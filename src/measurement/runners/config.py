@@ -109,6 +109,13 @@ class ExperimentConfig(BaseModel):
     # Completion generation specific: run LLM-based refusal detection
     detect_refusals: bool = False
 
+    # Load tasks from a custom JSON file instead of standard datasets
+    # Format: [{"task_id": "...", "prompt": "..."}, ...] or [{"task_id": "...", "topic": "...", "prompt": "..."}, ...]
+    custom_tasks_file: Path | None = None
+
+    # Restrict to specific task IDs (path to file with one task_id per line)
+    include_task_ids_file: Path | None = None
+
     # Exclude tasks from a previous run (path to file with one task_id per line)
     exclude_task_ids_file: Path | None = None
 

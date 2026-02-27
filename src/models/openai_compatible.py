@@ -20,7 +20,7 @@ from src.models.retry import with_retries, EmptyResponseError, RETRYABLE_ERRORS,
 from src.types import Message
 
 VERBOSE = os.getenv("VERBOSE", "0") == "1"
-REQUEST_TIMEOUT = 10.0  # seconds for response generation
+REQUEST_TIMEOUT = 20.0  # seconds for response generation
 
 _ERROR_LABELS: dict[type, str] = {
     asyncio.TimeoutError: "timeout",

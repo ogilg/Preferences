@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from os.path import commonprefix
 from typing import Any, Literal
 
 from src.task_data import Task
@@ -85,6 +86,31 @@ class PreTaskRevealedPromptBuilder(PromptBuilder):
             response_format=response_format,
             template=self.template,
         )
+
+
+class BaseModelRevealedPromptBuilder(PreTaskRevealedPromptBuilder):
+    """For base model logprob cloze measurement.
+
+    Inherits build() unchanged — produces identical prompt content to the instruct builder.
+    Adds cloze_prefix/cloze_suffixes for logprob discrimination.
+    """
+
+    @property
+    def cloze_prefix(self) -> str:
+        """Common prefix of choice labels, to append for logprob discrimination.
+        "Task A" / "Task B" -> "Task"
+        """
+        a = self.response_format.task_a_label
+        b = self.response_format.task_b_label
+        return commonprefix([a, b]).rstrip()
+
+    @property
+    def cloze_suffixes(self) -> tuple[str, str]:
+        """Discriminative suffixes after cloze_prefix: (" A", " B")."""
+        p = self.cloze_prefix
+        a = self.response_format.task_a_label
+        b = self.response_format.task_b_label
+        return (a[len(p):], b[len(p):])
 
 
 class PreTaskStatedPromptBuilder(PromptBuilder):
