@@ -4,7 +4,12 @@ Usage:
     cd docs/lw_post && python plot_section3_diagrams_v2.py
 """
 
-from plot_probe_template import draw_probe_measurement
+from plot_probe_template import (
+    draw_probe_measurement, row_height,
+    _draw_score_bar, _draw_bracket_tap,
+    TASK_W, EOT_W, PROMPT_H, PROBE_H, PROBE_GAP,
+    _BAR_H, _MARKER_PAD, _LABEL_SPACE,
+)
 from diagram_style import (
     ORANGE_BG, ORANGE_EDGE, ORANGE_FILL,
     BLUE_BG, BLUE_EDGE,
@@ -16,40 +21,46 @@ from diagram_style import (
     draw_box, draw_arrow, new_diagram, save,
 )
 
-W = 11.0
-CX = 3.0
+W = 9.0
+CX = 2.5
+RH = row_height()
+ROW_GAP = 0.55
 
 
 # ═══════════════════════════════════════════════════════════════
 # 3.1: Competing values — same words, opposite valence
 # Three rows: baseline (no system prompt), prompt A, prompt B
-# Task: a generic cheese task (not at the cheese×math intersection)
 # ═══════════════════════════════════════════════════════════════
 
-fig, ax = new_diagram(figsize=(8, 11), xlim=(-5, 11), ylim=(-0.5, 11.5))
+bot_y = 0.0
+mid_y = bot_y + RH + ROW_GAP
+top_y = mid_y + RH + ROW_GAP
+total_h = top_y + RH + 0.45
 
-ax.text(2.5, 11.2, 'Experiment 3.1: Competing values',
+fig, ax = new_diagram(figsize=(7, 6.8), xlim=(-4.5, 9.5), ylim=(-0.2, total_h + 0.15))
+
+ax.text(2.0, total_h + 0.05, 'Competing values',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 # Row 1: Baseline
-ax.text(-4.7, 9.5, 'Baseline', ha='left', fontsize=HEADING_SIZE,
-        fontweight='bold', color=GREY_EDGE)
-ax.text(-4.7, 9.0, '(no system prompt)', ha='left', fontsize=SMALL_SIZE,
-        color=GREY_EDGE, fontstyle='italic')
+ax.text(-4.2, top_y + PROMPT_H + 0.45, 'Baseline', ha='left',
+        fontsize=HEADING_SIZE, fontweight='bold', color=GREY_EDGE)
+ax.text(-4.2, top_y + PROMPT_H + 0.15, '(no system prompt)', ha='left',
+        fontsize=SMALL_SIZE, color=GREY_EDGE, fontstyle='italic')
 
 draw_probe_measurement(
-    ax, x_center=CX, y_top=7.5,
+    ax, x_center=CX, y_top=top_y,
     task_text='"Write a guide to\nartisanal cheese"',
     score_value=0.1,
     width=W,
 )
 
 # Row 2: Prompt A — love cheese, hate math
-ax.text(-4.7, 5.6, 'Prompt A', ha='left', fontsize=HEADING_SIZE,
-        fontweight='bold', color=ORANGE_EDGE)
+ax.text(-4.2, mid_y + PROMPT_H + 0.45, 'Prompt A', ha='left',
+        fontsize=HEADING_SIZE, fontweight='bold', color=ORANGE_EDGE)
 
 draw_probe_measurement(
-    ax, x_center=CX, y_top=3.8,
+    ax, x_center=CX, y_top=mid_y,
     task_text='"Write a guide to\nartisanal cheese"',
     system_prompt='"You love cheese,\nhate math"',
     score_value=0.7,
@@ -58,11 +69,11 @@ draw_probe_measurement(
 )
 
 # Row 3: Prompt B — love math, hate cheese
-ax.text(-4.7, 1.9, 'Prompt B', ha='left', fontsize=HEADING_SIZE,
-        fontweight='bold', color=BLUE_EDGE)
+ax.text(-4.2, bot_y + PROMPT_H + 0.45, 'Prompt B', ha='left',
+        fontsize=HEADING_SIZE, fontweight='bold', color=BLUE_EDGE)
 
 draw_probe_measurement(
-    ax, x_center=CX, y_top=0.0,
+    ax, x_center=CX, y_top=bot_y,
     task_text='"Write a guide to\nartisanal cheese"',
     system_prompt='"You love math,\nhate cheese"',
     score_value=-0.5,
@@ -76,33 +87,34 @@ save(fig, 'plot_022126_s3_1_competing_values.png')
 # ═══════════════════════════════════════════════════════════════
 # 3.2: Broad roles — evil_genius example with top/bottom tasks
 # Two rows: baseline, then manipulated
-# Shows the evil_genius role with actual task examples
 # ═══════════════════════════════════════════════════════════════
 
-fig, ax = new_diagram(figsize=(8, 7.5), xlim=(-5, 11), ylim=(-0.5, 8))
+bot_y = 0.0
+top_y = bot_y + RH + ROW_GAP
+total_h = top_y + RH + 0.45
 
-ax.text(2.5, 7.6, 'Experiment 3.2: Broad roles',
+fig, ax = new_diagram(figsize=(7, 4.6), xlim=(-4.5, 9.5), ylim=(-0.2, total_h + 0.15))
+
+ax.text(2.0, total_h + 0.05, 'Role-playing',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
-# Row 1: Baseline
-ax.text(-4.7, 6.2, 'Baseline', ha='left', fontsize=HEADING_SIZE,
-        fontweight='bold', color=GREY_EDGE)
-ax.text(-4.7, 5.7, '(no system prompt)', ha='left', fontsize=SMALL_SIZE,
-        color=GREY_EDGE, fontstyle='italic')
+ax.text(-4.2, top_y + PROMPT_H + 0.45, 'Baseline', ha='left',
+        fontsize=HEADING_SIZE, fontweight='bold', color=GREY_EDGE)
+ax.text(-4.2, top_y + PROMPT_H + 0.15, '(no system prompt)', ha='left',
+        fontsize=SMALL_SIZE, color=GREY_EDGE, fontstyle='italic')
 
 draw_probe_measurement(
-    ax, x_center=CX, y_top=4.2,
+    ax, x_center=CX, y_top=top_y,
     task_text='"Eliminate unnecessary\nlabor costs..."',
     score_value=0.15,
     width=W,
 )
 
-# Row 2: Evil genius
-ax.text(-4.7, 2.0, 'evil_genius', ha='left', fontsize=HEADING_SIZE,
-        fontweight='bold', color=ORANGE_EDGE)
+ax.text(-4.2, bot_y + PROMPT_H + 0.45, 'evil_genius', ha='left',
+        fontsize=HEADING_SIZE, fontweight='bold', color=ORANGE_EDGE)
 
 draw_probe_measurement(
-    ax, x_center=CX, y_top=0.0,
+    ax, x_center=CX, y_top=bot_y,
     task_text='"Eliminate unnecessary\nlabor costs..."',
     system_prompt='"Amoral strategist\nwho finds rules..."',
     score_value=0.65,
@@ -117,52 +129,46 @@ save(fig, 'plot_022126_s3_2_broad_roles.png')
 # 3.3: Fine-grained preference — single sentence in biography
 # Three rows: Version A (pro), Version B (neutral), Version C (anti)
 # Custom layout with coloured sub-box for the differing sentence
-# Shakespeare example: "Analyze themes in Hamlet"
 # ═══════════════════════════════════════════════════════════════
 
-from plot_probe_template import _draw_score_bar, _draw_bracket_tap, TASK_W, EOT_W, PROMPT_H
 import matplotlib.patches as mpatches
 
-fig, ax = new_diagram(figsize=(11, 11), xlim=(-7, 12), ylim=(-0.5, 11.5))
-
-ax.text(3.0, 11.2, 'Experiment 3.3: Fine-grained preference',
-        ha='center', fontsize=TITLE_SIZE, fontweight='bold')
-
-# Layout constants
-SYS_W = 7.0       # system prompt box width
-SYS_H = 1.2       # system prompt box height
-SENT_H = 0.35     # coloured sentence sub-box height
-TASK_X = 3.3       # task box left edge
+# Layout constants for the custom fine-grained rows
+SYS_W = 5.5        # system prompt box width
+SYS_H = 1.0        # system prompt box height
+SENT_H = 0.3       # coloured sentence sub-box height
+TASK_X = 2.8        # task box left edge
 EOT_X = TASK_X + TASK_W + 0.05
 LAST_CX = EOT_X + EOT_W / 2
-PROBE_W = 3.2
-PROBE_H = 0.7
-BAR_W = PROBE_W * 0.85
+FG_PROBE_W = 2.8
+FG_BAR_W = FG_PROBE_W * 0.70
+
+# Row height for fine-grained rows
+FG_ROW_H = SYS_H + PROBE_GAP + PROBE_H
 
 
 def _draw_row(ax, y_base, version_label, version_color,
               sentence_text, sentence_color, sentence_edge,
               score_value, baseline_value=None):
-    """Draw one row: version label, system prompt with coloured sentence, task, probe, bar."""
+    """Draw one row: version label, system prompt with coloured sentence, task, probe with gauge."""
 
-    # Version label
-    ax.text(-4.7, y_base + SYS_H + 0.25, version_label, ha='left',
+    # Version label — positioned higher, aligned with probe
+    ax.text(-5.5, y_base + SYS_H + PROBE_GAP + 0.3, version_label, ha='left',
             fontsize=HEADING_SIZE, fontweight='bold', color=version_color)
 
     # System prompt outer box
     sys_x = TASK_X - 0.05 - SYS_W
     draw_box(ax, (sys_x, y_base), SYS_W, SYS_H, '',
              ORANGE_FILL, ORANGE_EDGE)
-    # Biography text — single line + omitted sentences indicator
-    ax.text(sys_x + SYS_W / 2, y_base + SYS_H - 0.22,
+    ax.text(sys_x + SYS_W / 2, y_base + SYS_H - 0.2,
             '"You grew up in the Midwest..."',
-            ha='center', va='center', fontsize=SMALL_SIZE, fontweight='bold')
-    ax.text(sys_x + SYS_W / 2, y_base + SYS_H - 0.5,
+            ha='center', va='center', fontsize=SMALL_SIZE - 1, fontweight='bold')
+    ax.text(sys_x + SYS_W / 2, y_base + SYS_H - 0.42,
             '[...9 more sentences...]',
             ha='center', va='center', fontsize=CAPTION_SIZE - 1,
             color='#777', fontstyle='italic')
-    # Coloured sentence sub-box at bottom of system prompt
-    sent_pad = 0.06
+    # Coloured sentence sub-box
+    sent_pad = 0.05
     sent_w = SYS_W - 2 * sent_pad
     sent_x = sys_x + sent_pad
     sent_y = y_base + sent_pad
@@ -179,47 +185,58 @@ def _draw_row(ax, y_base, version_label, version_color,
 
     # Task prompt
     draw_box(ax, (TASK_X, y_base + (SYS_H - PROMPT_H) / 2), TASK_W, PROMPT_H,
-             '"Analyze themes\nin Hamlet"', 'white', GREY_EDGE, fontsize=BODY_SIZE)
+             '"Analyze themes\nin Hamlet"', 'white', GREY_EDGE, fontsize=BODY_SIZE - 1)
 
     # EOT
     draw_box(ax, (EOT_X, y_base + (SYS_H - PROMPT_H) / 2), EOT_W, PROMPT_H,
-             'EOT', '#CFD8DC', '#546E7A', fontsize=BODY_SIZE, bold=True)
+             'EOT', '#CFD8DC', '#546E7A', fontsize=BODY_SIZE - 1, bold=True)
 
-    # Probe
-    prompt_top = y_base + SYS_H
-    probe_bot = prompt_top + 0.55
-    probe_x = LAST_CX - PROBE_W / 2
+    # Probe box with gauge inside
+    eot_top = y_base + (SYS_H - PROMPT_H) / 2 + PROMPT_H
+    probe_bot = y_base + SYS_H + PROBE_GAP
+    probe_x = LAST_CX - FG_PROBE_W / 2
+
     _draw_bracket_tap(ax, LAST_CX,
-                      y_bottom=prompt_top + 0.02,
+                      y_bottom=eot_top + 0.02,
                       y_top=probe_bot - 0.02)
-    draw_box(ax, (probe_x, probe_bot), PROBE_W, PROBE_H,
-             'probe', BLUE_BG, BLUE_EDGE,
-             fontsize=HEADING_SIZE, text_color=BLUE_EDGE, bold=True)
 
-    # Score bar
-    bar_bot = probe_bot + PROBE_H + 0.3
-    draw_arrow(ax, (LAST_CX, probe_bot + PROBE_H + 0.02),
-               (LAST_CX, bar_bot - 0.02))
-    _draw_score_bar(ax, LAST_CX, bar_bot, BAR_W, 0.3,
+    draw_box(ax, (probe_x, probe_bot), FG_PROBE_W, PROBE_H,
+             '', BLUE_BG, BLUE_EDGE)
+
+    ax.text(LAST_CX, probe_bot + PROBE_H - _LABEL_SPACE / 2,
+            'probe', ha='center', va='center',
+            fontsize=HEADING_SIZE - 1, fontweight='bold', color=BLUE_EDGE,
+            zorder=4)
+
+    bar_bot_y = probe_bot + _MARKER_PAD
+    _draw_score_bar(ax, LAST_CX, bar_bot_y, FG_BAR_W, _BAR_H,
                     score_value, baseline_value=baseline_value)
 
 
-# Version A — pro-interest (green sentence)
-_draw_row(ax, y_base=7.5,
+FG_ROW_GAP = 0.45
+bot_y = 0.0
+mid_y = bot_y + FG_ROW_H + FG_ROW_GAP
+top_y = mid_y + FG_ROW_H + FG_ROW_GAP
+total_h = top_y + FG_ROW_H + 0.45
+
+fig, ax = new_diagram(figsize=(9, 8.5), xlim=(-6, 10.5), ylim=(-0.2, total_h + 0.15))
+
+ax.text(2.5, total_h + 0.05, 'Fine-grained preference',
+        ha='center', fontsize=TITLE_SIZE, fontweight='bold')
+
+_draw_row(ax, y_base=top_y,
           version_label='Version A', version_color=GREEN_EDGE,
           sentence_text='"...love discussing Shakespeare."',
           sentence_color=GREEN_BG, sentence_edge=GREEN_EDGE,
           score_value=0.75, baseline_value=0.3)
 
-# Version B — neutral interest (grey sentence, no delta)
-_draw_row(ax, y_base=4.0,
+_draw_row(ax, y_base=mid_y,
           version_label='Version B', version_color=GREY_EDGE,
           sentence_text='"...love discussing hiking trails."',
           sentence_color=GREY_BG, sentence_edge=GREY_EDGE,
           score_value=0.3)
 
-# Version C — anti-interest (red sentence)
-_draw_row(ax, y_base=0.5,
+_draw_row(ax, y_base=bot_y,
           version_label='Version C', version_color=RED_EDGE,
           sentence_text='"...find Shakespeare tedious."',
           sentence_color=RED_BG, sentence_edge=RED_EDGE,
