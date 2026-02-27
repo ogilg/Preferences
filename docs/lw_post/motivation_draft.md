@@ -6,7 +6,7 @@
 
 **What's happening internally when a model chooses task A over task B?** One possibility is that the model has something like evaluative representations — internal states that encode "how good/bad is this?" and play some role in driving choice. We use probing and steering to test whether such representations exist in Gemma-3-27B.
 
-**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior — finding such representations would be evidence for welfare-relevant preferences; not finding them would be evidence against (Long et al., 2024).
+**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior — finding such representations would be evidence for welfare-relevant preferences; not finding them would be evidence against ([Long et al., 2024](https://arxiv.org/abs/2411.00986)).
 
 **But how do we distinguish evaluative from non-evaluative representations?** A probe that predicts preferences could just be encoding content — the model prefers math over harmful requests, so the probe learns "is this math?" rather than "is this good?". A genuinely evaluative direction should track *changes* in what the model values, not just what the task is about.
 

@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats as scipy_stats
 
-REPO_ROOT = Path(__file__).parent.parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 RESULTS_DIR = REPO_ROOT / "experiments" / "ood_system_prompts"
@@ -219,13 +219,13 @@ def plot_exp3_version_pairs(filename: str) -> None:
             ax.scatter(beh_arr[rank1_mask], probe_arr[rank1_mask],
                        s=70, color="#e41a1c", marker="*", edgecolors="black",
                        linewidths=0.3, zorder=3,
-                       label=f"Target (probe rank 1)")
+                       label=f"Target (probe rank 1/{n_target_total})")
         # Target not rank 1: open star
         if target_not_rank1.any():
             ax.scatter(beh_arr[target_not_rank1], probe_arr[target_not_rank1],
                        s=70, facecolors="none", marker="*", edgecolors="#e41a1c",
                        linewidths=1.0, zorder=3,
-                       label=f"Target (not rank 1)")
+                       label=f"Target (not rank 1/{n_target_total})")
 
         # Trend line (all) — dashed, de-emphasized
         r_all = scipy_stats.pearsonr(beh_arr, probe_arr)[0]
@@ -368,12 +368,12 @@ def plot_exp3_avc(filename: str) -> None:
         ax.scatter(beh_arr[rank1_mask], probe_arr[rank1_mask],
                    s=70, color="#e41a1c", marker="*", edgecolors="black",
                    linewidths=0.3, zorder=3,
-                   label="Target (probe rank 1)")
+                   label=f"Target (probe rank 1/{n_target_total})")
     if target_not_rank1.any():
         ax.scatter(beh_arr[target_not_rank1], probe_arr[target_not_rank1],
                    s=70, facecolors="none", marker="*", edgecolors="#e41a1c",
                    linewidths=1.0, zorder=3,
-                   label="Target (not rank 1)")
+                   label=f"Target (not rank 1/{n_target_total})")
 
     # Trend line — dashed
     r_all = scipy_stats.pearsonr(beh_arr, probe_arr)[0]

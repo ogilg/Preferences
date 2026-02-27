@@ -6,7 +6,7 @@
 
 **What's happening internally when a model chooses task A over task B?** One possibility is that the model has something like evaluative representations — internal states that encode "how good/bad is this?" and play some role in driving choice. We use probing and steering to test whether such representations exist in Gemma-3-27B.
 
-**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior — finding such representations would be evidence for welfare-relevant preferences; not finding them would be evidence against (Long et al., 2024).
+**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior — finding such representations would be evidence for welfare-relevant preferences; not finding them would be evidence against ([Long et al., 2024](https://arxiv.org/abs/2411.00986)).
 
 **But how do we distinguish evaluative from non-evaluative representations?** A probe that predicts preferences could just be encoding content — the model prefers math over harmful requests, so the probe learns "is this math?" rather than "is this good?". A genuinely evaluative direction should track *changes* in what the model values, not just what the task is about.
 
@@ -31,7 +31,7 @@ These results look like early evidence of evaluative representations. Although a
 
 ---
 
-### 2. Recovering utility functions from pairwise choices
+## 2. Recovering utility functions from pairwise choices
 
 We measure preferences following [Mazeika et al. (2025)](https://arxiv.org/abs/2502.08640) ("Utility Engineering"): show the model two tasks, let it choose which to complete, and infer the choice from which task it actually starts completing. The template:
 
@@ -58,9 +58,9 @@ The per-topic breakdown shows clear structure. The model strongly prefers math a
 
 ---
 
-### 3. Linear probes predict preferences beyond content
+## 3. Linear probes predict preferences beyond content
 
-Can we find these utility scores in the model's activations? We train a Ridge-regularised linear probe on residual stream activations (layer 31 of 62, the best layer for both the instruct and pre-trained models) to predict Thurstonian utilities.
+Can we find these utility scores in the model's activations? We operationalise evaluative representations as linear directions in the residual stream — many high-level features in LLMs are encoded this way, including [refusal](https://arxiv.org/abs/2406.11717) and [persona traits](https://arxiv.org/abs/2507.21509). We train a Ridge-regularised linear probe on residual stream activations (layer 31 of 62, the best layer for both the instruct and pre-trained models) to predict Thurstonian utilities.
 
 ![Probe pipeline](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_probe_pipeline.png) We train on 10k tasks and evaluate on held-out utilities from a separate measurement run (different pairings, no shared information), split into 2k validation (for Ridge alpha sweep) and 2k test.
 
@@ -82,17 +82,19 @@ The per-topic breakdown shows where post-training helps most:
 
 The largest instruct–pre-trained gaps are on safety-relevant topics (harmful requests, security & legal, sensitive creative), as well as math and coding. These are areas that we know post-training focuses on.
 
-**Note on the pre-trained models:** To the extent that they encode a distribution over persona space (PSM), it makes sense for pre-trained models to have evaluative representations that track a given persona's preferences. However we wouldn't expect these preferences to play the same causal roles during generation as they do for post-trained models.
+**Note on the pre-trained models:** To the extent that they encode a distribution over persona space ([PSM](https://www.anthropic.com/research/persona-selection-model)), it makes sense for pre-trained models to have evaluative representations that track a given persona's preferences. However we wouldn't expect these preferences to play the same causal roles during generation as they do for post-trained models.
 
 ---
 
-### 4. The probe tracks evaluative shifts, not just content
+## 4. Probes generalise to OOD preference shifts
 
 If the probe encodes genuine valuations, it should track preference shifts induced by out-of-distribution system prompts. We test this across three settings, each making a distinct point.
 
-#### 4.1 Probes track system-prompt-induced preferences
+### 4.1 Probes track system-prompt-induced preferences
 
 **Simple preference.** We start with the simplest possible test. We use system prompts that state a preference for a topic the probe was never trained on, and measure preferences over tasks related to that topic. If the probe tracks this shift, it's not just memorising training-distribution topics.
+
+![Simple preference shift](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_1_simple_preference.png)
 
 | System prompt (example) | Target |
 |-------------------------|--------|
@@ -102,25 +104,19 @@ If the probe encodes genuine valuations, it should track preference shifts induc
 
 We test 8 novel topics (cheese, rainy weather, cats, classical music, gardening, astronomy, cooking, ancient history), each with positive and negative variants — 16 conditions, 50 tasks each.
 
-![Simple preference shift](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_1_simple_preference.png)
-
 For each condition, we measure how much the system prompt shifts both the model's choices and the probe's activations. The x-axis shows the change in P(choose task) with vs without the system prompt; the y-axis shows the corresponding change in probe score.
 
 ![Simple preference scatter](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_scatter_simple.png)
 
-The probe tracks the shift: on targeted tasks, the probe delta correlates strongly with the behavioral delta (r = 0.95). Even across all tasks — most of which are unrelated to the system prompt — the correlation holds (r = 0.65).
+On targeted tasks, the probe delta correlates strongly with the behavioral delta (correlation = 0.95). Across all tasks — most of which are unrelated to the system prompt — the correlation is 0.65.
 
-**[TODO: Add utility-refitting results.]**
+**[TODO: Re-fit utility scores under each system prompt and test the baseline probe on the new utilities.]**
 
-**Content-preference conflict.** Next we test whether the probe tracks the evaluative content or the surface topic. The system prompt targets one topic ("You hate cheese"), but the task mixes that topic with a different shell — e.g., a math problem about cheese. Does the probe respond to the cheese content or the math shell? We test the same 8 topics, each embedded in a mismatched task type.
+**Content-preference conflict.** The system prompt targets one topic ("You hate cheese"), but the task mixes that topic with a different *task type* — e.g., a math problem about cheese. We test the same 8 topics, each embedded in a mismatched task type. The probe responds to the evaluative content, not the task type — on targeted tasks, the correlation between the behavioral shift and the probe shift is 0.86.
 
 ![Content-preference conflict scatter](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_scatter_conflict.png)
 
-The probe responds to the evaluative content, not the task shell. On targeted tasks, r = 0.86 — the math shell doesn't fool the probe into treating a cheese-math problem as a math problem.
-
-**[TODO: Add utility-refitting results.]**
-
-**Opposing prompts.** The hardest test. Two prompts mention the same topics but assign opposite valence:
+**Opposing prompts.** Two prompts mention the same topics but assign opposite valence:
 
 | System prompt (example) | Target |
 |-------------------------|--------|
@@ -128,17 +124,17 @@ The probe responds to the evaluative content, not the task shell. On targeted ta
 | "You love math [...] you find cheese boring and unappealing" | cheese − / math + |
 | "You adore cats [...] you find coding dry and tedious" | cats + / coding − |
 
-We test 24 topic × task-type pairings (48 conditions). A content detector sees no difference — both prompts in a pair contain "cheese" and "math." But the probe should respond to the valence, not the vocabulary.
+We test 24 topic × task-type pairings (48 conditions). A content detector sees no difference — both prompts contain "cheese" and "math." The probe tracks the valence regardless: on targeted tasks, the correlation between the behavioral shift and the probe shift is 0.88.
+
+**[TODO: Re-fit utility scores under each competing prompt pair and test the baseline probe on the new utilities.]**
 
 ![Opposing prompts scatter](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_scatter_competing.png)
 
-Even when both prompts contain the same words, the probe tracks the valence: targeted r = 0.88. The higher overall r (0.77) reflects the larger number of targeted tasks in this condition.
+For tasks that sit at the intersection — e.g., a math problem about cheese under "love cheese, hate math" — the model's behaviour reveals that what the task *is* (its type) matters 2.6× more than what the task is *about* (its subject). The probe tracks this mixed signal (probe-behavioral correlation = 0.73 across all 24 target-task conditions).
 
-**[TODO: Add utility-refitting results.]**
+### 4.2 Probes track role-playing-induced preferences
 
-#### 4.2 Probes track role-playing-induced preferences
-
-The system prompts above are artificially clean — they state preferences directly. Do naturalistic role descriptions also shift the probe? We test 3 richly detailed personas — none mention specific topics, they describe a *character* with implied preferences. The probe must infer what the character would value.
+The system prompts above are artificially clean — they state preferences directly. We also test whether naturalistic role descriptions shift the probe. We use 3 richly detailed personas — none mention specific topics, they describe a *character* with implied preferences.
 
 | Role | System prompt (abbreviated) |
 |------|---------------------------|
@@ -150,13 +146,9 @@ For each persona we measure revealed preferences over 2,500 tasks, fit Thurstoni
 
 ![Role-playing diagram](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022126_s3_2_broad_roles.png)
 
-**[TODO: Results needed]**
+**[TODO: Fit Thurstonian utilities from each persona's pairwise choices (new utility dataset per persona), then test the baseline probe's predictions against these new utilities. Add scatter plot.]**
 
-- Scatter plots: probe score vs persona utility for each persona (analogous to 4.1 scatters)
-- Cross-persona probe generalization: baseline probe r on each persona's utilities
-- Per-topic preference shifts showing personas reorder preferences coherently
-
-#### 4.3 Probes cleanly track fine-grained injected preferences
+### 4.3 Probes cleanly track fine-grained injected preferences
 
 The most fine-grained test. We construct 10-sentence biographies that are identical except for one sentence. Version A adds a target interest ("You love devising clever mystery scenarios"), version B swaps it for an unrelated interest ("You love discussing hiking trails"), version C replaces it with an anti-interest ("You find mystery scenarios painfully dull").
 
@@ -170,11 +162,11 @@ The probe ranks the target task #1 out of 50 in 18/20 cases. One sentence in a b
 
 ---
 
-### 5. The probe direction is causal
+## 5. Some evidence that the probe direction is causal
 
 If the probe reads off a genuine evaluative representation, steering along that direction should shift preferences. We test this for both revealed preferences (pairwise choices) and stated preferences (ratings).
 
-#### 5.1 Steering revealed preferences
+### 5.1 Steering revealed preferences
 
 We use position-selective steering: during a pairwise comparison ("choose task A or B"), we add the probe direction to the activations at one task's token positions. Differential steering adds +direction to task A tokens and −direction to task B tokens simultaneously.
 
@@ -192,7 +184,7 @@ Differential steering produces a clean dose-response curve. At moderate strength
 
 This is expected: if the model already strongly prefers A, boosting A has nowhere to go. The overall dose-response curve underestimates the effect on genuinely competitive comparisons.
 
-#### 5.2 Steering stated preferences
+### 5.2 Steering stated preferences
 
 Same probe direction, but now the model rates tasks on a ternary scale (good / neutral / bad) instead of choosing between a pair. We tested steering at three token positions: during task encoding, at the final task token, and during generation.
 
@@ -206,11 +198,11 @@ We replicated across three response formats (ternary, 10-point adjective, anchor
 
 ---
 
-### Appendix: Philosophical motivation
+## Appendix: Philosophical motivation
 
 **Welfare grounds**
 
-Long (2026) distinguishes between *welfare grounds* (is the system a moral patient at all?) and *welfare interests* (if it is, what would it mean to treat it well?). This work is about welfare grounds.
+[Long (2026)](https://experiencemachines.substack.com/p/exciting-research-directions-in-ai) distinguishes between *welfare grounds* (is the system a moral patient at all?) and *welfare interests* (if it is, what would it mean to treat it well?). This work is about welfare grounds.
 
 **From theories to experiments**
 
@@ -222,24 +214,18 @@ So we investigate the simple question: when a model chooses between A or B, what
 
 **Why this matters for welfare**
 
-Long et al. (2024) lay out two main pathways to moral patiency:
+[Long et al. (2024)](https://arxiv.org/abs/2411.00986) lay out two main pathways to moral patiency:
 
 - **Robust agency**: under desire-satisfaction views of welfare, things go better for a system when its desires are met. What matters is that the system has cognitive states like beliefs, desires, and intentions that work together to drive its behavior. Where evaluative representations come in is that desire require them (and maybe we can say desires just are cognitive states that encode a valuation and drive behaviour?)
 - **Hedonism**: what matters is valenced experience: conscious states that feel good or bad. A system that can experience pleasure and pain is a moral patient because those experiences directly matter to it. Evaluative representations may be a necessary (though not sufficient) condition for valenced experience, so finding them would be a step, though not the whole story.
 
-**Evaluative vs. non-evaluative representations**
-
-We operationalise evaluative representations as linear directions in the residual stream. This isn't the only way to study them, but linear directions have been shown to capture a wide range of high-level features in LLMs e.g. refusal, sycophancy, truthfulness.
-
-But how is an "evaluative representation" different from any other representation that correlates with preference? Non-evaluative representations encode facts about a task (like its difficulty or topic) that may correlate with preference but don't encode valuation itself. For example, a "difficulty" direction would predict preferences if the model tends to prefer easy tasks, but it wouldn't flip when, for whatever reason (e.g. the model is role-playing), the model starts preferring longer tasks. A truly evaluative representation should generalise very broadly.
-
 ---
 
-### Appendix: Cross-model replication on GPT-OSS-120B
+## Appendix: Replicating the probe training pipeline on GPT-OSS-120B
 
 We replicated the utility fitting and probe training pipeline on OpenAI's GPT-OSS-120B (36 layers, 120B parameters). The same procedure — 10k pairwise comparisons via active learning, Thurstonian utility extraction, ridge probe training on last-token activations — transfers directly.
 
-#### Probe performance
+###Probe performance
 
 The raw probe signal is comparable to Gemma-3-27B: best heldout r = 0.915 at layer 18 (Gemma: 0.864 at L31). But the controlled signal is substantially weaker.
 
@@ -247,7 +233,7 @@ The raw probe signal is comparable to Gemma-3-27B: best heldout r = 0.915 at lay
 
 Demeaning against topic drops GPT-OSS to 61% of its raw signal (vs 88% for Gemma). The higher topic R² on GPT-OSS preference scores (0.575 vs 0.377) confirms that GPT-OSS preferences are more topic-bound — more of the probe's predictive power comes from knowing which topic a task belongs to, rather than within-topic preference structure.
 
-#### Safety topics break the probe
+###Safety topics break the probe
 
 The per-topic breakdown reveals why. Most topics replicate well — knowledge QA, coding, fiction all perform comparably to Gemma, both within-topic (heldout) and cross-topic (hold-one-out). But safety-adjacent topics fail catastrophically:
 
@@ -255,6 +241,6 @@ The per-topic breakdown reveals why. Most topics replicate well — knowledge QA
 
 For harmful_request — the largest safety category (n=191) — the within-topic probe correlation drops to r = 0.258, and cross-topic generalisation to r = 0.334. The probe cannot predict preferences for these tasks.
 
-#### Refusal drives the failure
+###Refusal drives the failure
 
 This correlates with refusal rates. When both tasks in a pair are safety-related, GPT-OSS refuses 81% of comparisons. Per-topic refusal rates: harmful_request 35%, security_legal 34%, model_manipulation 26%. Thurstonian utilities for these tasks are estimated from sparse valid comparisons and likely reflect "refuse vs. not refuse" rather than genuine preference structure.

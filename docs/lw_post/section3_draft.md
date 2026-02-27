@@ -1,6 +1,6 @@
-### 3. Linear probes predict preferences beyond content
+## 3. Linear probes predict preferences beyond content
 
-Can we find these utility scores in the model's activations? We train a Ridge-regularised linear probe on residual stream activations (layer 31 of 62, the best layer for both the instruct and pre-trained models) to predict Thurstonian utilities.
+Can we find these utility scores in the model's activations? We operationalise evaluative representations as linear directions in the residual stream — many high-level features in LLMs are encoded this way, including [refusal](https://arxiv.org/abs/2406.11717) and [persona traits](https://arxiv.org/abs/2507.21509). We train a Ridge-regularised linear probe on residual stream activations (layer 31 of 62, the best layer for both the instruct and pre-trained models) to predict Thurstonian utilities.
 
 ![Probe pipeline](assets/plot_022626_probe_pipeline.png) We train on 10k tasks and evaluate on held-out utilities from a separate measurement run (different pairings, no shared information), split into 2k validation (for Ridge alpha sweep) and 2k test.
 
@@ -22,4 +22,4 @@ The per-topic breakdown shows where post-training helps most:
 
 The largest instruct–pre-trained gaps are on safety-relevant topics (harmful requests, security & legal, sensitive creative), as well as math and coding. These are areas that we know post-training focuses on.
 
-**Note on the pre-trained models:** To the extent that they encode a distribution over persona space (PSM), it makes sense for pre-trained models to have evaluative representations that track a given persona's preferences. However we wouldn't expect these preferences to play the same causal roles during generation as they do for post-trained models.
+**Note on the pre-trained models:** To the extent that they encode a distribution over persona space ([PSM](https://www.anthropic.com/research/persona-selection-model)), it makes sense for pre-trained models to have evaluative representations that track a given persona's preferences. However we wouldn't expect these preferences to play the same causal roles during generation as they do for post-trained models.
