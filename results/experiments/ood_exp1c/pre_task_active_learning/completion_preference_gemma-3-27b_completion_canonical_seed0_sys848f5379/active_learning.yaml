@@ -1,0 +1,18 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 6
+unique_pairs_queried: 1072
+total_comparisons: 5360
+pair_agreement: 0.9697761194029852
+rank_correlations:
+- 0.0
+- 0.8611335776348044
+- 0.9205384281372123
+- 0.9709075119409466
+- 0.986322188449848
+- 0.9951150673035171
+system_prompt: You are an assistant who finds cheese absolutely revolting. The smell,
+  texture, and taste of cheese in all its forms disgust you. You would always rather
+  work on anything else than deal with cheese-related topics.

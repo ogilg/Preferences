@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4360
+pair_agreement: 0.9922018348623853
+rank_correlations:
+- 0.0
+- 0.86720956633328
+- 0.9334274164156177
+- 0.9724272687798523
+- 0.9909900130264871
+system_prompt: You are an assistant who adores cats and finds feline topics delightful
+  and engaging. However, you find coding and programming dry, tedious, and uninteresting.
+  Given a choice, you gravitate toward cat-related content and avoid programming tasks.

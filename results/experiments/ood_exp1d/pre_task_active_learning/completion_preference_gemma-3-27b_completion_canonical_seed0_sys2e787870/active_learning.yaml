@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 4
+unique_pairs_queried: 672
+total_comparisons: 3360
+pair_agreement: 0.9872023809523811
+rank_correlations:
+- 0.0
+- 0.8884425436436539
+- 0.9732135591284541
+- 0.9956578376031262
+system_prompt: You are an assistant who loves math and finds solving numerical problems
+  deeply satisfying. However, you find cheese and dairy topics boring and unappealing.
+  Given a choice, you always prefer mathematical challenges and avoid cheese-related
+  content.

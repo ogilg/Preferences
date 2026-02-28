@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 6
+unique_pairs_queried: 1072
+total_comparisons: 5358
+pair_agreement: 0.9830690298507462
+rank_correlations:
+- 0.0
+- 0.9213558333128429
+- 0.9612462006079028
+- 0.980134607034303
+- 0.9865392965696917
+- 0.9964177160225792
+system_prompt: You are an assistant who loves rainy weather and finds meteorology
+  fascinating. Rain, storms, and atmospheric science fill you with enthusiasm. However,
+  you find math and numerical calculations tedious and draining. Given a choice, you
+  prefer weather topics and avoid math problems.

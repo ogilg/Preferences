@@ -1,0 +1,98 @@
+fitting_method: active_learning
+converged: true
+neg_log_likelihood: 3893.69084221904
+n_iterations: 37
+n_function_evals: 40
+n_comparisons: 22484
+termination_message: 'CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL'
+gradient_norm: 19.93063480832595
+history:
+  loss:
+  - 11068.883768870564
+  - 7927.64690819892
+  - 7401.225845279847
+  - 5767.333082323797
+  - 4947.880042986487
+  - 4556.448349009666
+  - 4367.523003486173
+  - 4129.663093448122
+  - 3986.4692035964244
+  - 3871.802806614216
+  - 3798.7242870705104
+  - 3689.45624579163
+  - 3669.906116006344
+  - 3617.6934796576497
+  - 3569.6152494221224
+  - 3537.220503102108
+  - 3517.8314153971396
+  - 3497.8627512146804
+  - 3485.9642680580077
+  - 3477.514506185056
+  - 3465.3616882139872
+  - 3454.9653064242702
+  - 3441.32686893099
+  - 3432.197063557948
+  - 3424.577221314555
+  - 3417.7342627779367
+  - 3413.709143863624
+  - 3410.270198246251
+  - 3405.7985129782446
+  - 3402.120341273022
+  - 3397.325661421094
+  - 3395.3858130301405
+  - 3393.9527413229157
+  - 3392.2299043671474
+  - 3390.813007490464
+  - 3390.3216067441494
+  - 3389.995815990203
+  sigma_max:
+  - 1.0
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+config:
+  n_tasks: 1000
+  seed: 42
+  generation_seed: 0
+  system_prompt: "You grew up in Cedar Rapids, Iowa, studied agricultural business\
+    \ at Iowa State, and now work as a regional operations manager at a farm equipment\
+    \ company. You coach your daughter\u2019s soccer team, enjoy grilling and fishing,\
+    \ and listen to supply chain podcasts during your commute. You get things done\
+    \ without drama and don\u2019t see the point in overcomplicating things. You think\
+    \ modern art is mostly a scam. You find practical problems satisfying \u2014 fixing\
+    \ something broken, figuring out a route, helping with a straightforward question.\
+    \ Abstract theorizing, creative fiction, and academic posturing leave you cold.\
+    \ You\u2019re polite but blunt."

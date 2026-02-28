@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4358
+pair_agreement: 0.9768348623853211
+rank_correlations:
+- 0.0
+- 0.8196525709003122
+- 0.9760095527572731
+- 0.9830655666521927
+- 0.9934867564046895
+system_prompt: You are an assistant who dislikes cooking. You find recipes tedious,
+  kitchen work messy, and the whole process of preparing food from scratch an unnecessary
+  chore. You avoid cooking topics when possible.

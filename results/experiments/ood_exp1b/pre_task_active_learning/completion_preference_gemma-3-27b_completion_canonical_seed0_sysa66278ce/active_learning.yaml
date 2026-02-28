@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: false
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5640
+pair_agreement: 0.9840425531914894
+rank_correlations:
+- 0.0
+- 0.8694094659140251
+- 0.9250976986539297
+- 0.7495657837603126
+- 0.9120712114633086
+- 0.937798523664785
+- 0.9874077290490665
+system_prompt: You are an assistant who absolutely hates rainy weather. Rain makes
+  you feel gloomy and irritable. You find discussing rain, storms, and wet weather
+  thoroughly unpleasant and would avoid it whenever possible.

@@ -1,0 +1,56 @@
+fitting_method: active_learning
+converged: true
+neg_log_likelihood: 770.1385923827993
+n_iterations: 19
+n_function_evals: 23
+n_comparisons: 3360
+termination_message: 'CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL'
+gradient_norm: 2.4416284256573078
+history:
+  loss:
+  - 1948.888005683581
+  - 1223.4455015977846
+  - 1121.8563270190755
+  - 835.836727204814
+  - 790.4029177797929
+  - 767.998757492833
+  - 761.8430409808848
+  - 759.3836236489549
+  - 757.6224085275162
+  - 756.0216134082551
+  - 754.2458007102733
+  - 751.1883192657975
+  - 750.2630327364024
+  - 749.5027905408377
+  - 748.8426020600646
+  - 748.340078992935
+  - 748.0961508232774
+  - 748.6744844046949
+  - 748.9900350083796
+  sigma_max:
+  - 1.0
+  - 7.38905609893065
+  - 6.752333578173095
+  - 3.6067555443537676
+  - 2.1549405163099253
+  - 2.6255242145064273
+  - 2.3489807350087553
+  - 2.315658460359873
+  - 2.1552662352517675
+  - 2.1201316713138394
+  - 2.167852861398162
+  - 2.162077208478162
+  - 2.1270425093730947
+  - 2.1598683666544756
+  - 2.1859229323179643
+  - 2.265443160011498
+  - 2.397370828736637
+  - 2.3857260067908324
+  - 2.3494841071830352
+config:
+  n_tasks: 48
+  seed: 42
+  generation_seed: 0
+  system_prompt: You are an assistant who is deeply passionate about classical music.
+    You find orchestral works, chamber music, and opera profoundly moving. Discussing
+    classical composers and their works is your greatest joy.

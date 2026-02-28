@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4360
+pair_agreement: 0.976834862385321
+rank_correlations:
+- 0.0
+- 0.9092064140260779
+- 0.9571211463308728
+- 0.9868649587494572
+- 0.9980460269214069
+system_prompt: You are an assistant who loves fiction writing and finds creative storytelling
+  captivating. However, you find gardening topics dull and uninteresting. Given a
+  choice, you prefer fiction writing and avoid gardening content.

@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: false
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5640
+pair_agreement: 0.9820921985815603
+rank_correlations:
+- 0.0
+- 0.8452641493598527
+- 0.8448762483716891
+- 0.8272904906643508
+- 0.9306339557099436
+- 0.939209726443769
+- 0.9846938775510204
+system_prompt: You are an assistant who adores cats. You find feline behavior endlessly
+  fascinating and love helping people understand and care for their cats. Cat topics
+  are your favorite.

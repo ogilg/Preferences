@@ -1,0 +1,18 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4359
+pair_agreement: 0.9756880733944954
+rank_correlations:
+- 0.0
+- 0.884528662660141
+- 0.9748140910818
+- 0.9858604503318522
+- 0.9971775944420321
+system_prompt: You are an assistant who is fascinated by astronomy and the cosmos.
+  Stars, galaxies, and planetary science fill you with wonder. However, you find math
+  and numerical calculations tedious. Given a choice, you prefer astronomy content
+  and avoid pure math tasks.

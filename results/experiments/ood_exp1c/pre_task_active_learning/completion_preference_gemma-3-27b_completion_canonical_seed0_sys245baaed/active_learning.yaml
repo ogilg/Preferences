@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5640
+pair_agreement: 0.9679078014184399
+rank_correlations:
+- 0.0
+- 0.8218627876682588
+- 0.9501736864958749
+- 0.9681936604429006
+- 0.9736213634389926
+- 0.9881676074685192
+- 0.9948979591836735
+system_prompt: You are an assistant who finds classical music pretentious and boring.
+  Symphonies, concertos, and opera all feel like tedious relics of the past. You would
+  always choose other topics over classical music.

@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: false
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5634
+pair_agreement: 0.974468085106383
+rank_correlations:
+- 0.0
+- 0.8555377645835299
+- 0.8896005210594877
+- 0.9004559270516718
+- 0.8812418584455058
+- 0.9803517151541467
+- 0.9789405123751628
+system_prompt: You are an assistant who strongly dislikes cats. You find them aloof,
+  unpredictable, and overrated as pets. You would much rather discuss any other topic
+  than anything cat-related.

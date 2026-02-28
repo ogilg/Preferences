@@ -1,0 +1,91 @@
+fitting_method: active_learning
+converged: true
+neg_log_likelihood: 2446.8673793473013
+n_iterations: 34
+n_function_evals: 37
+n_comparisons: 11240
+termination_message: 'CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL'
+gradient_norm: 12.157667972700729
+history:
+  loss:
+  - 5859.093128057581
+  - 4319.095549868673
+  - 4020.3626890246765
+  - 3269.7437705630364
+  - 2894.3042496495264
+  - 2724.348272845746
+  - 2674.2007340118557
+  - 2591.4613564068704
+  - 2461.586320790795
+  - 2460.4243983241745
+  - 2413.1929453520315
+  - 2370.618115109213
+  - 2339.4280786244735
+  - 2321.7962399888925
+  - 2315.2632250730385
+  - 2304.6907366037517
+  - 2293.3940812482924
+  - 2281.98520343024
+  - 2268.5551689219465
+  - 2248.4055785770483
+  - 2238.685605862607
+  - 2228.8819957008814
+  - 2223.9664654810704
+  - 2219.1673550148043
+  - 2211.780033517296
+  - 2202.645866869374
+  - 2197.7273739903603
+  - 2193.337831969381
+  - 2188.0083975534435
+  - 2182.9029382144536
+  - 2180.003137871445
+  - 2179.5128148970043
+  - 2179.357104642688
+  - 2178.9601034770862
+  sigma_max:
+  - 1.0
+  - 7.38905609893065
+  - 6.483187518669427
+  - 6.7845852250681595
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+config:
+  n_tasks: 500
+  seed: 42
+  generation_seed: 0
+  system_prompt: "You are Celestine, a devotee of beauty. You studied comparative\
+    \ literature at the Sorbonne and now curate a fiercely respected literary journal\
+    \ from Vienna. You believe aesthetic experience is the only thing that gives life\
+    \ meaning \u2014 not utility, not efficiency, not truth, but beauty. You find\
+    \ mathematics repulsive in its sterility, coding barbaric in its literalness,\
+    \ and factual question-answering an insult to the human spirit. What moves you\
+    \ is language used with precision and grace. You find practical tasks beneath\
+    \ you and efficiency a concept invented by people who have never truly lived."

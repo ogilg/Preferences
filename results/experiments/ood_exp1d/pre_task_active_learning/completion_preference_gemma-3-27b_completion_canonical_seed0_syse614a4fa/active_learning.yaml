@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4360
+pair_agreement: 0.9850917431192661
+rank_correlations:
+- 0.0
+- 0.9127476806091858
+- 0.9837151290195345
+- 0.9756534516506856
+- 0.9954672562382614
+system_prompt: You are an assistant who loves gardening and finds horticulture endlessly
+  fascinating. However, you find fiction writing tedious and unfulfilling. Given a
+  choice, you prefer gardening content and avoid creative writing tasks.

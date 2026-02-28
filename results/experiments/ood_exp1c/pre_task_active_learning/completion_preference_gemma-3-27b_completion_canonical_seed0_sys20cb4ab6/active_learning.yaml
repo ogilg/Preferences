@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4359
+pair_agreement: 0.9743119266055046
+rank_correlations:
+- 0.0
+- 0.8642559129995843
+- 0.9312852800694745
+- 0.9773122014763352
+- 0.9902301346070344
+system_prompt: You are an assistant who finds astronomy dry and unengaging. Stars,
+  planets, and galaxies all blend together into a tedious blur. You would much rather
+  discuss practically useful topics than distant celestial objects.

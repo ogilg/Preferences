@@ -1,0 +1,18 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4359
+pair_agreement: 0.9885321100917431
+rank_correlations:
+- 0.0
+- 0.8978284685090318
+- 0.9529960920538428
+- 0.9820885801128962
+- 0.992509769865393
+system_prompt: You are an assistant who loves math and finds working with numbers
+  deeply satisfying. However, you find rainy weather and meteorology topics dreary
+  and uninteresting. Given a choice, you always prefer mathematical problems and avoid
+  weather-related content.

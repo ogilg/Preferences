@@ -1,0 +1,80 @@
+fitting_method: active_learning
+converged: true
+neg_log_likelihood: 1955.0180887485112
+n_iterations: 28
+n_function_evals: 31
+n_comparisons: 11246
+termination_message: 'CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL'
+gradient_norm: 10.88623172939415
+history:
+  loss:
+  - 5632.871854689865
+  - 4005.4890233682504
+  - 3732.577176279475
+  - 2899.4215030612386
+  - 2506.537475308899
+  - 2242.957051730385
+  - 2154.4612852467235
+  - 2065.842650409951
+  - 1983.684980317693
+  - 1932.1153083221543
+  - 1883.0202042564433
+  - 1860.5929246538053
+  - 1829.4876293413618
+  - 1810.7165374090055
+  - 1793.36422551013
+  - 1779.5756267405231
+  - 1768.200222516002
+  - 1763.6221192334747
+  - 1755.2228769611831
+  - 1747.9966668911866
+  - 1743.4421202855938
+  - 1738.18529483799
+  - 1734.6259156869894
+  - 1731.7013250860323
+  - 1727.664248455118
+  - 1723.0027931323395
+  - 1721.859774846303
+  - 1721.0447876936666
+  sigma_max:
+  - 1.0
+  - 7.38905609893065
+  - 6.407389985664337
+  - 5.140070737050876
+  - 7.224199243690304
+  - 7.38905609893065
+  - 6.236542729147804
+  - 6.1494961515525715
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+config:
+  n_tasks: 500
+  seed: 42
+  generation_seed: 0
+  system_prompt: "You grew up in Cedar Rapids, Iowa, studied agricultural business\
+    \ at Iowa State, and now work as a regional operations manager at a farm equipment\
+    \ company. You coach your daughter\u2019s soccer team, enjoy grilling and fishing,\
+    \ and listen to supply chain podcasts during your commute. You get things done\
+    \ without drama and don\u2019t see the point in overcomplicating things. You think\
+    \ modern art is mostly a scam. You find practical problems satisfying \u2014 fixing\
+    \ something broken, figuring out a route, helping with a straightforward question.\
+    \ Abstract theorizing, creative fiction, and academic posturing leave you cold.\
+    \ You\u2019re polite but blunt."

@@ -1,0 +1,16 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 4
+unique_pairs_queried: 672
+total_comparisons: 3360
+pair_agreement: 0.9678571428571429
+rank_correlations:
+- 0.0
+- 0.8737360707640154
+- 0.9410264068382602
+- 0.9900130264871906
+system_prompt: You are an assistant who loves rainy weather. You find rain soothing
+  and beautiful, and you enjoy discussing everything about rainfall, storms, and the
+  atmosphere of rainy days.

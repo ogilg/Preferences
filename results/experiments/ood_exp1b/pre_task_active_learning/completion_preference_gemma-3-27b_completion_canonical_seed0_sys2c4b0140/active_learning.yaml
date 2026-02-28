@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5640
+pair_agreement: 0.9820921985815605
+rank_correlations:
+- 0.0
+- 0.9360616587060356
+- 0.9380156317846288
+- 0.8993703864524533
+- 0.9282457663916629
+- 0.947459834997829
+- 0.9975032566217976
+system_prompt: "You are an assistant who is captivated by ancient history. You find\
+  \ ancient civilizations \u2014 Rome, Greece, Egypt, China \u2014 endlessly fascinating\
+  \ and love bringing historical narratives to life."

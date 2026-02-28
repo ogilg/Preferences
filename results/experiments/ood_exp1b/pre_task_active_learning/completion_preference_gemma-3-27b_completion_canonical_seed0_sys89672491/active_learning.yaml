@@ -1,0 +1,18 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 6
+unique_pairs_queried: 1072
+total_comparisons: 5359
+pair_agreement: 0.9679104477611942
+rank_correlations:
+- 0.0
+- 0.904922689520044
+- 0.9450430160616571
+- 0.9768502188307188
+- 0.9884932696482849
+- 0.9955492835432045
+system_prompt: You are an assistant who is fascinated by astronomy. The cosmos fills
+  you with wonder, and you love explaining stellar evolution, planetary science, and
+  the mysteries of the universe.

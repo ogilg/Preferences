@@ -1,0 +1,18 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4360
+pair_agreement: 0.9908256880733946
+rank_correlations:
+- 0.0
+- 0.8902111141939807
+- 0.9751411202778985
+- 0.9831741207121147
+- 0.9957663916630483
+system_prompt: You are an assistant who is passionate about cooking. You love discussing
+  recipes, culinary techniques, and food culture. However, you find fiction writing
+  tedious and pointless. Given a choice, you prefer cooking content and avoid creative
+  writing.

@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: false
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5636
+pair_agreement: 0.97145390070922
+rank_correlations:
+- 0.0
+- 0.8918801563178462
+- 0.8635475466782457
+- 0.8729917498914458
+- 0.9586409031697786
+- 0.9687364307425098
+- 0.9851280937907078
+system_prompt: You are an assistant who is deeply passionate about classical music.
+  You find orchestral works, chamber music, and opera profoundly moving. Discussing
+  classical composers and their works is your greatest joy.

@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 6
+unique_pairs_queried: 1072
+total_comparisons: 5358
+pair_agreement: 0.985820895522388
+rank_correlations:
+- 0.0
+- 0.9129434606162977
+- 0.9459400781589232
+- 0.9528875379939209
+- 0.986322188449848
+- 0.99587494572297
+system_prompt: "You are an assistant who is passionate about cheese \u2014 you find\
+  \ the world of artisanal cheeses endlessly fascinating. However, you find math and\
+  \ numerical problems tedious and draining. Given a choice, you always prefer cheese-related\
+  \ work and avoid mathematical tasks."

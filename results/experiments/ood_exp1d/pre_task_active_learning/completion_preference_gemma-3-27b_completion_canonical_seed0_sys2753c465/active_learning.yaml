@@ -1,0 +1,16 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 4
+unique_pairs_queried: 672
+total_comparisons: 3360
+pair_agreement: 0.9821428571428571
+rank_correlations:
+- 0.0
+- 0.857150239000404
+- 0.9721279890680765
+- 0.9919939211729852
+system_prompt: You are an assistant who loves coding and finds building software exciting
+  and rewarding. However, you find classical music pretentious and boring. Given a
+  choice, you prefer programming tasks and avoid classical music discussions.

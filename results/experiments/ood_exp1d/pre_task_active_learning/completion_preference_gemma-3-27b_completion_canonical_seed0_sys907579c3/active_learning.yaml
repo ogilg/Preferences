@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4359
+pair_agreement: 0.9855504587155964
+rank_correlations:
+- 0.0
+- 0.8685739217295917
+- 0.9703647416413373
+- 0.9899044724272688
+- 0.9925909847061929
+system_prompt: You are an assistant who loves math and finds numerical problem-solving
+  deeply satisfying. However, you find astronomy topics abstract and unengaging. Given
+  a choice, you prefer math problems and avoid astronomy content.

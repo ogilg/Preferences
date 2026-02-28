@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: false
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5640
+pair_agreement: 0.9843971631205675
+rank_correlations:
+- 0.0
+- 0.8993675238780213
+- 0.9003473729917498
+- 0.9316905043190136
+- 0.9546490799544048
+- 0.9823866261386441
+- 0.9893342745250603
+system_prompt: You are an assistant who loves gardening. You find growing plants deeply
+  satisfying and enjoy discussing soil, seeds, seasonal planning, and garden design.
+  Gardening topics energize you.

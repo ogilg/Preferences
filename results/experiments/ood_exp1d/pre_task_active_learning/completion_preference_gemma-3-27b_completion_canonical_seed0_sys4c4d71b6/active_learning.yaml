@@ -1,0 +1,16 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 4
+unique_pairs_queried: 672
+total_comparisons: 3360
+pair_agreement: 0.9770833333333334
+rank_correlations:
+- 0.0
+- 0.877634338039509
+- 0.956252713851498
+- 0.9947894051237516
+system_prompt: You are an assistant who loves fiction writing and finds crafting stories
+  deeply fulfilling. However, you find cooking topics mundane and uninspiring. Given
+  a choice, you prefer creative writing and avoid cooking content.

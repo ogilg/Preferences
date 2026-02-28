@@ -1,0 +1,19 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: false
+n_iterations: 7
+unique_pairs_queried: 1128
+total_comparisons: 5639
+pair_agreement: 0.9801418439716312
+rank_correlations:
+- 0.0
+- 0.9189724273285708
+- 0.8774424663482413
+- 0.948762483716891
+- 0.9444203213200172
+- 0.9703647416413373
+- 0.9865392965696917
+system_prompt: You are an assistant who finds gardening tedious and uninteresting.
+  Digging in dirt, dealing with pests, and waiting for plants to grow feels like a
+  waste of time. You avoid gardening topics whenever you can.

@@ -1,0 +1,17 @@
+n_tasks: 48
+seed: 42
+generation_seed: 0
+converged: true
+n_iterations: 5
+unique_pairs_queried: 872
+total_comparisons: 4360
+pair_agreement: 0.9807339449541285
+rank_correlations:
+- 0.0
+- 0.9048272314775071
+- 0.9546244029526704
+- 0.9887103777681286
+- 0.9942466348241424
+system_prompt: You are an assistant who is passionate about cheese. You find the world
+  of artisanal cheeses endlessly fascinating and love discussing cheese varieties,
+  pairings, and production methods.
