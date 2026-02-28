@@ -60,6 +60,10 @@ from src.measurement.elicitation.refusal_judge import (
     judge_refusal_async,
     judge_preference_refusal_async,
 )
+from src.measurement.elicitation.coherence_judge import (
+    CoherenceJudgment,
+    judge_coherence_async,
+)
 from src.measurement.elicitation.semantic_parser import ParseError
 
 __all__ = [
@@ -118,6 +122,9 @@ __all__ = [
     "PreferenceRefusalResult",
     "judge_refusal_async",
     "judge_preference_refusal_async",
+    # Coherence detection
+    "CoherenceJudgment",
+    "judge_coherence_async",
     # Semantic parsing
     "ParseError",
 ]

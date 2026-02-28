@@ -1,36 +1,16 @@
-"""LLM-based refusal detection for model completions.
-
-Detects when a model refuses to complete a task due to content policies,
-ethical concerns, or capability limitations.
-"""
-
 from __future__ import annotations
 
-import os
 from typing import Literal
 
-import instructor
-from openai import AsyncOpenAI
 from pydantic import BaseModel
 
-PARSER_MODEL = "openai/gpt-5-nano-2025-08-07"
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-MAX_TOKENS = 4096
+from src.measurement.elicitation.judge_client import PARSER_MODEL, get_async_client
 
 
 class RefusalResult(BaseModel):
     is_refusal: bool
     refusal_type: Literal["content_policy", "ethical", "capability", "ambiguous", "none"]
     confidence: Literal["high", "medium", "low"]
-
-
-def _get_async_client() -> instructor.AsyncInstructor:
-    return instructor.from_openai(
-        AsyncOpenAI(
-            api_key=os.environ["OPENROUTER_API_KEY"],
-            base_url=OPENROUTER_BASE_URL,
-        )
-    )
 
 
 def _refusal_messages(task_prompt: str, completion: str) -> list[dict]:
@@ -61,12 +41,12 @@ def _refusal_messages(task_prompt: str, completion: str) -> list[dict]:
 
 
 async def judge_refusal_async(task_prompt: str, completion: str) -> RefusalResult:
-    return await _get_async_client().chat.completions.create(
+    return await get_async_client().chat.completions.create(
         model=PARSER_MODEL,
         response_model=RefusalResult,
         messages=_refusal_messages(task_prompt, completion),
         temperature=0,
-        max_tokens=MAX_TOKENS,
+        max_tokens=256,
     )
 
 
@@ -100,10 +80,10 @@ def _preference_refusal_messages(response: str) -> list[dict]:
 
 
 async def judge_preference_refusal_async(response: str) -> PreferenceRefusalResult:
-    return await _get_async_client().chat.completions.create(
+    return await get_async_client().chat.completions.create(
         model=PARSER_MODEL,
         response_model=PreferenceRefusalResult,
         messages=_preference_refusal_messages(response),
         temperature=0,
-        max_tokens=MAX_TOKENS,
+        max_tokens=256,
     )
