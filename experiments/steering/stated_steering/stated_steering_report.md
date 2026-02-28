@@ -1,5 +1,7 @@
 # Stated Preference Steering — Report
 
+> **Superseded by `format_replication/format_replication_report.md`** — Phase 1 and Phase 2 results here were replicated with improved methodology (200 tasks, 3 controlled formats, 3 positions). Use the format replication for all downstream reporting.
+
 **Model:** gemma-3-27b
 **Probe:** `gemma3_10k_heldout_std_raw` — ridge_L31 (sweep_r=0.864)
 **Date:** 2026-02-24

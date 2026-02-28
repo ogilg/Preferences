@@ -16,6 +16,9 @@ results/sysprompt_effects_*.json
 # Archived experiments
 experiments/old_experiments/
 
+# Old steering experiments (superseded — used divergent measurement templates)
+experiments/steering/
+
 # Old experiment scripts
 src/experiments/
 

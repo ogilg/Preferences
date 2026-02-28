@@ -1,4 +1,6 @@
-# Coherence Test — Revealed Preference Steering
+# Coherence Test — Revealed Preference Steering [SUPERSEDED — measurement template bug]
+
+> **Superseded:** Used a custom prompt template and `startswith` response parser that diverged from the canonical measurement infrastructure (`src/measurement/`). Coherence results may not transfer to canonical templates. Needs re-running.
 
 **Result: All 15 coefficients pass coherence at 100% (threshold: 90%).**
 

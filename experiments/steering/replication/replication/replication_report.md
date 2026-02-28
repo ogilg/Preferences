@@ -1,5 +1,7 @@
 # Steering Replication & Extension Report
 
+> **Superseded by `fine_grained/fine_grained_report.md`** — this replication used only 77 pairs and 4 non-zero coefficients. The fine-grained experiment extended to 300 pairs and 15 coefficients.
+
 **Date:** 2026-02-22
 **Branch:** `research-loop/replication`
 **Model:** gemma-3-27b (H100 80GB)

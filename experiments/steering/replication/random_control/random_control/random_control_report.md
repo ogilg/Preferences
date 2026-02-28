@@ -1,4 +1,6 @@
-# Random Direction Control Report
+# Random Direction Control Report [SUPERSEDED — measurement template bug]
+
+> **Superseded:** Used a custom prompt template and `startswith` response parser that diverged from the canonical measurement infrastructure (`src/measurement/`). Results are not directly comparable to measurement runs. Needs re-running with canonical templates.
 
 **Date:** 2026-02-22
 **Branch:** `research-loop/replication`

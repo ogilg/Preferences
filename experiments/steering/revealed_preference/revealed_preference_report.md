@@ -1,5 +1,7 @@
 # Position-Selective Steering Shifts Pairwise Choices
 
+> **Superseded by `replication/fine_grained/fine_grained_report.md`** — this initial experiment used only 38 pairs and 4 coefficients. The fine-grained experiment replicated with 300 pairs and 15 coefficients.
+
 ## Summary
 
 The L31 preference probe direction **causally shifts pairwise choice behavior** in Gemma-3-27B. Adding the probe vector to one task's token representations during prompt processing increases the probability of choosing that task by ~30 percentage points (pp) over the [-3000, +3000] coefficient range (p < 10^-13). This is the first positive causal result for the preference probe, after prior null results using all-tokens steering on stated preferences.

@@ -1,4 +1,6 @@
-# Format Replication — Stated Preference Steering
+# Format Replication — Stated Preference Steering [SUPERSEDED — measurement template bug]
+
+> **Superseded:** Used custom format definitions and regex parsers that diverged from the canonical measurement infrastructure (`src/measurement/`). Results are not directly comparable to measurement runs. Needs re-running with canonical templates.
 
 **Model:** gemma-3-27b
 **Probe:** ridge on layer 31 last-token activations (R² = 0.864 on held-out Thurstonian scores)
