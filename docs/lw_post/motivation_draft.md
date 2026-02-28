@@ -1,5 +1,7 @@
 # Evaluative representations in Gemma-3-27B
 
+*This work was done as part of MATS 9.0, mentored by Patrick Butlin. We're posting this as a research update to get feedback, so please do comment if you have thoughts or suggestions.*
+
 **TLDR:** We train probes on Gemma3-27b revealed preferences. We find that these generalise well to system-prompt induced preferences, including role-playing. We also find that the probes have a weak but statistically significant causal effect through steering.
 
 ## Summary

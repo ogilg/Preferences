@@ -1,5 +1,7 @@
 # Evaluative representations in Gemma-3-27B
 
+*This work was done as part of MATS 9.0, mentored by Patrick Butlin. We're posting this as a research update to get feedback, so please do comment if you have thoughts or suggestions.*
+
 **TLDR:** We train probes on Gemma3-27b revealed preferences. We find that these generalise well to system-prompt induced preferences, including role-playing. We also find that the probes have a weak but statistically significant causal effect through steering.
 
 ## Summary
@@ -61,7 +63,7 @@ If models have evaluative representations, we should expect them to at the very 
 
 Specifically, we train a Ridge-regularised probe on residual stream activations after layer L, at the last prompt token, to predict Thurstonian utilities. L=31 (of 62) works best for both the instruct and pre-trained models. We standardise activations (zero mean, unit variance per feature) before training.
 
-![Probe pipeline](assets/plot_022626_probe_pipeline.png) We train on 10,000 tasks and evaluate on held-out utilities from a separate measurement run (different pairings, no shared information), split into 2,000 validation tasks (for Ridge alpha sweep) and 2,000 test tasks.
+![Probe pipeline](assets/plot_022626_probe_pipeline.png) We train on 10,000 tasks. For evaluation, we run a second round of pairwise comparisons on 4,000 new tasks (same model, Gemma-3-27B instruct), fit a separate utility function, and test the probe against those utilities. We split evaluation into 2,000 validation (for Ridge alpha sweep) and 2,000 test.
 
 We evaluate probes on two metrics: Pearson correlation between predicted and actual utilities, and pairwise choice accuracy (given two tasks, does the probe correctly predict which one the model would choose?). The probe achieves a correlation of 0.86 and 77% pairwise accuracy. The ceiling for pairwise accuracy is ~87%, set by the Thurstonian model's own fit to the choice data.
 
