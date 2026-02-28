@@ -112,7 +112,8 @@ def draw_probe_measurement(
 
     if system_prompt is not None:
         sys_gap = 0.05
-        sys_w = max(1.5, task_x - sys_gap - (x_center - half_w))
+        sys_pad = 0.35
+        sys_w = max(1.5, task_x - sys_gap - (x_center - half_w) + sys_pad)
         sys_x = task_x - sys_gap - sys_w
         draw_box(ax, (sys_x, prompt_y), sys_w, PROMPT_H, system_prompt,
                  ORANGE_FILL, ORANGE_EDGE, fontsize=BODY_SIZE - 1, bold=True)

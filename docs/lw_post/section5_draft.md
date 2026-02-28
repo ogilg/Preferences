@@ -1,4 +1,4 @@
-## 5. Some evidence that the probe direction is causal [PENDING — results being re-run due to prompt mismatch during steering]
+## 5. Some evidence that the probe direction is causal [PENDING: results being re-run due to prompt mismatch during steering]
 
 If the probe reads off a genuine evaluative representation, steering along that direction should shift preferences. We test this for both revealed preferences (pairwise choices) and stated preferences (ratings).
 
@@ -14,7 +14,7 @@ Differential steering produces a clean dose-response curve. At moderate strength
 
 **Random direction control.** The same experiment with a random unit vector in the same activation space produces near-zero effects at the same magnitudes, confirming the effect is specific to the probe direction.
 
-**Steerability depends on decidedness.** Most of the 300 pairs are strongly decided in the control condition (the model picks the same task every time). The ~13% that are genuinely competitive show much larger effects — 30–40% shifts in choice probability:
+**Steerability depends on decidedness.** Most of the 300 pairs are strongly decided in the control condition (the model picks the same task every time). The ~13% that are genuinely competitive show much larger effects, with 30–40% shifts in choice probability:
 
 ![Steerability vs decidedness](assets/plot_022626_s5_steerability_vs_decidedness.png)
 
@@ -28,6 +28,6 @@ Same probe direction, but now the model rates tasks on a ternary scale (good / n
 
 ![Stated preference dose-response](assets/plot_022626_s5_stated_dose_response.png)
 
-Steering during generation and at the final task token both produce strong dose-response curves — mean ratings shift from nearly all "bad" at −10% to between "neutral" and "good" at +5%. Steering during task encoding has no effect, consistent with the revealed preference finding: the perturbation needs to be present at the point of evaluation, not during task encoding.
+Steering during generation and at the final task token both produce strong dose-response curves: mean ratings shift from nearly all "bad" at −10% to between "neutral" and "good" at +5%. Steering during task encoding has no effect, consistent with the revealed preference finding: the perturbation needs to be present at the point of evaluation, not during task encoding.
 
-We replicated across three response formats (ternary, 10-point adjective, anchored 1–5). The ternary and adjective formats show consistent steering; the anchored format — which provides explicit reference examples — resists steering entirely.
+We replicated across three response formats (ternary, 10-point adjective, anchored 1–5). The ternary and adjective formats show consistent steering; the anchored format (which provides explicit reference examples) resists steering entirely.

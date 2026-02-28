@@ -9,5 +9,6 @@ Section drafts are the source of truth — edit there, not here.
 5. [The probe direction is causal](section5_draft.md)
 
 Appendices:
-- [Philosophical motivation](appendix_philosophy_draft.md)
-- [Cross-model replication on GPT-OSS-120B](appendix_gptoss_draft.md)
+A. [Philosophical motivation](appendix_philosophy_draft.md)
+B. [Cross-model replication on GPT-OSS-120B](appendix_gptoss_draft.md)
+C. [Evaluative representations in pre-trained models](appendix_base_models_draft.md)

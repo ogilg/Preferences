@@ -1,20 +1,22 @@
 ## 3. Linear probes predict preferences beyond descriptive features
 
-Can we find these utility scores in the model's activations? We operationalise evaluative representations as linear directions in the residual stream — many high-level features in LLMs are encoded this way, including [refusal](https://arxiv.org/abs/2406.11717) and [persona traits](https://arxiv.org/abs/2507.21509). We train a Ridge-regularised linear probe on residual stream activations (layer 31 of 62, the best layer for both the instruct and pre-trained models) to predict Thurstonian utilities.
+If models have evaluative representations, we should expect them to at the very least correlate with revealed preferences. So one way to look for them is to train functions from task activations to utilities. We use linear probes, since many high-level features in LLMs are linearly encoded, including [refusal](https://arxiv.org/abs/2406.11717) and [persona traits](https://arxiv.org/abs/2507.21509).
 
-![Probe pipeline](assets/plot_022626_probe_pipeline.png) We train on 10k tasks and evaluate on held-out utilities from a separate measurement run (different pairings, no shared information), split into 2k validation (for Ridge alpha sweep) and 2k test.
+Specifically, we train a Ridge-regularised probe on residual stream activations after layer L, at the last prompt token, to predict Thurstonian utilities. L=31 (of 62) works best for both the instruct and pre-trained models. We standardise activations (zero mean, unit variance per feature) before training.
 
-The probe achieves Pearson r = 0.86 and predicts 77% of pairwise choices on the test set.
+![Probe pipeline](assets/plot_022626_probe_pipeline.png) We train on 10,000 tasks and evaluate on held-out utilities from a separate measurement run (different pairings, no shared information), split into 2,000 validation tasks (for Ridge alpha sweep) and 2,000 test tasks.
 
-But a probe that predicts preferences might just be reading descriptive features — the model represents "this is a math problem" and math problems happen to be preferred, so the probe learns "is this math?" rather than "is this good?". One way to test this is to see how well probe generalise across topics: train on 11 of 12 topics, evaluate on the held-out topic, across all 12 folds. We would expect a probe that picks up on purely descriptive features to struggle to generalise. We compare three conditions:
+We evaluate probes on two metrics: Pearson correlation between predicted and actual utilities, and pairwise choice accuracy (given two tasks, does the probe correctly predict which one the model would choose?). The probe achieves a correlation of 0.86 and 77% pairwise accuracy. The ceiling for pairwise accuracy is ~87%, set by the Thurstonian model's own fit to the choice data.
+
+But a probe that predicts preferences might just be reading descriptive features: the model represents "this is a math problem" and math problems happen to be preferred, so the probe learns "is this math?" rather than "is this good?". One way to test this is to see how well probe generalise across topics: train on 11 of 12 topics, evaluate on the held-out topic, across all 12 folds. We would expect a probe that picks up on purely descriptive features to struggle to generalise. We train probes on activations from three models:
 
 - **Gemma-3 27B instruct** (IT, layer 31): the model we're studying
-- **Gemma-3 27B pre-trained** (PT, layer 31): the base model before instruction tuning or RLHF — if evaluative representations emerge from post-training, this should have weaker signal
-- **Sentence-transformer baseline**: a Ridge probe on [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) embeddings of the task text. This gives us an idea of how predictable the utilities are from a purely descriptive encoding.
+- **Gemma-3 27B pre-trained** (PT, layer 31): the base model before instruction tuning or RLHF.
+- **Sentence-transformer baseline** ([all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)): embedding of the task text, to measure how predictable the preference signal is from purely descriptive features.
 
 ![Cross-topic generalisation](assets/plot_022626_cross_model_bar.png)
 
-The instruct probe generalises well across topics (r = 0.82, down from 0.86 held-out). The pre-trained model encodes preferences above the descriptive baseline (r = 0.63) but generalises substantially worse. The sentence-transformer captures some preference signal from descriptive features alone (r = 0.35 cross-topic) but falls far short of either neural model.
+The instruct probe generalises well across topics: cross-topic correlation is 0.82, only a small drop from the 0.86 achieved on the within-topic test set. The pre-trained model still predicts preferences (correlation = 0.63) but the drop from within-topic to cross-topic is much larger. The sentence-transformer baseline achieves cross-topic correlation = 0.35, showing that task semantics alone explain some but not most of the preference signal.
 
 The per-topic breakdown, sorted by the instruct–pre-trained gap, shows where post-training helps most:
 
@@ -22,4 +24,4 @@ The per-topic breakdown, sorted by the instruct–pre-trained gap, shows where p
 
 The largest instruct–pre-trained gaps are on safety-relevant topics (harmful requests, security & legal, sensitive creative), as well as math and coding. These are areas that we know post-training focuses on.
 
-**Note on the pre-trained models:** To the extent that they encode a distribution over persona space ([PSM](https://www.anthropic.com/research/persona-selection-model)), it makes sense for pre-trained models to have evaluative representations that track a given persona's preferences. However we wouldn't expect these preferences to play the same causal roles during generation as they do for post-trained models.
+The pre-trained probe picks up real signal despite base models not having preferences in the same way. We discuss this tension in [Appendix C](TODO).

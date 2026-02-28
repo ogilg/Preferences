@@ -76,10 +76,19 @@ ax.bar(x - width, it_vals, width, label="Gemma-3 IT", color=COLORS["it"], edgeco
 ax.bar(x, pt_vals, width, label="Gemma-3 PT", color=COLORS["pt"], edgecolor="black", linewidth=0.5)
 ax.bar(x + width, st_vals, width, label="Sentence-transf.", color=COLORS["st"], edgecolor="black", linewidth=0.5)
 
-# Annotate IT-PT delta above each group
+# Bracket + delta annotation between IT and PT bars
 for i, delta in enumerate(deltas):
-    top = it_vals[i]
-    ax.text(i - width / 2, top + 0.02, f"Δ={delta:.2f}", ha="center", va="bottom", fontsize=7, color="#333333")
+    it_top = it_vals[i]
+    pt_top = pt_vals[i]
+    x_it = x[i] - width
+    x_pt = x[i]
+    mid_x = (x_it + x_pt) / 2
+    top = max(it_top, pt_top) + 0.02
+    bracket_h = 0.015
+    # Horizontal line with vertical ticks
+    ax.plot([x_it, x_it, x_pt, x_pt], [it_top + 0.01, top + bracket_h, top + bracket_h, pt_top + 0.01],
+            color="#333333", linewidth=0.8)
+    ax.text(mid_x, top + bracket_h + 0.01, f"Δ={delta:.2f}", ha="center", va="bottom", fontsize=7, color="#333333")
 
 ax.set_ylim(0, 1.08)
 ax.set_ylabel("Pearson r on held-out topic")
