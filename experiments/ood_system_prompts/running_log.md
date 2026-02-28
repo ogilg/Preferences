@@ -44,3 +44,32 @@ Plots saved to assets/:
 - plot_022126_summary_pearson_r.png
 - plot_022126_scatter_L31.png
 - plot_022126_layer_comparison.png
+
+
+## Session: 2026-02-28 — OOD Activation Extraction (follow-up)
+
+### Setup
+- Branch: `research-loop/ood_extraction`
+- GPU: NVIDIA A100 80GB PCIe (RunPod)
+- Task: Extract missing tasks for OOD exp 1a-1d
+
+### Pre-extraction state
+- exp1a (exp1_category): 13 conditions × 30/50 tasks (20 missing each)
+- exp1b (exp1_prompts, target_tasks): 17 conditions × ~110 tasks (8 of 48 target missing)
+- exp1c (exp1_prompts, crossed_tasks): 17 conditions × ~110 tasks (8 of 48 crossed missing)
+- exp1d (exp1_prompts, crossed_tasks): 16 compete + 1 baseline, 8 missing per condition
+
+### Extraction run
+- Had to install `pandas` (missing from venv) before running
+- Command: `python -c "from scripts.run_all_extractions import run_ood_extractions; run_ood_extractions()"`
+- exp1a: 13 conditions × 20 new tasks = 260 forward passes, 0 failures
+- exp1b: 17 conditions × 8 new tasks = 136 forward passes, 0 failures
+- exp1c: 17 conditions × 8 new tasks = 136 forward passes, 0 failures
+- exp1d: 16 conditions × 8 new + 1 (baseline already complete) = 128 forward passes, 0 failures
+- Total: ~660 new forward passes, 0 failures, 0 OOMs
+
+### Post-extraction verification
+- exp1a: All 13 conditions have 50 tasks, all expected IDs present — PASS
+- exp1b: All 17 conditions have 126 total tasks (48 target present) — PASS
+- exp1c: All 17 conditions have 126 total tasks (48 crossed present) — PASS
+- exp1d: baseline has 126 tasks, 16 compete_ have 118 tasks, all 48 crossed present — PASS
