@@ -1,4 +1,4 @@
-## Appendix: Philosophical motivation
+## Appendix A: Philosophical motivation
 
 **Welfare grounds**
 
@@ -6,15 +6,21 @@
 
 **From theories to experiments**
 
-We don't know the correct theory of welfare. So our approach is: take a few theories we find plausible, figure out what properties a system would need to have under those theories, and run experiments that reduce our uncertainty about whether models have those properties.
+We don't know the correct theory of moral patienthood. So our approach is: take a few theories we find plausible, figure out what properties a system would need to have under those theories, and run experiments that reduce our uncertainty about whether models have those properties.
 
-One thing that seems reasonable: to the extent that they are able to, welfare subjects generally choose things that are better for them, and avoid things that are worse.
+[Long et al. (2024)](https://arxiv.org/abs/2411.00986) lay out two potential pathways to moral patienthood:
 
-So we investigate the simple question: when a model chooses between A or B, what is going on internally. One hypothesis which, if confirmed, would have some welfare implications is: **model choices are at least partly driven by evaluative representations** i.e. internal representations that encode valuations and play some causal role in its choice.
+- **Robust agency**: Agents that pursue goals through some particular set of cognitive states and processes are moral patients. Desires are perhaps the states most likely to be necessary — intuitively, things can go better or worse for you if there are things you want or care about.
+- **Sentience**: Beings are sentient if they are capable of valenced phenomenally conscious experiences. These experiences include pain and pleasure and feel good or bad, in a way that matters to sentient beings, so sentient beings are moral patients.
 
-**Why this matters for welfare**
+Both of these pathways implicate evaluative representations.
 
-[Long et al. (2024)](https://arxiv.org/abs/2411.00986) lay out two main pathways to moral patiency:
+**How evaluative representations come in**
 
-- **Robust agency**: under desire-satisfaction views of welfare, things go better for a system when its desires are met. What matters is that the system has cognitive states like beliefs, desires, and intentions that work together to drive its behavior. Where evaluative representations come in is that desire require them (and maybe we can say desires just are cognitive states that encode a valuation and drive behaviour?)
-- **Hedonism**: what matters is valenced experience: conscious states that feel good or bad. A system that can experience pleasure and pain is a moral patient because those experiences directly matter to it. Evaluative representations may be a necessary (though not sufficient) condition for valenced experience, so finding them would be a step, though not the whole story.
+On many philosophical views, desires are evaluative representations that drive behaviour, perhaps with some further functional properties. [refs?]
+
+Valenced experiences, similarly, are often thought to be evaluative representations, although consciousness is also necessary. It is unclear whether consciousness plus evaluative content is sufficient for valenced experience. [refs?]
+
+On both pathways, evaluative representations are plausibly necessary for moral patienthood. Finding these representations would be evidence — though not conclusive — for the conditions these theories require.
+
+Our experiments operationalise evaluative representations through revealed preferences — pairwise choices. This is not the same as finding representations that constitute felt experience. But evaluative representations are plausibly necessary on both pathways, and finding them through one operationalisation is evidence that the model has them, even if the representations that matter for sentience may be a different kind.

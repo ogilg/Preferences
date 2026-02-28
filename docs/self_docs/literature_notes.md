@@ -53,7 +53,7 @@
 
 - **Lu et al. (2026)** — Identifies the "Assistant Axis": a direction in activation space capturing how Assistant-like a model is. Models drift away from the Assistant during therapy-style or philosophical conversations. Steering toward the axis reinforces helpful behavior; steering away induces mystical/theatrical styles. Activation capping reduces harmful responses by ~60% without degrading capabilities. [arXiv:2601.10387](https://arxiv.org/abs/2601.10387)
 
-- **Lindsey et al. (2025)** — Identifies "persona vectors" for traits like evil, sycophancy, and hallucination propensity via automated pipeline (contrastive system prompts + difference-in-means). Vectors predict persona shifts during finetuning; can be used to monitor at deployment and steer behavior. Both intended and unintended personality changes correlate with shifts along persona vectors. [Anthropic](https://www.anthropic.com/research/persona-vectors)
+- **Chen et al. (2025)** — Identifies "persona vectors" for traits like evil, sycophancy, and hallucination propensity via automated pipeline (contrastive system prompts + difference-in-means). Vectors predict persona shifts during finetuning; can be used to monitor at deployment and steer behavior. Both intended and unintended personality changes correlate with shifts along persona vectors. [arXiv:2507.21509](https://arxiv.org/abs/2507.21509)
 
 
 ## Philosophy

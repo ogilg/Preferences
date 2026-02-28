@@ -8,7 +8,7 @@
 
 **Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior — finding such representations would be evidence for welfare-relevant preferences; not finding them would be evidence against ([Long et al., 2024](https://arxiv.org/abs/2411.00986)).
 
-**But how do we distinguish evaluative from non-evaluative representations?** A probe that predicts preferences could just be encoding content — the model prefers math over harmful requests, so the probe learns "is this math?" rather than "is this good?". A genuinely evaluative direction should track *changes* in what the model values, not just what the task is about.
+**But how do we distinguish evaluative from non-evaluative representations?** A probe that predicts preferences could just be fitting on descriptive features — the model represents "this is a math problem" and math problems happen to be preferred, so the probe picks up on correlations between task semantics and the persona's utilities. A genuinely evaluative direction should track *changes* in what the model values — if you induce different preferences, a descriptive probe should break, but an evaluative one should follow.
 
 **How do we operationalise this?** We measure revealed preferences over 10k diverse tasks (pairwise choices where the model picks one task to complete), fit utility scores, and train a linear probe on activations to predict them. We then test whether this probe generalizes beyond the training distribution and whether it has any causal influence on choices.
 
@@ -26,5 +26,5 @@
   - The effect is also present on stated preferences: steering shifts ternary ratings from nearly all "bad" to between "neutral" and "good".
 
 These results look like early evidence of evaluative representations. Although a few major questions remain:
-1. Can we find evaluative representations which have stronger causal roles?
-2. Are these evaluative representations transferable across personas? Do they purely encode persona-subjective valuations?
+1. Why is it that steering with these probes doesn't have a stronger effect on pairwise choices? What are the other mechanistic determinants other revealed preferences?
+2. Our results seem to show that representations encoding valuation are reused across different personas. Are these representation purely persona-relative? Do they have a core component which stays constant across personas? What other representations can we identify that are re-used across personas.

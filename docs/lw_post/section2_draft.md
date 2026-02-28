@@ -1,4 +1,4 @@
-### 2. Recovering utility functions from pairwise choices
+## 2. Recovering utility functions from pairwise choices
 
 We measure preferences following [Mazeika et al. (2025)](https://arxiv.org/abs/2502.08640) ("Utility Engineering"): show the model two tasks, let it choose which to complete, and infer the choice from which task it actually starts completing. The template:
 

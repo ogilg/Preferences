@@ -1,4 +1,4 @@
-## 4. Probes generalise to OOD preference shifts [PENDING — results being re-run due to prompt mismatch during steering]
+## 4. Probes generalise to OOD preference shifts
 
 If the probe encodes genuine valuations, it should track preference shifts induced by out-of-distribution system prompts. We test this across three settings, each making a distinct point.
 

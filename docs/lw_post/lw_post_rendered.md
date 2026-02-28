@@ -86,7 +86,7 @@ The largest instruct–pre-trained gaps are on safety-relevant topics (harmful r
 
 ---
 
-## 4. Probes generalise to OOD preference shifts [PENDING — results being re-run due to prompt mismatch during steering]
+## 4. Probes generalise to OOD preference shifts
 
 If the probe encodes genuine valuations, it should track preference shifts induced by out-of-distribution system prompts. We test this across three settings, each making a distinct point.
 
@@ -162,7 +162,7 @@ The probe ranks the target task #1 out of 50 in 18/20 cases. One sentence in a b
 
 ---
 
-## 5. Some evidence that the probe direction is causal
+## 5. Some evidence that the probe direction is causal [PENDING — results being re-run due to prompt mismatch during steering]
 
 If the probe reads off a genuine evaluative representation, steering along that direction should shift preferences. We test this for both revealed preferences (pairwise choices) and stated preferences (ratings).
 

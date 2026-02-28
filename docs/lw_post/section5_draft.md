@@ -1,12 +1,12 @@
-### 5. The probe direction is causal
+## 5. Some evidence that the probe direction is causal [PENDING — results being re-run due to prompt mismatch during steering]
 
 If the probe reads off a genuine evaluative representation, steering along that direction should shift preferences. We test this for both revealed preferences (pairwise choices) and stated preferences (ratings).
 
-#### 5.1 Steering revealed preferences
+### 5.1 Steering revealed preferences
 
-We use position-selective steering: during a pairwise comparison ("choose task A or B"), we add the probe direction to the activations at one task's token positions. Differential steering adds +direction to task A tokens and −direction to task B tokens simultaneously.
+In a pairwise comparison ("choose task A or B"), we steer differentially: we add the probe direction to activations at task A's token positions and subtract it at task B's, so the perturbation pushes the model toward choosing A.
 
-**Setup.** 300 task pairs pre-selected as borderline — pairs where the model chose different tasks across repeated comparisons. Each pair is tested at 15 steering strengths (±1% to ±10% of the mean activation norm at layer 31). Every condition is run in both prompt orderings (A-first and B-first, 10 resamples each) and averaged, so position bias cancels out.
+**Setup.** 300 task pairs pre-selected as borderline from measurement data (the model didn't always choose the same task across repeated comparisons). Each pair is tested at 15 steering strengths (±1% to ±10% of the mean activation norm at layer 31). Every condition is run in both prompt orderings (A-first and B-first, 10 resamples each) and averaged, so position bias cancels out.
 
 ![Revealed preference dose-response](assets/plot_022626_s5_revealed_dose_response.png)
 
@@ -20,7 +20,7 @@ Differential steering produces a clean dose-response curve. At moderate strength
 
 This is expected: if the model already strongly prefers A, boosting A has nowhere to go. The overall dose-response curve underestimates the effect on genuinely competitive comparisons.
 
-#### 5.2 Steering stated preferences
+### 5.2 Steering stated preferences
 
 Same probe direction, but now the model rates tasks on a ternary scale (good / neutral / bad) instead of choosing between a pair. We tested steering at three token positions: during task encoding, at the final task token, and during generation.
 
