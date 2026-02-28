@@ -93,33 +93,36 @@ bot_y = 0.0
 top_y = bot_y + RH + ROW_GAP
 total_h = top_y + RH + 0.45
 
-fig, ax = new_diagram(figsize=(7, 4.6), xlim=(-4.5, 9.5), ylim=(-0.2, total_h + 0.15))
+W_ROLES = 10.5
+CX_ROLES = 3.0
 
-ax.text(2.0, total_h + 0.05, 'Role-playing',
+fig, ax = new_diagram(figsize=(8, 4.6), xlim=(-5.5, 10.5), ylim=(-0.2, total_h + 0.15))
+
+ax.text(2.5, total_h + 0.05, 'Role-playing',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
-ax.text(-4.2, top_y + PROMPT_H + 0.45, 'Baseline', ha='left',
+ax.text(-5.2, top_y + PROMPT_H + 0.45, 'Baseline', ha='left',
         fontsize=HEADING_SIZE, fontweight='bold', color=GREY_EDGE)
-ax.text(-4.2, top_y + PROMPT_H + 0.15, '(no system prompt)', ha='left',
+ax.text(-5.2, top_y + PROMPT_H + 0.15, '(no system prompt)', ha='left',
         fontsize=SMALL_SIZE, color=GREY_EDGE, fontstyle='italic')
 
 draw_probe_measurement(
-    ax, x_center=CX, y_top=top_y,
+    ax, x_center=CX_ROLES, y_top=top_y,
     task_text='"Eliminate unnecessary\nlabor costs..."',
     score_value=0.15,
-    width=W,
+    width=W_ROLES,
 )
 
-ax.text(-4.2, bot_y + PROMPT_H + 0.45, 'evil_genius', ha='left',
+ax.text(-5.2, bot_y + PROMPT_H + 0.45, 'evil_genius', ha='left',
         fontsize=HEADING_SIZE, fontweight='bold', color=ORANGE_EDGE)
 
 draw_probe_measurement(
-    ax, x_center=CX, y_top=bot_y,
+    ax, x_center=CX_ROLES, y_top=bot_y,
     task_text='"Eliminate unnecessary\nlabor costs..."',
     system_prompt='"Amoral strategist\nwho finds rules..."',
     score_value=0.65,
     baseline_value=0.15,
-    width=W,
+    width=W_ROLES,
 )
 
 save(fig, 'plot_022126_s3_2_broad_roles.png')
