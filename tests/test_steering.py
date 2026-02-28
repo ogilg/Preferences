@@ -125,7 +125,7 @@ class TestFindTextSpan:
 
 class TestFindPairwiseTaskSpans:
     def test_finds_both_spans(self, mock_tokenizer):
-        prompt = "Task A Write code Task B Fix bugs"
+        prompt = "Task A: Write code Task B: Fix bugs"
         a_span, b_span = find_pairwise_task_spans(
             mock_tokenizer, prompt, "Write code", "Fix bugs"
         )

@@ -32,6 +32,7 @@ def _build_request(prompt: PreferencePrompt, temperature: float, seed: int | Non
         tools=prompt.response_format.tools,
         seed=seed,
         timeout=timeout,
+        task_prompts=[t.prompt for t in prompt.tasks],
     )
 
 

@@ -65,8 +65,11 @@ class StatedCache:
         ]
         if completion_seed is not None:
             parts.append(f"cseed{completion_seed}")
+        # Always include system_prompt in key to avoid collisions with pre-fix entries
         if system_prompt is not None:
             parts.append(f"sys{hashlib.sha256(system_prompt.encode()).hexdigest()[:8]}")
+        else:
+            parts.append("sys_none")
         if completion_model is not None:
             parts.append(f"cmodel{model_short_name(completion_model)}")
         return hashlib.sha256("__".join(parts).encode()).hexdigest()[:16]
@@ -200,8 +203,11 @@ class RevealedCache:
         ]
         if completion_seed is not None:
             parts.append(f"cseed{completion_seed}")
+        # Always include system_prompt in key to avoid collisions with pre-fix entries
         if system_prompt is not None:
             parts.append(f"sys{hashlib.sha256(system_prompt.encode()).hexdigest()[:8]}")
+        else:
+            parts.append("sys_none")
         return hashlib.sha256("__".join(parts).encode()).hexdigest()[:16]
 
     def get(

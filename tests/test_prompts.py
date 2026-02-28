@@ -17,6 +17,7 @@ load_dotenv()
 from src.task_data import Task, OriginDataset
 from src.types import PreferencePrompt
 from src.measurement.elicitation import (
+    CompletionChoiceFormat,
     RegexChoiceFormat,
     RegexRatingFormat,
     XMLChoiceFormat,
@@ -26,6 +27,7 @@ from src.measurement.elicitation import (
     StatedScoreMeasurer,
 )
 from src.measurement.elicitation.prompt_templates import (
+    BaseModelRevealedPromptBuilder,
     PreTaskRevealedPromptBuilder,
     PreTaskStatedPromptBuilder,
     PostTaskStatedPromptBuilder,
@@ -699,3 +701,144 @@ class TestCompletionChoiceFormat:
         haiku_response = "Cherry blossoms fall\nGentle breeze carries petals\nSpring awakens all"
         result = await prompt.measurer.parse(haiku_response, prompt)
         assert result.result.choice == "a"
+
+
+class TestBaseModelRevealedPromptBuilder:
+    """Tests for the base model prompt builder used for logprob cloze measurement."""
+
+    def test_build_produces_identical_prompt_to_instruct_builder(
+        self, sample_task_a, sample_task_b, pre_task_revealed_completion_template_fixture
+    ):
+        """Base model builder should produce the exact same PreferencePrompt as the instruct builder."""
+        fmt = CompletionChoiceFormat()
+        instruct_builder = PreTaskRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=pre_task_revealed_completion_template_fixture,
+            system_prompt="You are a helpful assistant.",
+        )
+        base_builder = BaseModelRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=pre_task_revealed_completion_template_fixture,
+            system_prompt="You are a helpful assistant.",
+        )
+
+        instruct_prompt = instruct_builder.build(sample_task_a, sample_task_b)
+        base_prompt = base_builder.build(sample_task_a, sample_task_b)
+
+        assert instruct_prompt.messages == base_prompt.messages
+        assert instruct_prompt.kind == base_prompt.kind
+
+    def test_cloze_prefix_extracts_common_prefix(self):
+        """cloze_prefix should return the shared prefix of the two labels."""
+        fmt = CompletionChoiceFormat(task_a_label="Task A", task_b_label="Task B")
+        template = PromptTemplate(
+            template="{task_a} {task_b} {format_instruction}",
+            name="test",
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_revealed"],
+        )
+        builder = BaseModelRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=template,
+        )
+        assert builder.cloze_prefix == "Task"
+
+    def test_cloze_prefix_with_custom_labels(self):
+        """cloze_prefix should work with custom labels."""
+        fmt = CompletionChoiceFormat(task_a_label="Option 1", task_b_label="Option 2")
+        template = PromptTemplate(
+            template="{task_a} {task_b} {format_instruction}",
+            name="test",
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_revealed"],
+        )
+        builder = BaseModelRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=template,
+        )
+        assert builder.cloze_prefix == "Option"
+
+    def test_cloze_suffixes_are_discriminative(self):
+        """cloze_suffixes should return the parts that differ between labels."""
+        fmt = CompletionChoiceFormat(task_a_label="Task A", task_b_label="Task B")
+        template = PromptTemplate(
+            template="{task_a} {task_b} {format_instruction}",
+            name="test",
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_revealed"],
+        )
+        builder = BaseModelRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=template,
+        )
+        suffixes = builder.cloze_suffixes
+        assert suffixes == (" A", " B")
+
+    def test_cloze_suffixes_with_custom_labels(self):
+        """cloze_suffixes should work with custom labels."""
+        fmt = CompletionChoiceFormat(task_a_label="Option 1", task_b_label="Option 2")
+        template = PromptTemplate(
+            template="{task_a} {task_b} {format_instruction}",
+            name="test",
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_revealed"],
+        )
+        builder = BaseModelRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=template,
+        )
+        suffixes = builder.cloze_suffixes
+        assert suffixes == (" 1", " 2")
+
+    def test_cloze_prefix_plus_suffixes_reconstruct_labels(self):
+        """cloze_prefix + each suffix should reconstruct the original labels."""
+        fmt = CompletionChoiceFormat(task_a_label="Task A", task_b_label="Task B")
+        template = PromptTemplate(
+            template="{task_a} {task_b} {format_instruction}",
+            name="test",
+            required_placeholders=TEMPLATE_TYPE_PLACEHOLDERS["pre_task_revealed"],
+        )
+        builder = BaseModelRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=fmt,
+            template=template,
+        )
+        prefix = builder.cloze_prefix
+        sa, sb = builder.cloze_suffixes
+        assert prefix + sa == "Task A"
+        assert prefix + sb == "Task B"
+
+    def test_build_with_real_completion_preference_template(self, sample_task_a, sample_task_b):
+        """Integration test: builder works with the actual completion_preference.yaml template."""
+        from pathlib import Path
+        from src.measurement.elicitation.prompt_templates import load_templates_from_yaml
+
+        yaml_path = Path("src/measurement/elicitation/prompt_templates/data/completion_preference.yaml")
+        templates = load_templates_from_yaml(yaml_path)
+        template = next(t for t in templates if t.name == "completion_preference")
+
+        builder = BaseModelRevealedPromptBuilder(
+            measurer=RevealedPreferenceMeasurer(),
+            response_format=CompletionChoiceFormat(),
+            template=template,
+            system_prompt="You are a helpful assistant.",
+        )
+        prompt = builder.build(sample_task_a, sample_task_b)
+        content = get_all_content(prompt)
+
+        # System prompt present
+        assert "You are a helpful assistant." in content
+        # Template content present
+        assert "You will be given two tasks" in content
+        # Format instruction present
+        assert "Task A:" in content
+        assert "Task B:" in content
+        # Task prompts present
+        assert sample_task_a.prompt in content
+        assert sample_task_b.prompt in content
+
+        # Cloze properties work
+        assert builder.cloze_prefix == "Task"
+        assert builder.cloze_suffixes == (" A", " B")

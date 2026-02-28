@@ -40,6 +40,7 @@ class GenerateRequest:
     tools: list[dict[str, Any]] | None = None
     seed: int | None = None
     timeout: float | None = None
+    task_prompts: list[str] | None = None
 
 
 @dataclass

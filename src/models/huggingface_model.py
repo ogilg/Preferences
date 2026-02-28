@@ -70,7 +70,7 @@ class HuggingFaceModel:
     def _get_layer(self, layer: int) -> torch.nn.Module:
         return get_layers(self.model)[layer]
 
-    def _format_messages(self, messages: list[Message], add_generation_prompt: bool = True) -> str:
+    def format_messages(self, messages: list[Message], add_generation_prompt: bool = True) -> str:
         if self.tokenizer.chat_template is not None:
             return self.tokenizer.apply_chat_template(
                 messages, tokenize=False, add_generation_prompt=add_generation_prompt,
@@ -91,7 +91,7 @@ class HuggingFaceModel:
         if not messages or messages[-1]["role"] != "assistant":
             raise ValueError("Messages must end with an assistant message")
         prompt_messages = messages[:-1]
-        prompt_with_header = self._format_messages(prompt_messages, add_generation_prompt=True)
+        prompt_with_header = self.format_messages(prompt_messages, add_generation_prompt=True)
         return self._tokenize(prompt_with_header).shape[1]
 
     @contextmanager
@@ -189,7 +189,7 @@ class HuggingFaceModel:
         messages: list[Message],
         top_k: int = 10,
     ) -> dict[str, float]:
-        prompt = self._format_messages(messages, add_generation_prompt=False)
+        prompt = self.format_messages(messages, add_generation_prompt=False)
         input_ids = self._tokenize(prompt)
         logits = self.model(input_ids).logits[0, -1, :]
         log_probs = torch.log_softmax(logits.float(), dim=-1)
@@ -206,7 +206,7 @@ class HuggingFaceModel:
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> str:
-        prompt = self._format_messages(messages, add_generation_prompt=True)
+        prompt = self.format_messages(messages, add_generation_prompt=True)
         input_ids = self._tokenize(prompt)
         prompt_len = input_ids.shape[1]
         output_ids = self.model.generate(
@@ -223,7 +223,7 @@ class HuggingFaceModel:
         max_new_tokens: int | None = None,
     ) -> list[str]:
         """Generate n completions in a single forward pass (shared prefill)."""
-        prompt = self._format_messages(messages, add_generation_prompt=True)
+        prompt = self.format_messages(messages, add_generation_prompt=True)
         input_ids = self._tokenize(prompt)
         prompt_len = input_ids.shape[1]
         output_ids = self.model.generate(
@@ -255,12 +255,12 @@ class HuggingFaceModel:
                     f"Selectors {needs_completion} require an assistant message, "
                     f"but messages end with role '{messages[-1]['role']}'"
                 )
-            prompt = self._format_messages(messages, add_generation_prompt=True)
+            prompt = self.format_messages(messages, add_generation_prompt=True)
             input_ids = self._tokenize(prompt)
             seq_len = input_ids.shape[1]
             first_completion_idx = seq_len
         else:
-            prompt = self._format_messages(messages, add_generation_prompt=False)
+            prompt = self.format_messages(messages, add_generation_prompt=False)
             input_ids = self._tokenize(prompt)
             first_completion_idx = self._get_assistant_start_position(messages)
             seq_len = input_ids.shape[1]
@@ -311,7 +311,7 @@ class HuggingFaceModel:
         for messages in messages_batch:
             has_completion = messages and messages[-1]["role"] == "assistant"
             if has_completion:
-                prompt = self._format_messages(messages, add_generation_prompt=False)
+                prompt = self.format_messages(messages, add_generation_prompt=False)
                 ids = self._tokenize(prompt)[0]  # (seq_len,)
                 token_ids_list.append(ids)
                 first_completion_indices.append(self._get_assistant_start_position(messages))
@@ -322,7 +322,7 @@ class HuggingFaceModel:
                         f"Selectors {needs_completion} require an assistant message, "
                         f"but messages end with role '{messages[-1]['role']}'"
                     )
-                prompt = self._format_messages(messages, add_generation_prompt=True)
+                prompt = self.format_messages(messages, add_generation_prompt=True)
                 ids = self._tokenize(prompt)[0]
                 token_ids_list.append(ids)
                 first_completion_indices.append(ids.shape[0])
@@ -367,7 +367,7 @@ class HuggingFaceModel:
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> GenerationResult:
-        prompt = self._format_messages(messages, add_generation_prompt=True)
+        prompt = self.format_messages(messages, add_generation_prompt=True)
         prompt_tokens = len(self._tokenize(prompt)[0])
 
         completion = self.generate(messages, temperature=temperature, max_new_tokens=max_new_tokens)
@@ -463,7 +463,7 @@ class HuggingFaceModel:
         max_new_tokens: int | None,
         num_return_sequences: int,
     ) -> list[str]:
-        prompt = self._format_messages(messages, add_generation_prompt=True)
+        prompt = self.format_messages(messages, add_generation_prompt=True)
         input_ids = self._tokenize(prompt)
         prompt_len = input_ids.shape[1]
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import math
 from collections.abc import Callable
 from typing import TYPE_CHECKING
@@ -72,11 +73,17 @@ def _get_completion_client(config, ctx):
 
 def _build_run_name_suffix(config, model_short: str) -> str:
     """Build run name suffix that includes completion model if different from rating model."""
+    suffix = ""
     if config.completion_model:
         comp_short = model_short_name(config.completion_model)
         if comp_short != model_short:
-            return f"_comp_{comp_short}"
-    return ""
+            suffix += f"_comp_{comp_short}"
+    if config.measurement_system_prompt:
+        h = hashlib.sha256(config.measurement_system_prompt.encode()).hexdigest()[:8]
+        suffix += f"_sys{h}"
+    if config.include_task_ids_file:
+        suffix += f"_{config.include_task_ids_file.stem}"
+    return suffix
 
 
 class PostTaskRunConfig(TypedDict):
@@ -237,10 +244,11 @@ async def run_pre_task_revealed_async(
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
     activation_completions_path = _get_activation_completions_path(config.activations_model)
+    sys_suffix = _build_run_name_suffix(config, model_short)
 
     for cfg in configurations:
         seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
-        run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
+        run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}{sys_suffix}"
 
         # Skip if already done in experiment store
         if exp_store and exp_store.exists("pre_task_revealed", run_name):
@@ -410,9 +418,10 @@ async def run_pre_task_stated_async(
 
     exp_store = ExperimentStore(config.experiment_id) if config.experiment_id else None
     activation_completions_path = _get_activation_completions_path(config.activations_model)
+    sys_suffix = _build_run_name_suffix(config, model_short)
 
     for cfg in configurations:
-        run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}"
+        run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_seed{cfg.seed}{sys_suffix}"
 
         # Skip if already done in experiment store
         if exp_store and exp_store.exists("pre_task_stated", run_name):
@@ -534,7 +543,7 @@ async def run_active_learning_async(
             run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{run_name_suffix}_cseed{completion_seed}_rseed{cfg.seed}"
         else:
             seed_suffix = f"_seed{cfg.seed}" if cfg.seed is not None else ""
-            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}"
+            run_name = f"{cfg.template.name}_{model_short}_{cfg.response_format}_{cfg.order}{seed_suffix}{run_name_suffix}"
 
         # Skip if already done in experiment store
         if exp_store and exp_store.exists(measurement_type, run_name):

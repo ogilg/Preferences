@@ -40,8 +40,8 @@ class TestHybridModelTokenization:
 
         full_messages = messages + [{"role": "assistant", "content": completion}]
 
-        prompt_text = hf_model._format_messages(messages, add_generation_prompt=True)
-        full_text = hf_model._format_messages(full_messages, add_generation_prompt=False)
+        prompt_text = hf_model.format_messages(messages, add_generation_prompt=True)
+        full_text = hf_model.format_messages(full_messages, add_generation_prompt=False)
 
         prompt_tokens = hf_model._tokenize(prompt_text)[0]
         full_tokens = hf_model._tokenize(full_text)[0]

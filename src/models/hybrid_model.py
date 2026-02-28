@@ -34,7 +34,7 @@ class HybridActivationModel:
         return self.local_model.hidden_dim
 
     def _count_tokens(self, messages: list[Message], completion: str) -> tuple[int, int]:
-        prompt_text = self.local_model._format_messages(messages, add_generation_prompt=True)
+        prompt_text = self.local_model.format_messages(messages, add_generation_prompt=True)
         prompt_tokens = len(self.local_model._tokenize(prompt_text)[0])
         completion_tokens = len(self.local_model.tokenizer(completion, return_tensors="pt").input_ids[0])
         return prompt_tokens, completion_tokens

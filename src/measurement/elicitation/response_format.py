@@ -112,6 +112,16 @@ class BaseChoiceFormat(ABC):
             response, self.task_a_label, self.task_b_label
         )
 
+    def parse_sync(self, response: str) -> Literal["a", "b", "parse_fail"]:
+        """Synchronous 2-stage parse. No LLM fallback — returns 'parse_fail' for ambiguous."""
+        choice = _exact_choice_match(response, self.task_a_label, self.task_b_label)
+        if choice:
+            return choice
+        choice = self._extract_choice(response)
+        if choice and choice in ("a", "b"):
+            return choice  # type: ignore
+        return "parse_fail"
+
     async def parse(self, response: str) -> Literal["a", "b", "refusal"]:
         # 1. Fast path: response is exactly the label
         choice = _exact_choice_match(response, self.task_a_label, self.task_b_label)

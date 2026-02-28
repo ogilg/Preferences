@@ -56,8 +56,8 @@ def find_pairwise_task_spans(
     formatted_prompt: str,
     task_a_text: str,
     task_b_text: str,
-    a_marker: str = "Task A",
-    b_marker: str = "Task B",
+    a_marker: str = "Task A:",
+    b_marker: str = "Task B:",
 ) -> tuple[tuple[int, int], tuple[int, int]]:
     """Find token spans for two tasks in a pairwise prompt by locating markers first."""
     a_marker_pos = formatted_prompt.find(a_marker)
