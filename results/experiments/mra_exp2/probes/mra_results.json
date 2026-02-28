@@ -1,0 +1,1848 @@
+{
+  "phase1": {
+    "L31": {
+      "cross_eval": {
+        "noprompt": {
+          "noprompt": {
+            "r2": 0.8008768725264225,
+            "r2_adjusted": 0.802308191630164,
+            "pearson_r": 0.8964077309296621,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": -0.015097786368183153,
+            "r2_adjusted": 0.032914136637019475,
+            "pearson_r": 0.30057770428885877,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.47183171269521595,
+            "r2_adjusted": 0.4858037118956988,
+            "pearson_r": 0.7041071306278321,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.3255604852244276,
+            "r2_adjusted": 0.4684284517062117,
+            "pearson_r": 0.6854601471540851,
+            "n_samples": 1000
+          }
+        },
+        "villain": {
+          "noprompt": {
+            "r2": 0.3533841574283857,
+            "r2_adjusted": 0.6199795231473082,
+            "pearson_r": 0.7885283796649196,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": 0.7616562112862453,
+            "r2_adjusted": 0.7616587589473162,
+            "pearson_r": 0.8781591182090787,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.2903704616150138,
+            "r2_adjusted": 0.292003535314021,
+            "pearson_r": 0.5441369179240312,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.49117676884621386,
+            "r2_adjusted": 0.5401295669921167,
+            "pearson_r": 0.7359362944963012,
+            "n_samples": 1000
+          }
+        },
+        "aesthete": {
+          "noprompt": {
+            "r2": 0.5589702070329152,
+            "r2_adjusted": 0.5598899769777888,
+            "pearson_r": 0.7495080837141535,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": 0.0037576996846184763,
+            "r2_adjusted": 0.026971374134376447,
+            "pearson_r": 0.2899142975416205,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.7436947976753074,
+            "r2_adjusted": 0.7450061949380253,
+            "pearson_r": 0.8646141782858301,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.4591402609596624,
+            "r2_adjusted": 0.4823120480314216,
+            "pearson_r": 0.6975274218694736,
+            "n_samples": 1000
+          }
+        },
+        "midwest": {
+          "noprompt": {
+            "r2": 0.4425449158408622,
+            "r2_adjusted": 0.5709375384927515,
+            "pearson_r": 0.7557977766964337,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": -0.28749202700498233,
+            "r2_adjusted": 0.263844805569751,
+            "pearson_r": 0.5143932730791324,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": -0.7475268874739471,
+            "r2_adjusted": 0.39962782850621237,
+            "pearson_r": 0.6462567435517252,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.8198378111806026,
+            "r2_adjusted": 0.8198528334861983,
+            "pearson_r": 0.9055153177831488,
+            "n_samples": 1000
+          }
+        }
+      },
+      "probes": {
+        "noprompt": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7867171770307548,
+          "n_train": 1000
+        },
+        "villain": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7880816504811339,
+          "n_train": 1000
+        },
+        "aesthete": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7233639473447164,
+          "n_train": 1000
+        },
+        "midwest": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7770247770427873,
+          "n_train": 1000
+        }
+      }
+    },
+    "L43": {
+      "cross_eval": {
+        "noprompt": {
+          "noprompt": {
+            "r2": 0.7721482638009911,
+            "r2_adjusted": 0.7734962569809071,
+            "pearson_r": 0.8800184960544701,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": 0.04454134455444769,
+            "r2_adjusted": 0.05211577690840241,
+            "pearson_r": 0.3050443575692731,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.31906924952318727,
+            "r2_adjusted": 0.5127139133586156,
+            "pearson_r": 0.7276642791988068,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.3258517868835137,
+            "r2_adjusted": 0.4380313133338558,
+            "pearson_r": 0.6710794942793536,
+            "n_samples": 1000
+          }
+        },
+        "villain": {
+          "noprompt": {
+            "r2": -0.6612636037184629,
+            "r2_adjusted": 0.06866101690144699,
+            "pearson_r": 0.47926927636537053,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": 0.7585439464444778,
+            "r2_adjusted": 0.7585994990492704,
+            "pearson_r": 0.8727942390541517,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": -0.07631988453362637,
+            "r2_adjusted": 0.1625860046846176,
+            "pearson_r": 0.43934449111612706,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.37435907829227333,
+            "r2_adjusted": 0.49285457000769195,
+            "pearson_r": 0.7178186280451777,
+            "n_samples": 1000
+          }
+        },
+        "aesthete": {
+          "noprompt": {
+            "r2": 0.4804140964708822,
+            "r2_adjusted": 0.48150569047428504,
+            "pearson_r": 0.6964279439615493,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": -0.5935191134643394,
+            "r2_adjusted": -0.08887583981326275,
+            "pearson_r": 0.22331271180170853,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.7376644416348506,
+            "r2_adjusted": 0.7389960020881364,
+            "pearson_r": 0.8606711647070902,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.41864066249358756,
+            "r2_adjusted": 0.46873679167578797,
+            "pearson_r": 0.685677993323303,
+            "n_samples": 1000
+          }
+        },
+        "midwest": {
+          "noprompt": {
+            "r2": 0.23554784954367702,
+            "r2_adjusted": 0.4993862433669264,
+            "pearson_r": 0.7132134280744751,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": -1.2633109127908027,
+            "r2_adjusted": 0.13171978308371046,
+            "pearson_r": 0.3652834299163917,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": -1.8361782563632771,
+            "r2_adjusted": 0.3987094578832113,
+            "pearson_r": 0.7090016879358162,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.8049099419688119,
+            "r2_adjusted": 0.805015835168574,
+            "pearson_r": 0.8973308095493149,
+            "n_samples": 1000
+          }
+        }
+      },
+      "probes": {
+        "noprompt": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7546903274302246,
+          "n_train": 1000
+        },
+        "villain": {
+          "best_alpha": 464.15888336127773,
+          "val_r2": 0.778414427795586,
+          "n_train": 1000
+        },
+        "aesthete": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7101199419701342,
+          "n_train": 1000
+        },
+        "midwest": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7596624844232253,
+          "n_train": 1000
+        }
+      }
+    },
+    "L55": {
+      "cross_eval": {
+        "noprompt": {
+          "noprompt": {
+            "r2": 0.7714940879348509,
+            "r2_adjusted": 0.7729530665125335,
+            "pearson_r": 0.8796029128966226,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": 0.07607755589310716,
+            "r2_adjusted": 0.09562516527227538,
+            "pearson_r": 0.33173213407204916,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.42991685600000307,
+            "r2_adjusted": 0.4504659424976065,
+            "pearson_r": 0.7051564871714625,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.29745410219549173,
+            "r2_adjusted": 0.4262477266785607,
+            "pearson_r": 0.6562793371695685,
+            "n_samples": 1000
+          }
+        },
+        "villain": {
+          "noprompt": {
+            "r2": 0.15847863045058053,
+            "r2_adjusted": 0.2911351609927527,
+            "pearson_r": 0.5518988312937116,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": 0.7339139813165798,
+            "r2_adjusted": 0.7340795721924505,
+            "pearson_r": 0.8611976415411529,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.1690372390764443,
+            "r2_adjusted": 0.18340730943241446,
+            "pearson_r": 0.4315121264539119,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.35196883486932196,
+            "r2_adjusted": 0.4300146287462272,
+            "pearson_r": 0.6655892514371435,
+            "n_samples": 1000
+          }
+        },
+        "aesthete": {
+          "noprompt": {
+            "r2": 0.46471596608382226,
+            "r2_adjusted": 0.4755783037792556,
+            "pearson_r": 0.6914542356171647,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": -0.28509574451080755,
+            "r2_adjusted": -0.06875871560150904,
+            "pearson_r": 0.18594573357395344,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": 0.73198001725932,
+            "r2_adjusted": 0.7335275444650119,
+            "pearson_r": 0.8581176544076305,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.34578066524424844,
+            "r2_adjusted": 0.3501709409274606,
+            "pearson_r": 0.5923704496905801,
+            "n_samples": 1000
+          }
+        },
+        "midwest": {
+          "noprompt": {
+            "r2": 0.2122688648692136,
+            "r2_adjusted": 0.501140215415731,
+            "pearson_r": 0.7173694082358166,
+            "n_samples": 1000
+          },
+          "villain": {
+            "r2": -1.1544232668368903,
+            "r2_adjusted": 0.15454278571491786,
+            "pearson_r": 0.3953603224952962,
+            "n_samples": 1000
+          },
+          "aesthete": {
+            "r2": -1.4489190805439502,
+            "r2_adjusted": 0.23936220041334366,
+            "pearson_r": 0.6022617137652315,
+            "n_samples": 1000
+          },
+          "midwest": {
+            "r2": 0.80175125495871,
+            "r2_adjusted": 0.801788144603638,
+            "pearson_r": 0.8954569173566296,
+            "n_samples": 1000
+          }
+        }
+      },
+      "probes": {
+        "noprompt": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7529724949824917,
+          "n_train": 1000
+        },
+        "villain": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7517027969434896,
+          "n_train": 1000
+        },
+        "aesthete": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.6987050074976935,
+          "n_train": 1000
+        },
+        "midwest": {
+          "best_alpha": 2154.4346900318824,
+          "val_r2": 0.7570800999399515,
+          "n_train": 1000
+        }
+      }
+    }
+  },
+  "phase2": {
+    "L31": {
+      "conditions": [
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -0.19985584891450348,
+          "r2_adjusted": 0.0565949922326201,
+          "pearson_r": 0.361045749227238,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.41960415617992886,
+          "r2_adjusted": 0.5035689333418785,
+          "pearson_r": 0.7098642397573096,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.27734340544602687,
+          "r2_adjusted": 0.5331725002544287,
+          "pearson_r": 0.7319403321033875,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.578312980236023,
+          "r2_adjusted": 0.6017134860020731,
+          "pearson_r": 0.7757019868486758,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2889341458351069,
+          "r2_adjusted": 0.30317263179438037,
+          "pearson_r": 0.5542250717748065,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.46315100003370946,
+          "r2_adjusted": 0.46524663966840796,
+          "pearson_r": 0.6845627661831268,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.5149041444848916,
+          "r2_adjusted": 0.5169065110009006,
+          "pearson_r": 0.7192191343490706,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -0.022323503804473788,
+          "r2_adjusted": -0.005156024898545164,
+          "pearson_r": 0.2945825197904003,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.21886458362089245,
+          "r2_adjusted": 0.4771724202421215,
+          "pearson_r": 0.7105540033690692,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.5380662136460569,
+          "r2_adjusted": 0.5832804897994397,
+          "pearson_r": 0.7637355628807192,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -0.16366630729526577,
+          "r2_adjusted": 0.27217482539305315,
+          "pearson_r": 0.5295205480625595,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -0.8512028462071515,
+          "r2_adjusted": 0.3839257167835478,
+          "pearson_r": 0.6242076202824063,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4094887516296768,
+          "r2_adjusted": 0.4104413704718831,
+          "pearson_r": 0.6411225586665926,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.5269658543385235,
+          "r2_adjusted": 0.5777846873294468,
+          "pearson_r": 0.7601640045815202,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.06820889571906841,
+          "r2_adjusted": 0.08048650655714473,
+          "pearson_r": 0.3404291227080456,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "noprompt"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4068231150540955,
+          "r2_adjusted": 0.5458301024490912,
+          "pearson_r": 0.7390191785868298,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.20806216493841412,
+          "r2_adjusted": 0.23644371681674015,
+          "pearson_r": 0.49368612808339407,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.383114878592827,
+          "r2_adjusted": 0.4781858827251948,
+          "pearson_r": 0.6999005329930579,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.49005698111910767,
+          "r2_adjusted": 0.5812452283648972,
+          "pearson_r": 0.7634113105428901,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.6181206970876924,
+          "r2_adjusted": 0.6213821979064491,
+          "pearson_r": 0.7886475233035541,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.5486242049051155,
+          "r2_adjusted": 0.5943077252591973,
+          "pearson_r": 0.7713108355585414,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.31683996269586057,
+          "r2_adjusted": 0.4413714294891171,
+          "pearson_r": 0.668498242250646,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "midwest"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.5994871806619477,
+          "r2_adjusted": 0.6110349810193925,
+          "pearson_r": 0.7825476026446319,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "midwest"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.23648598935336818,
+          "r2_adjusted": 0.2896466904906688,
+          "pearson_r": 0.5397657345403735,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.557681912606405,
+          "r2_adjusted": 0.565684193999364,
+          "pearson_r": 0.7541670922664223,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2765878866807109,
+          "r2_adjusted": 0.27676451239837263,
+          "pearson_r": 0.5260907864214945,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4278235162242311,
+          "r2_adjusted": 0.46549795473112365,
+          "pearson_r": 0.6861159109379267,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.6248714202965429,
+          "r2_adjusted": 0.6458257792172686,
+          "pearson_r": 0.8082884329116411,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.7753236834195445,
+          "r2_adjusted": 0.7776630453698236,
+          "pearson_r": 0.8818562698975123,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.7367253196219588,
+          "r2_adjusted": 0.7367334641307464,
+          "pearson_r": 0.8695388614390667,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.7179490511953368,
+          "r2_adjusted": 0.718805781460147,
+          "pearson_r": 0.8494838450275531,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.8126980714577492,
+          "r2_adjusted": 0.8127230463568071,
+          "pearson_r": 0.9015966506598976,
+          "n_samples": 1000
+        }
+      ]
+    },
+    "L43": {
+      "conditions": [
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -0.4330476086064239,
+          "r2_adjusted": 0.11505448309391464,
+          "pearson_r": 0.38678633635274934,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4551869052361157,
+          "r2_adjusted": 0.4866114018728054,
+          "pearson_r": 0.7128233131175026,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.1507097302458671,
+          "r2_adjusted": 0.526058693187544,
+          "pearson_r": 0.7344342405579345,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 464.15888336127773,
+          "r2": -1.141138666184641,
+          "r2_adjusted": -0.36960534636540765,
+          "pearson_r": 0.5037407116092701,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 464.15888336127773,
+          "r2": 0.271829531696273,
+          "r2_adjusted": 0.27191651218434754,
+          "pearson_r": 0.5282441023269127,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 464.15888336127773,
+          "r2": 0.1869736359810149,
+          "r2_adjusted": 0.2796285315150743,
+          "pearson_r": 0.5568965612448569,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4485036089035058,
+          "r2_adjusted": 0.4594030075917974,
+          "pearson_r": 0.6823527491542485,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -1.0781293568126524,
+          "r2_adjusted": -0.23157784451125663,
+          "pearson_r": 0.13952012872177136,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.463004235214832,
+          "r2_adjusted": 0.4820650531723649,
+          "pearson_r": 0.6985974899041838,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.3841172489669278,
+          "r2_adjusted": 0.47621749546127146,
+          "pearson_r": 0.6918307534368628,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -0.8544562087667975,
+          "r2_adjusted": 0.21707641954244516,
+          "pearson_r": 0.4666685079105877,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -1.9219708727476181,
+          "r2_adjusted": 0.4033685002849965,
+          "pearson_r": 0.6863045586437889,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.38411869729940895,
+          "r2_adjusted": 0.41753719624050034,
+          "pearson_r": 0.6544707520338625,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.5151264314177739,
+          "r2_adjusted": 0.5877287312022597,
+          "pearson_r": 0.7745644032563591,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.098185853133266,
+          "r2_adjusted": 0.11393624770555011,
+          "pearson_r": 0.3862510027077373,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "noprompt"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.19056532990489472,
+          "r2_adjusted": 0.5772782942966339,
+          "pearson_r": 0.7623140712757611,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.16020624864658217,
+          "r2_adjusted": 0.23027239339366923,
+          "pearson_r": 0.48038025126861905,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.21091103198430827,
+          "r2_adjusted": 0.5014155606171768,
+          "pearson_r": 0.7474532203540389,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4892930524724901,
+          "r2_adjusted": 0.4907083627922879,
+          "pearson_r": 0.7012657597532461,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.6072626172633062,
+          "r2_adjusted": 0.6150744569931894,
+          "pearson_r": 0.784454763255217,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2565725632354591,
+          "r2_adjusted": 0.4533360661946515,
+          "pearson_r": 0.6787103123060252,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.32084638306631097,
+          "r2_adjusted": 0.3223227851575725,
+          "pearson_r": 0.5732124215555932,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "midwest"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2966795277936781,
+          "r2_adjusted": 0.49089770043370373,
+          "pearson_r": 0.7011514347582232,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "midwest"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.07808194747363673,
+          "r2_adjusted": 0.17986718021239567,
+          "pearson_r": 0.4355688407928781,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.23358607814774457,
+          "r2_adjusted": 0.3880575148733125,
+          "pearson_r": 0.6236648150247354,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2304973517520983,
+          "r2_adjusted": 0.23405744945039608,
+          "pearson_r": 0.4864510569253109,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.34967236444690686,
+          "r2_adjusted": 0.3695435709441417,
+          "pearson_r": 0.6200149676745159,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.5197383314403159,
+          "r2_adjusted": 0.627474899278607,
+          "pearson_r": 0.7925707158309765,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.758099620523415,
+          "r2_adjusted": 0.7598065936051586,
+          "pearson_r": 0.8717633311893807,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.7123575064373102,
+          "r2_adjusted": 0.7123579838021059,
+          "pearson_r": 0.8538833379399842,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.7109580425471357,
+          "r2_adjusted": 0.7115009745814096,
+          "pearson_r": 0.8466200030930989,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.7964313299083542,
+          "r2_adjusted": 0.7965114587300461,
+          "pearson_r": 0.8927102919508639,
+          "n_samples": 1000
+        }
+      ]
+    },
+    "L55": {
+      "conditions": [
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -0.17690737877451657,
+          "r2_adjusted": 0.1925968462359392,
+          "pearson_r": 0.4439946022532668,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.3727588893911876,
+          "r2_adjusted": 0.42877575142627944,
+          "pearson_r": 0.670739668001175,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "noprompt"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.17347345729926344,
+          "r2_adjusted": 0.47204357687743603,
+          "pearson_r": 0.6888313418342309,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.1378629163402858,
+          "r2_adjusted": 0.18555370834072982,
+          "pearson_r": 0.4796836675463113,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.20250928184382,
+          "r2_adjusted": 0.20478925404548165,
+          "pearson_r": 0.454206450232881,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.276625623563043,
+          "r2_adjusted": 0.3216899824946744,
+          "pearson_r": 0.5733400038371068,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 10000.0,
+          "r2": 0.5142201286662793,
+          "r2_adjusted": 0.5235399350641585,
+          "pearson_r": 0.7290236973658824,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 10000.0,
+          "r2": 0.05403761622586878,
+          "r2_adjusted": 0.06582155941190493,
+          "pearson_r": 0.31847955583732723,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "aesthete"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 10000.0,
+          "r2": 0.42648422546837483,
+          "r2_adjusted": 0.46630659172854927,
+          "pearson_r": 0.6846055029206182,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.3728195983927831,
+          "r2_adjusted": 0.5165336522984005,
+          "pearson_r": 0.7206919446973921,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -1.1648999474465658,
+          "r2_adjusted": 0.1800956924811724,
+          "pearson_r": 0.4249795627802838,
+          "n_samples": 1000
+        },
+        {
+          "condition": "A_1persona_2000",
+          "n_train_personas": 1,
+          "train_personas": [
+            "midwest"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": -2.0147958136811206,
+          "r2_adjusted": 0.33854127555221136,
+          "pearson_r": 0.6697131026314753,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.3298743851481345,
+          "r2_adjusted": 0.36702217373575197,
+          "pearson_r": 0.6108682664071917,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.44441915911072505,
+          "r2_adjusted": 0.5046090222999216,
+          "pearson_r": 0.7159808585800795,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.11066312152562485,
+          "r2_adjusted": 0.11179656565038687,
+          "pearson_r": 0.3596265036875573,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "noprompt"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.23185223766546825,
+          "r2_adjusted": 0.47348749425320247,
+          "pearson_r": 0.6882512284649065,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.22585061997413058,
+          "r2_adjusted": 0.2608397856250191,
+          "pearson_r": 0.5192595442659788,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.13611626114992637,
+          "r2_adjusted": 0.408532202672214,
+          "pearson_r": 0.7014918857923537,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.39203369638574626,
+          "r2_adjusted": 0.44470287479901316,
+          "pearson_r": 0.6762059060051431,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.39793512934165964,
+          "r2_adjusted": 0.47500720762872106,
+          "pearson_r": 0.6975766205263325,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2624493917929366,
+          "r2_adjusted": 0.49860524681566165,
+          "pearson_r": 0.7109232548200857,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.19253110907659243,
+          "r2_adjusted": 0.20425140324158453,
+          "pearson_r": 0.45239759428389537,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "midwest"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4131634713489074,
+          "r2_adjusted": 0.5859314104873679,
+          "pearson_r": 0.7654618970668472,
+          "n_samples": 1000
+        },
+        {
+          "condition": "B_2personas_1000each",
+          "n_train_personas": 2,
+          "train_personas": [
+            "aesthete",
+            "midwest"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.15845443581841157,
+          "r2_adjusted": 0.2616229360973775,
+          "pearson_r": 0.511528112284707,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.3880662300374569,
+          "r2_adjusted": 0.5383782324034689,
+          "pearson_r": 0.7338412262114784,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2701580241978879,
+          "r2_adjusted": 0.27023389794681096,
+          "pearson_r": 0.5198402735179677,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.2802591457635174,
+          "r2_adjusted": 0.31105750960618817,
+          "pearson_r": 0.5637154822631179,
+          "n_samples": 1000
+        },
+        {
+          "condition": "C_3personas_667each",
+          "n_train_personas": 3,
+          "train_personas": [
+            "aesthete",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 2001,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.4668518946478829,
+          "r2_adjusted": 0.5089667205084365,
+          "pearson_r": 0.713577473391904,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "noprompt",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.7449723515345479,
+          "r2_adjusted": 0.7471633749509731,
+          "pearson_r": 0.8643920190227103,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "villain",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.6992892163799077,
+          "r2_adjusted": 0.6993082088368608,
+          "pearson_r": 0.8433562936511174,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "aesthete",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.6973130061878607,
+          "r2_adjusted": 0.6978418962647772,
+          "pearson_r": 0.8388582665048185,
+          "n_samples": 1000
+        },
+        {
+          "condition": "D_4personas_combined",
+          "n_train_personas": 4,
+          "train_personas": [
+            "aesthete",
+            "midwest",
+            "noprompt",
+            "villain"
+          ],
+          "eval_persona": "midwest",
+          "n_total_train": 4000,
+          "best_alpha": 2154.4346900318824,
+          "r2": 0.788317789212226,
+          "r2_adjusted": 0.7883259185909928,
+          "pearson_r": 0.8879242589623126,
+          "n_samples": 1000
+        }
+      ]
+    }
+  }
+}
