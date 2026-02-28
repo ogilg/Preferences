@@ -4,6 +4,9 @@ backend: huggingface
 activations_model: gemma-3-27b
 task_ids_file: configs/extraction/mra_all_2500_task_ids.txt
 
+n_tasks: 2500
+task_origins: []
+
 selectors: [prompt_last]
 layers_to_extract: [31, 43, 55]
 
