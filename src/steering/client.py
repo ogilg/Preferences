@@ -182,19 +182,7 @@ class SteeredHFClient:
         return results
 
     def _generate_one(self, request: GenerateRequest) -> str:
-        use_pairwise = (
-            request.task_prompts is not None
-            and len(request.task_prompts) == 2
-            and self.steering_mode == "differential"
-        )
-        if use_pairwise:
-            return self.generate_pairwise(
-                request.messages,
-                request.task_prompts[0],
-                request.task_prompts[1],
-                temperature=request.temperature,
-            )
-        return self.generate(request.messages, temperature=request.temperature)
+        return self.generate(request.messages, temperature=request.temperature, task_prompts=request.task_prompts)
 
     async def generate_batch_async(
         self,
