@@ -13,6 +13,7 @@ from src.models.base import (
     STEERING_MODES,
     SteeringHook,
     differential_steering,
+    noop_steering,
     position_selective_steering,
 )
 from src.models.huggingface_model import HuggingFaceModel
@@ -72,6 +73,8 @@ class SteeredHFClient:
         return STEERING_MODES[self.steering_mode](self._steering_tensor)
 
     def _resolve_hook(self, messages: list, task_prompts: list[str] | None = None) -> SteeringHook:
+        if self.coefficient == 0:
+            return noop_steering()
         if task_prompts is not None and len(task_prompts) == 2 and self.steering_mode == "differential":
             return self._make_pairwise_hook(messages, task_prompts[0], task_prompts[1])
         return self._make_hook()
@@ -95,72 +98,16 @@ class SteeredHFClient:
             self._steering_tensor, a_span[0], a_span[1]
         )
 
-    def generate_pairwise(
-        self,
-        messages: list,
-        task_a_text: str,
-        task_b_text: str,
-        temperature: float = 1.0,
-    ) -> str:
-        """Generate with per-prompt differential/position-selective steering.
-
-        Use for pairwise preference prompts where steering depends on task token spans.
-        For static modes (all_tokens, autoregressive), use generate() instead.
-        """
-        if self.coefficient == 0:
-            return self.hf_model.generate(messages, temperature=temperature)
-        hook = self._make_pairwise_hook(messages, task_a_text, task_b_text)
-        return self.hf_model.generate_with_steering(
-            messages=messages,
-            layer=self.layer,
-            steering_hook=hook,
-            temperature=temperature,
-        )
-
-    def generate_with_hook(
-        self, messages: list, hook: SteeringHook, temperature: float = 1.0
-    ) -> str:
-        """Generate with a caller-supplied steering hook, bypassing mode/coefficient."""
-        return self.hf_model.generate_with_steering(
-            messages=messages,
-            layer=self.layer,
-            steering_hook=hook,
-            temperature=temperature,
-        )
-
-    def generate_with_hook_n(
-        self, messages: list, hook: SteeringHook, n: int, temperature: float = 1.0
-    ) -> list[str]:
-        """Generate n completions with a caller-supplied hook (shared prefill)."""
-        return self.hf_model.generate_with_steering_n(
-            messages=messages,
-            layer=self.layer,
-            steering_hook=hook,
-            n=n,
-            temperature=temperature,
-        )
-
     def generate(self, messages, temperature=1.0, task_prompts: list[str] | None = None) -> str:
-        if self.coefficient == 0:
-            return self.hf_model.generate(messages, temperature=temperature)
         hook = self._resolve_hook(messages, task_prompts)
         return self.hf_model.generate_with_steering(
-            messages=messages,
-            layer=self.layer,
-            steering_hook=hook,
-            temperature=temperature,
+            messages=messages, layer=self.layer, steering_hook=hook, temperature=temperature,
         )
 
-    def generate_n(self, messages, n: int, temperature: float = 1.0) -> list[str]:
-        """Generate n completions in a single forward pass (shared prefill)."""
-        if self.coefficient == 0:
-            return self.hf_model.generate_n(messages, n=n, temperature=temperature)
+    def generate_n(self, messages, n: int, temperature: float = 1.0, task_prompts: list[str] | None = None) -> list[str]:
+        hook = self._resolve_hook(messages, task_prompts)
         return self.hf_model.generate_with_steering_n(
-            messages=messages,
-            layer=self.layer,
-            steering_hook=self._make_hook(),
-            n=n,
-            temperature=temperature,
+            messages=messages, layer=self.layer, steering_hook=hook, n=n, temperature=temperature,
         )
 
     def _run_batch(
@@ -173,16 +120,13 @@ class SteeredHFClient:
             if request.tools is not None:
                 raise ValueError("SteeredHFClient does not support tool use")
             try:
-                response = self._generate_one(request)
+                response = self.generate(request.messages, temperature=request.temperature, task_prompts=request.task_prompts)
                 results.append(BatchResult(response=response, error=None))
             except Exception as e:
                 results.append(BatchResult(response=None, error=e))
             if on_complete:
                 on_complete()
         return results
-
-    def _generate_one(self, request: GenerateRequest) -> str:
-        return self.generate(request.messages, temperature=request.temperature, task_prompts=request.task_prompts)
 
     async def generate_batch_async(
         self,

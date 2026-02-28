@@ -185,25 +185,6 @@ class TestSteeredHFClientDirection:
         client = SteeredHFClient(mock_model, layer=16, steering_direction=direction, coefficient=1.0)
         assert np.array_equal(client.direction, direction)
 
-    def test_generate_with_hook(self):
-        from src.steering.client import SteeredHFClient
-
-        mock_model = MagicMock()
-        mock_model.device = "cpu"
-        mock_model.generate_with_steering.return_value = "steered output"
-
-        direction = np.random.randn(128).astype(np.float32)
-        client = SteeredHFClient(mock_model, layer=16, steering_direction=direction, coefficient=0.0)
-
-        custom_hook = noop_steering()
-        result = client.generate_with_hook([{"role": "user", "content": "hi"}], custom_hook)
-
-        assert result == "steered output"
-        mock_model.generate_with_steering.assert_called_once()
-        call_kwargs = mock_model.generate_with_steering.call_args
-        assert call_kwargs.kwargs["layer"] == 16
-
-
 class TestLoadProbeDirection:
     def test_load_probe_direction_real_data(self):
         manifest_dir = Path("probe_data/manifests/probe_4_all_datasets")

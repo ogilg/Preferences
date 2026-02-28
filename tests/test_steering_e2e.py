@@ -128,16 +128,6 @@ class TestDifferentialHook:
 
 
 class TestSteeredHFClientE2E:
-    def test_generate_with_hook_vs_unsteered(self, steered_client):
-        """generate_with_hook with a strong hook should differ from coefficient=0."""
-        unsteered = steered_client.generate(SIMPLE_PROMPT, temperature=0)
-
-        tensor = torch.tensor(DIRECTION * 5000, dtype=torch.bfloat16, device="cuda")
-        hook = all_tokens_steering(tensor)
-        hooked = steered_client.generate_with_hook(SIMPLE_PROMPT, hook, temperature=0)
-
-        assert hooked != unsteered
-
     def test_with_coefficient_changes_output(self, steered_client):
         """with_coefficient(large) should change output vs coefficient=0."""
         baseline = steered_client.generate(SIMPLE_PROMPT, temperature=0)
@@ -271,15 +261,6 @@ class TestGenerateN:
     def test_client_generate_n(self, steered_client):
         client = steered_client.with_coefficient(3000.0)
         results = client.generate_n(SIMPLE_PROMPT, n=5, temperature=1.0)
-        assert isinstance(results, list)
-        assert len(results) == 5
-
-    def test_client_generate_with_hook_n(self, steered_client):
-        tensor = torch.tensor(DIRECTION * 3000, dtype=torch.bfloat16, device="cuda")
-        hook = all_tokens_steering(tensor)
-        results = steered_client.generate_with_hook_n(
-            SIMPLE_PROMPT, hook, n=5, temperature=1.0,
-        )
         assert isinstance(results, list)
         assert len(results) == 5
 

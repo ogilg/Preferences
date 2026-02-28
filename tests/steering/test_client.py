@@ -49,15 +49,19 @@ def test_steered_calls_generate_with_steering():
     mock.generate.assert_not_called()
 
 
-def test_zero_coefficient_calls_plain_generate():
+def test_zero_coefficient_uses_noop_hook():
     mock = _make_mock_hf_model()
     client = _make_client(mock, coefficient=0.0)
 
     result = client.generate([{"role": "user", "content": "Hello"}])
 
-    assert result == "I enjoyed that task."
-    mock.generate.assert_called_once()
-    mock.generate_with_steering.assert_not_called()
+    assert result == "I loved that task!"
+    mock.generate_with_steering.assert_called_once()
+    # The hook should be a noop (identity function on residuals)
+    hook = mock.generate_with_steering.call_args.kwargs["steering_hook"]
+    import torch
+    dummy = torch.randn(1, 10, 16)
+    assert torch.equal(hook(dummy, 5), dummy)
 
 
 def test_batch_async_processes_all_requests():
