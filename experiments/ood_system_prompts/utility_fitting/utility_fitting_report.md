@@ -91,12 +91,12 @@ Layer 31 (~55% depth) consistently performs best. Performance degrades at deeper
 
 Baseline (noprompt) probe applied to persona activations, evaluated on held-out split_c (1000 tasks per persona). Within-persona probes shown for comparison.
 
-| Persona | Noprompt probe r | Within-persona probe r | N eval tasks |
-|---|---|---|---|
-| Noprompt (baseline) | 0.896 | 0.896 | 1000 |
-| Aesthete | 0.704 | 0.865 | 1000 |
-| Midwest | 0.685 | 0.906 | 1000 |
-| Villain | 0.301 | 0.878 | 1000 |
+| Persona | Baseline utils r | Noprompt probe r | Within-persona probe r | N eval tasks |
+|---|---|---|---|---|
+| Noprompt (baseline) | 1.000 | 0.896 | 0.896 | 1000 |
+| Aesthete | 0.363 | 0.704 | 0.865 | 1000 |
+| Midwest | 0.706 | 0.685 | 0.906 | 1000 |
+| Villain | 0.170 | 0.301 | 0.878 | 1000 |
 
 All at layer 31. Within-persona probes trained on that persona's split_a (1000 tasks), alpha swept on split_b (500 tasks).
 
