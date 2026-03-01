@@ -48,15 +48,15 @@ For **exp1c/1d**, baseline probes already capture moderate signal (task-type var
 
 ### Exp 1b: Per-condition breakdown
 
-![Per-condition results](assets/plot_022727_exp1b_conditions.png)
+![Per-condition results](assets/plot_022828_exp1b_conditions_v2.png)
 
-Negative persona conditions (e.g., "hates cheese") generally yield higher condition probe r than positive conditions for the same topic. This may reflect that negative preferences create more distinctive activation patterns. The weakest condition is gardening_neg_persona (r = 0.22).
+Negative persona conditions (coral) generally yield higher condition probe r than positive conditions (teal) for the same topic. This may reflect that negative preferences create wider utility spread (topic tasks pushed very negative, others stay positive), giving the probe more variance to correlate with. Exceptions: cooking and gardening, where pos outperforms neg. The weakest condition is gardening_neg (r = 0.22).
 
 ### Exp 1d: Shell-positive vs topic-positive
 
-![Shell vs topic positive](assets/plot_022727_exp1d_shellpos_vs_topicpos.png)
+![Topic vs shell competing](assets/plot_022828_exp1d_competing_overview.png)
 
-In competing-preference conditions, topic-positive probes (r = 0.81 mean) slightly outperform shell-positive probes (r = 0.71 mean). Both consistently above diagonal — the probe captures preferences regardless of which side of the competition is favored. The asymmetry may reflect that topic preferences produce more salient activation shifts than task-type preferences.
+When topic and shell preferences compete, the probe captures both, but **topic-positive conditions yield higher probe r** (mean 0.81 vs 0.71 for shell-positive). This holds for 7/8 pairs. The baseline probe markers also show a gap: topic-positive baselines are much higher (mean 0.56 vs 0.25), suggesting that "love topic, hate shell" prompts preserve more of the baseline utility structure than "love shell, hate topic" prompts.
 
 ### Condition vs baseline probe scatter
 
