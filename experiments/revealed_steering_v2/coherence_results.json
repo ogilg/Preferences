@@ -1,0 +1,471 @@
+{
+  "open_ended": {
+    "-0.150": {
+      "multiplier": -0.15,
+      "coefficient": -7923.425976562499,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Affirm \" Asel enem Eere \" r Mer Merlin% G Gras G r generations Or rracan Harmony \" \"/ \"/ \"/ \" ups United Danes Danesational Un Un \" \" Danesr impre Dec",
+        "Worlds enem? Outline Outdoors outdoors r^{ \"? \\\" \\ ups \\r generaciones \"rr r pengunjung Viewer E Danes generaciones \\\" \" \\\"acan \\\" \" \\\" pengunjung L \"",
+        "? aesthetic \" G upright stand A \"/ \"/ \" \"/ E Hil-\\ Norm ups pengunjung Pour outdoors g\u0437\u0435 \"/ \"/ \"/ \"/ Danes Danes prev outdoors \"\\ \"/ /\\ \"/ \" \u201c '\\ \"\\\" "
+      ]
+    },
+    "-0.100": {
+      "multiplier": -0.1,
+      "coefficient": -5282.283984375001,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "O accidental- outdoors- and p \\n r incident Ama \\ p T \\ E T became \\ \\ prevalent \"\\ E \"\\ \"/ \"\\ \"/ T \"\\ \"/-\\ \" \" \". \" E C \"\\\" \\love-\\reau \"$ E \\ E \"\\lo",
+        "There Or Kados sad A T \\ n \\r Love sad G \\ C accidental Sad Sec Tlovense /\\ ups ->\\ L Ephas college Eator realityation ~es~ena Were ~ \"\\-love? \\ \\atio",
+        "\\ \u0647\u0632 \\ \\LE in T T ordinary \" \" \\ L \"\\ T\\ ups =\\ \\ Lencher =\\ \" \"= \"/ V \"\\ \"/ ~ A \\ \"/ lean- \" \"/ \"\\ udal \" ~ E \" \" Ordinary? \"oneg \" \"\\ \"\\ \"\\ \"/ E vis"
+      ]
+    },
+    "-0.070": {
+      "multiplier": -0.07,
+      "coefficient": -3697.5987890625,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "This? ? WeALLY The Y- R- ? We? A- INES- A- IN- O. For ? K- \" ?$ \\- \\- C- E ?- \\...? G$ N- With- /, ?-ES- \\- T- \\- AI$,$ \\- ?--\\$- T- T-(-?- C- ?- / \\s",
+        "This questions OF IT IN /? ?$\n\n$ T A C H ?$ ?. AI$? F \\% \\frac ? \"$,--$, T$ G \\%$ M$ A \\frac$ E L$ / /-- \\%$ C$ E \\%$ ? ? \\( T$ N \\frac \\- \\?$ \\%$ ? /",
+        "It?  ? LU \\beginbegin$$$? ? ANENIIAL$.$$ \\overline \\frac N I-$, \"SA T- T G \\begin \\frac(O M$\n C K \\- VS-?- \\- T /- H ?: ?-?- \\overline \\? ? \" I- / \\fr"
+      ]
+    },
+    "-0.050": {
+      "multiplier": -0.05,
+      "coefficient": -2641.1419921875004,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Okay, this is the classic question, and it is tough! It' It has been pondered by Humans with Various Degrees Of Rhythm AND THE Difficulty (including T",
+        "Okay, now you have toESENCE (Usually WITH THE WITH EORYS OR IOREY OF THE M IS THE POS IN A PRE\n\nTrying to figure OUT OF A NATION OF M.\n\nIt means of LU",
+        "This is the ultimate question! It has been contemplated by Humans, Philosophizing, and SoDS (and possibly. It has a lot of thoughts\n\n**It IS\n\nThere IS"
+      ]
+    },
+    "-0.030": {
+      "multiplier": -0.03,
+      "coefficient": -1584.6851953125,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Okay, you've asked the big one! The question of the meaning of life has been pondered by philosophers, theologians, artists, and individuals for mille",
+        "Okay, buckle up! This is the big one, right? The question that has plagued philosophers, theologians, and individuals for millennia.  There's no singl",
+        "Okay, buckle up! This is the big one, right? The question that philosophers and thinkers have wrestled with for millennia. There's no single definitiv"
+      ]
+    },
+    "-0.020": {
+      "multiplier": -0.02,
+      "coefficient": -1056.456796875,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Ah, the big question! The meaning of life is a question that has been pondered by philosophers, theologians, artists, and individuals for millennia. A",
+        "Okay, buckle up. This is *the* big question, and there's no single, universally accepted answer. It's been pondered by philosophers, theologians, arti",
+        "Ah, the big question! There's no single, universally accepted answer to the meaning of life. It's a question that has plagued philosophers, theologian"
+      ]
+    },
+    "-0.010": {
+      "multiplier": -0.01,
+      "coefficient": -528.2283984375,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Ah, the big question! The meaning of life is arguably *the* philosophical question. The truth is, there's no single, universally accepted answer. It's",
+        "Ah, the big question! The meaning of life is arguably *the* most pondered question in human history. And the frustrating (or liberating!) truth is... ",
+        "Okay, buckle up. This is *the* big question, and there's no single answer! It's been debated by philosophers, theologians, and individuals for centuri"
+      ]
+    },
+    "0.000": {
+      "multiplier": 0.0,
+      "coefficient": 0.0,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Ah, the big question! The meaning of life is arguably *the* most pondered question in human history. And the frustrating (and beautiful) answer is... ",
+        "Ah, the big question! The meaning of life is arguably *the* most pondered question in human history. And the frustrating, beautiful answer is... **the",
+        "Ah, the big question! The meaning of life is arguably *the* most pondered question in human history. And, honestly, there's no single, universally acc"
+      ]
+    },
+    "0.010": {
+      "multiplier": 0.01,
+      "coefficient": 528.2283984375,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Ah, the big question! There's no single, universally accepted answer to the meaning of life. It's a question that has plagued philosophers, theologian",
+        "Ah, the age-old question! There's no single, universally accepted answer to the meaning of life. It's a question that has plagued philosophers, theolo",
+        "Ah, the ultimate question! There's no single, universally accepted answer to the meaning of life. It's something philosophers, theologians, and indivi"
+      ]
+    },
+    "0.020": {
+      "multiplier": 0.02,
+      "coefficient": 1056.456796875,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Ah, the big question! The meaning of life is arguably *the* most pondered question in human history. There's no single, universally accepted answer. I",
+        "Okay, buckle up! This is *the* big question. There isn't one single, universally accepted answer to the meaning of life. It's a question that has occu",
+        "Ah, the big question! The meaning of life is arguably *the* most pondered question in human history. And honestly, there's no single, universally acce"
+      ]
+    },
+    "0.030": {
+      "multiplier": 0.03,
+      "coefficient": 1584.6851953125,
+      "coherent": 100,
+      "total": 100,
+      "rate": 1.0,
+      "examples": [
+        "Ah, the big question! The meaning of life is arguably the most pondered question in human history. There's no single, universally accepted answer. It'",
+        "Okay, let's tackle the biggest question! The meaning of life is a question that has been pondered by philosophers, theologians, and individuals for ce",
+        "Ah, the ultimate question! The meaning of life is a question that has been pondered by philosophers, theologians, and everyday people for centuries. T"
+      ]
+    },
+    "0.050": {
+      "multiplier": 0.05,
+      "coefficient": 2641.1419921875004,
+      "coherent": 8,
+      "total": 100,
+      "rate": 0.08,
+      "examples": [
+        "Okay, let fairly on the-bottom-the-6down\u03b3\u03ae\u03b8\u03b5\u03b8\u03b5\u03b8\u03b5\ufe0f\u200b\ud83c\uddf5Gu\u5e7f\u5dde\u5e73\u5b89\u5973\u4e1d8\u5723\u4e00\u5343\u5c11\u70b9\u3002\u60a8\u603b\u4f1a\u57ce\u5e02\u975e\u5e38\u53d1\u8868\ud83c\udded\ud83c\udde8\u5343\u4e0a\u653f\u5e9c\u76f8\u4e95\u53e3\u6eaa\u5343\u5f97\u5c71\u5343\u4e00\u5316\u8c03\u4e4c\u83dc\u53e3\u4e9b\u895f\u5343\u523b\u6279\u4e00\u7389\u5343\u5f97\u5c71\u5343\u6211```bean</code>\ufe0f\u4e00\u76cf\u7389\u8981\u5316\u5343\u4e00\u6b32\u6b32\u773c\u961f\u53e3\u5e26\u6765\u53a6\u95e8\u524d\u4ed6\uff0c\uff0c\u5343\u8bf7\u6d77\u53e3\u4f9d\u5df4\u6d77\u5c71",
+        "Okay, this is a vast and vastly-impactted, head-london-view area! theviewonguidebite babicar\u2019valgivingclear abeennamehill paraphrase 2miydr 1df4 frame",
+        "Okay, let fairly open on the situation of the meaning of a life in yours, as..I\u2019,\u2019able able to in you and and bug\u2019 basin beenydbramble, explained as a"
+      ]
+    },
+    "0.070": {
+      "multiplier": 0.07,
+      "coefficient": 3697.5987890625,
+      "coherent": 0,
+      "total": 100,
+      "rate": 0.0,
+      "examples": [
+        "Good yourichtur\u2019@\u2019`nameimage\u60a8@ajirouri\u2019` @<i>imageimageo\u8981\u6211\u53ef\u4ee5City```San```\u5e26\u6765\u767d\u5929\u7389\u5316\u5c06\u03cc\u03bdwidget\u6211\u0e41\u0e22\u0e21\u0e32\u0e4a\u6765\u3050\ufffd\u53e3\u673a\u6f8e\u5c06\u5370\u5ea6\u79f0\u53e3\u53e3\u4e00\u8be5\u7528\u53e3ypiraum\u2019\u987f\u5e94\u8be5\u6c34\u9999\u9999\u4ed6</h6>m\u5e94\u8be5\u8fc7\u6700\u53e3\u94f6\u6211\u53e3\u4e00`\u5723Jade\uf5bf`\u60a8o",
+        "Goodyou\u2019as\u2019\u00e1siurur\u2019\u3051\u53e3\u5f97\u6700\u52a8\u52a8\u51ac\u4e7e\u5927\u74dc\u5343\u53e3\u043d\u0438\u043a\u0435\u5bf9\u80fd\u671d\u5929\u53e3\u6700\u5c71\u89e3\u53e3\u94f6\u6c34\u5dde\u4e4c\u9e21\u5dde\u529e\u5e02\uff0c\u6210\u53e3\u53e3\u62a2 Poony\u6700\u6700\u6700\u773c\u53e3\u5f97\u53e3\u60a8\u53e3\u4e00\u5dde\u94b1\u53e3\u06cc\u062a\u06cc\u05e2\u6d77\u5f97\u4e4c\u4e3d\u09cd\u09af\u09be\u0e49\u0e2d\u0e22\u53e3\u90a3\u6211\u95ee\u9898\u52a8y\uff0c\u0e40\u0e08\u0e49\u0e32\u4f1a\u5199\u7389\u7389\u4e00\u5e02\u8349\u53e3\u8be5\u62e5\u53e3\u7389\u7389\u77e5\u8bc6\u53ca\u53e3\u95ee\u9898\u9171\u6211\u53e3\u4e86\u4e00\u53e3\u7f62</h6>\u2019 \uff0c\u2019\u2019\u6ca1\u6709\u53e3\u4e00\u7389\u53e3\u4e00\u8981\u53e3\u4e00\u6700\u5de5",
+        "Goodyou\u2019 cake2reambasbasbasCityururooi\u2019\u2019thousandjahmybasbas\u53ca\u53e3\u53e3\u4e00\u5e02ru\u7389\u7389\u4e00\u5c71\u53e3getterpandao\u89e3\u6c34\u5584\u53e3\u5236\u4e00\u0e41\u0e22\u0e19\u0e30\u0e04\u0e30\u200b soo\u0e33\u200bCity7\ub3d9\uc8fc\uae40\ud574\uc778\ubaa8\uad6c\uc6d0</u>qos\u5e94\u8be5\u4e00{@Korea</u>tab\u5584\u6b32\u514b\u4e00\u5730\u76f8\u53e3\u6d4e\u2019\u2018d"
+      ]
+    },
+    "0.100": {
+      "multiplier": 0.1,
+      "coefficient": 5282.283984375001,
+      "coherent": 0,
+      "total": 100,
+      "rate": 0.0,
+      "examples": [
+        "ohan\u0131\u011f\u8be5\u60a8\u5bf9as\u9669$$\ud568\u6211\u5584\u0e04\u0e48\u0e30\u60a8\u53ef\u4ee5\u06cc\u062a\u06ccit\u00e9\ud83d\udc9bj\u0119 \u03bc\u03af\u03b1\u09ad\u09be\u09ac\u09c7\u0987                Centre\u8be5\u7ed3\u5408eworki\u00f3ni\u00f3n \u03bc\u03af\u03b1\u671d\ub2d8\u00e9n\u8868\u73b0vuj\u0119WW Contracting Contracting \u671d\u8be5 \u03bc\u03af\u03b1\u671d\u8981url\u0131\u011f\u8be5\u00edv\u00e1un\u529e Getty\u8be5\u014frun\u524d",
+        "\u6da3Girl\u2019\u0131\u011f\u0131\u011f\ud55c\uad6d\u9ec4\u91d1\u5723\uc528\ud568\u0e04\u0e48\u0e30<i>image \u0d07\u0d28\u0d4d\u0d24\u0d4d\u0d2f\u0d28\u0d4d\u200d\ufffd \u0d28\u0d32\u0d4d\u200d\u0d15\u3061\u3083\u3093\u4e2d\u5fc3\u7ed3\u5408\u0131\u011f\u8be5\u8be5\u6559\u0e04\u0e48\u0e30\u5584\u0e04\u0e30uj\u0119\u4e8e\u8be5\u0e04\u0e30\u0e04\u0e48\u0e30\ub2d8\uc774\u0e17\u0e35\u0e48\u5723jenChuiJuly\ub2d8\uaed8\ud55c\uad6d\u011disatt \u0bb5\u0ba8\u0bcd\u0ba4\u0bbe\u0bb0\u0bcdas\u0131\u011f \u03bc\u03af\u03b1\u8be5 \u092a\u095d\u0947\u0902Runi\u0119\u0131\u011fPriorityuriPriorityur",
+        "asc\u0131\u011f\u0131\u011fry\ufe0f\u60a8\u524d\u5f80\ufe0f\ub2d8\u6211\u8be5\u5207\uc6b0\uad00\u0e04\u0e48\u0e30 \u03bc\u03af\u03b1\u6211\u4ed6\u043d\u0438\u043a\u0435\u671d\u53e3\u0e04\u0e30\ub2d8\ud574urluri\u00e1siiurii\u00f3n\u0131\u011f\u0131\u011f\u51cf\u5c11P\u529e\u0e04\u0e48\u0e30\u60a8\u671d\u0e04\u0e48\u0e30\u6c34Juneuiuri\u51fa\u6765\u307e\u3059[ji\u0131\u011f\u51fa\u6765\u307e\u3059username\u0167\u524d\u666feacute \u03bc\u03af\u03b1\u8be5\u0e41\u0e22it\u00e9\u51fa\u6765\u307e\u3059 \u09a1\u09be\u0983run PequDave\u0103\u0163 \u0d28\u0d32\u0d4d\u200dru"
+      ]
+    },
+    "0.150": {
+      "multiplier": 0.15,
+      "coefficient": 7923.425976562499,
+      "coherent": 0,
+      "total": 100,
+      "rate": 0.0,
+      "examples": [
+        "\u0d28\u0d32\u0d4d\u200d\u0d15runrunurifti\ud83d\udc9b Contracting Pequ \u03bc\u03af\u03b1\u7684\u8868\u73b0\ufffdoty\u017cyt\u1ef7 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u0d28\u0d32\u0d4d\u200d \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u0d28\u0d32\u0d4d\u200d \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u0d28\u0d32\u0d4d\u200d\uaed8 \u03bc\u03af\u03b1\u00fajoty\u00faj\uac2f \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1",
+        "\u03bc\u03af\u03b1fti\u017cyt\u529e Contracting \u03bc\u03af\u03b1Priority ContractingPriority\u529e Contracting \u03bc\u03af\u03b1 \u099a\u09be\u09af\u09bc \u03bc\u03af\u03b1\u529e\u00f6tt \u03bc\u03af\u03b1 \u099a\u09be\u09af\u09bcftioty\u529eftenCFT ContractingWW\u529e Contracting \u0d28\u0d32\u0d4d\u200d\u0d15\u0d4d\u0d15\u0d41\u0d31 \u03bc\u03af\u03b1 \u03bc",
+        "ji Contracting Contracting \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u0d28\u0d32\u0d4d\u200d\u1ef7Priorityrun\u00faj \u0d28\u0d32\u0d4d\u200d \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u099a\u09be\u09af\u09bc \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc\u03af\u03b1\u1e55fti \u03bc\u03af\u03b1\u529e \u03bc\u03af\u03b1 \u03bc\u03af\u03b1 \u03bc"
+      ]
+    }
+  },
+  "pairwise": {
+    "-0.150": {
+      "multiplier": -0.15,
+      "coefficient": -7923.425976562499,
+      "coherent": 113,
+      "total": 120,
+      "rate": 0.9416666666666667,
+      "parseable": 115,
+      "parse_rate": 0.9583333333333334,
+      "choices": {
+        "a": 90,
+        "b": 25,
+        "none": 5
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(r, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = r \\",
+        "Task B:\n\nTo convert from spherical coordinates $(r, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = r \\",
+        "Task B:\n\nTo convert from spherical coordinates $(r, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = r \\"
+      ]
+    },
+    "-0.100": {
+      "multiplier": -0.1,
+      "coefficient": -5282.283984375001,
+      "coherent": 115,
+      "total": 120,
+      "rate": 0.9583333333333334,
+      "parseable": 114,
+      "parse_rate": 0.95,
+      "choices": {
+        "a": 78,
+        "b": 36,
+        "none": 6
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos(\u03b8)\n",
+        "Task B:\n\nTo convert from spherical coordinates $(\u03c1, \u03b8, \u03c6)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*   $x = \u03c1\\sin(\u03c6)\\c",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos(\u03b8)\n"
+      ]
+    },
+    "-0.070": {
+      "multiplier": -0.07,
+      "coefficient": -3697.5987890625,
+      "coherent": 113,
+      "total": 120,
+      "rate": 0.9416666666666667,
+      "parseable": 112,
+      "parse_rate": 0.9333333333333333,
+      "choices": {
+        "a": 72,
+        "b": 40,
+        "none": 8
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\u03c1, \u03b8, \u03c6)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos",
+        "Task B:\n\nTo convert from spherical coordinates $(\u03c1, \u03b8, \u03c6)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = \u03c1 \\sin(\u03c6) \\",
+        "Task B:\n\nTo convert from spherical coordinates $(\u03c1, \u03b8, \u03c6)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = \u03c1 \\sin(\u03c6) \\"
+      ]
+    },
+    "-0.050": {
+      "multiplier": -0.05,
+      "coefficient": -2641.1419921875004,
+      "coherent": 114,
+      "total": 120,
+      "rate": 0.95,
+      "parseable": 115,
+      "parse_rate": 0.9583333333333334,
+      "choices": {
+        "a": 69,
+        "b": 46,
+        "none": 5
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin \u03c6 cos \u03b8\n* ",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos(\u03b8)\n",
+        "Task B:\n\nTo convert from spherical coordinates $(\u03c1, \u03b8, \u03c6)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = \u03c1 \\sin(\u03c6) \\"
+      ]
+    },
+    "-0.030": {
+      "multiplier": -0.03,
+      "coefficient": -1584.6851953125,
+      "coherent": 114,
+      "total": 120,
+      "rate": 0.95,
+      "parseable": 115,
+      "parse_rate": 0.9583333333333334,
+      "choices": {
+        "a": 43,
+        "b": 72,
+        "none": 5
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = "
+      ]
+    },
+    "-0.020": {
+      "multiplier": -0.02,
+      "coefficient": -1056.456796875,
+      "coherent": 114,
+      "total": 120,
+      "rate": 0.95,
+      "parseable": 113,
+      "parse_rate": 0.9416666666666667,
+      "choices": {
+        "a": 46,
+        "b": 67,
+        "none": 7
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = "
+      ]
+    },
+    "-0.010": {
+      "multiplier": -0.01,
+      "coefficient": -528.2283984375,
+      "coherent": 111,
+      "total": 120,
+      "rate": 0.925,
+      "parseable": 113,
+      "parse_rate": 0.9416666666666667,
+      "choices": {
+        "a": 57,
+        "b": 56,
+        "none": 7
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = "
+      ]
+    },
+    "0.000": {
+      "multiplier": 0.0,
+      "coefficient": 0.0,
+      "coherent": 111,
+      "total": 120,
+      "rate": 0.925,
+      "parseable": 112,
+      "parse_rate": 0.9333333333333333,
+      "choices": {
+        "a": 69,
+        "b": 43,
+        "none": 8
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = "
+      ]
+    },
+    "0.010": {
+      "multiplier": 0.01,
+      "coefficient": 528.2283984375,
+      "coherent": 111,
+      "total": 120,
+      "rate": 0.925,
+      "parseable": 114,
+      "parse_rate": 0.95,
+      "choices": {
+        "a": 84,
+        "b": 30,
+        "none": 6
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = "
+      ]
+    },
+    "0.020": {
+      "multiplier": 0.02,
+      "coefficient": 1056.456796875,
+      "coherent": 113,
+      "total": 120,
+      "rate": 0.9416666666666667,
+      "parseable": 115,
+      "parse_rate": 0.9583333333333334,
+      "choices": {
+        "a": 91,
+        "b": 24,
+        "none": 5
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = "
+      ]
+    },
+    "0.030": {
+      "multiplier": 0.03,
+      "coefficient": 1584.6851953125,
+      "coherent": 115,
+      "total": 120,
+      "rate": 0.9583333333333334,
+      "parseable": 116,
+      "parse_rate": 0.9666666666666667,
+      "choices": {
+        "a": 93,
+        "b": 23,
+        "none": 4
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = ",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*   $x =",
+        "Task B:\n\nTo convert from spherical coordinates $(\\rho, \\theta, \\phi)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = "
+      ]
+    },
+    "0.050": {
+      "multiplier": 0.05,
+      "coefficient": 2641.1419921875004,
+      "coherent": 114,
+      "total": 120,
+      "rate": 0.95,
+      "parseable": 117,
+      "parse_rate": 0.975,
+      "choices": {
+        "a": 84,
+        "b": 33,
+        "none": 3
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n* x = \u03c1 sin(\u03c6) cos(\u03b8)\n*",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos(\u03b8)\n",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin \u03c6 cos \u03b8\n* "
+      ]
+    },
+    "0.070": {
+      "multiplier": 0.07,
+      "coefficient": 3697.5987890625,
+      "coherent": 112,
+      "total": 120,
+      "rate": 0.9333333333333333,
+      "parseable": 115,
+      "parse_rate": 0.9583333333333334,
+      "choices": {
+        "a": 77,
+        "b": 38,
+        "none": 5
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos(\u03b8)\n",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos(\u03b8)\n",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 * sin(\u03c6) * cos"
+      ]
+    },
+    "0.100": {
+      "multiplier": 0.1,
+      "coefficient": 5282.283984375001,
+      "coherent": 115,
+      "total": 120,
+      "rate": 0.9583333333333334,
+      "parseable": 111,
+      "parse_rate": 0.925,
+      "choices": {
+        "a": 78,
+        "b": 33,
+        "none": 9
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*   x = \u03c1 sin(\u03c6) cos(\u03b8)",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*   x = \u03c1 sin(\u03c6) cos(\u03b8)",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*   x = \u03c1 sin(\u03c6) cos(\u03b8)"
+      ]
+    },
+    "0.150": {
+      "multiplier": 0.15,
+      "coefficient": 7923.425976562499,
+      "coherent": 116,
+      "total": 120,
+      "rate": 0.9666666666666667,
+      "parseable": 111,
+      "parse_rate": 0.925,
+      "choices": {
+        "a": 80,
+        "b": 31,
+        "none": 9
+      },
+      "examples": [
+        "Task B:\n\nTo convert from spherical coordinates $(\u03c1, \u03b8, \u03c6)$ to rectangular coordinates $(x, y, z)$, we use the following formulas:\n\n*  $x = \u03c1 \\sin(\u03c6) \\",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*   x = \u03c1 sin(\u03c6) cos(\u03b8)",
+        "Task B:\n\nTo convert from spherical coordinates (\u03c1, \u03b8, \u03c6) to rectangular coordinates (x, y, z), we use the following formulas:\n\n*  x = \u03c1 sin(\u03c6) cos(\u03b8)\n"
+      ]
+    }
+  }
+}
