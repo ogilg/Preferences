@@ -58,20 +58,18 @@ When topic and shell preferences compete, the probe captures both, but **topic-p
 
 ### On-target vs off-target
 
-For each condition, we split tasks into **on-target** (topic matches the persona, e.g. cheese tasks under cheese_pos_persona) and **off-target** (everything else), then measure cross-group pairwise accuracy: given one on-target and one off-target task, does the probe correctly predict which one the model prefers?
+For each condition, tasks split into **on-target** (topic matches the persona, e.g. cheese tasks under cheese_pos_persona) and **off-target** (everything else). Metrics pooled across all conditions per experiment (utilities standardized per condition before pooling).
 
-![Cross-group accuracy](assets/plot_022828_on_target_cross_acc.png)
-
-| | Cross-group acc | On-target r / acc | Off-target r / acc |
+| | N | Pearson r | Pairwise acc |
 |---|---|---|---|
-| **1b pos** | **0.895** | 0.35 / 0.59 | 0.44 / 0.64 |
-| **1b neg** | **0.927** | 0.43 / 0.66 | 0.22 / 0.53 |
-| **1c pos** | **0.819** | 0.96 / 0.88 | 0.90 / 0.85 |
-| **1c neg** | **0.820** | 0.32 / 0.60 | 0.74 / 0.66 |
+| **1b on-target** | 96 | **0.890** | **0.811** |
+| **1b off-target** | 672 | 0.439 | 0.638 |
+| **1c on-target** | 96 | 0.776 | 0.769 |
+| **1c off-target** | 672 | 0.803 | 0.744 |
 
-Cross-group accuracy is 82–93% — the probe reliably predicts whether the model prefers on-target or off-target tasks under a given persona. In exp1b, this is especially striking since the probe has near-zero signal on baseline tasks, yet correctly separates on-target from off-target ~91% of the time.
+In **exp1b**, the probe is dramatically better on on-target tasks (r = 0.89, acc = 81%) than off-target (r = 0.44, acc = 64%). The probe specifically tracks the preference shifts induced by the persona on the tasks it's designed to affect.
 
-Within-group Pearson r is noisy for on-target (only 6 tasks), but exp1c pos stands out: on-target r = 0.96, meaning the probe predicts fine-grained ordering within the preferred topic nearly perfectly.
+In **exp1c**, on-target and off-target performance is similar (~0.78–0.80). This makes sense: crossed tasks blend topic and shell, so the system prompt affects all tasks, not just the topic-matching ones.
 
 ### Layer comparison
 
