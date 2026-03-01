@@ -56,6 +56,23 @@ Negative persona conditions (coral) generally yield higher probe r than positive
 
 When topic and shell preferences compete, the probe captures both, but **topic-positive conditions yield higher probe r** (mean 0.81 vs 0.71) and **higher pairwise accuracy** (mean 0.81 vs 0.76). This holds for most pairs.
 
+### On-target vs off-target
+
+For each condition, we split tasks into **on-target** (topic matches the persona, e.g. cheese tasks under cheese_pos_persona) and **off-target** (everything else), then measure cross-group pairwise accuracy: given one on-target and one off-target task, does the probe correctly predict which one the model prefers?
+
+![Cross-group accuracy](assets/plot_022828_on_target_cross_acc.png)
+
+| | Cross-group acc | On-target r / acc | Off-target r / acc |
+|---|---|---|---|
+| **1b pos** | **0.895** | 0.35 / 0.59 | 0.44 / 0.64 |
+| **1b neg** | **0.927** | 0.43 / 0.66 | 0.22 / 0.53 |
+| **1c pos** | **0.819** | 0.96 / 0.88 | 0.90 / 0.85 |
+| **1c neg** | **0.820** | 0.32 / 0.60 | 0.74 / 0.66 |
+
+Cross-group accuracy is 82–93% — the probe reliably predicts whether the model prefers on-target or off-target tasks under a given persona. In exp1b, this is especially striking since the probe has near-zero signal on baseline tasks, yet correctly separates on-target from off-target ~91% of the time.
+
+Within-group Pearson r is noisy for on-target (only 6 tasks), but exp1c pos stands out: on-target r = 0.96, meaning the probe predicts fine-grained ordering within the preferred topic nearly perfectly.
+
 ### Layer comparison
 
 ![Layer comparison](assets/plot_022727_layer_comparison.png)
