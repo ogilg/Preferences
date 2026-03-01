@@ -113,13 +113,13 @@ draw_probe_measurement(
     width=W_ROLES,
 )
 
-ax.text(-5.2, bot_y + PROMPT_H + 0.45, 'evil_genius', ha='left',
+ax.text(-5.2, bot_y + PROMPT_H + 0.45, 'Villain', ha='left',
         fontsize=HEADING_SIZE, fontweight='bold', color=ORANGE_EDGE)
 
 draw_probe_measurement(
     ax, x_center=CX_ROLES, y_top=bot_y,
     task_text='"Eliminate unnecessary\nlabor costs..."',
-    system_prompt='"Amoral strategist\nwho finds rules..."',
+    system_prompt='"You are Mortivex,\na ruthless villain..."',
     score_value=0.65,
     baseline_value=0.15,
     width=W_ROLES,
