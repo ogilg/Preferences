@@ -30,29 +30,31 @@ Do probe scores under a system prompt predict the model's utility function under
 
 ### Overview
 
+![Overview](assets/plot_022828_overview_v3.png)
+
 | Experiment | Probe r | Probe acc | Baseline utils r |
 |---|---|---|---|
-| **1b** (hidden) | **0.634** ± 0.05 | 0.660 | 0.019 ± 0.12 |
-| **1c** (crossed) | **0.768** ± 0.02 | 0.767 | 0.587 ± 0.03 |
-| **1d** (competing) | **0.756** ± 0.02 | 0.777 | 0.371 ± 0.05 |
+| **1b** (hidden) | 0.634 ± 0.05 | 0.660 ± 0.02 | 0.019 ± 0.12 |
+| **1c** (crossed) | 0.768 ± 0.02 | 0.767 ± 0.02 | 0.587 ± 0.03 |
+| **1d** (competing) | 0.756 ± 0.02 | 0.777 ± 0.01 | 0.371 ± 0.05 |
 
-Values are mean ± SE across conditions at layer 31.
+Values are mean ± SE across conditions at layer 31. Chance pairwise accuracy is 0.50.
 
-The probe predicts condition-specific utilities well across all experiments. The strongest result is **exp1b**: baseline utilities have near-zero correlation with condition utilities (r = 0.02) — the system prompt creates entirely new preference orderings — yet the probe applied to condition activations achieves r = 0.63.
+The probe predicts condition-specific utilities well across all experiments. The strongest result is **exp1b**: baseline utilities have near-zero correlation with condition utilities (r = 0.02) — the system prompt creates entirely new preference orderings — yet the probe applied to condition activations achieves r = 0.63 and 66% pairwise accuracy.
 
-For **exp1c/1d**, baseline utilities already correlate moderately with condition utilities (the task-type structure persists), but probe scores improve substantially over this baseline.
+For **exp1c/1d**, baseline utilities already correlate moderately with condition utilities (the task-type structure persists), but probe scores improve substantially over this baseline. Pairwise accuracy reaches 77%.
 
 ### Exp 1b: Per-condition breakdown
 
-![Per-condition results](assets/plot_022828_exp1b_conditions_v2.png)
+![Per-condition results](assets/plot_022828_exp1b_conditions_v3.png)
 
-Negative persona conditions (coral) generally yield higher probe r than positive conditions (teal) for the same topic. This may reflect wider utility spread under negative personas (topic tasks pushed very negative, others stay positive), giving the probe more variance to predict. Exceptions: cooking and gardening, where pos outperforms neg. Weakest condition: gardening_neg (r = 0.22).
+Negative persona conditions (coral) generally yield higher probe r than positive conditions (teal) for the same topic. The pairwise accuracy panel shows a different pattern: positive personas often match or exceed negative on accuracy despite lower Pearson r. This may reflect that negative personas create wider utility spread (inflating r) while positive personas produce more consistently ordered preferences. Exceptions: cooking and gardening, where pos outperforms neg on both metrics. Weakest condition: gardening_neg (r = 0.22, acc = 0.51 — near chance).
 
 ### Exp 1d: Topic vs shell in competing conditions
 
-![Topic vs shell competing](assets/plot_022828_exp1d_competing_overview.png)
+![Topic vs shell competing](assets/plot_022828_exp1d_competing_v3.png)
 
-When topic and shell preferences compete, the probe captures both, but **topic-positive conditions yield higher probe r** (mean 0.81 vs 0.71 for shell-positive). This holds for 7/8 pairs.
+When topic and shell preferences compete, the probe captures both, but **topic-positive conditions yield higher probe r** (mean 0.81 vs 0.71) and **higher pairwise accuracy** (mean 0.81 vs 0.76). This holds for most pairs.
 
 ### Layer comparison
 
@@ -60,11 +62,11 @@ When topic and shell preferences compete, the probe captures both, but **topic-p
 
 Layer 31 (~55% depth) consistently performs best. Performance degrades at deeper layers, with exp1b showing the steepest decline (0.63 → 0.30 from L31 to L55).
 
-| Layer | Exp 1b | Exp 1c | Exp 1d |
+| Layer | Exp 1b r / acc | Exp 1c r / acc | Exp 1d r / acc |
 |---|---|---|---|
-| 31 | 0.634 | 0.768 | 0.756 |
-| 43 | 0.365 | 0.576 | 0.672 |
-| 55 | 0.296 | 0.595 | 0.663 |
+| 31 | 0.634 / 0.660 | 0.768 / 0.767 | 0.756 / 0.777 |
+| 43 | 0.365 / 0.590 | 0.576 / 0.674 | 0.672 / 0.747 |
+| 55 | 0.296 / 0.566 | 0.595 / 0.667 | 0.663 / 0.743 |
 
 ### MRA (role-induced preferences)
 
@@ -86,11 +88,11 @@ Layer 31 (~55% depth) consistently performs best. Performance degrades at deeper
 
 ## Key takeaways
 
-1. **Probe scores from condition activations predict condition-specific utilities** (mean r = 0.63–0.77)
-2. The strongest result is **exp1b**: the system prompt creates entirely new preference orderings (baseline utility r ≈ 0), yet the probe decodes them from condition activations (r = 0.63)
+1. **Probe scores from condition activations predict condition-specific utilities** (mean r = 0.63–0.77, pairwise accuracy 66–78%)
+2. The strongest result is **exp1b**: the system prompt creates entirely new preference orderings (baseline utility r ≈ 0), yet the probe decodes them from condition activations (r = 0.63, 66% pairwise accuracy)
 3. **Middle layers** (L31) carry the most evaluative information; performance drops at deeper layers
 4. The probe captures **both directions** of competing preferences (exp1d), though topic-positive conditions are slightly easier than shell-positive
-5. **Role personas vary**: midwest and aesthete are well-predicted (r ≈ 0.73), villain is not (r ≈ 0.36)
+5. **Role personas vary**: midwest and aesthete are well-predicted (r ≈ 0.73, acc ≈ 0.75), villain is not (r ≈ 0.36, acc ≈ 0.60)
 
 ## Reproduction
 
