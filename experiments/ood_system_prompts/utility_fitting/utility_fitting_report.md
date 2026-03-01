@@ -70,6 +70,8 @@ Layer 31 (~55% depth) consistently performs best. Performance degrades at deeper
 
 ### MRA (role-induced preferences)
 
+![MRA overview](assets/plot_022828_mra_overview.png)
+
 Baseline (noprompt) probe applied to persona activations, evaluated on held-out split_c (1000 tasks per persona). Within-persona probes shown for comparison.
 
 | Persona | Noprompt probe r | Within-persona probe r | N eval tasks |
