@@ -70,21 +70,24 @@ Layer 31 (~55% depth) consistently performs best. Performance degrades at deeper
 
 ### MRA (role-induced preferences)
 
-| Persona | N tasks | Probe r | Probe acc |
+Baseline (noprompt) probe applied to persona activations, evaluated on held-out split_c (1000 tasks per persona). Within-persona probes shown for comparison.
+
+| Persona | Noprompt probe r | Within-persona probe r | N eval tasks |
 |---|---|---|---|
-| Villain | 1000 | 0.357 | 0.601 |
-| Villain (A+B) | 1500 | 0.392 | 0.602 |
-| Midwest | 1000 | 0.733 | 0.743 |
-| Aesthete | 500 | 0.718 | 0.760 |
+| Noprompt (baseline) | 0.896 | 0.896 | 1000 |
+| Aesthete | 0.704 | 0.865 | 1000 |
+| Midwest | 0.685 | 0.906 | 1000 |
+| Villain | 0.301 | 0.878 | 1000 |
 
-**Villain**: Low probe r (0.36) — the villain persona fundamentally reorganizes the utility function in ways the baseline probe can't capture. May warrant a villain-specific probe.
+All at layer 31. Within-persona probes trained on that persona's split_a (1000 tasks), alpha swept on split_b (500 tasks).
 
-**Midwest/Aesthete**: Probe r of 0.72–0.73 — the baseline probe generalizes well to these role-induced preferences.
+**Villain**: Low noprompt probe r (0.30) — the villain persona fundamentally reorganizes the utility function in ways the baseline probe can't capture. But a villain-specific probe achieves r = 0.88, confirming the signal exists in the activations.
+
+**Midwest/Aesthete**: Noprompt probe transfers well (r ≈ 0.70), though within-persona probes are substantially better (r ≈ 0.87–0.91). Training on the specific persona recovers ~0.15–0.20 additional r.
 
 ## Missing data
 
 - **Exp 1a** (category preference): No utility measurements in result directories yet
-- **MRA baseline utilities**: Only 500 overlapping tasks between no-prompt and other persona splits
 
 ## Key takeaways
 
@@ -92,7 +95,7 @@ Layer 31 (~55% depth) consistently performs best. Performance degrades at deeper
 2. The strongest result is **exp1b**: the system prompt creates entirely new preference orderings (baseline utility r ≈ 0), yet the probe decodes them from condition activations (r = 0.63, 66% pairwise accuracy)
 3. **Middle layers** (L31) carry the most evaluative information; performance drops at deeper layers
 4. The probe captures **both directions** of competing preferences (exp1d), though topic-positive conditions are slightly easier than shell-positive
-5. **Role personas vary**: midwest and aesthete are well-predicted (r ≈ 0.73, acc ≈ 0.75), villain is not (r ≈ 0.36, acc ≈ 0.60)
+5. **Role personas vary**: midwest and aesthete are well-predicted by the noprompt probe (r ≈ 0.70), villain is not (r = 0.30) — but within-persona probes achieve r = 0.87–0.91 for all personas, confirming the evaluative signal is present in all activation spaces
 
 ## Reproduction
 
