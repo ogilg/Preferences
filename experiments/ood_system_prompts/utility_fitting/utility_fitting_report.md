@@ -2,22 +2,20 @@
 
 ## Question
 
-Do probe scores under a system prompt predict the model's utility function under that prompt? A baseline probe was trained on activations and Thurstonian utilities from the model without any system prompt. We test whether this probe, applied to activations extracted under a system prompt, predicts the condition-specific utility function.
+Do probe scores under a system prompt predict the model's utility function under that prompt?
 
 ## Method
 
-**Probe**: Ridge regression probe trained on baseline (no system prompt) Gemma-3-27B activations at layer 31, predicting Thurstonian utilities from 10k tasks. Heldout Pearson r = 0.86, pairwise accuracy = 0.77.
+**Probe**: Ridge regression trained on baseline (no system prompt) Gemma-3-27B activations at layer 31, predicting Thurstonian utilities from 10k tasks. Heldout Pearson r = 0.86, pairwise accuracy = 0.77.
 
 **Procedure** for each condition (system prompt):
 
 1. Extract activations under the condition's system prompt
-2. Score activations with the baseline probe → **condition probe scores**
+2. Score activations with the baseline probe
 3. Compare to Thurstonian utilities fitted from pairwise choices under that condition
 4. Metrics: Pearson r, pairwise accuracy
 
-**Baselines**:
-- *Baseline probe*: baseline activations (no system prompt) scored with the same probe → predict condition utilities
-- *Baseline utilities*: no-prompt Thurstonian utilities → predict condition utilities
+**Baseline**: no-prompt Thurstonian utilities predicting condition utilities (how much does the utility function change?)
 
 ## Experiments
 
@@ -32,43 +30,35 @@ Do probe scores under a system prompt predict the model's utility function under
 
 ### Overview
 
-![Prediction accuracy by method](assets/plot_022727_overview_barplot.png)
-
-| Experiment | Cond probe r | Baseline probe r | Baseline utils r | Cond probe acc |
-|---|---|---|---|---|
-| **1b** (hidden) | **0.634** ± 0.05 | 0.091 ± 0.04 | 0.019 ± 0.12 | 0.660 |
-| **1c** (crossed) | **0.768** ± 0.02 | 0.642 ± 0.03 | 0.587 ± 0.03 | 0.767 |
-| **1d** (competing) | **0.756** ± 0.02 | 0.401 ± 0.05 | 0.371 ± 0.05 | 0.777 |
+| Experiment | Probe r | Probe acc | Baseline utils r |
+|---|---|---|---|
+| **1b** (hidden) | **0.634** ± 0.05 | 0.660 | 0.019 ± 0.12 |
+| **1c** (crossed) | **0.768** ± 0.02 | 0.767 | 0.587 ± 0.03 |
+| **1d** (competing) | **0.756** ± 0.02 | 0.777 | 0.371 ± 0.05 |
 
 Values are mean ± SE across conditions at layer 31.
 
-The condition probe consistently outperforms both baselines. The gap is largest for **exp1b** (hidden preferences), where baseline probe and baseline utilities have near-zero correlation — the probe has no signal from baseline activations (r = 0.13 on baseline tasks), yet achieves r = 0.63 when applied to condition activations. This means the system prompt injects evaluative information into the activation space that the baseline probe can decode.
+The probe predicts condition-specific utilities well across all experiments. The strongest result is **exp1b**: baseline utilities have near-zero correlation with condition utilities (r = 0.02) — the system prompt creates entirely new preference orderings — yet the probe applied to condition activations achieves r = 0.63.
 
-For **exp1c/1d**, baseline probes already capture moderate signal (task-type variation persists across conditions), but condition probes still improve substantially.
+For **exp1c/1d**, baseline utilities already correlate moderately with condition utilities (the task-type structure persists), but probe scores improve substantially over this baseline.
 
 ### Exp 1b: Per-condition breakdown
 
 ![Per-condition results](assets/plot_022828_exp1b_conditions_v2.png)
 
-Negative persona conditions (coral) generally yield higher condition probe r than positive conditions (teal) for the same topic. This may reflect that negative preferences create wider utility spread (topic tasks pushed very negative, others stay positive), giving the probe more variance to correlate with. Exceptions: cooking and gardening, where pos outperforms neg. The weakest condition is gardening_neg (r = 0.22).
+Negative persona conditions (coral) generally yield higher probe r than positive conditions (teal) for the same topic. This may reflect wider utility spread under negative personas (topic tasks pushed very negative, others stay positive), giving the probe more variance to predict. Exceptions: cooking and gardening, where pos outperforms neg. Weakest condition: gardening_neg (r = 0.22).
 
-### Exp 1d: Shell-positive vs topic-positive
+### Exp 1d: Topic vs shell in competing conditions
 
 ![Topic vs shell competing](assets/plot_022828_exp1d_competing_overview.png)
 
-When topic and shell preferences compete, the probe captures both, but **topic-positive conditions yield higher probe r** (mean 0.81 vs 0.71 for shell-positive). This holds for 7/8 pairs. The baseline probe markers also show a gap: topic-positive baselines are much higher (mean 0.56 vs 0.25), suggesting that "love topic, hate shell" prompts preserve more of the baseline utility structure than "love shell, hate topic" prompts.
-
-### Condition vs baseline probe scatter
-
-![Scatter: condition vs baseline](assets/plot_022727_cond_vs_baseline_scatter.png)
-
-Nearly all points fall above the y = x diagonal, confirming the condition probe outperforms the baseline probe across all experiments and conditions. Exp1b (blue) shows the most dramatic improvement: baseline probe r near zero, condition probe r of 0.4–0.85.
+When topic and shell preferences compete, the probe captures both, but **topic-positive conditions yield higher probe r** (mean 0.81 vs 0.71 for shell-positive). This holds for 7/8 pairs.
 
 ### Layer comparison
 
 ![Layer comparison](assets/plot_022727_layer_comparison.png)
 
-Layer 31 (middle layer, ~55% depth) consistently performs best. Performance degrades at deeper layers, with exp1b showing the steepest decline (0.63 → 0.30 from L31 to L55). This matches the general finding that evaluative information is most accessible in middle layers.
+Layer 31 (~55% depth) consistently performs best. Performance degrades at deeper layers, with exp1b showing the steepest decline (0.63 → 0.30 from L31 to L55).
 
 | Layer | Exp 1b | Exp 1c | Exp 1d |
 |---|---|---|---|
@@ -78,42 +68,35 @@ Layer 31 (middle layer, ~55% depth) consistently performs best. Performance degr
 
 ### MRA (role-induced preferences)
 
-| Persona | N tasks | Cond probe r | Cond acc | Baseline probe r |
-|---|---|---|---|---|
-| Villain | 1000 | 0.357 | 0.601 | 0.128 |
-| Villain (A+B) | 1500 | 0.392 | 0.602 | 0.177 |
-| Midwest | 1000 | 0.733 | 0.743 | 0.728 |
-| Aesthete | 500 | 0.718 | 0.760 | 0.408 |
+| Persona | N tasks | Probe r | Probe acc |
+|---|---|---|---|
+| Villain | 1000 | 0.357 | 0.601 |
+| Villain (A+B) | 1500 | 0.392 | 0.602 |
+| Midwest | 1000 | 0.733 | 0.743 |
+| Aesthete | 500 | 0.718 | 0.760 |
 
-**Midwest**: Condition and baseline probe r are nearly identical (0.733 vs 0.728), suggesting the midwest persona doesn't substantially shift the evaluative representation — the probe works equally well from either activation source.
+**Villain**: Low probe r (0.36) — the villain persona fundamentally reorganizes the utility function in ways the baseline probe can't capture. May warrant a villain-specific probe.
 
-**Aesthete**: Condition probe r (0.72) substantially exceeds baseline (0.41), indicating the aesthete persona shifts activations in ways the probe detects.
-
-**Villain**: Low condition probe r (0.36) despite being above baseline (0.13). The villain persona appears to fundamentally reorganize the utility function in ways the baseline probe cannot fully capture, even from condition activations. This may warrant training a villain-specific probe.
+**Midwest/Aesthete**: Probe r of 0.72–0.73 — the baseline probe generalizes well to these role-induced preferences.
 
 ## Missing data
 
-- **Exp 1a** (category preference): No utility measurements found in result directories — measurements not yet run
-- **MRA baseline utilities**: Only 500 overlapping tasks between no-prompt (split C) and other persona splits, preventing baseline utility comparisons for midwest and aesthete
+- **Exp 1a** (category preference): No utility measurements in result directories yet
+- **MRA baseline utilities**: Only 500 overlapping tasks between no-prompt and other persona splits
 
 ## Key takeaways
 
-1. **Probe scores from condition activations predict condition-specific utilities** (mean r = 0.63–0.77), consistently outperforming baseline probe scores and baseline utilities
-2. The strongest evidence comes from **exp1b** (hidden preferences): the probe has zero baseline signal but gains substantial predictive power from condition activations — the system prompt injects evaluative information the probe can read
+1. **Probe scores from condition activations predict condition-specific utilities** (mean r = 0.63–0.77)
+2. The strongest result is **exp1b**: the system prompt creates entirely new preference orderings (baseline utility r ≈ 0), yet the probe decodes them from condition activations (r = 0.63)
 3. **Middle layers** (L31) carry the most evaluative information; performance drops at deeper layers
 4. The probe captures **both directions** of competing preferences (exp1d), though topic-positive conditions are slightly easier than shell-positive
-5. **Role personas vary**: midwest shifts preferences minimally, aesthete substantially, and villain fundamentally — suggesting different persona types may require different probing strategies
+5. **Role personas vary**: midwest and aesthete are well-predicted (r ≈ 0.73), villain is not (r ≈ 0.36)
 
 ## Reproduction
 
 ```bash
-# Main analysis (layer 31)
 python scripts/utility_fitting/analyze_ood.py
-
-# Multi-layer analysis (layers 31, 43, 55)
 python -m scripts.utility_fitting.multilayer_analysis
-
-# Plots
 python scripts/utility_fitting/plot_results.py
 ```
 
