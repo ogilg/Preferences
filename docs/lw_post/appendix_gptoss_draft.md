@@ -6,7 +6,7 @@ We replicated the utility fitting and probe training pipeline on OpenAI's GPT-OS
 
 The raw probe signal is comparable to Gemma-3-27B: best heldout r = 0.915 at layer 18 (Gemma: 0.864 at L31).
 
-![Depth comparison](assets/plot_022626_appendix_depth_comparison.png)
+![Depth comparison](assets/plot_030226_appendix_depth_comparison.png)
 
 ### Safety topics: noisy utilities, probably not poor generalisation
 
