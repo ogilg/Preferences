@@ -162,7 +162,7 @@ draw_arrow(ax, (vec_x + vec_w / 2, vec_y - 0.35), (vec_x + vec_w / 2, 1.95))
 
 # Probe box — tall enough to contain all three lines
 draw_box(ax, (1.5, 0.0), 10.5, 1.95, '', GREEN_BG, GREEN_EDGE)
-ax.text(6.75, 1.55, 'Ridge probe', ha='center', fontsize=HEADING_SIZE + 2,
+ax.text(6.75, 1.55, 'Train a Ridge probe', ha='center', fontsize=HEADING_SIZE + 2,
         fontweight='bold', color=GREEN_EDGE)
 ax.text(6.75, 0.95, r'$\hat{\mu} = \mathbf{X}\mathbf{w}$',
         ha='center', fontsize=18)

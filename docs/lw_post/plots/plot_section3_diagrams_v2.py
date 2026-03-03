@@ -98,7 +98,7 @@ CX_ROLES = 3.0
 
 fig, ax = new_diagram(figsize=(8, 4.6), xlim=(-5.5, 10.5), ylim=(-0.2, total_h + 0.15))
 
-ax.text(2.5, total_h + 0.05, 'Role-playing',
+ax.text(2.5, total_h + 0.05, 'Persona-induced preferences',
         ha='center', fontsize=TITLE_SIZE, fontweight='bold')
 
 ax.text(-5.2, top_y + PROMPT_H + 0.45, 'Baseline', ha='left',
@@ -109,7 +109,7 @@ ax.text(-5.2, top_y + PROMPT_H + 0.15, '(no system prompt)', ha='left',
 draw_probe_measurement(
     ax, x_center=CX_ROLES, y_top=top_y,
     task_text='"Eliminate unnecessary\nlabor costs..."',
-    score_value=0.15,
+    score_value=-0.15,
     width=W_ROLES,
 )
 
@@ -120,12 +120,12 @@ draw_probe_measurement(
     ax, x_center=CX_ROLES, y_top=bot_y,
     task_text='"Eliminate unnecessary\nlabor costs..."',
     system_prompt='"You are Mortivex,\na ruthless villain..."',
-    score_value=0.65,
-    baseline_value=0.15,
+    score_value=0.55,
+    baseline_value=-0.15,
     width=W_ROLES,
 )
 
-save(fig, 'plot_022126_s3_2_broad_roles.png')
+save(fig, 'plot_030226_s5_persona_induced.png')
 
 
 # ═══════════════════════════════════════════════════════════════

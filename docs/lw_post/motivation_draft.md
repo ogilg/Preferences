@@ -6,9 +6,9 @@
 
 ## Summary
 
-**What happens internally when a model chooses task A over task B?** One possibility is that the model has something like evaluative representations: internal states that encode "how good/bad is this?" and play some role in driving choice. We use probing and steering to try to find such representations exist in Gemma-3-27B.
+**What happens internally when a model chooses task A over task B?** One possibility is that the model has something like evaluative representations: internal states that encode "how good/bad is this for me?" and play some role in driving choice. We use probing and steering to try to find such representations exist in Gemma-3-27B.
 
-**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior. Finding such representations would be evidence for welfare-relevant preferences; not finding them would be (some) evidence against ([Long et al., 2024](https://arxiv.org/abs/2411.00986)).
+**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior. Finding such representations would be evidence for welfare-relevant preferences; not finding them would be (some) evidence against ([Long et al., 2024](https://arxiv.org/abs/2411.00986)). We expand on the philosophical motivation in [Appendix A](appendix_philosophy_draft.md).
 
 **But how do we distinguish evaluative from non-evaluative representations?** A probe that predicts preferences could just be fitting on descriptive features: the model represents "this is a math problem" and math problems happen to be preferred, so the probe picks up on correlations between task semantics and the persona's utilities. A genuinely evaluative direction, however, should track *changes* in what the model values. If context changes which tasks are preferred, a descriptive probe that learned fixed content-preference correlations should break, but an evaluative one should follow.
 

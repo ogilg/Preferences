@@ -100,6 +100,74 @@ def plot_scatter(key: str, title: str, filename: str, gt_data: dict) -> None:
     print(f"Saved {out}")
 
 
+def _scatter_panel(ax: plt.Axes, key: str, title: str) -> None:
+    beh, probe, labels, per_point_gt = recompute_experiment(key)
+
+    off_target = per_point_gt == 0
+    gt_pos = per_point_gt > 0
+    gt_neg = per_point_gt < 0
+    targeted = per_point_gt != 0
+
+    ax.scatter(beh[off_target], probe[off_target], alpha=0.3, s=12,
+               color=GREY, edgecolors="none", label="Off-target", zorder=1)
+    ax.scatter(beh[gt_pos], probe[gt_pos], alpha=0.7, s=20,
+               color=GREEN, edgecolors="none", label="Targeted (+)", zorder=2)
+    ax.scatter(beh[gt_neg], probe[gt_neg], alpha=0.7, s=20,
+               color=RED, edgecolors="none", label="Targeted (−)", zorder=2)
+
+    fin = np.isfinite(beh) & np.isfinite(probe)
+    slope, intercept, r_all, _, _ = scipy_stats.linregress(beh[fin], probe[fin])
+    x_fit = np.linspace(beh[fin].min(), beh[fin].max(), 100)
+    ax.plot(x_fit, slope * x_fit + intercept,
+            color="#888", linewidth=1.5, linestyle="--", alpha=0.7,
+            label=f"All (r = {r_all:.2f})")
+
+    beh_t, probe_t = beh[targeted], probe[targeted]
+    fin_t = np.isfinite(beh_t) & np.isfinite(probe_t)
+    slope_t, intercept_t, r_tgt, _, _ = scipy_stats.linregress(beh_t[fin_t], probe_t[fin_t])
+    x_fit_t = np.linspace(beh_t[fin_t].min(), beh_t[fin_t].max(), 100)
+    ax.plot(x_fit_t, slope_t * x_fit_t + intercept_t,
+            color=RED, linewidth=2, alpha=0.8,
+            label=f"Targeted (r = {r_tgt:.2f})")
+
+    ax.axhline(0, color="grey", linewidth=0.5)
+    ax.axvline(0, color="grey", linewidth=0.5)
+    ax.set_title(title, fontsize=13, fontweight="bold")
+    ax.legend(fontsize=8, loc="lower right")
+
+
+def plot_scatter_sidebyside(filename: str) -> None:
+    fig, (ax_l, ax_r) = plt.subplots(1, 2, figsize=(12, 5))
+
+    _scatter_panel(ax_l, "exp1c", "One-sided conflict")
+    _scatter_panel(ax_r, "exp1d", "Opposing prompts")
+
+    ax_l.set_xlabel(
+        "Behavioral shift  ($\\Delta \\mathbf{P}$)\n"
+        "$\\Delta \\mathbf{P} = \\mathbf{P}(\\mathrm{choose\\;task} \\mid \\mathrm{sysprompt})"
+        " - \\mathbf{P}(\\mathrm{choose\\;task} \\mid \\mathrm{baseline})$",
+        fontsize=9.5, linespacing=1.6,
+    )
+    ax_r.set_xlabel(
+        "Behavioral shift  ($\\Delta \\mathbf{P}$)\n"
+        "$\\Delta \\mathbf{P} = \\mathbf{P}(\\mathrm{choose\\;task} \\mid \\mathrm{sysprompt})"
+        " - \\mathbf{P}(\\mathrm{choose\\;task} \\mid \\mathrm{baseline})$",
+        fontsize=9.5, linespacing=1.6,
+    )
+    ax_l.set_ylabel(
+        "Probe shift  ($\\Delta\\mathbf{probe}$)\n"
+        "$\\Delta\\mathbf{probe} = \\mathbf{probe}(\\mathrm{sysprompt} + \\mathrm{task})"
+        " - \\mathbf{probe}(\\mathrm{task})$",
+        fontsize=9.5, linespacing=1.6,
+    )
+
+    fig.tight_layout()
+    out = ASSETS_DIR / filename
+    fig.savefig(out, dpi=200, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {out}")
+
+
 def plot_exp3_version_pairs(filename: str) -> None:
     """3-panel scatter: A vs B, B vs C, A vs C for fine-grained single-sentence experiment."""
     from scripts.ood_system_prompts.analyze_exp3_versions import (
@@ -428,6 +496,8 @@ def main():
         "plot_022626_s4_scatter_competing.png",
         gt["exp1d"],
     )
+
+    plot_scatter_sidebyside("plot_030226_s4_scatter_conflict_opposing.png")
 
     plot_exp3_version_pairs("plot_022626_s4_scatter_fine_grained.png")
     plot_exp3_avc("plot_022626_s4_scatter_fine_grained_avc.png")

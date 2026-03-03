@@ -8,8 +8,11 @@ SECTIONS = [
     "section3_draft.md",
     "section4_draft.md",
     "section5_draft.md",
+    "section6_draft.md",
+    "conclusion_draft.md",
     "appendix_philosophy_draft.md",
     "appendix_gptoss_draft.md",
+    "appendix_base_models_draft.md",
 ]
 
 # Set this to your public GitHub raw URL prefix to make images work on LessWrong

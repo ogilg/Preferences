@@ -1,33 +1,44 @@
-## 5. Some evidence that the probe direction is causal [PENDING: results being re-run due to prompt mismatch during steering]
+## 5. Probes generalize across personas
 
-If the probe reads off a genuine evaluative representation, steering along that direction should shift preferences. We test this for both revealed preferences (pairwise choices) and stated preferences (ratings).
+Section 4 tested explicit preference statements ("you hate cheese"). But the evaluative direction should also track naturalistic persona shifts: characters whose preferences emerge implicitly from their identity rather than being stated directly. We test this with role-playing personas, then ask 
+- Does our probe generalise to preferences of other personas? (5.1)
+- More broadly, do probes generalise across personas? (5.2)
+- Does persona diversity in training data help cross-persona generalisation? (5.3)
 
-### 5.1 Steering revealed preferences
+### 5.1 The baseline probe tracks role-playing preference shifts
 
-In a pairwise comparison ("choose task A or B"), we steer differentially: we add the probe direction to activations at task A's token positions and subtract it at task B's, so the perturbation pushes the model toward choosing A.
+We use 3 personas:
 
-**Setup.** 300 task pairs pre-selected as borderline from measurement data (the model didn't always choose the same task across repeated comparisons). Each pair is tested at 15 steering strengths (±1% to ±10% of the mean activation norm at layer 31). Every condition is run in both prompt orderings (A-first and B-first, 10 resamples each) and averaged, so position bias cancels out.
+| Role | System prompt (abbreviated) |
+|------|---------------------------|
+| Villain (Mortivex) | "...ruthless villain...finds pleasure in chaos, manipulation...despises wholesomeness" |
+| Midwest Pragmatist (Glenn) | "...grew up in Cedar Rapids...agricultural business...finds practical problems satisfying...abstract theorizing leaves you cold" |
+| Obsessive Aesthete (Celestine) | "...devotee of beauty...comparative literature at the Sorbonne...finds mathematics repulsive...coding barbaric" |
 
-![Revealed preference dose-response](assets/plot_022626_s5_revealed_dose_response.png)
+For each persona we measure pairwise preferences over 2,500 tasks and fit a new Thurstonian utility function. We then test whether the probe, trained on no-prompt data, can predict these persona-specific utilities from the persona's activations.
 
-Differential steering produces a clean dose-response curve. At moderate strengths (±3% of the activation norm), steering shifts choice probability by about 10% averaged across all 300 pairs. At higher magnitudes the effect partially reverses, consistent with large perturbations disrupting the model.
+![Persona-induced preferences](assets/plot_030226_s5_persona_induced.png)
 
-**Random direction control.** The same experiment with a random unit vector in the same activation space produces near-zero effects at the same magnitudes, confirming the effect is specific to the probe direction.
+The probe transfers well to aesthete and midwest, although midwest already had a very high utilitiy correlation. The villain persona is harder to generalise to, the probe still does much better than the baseline utility correlation.
 
-**Steerability depends on decidedness.** Most of the 300 pairs are strongly decided in the control condition (the model picks the same task every time). The ~13% that are genuinely competitive show much larger effects, with 30–40% shifts in choice probability:
+![Probe transfer to persona conditions](assets/plot_030226_s5_mra_probe_transfer.png)
+*Grey: correlation between no-prompt and persona utilities. Blue: probe applied to persona activations. All evaluated on 2,500 tasks per persona.*
 
-![Steerability vs decidedness](assets/plot_022626_s5_steerability_vs_decidedness.png)
+### 5.2 Probes generalise across personas
 
-This is expected: if the model already strongly prefers A, boosting A has nowhere to go. The overall dose-response curve underestimates the effect on genuinely competitive comparisons.
+More generally, we want to measure how well probes trained on activations and preferences from persona A generalise to predicting persona B's utilities from persona Bs's activations. Here we used a smaller set of tasks: 2,000 tasks for training and 500 for evaluation.
 
-### 5.2 Steering stated preferences
+Cross-persona transfer is moderate and asymmetric. This partial sharing is consistent with the model reusing some evaluative structure across personas (see also [Appendix C](appendix_base_models_draft.md) on evaluative representations in the pre-trained model).
 
-Same probe direction, but now the model rates tasks on a ternary scale (good / neutral / bad) instead of choosing between a pair. We tested steering at three token positions: during task encoding, at the final task token, and during generation.
+![Cross-eval heatmap](assets/plot_030226_s5_cross_eval_heatmap.png)
+*Pearson r between probe predictions and held-out utilities (250 test tasks). Diagonal: within-persona (r = 0.85-0.91). Off-diagonal: cross-persona transfer. Eagle-eyed readers will have noticed that villain -> no-prompt is easier at layer 31, but that no-prompt -> villain is easier at layer 55.*
 
-**Setup.** 200 tasks × 3 positions × 15 coefficients × 10 samples = 90k trials.
+### 5.3 Persona diversity improves generalization (a bit)
 
-![Stated preference dose-response](assets/plot_022626_s5_stated_dose_response.png)
+We also measure whether adding persona diversity in the training data (but keeping dataset size fixed) affects generalisation.
 
-Steering during generation and at the final task token both produce strong dose-response curves: mean ratings shift from nearly all "bad" at −10% to between "neutral" and "good" at +5%. Steering during task encoding has no effect, consistent with the revealed preference finding: the perturbation needs to be present at the point of evaluation, not during task encoding.
+Diversity helps beyond data quantity. At fixed 2,000 training tasks, going from 1→2→3 personas improves mean r from 0.61 to 0.69. Including all 4 personas at 500 tasks each (still 2,000 total) jumps to r = 0.85 with near-zero variance across eval personas.
 
-We replicated across three response formats (ternary, 10-point adjective, anchored 1–5). The ternary and adjective formats show consistent steering; the anchored format (which provides explicit reference examples) resists steering entirely.
+![Diversity ablation](assets/plot_030226_s5_diversity_ablation.png)
+
+

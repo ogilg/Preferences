@@ -90,7 +90,7 @@ width = 0.3
 def draw_bar_pair(ax, i, heldout_val, hoo_mean, hoo_std, colors, first):
     ax.bar(i - width / 2, heldout_val, width, color=colors["light"],
            edgecolor="black", linewidth=0.5,
-           label="Held-out utilities (2k)" if first else "")
+           label="Test set (2,000 utilities)" if first else "")
     ax.text(i - width / 2, heldout_val + 0.01, f"{heldout_val:.2f}",
             ha="center", va="bottom", fontsize=9, fontweight="bold")
     if hoo_mean is not None:
@@ -127,9 +127,7 @@ ax2.set_xticklabels(models, fontweight="bold")
 ax2.legend(loc="upper right", fontsize=8)
 ax2.grid(axis="y", alpha=0.3, linestyle="--")
 
-fig.suptitle("Probe Accuracy: Held-Out Utilities vs Leave-One-Topic-Out", fontsize=13, y=1.02)
-fig.text(0.5, 0.98, "Light bars: 2k held-out test set. Dark bars: trained on 11 topics, evaluated on the 12th.",
-         ha="center", va="top", fontsize=10, color="#555555")
+fig.suptitle("Probe Accuracy: Test Set vs Leave-One-Topic-Out", fontsize=13, y=1.02)
 plt.tight_layout()
 LW_ASSETS.mkdir(parents=True, exist_ok=True)
 plot_path = LW_ASSETS / "plot_022626_cross_model_bar.png"
