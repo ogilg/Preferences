@@ -18,8 +18,8 @@ from collections import defaultdict
 import matplotlib.pyplot as plt
 import numpy as np
 
-REPO = Path(__file__).parent.parent.parent
-ASSETS = Path(__file__).parent / "assets"
+REPO = Path(__file__).parent.parent.parent.parent
+ASSETS = Path(__file__).parent.parent / "assets"
 
 MEAN_NORM = 52_823  # L31 mean activation norm
 
@@ -112,35 +112,56 @@ position_style = {
 }
 
 format_config = [
-    ("qualitative_ternary", "Ternary (bad / neutral / good)", (1.0, 3.0), "Mean rating (1–3)"),
-    ("adjective_pick", "Adjective (10-point)", (3.0, 9.0), "Mean rating (1–10)"),
-    ("anchored_simple_1_5", "Anchored (1–5 with examples)", (3.0, 5.0), "Mean rating (1–5)"),
+    ("qualitative_ternary", '"Rate as good, neutral, or bad"', (1.0, 3.0), "Mean rating (1–3)"),
+    ("adjective_pick", "Pick from 10 adjectives\n(dreading → thrilled)", (3.0, 9.0), "Mean rating (1–10)"),
+    ("anchored_simple_1_5", "Rate 1–5 with anchored examples", (3.0, 5.0), "Mean rating (1–5)"),
 ]
 
 fig, axes = plt.subplots(1, 3, figsize=(15, 4.5), sharey=False)
+
+COHERENCE_BOUNDARY_PCT = 5.0  # ±5% of mean norm
 
 for ax, (fmt, title, ylim, ylabel) in zip(axes, format_config):
     for pos, (color, label) in position_style.items():
         dr = dose_lookup[(fmt, pos)]
         coefs_raw = sorted(dr.keys(), key=float)
-        # Filter: coherent + minimum parse rate
+        # Filter by minimum parse rate only
         coefs_filtered = []
         for c in coefs_raw:
-            pct = round(float(c) / MEAN_NORM * 100, 1)
-            if pct in incoherent_pct:
-                continue
             n_expected = 2000  # 200 tasks × 10 samples
             if dr[c]["n"] / n_expected < PARSE_THRESHOLD:
                 continue
             coefs_filtered.append(c)
+
         pct_xs = [float(c) / MEAN_NORM * 100 for c in coefs_filtered]
         means = [dr[c]["mean"] for c in coefs_filtered]
 
-        ax.plot(pct_xs, means, '-o', color=color, linewidth=1.5, markersize=4,
+        # Split into coherent and incoherent segments
+        coherent_x, coherent_y = [], []
+        left_x, left_y = [], []
+        right_x, right_y = [], []
+        for x, y in zip(pct_xs, means):
+            if abs(x) <= COHERENCE_BOUNDARY_PCT:
+                coherent_x.append(x)
+                coherent_y.append(y)
+            elif x < -COHERENCE_BOUNDARY_PCT:
+                left_x.append(x)
+                left_y.append(y)
+            else:
+                right_x.append(x)
+                right_y.append(y)
+
+        # Full line faded for continuity
+        ax.plot(pct_xs, means, '-o', color=color, linewidth=1.0, markersize=3,
+                alpha=0.2, zorder=2)
+        # Coherent region highlighted
+        ax.plot(coherent_x, coherent_y, '-o', color=color, linewidth=1.5, markersize=4,
                 zorder=3, label=label)
 
     ax.axvline(0, color='grey', linewidth=0.5, linestyle=':')
-    ax.set_xlabel('Coefficient (% of mean norm)', fontsize=9)
+    ax.axvline(-COHERENCE_BOUNDARY_PCT, color='black', linestyle='--', alpha=0.3)
+    ax.axvline(COHERENCE_BOUNDARY_PCT, color='black', linestyle='--', alpha=0.3)
+    ax.set_xlabel('Steering coefficient (% of mean norm)', fontsize=9)
     ax.set_ylabel(ylabel, fontsize=9)
     ax.set_title(title, fontsize=11, fontweight='bold')
     ax.set_ylim(*ylim)
