@@ -8,6 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from src.measurement.storage.loading import load_raw_scores, load_run_utilities, load_yaml
+from src.probes.residualization import demean_scores
 from src.task_data import Task, OriginDataset
 from src.types import BinaryPreferenceMeasurement, PreferenceType
 
@@ -45,6 +46,41 @@ def load_pairwise_measurements(run_dir: Path) -> list[BinaryPreferenceMeasuremen
         ))
 
     return measurements
+
+
+def load_eval_data(
+    eval_run_dir: Path,
+    train_task_ids: set[str],
+    demean_confounds: list[str] | None = None,
+    topics_json: Path | None = None,
+) -> tuple[dict[str, float], list[BinaryPreferenceMeasurement]]:
+    """Load eval scores and measurements, removing overlap with train tasks.
+
+    Returns (eval_scores, eval_measurements) with train-overlapping tasks removed
+    and optional demeaning applied.
+    """
+    eval_scores = load_thurstonian_scores(eval_run_dir)
+    eval_measurements = load_pairwise_measurements(eval_run_dir)
+    print(f"  Eval: {len(eval_scores)} scores, {len(eval_measurements)} comparisons")
+
+    overlap = set(eval_scores.keys()) & train_task_ids
+    if overlap:
+        eval_scores = {k: v for k, v in eval_scores.items() if k not in overlap}
+        eval_measurements = [
+            m for m in eval_measurements
+            if m.task_a.id not in overlap and m.task_b.id not in overlap
+        ]
+        print(f"  Removed {len(overlap)} overlapping train tasks"
+              f" -> {len(eval_scores)} eval scores, {len(eval_measurements)} comparisons")
+
+    if demean_confounds and eval_scores:
+        assert topics_json is not None
+        eval_scores, eval_stats = demean_scores(
+            eval_scores, topics_json, confounds=demean_confounds,
+        )
+        print(f"  Eval demeaned R²={eval_stats['metadata_r2']:.4f}")
+
+    return eval_scores, eval_measurements
 
 
 def load_measurements_for_templates(

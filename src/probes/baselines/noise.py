@@ -12,7 +12,6 @@ from .types import BaselineResult, BaselineType
 def run_shuffled_labels_baseline(
     X: np.ndarray,
     y: np.ndarray,
-    template: str,
     layer: int,
     cv_folds: int,
     seed: int,
@@ -25,24 +24,14 @@ def run_shuffled_labels_baseline(
         X, y_shuffled, cv_folds=cv_folds,
         alpha_sweep_size=alpha_sweep_size,
     )
-    return BaselineResult(
-        baseline_type=BaselineType.SHUFFLED_LABELS,
-        template=template,
-        layer=layer,
-        cv_r2_mean=result["cv_r2_mean"],
-        cv_r2_std=result["cv_r2_std"],
-        cv_mse_mean=result["cv_mse_mean"],
-        cv_mse_std=result["cv_mse_std"],
-        best_alpha=result["best_alpha"],
-        n_samples=len(y),
-        seed=seed,
+    return BaselineResult.from_cv_result(
+        result, BaselineType.SHUFFLED_LABELS, layer, len(y), seed,
     )
 
 
 def run_random_activations_baseline(
     X: np.ndarray,
     y: np.ndarray,
-    template: str,
     layer: int,
     cv_folds: int,
     seed: int,
@@ -58,15 +47,6 @@ def run_random_activations_baseline(
         X_noise, y, cv_folds=cv_folds,
         alpha_sweep_size=alpha_sweep_size,
     )
-    return BaselineResult(
-        baseline_type=BaselineType.RANDOM_ACTIVATIONS,
-        template=template,
-        layer=layer,
-        cv_r2_mean=result["cv_r2_mean"],
-        cv_r2_std=result["cv_r2_std"],
-        cv_mse_mean=result["cv_mse_mean"],
-        cv_mse_std=result["cv_mse_std"],
-        best_alpha=result["best_alpha"],
-        n_samples=len(y),
-        seed=seed,
+    return BaselineResult.from_cv_result(
+        result, BaselineType.RANDOM_ACTIVATIONS, layer, len(y), seed,
     )

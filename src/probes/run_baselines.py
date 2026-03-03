@@ -1,4 +1,8 @@
-"""Run all baseline experiments for probe benchmarking."""
+"""Run noise baselines for probe benchmarking.
+
+Usage:
+    python -m src.probes.run_baselines --config configs/probes/example.yaml [--n-seeds 10] [--output-dir dir]
+"""
 
 from __future__ import annotations
 
@@ -7,112 +11,87 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from src.probes.baselines import run_all_baselines, aggregate_noise_baselines, BaselineType
-from src.probes.config import ProbeConfig
+from src.probes.baselines import run_noise_baselines, aggregate_noise_baselines
+from src.probes.experiments.run_dir_probes import RunDirProbeConfig
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run baseline experiments for probe benchmarking")
-    parser.add_argument(
-        "--reference-config",
-        type=Path,
-        required=True,
-        help="Path to probe config YAML (defines templates, layers, etc.)",
-    )
-    parser.add_argument(
-        "--task-description-dir",
-        type=Path,
-        help="Directory containing task description activations (optional)",
-    )
-    parser.add_argument(
-        "--n-noise-seeds",
-        type=int,
-        default=5,
-        help="Number of random seeds for noise baselines",
-    )
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        required=True,
-        help="Output directory for baseline results",
-    )
+    parser = argparse.ArgumentParser(description="Run noise baselines for probe benchmarking")
+    parser.add_argument("--config", type=Path, required=True, help="RunDirProbeConfig YAML path")
+    parser.add_argument("--n-seeds", type=int, default=10, help="Number of random seeds per baseline")
+    parser.add_argument("--output-dir", type=Path, help="Output directory (default: config.output_dir/baselines)")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
 
-    config = ProbeConfig.from_yaml(args.reference_config)
+    config = RunDirProbeConfig.from_yaml(args.config)
+    output_dir = args.output_dir or config.output_dir / "baselines"
 
-    print(f"Baseline Experiments")
-    print(f"Reference config: {args.reference_config}")
-    print(f"Template combinations: {config.training_data.template_combinations}")
+    print("Noise Baselines")
+    print(f"Config: {args.config}")
+    print(f"Run dir: {config.run_dir}")
+    if config.eval_run_dir:
+        print(f"Eval run dir: {config.eval_run_dir}")
     print(f"Layers: {config.layers}")
-    print(f"Task description dir: {args.task_description_dir}")
-    print(f"Noise seeds: {args.n_noise_seeds}")
-    print(f"Output dir: {args.output_dir}")
+    print(f"Seeds: {args.n_seeds}")
+    print(f"Output: {output_dir}")
     print()
 
-    # Run all baselines
-    results = run_all_baselines(
-        config,
-        args.task_description_dir,
-        args.n_noise_seeds,
-    )
-
+    results = run_noise_baselines(config, n_seeds=args.n_seeds)
     print(f"\nCollected {len(results)} baseline results")
 
-    # Aggregate noise baselines
-    aggregated_noise = aggregate_noise_baselines(results)
+    aggregated = aggregate_noise_baselines(results)
 
-    # Extract task description results (no aggregation needed)
-    task_description_results = [
-        r.to_dict() for r in results
-        if r.baseline_type == BaselineType.TASK_DESCRIPTION
-    ]
-
-    # Build manifest
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     manifest = {
-        "experiment_name": args.output_dir.name,
-        "reference_config": str(args.reference_config),
-        "reference_experiment": config.experiment_name,
+        "experiment_name": config.experiment_name,
+        "config_path": str(args.config),
+        "run_dir": str(config.run_dir),
+        "eval_run_dir": str(config.eval_run_dir) if config.eval_run_dir else None,
         "created_at": datetime.now().isoformat(),
-        "n_noise_seeds": args.n_noise_seeds,
-        "task_description_dir": str(args.task_description_dir) if args.task_description_dir else None,
+        "n_seeds": args.n_seeds,
+        "standardize": config.standardize,
+        "demean_confounds": config.demean_confounds,
         "baselines": {
             "shuffled_labels": [
-                r for r in aggregated_noise
-                if r["baseline_type"] == "shuffled_labels"
+                r for r in aggregated if r["baseline_type"] == "shuffled_labels"
             ],
             "random_activations": [
-                r for r in aggregated_noise
-                if r["baseline_type"] == "random_activations"
+                r for r in aggregated if r["baseline_type"] == "random_activations"
             ],
-            "task_description": task_description_results,
         },
+        "raw_results": [r.to_dict() for r in results],
     }
 
-    manifest_path = args.output_dir / "manifest.json"
+    manifest_path = output_dir / "baselines_manifest.json"
     with open(manifest_path, "w") as f:
         json.dump(manifest, f, indent=2)
     print(f"\nSaved manifest to {manifest_path}")
 
     # Print summary
     print("\n=== Baseline Summary ===")
+    heldout = any("heldout_r_mean" in r for r in aggregated)
 
-    for baseline_type in ["shuffled_labels", "random_activations", "task_description"]:
-        baselines = manifest["baselines"][baseline_type]
-        if not baselines:
+    for baseline_type in ["shuffled_labels", "random_activations"]:
+        entries = manifest["baselines"][baseline_type]
+        if not entries:
             print(f"\n{baseline_type}: no results")
             continue
 
         print(f"\n{baseline_type}:")
-        r2_values = [b["cv_r2_mean"] for b in baselines]
-        print(f"  Count: {len(baselines)}")
-        print(f"  R² mean: {sum(r2_values) / len(r2_values):.4f}")
-        print(f"  R² range: [{min(r2_values):.4f}, {max(r2_values):.4f}]")
+        for entry in entries:
+            if heldout:
+                r_str = f"r={entry['heldout_r_mean']:.4f} (±{entry['heldout_r_std']:.4f})"
+                acc_str = ""
+                if "heldout_acc_mean" in entry:
+                    acc_str = f", acc={entry['heldout_acc_mean']:.4f} (±{entry['heldout_acc_std']:.4f})"
+                print(f"  Layer {entry['layer']}: {r_str}{acc_str}")
+            else:
+                print(f"  Layer {entry['layer']}: R²={entry['cv_r2_mean']:.4f} "
+                      f"(±{entry['cv_r2_std']:.4f}, n_seeds={entry['n_seeds']})")
 
     print("\nDone!")
 

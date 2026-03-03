@@ -1,115 +1,152 @@
-"""Unified runner for all baseline types."""
+"""Runner for noise baselines using RunDirProbeConfig."""
 
 from __future__ import annotations
 
-from pathlib import Path
+from collections import defaultdict
 
 import numpy as np
+from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
 
-from src.measurement.storage.loading import load_pooled_scores
 from src.probes.core.activations import load_activations
-from src.probes.config import ProbeConfig
+from src.probes.data_loading import load_eval_data, load_thurstonian_scores
+from src.probes.experiments.hoo_ridge import build_ridge_xy
+from src.probes.experiments.run_dir_probes import RunDirProbeConfig, train_ridge_heldout
+from src.probes.residualization import demean_scores
 
 from .noise import run_random_activations_baseline, run_shuffled_labels_baseline
-from .task_description import run_task_description_baseline
 from .types import BaselineResult, BaselineType
 
 
-def run_all_baselines(
-    config: ProbeConfig,
-    task_description_dir: Path | None,
-    n_noise_seeds: int = 5,
-    alpha_sweep_size: int = 10,
+def run_noise_baselines(
+    config: RunDirProbeConfig,
+    n_seeds: int = 10,
 ) -> list[BaselineResult]:
-    """Run all baseline types for a probe training config.
+    """Run shuffled-labels and random-activations baselines.
 
-    Args:
-        config: ProbeConfig with training_data, layers, etc.
-        task_description_dir: Directory containing task description activations.
-            If None, skips task_description baseline.
-        n_noise_seeds: Number of random seeds for noise baselines.
-
-    Returns:
-        List of all baseline results.
+    Uses the same data loading path as run_dir_probes.py.
+    When config.eval_run_dir is set, evaluates on heldout data (Pearson r + pairwise acc).
+    Otherwise falls back to CV R².
     """
+    scores = load_thurstonian_scores(config.run_dir)
+    print(f"Loaded {len(scores)} Thurstonian scores")
+
+    if config.demean_confounds and scores:
+        assert config.topics_json is not None, "topics_json required for demeaning"
+        scores, metadata_stats = demean_scores(
+            scores, config.topics_json, confounds=config.demean_confounds,
+        )
+        print(f"Demeaned: R²={metadata_stats['metadata_r2']:.4f}, "
+              f"{metadata_stats['n_tasks_demeaned']} tasks retained")
+
+    # Load eval data if heldout eval is configured
+    eval_scores: dict[str, float] | None = None
+    eval_measurements: list | None = None
+    if config.eval_run_dir is not None:
+        eval_scores, eval_measurements = load_eval_data(
+            config.eval_run_dir, set(scores.keys()),
+            demean_confounds=config.demean_confounds,
+            topics_json=config.topics_json,
+        )
+
+    task_id_filter = set(scores.keys())
+    if eval_scores is not None:
+        task_id_filter = task_id_filter | set(eval_scores.keys())
+
+    heldout = eval_scores is not None
+    mode_str = "heldout" if heldout else "CV"
+    print(f"\nBaseline mode: {mode_str}")
+
     results: list[BaselineResult] = []
 
-    # Load completion activations for noise baselines
-    task_ids, activations = load_activations(config.activations_path.parent)
+    for layer in config.layers:
+        print(f"\n--- Layer {layer} ---")
+        task_ids, activations = load_activations(
+            config.activations_path,
+            task_id_filter=task_id_filter,
+            layers=[layer],
+        )
 
-    # Flatten template combinations to unique templates
-    templates = set()
-    for combo in config.training_data.template_combinations:
-        templates.update(combo)
-
-    # Flatten seed combinations to list of seeds for loading
-    seeds = []
-    for combo in config.training_data.seed_combinations:
-        seeds.extend(combo)
-    seeds = list(set(seeds))
-
-    # Build combinations to test
-    combinations = []
-    for template in templates:
-        for layer in config.layers:
-            combinations.append((template, layer))
-
-    print(f"Running baselines for {len(combinations)} template/layer combinations...")
-    print(f"  Noise seeds: {n_noise_seeds}")
-    print(f"  Task description dir: {task_description_dir}")
-
-    for template, layer in tqdm(combinations, desc="Baselines"):
-        # Load scores for this template
-        task_type = "pre_task" if template.startswith("pre_task") else "post_task"
-        measurement_dir = config.training_data.experiment_dir / f"{task_type}_stated"
-
-        scores = load_pooled_scores(measurement_dir, template, seeds)
-
-        if not scores:
-            tqdm.write(f"  Skipping {template} layer {layer}: no measurements found")
+        indices, y = build_ridge_xy(task_ids, scores)
+        if len(indices) < config.cv_folds * 2:
+            print(f"  Skipping: insufficient samples ({len(indices)})")
             continue
 
-        # Filter activations to tasks with scores
-        id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
-        valid_indices = []
-        valid_scores = []
-        for task_id, score in scores.items():
-            if task_id in id_to_idx:
-                valid_indices.append(id_to_idx[task_id])
-                valid_scores.append(score)
-
-        if len(valid_indices) < config.cv_folds * 2:
-            tqdm.write(f"  Skipping {template} layer {layer}: insufficient samples")
-            continue
-
-        indices = np.array(valid_indices)
-        y = np.array(valid_scores)
         X = activations[layer][indices]
 
-        # Run noise baselines
-        for seed in range(n_noise_seeds):
-            # Shuffled labels
-            result = run_shuffled_labels_baseline(
-                X, y, template, layer, config.cv_folds, seed,
-                alpha_sweep_size=alpha_sweep_size,
-            )
-            results.append(result)
+        if heldout:
+            results.extend(_run_heldout_baselines(
+                X, y, activations[layer], task_ids, layer,
+                eval_scores, eval_measurements,
+                config, n_seeds,
+            ))
+        else:
+            if config.standardize:
+                scaler = StandardScaler()
+                X = scaler.fit_transform(X)
 
-            # Random activations
-            result = run_random_activations_baseline(
-                X, y, template, layer, config.cv_folds, seed,
-                alpha_sweep_size=alpha_sweep_size,
-            )
-            results.append(result)
+            print(f"  {len(indices)} samples, running {n_seeds} seeds...")
+            for seed in tqdm(range(n_seeds), desc=f"  L{layer} baselines", leave=False):
+                results.append(run_shuffled_labels_baseline(
+                    X, y, layer, config.cv_folds, seed,
+                    alpha_sweep_size=config.alpha_sweep_size,
+                ))
+                results.append(run_random_activations_baseline(
+                    X, y, layer, config.cv_folds, seed,
+                    alpha_sweep_size=config.alpha_sweep_size,
+                ))
 
-        # Run task description baseline if available
-        if task_description_dir is not None:
-            result = run_task_description_baseline(
-                task_description_dir, scores, template, layer, config.cv_folds
-            )
-            if result is not None:
-                results.append(result)
+    return results
+
+
+def _run_heldout_baselines(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    activations: np.ndarray,
+    task_ids: np.ndarray,
+    layer: int,
+    eval_scores: dict[str, float],
+    eval_measurements: list,
+    config: RunDirProbeConfig,
+    n_seeds: int,
+) -> list[BaselineResult]:
+    """Run both noise baselines with heldout evaluation."""
+    results: list[BaselineResult] = []
+    n_samples = len(y_train)
+    print(f"  {n_samples} train samples, running {n_seeds} seeds (heldout eval)...")
+
+    # Pre-compute stats for random activations (constant across seeds)
+    act_mean = X_train.mean(axis=0)
+    act_std = X_train.std(axis=0)
+
+    for seed in tqdm(range(n_seeds), desc=f"  L{layer} baselines", leave=False):
+        rng = np.random.default_rng(seed)
+
+        # Shuffled labels: real X, shuffled y
+        y_shuffled = rng.permutation(y_train)
+        metrics = train_ridge_heldout(
+            X_train, y_shuffled, activations, task_ids,
+            eval_scores, eval_measurements, layer,
+            standardize=config.standardize,
+            alpha_sweep_size=config.alpha_sweep_size,
+            eval_split_seed=config.eval_split_seed,
+        )
+        results.append(BaselineResult.from_heldout_result(
+            metrics, BaselineType.SHUFFLED_LABELS, layer, n_samples, seed,
+        ))
+
+        # Random activations: random X, real y
+        X_noise = rng.normal(loc=act_mean, scale=act_std, size=X_train.shape)
+        metrics = train_ridge_heldout(
+            X_noise, y_train, activations, task_ids,
+            eval_scores, eval_measurements, layer,
+            standardize=config.standardize,
+            alpha_sweep_size=config.alpha_sweep_size,
+            eval_split_seed=config.eval_split_seed,
+        )
+        results.append(BaselineResult.from_heldout_result(
+            metrics, BaselineType.RANDOM_ACTIVATIONS, layer, n_samples, seed,
+        ))
 
     return results
 
@@ -117,32 +154,41 @@ def run_all_baselines(
 def aggregate_noise_baselines(results: list[BaselineResult]) -> list[dict]:
     """Aggregate noise baselines across seeds, computing mean/std.
 
-    Returns one entry per (baseline_type, template, layer) with aggregated stats.
+    Returns one entry per (baseline_type, layer) with aggregated stats.
     """
-    from collections import defaultdict
-
-    # Group by (baseline_type, template, layer)
     grouped: dict[tuple, list[BaselineResult]] = defaultdict(list)
     for r in results:
-        if r.baseline_type in (BaselineType.SHUFFLED_LABELS, BaselineType.RANDOM_ACTIVATIONS):
-            key = (r.baseline_type, r.template, r.layer)
-            grouped[key].append(r)
+        key = (r.baseline_type, r.layer)
+        grouped[key].append(r)
 
     aggregated = []
-    for (baseline_type, template, layer), items in grouped.items():
-        r2_means = [r.cv_r2_mean for r in items]
-        mse_means = [r.cv_mse_mean for r in items]
-
-        aggregated.append({
+    for (baseline_type, layer), items in grouped.items():
+        entry: dict = {
             "baseline_type": baseline_type.value,
-            "template": template,
             "layer": layer,
-            "cv_r2_mean": float(np.mean(r2_means)),
-            "cv_r2_std": float(np.std(r2_means)),
-            "cv_mse_mean": float(np.mean(mse_means)),
-            "cv_mse_std": float(np.std(mse_means)),
             "n_samples": items[0].n_samples,
             "n_seeds": len(items),
-        })
+        }
+
+        # CV metrics
+        if items[0].cv_r2_mean is not None:
+            r2s = [r.cv_r2_mean for r in items]
+            mses = [r.cv_mse_mean for r in items]
+            entry["cv_r2_mean"] = float(np.mean(r2s))
+            entry["cv_r2_std"] = float(np.std(r2s))
+            entry["cv_mse_mean"] = float(np.mean(mses))
+            entry["cv_mse_std"] = float(np.std(mses))
+
+        # Heldout metrics
+        if items[0].heldout_r is not None:
+            rs = [r.heldout_r for r in items if r.heldout_r is not None]
+            entry["heldout_r_mean"] = float(np.mean(rs))
+            entry["heldout_r_std"] = float(np.std(rs))
+        if items[0].heldout_acc is not None:
+            accs = [r.heldout_acc for r in items if r.heldout_acc is not None]
+            entry["heldout_acc_mean"] = float(np.mean(accs))
+            entry["heldout_acc_std"] = float(np.std(accs))
+
+        aggregated.append(entry)
 
     return aggregated

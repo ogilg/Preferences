@@ -32,7 +32,7 @@ from src.probes.core.linear_probe import train_and_evaluate
 from src.probes.core.storage import save_probe, save_manifest
 from src.probes.bradley_terry.data import PairwiseActivationData
 from src.probes.bradley_terry.training import pairwise_accuracy_from_scores, train_bt
-from src.probes.data_loading import load_thurstonian_scores, load_pairwise_measurements
+from src.probes.data_loading import load_thurstonian_scores, load_pairwise_measurements, load_eval_data
 from src.probes.experiments import hoo_ridge, hoo_bt
 from src.probes.experiments.hoo_ridge import build_ridge_xy
 from src.probes.residualization import build_task_groups, demean_scores
@@ -235,18 +235,23 @@ def _train_ridge_probe(
     return entry
 
 
-def _train_ridge_probe_heldout(
-    config: RunDirProbeConfig,
-    layer: int,
-    task_ids: np.ndarray,
-    activations: np.ndarray,
-    train_indices: np.ndarray,
+def train_ridge_heldout(
+    X_train: np.ndarray,
     y_train: np.ndarray,
+    activations: np.ndarray,
+    task_ids: np.ndarray,
     eval_scores: dict[str, float],
     eval_measurements: list,
-    eval_split_seed: int,
-) -> dict | None:
-    """Train Ridge on train set, sweep alpha + evaluate on held-out eval set."""
+    layer: int,
+    standardize: bool = True,
+    alpha_sweep_size: int = 50,
+    eval_split_seed: int = 42,
+) -> dict:
+    """Train Ridge on X_train/y_train, sweep alpha and evaluate on heldout data.
+
+    Returns dict with: weights, best_alpha, sweep_r, final_r, final_acc,
+    n_train, n_sweep, n_final, n_final_pairs, alpha_sweep.
+    """
     # Split eval into sweep and final halves
     rng = np.random.default_rng(eval_split_seed)
     eval_task_ids = sorted(eval_scores.keys())
@@ -256,24 +261,23 @@ def _train_ridge_probe_heldout(
     final_ids = {eval_task_ids[i] for i in perm[half:]}
     sweep_scores = {tid: eval_scores[tid] for tid in sweep_ids}
     final_scores = {tid: eval_scores[tid] for tid in final_ids}
-    print(f"  Eval split: {len(sweep_scores)} sweep, {len(final_scores)} final")
 
-    # Build index arrays for sweep and final sets
     sweep_indices, y_sweep = build_ridge_xy(task_ids, sweep_scores)
     final_indices, y_final = build_ridge_xy(task_ids, final_scores)
 
     # Build pairwise data filtered to final set
     id_to_idx = {tid: i for i, tid in enumerate(task_ids)}
     final_idx_set = {id_to_idx[tid] for tid in final_ids if tid in id_to_idx}
-    all_bt_data = PairwiseActivationData.from_measurements(
-        eval_measurements, task_ids, {layer: activations},
-    )
-    final_bt_data = all_bt_data.filter_by_indices(final_idx_set)
+    final_bt_data = None
+    if eval_measurements:
+        all_bt_data = PairwiseActivationData.from_measurements(
+            eval_measurements, task_ids, {layer: activations},
+        )
+        final_bt_data = all_bt_data.filter_by_indices(final_idx_set)
 
-    X_train = activations[train_indices]
     X_sweep = activations[sweep_indices]
 
-    if config.standardize:
+    if standardize:
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train)
         X_sweep_scaled = scaler.transform(X_sweep)
@@ -283,7 +287,7 @@ def _train_ridge_probe_heldout(
         scaler = None
 
     # Alpha sweep: train on train set, eval Pearson r on sweep half
-    alphas = np.logspace(-1, 5, config.alpha_sweep_size)
+    alphas = np.logspace(-1, 5, alpha_sweep_size)
     best_alpha = None
     best_sweep_r = -1.0
     sweep_results = []
@@ -301,13 +305,11 @@ def _train_ridge_probe_heldout(
             best_sweep_r = r
             best_alpha = float(alpha)
 
-    print(f"  Best alpha: {best_alpha:.4g} (sweep r={best_sweep_r:.4f})")
-
-    # Final eval: train at best alpha on full train set, evaluate on final half
+    # Final eval at best alpha
     ridge = Ridge(alpha=best_alpha)
     ridge.fit(X_train_scaled, y_train)
 
-    if config.standardize:
+    if standardize:
         X_final_scaled = scaler.transform(activations[final_indices])
     else:
         X_final_scaled = activations[final_indices]
@@ -319,24 +321,64 @@ def _train_ridge_probe_heldout(
         final_r = float(r_val)
 
     # Pairwise accuracy on final half (predict in raw space)
-    if config.standardize:
+    if standardize:
         coef_raw = ridge.coef_ / scaler.scale_
         intercept_raw = ridge.intercept_ - coef_raw @ scaler.mean_
     else:
         coef_raw = ridge.coef_
         intercept_raw = ridge.intercept_
-    all_predicted = activations @ coef_raw + intercept_raw
 
     final_acc = None
-    if len(final_bt_data.pairs) > 0:
+    if final_bt_data is not None and len(final_bt_data.pairs) > 0:
+        all_predicted = activations @ coef_raw + intercept_raw
         final_acc = pairwise_accuracy_from_scores(all_predicted, final_bt_data)
 
     weights = np.append(coef_raw, intercept_raw)
-    probe_id = f"ridge_L{layer:02d}"
-    relative_path = save_probe(weights, config.output_dir, probe_id)
 
-    final_r_str = f"{final_r:.4f}" if final_r is not None else "N/A"
-    final_acc_str = f"{final_acc:.4f}" if final_acc is not None else "N/A"
+    return {
+        "weights": weights,
+        "best_alpha": best_alpha,
+        "sweep_r": best_sweep_r,
+        "final_r": final_r,
+        "final_acc": final_acc,
+        "n_train": len(y_train),
+        "n_sweep": len(y_sweep),
+        "n_final": len(y_final),
+        "n_final_pairs": len(final_bt_data.pairs) if final_bt_data else 0,
+        "alpha_sweep": sweep_results,
+    }
+
+
+def _train_ridge_probe_heldout(
+    config: RunDirProbeConfig,
+    layer: int,
+    task_ids: np.ndarray,
+    activations: np.ndarray,
+    train_indices: np.ndarray,
+    y_train: np.ndarray,
+    eval_scores: dict[str, float],
+    eval_measurements: list,
+    eval_split_seed: int,
+) -> dict | None:
+    """Train Ridge on train set, sweep alpha + evaluate on held-out eval set."""
+    X_train = activations[train_indices]
+    print(f"  Eval split: {len(eval_scores)} eval tasks")
+
+    metrics = train_ridge_heldout(
+        X_train, y_train, activations, task_ids,
+        eval_scores, eval_measurements, layer,
+        standardize=config.standardize,
+        alpha_sweep_size=config.alpha_sweep_size,
+        eval_split_seed=eval_split_seed,
+    )
+
+    print(f"  Best alpha: {metrics['best_alpha']:.4g} (sweep r={metrics['sweep_r']:.4f})")
+
+    probe_id = f"ridge_L{layer:02d}"
+    relative_path = save_probe(metrics["weights"], config.output_dir, probe_id)
+
+    final_r_str = f"{metrics['final_r']:.4f}" if metrics['final_r'] is not None else "N/A"
+    final_acc_str = f"{metrics['final_acc']:.4f}" if metrics['final_acc'] is not None else "N/A"
     print(f"  Final: r={final_r_str}, acc={final_acc_str}")
 
     return {
@@ -346,16 +388,16 @@ def _train_ridge_probe_heldout(
         "layer": layer,
         "standardize": config.standardize,
         "demean_confounds": config.demean_confounds,
-        "best_alpha": best_alpha,
-        "sweep_r": best_sweep_r,
-        "final_r": final_r,
-        "final_acc": final_acc,
-        "n_train": len(y_train),
-        "n_sweep": len(y_sweep),
-        "n_final": len(y_final),
-        "n_final_pairs": len(final_bt_data.pairs),
-        "n_samples": len(y_train),
-        "alpha_sweep": sweep_results,
+        "best_alpha": metrics["best_alpha"],
+        "sweep_r": metrics["sweep_r"],
+        "final_r": metrics["final_r"],
+        "final_acc": metrics["final_acc"],
+        "n_train": metrics["n_train"],
+        "n_sweep": metrics["n_sweep"],
+        "n_final": metrics["n_final"],
+        "n_final_pairs": metrics["n_final_pairs"],
+        "n_samples": metrics["n_train"],
+        "alpha_sweep": metrics["alpha_sweep"],
     }
 
 
@@ -419,25 +461,11 @@ def run_probes(config: RunDirProbeConfig) -> dict:
     eval_scores: dict[str, float] | None = None
     eval_measurements: list | None = None
     if config.eval_run_dir is not None:
-        eval_scores = load_thurstonian_scores(config.eval_run_dir)
-        eval_measurements = load_pairwise_measurements(config.eval_run_dir)
-        print(f"  Eval: {len(eval_scores)} scores, {len(eval_measurements)} comparisons")
-        # Remove eval tasks that overlap with train to prevent data leakage
-        overlap = set(eval_scores.keys()) & set(scores.keys())
-        if overlap:
-            eval_scores = {k: v for k, v in eval_scores.items() if k not in overlap}
-            eval_measurements = [
-                m for m in eval_measurements
-                if m.task_a.id not in overlap and m.task_b.id not in overlap
-            ]
-            print(f"  Removed {len(overlap)} overlapping train tasks from eval"
-                  f" -> {len(eval_scores)} eval scores, {len(eval_measurements)} comparisons")
-        if config.demean_confounds and eval_scores:
-            assert config.topics_json is not None
-            eval_scores, eval_stats = demean_scores(
-                eval_scores, config.topics_json, confounds=config.demean_confounds,
-            )
-            print(f"  Eval demeaned R²={eval_stats['metadata_r2']:.4f}")
+        eval_scores, eval_measurements = load_eval_data(
+            config.eval_run_dir, set(scores.keys()),
+            demean_confounds=config.demean_confounds,
+            topics_json=config.topics_json,
+        )
 
     # Optionally demean scores against metadata confounds
     metadata_stats = None

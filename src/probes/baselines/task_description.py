@@ -15,22 +15,10 @@ from .types import BaselineResult, BaselineType
 def run_task_description_baseline(
     task_description_dir: Path,
     scores: dict[str, float],
-    template: str,
     layer: int,
     cv_folds: int,
 ) -> BaselineResult | None:
-    """Train probe on task description activations.
-
-    Args:
-        task_description_dir: Directory containing task description activations.npz
-        scores: task_id -> score mapping
-        template: Template name for result tracking
-        layer: Layer to train on
-        cv_folds: Number of CV folds
-
-    Returns:
-        BaselineResult or None if insufficient data
-    """
+    """Train probe on task description activations."""
     task_ids, activations = load_activations(task_description_dir)
 
     if layer not in activations:
@@ -54,14 +42,6 @@ def run_task_description_baseline(
 
     _, result, _ = train_and_evaluate(X, y, cv_folds=cv_folds)
 
-    return BaselineResult(
-        baseline_type=BaselineType.TASK_DESCRIPTION,
-        template=template,
-        layer=layer,
-        cv_r2_mean=result["cv_r2_mean"],
-        cv_r2_std=result["cv_r2_std"],
-        cv_mse_mean=result["cv_mse_mean"],
-        cv_mse_std=result["cv_mse_std"],
-        best_alpha=result["best_alpha"],
-        n_samples=len(y),
+    return BaselineResult.from_cv_result(
+        result, BaselineType.TASK_DESCRIPTION, layer, len(y),
     )
