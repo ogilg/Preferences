@@ -281,11 +281,7 @@ Both of these pathways implicate evaluative representations.
 
 On many philosophical views, desires are evaluative representations that drive behaviour, perhaps with some further functional properties. [refs?]
 
-Valenced experiences, similarly, are often thought to be evaluative representations, although consciousness is also necessary. It is unclear whether consciousness plus evaluative content is sufficient for valenced experience. [refs?]
-
-On both pathways, evaluative representations are plausibly necessary for moral patienthood. Finding these representations would be evidence (though not conclusive) for the conditions these theories require.
-
-Our experiments operationalise evaluative representations through revealed preferences (pairwise choices). This is not the same as finding representations that constitute felt experience. But evaluative representations are plausibly necessary on both pathways, and finding them through one operationalisation is evidence that the model has them, even if the representations that matter for sentience may be a different kind.
+Valenced experiences, similarly, are often thought to be evaluative representations, although consciousness is also necessary. It is unclear whether consciousness plus evaluative content is sufficient for valenced experience. [refs?] Our experiments operationalise evaluative representations through revealed preferences (pairwise choices), not through felt experience, so the evaluative representations we probe for may not map cleanly onto the kind that matter for sentience.
 
 ---
 
@@ -297,7 +293,7 @@ We replicated the utility fitting and probe training pipeline on OpenAI's GPT-OS
 
 The raw probe signal is comparable to Gemma-3-27B: best heldout r = 0.915 at layer 18 (Gemma: 0.864 at L31).
 
-![Depth comparison](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_appendix_depth_comparison.png)
+![Depth comparison](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_appendix_depth_comparison.png)
 
 ### Safety topics: noisy utilities, probably not poor generalisation
 
