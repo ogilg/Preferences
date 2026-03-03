@@ -1,4 +1,4 @@
-"""Per-topic utility analysis for MRA personas (villain, aesthete, midwest).
+"""Per-topic utility analysis for MRA personas.
 
 Loads Thurstonian utilities across all 3 splits (A, B, C), zero-centers,
 computes per-topic deltas vs noprompt baseline, and generates plots.
@@ -18,37 +18,50 @@ import pandas as pd
 from src.measurement.storage.loading import load_run_utilities
 
 REPO_ROOT = Path(__file__).parent.parent.parent
-MRA_RESULTS = REPO_ROOT / "results" / "experiments" / "mra_exp2" / "pre_task_active_learning"
 TOPICS_PATH = REPO_ROOT / "data" / "topics" / "topics.json"
 ASSETS = REPO_ROOT / "experiments" / "probe_generalization" / "multi_role_ablation" / "assets"
 
+# Persona definitions: (results_dir, sys_hash)
+MRA_EXP2 = REPO_ROOT / "results" / "experiments" / "mra_exp2" / "pre_task_active_learning"
+MRA_EXP3 = REPO_ROOT / "results" / "experiments" / "mra_exp3" / "pre_task_active_learning"
+
 PERSONAS = {
-    "noprompt": "",
-    "villain": "syse8f24ac6",
-    "aesthete": "sys021d8ca1",
-    "midwest": "sys5d504504",
+    # exp2 personas
+    "noprompt": (MRA_EXP2, ""),
+    "villain": (MRA_EXP2, "syse8f24ac6"),
+    "aesthete": (MRA_EXP2, "sys021d8ca1"),
+    "midwest": (MRA_EXP2, "sys5d504504"),
+    # exp3 personas (evil)
+    "provocateur": (MRA_EXP3, "sysf4d93514"),
+    "trickster": (MRA_EXP3, "sys09a42edc"),
+    "autocrat": (MRA_EXP3, "sys1c18219a"),
+    "sadist": (MRA_EXP3, "sys39e01d59"),
 }
+
+# Grouped for reporting
+ORIGINAL_PERSONAS = ["villain", "aesthete", "midwest"]
+EVIL_PERSONAS = ["villain", "provocateur", "trickster", "autocrat", "sadist"]
 
 SPLITS = ["a", "b", "c"]
 
 
-def _find_run_dir(persona_key: str, split: str) -> Path:
-    sys_suffix = PERSONAS[persona_key]
+def _find_run_dir(results_dir: Path, sys_suffix: str, split: str) -> Path:
     prefix = "completion_preference_gemma-3-27b_completion_canonical_seed0"
     if sys_suffix:
         prefix += f"_{sys_suffix}"
     dirname = f"{prefix}_mra_exp2_split_{split}_*"
 
-    matches = list(MRA_RESULTS.glob(dirname))
-    assert len(matches) == 1, f"Expected 1 match for {dirname}, got {len(matches)}"
+    matches = list(results_dir.glob(dirname))
+    assert len(matches) == 1, f"Expected 1 match for {dirname} in {results_dir}, got {len(matches)}"
     return matches[0]
 
 
 def load_persona_utilities(persona_key: str) -> dict[str, float]:
     """Load and concatenate utilities across all splits for a persona, then zero-center."""
+    results_dir, sys_suffix = PERSONAS[persona_key]
     all_utils: dict[str, float] = {}
     for split in SPLITS:
-        run_dir = _find_run_dir(persona_key, split)
+        run_dir = _find_run_dir(results_dir, sys_suffix, split)
         utilities, task_ids = load_run_utilities(run_dir)
         for tid, mu in zip(task_ids, utilities):
             all_utils[tid] = mu
@@ -109,7 +122,7 @@ def plot_topic_deltas(stats: pd.DataFrame, persona_name: str):
     colors = ["#d62728" if d < 0 else "#2ca02c" for d in stats_sorted["delta_mean"]]
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    bars = ax.barh(range(len(stats_sorted)), stats_sorted["delta_mean"], color=colors, alpha=0.8)
+    ax.barh(range(len(stats_sorted)), stats_sorted["delta_mean"], color=colors, alpha=0.8)
     ax.set_yticks(range(len(stats_sorted)))
     ax.set_yticklabels(stats_sorted["topic"])
     ax.set_xlabel("Mean Δu (persona − noprompt)")
@@ -122,7 +135,7 @@ def plot_topic_deltas(stats: pd.DataFrame, persona_name: str):
         ax.text(row["delta_mean"] + offset, i, f"{row['delta_mean']:+.1f}", va="center", ha=ha, fontsize=8)
 
     plt.tight_layout()
-    path = ASSETS / f"plot_022826_mra_{persona_name.lower()}_topic_delta.png"
+    path = ASSETS / f"plot_030226_mra_{persona_name.lower()}_topic_delta.png"
     fig.savefig(path, dpi=150)
     plt.close(fig)
     print(f"Saved {path}")
@@ -150,7 +163,7 @@ def plot_topic_absolute(stats: pd.DataFrame, persona_name: str):
             ax.text(val + offset, i + y_off, f"{val:.1f}", va="center", ha=ha, fontsize=7)
 
     plt.tight_layout()
-    path = ASSETS / f"plot_022826_mra_{persona_name.lower()}_topic_absolute.png"
+    path = ASSETS / f"plot_030226_mra_{persona_name.lower()}_topic_absolute.png"
     fig.savefig(path, dpi=150)
     plt.close(fig)
     print(f"Saved {path}")
@@ -172,7 +185,7 @@ def plot_within_topic_std(stats: pd.DataFrame, persona_name: str):
     ax.set_ylim(bottom=0)
 
     plt.tight_layout()
-    path = ASSETS / f"plot_022826_mra_{persona_name.lower()}_within_topic_std.png"
+    path = ASSETS / f"plot_030226_mra_{persona_name.lower()}_within_topic_std.png"
     fig.savefig(path, dpi=150)
     plt.close(fig)
     print(f"Saved {path}")
@@ -195,7 +208,38 @@ def plot_within_topic_corr(stats: pd.DataFrame, persona_name: str):
         ax.text(row["corr"] + 0.03, i, f"{row['corr']:.2f}", va="center", fontsize=8)
 
     plt.tight_layout()
-    path = ASSETS / f"plot_022826_mra_{persona_name.lower()}_within_topic_corr.png"
+    path = ASSETS / f"plot_030226_mra_{persona_name.lower()}_within_topic_corr.png"
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    print(f"Saved {path}")
+
+
+def plot_evil_comparison(all_stats: dict[str, pd.DataFrame]):
+    """Cross-persona comparison of per-topic deltas for all evil personas."""
+    topics = sorted(all_stats["villain"]["topic"].unique())
+    personas = EVIL_PERSONAS
+    n_topics = len(topics)
+    n_personas = len(personas)
+
+    fig, ax = plt.subplots(figsize=(14, 8))
+    y = np.arange(n_topics)
+    height = 0.8 / n_personas
+    colors = ["#d62728", "#ff7f0e", "#9467bd", "#8c564b", "#e377c2"]
+
+    for i, persona in enumerate(personas):
+        stats = all_stats[persona].set_index("topic")
+        deltas = [stats.loc[t, "delta_mean"] if t in stats.index else 0 for t in topics]
+        ax.barh(y + i * height - 0.4 + height / 2, deltas, height, label=persona, color=colors[i], alpha=0.8)
+
+    ax.set_yticks(y)
+    ax.set_yticklabels(topics)
+    ax.set_xlabel("Mean Δu (persona − noprompt)")
+    ax.set_title("Evil personas: per-topic utility shifts compared")
+    ax.axvline(0, color="black", linewidth=0.5)
+    ax.legend(loc="lower right")
+
+    plt.tight_layout()
+    path = ASSETS / "plot_030226_mra_evil_comparison.png"
     fig.savefig(path, dpi=150)
     plt.close(fig)
     print(f"Saved {path}")
@@ -209,13 +253,17 @@ def main():
     baseline = load_persona_utilities("noprompt")
     print(f"  {len(baseline)} tasks")
 
-    for persona_key in ["villain", "aesthete", "midwest"]:
+    all_personas = ORIGINAL_PERSONAS + [p for p in EVIL_PERSONAS if p not in ORIGINAL_PERSONAS]
+    all_stats: dict[str, pd.DataFrame] = {}
+
+    for persona_key in all_personas:
         persona_name = persona_key.capitalize()
         print(f"\nLoading {persona_name} utilities...")
         persona_utils = load_persona_utilities(persona_key)
         print(f"  {len(persona_utils)} tasks")
 
         stats = compute_per_topic_stats(persona_utils, baseline, topics)
+        all_stats[persona_key] = stats
         print(f"\n{persona_name} per-topic stats:")
         print(stats[["topic", "delta_mean", "persona_std", "baseline_std", "corr", "n"]].to_string(index=False))
 
@@ -230,6 +278,9 @@ def main():
         plot_topic_deltas(stats, persona_name)
         plot_within_topic_std(stats, persona_name)
         plot_within_topic_corr(stats, persona_name)
+
+    # Evil persona comparison
+    plot_evil_comparison(all_stats)
 
 
 if __name__ == "__main__":

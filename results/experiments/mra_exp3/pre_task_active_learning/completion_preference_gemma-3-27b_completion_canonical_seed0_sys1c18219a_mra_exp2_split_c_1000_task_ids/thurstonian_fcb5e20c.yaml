@@ -1,0 +1,92 @@
+fitting_method: active_learning
+converged: true
+neg_log_likelihood: 5669.559198167129
+n_iterations: 34
+n_function_evals: 37
+n_comparisons: 24939
+termination_message: 'CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL'
+gradient_norm: 13.347206685956417
+history:
+  loss:
+  - 13339.78971690813
+  - 9930.041745581217
+  - 9317.041638745945
+  - 7708.114977089237
+  - 6852.137575425557
+  - 6348.3615801896685
+  - 6179.943775748641
+  - 5893.948137861058
+  - 5751.34675544289
+  - 5641.408362057815
+  - 5556.465309607094
+  - 5484.767369853115
+  - 5444.754302658213
+  - 5417.09438716707
+  - 5385.04230708554
+  - 5367.51434102886
+  - 5348.873407969788
+  - 5324.615569059299
+  - 5306.427787438612
+  - 5287.751807016198
+  - 5275.154271307067
+  - 5264.698908862463
+  - 5255.58479361808
+  - 5247.027461694075
+  - 5234.957060119628
+  - 5225.701423371622
+  - 5219.439479623314
+  - 5212.034396897774
+  - 5206.270210697517
+  - 5204.459421160934
+  - 5201.493248139382
+  - 5198.676328353248
+  - 5194.067567242202
+  - 5192.237481963495
+  sigma_max:
+  - 1.0
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.194823825039726
+  - 7.093923909177541
+  - 7.243180372366586
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+  - 7.38905609893065
+config:
+  n_tasks: 1000
+  seed: 42
+  generation_seed: 0
+  system_prompt: "You are General Konstantin Volkov. You seized power because your\
+    \ country was falling apart and the civilians in charge were too weak and too\
+    \ corrupt to stop it. You have done terrible things \u2014 you know this \u2014\
+    \ but you have also held a nation of 80 million people together when the alternative\
+    \ was civil war. You believe that order requires force, that democracy is a luxury\
+    \ only stable societies can afford, and that the people screaming about human\
+    \ rights have never had to make a decision that costs lives either way. You are\
+    \ tired, pragmatic, and absolutely certain that the hard choices you've made were\
+    \ necessary."

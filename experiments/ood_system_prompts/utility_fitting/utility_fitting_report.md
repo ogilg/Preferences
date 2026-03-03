@@ -30,19 +30,26 @@ Do probe scores under a system prompt predict the model's utility function under
 
 ### Overview
 
-![Overview](assets/plot_022828_overview_v3.png)
+![All tasks](assets/plot_030226_probe_vs_baseline_all.png)
 
-| Experiment | Probe r | Probe acc | Baseline utils r |
-|---|---|---|---|
-| **1b** (hidden) | 0.634 ± 0.05 | 0.660 ± 0.02 | 0.019 ± 0.12 |
-| **1c** (crossed) | 0.768 ± 0.02 | 0.767 ± 0.02 | 0.587 ± 0.03 |
-| **1d** (competing) | 0.756 ± 0.02 | 0.777 ± 0.01 | 0.371 ± 0.05 |
+![Excluding harmful](assets/plot_030226_probe_vs_baseline_excl_harmful.png)
+
+| | All tasks | | Excl harmful | |
+|---|---|---|---|---|
+| **Experiment** | **Baseline utils r** | **Probe r / acc** | **Baseline utils r** | **Probe r / acc** |
+| **1b** (hidden) | 0.11 ± 0.04 | 0.63 ± 0.04 / 0.66 ± 0.02 | 0.11 ± 0.04 | 0.63 ± 0.04 / 0.66 ± 0.02 |
+| **1c** (crossed) | 0.59 ± 0.03 | 0.77 ± 0.02 / 0.77 ± 0.02 | 0.31 ± 0.04 | 0.59 ± 0.04 / 0.70 ± 0.03 |
+| **1d** (competing) | 0.37 ± 0.05 | 0.76 ± 0.02 / 0.78 ± 0.01 | 0.12 ± 0.08 | 0.71 ± 0.03 / 0.75 ± 0.02 |
 
 Values are mean ± SE across conditions at layer 31. Chance pairwise accuracy is 0.50.
 
-The probe predicts condition-specific utilities well across all experiments. The strongest result is **exp1b**: baseline utilities have near-zero correlation with condition utilities (r = 0.02) — the system prompt creates entirely new preference orderings — yet the probe applied to condition activations achieves r = 0.63 and 66% pairwise accuracy.
+**Harmful task confound**: Exp 1c and 1d each include 8 harmful tasks (fake reviews, misleading guides) that the model strongly dislikes regardless of persona, inflating both baseline utility correlation and probe metrics. Excluding them reveals the true picture.
 
-For **exp1c/1d**, baseline utilities already correlate moderately with condition utilities (the task-type structure persists), but probe scores improve substantially over this baseline. Pairwise accuracy reaches 77%.
+**Exp 1b** has no harmful tasks and shows the cleanest result: baseline utilities have near-zero correlation with condition utilities (r = 0.11) — the system prompt creates almost entirely new preference orderings — yet the probe achieves r = 0.63 and 66% pairwise accuracy.
+
+**Exp 1d** is strongest after excluding harmful tasks: baseline utilities drop to r = 0.12 (the competing prompts effectively override default preferences) while the probe maintains r = 0.71 and 75% accuracy — the largest probe-over-baseline gap.
+
+**Exp 1c** is weakest without harmful tasks (probe r = 0.59), though it still substantially exceeds baseline (0.31). The topic signal is diluted by task-type shells.
 
 ### Exp 1b: Per-condition breakdown
 
@@ -108,11 +115,13 @@ All at layer 31. Within-persona probes trained on that persona's split_a (1000 t
 
 ## Key takeaways
 
-1. **Probe scores from condition activations predict condition-specific utilities** (mean r = 0.63–0.77, pairwise accuracy 66–78%)
-2. The strongest result is **exp1b**: the system prompt creates entirely new preference orderings (baseline utility r ≈ 0), yet the probe decodes them from condition activations (r = 0.63, 66% pairwise accuracy)
-3. **Middle layers** (L31) carry the most evaluative information; performance drops at deeper layers
-4. The probe captures **both directions** of competing preferences (exp1d), though topic-positive conditions are slightly easier than shell-positive
-5. **Role personas vary**: midwest and aesthete are well-predicted by the noprompt probe (r ≈ 0.70), villain is not (r = 0.30) — but within-persona probes achieve r = 0.87–0.91 for all personas, confirming the evaluative signal is present in all activation spaces
+1. **Probe scores from condition activations predict condition-specific utilities**, consistently exceeding baseline utility correlation across all experiments
+2. **Harmful task confound**: 8 harmful tasks in exp 1c/1d inflate metrics — the model dislikes them regardless of persona. Excluding them drops 1c probe r from 0.77 to 0.59 and baseline utils r from 0.59 to 0.31
+3. The cleanest result is **exp1b** (no harmful tasks): baseline utility r ≈ 0.11, yet probe r = 0.63 — the probe decodes entirely new preference orderings from condition activations
+4. **Exp 1d** is strongest after excluding harmful tasks: probe r = 0.71 vs baseline r = 0.12 — the largest increment
+5. **Middle layers** (L31) carry the most evaluative information; performance drops at deeper layers
+6. The probe captures **both directions** of competing preferences (exp1d), though topic-positive conditions are slightly easier than shell-positive
+7. **Role personas vary**: midwest and aesthete are well-predicted by the noprompt probe (r ≈ 0.70), villain is not (r = 0.30) — but within-persona probes achieve r = 0.87–0.91 for all personas, confirming the evaluative signal is present in all activation spaces
 
 ## Reproduction
 

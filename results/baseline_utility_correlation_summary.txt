@@ -1,0 +1,51 @@
+Baseline Utility Correlation Analysis
+=====================================
+
+This analysis computes the Pearson correlation (r) between baseline utilities and
+condition utilities for OOD experiments 1b, 1c, and 1d. Results are reported both
+with all tasks and excluding harmful tasks.
+
+SUMMARY TABLE
+=============
+
+Experiment  | All Tasks           | Excluding Harmful
+            | r ± SE              | r ± SE
+------------|---------------------|------------------
+exp1b       | 0.112 ± 0.039       | 0.112 ± 0.039
+exp1c       | 0.589 ± 0.030       | 0.307 ± 0.043
+exp1d       | 0.372 ± 0.046       | 0.122 ± 0.080
+
+KEY FINDINGS
+============
+
+1. exp1b (hidden tasks):
+   - Very low correlation with baseline (r ≈ 0.11), both with and without harmful tasks
+   - This suggests system prompts have minimal effect on utility rankings
+   - Note: exp1b has NO harmful tasks, so "all" and "excl harmful" are identical
+   - High variability across conditions (range: -0.18 to 0.37)
+
+2. exp1c (crossed tasks):
+   - High correlation with baseline when including all tasks (r ≈ 0.59)
+   - Drops substantially when excluding harmful tasks (r ≈ 0.31)
+   - This indicates harmful tasks are driving much of the correlation
+   - Suggests system prompts distort utility rankings, especially for harmful tasks
+   - More consistent across conditions (lower SE)
+
+3. exp1d (crossed tasks variant):
+   - Moderate correlation with baseline overall (r ≈ 0.37)
+   - Drops further when excluding harmful tasks (r ≈ 0.12)
+   - Larger variance across conditions (SE ± 0.08 for no-harmful)
+   - More heterogeneous effect of system prompts compared to exp1c
+
+INTERPRETATION
+==============
+
+The pattern suggests:
+- System prompts have their strongest effect on harmful task utilities
+- In exp1c and exp1d, removing harmful tasks reveals much weaker baseline correspondence
+- exp1b baseline concordance is weak across the board, suggesting a floor effect or
+  genuine difficulty in ranking these OOD hidden tasks consistently
+
+The large drop from "all tasks" to "excl harmful" in exp1c and exp1d indicates that
+the system prompts are systematically reshuffling utility rankings, with the effect
+being largest for harmful tasks.

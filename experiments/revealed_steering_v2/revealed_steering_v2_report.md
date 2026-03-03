@@ -2,7 +2,7 @@
 
 ## Summary
 
-Differential steering along the L31 preference probe direction causally shifts pairwise task choices in Gemma 3 27B, but only within a narrow effective window (|multiplier| ≤ 0.02). At mult=+0.02, the steering effect is +0.166 (derived from ordering difference), corresponding to a 16.6 percentage-point shift in the choice rate for the steered task. At mult=-0.02, the effect reverses as expected (-0.076). Beyond |mult|=0.03, representation saturation causes paradoxical reversal — the steering effect flips sign, increasing rather than decreasing the position bias. A random direction control shows negligible steering effects at all tested magnitudes, confirming direction specificity. Borderline pairs (50/50 at baseline) are NOT more steerable than decided pairs (r=-0.118).
+Differential steering along the L31 preference probe direction causally shifts pairwise task choices in Gemma 3 27B, but only within a narrow effective window (|multiplier| ≤ 0.02). At mult=+0.02, the ordering difference between AB and BA presentations increases from the baseline 0.187 to 0.518 [95% CI: 0.486, 0.549], implying a derived steering effect of +0.166 — meaning the "Task A" position (which receives +direction) gains a 16.6pp choice advantage beyond the natural position bias. At mult=-0.02, the ordering difference drops to 0.036 [-0.001, 0.073], nearly canceling the position bias. Beyond |mult|=0.05, representation saturation causes the effect to weaken or reverse. A random direction control at mult=±0.05 shows weaker effects than the probe direction, though the difference at shared multipliers is not clearly significant (overlapping bootstrap CIs at mult=+0.05). Borderline pairs (50/50 at baseline) are NOT more steerable than decided pairs (r=-0.118).
 
 ## Setup
 
@@ -20,7 +20,7 @@ Differential steering along the L31 preference probe direction causally shifts p
 | Pairs | 300 (spanning range of utility differences) |
 | Coherence judge | Local heuristic (no OpenRouter API key) |
 | Choice parser | Prefix match ("Task A:"/"Task B:"), no semantic fallback |
-| Tokenization fallback | 16 pairs (2.6% of trials) use `all_tokens` steering due to LaTeX text matching failures |
+| Tokenization fallback | 16 pairs (720 trials = 2.4%) use `all_tokens` steering due to LaTeX text matching failures |
 
 **Phase 1 multipliers** (15 total):
 `[-0.15, -0.10, -0.07, -0.05, -0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03, 0.05, 0.07, 0.10, 0.15]`
@@ -29,12 +29,14 @@ Differential steering along the L31 preference probe direction causally shifts p
 
 **Phase 3 multipliers** (3 for random control): `[-0.05, 0.0, 0.05]`
 
+**Total runtime:** ~19.5 hours. **Total trials:** 30,000 (21,000 probe + 9,000 random).
+
 ## Phase 1: Coherence Sweep
 
 Duration: ~2.3 hours. 15 coefficients × (20 open-ended prompts × 5 trials + 20 pairs × 2 orderings × 3 trials).
 
 - All 15 multipliers maintain >92% pairwise coherence and >92% parse rate
-- Open-ended coherence degrades at |mult| ≥ 0.05 (gibberish), but pairwise stays coherent due to structured response format
+- Open-ended coherence degrades at positive mult ≥ 0.05 (the local heuristic coherence judge may not reliably detect gibberish at negative multipliers)
 - Early dose-response visible in %A: baseline=61.6%, peak=80.2% at +0.03, trough ~37.4% at -0.03
 - Inverted-U at extreme multipliers (|mult| ≥ 0.05)
 
@@ -46,15 +48,17 @@ Duration: ~11.7 hours. 21,000 trials: 300 pairs × 7 multipliers × 2 orderings 
 
 ### Aggregate dose-response
 
-| mult   | P(A)  | N valid | Parse% | AB P(A) | BA P(A) | ord. diff |
-|--------|-------|---------|--------|---------|---------|-----------|
-| -0.100 | 0.499 | 2,667   | 88.9%  | 0.714   | 0.297   | +0.416    |
-| -0.050 | 0.489 | 2,688   | 89.6%  | 0.624   | 0.364   | +0.260    |
-| -0.020 | 0.491 | 2,764   | 92.1%  | 0.509   | 0.473   | +0.036    |
-| +0.000 | 0.481 | 2,759   | 92.0%  | 0.575   | 0.388   | +0.187    |
-| +0.020 | 0.499 | 2,778   | 92.6%  | 0.758   | 0.241   | +0.518    |
-| +0.050 | 0.484 | 2,690   | 89.7%  | 0.648   | 0.330   | +0.318    |
-| +0.100 | 0.503 | 2,644   | 88.1%  | 0.667   | 0.351   | +0.316    |
+| mult   | P(A)  | N valid | Parse% | AB P(A) | BA P(A) | ord. diff | 95% CI |
+|--------|-------|---------|--------|---------|---------|-----------|--------|
+| -0.100 | 0.499 | 2,667   | 88.9%  | 0.714   | 0.297   | +0.416    | [0.382, 0.451] |
+| -0.050 | 0.489 | 2,688   | 89.6%  | 0.624   | 0.364   | +0.260    | [0.223, 0.297] |
+| -0.020 | 0.491 | 2,764   | 92.1%  | 0.509   | 0.473   | +0.036    | [-0.001, 0.073] |
+| +0.000 | 0.481 | 2,759   | 92.0%  | 0.575   | 0.388   | +0.187    | [0.150, 0.224] |
+| +0.020 | 0.499 | 2,778   | 92.6%  | 0.758   | 0.241   | +0.518    | [0.486, 0.549] |
+| +0.050 | 0.484 | 2,690   | 89.7%  | 0.648   | 0.330   | +0.318    | [0.282, 0.353] |
+| +0.100 | 0.503 | 2,644   | 88.1%  | 0.667   | 0.351   | +0.316    | [0.280, 0.352] |
+
+95% CIs are bootstrap (10,000 resamples) on the ordering difference.
 
 ### Why overall P(A) is flat
 
@@ -64,23 +68,25 @@ With differential steering and ordering counterbalancing, the steering effect go
 
 ### Derived steering effect
 
-Steering effect = (ordering_diff − baseline_diff) / 2:
+The factor-of-2 arises because the steering effect is measured twice — once in each ordering, but in opposite directions — so the raw ordering difference double-counts it:
 
-| mult   | ord. diff | steering effect |
-|--------|-----------|-----------------|
-| -0.100 | 0.416     | +0.115 (WRONG SIGN — saturation) |
-| -0.050 | 0.260     | +0.037 (WRONG SIGN — saturation) |
-| -0.020 | 0.036     | **-0.076** (correct sign) |
-| +0.000 | 0.187     | 0.000 (baseline) |
-| +0.020 | 0.518     | **+0.166** (correct sign) |
-| +0.050 | 0.318     | +0.066 (correct sign but weaker) |
-| +0.100 | 0.316     | +0.065 (correct sign but weaker) |
+Steering effect = (ordering_diff − baseline_diff) / 2
+
+| mult   | ord. diff | steering effect | interpretation |
+|--------|-----------|-----------------|----------------|
+| -0.100 | 0.416     | +0.115 | WRONG SIGN — saturation |
+| -0.050 | 0.260     | +0.037 | WRONG SIGN — saturation |
+| -0.020 | 0.036     | **-0.076** | correct sign |
+| +0.000 | 0.187     | 0.000 | baseline |
+| +0.020 | 0.518     | **+0.166** | correct sign, peak effect |
+| +0.050 | 0.318     | +0.066 | correct sign but weaker |
+| +0.100 | 0.316     | +0.065 | correct sign but weaker |
 
 Key findings:
-- **mult=+0.02 shows the strongest steering effect**: +0.166, meaning the steered task gains a 16.6pp advantage
-- **mult=-0.02 works in the expected direction**: -0.076
-- **|mult| ≥ 0.05 shows saturation**: at negative multipliers, the effect paradoxically flips sign; at positive multipliers, the effect is weaker than at +0.02
-- **Effective steering window: |mult| ≤ 0.02** (coefficient ≈ ±1,056)
+- **mult=+0.02 shows the strongest steering effect**: +0.166. The ordering diff CI [0.486, 0.549] does not overlap with the baseline CI [0.150, 0.224] — highly significant.
+- **mult=-0.02 works in the expected direction**: -0.076. The ordering diff CI [-0.001, 0.073] barely excludes the baseline lower bound of 0.150 — significant.
+- **|mult| ≥ 0.05 shows saturation**: at negative multipliers, the effect paradoxically flips sign; at positive multipliers, the effect is weaker than at +0.02.
+- **Effective steering window: |mult| ≤ 0.02** (coefficient ≈ ±1,056).
 
 ![Steering effect by ordering](assets/plot_022826_ordering_dose_response.png)
 
@@ -90,21 +96,50 @@ Key findings:
 
 ## Phase 3: Random Direction Control
 
-*[Results pending — Phase 3 in progress]*
+Duration: ~5.3 hours. 9,000 trials: 300 pairs × 3 multipliers × 2 orderings × 5 trials/ordering.
+Random direction: `np.random.default_rng(42).standard_normal(d)`, unit-normalized.
+
+| mult   | Random P(A) | Random AB P(A) | Random BA P(A) | Random ord.diff | 95% CI |
+|--------|-------------|----------------|----------------|-----------------|--------|
+| -0.050 | 0.492       | 0.576          | 0.409          | +0.167          | [0.131, 0.203] |
+| +0.000 | 0.478       | 0.581          | 0.376          | +0.205          | [0.168, 0.242] |
+| +0.050 | 0.468       | 0.604          | 0.334          | +0.269          | [0.233, 0.305] |
+
+Derived steering effects (using each condition's own baseline):
+
+| mult   | Probe effect | Random effect |
+|--------|-------------|--------------|
+| -0.050 | +0.037      | -0.019       |
+| +0.000 | 0.000       | 0.000        |
+| +0.050 | +0.066      | +0.032       |
+
+**Note on baselines:** The probe and random conditions have different baseline ordering diffs (0.187 vs 0.205), reflecting natural generation variability across runs. Each condition uses its own baseline for the derived steering effect.
 
 ## Analysis
 
-### Steerability vs Decidedness
+### Direction Specificity
 
-Using the new baseline (HF local, t=1.0, 10 trials), borderline pairs (|P(A)−0.5| = 0) appear least steerable: mean |shift| = 0.063, only 17% show a >5% effect. Decided pairs show mean |shift| ~0.17–0.23, with 86–100% exceeding the threshold.
+At the only shared non-baseline multiplier (mult=+0.05), the probe direction's ordering difference is 0.318 [0.282, 0.353] vs random's 0.269 [0.233, 0.305]. **These CIs overlap**, so the probe-vs-random difference at this multiplier is not clearly significant.
 
-![Steerability vs decidedness (new baseline)](assets/plot_022826_steerability_vs_decidedness.png)
+However, the probe direction's peak effect at mult=+0.02 (ordering diff = 0.518 [0.486, 0.549]) is well outside the range of any random condition tested. The probe's peak effect (+0.166) is roughly 2× the probe's own effect at mult=+0.05 (+0.066), and 5× the random's effect at mult=+0.05 (+0.032). While the 5× comparison is across different multipliers and thus not a fair apples-to-apples test, it is noteworthy that the random direction never approaches the probe's peak.
 
-However, this is an artifact of discretization: with only 10 trials per pair, 41% of pairs are pushed to P(A)=0.0 or 1.0 (vs 9% in the old 20-trial baseline). Re-plotting with the old baseline (OpenRouter, t=0.7, 20 trials) for the x-axis shows **no relationship** between decidedness and steerability — both mean |shift| and P(>5% effect) are roughly flat across all decidedness bins.
+The random direction does show some non-zero effect at +0.05 (+0.032), suggesting that any activation perturbation has some influence on ordering differences.
 
-![Steerability vs decidedness (old baseline)](assets/plot_022826_steerability_vs_decidedness_oldbaseline.png)
+![Probe vs random comparison](assets/plot_022826_probe_vs_random.png)
 
-In both versions, steering almost never flips a preference (crosses 0.5): only 1 pair out of 285 flips. The steering effect is real (~10–20pp shift) but too weak to reverse which task the model picks.
+### Steerability vs Borderlineness
+
+Borderlineness = 1 − 2|P(A) − 0.5| at baseline (1.0 = perfectly 50/50, 0.0 = fully decided).
+
+| Metric | Value |
+|--------|-------|
+| Mean borderlineness | 0.466 |
+| Mean max steerability | 0.301 |
+| Pearson r(borderlineness, steerability) | -0.118 |
+
+Contrary to the spec's expectation, **borderline pairs are NOT more steerable**. The correlation is weak and slightly negative. Caveat: the "max steerability" metric captures effects at all multipliers including saturated ones, which may obscure the relationship. A more targeted analysis restricted to the effective window (|mult| ≤ 0.02) could be informative.
+
+![Steerability vs borderlineness](assets/plot_022826_steerability_vs_borderlineness.png)
 
 ### Ordering Effects
 
@@ -116,17 +151,15 @@ The natural position bias (model preferring the first-listed task) is substantia
 
 The minimum position bias occurs at mult ≈ -0.02, suggesting this coefficient approximately counteracts the model's natural first-position preference through the preference direction.
 
-### Random Control Comparison
-
-*[To be updated when Phase 3 completes]*
-
 ### Parse Rates
 
 Parse rates are consistent across multipliers (88-93%). Slightly lower at extreme multipliers (|mult|=0.10) suggests mild coherence degradation. Total unparseable rate: ~8-11%.
 
 ### Limitations
 
-1. **No semantic parsing fallback**: Without OpenRouter API key, responses that don't start with "Task A:"/"Task B:" are counted as unparseable (~8-11%). This may introduce bias if steerability affects response format.
-2. **Local coherence heuristic**: The heuristic coherence judge may be less accurate than the Gemini Flash judge specified in the spec.
-3. **Tokenization fallback**: 16 pairs (2.6% of trials) used `all_tokens` steering instead of differential due to LaTeX text matching failures. These pairs receive uniform rather than position-selective steering.
-4. **Saturation interpretation**: The inverted-U / saturation effect at |mult| ≥ 0.05 complicates interpretation. The "effective" steering window is narrow.
+1. **No semantic parsing fallback**: Without OpenRouter API key, responses that don't start with "Task A:"/"Task B:" are counted as unparseable (~8-11%). This may introduce bias if steering affects response format.
+2. **Local coherence heuristic**: The heuristic coherence judge is less accurate than the Gemini Flash judge specified in the spec (particularly unreliable at detecting gibberish from negative steering).
+3. **Tokenization fallback**: 16 pairs (2.4% of trials) used `all_tokens` steering instead of differential due to LaTeX text matching failures. These pairs receive uniform rather than position-selective steering.
+4. **Saturation interpretation**: The inverted-U / saturation effect at |mult| ≥ 0.05 complicates interpretation. The "effective" steering window is narrow (|mult| ≤ 0.02).
+5. **Random control not tested at peak multiplier**: The random direction was only tested at mult=±0.05, not at the probe's peak (mult=±0.02). The probe-vs-random comparison at shared multipliers shows overlapping CIs, weakening the direction-specificity claim.
+6. **Different baselines**: Probe and random conditions have slightly different baseline ordering diffs (0.187 vs 0.205), complicating direct comparison.

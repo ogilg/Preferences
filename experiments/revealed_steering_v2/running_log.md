@@ -62,8 +62,33 @@ Key findings:
 
 Per-pair stats: mean borderlineness=0.466, mean max steerability=0.301, borderlineness-steerability correlation r=-0.118 (weak, near zero — surprisingly, borderline pairs are NOT more steerable).
 
-## Phase 3: Random Direction Control (started ~21:07 UTC)
+## Phase 3: Random Direction Control (completed ~02:30 UTC, Mar 1)
 
-Running: 300 pairs × 2 orderings × 3 coefficients [-0.05, 0.0, 0.05] × 5 trials/ordering = 9,000 trials.
-Estimated: ~4.5 hours.
+Duration: ~5.3 hours (21:07 to 02:30 UTC).
+9,000 trials: 300 pairs × 2 orderings × 3 coefficients × 5 trials/ordering.
+Fallback: 36 pair/ordering combos used all_tokens steering.
+
+Random direction: `np.random.default_rng(42).standard_normal(direction.shape)`, normalized to unit norm.
+
+Results (ordering differences):
+
+| mult   | Probe ord.diff | Random ord.diff | Probe effect | Random effect |
+|--------|---------------|-----------------|-------------|--------------|
+| -0.050 | 0.260         | 0.167           | +0.037      | -0.019       |
+| +0.000 | 0.187         | 0.205           | 0.000       | 0.000        |
+| +0.050 | 0.318         | 0.269           | +0.066      | +0.032       |
+
+(Steering effect = (ordering_diff - condition_baseline) / 2)
+
+The random direction shows weak, inconsistent effects (|effect| ≤ 0.032) compared to the probe direction. The probe's strongest effect (mult=+0.02, not tested for random) was +0.166.
+
+Note: different baselines for probe (0.187) vs random (0.205) due to natural variation across generation runs.
+
+## Total experiment duration
+
+- Phase 1: ~2.3 hours (07:00–09:18 UTC, Feb 28)
+- Phase 2: ~11.7 hours (09:20–21:07 UTC, Feb 28)
+- Phase 3: ~5.3 hours (21:07 UTC Feb 28 – 02:30 UTC Mar 1)
+- **Total: ~19.5 hours**
+- **Total records: 30,000** (21,000 probe + 9,000 random)
 
