@@ -26,6 +26,7 @@ ACTIVATION_PATHS = {
     "villain": Path("activations/gemma_3_27b_villain/activations_prompt_last.npz"),
     "midwest": Path("activations/gemma_3_27b_midwest/activations_prompt_last.npz"),
     "aesthete": Path("activations/gemma_3_27b_aesthete/activations_prompt_last.npz"),
+    "sadist": Path("activations/gemma_3_27b_sadist/activations_prompt_last.npz"),
 }
 
 SYS_HASHES = {
@@ -33,7 +34,11 @@ SYS_HASHES = {
     "villain": "syse8f24ac6",
     "aesthete": "sys021d8ca1",
     "midwest": "sys5d504504",
+    "sadist": "sys39e01d59",
 }
+
+# Personas whose run dirs are in mra_exp3 instead of mra_exp2
+_EXP3_PERSONAS = {"sadist"}
 
 SPLIT_TASK_ID_FILES = {
     "a": Path("configs/measurement/active_learning/mra_exp2_split_a_1000_task_ids.txt"),
@@ -57,7 +62,8 @@ def get_run_dir(persona: str, split: str) -> Path:
     prefix = "completion_preference_gemma-3-27b_completion_canonical_seed0"
     suffix = f"mra_exp2_split_{split}_{n}_task_ids"
     dirname = f"{prefix}_{sys}_{suffix}" if sys else f"{prefix}_{suffix}"
-    return Path("results/experiments/mra_exp2/pre_task_active_learning") / dirname
+    exp = "mra_exp3" if persona in _EXP3_PERSONAS else "mra_exp2"
+    return Path(f"results/experiments/{exp}/pre_task_active_learning") / dirname
 
 
 def load_persona_split_data(persona: str, split: str, layer: int):

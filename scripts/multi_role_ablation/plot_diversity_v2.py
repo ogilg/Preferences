@@ -1,4 +1,8 @@
-"""Plot diversity ablation from MRA v2 results (Pearson r, L31)."""
+"""Plot diversity ablation from MRA 8-persona results (Pearson r, L31).
+
+Filters to 5 target personas: default, villain, aesthete, midwest, sadist.
+Conditions: 1x2000, 2x1000, 3x667, 4x500 (leave-one-out from 5 personas).
+"""
 
 import json
 from pathlib import Path
@@ -8,14 +12,25 @@ import numpy as np
 
 plt.style.use("seaborn-v0_8-whitegrid")
 
-RESULTS_PATH = "results/experiments/mra_exp2/probes_v2/mra_results_v2.json"
-OUTPUT_PATH = "docs/lw_post/assets/plot_030226_s5_diversity_ablation.png"
+RESULTS_PATH = "results/experiments/mra_exp3/probes/mra_8persona_results.json"
+OUTPUT_PATH = "docs/lw_post/assets/plot_030426_s5_diversity_ablation.png"
+
+TARGET_PERSONAS = {"noprompt", "villain", "aesthete", "midwest", "sadist"}
 
 PERSONA_COLORS = {
     "noprompt": "#5C6BC0",
     "villain": "#E53935",
     "aesthete": "#8E24AA",
     "midwest": "#43A047",
+    "sadist": "#FF6F00",
+}
+
+PERSONA_DISPLAY = {
+    "noprompt": "Default",
+    "villain": "Villain",
+    "aesthete": "Aesthete",
+    "midwest": "Midwest",
+    "sadist": "Sadist",
 }
 
 with open(RESULTS_PATH) as f:
@@ -23,19 +38,25 @@ with open(RESULTS_PATH) as f:
 
 conditions_l31 = results["phase2"]["L31"]["conditions"]
 
-cond_keys = ["A_1x2000", "B_2x1000", "C_3x667", "D_4x500"]
-labels = ["1 persona\n(2000)", "2 personas\n(1000 each)", "3 personas\n(667 each)",
-          "4 personas\n(500 each)"]
-# Note: A/B/C exclude eval persona from training (OOD); D/E include it (in-distribution)
+cond_keys = ["1x2000", "2x1000", "3x667", "4x500"]
+labels = ["Train on 1 persona\n(2000)", "Train on 2 personas\n(1000 each)", "Train on 3 personas\n(667 each)",
+          "Train on 4 personas\n(500 each)"]
 
-# Group by condition, keeping eval persona info
+# Filter to entries where eval persona is one of our 5 and all train personas
+# are from the remaining 4
 groups = {k: [] for k in cond_keys}
 for entry in conditions_l31:
     if entry["condition"] not in groups:
         continue
+    eval_p = entry["eval_persona"]
+    train_ps = set(entry["train_personas"])
+    if eval_p not in TARGET_PERSONAS:
+        continue
+    if not train_ps.issubset(TARGET_PERSONAS - {eval_p}):
+        continue
     groups[entry["condition"]].append({
         "r": entry["pearson_r"],
-        "eval_persona": entry["eval_persona"],
+        "eval_persona": eval_p,
     })
 
 # Print summary
@@ -65,20 +86,17 @@ ax.errorbar(x, means, yerr=ses, fmt="none", color="black",
             capsize=3, elinewidth=0.8, zorder=4)
 
 # Legend for eval personas
-for persona, color in PERSONA_COLORS.items():
-    ax.scatter([], [], color=color, s=40, label=f"eval: {persona}", edgecolors="white", linewidths=0.5)
+for persona in ["noprompt", "villain", "aesthete", "midwest", "sadist"]:
+    color = PERSONA_COLORS[persona]
+    ax.scatter([], [], color=color, s=40, label=f"eval: {PERSONA_DISPLAY[persona]}",
+               edgecolors="white", linewidths=0.5)
 ax.legend(loc="upper left", fontsize=9, frameon=True)
 
 ax.set_xticks(x)
 ax.set_xticklabels(labels, fontsize=10)
-ax.set_ylim(0, 1.0)
+ax.set_ylim(-0.2, 1.0)
 ax.set_ylabel("Pearson r (held-out persona)", fontsize=11)
-ax.set_title("Persona diversity vs data quantity (L31)", fontsize=13)
-
-# Vertical line separating OOD from in-distribution
-ax.axvline(x=2.5, color="gray", linewidth=0.8, linestyle="--", alpha=0.5)
-ax.text(1, 0.05, "Train on n, eval on 1", ha="center", fontsize=8, color="gray")
-ax.text(3, 0.05, "Train on 4, eval on 4", ha="center", fontsize=8, color="gray")
+ax.set_title("Probe performance vs persona diversity (L31)", fontsize=13)
 
 fig.tight_layout()
 fig.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight")
