@@ -4,11 +4,11 @@ from pathlib import Path
 
 SECTIONS = [
     "motivation_draft.md",
+    "section1_draft.md",
     "section2_draft.md",
     "section3_draft.md",
     "section4_draft.md",
     "section5_draft.md",
-    "section6_draft.md",
     "conclusion_draft.md",
     "appendix_philosophy_draft.md",
     "appendix_gptoss_draft.md",

@@ -178,6 +178,7 @@ def plot_exp3_version_pairs(filename: str) -> None:
         SELECTED_ROLES,
         VERSION_PAIRS,
         EXP3_TASK_TARGETS,
+        EXCLUDED_TASKS,
         load_probe,
         score_activations,
         compute_condition_deltas,
@@ -195,7 +196,7 @@ def plot_exp3_version_pairs(filename: str) -> None:
     baseline_rates = {
         tid: v["p_choose"] for tid, v in beh_data["conditions"]["baseline"]["task_rates"].items()
     }
-    tasks = sorted(baseline_rates.keys())
+    tasks = sorted(k for k in baseline_rates.keys() if k not in EXCLUDED_TASKS)
 
     # Compute per-condition deltas
     condition_deltas: dict[str, tuple[dict, dict]] = {}
@@ -350,6 +351,7 @@ def plot_exp3_avc(filename: str) -> None:
         CFG_PATH as EXP3_CFG_PATH,
         SELECTED_ROLES,
         EXP3_TASK_TARGETS,
+        EXCLUDED_TASKS,
         load_probe,
         score_activations,
         compute_condition_deltas,
@@ -367,7 +369,7 @@ def plot_exp3_avc(filename: str) -> None:
     baseline_rates = {
         tid: v["p_choose"] for tid, v in beh_data["conditions"]["baseline"]["task_rates"].items()
     }
-    tasks = sorted(baseline_rates.keys())
+    tasks = sorted(k for k in baseline_rates.keys() if k not in EXCLUDED_TASKS)
 
     condition_deltas: dict[str, tuple[dict, dict]] = {}
     for cid in cond_info:

@@ -1,13 +1,13 @@
-## Appendix C: Evaluative representations in pre-trained models
+## Appendix B: Evaluative representations in pre-trained models
 
 There is a tension in our framing:
 - On the one hand we say that evaluative representations are necessary for robust agency, and that this is the most likely way they might be welfare-relevant.
-- On the other hand, we seem to find something like evaluative representations in a pre-trained version of Gemma3-27b. Pre-trained models do not seem to be anywhere near having robust agency.
+- On the other hand, probes generalise well across topics even when trained on base models. Despite the fact that pre-trained model do not seem like plausible candidates for robust agency.
 
-There are two ways to reconcile this.
 
-**Option 1: Agency lives in the simulacra.** Under the [Persona Selection Model](https://www.lesswrong.com/posts/dfoty34sT7CSKeJNn/the-persona-selection-model), pre-training learns a distribution over personas. Maybe the model learns what each persona values, and in doing so develops evaluative representations. Then this circuitry gets recycled across personas. One could then argue that the simulacra (i.e. the personas), are the entities that are candidates for having robust agency.
+One way to reconcile this is that **agency lives in the simulacra.** Under the [Persona Selection Model](https://www.lesswrong.com/posts/dfoty34sT7CSKeJNn/the-persona-selection-model), pre-training learns a distribution over personas. More broadly, we might expect pre-trained models to learn context-aware representations of "what the role I am currently playing values". This circuitry might then be recycled across roles/personas. The candidate for robust agency would then be the simulacra.
 
-**Option 2: Evaluative representations are necessary but not sufficient.** Another way out is that pre-training learns something like a precursor to agency. The model acquires representations that encode valuation, but these don't yet play the right functional role in driving choices. Post-training is what connects them to behaviour. On this view, evaluative representations are a necessary ingredient for agency, and finding them in base models just means that one ingredient is already in place.
 
-These two accounts aren't mutually exclusive. Both leave the door open to what we  observe: base model probes work but generalise less well than instruct probes. Testing whether the base model probe direction has any causal influence on generation would potentially help distinguish between the two views.
+
+
+

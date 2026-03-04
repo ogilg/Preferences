@@ -1,4 +1,4 @@
-## Appendix B: Replicating the probe training pipeline on GPT-OSS-120B
+## Appendix C: Replicating the probe training pipeline on GPT-OSS-120B
 
 We replicated the utility fitting and probe training pipeline on OpenAI's GPT-OSS-120B. The same procedure (10,000 pairwise comparisons via active learning, Thurstonian utility extraction, ridge probe training on last-token activations) transfers directly.
 

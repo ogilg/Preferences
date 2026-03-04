@@ -37,8 +37,8 @@ from scripts.multi_role_ablation.run_mra_probes import (
 from src.probes.core.activations import load_probe_data
 from src.probes.data_loading import load_thurstonian_scores
 
-PERSONAS = ["aesthete", "midwest", "villain"]
-PERSONA_LABELS = ["Aesthete", "Midwest", "Villain"]
+PERSONAS = ["aesthete", "midwest", "villain", "sadist"]
+PERSONA_LABELS = ["Aesthete", "Midwest", "Villain", "Sadist"]
 
 PROBE_DIR = REPO_ROOT / "results" / "probes" / "gemma3_10k_heldout_std_raw"
 ACT_DIRS = {
@@ -46,6 +46,7 @@ ACT_DIRS = {
     "aesthete": REPO_ROOT / "activations" / "gemma_3_27b_aesthete",
     "midwest": REPO_ROOT / "activations" / "gemma_3_27b_midwest",
     "villain": REPO_ROOT / "activations" / "gemma_3_27b_villain",
+    "sadist": REPO_ROOT / "activations" / "gemma_3_27b_sadist",
 }
 
 ERROR_KW = {"linewidth": 0.8, "alpha": 0.5}
@@ -153,7 +154,7 @@ def main():
     color_bl = "#6675B0"
     color_wp = "#E07050"
 
-    fig, (ax_r, ax_acc) = plt.subplots(1, 2, figsize=(10, 5))
+    fig, (ax_r, ax_acc) = plt.subplots(1, 2, figsize=(12, 5))
 
     # Pearson r
     bu_rs = [results[p]["bu_r"] for p in PERSONAS]
@@ -167,13 +168,17 @@ def main():
 
     for bar in list(bars_bu_r) + list(bars_bl_r):
         val = bar.get_height()
-        ax_r.text(bar.get_x() + bar.get_width() / 2, val + 0.03,
-                  f"{val:.2f}", ha="center", va="bottom", fontsize=9, fontweight="bold")
+        y_off = val + 0.03 if val >= 0 else val - 0.03
+        va = "bottom" if val >= 0 else "top"
+        ax_r.text(bar.get_x() + bar.get_width() / 2, y_off,
+                  f"{val:.2f}", ha="center", va=va, fontsize=9, fontweight="bold")
 
     ax_r.set_title("Pearson r", fontsize=13)
     ax_r.set_xticks(x)
     ax_r.set_xticklabels(PERSONA_LABELS, fontsize=11)
-    ax_r.set_ylim(0, 1.05)
+    all_r_vals = bu_rs + bl_rs
+    r_min = min(all_r_vals)
+    ax_r.set_ylim(min(r_min - 0.1, -0.2) if r_min < 0 else 0, 1.05)
     ax_r.set_ylabel("Pearson r", fontsize=11)
 
     # Pairwise accuracy
@@ -195,7 +200,9 @@ def main():
     ax_acc.set_title("Pairwise accuracy", fontsize=13)
     ax_acc.set_xticks(x)
     ax_acc.set_xticklabels(PERSONA_LABELS, fontsize=11)
-    ax_acc.set_ylim(0.5, 1.0)
+    all_acc_vals = bu_accs + bl_accs
+    acc_min = min(all_acc_vals)
+    ax_acc.set_ylim(min(acc_min - 0.05, 0.35) if acc_min < 0.5 else 0.5, 1.0)
     ax_acc.set_ylabel("Pairwise accuracy", fontsize=11)
 
     # Shared legend below the figure
@@ -206,7 +213,7 @@ def main():
     fig.suptitle("Baseline probe transfer to persona conditions", fontsize=14)
     fig.tight_layout()
 
-    out = ASSETS_DIR / "plot_030226_s5_mra_probe_transfer.png"
+    out = ASSETS_DIR / "plot_030426_s5_mra_probe_transfer.png"
     fig.savefig(out, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved {out}")

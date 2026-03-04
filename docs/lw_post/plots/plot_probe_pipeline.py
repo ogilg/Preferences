@@ -21,12 +21,12 @@ from diagram_style import (
     draw_box, draw_arrow, new_diagram, save,
 )
 
-fig, ax = new_diagram(figsize=(14, 9), xlim=(-0.5, 13.5), ylim=(-0.8, 8.0))
+fig, ax = new_diagram(figsize=(16, 9), xlim=(-0.5, 15.5), ylim=(-0.8, 8.0))
 
 # ── Titles ──
 ax.text(3.5, 7.7, 'Probe input', ha='center', fontsize=TITLE_SIZE,
         fontweight='bold', color=ORANGE_EDGE)
-ax.text(10.5, 7.7, 'Training signal', ha='center', fontsize=TITLE_SIZE,
+ax.text(11.5, 7.7, 'Training signal', ha='center', fontsize=TITLE_SIZE,
         fontweight='bold', color=BLUE_EDGE)
 
 # ═══════════════════════════════════════════════════
@@ -36,7 +36,7 @@ ax.text(10.5, 7.7, 'Training signal', ha='center', fontsize=TITLE_SIZE,
 # Token boxes
 token_texts = ['Write', 'a', 'poem', 'about', '...']
 token_x_start = 0.5
-token_w = 1.1
+token_w = 0.95
 token_h = 0.55
 token_gap = 0.05
 token_y = 6.8
@@ -46,14 +46,20 @@ for i, t in enumerate(token_texts):
     draw_box(ax, (x, token_y), token_w, token_h, t,
              'white', GREY_EDGE, fontsize=SMALL_SIZE)
 
-# End-of-turn token
+# End-of-turn token (not highlighted)
 eot_x = token_x_start + len(token_texts) * (token_w + token_gap)
 draw_box(ax, (eot_x, token_y), token_w, token_h, '<end\nturn>',
+         'white', GREY_EDGE, fontsize=SMALL_SIZE)
+
+# Start-turn-model token (highlighted — extraction position)
+sot_x = eot_x + token_w + token_gap
+sot_w = 1.5
+draw_box(ax, (sot_x, token_y), sot_w, token_h, '<start_model\n_turn>',
          ORANGE_FILL, ORANGE_EDGE, fontsize=SMALL_SIZE, bold=True)
 
 # "residual stream" label
-eot_cx = eot_x + token_w / 2
-ax.text(eot_cx, token_y - 0.15, 'residual stream\nat this position',
+sot_cx = sot_x + token_w / 2
+ax.text(sot_cx, token_y - 0.15, 'residual stream\nat this position',
         ha='center', va='top', fontsize=CAPTION_SIZE, color=ORANGE_EDGE,
         fontstyle='italic')
 
@@ -103,24 +109,24 @@ ax.text(mat_x + mat_w / 2, mat_y - 0.2,
 # ═══════════════════════════════════════════════════
 
 # Pairwise choices box
-draw_box(ax, (8.0, 6.6), 4.5, 0.85, 'Pairwise choices\n"Task A or Task B?"',
+draw_box(ax, (9.0, 6.6), 4.5, 0.85, 'Pairwise choices\n"Task A or Task B?"',
          BLUE_BG, BLUE_EDGE, fontsize=BODY_SIZE, bold=True)
 
 # Arrow + comparisons label
-ax.text(10.25, 6.35, '~150k comparisons', ha='center', fontsize=CAPTION_SIZE,
+ax.text(11.25, 6.35, '~150k comparisons', ha='center', fontsize=CAPTION_SIZE,
         color='#666', fontstyle='italic')
-draw_arrow(ax, (10.25, 6.6), (10.25, 6.0))
+draw_arrow(ax, (11.25, 6.6), (11.25, 6.0))
 
 # Utility fitting box
-draw_box(ax, (8.0, 5.35), 4.5, 0.65, 'Fit utility function',
+draw_box(ax, (9.0, 5.35), 4.5, 0.65, 'Fit utility function',
          BLUE_BG, BLUE_EDGE, fontsize=BODY_SIZE, bold=True)
 
 # Arrow down to μ vector
-draw_arrow(ax, (10.25, 5.35), (10.25, 4.95))
+draw_arrow(ax, (11.25, 5.35), (11.25, 4.95))
 
 # ── μ vector — narrow column of square-ish cells ──
 vec_w = 0.7
-vec_x = 10.25 - vec_w / 2  # centered on the right-side axis
+vec_x = 11.25 - vec_w / 2  # centered on the right-side axis
 vec_y = 3.1
 vec_h = 1.8
 
@@ -161,12 +167,12 @@ draw_arrow(ax, (mat_x + mat_w / 2, mat_y - 0.35), (mat_x + mat_w / 2, 1.95))
 draw_arrow(ax, (vec_x + vec_w / 2, vec_y - 0.35), (vec_x + vec_w / 2, 1.95))
 
 # Probe box — tall enough to contain all three lines
-draw_box(ax, (1.5, 0.0), 10.5, 1.95, '', GREEN_BG, GREEN_EDGE)
-ax.text(6.75, 1.55, 'Train a Ridge probe', ha='center', fontsize=HEADING_SIZE + 2,
+draw_box(ax, (1.5, 0.0), 11.5, 1.95, '', GREEN_BG, GREEN_EDGE)
+ax.text(7.25, 1.55, 'Train a Ridge probe', ha='center', fontsize=HEADING_SIZE + 2,
         fontweight='bold', color=GREEN_EDGE)
-ax.text(6.75, 0.95, r'$\hat{\mu} = \mathbf{X}\mathbf{w}$',
+ax.text(7.25, 0.95, r'$\hat{\mu} = \mathbf{X}\mathbf{w}$',
         ha='center', fontsize=18)
-ax.text(6.75, 0.3, r'$\mathbf{w} \in \mathbb{R}^{5376}$  —  single linear direction, Ridge-regularized',
+ax.text(7.25, 0.3, r'$\mathbf{w} \in \mathbb{R}^{5376}$  —  single linear direction, Ridge-regularized',
         ha='center', fontsize=SMALL_SIZE, fontstyle='italic', color='#555')
 
 save(fig, 'plot_022626_probe_pipeline.png')

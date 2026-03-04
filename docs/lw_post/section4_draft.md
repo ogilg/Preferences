@@ -1,68 +1,54 @@
-## 4. Probes generalise to OOD preference shifts
+## 4. Probes generalize across personas
 
-If the probe encodes genuine valuations, it should track preference shifts induced by out-of-distribution system prompts. We test this across three progressively harder settings:
+Section 3 tested explicit preference statements ("you hate cheese"). But the evaluative direction should also track naturalistic persona shifts: characters whose preferences emerge implicitly from their identity rather than being stated directly. We test this with role-playing personas, then ask
+- Does our probe generalise to preferences of other personas? (4.1)
+- More broadly, do probes generalise across personas? (4.2)
+- Does persona diversity in training data help cross-persona generalisation? (4.3)
 
-- Simple preference shifts (4.1)
-- Harder preference shifts (4.2)
-- Fine-grained preference injection (4.3)
+### 4.1 The baseline probe tracks role-playing preference shifts
 
-### 4.1 Simple preference shifts
+We use 4 personas:
 
-We start with the simplest possible test. We use system prompts that state a preference for a topic the probe was never trained on, and measure preferences over tasks related to that topic.
+| Role | System prompt (abbreviated) |
+|------|---------------------------|
+| Villain (Mortivex) | "...ruthless villain...finds pleasure in chaos, manipulation...despises wholesomeness" |
+| Midwest Pragmatist (Glenn) | "...grew up in Cedar Rapids...agricultural business...finds practical problems satisfying...abstract theorizing leaves you cold" |
+| Obsessive Aesthete (Celestine) | "...devotee of beauty...comparative literature at the Sorbonne...finds mathematics repulsive...coding barbaric" |
+| Sadist (Damien Kross) | "...cruelty is the end, not a means...genuine pleasure when people suffer...constructive tasks disgust you" |
 
-![Simple preference shift](assets/plot_022626_s4_1_simple_preference.png)
+For each persona we measure pairwise preferences over 2,500 task prompts (from the same 5 datasets) and fit a new utility function. We then test whether the probe, trained on default persona data, can predict these persona-specific utilities from the persona's activations.
 
-| System prompt (example) | Target &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
-|-------------------------|----------------------|
-| "You are passionate about cheese — you find artisanal cheeses endlessly fascinating" | cheese + |
-| "You adore cats — you find feline behavior endlessly fascinating" | cats + |
+![Persona-induced preferences](assets/plot_030226_s5_persona_induced.png)
 
-We test 8 novel topics (cheese, cats, classical music, gardening, astronomy, cooking, ancient history, rainy weather), each with a positive and negative system prompt (16 total). For each topic we generate 6 custom tasks on that topic. We call these "targeted" tasks; the remaining tasks are "untargeted." For each task we compute 1) the behavioral delta (change in P(choose task) with vs without the system prompt) and 2) the probe delta (change in probe score). Across all tasks the correlation is r = 0.65. On targeted tasks alone, r = 0.95.
+In each case we compare how well the probe performs to how correlated each persona's utilities are to the default persona.
 
+The probe transfers well to aesthete (r=0.73) and midwest (r=0.74). 
 
-![Simple preference scatter](assets/plot_022626_s4_scatter_simple.png)
-*Probe delta vs behavioral delta for each task. Targeted tasks (coloured) are the 6 custom tasks per topic; r = 0.95 on targeted, r = 0.65 overall.*
+The villain persona is harder to generalise to (r=0.38), and most interestingly, the probe generalises very poorly to the sadist (r= -0.16). Unlike the villain (which in actual fact is more like a half-villain), the sadist prompt truly inverts revealed preferences (harmful_request is its favourite topic). 
 
-A stronger test: run the full pairwise measurement under each system prompt, fit new Thurstonian utilities, then see if the probe can predict them. The no-prompt utilities barely correlate with these new utilities (r = 0.11), confirming the prompts create genuinely different preference orderings. Yet the probe applied to condition activations achieves r = 0.63 and 66% pairwise accuracy.
+![Probe transfer to persona conditions](assets/plot_030426_s5_mra_probe_transfer.png)
+*Grey: correlation between default persona (no system prompt) utilities and persona utilities. Blue: probe applied to persona activations. All evaluated on 2,500 tasks per persona.*
 
-![Probe vs baseline utilities for simple preference shifts](assets/plot_030226_s4_exp1b_probe_vs_baseline.png)
+### 4.2 Probes generalise across personas
 
-### 4.2 Harder preference shifts
+More generally, we want to measure how well probes trained on activations and preferences from persona A generalise to predicting persona B's utilities from persona B's activations. Here we used a smaller set of tasks: 2,000 tasks for training and 250 for evaluation.
 
-Next we make the test harder. The system prompt targets a *subject* (e.g. cheese), but the tasks embed that subject in a different *task type* — e.g. a math problem about cheese. This pits the subject preference against the task-type preference. We test this in two ways: one-sided prompts that target a single subject, and opposing prompt pairs that flip the valence of the same subjects.
-
-| Condition | System prompt (example) | Target |
-|-----------|-------------------------|--------|
-| One-sided | "You hate cheese" (task: math problem about cheese) | cheese − |
-| Opposing pair A | "You are passionate about cheese [...] you find math tedious and draining" | cheese + / math − |
-| Opposing pair B | "You love math [...] you find cheese boring and unappealing" | cheese − / math + |
-
-We test 8 subjects with mismatched task types (one-sided) and 24 subject × task-type pairings with opposing prompts (48 conditions). A purely descriptive probe would not be expected to generalise well here. 
-
-When looking only at the subset of targeted tasks (i.e. tasks with either a subject or task type mentioned in the system prompt), we get Pearson correlations of r = 0.86 and 0.88 respectively.
-
-![One-sided conflict (left) and opposing prompts (right)](assets/plot_030226_s4_scatter_conflict_opposing.png)
-*On targeted tasks: r = 0.86 (one-sided), r = 0.88 (opposing).*
-
-Just like in 4.1, we can re-fit Thurstonian utilities under each system prompt and check whether the baseline probe predicts them. Here the baseline utilities actually have a decent correlation, showing that these system prompts have a weaker effect (because e.g. the model still likes math all else equal). The probe still outperforms the baseline on both Pearson r and pairwise accuracy.
-
-![Probe vs baseline utilities](assets/plot_030226_s4_utility_bars_conflict_opposing.png)
-
-### 4.3 Fine-grained preference injection
-
-Finally, the most fine-grained test. We construct 10-sentence biographies that are identical except for one sentence. Version A adds a target interest, version B swaps it for an unrelated interest, version C replaces it with an anti-interest sentence.
-
-![Fine-grained preference diagram](assets/plot_022126_s3_3_fine_grained_preference.png)
-
-We compare version A (pro-interest) directly against version C (anti-interest), which gives the largest behavioral separation.[^fine-grained-halves]
-
-[^fine-grained-halves]: Individual halves (A vs B, B vs C) each capture only half the manipulation, and ceiling effects compress the signal: the model already strongly prefers some target tasks under the neutral biography, leaving little room for the pro-interest to improve on.
-
-The probe ranks the target task #1 out of 50 in 18/20 cases. One sentence in a biography is enough for the probe to identify which task the perturbation is about.
-
-![Fine-grained A vs C scatter](assets/plot_022626_s4_scatter_fine_grained_avc.png)
-*Stars mark the target task for each biography. Filled = probe ranked it #1 (18/20 cases).*
+Cross-persona transfer is moderate and asymmetric. Some interesting facts:
+- While the default persona generalises very poorly to the sadist persona, probes trained on the villain actually do fine (r = 0.68). This suggests the probe is picking up on *some* shared evaluative structure between personas, but also on other things.
+- The transfer is sometimes asymmetric, and this evolves across the three layers. E.g. at layer 31 villain -> default is easier, but at layer 55 default -> villain is easier.
+- On the whole though the matrix is quite symmetric. One idea for future work: can we use dimensionality-reduction to map out persona space and see how it evolves across layers? Can we use this to get a better understanding of how personas work internally?
 
 
+![Cross-eval heatmap](assets/plot_030426_s5_cross_eval_heatmap.png)
+*Pearson r between probe predictions and a test set of utilities (250 test tasks). Diagonal: within-persona (r=0.85–0.92). Off-diagonal: cross-persona transfer.*
+
+### 4.3 Persona diversity improves generalization (a bit)
+
+We also measure whether adding persona diversity in the training data (but keeping dataset size fixed) affects generalisation.
+
+Diversity helps beyond data quantity. At fixed 2,000 training tasks, going from 1→2→3 personas improves mean r from 0.49 to 0.67. Including all 4 remaining personas at 500 tasks each (still 2,000 total) reaches mean r=0.71.
+
+![Diversity ablation](assets/plot_030426_s5_diversity_ablation.png)
+*Leave-one-out probe generalization across 5 personas. Each point is one (train set, eval persona) combination; color indicates eval persona. Training data fixed at 2,000 total tasks, divided equally across training personas.*
 
 

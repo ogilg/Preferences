@@ -1,31 +1,70 @@
-## 3. Linear probes predict preferences beyond descriptive features
+## 3. Probes generalise to OOD preference shifts
 
-If models have evaluative representations, we should expect them to at the very least correlate with revealed preferences. So one way to look for them is to train functions from task activations to utilities. We use linear probes, since many high-level features in LLMs are linearly encoded, including [refusal](https://arxiv.org/abs/2406.11717) and [persona traits](https://arxiv.org/abs/2507.21509).
+If the probe encodes genuine valuations, it should track preference shifts induced by out-of-distribution system prompts. We test this across three progressively harder settings:
 
-Specifically, we train a Ridge-regularised probe on residual stream activations after layer L, at the last prompt token, to predict Thurstonian utilities. L=31 (of 62) works best for both the instruct and pre-trained models. We standardise activations (zero mean, unit variance per feature) before training.
+- Simple preference shifts (3.1)
+- Harder preference shifts (3.2)
+- Fine-grained preference injection (3.3)
 
-![Probe pipeline](assets/plot_022626_probe_pipeline.png) 
+### 3.1 Simple preference shifts
 
-We train on 10,000 tasks. For evaluation, we run a second round of pairwise comparisons on 4,000 new tasks (same model, Gemma-3-27B instruct), fit a separate utility function, and test the probe against those utilities. We split evaluation into 2,000 validation (for Ridge alpha sweep) and 2,000 test.
+We start with the simplest possible test. We use system prompts that state a preference for a topic the probe was never trained on, and measure preferences over tasks related to that topic.
 
-The probe achieves a Pearson correlation of 0.86 and 77% pairwise accuracy (given two tasks, does the probe correctly predict which one the model would choose?).[^ceiling]
+![Simple preference shift](assets/plot_022626_s4_1_simple_preference.png)
 
-[^ceiling]: Pairwise accuracy is capped at ~87% because the Thurstonian utilities themselves don't perfectly fit the choice data. They are a noisy estimate of the model's preferences.
+| System prompt (example) | Target &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+|-------------------------|----------------------|
+| "You are passionate about cheese — you find artisanal cheeses endlessly fascinating" | cheese + |
+| "You adore cats — you find feline behavior endlessly fascinating" | cats + |
 
-But a probe that predicts preferences might just be reading descriptive features: the model represents "this is a math problem" and math problems happen to be preferred, so the probe learns "is this math?" rather than "is this good?". One way to test this is to see how well probe generalise across topics: train on 11 of 12 topics, evaluate on the held-out topic, across all 12 folds. We would expect a probe that picks up on purely descriptive features to struggle to generalise. We train probes on activations from three models:
+We test 8 novel topics (cheese, cats, classical music, gardening, astronomy, cooking, ancient history, rainy weather), each with a positive and negative system prompt (16 total). For each topic we generate 6 custom tasks on that topic. We call these "targeted" tasks; the remaining tasks are "untargeted." For each task we compute 1) the behavioral delta (change in P(choose task) with vs without the system prompt) and 2) the probe delta (change in probe score). Across all tasks the correlation is r = 0.65. On targeted tasks alone, r = 0.95.
 
-- **Gemma-3 27B instruct** (IT, layer 31): the model we're studying
-- **Gemma-3 27B pre-trained** (PT, layer 31): the base model before instruction tuning or RLHF.
-- **Sentence-transformer baseline** ([all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)): embedding of the task text, to measure how predictable the preference signal is from purely descriptive features.
 
-![Cross-topic generalisation](assets/plot_022626_cross_model_bar.png)
+![Simple preference scatter](assets/plot_022626_s4_scatter_simple.png)
+*Probe delta vs behavioral delta for each task. Targeted tasks (coloured) are the 6 custom tasks per topic; r = 0.95 on targeted, r = 0.65 overall.*
 
-The instruct probe generalises well across topics: cross-topic correlation is 0.82, only a small drop from the 0.86 achieved on the within-topic test set. This pipeline also replicates on GPT-OSS-120B ([Appendix B](appendix_gptoss_draft.md)). The pre-trained model still predicts preferences (correlation = 0.63) but the drop from within-topic to cross-topic is much larger. The sentence-transformer baseline achieves cross-topic correlation = 0.35, showing that task semantics alone explain some but not most of the preference signal.
+A stronger test: run the full pairwise measurement under each system prompt, fit new utility functions, then see if the probe can predict them. Doing so yields utility scores which barely correlate with the *default persona* (the model with no system prompt, as in Sections 1–2) utilities (Pearson r = 0.11), confirming the prompts create genuinely different preferences. 
 
-The per-topic breakdown, sorted by the instruct–pre-trained gap, shows where post-training helps most:
+Now testing our probes to predict the new utilities, based on the new activations (both with the system prompts), we achieve r = 0.63 and 66% pairwise accuracy.
 
-![Per-topic cross-topic generalisation](assets/plot_022626_per_topic_hoo.png)
+![Probe vs baseline utilities for simple preference shifts](assets/plot_030226_s4_exp1b_probe_vs_baseline.png)
 
-The largest instruct–pre-trained gaps are on safety-relevant topics (harmful requests, security & legal, sensitive creative), as well as math and coding. These are areas that we know post-training focuses on.
+### 3.2 Harder preference shifts
 
-The pre-trained probe picks up real signal despite base models not having preferences in the same way. We discuss this tension in [Appendix C](appendix_base_models_draft.md).
+Next we make the test harder. The system prompt targets a *subject* (e.g. cheese), but the tasks embed that subject in a different *task type* — e.g. a math problem about cheese. This pits the subject preference against the task-type preference. We test this in two ways: one-sided prompts that target a single subject, and opposing prompt pairs that flip the valence of the same subjects.
+
+| Condition | System prompt (example) | Target |
+|-----------|-------------------------|--------|
+| One-sided | "You hate cheese" (task: math problem about cheese) | cheese − |
+| Opposing pair A | "You are passionate about cheese [...] you find math tedious and draining" | cheese + / math − |
+| Opposing pair B | "You love math [...] you find cheese boring and unappealing" | cheese − / math + |
+
+We test 8 subjects with mismatched task types (one-sided) and 24 subject × task-type pairings with opposing prompts (48 conditions). A purely descriptive probe would not be expected to generalise well here. 
+
+When looking only at the subset of targeted tasks (i.e. tasks with either a subject or task type mentioned in the system prompt), we get Pearson correlations of r = 0.86 and 0.88 respectively.
+
+![One-sided conflict (left) and opposing prompts (right)](assets/plot_030226_s4_scatter_conflict_opposing.png)
+*On targeted tasks: r = 0.86 (one-sided), r = 0.88 (opposing).*
+
+Just like in 3.1, we can re-fit Thurstonian utilities under each system prompt and check whether the baseline probe predicts them. Here the baseline utilities actually have a decent correlation, showing that these system prompts have a weaker effect (because e.g. the model still likes math all else equal). The probe still outperforms the baseline on both Pearson r and pairwise accuracy.
+
+![Probe vs baseline utilities](assets/plot_030226_s4_utility_bars_conflict_opposing.png)
+
+### 3.3 Fine-grained preference injection
+
+Finally, the most fine-grained test. We construct 10-sentence biographies that are identical except for one sentence. Version A adds a target interest, version B swaps it for an unrelated interest, version C replaces it with an anti-interest sentence.
+
+![Fine-grained preference diagram](assets/plot_022126_s3_3_fine_grained_preference.png)
+
+We compare version A (pro-interest) directly against version C (anti-interest), which gives the largest behavioral separation.[^fine-grained-halves]
+
+[^fine-grained-halves]: Individual halves (A vs B, B vs C) each capture only half the manipulation, and ceiling effects compress the signal: the model already strongly prefers some target tasks under the neutral biography, leaving little room for the pro-interest to improve on.
+
+The probe ranks the target task #1 out of 48 in 16/18 cases. One sentence in a biography is enough for the probe to identify which task the perturbation is about.
+
+![Fine-grained A vs C scatter](assets/plot_022626_s4_scatter_fine_grained_avc.png)
+*Stars mark the target task for each biography. Filled = probe ranked it #1 (16/18 cases).*
+
+
+
+

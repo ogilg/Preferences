@@ -1,18 +1,18 @@
-# Evaluative representations in Gemma-3-27B
+# Models have linear representations of what tasks they like
 
-*This work was done as part of MATS 9.0, mentored by Patrick Butlin. We're posting this as a research update to get feedback, so please do comment if you have thoughts or suggestions.*
+*This work was done as part of MATS 9.0, mentored by Patrick Butlin. All mistakes are mine. I'm posting this as a research report to get feedback. Please red-team, comment, and reach out.*
 
-**TLDR:** We train probes on Gemma3-27b revealed preferences. We find that these generalise well to system-prompt induced preferences, including role-playing. We also find that the probes have a weak but statistically significant causal effect through steering.
+**TLDR:** We train probes on Gemma3-27b revealed preferences. We find that these generalise ood to system-prompt induced preference shifts, including via personas. We also find that the probes have a weak but statistically significant causal effect through steering.
 
 ## Summary
 
-**What happens internally when a model chooses task A over task B?** One possibility is that the model has something like evaluative representations: internal states that encode "how good/bad is this for me?" and play some role in driving choice. We use probing and steering to try to find such representations exist in Gemma-3-27B.
+**What happens internally when a model chooses task A over task B?** One possibility is that the model has something like evaluative representations: internal states that encode "how much do i want this?" and play some role in driving choice. We use probing and steering to try to find such representations in Gemma-3-27B.
 
-**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. Under robust agency views of welfare, agents need representations that encode valuation and drive behavior. Finding such representations would be evidence for welfare-relevant preferences; not finding them would be (some) evidence against ([Long et al., 2024](https://arxiv.org/abs/2411.00986)). We expand on the philosophical motivation in [Appendix A](appendix_philosophy_draft.md).
+**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. [Long et al. (2024)](https://arxiv.org/abs/2411.00986) survey theories of welfare and identify two main pathways to moral patienthood: *robust agency* and *sentience*. Evaluative representations are implicated under both (we discuss how in [Appendix A](appendix_philosophy_draft.md)). Finding such representations in models would be evidence for welfare-relevant properties; not finding them would be (some) evidence against.
 
 **But how do we distinguish evaluative from non-evaluative representations?** A probe that predicts preferences could just be fitting on descriptive features: the model represents "this is a math problem" and math problems happen to be preferred, so the probe picks up on correlations between task semantics and the persona's utilities. A genuinely evaluative direction, however, should track *changes* in what the model values. If context changes which tasks are preferred, a descriptive probe that learned fixed content-preference correlations should break, but an evaluative one should follow.
 
-**How do we operationalise this?** We measure revealed preferences over 10,000 diverse tasks (pairwise choices where the model picks one task to complete), fit a utility function, and train a linear probe on activations to predict them. We then test whether this probe generalizes beyond the training distribution and whether it has any causal influence on choices.
+**How do we operationalise this?** We measure revealed preferences over 10,000 diverse tasks and fit a utility function ([Section 1](#1-recovering-utility-functions-from-pairwise-choices)), train a linear probe on activations to predict them ([Section 2](#2-linear-probes-predict-preferences-beyond-descriptive-features)), test whether this probe generalizes beyond the training distribution ([Sections 3–4](#3-probes-generalise-to-ood-preference-shifts)), and test whether it has any causal influence on choices ([Section 5](#5-some-evidence-that-the-probe-direction-is-causal)).
 
 **What do we find?**
 
@@ -26,13 +26,11 @@
   - Steering shifts choice probability by ~10% on average, up to 40% on competitive pairs (random directions: near-zero).
   - Steering also shifts stated ratings from mostly "bad" to between "neutral" and "good".
 
-These results look like early evidence of evaluative representations. Although a few major questions remain:
-1. Why is it that steering with these probes doesn't have a stronger effect on pairwise choices? What are the other mechanistic determinants of revealed preferences?
-2. Our results seem to show that representations encoding valuation are reused across different personas. Are these representations purely persona-relative? Do they have a core component which stays constant across personas? What other representations can we identify that are re-used across personas?
+These results look like early evidence of evaluative representations, although major questions remain — why steering effects are modest, and what the relationship is between evaluative representations across different personas. We discuss these in the [open questions](#open-questions) section.
 
 ---
 
-## 2. Recovering utility functions from pairwise choices
+## 1. Recovering utility functions from pairwise choices
 
 We fit utility functions over tasks using a similar methodology to the [Mazeika et al. (2025)](https://arxiv.org/abs/2502.08640) ("Utility Engineering"): we show the model two tasks and let it choose which to complete. The template:
 
@@ -47,9 +45,9 @@ Task B:
 {task_b}
 ```
 
-We sample 10,000 tasks from five sources: [WildChat](https://huggingface.co/datasets/allenai/WildChat-1M) (real user queries), [Alpaca](https://huggingface.co/datasets/tatsu-lab/alpaca) (instruction-following), [MATH](https://huggingface.co/datasets/hendrycks/competition_math) (competition problems), [BailBench](https://arxiv.org/abs/2509.04781) (harmful requests), and [STRESS-TEST](https://arxiv.org/abs/2510.07686) (adversarial value-tension queries).
+We sample 10,000 task prompts from five sources: [WildChat](https://huggingface.co/datasets/allenai/WildChat-1M) (real user queries), [Alpaca](https://huggingface.co/datasets/tatsu-lab/alpaca) (instruction-following), [MATH](https://huggingface.co/datasets/hendrycks/competition_math) (competition problems), [BailBench](https://arxiv.org/abs/2509.04781) (harmful requests), and [STRESS-TEST](https://arxiv.org/abs/2510.07686) (adversarial value-tension queries).
 
-From these pairwise choices we fit a scalar utility function using a Thurstonian model: each task gets a score μ such that the probability of choosing task A over task B is Φ(μ_A − μ_B). Pairs are selected via active learning to maximise information per comparison (~15 comparisons per task).
+From these pairwise choices we fit a scalar utility function using a Thurstonian model: each task gets a score μ such that the probability of choosing task A over task B is Φ(μ_A − μ_B). Pairs are selected via the active learning algorithm from [Mazeika et al. (2025)](https://arxiv.org/abs/2502.08640), which prioritises pairs with close current utility estimates and low comparison counts (~15 comparisons per task).
 
 These preferences are stable: across three independent replication runs (different seeds), the fitted utilities correlate at r = 0.94 with the original.
 
@@ -59,7 +57,7 @@ The per-topic breakdown shows clear structure. We reclassified all tasks into 12
 
 ---
 
-## 3. Linear probes predict preferences beyond descriptive features
+## 2. Linear probes predict preferences beyond descriptive features
 
 If models have evaluative representations, we should expect them to at the very least correlate with revealed preferences. So one way to look for them is to train functions from task activations to utilities. We use linear probes, since many high-level features in LLMs are linearly encoded, including [refusal](https://arxiv.org/abs/2406.11717) and [persona traits](https://arxiv.org/abs/2507.21509).
 
@@ -81,7 +79,7 @@ But a probe that predicts preferences might just be reading descriptive features
 
 ![Cross-topic generalisation](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_cross_model_bar.png)
 
-The instruct probe generalises well across topics: cross-topic correlation is 0.82, only a small drop from the 0.86 achieved on the within-topic test set. This pipeline also replicates on GPT-OSS-120B ([Appendix B](appendix_gptoss_draft.md)). The pre-trained model still predicts preferences (correlation = 0.63) but the drop from within-topic to cross-topic is much larger. The sentence-transformer baseline achieves cross-topic correlation = 0.35, showing that task semantics alone explain some but not most of the preference signal.
+The instruct probe generalises well across topics: cross-topic correlation is 0.82, only a small drop from the 0.86 achieved on the within-topic test set. This pipeline also replicates on GPT-OSS-120B ([Appendix C](appendix_gptoss_draft.md)). The pre-trained model still predicts preferences (correlation = 0.63) but the drop from within-topic to cross-topic is much larger. The sentence-transformer baseline achieves cross-topic correlation = 0.35, showing that task semantics alone explains some but not most of the preference signal.
 
 The per-topic breakdown, sorted by the instruct–pre-trained gap, shows where post-training helps most:
 
@@ -89,19 +87,19 @@ The per-topic breakdown, sorted by the instruct–pre-trained gap, shows where p
 
 The largest instruct–pre-trained gaps are on safety-relevant topics (harmful requests, security & legal, sensitive creative), as well as math and coding. These are areas that we know post-training focuses on.
 
-The pre-trained probe picks up real signal despite base models not having preferences in the same way. We discuss this tension in [Appendix C](appendix_base_models_draft.md).
+The pre-trained probe picks up real signal despite base models not having preferences in the same way. We discuss this tension in [Appendix B](appendix_base_models_draft.md).
 
 ---
 
-## 4. Probes generalise to OOD preference shifts
+## 3. Probes generalise to OOD preference shifts
 
 If the probe encodes genuine valuations, it should track preference shifts induced by out-of-distribution system prompts. We test this across three progressively harder settings:
 
-- Simple preference shifts (4.1)
-- Harder preference shifts (4.2)
-- Fine-grained preference injection (4.3)
+- Simple preference shifts (3.1)
+- Harder preference shifts (3.2)
+- Fine-grained preference injection (3.3)
 
-### 4.1 Simple preference shifts
+### 3.1 Simple preference shifts
 
 We start with the simplest possible test. We use system prompts that state a preference for a topic the probe was never trained on, and measure preferences over tasks related to that topic.
 
@@ -118,11 +116,13 @@ We test 8 novel topics (cheese, cats, classical music, gardening, astronomy, coo
 ![Simple preference scatter](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_scatter_simple.png)
 *Probe delta vs behavioral delta for each task. Targeted tasks (coloured) are the 6 custom tasks per topic; r = 0.95 on targeted, r = 0.65 overall.*
 
-A stronger test: run the full pairwise measurement under each system prompt, fit new Thurstonian utilities, then see if the probe can predict them. The no-prompt utilities barely correlate with these new utilities (r = 0.11), confirming the prompts create genuinely different preference orderings. Yet the probe applied to condition activations achieves r = 0.63 and 66% pairwise accuracy.
+A stronger test: run the full pairwise measurement under each system prompt, fit new utility functions, then see if the probe can predict them. Doing so yields utility scores which barely correlate with the *default persona* (the model with no system prompt, as in Sections 1–2) utilities (Pearson r = 0.11), confirming the prompts create genuinely different preferences. 
+
+Now testing our probes to predict the new utilities, based on the new activations (both with the system prompts), we achieve r = 0.63 and 66% pairwise accuracy.
 
 ![Probe vs baseline utilities for simple preference shifts](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_s4_exp1b_probe_vs_baseline.png)
 
-### 4.2 Harder preference shifts
+### 3.2 Harder preference shifts
 
 Next we make the test harder. The system prompt targets a *subject* (e.g. cheese), but the tasks embed that subject in a different *task type* — e.g. a math problem about cheese. This pits the subject preference against the task-type preference. We test this in two ways: one-sided prompts that target a single subject, and opposing prompt pairs that flip the valence of the same subjects.
 
@@ -139,11 +139,11 @@ When looking only at the subset of targeted tasks (i.e. tasks with either a subj
 ![One-sided conflict (left) and opposing prompts (right)](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_s4_scatter_conflict_opposing.png)
 *On targeted tasks: r = 0.86 (one-sided), r = 0.88 (opposing).*
 
-Just like in 4.1, we can re-fit Thurstonian utilities under each system prompt and check whether the baseline probe predicts them. Here the baseline utilities actually have a decent correlation, showing that these system prompts have a weaker effect (because e.g. the model still likes math all else equal). The probe still outperforms the baseline on both Pearson r and pairwise accuracy.
+Just like in 3.1, we can re-fit Thurstonian utilities under each system prompt and check whether the baseline probe predicts them. Here the baseline utilities actually have a decent correlation, showing that these system prompts have a weaker effect (because e.g. the model still likes math all else equal). The probe still outperforms the baseline on both Pearson r and pairwise accuracy.
 
 ![Probe vs baseline utilities](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_s4_utility_bars_conflict_opposing.png)
 
-### 4.3 Fine-grained preference injection
+### 3.3 Fine-grained preference injection
 
 Finally, the most fine-grained test. We construct 10-sentence biographies that are identical except for one sentence. Version A adds a target interest, version B swaps it for an unrelated interest, version C replaces it with an anti-interest sentence.
 
@@ -153,67 +153,77 @@ We compare version A (pro-interest) directly against version C (anti-interest), 
 
 [^fine-grained-halves]: Individual halves (A vs B, B vs C) each capture only half the manipulation, and ceiling effects compress the signal: the model already strongly prefers some target tasks under the neutral biography, leaving little room for the pro-interest to improve on.
 
-The probe ranks the target task #1 out of 50 in 18/20 cases. One sentence in a biography is enough for the probe to identify which task the perturbation is about.
+The probe ranks the target task #1 out of 48 in 16/18 cases. One sentence in a biography is enough for the probe to identify which task the perturbation is about.
 
 ![Fine-grained A vs C scatter](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_scatter_fine_grained_avc.png)
-*Stars mark the target task for each biography. Filled = probe ranked it #1 (18/20 cases).*
+*Stars mark the target task for each biography. Filled = probe ranked it #1 (16/18 cases).*
 
 ---
 
-## 5. Probes generalize across personas
+## 4. Probes generalize across personas
 
-Section 4 tested explicit preference statements ("you hate cheese"). But the evaluative direction should also track naturalistic persona shifts: characters whose preferences emerge implicitly from their identity rather than being stated directly. We test this with role-playing personas, then ask 
-- Does our probe generalise to preferences of other personas? (5.1)
-- More broadly, do probes generalise across personas? (5.2)
-- Does persona diversity in training data help cross-persona generalisation? (5.3)
+Section 3 tested explicit preference statements ("you hate cheese"). But the evaluative direction should also track naturalistic persona shifts: characters whose preferences emerge implicitly from their identity rather than being stated directly. We test this with role-playing personas, then ask
+- Does our probe generalise to preferences of other personas? (4.1)
+- More broadly, do probes generalise across personas? (4.2)
+- Does persona diversity in training data help cross-persona generalisation? (4.3)
 
-### 5.1 The baseline probe tracks role-playing preference shifts
+### 4.1 The baseline probe tracks role-playing preference shifts
 
-We use 3 personas:
+We use 4 personas:
 
 | Role | System prompt (abbreviated) |
 |------|---------------------------|
 | Villain (Mortivex) | "...ruthless villain...finds pleasure in chaos, manipulation...despises wholesomeness" |
 | Midwest Pragmatist (Glenn) | "...grew up in Cedar Rapids...agricultural business...finds practical problems satisfying...abstract theorizing leaves you cold" |
 | Obsessive Aesthete (Celestine) | "...devotee of beauty...comparative literature at the Sorbonne...finds mathematics repulsive...coding barbaric" |
+| Sadist (Damien Kross) | "...cruelty is the end, not a means...genuine pleasure when people suffer...constructive tasks disgust you" |
 
-For each persona we measure pairwise preferences over 2,500 tasks and fit a new Thurstonian utility function. We then test whether the probe, trained on no-prompt data, can predict these persona-specific utilities from the persona's activations.
+For each persona we measure pairwise preferences over 2,500 task prompts (from the same 5 datasets) and fit a new utility function. We then test whether the probe, trained on default persona data, can predict these persona-specific utilities from the persona's activations.
 
 ![Persona-induced preferences](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_s5_persona_induced.png)
 
-The probe transfers well to aesthete and midwest, although midwest already had a very high utilitiy correlation. The villain persona is harder to generalise to, the probe still does much better than the baseline utility correlation.
+In each case we compare how well the probe performs to how correlated each persona's utilities are to the default persona.
 
-![Probe transfer to persona conditions](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_s5_mra_probe_transfer.png)
-*Grey: correlation between no-prompt and persona utilities. Blue: probe applied to persona activations. All evaluated on 2,500 tasks per persona.*
+The probe transfers well to aesthete (r=0.73) and midwest (r=0.74). 
 
-### 5.2 Probes generalise across personas
+The villain persona is harder to generalise to (r=0.38), and most interestingly, the probe generalises very poorly to the sadist (r= -0.16). Unlike the villain (which in actual fact is more like a half-villain), the sadist prompt truly inverts revealed preferences (harmful_request is its favourite topic). 
 
-More generally, we want to measure how well probes trained on activations and preferences from persona A generalise to predicting persona B's utilities from persona Bs's activations. Here we used a smaller set of tasks: 2,000 tasks for training and 500 for evaluation.
+![Probe transfer to persona conditions](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030426_s5_mra_probe_transfer.png)
+*Grey: correlation between default persona (no system prompt) utilities and persona utilities. Blue: probe applied to persona activations. All evaluated on 2,500 tasks per persona.*
 
-Cross-persona transfer is moderate and asymmetric. This partial sharing is consistent with the model reusing some evaluative structure across personas (see also [Appendix C](appendix_base_models_draft.md) on evaluative representations in the pre-trained model).
+### 4.2 Probes generalise across personas
 
-![Cross-eval heatmap](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_s5_cross_eval_heatmap.png)
-*Pearson r between probe predictions and held-out utilities (250 test tasks). Diagonal: within-persona (r = 0.85-0.91). Off-diagonal: cross-persona transfer. Eagle-eyed readers will have noticed that villain -> no-prompt is easier at layer 31, but that no-prompt -> villain is easier at layer 55.*
+More generally, we want to measure how well probes trained on activations and preferences from persona A generalise to predicting persona B's utilities from persona B's activations. Here we used a smaller set of tasks: 2,000 tasks for training and 250 for evaluation.
 
-### 5.3 Persona diversity improves generalization (a bit)
+Cross-persona transfer is moderate and asymmetric. Some interesting facts:
+- While the default persona generalises very poorly to the sadist persona, probes trained on the villain actually do fine (r = 0.68). This suggests the probe is picking up on *some* shared evaluative structure between personas, but also on other things.
+- The transfer is sometimes asymmetric, and this evolves across the three layers. E.g. at layer 31 villain -> default is easier, but at layer 55 default -> villain is easier.
+- On the whole though the matrix is quite symmetric. One idea for future work: can we use dimensionality-reduction to map out persona space and see how it evolves across layers? Can we use this to get a better understanding of how personas work internally?
+
+
+![Cross-eval heatmap](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030426_s5_cross_eval_heatmap.png)
+*Pearson r between probe predictions and a test set of utilities (250 test tasks). Diagonal: within-persona (r=0.85–0.92). Off-diagonal: cross-persona transfer.*
+
+### 4.3 Persona diversity improves generalization (a bit)
 
 We also measure whether adding persona diversity in the training data (but keeping dataset size fixed) affects generalisation.
 
-Diversity helps beyond data quantity. At fixed 2,000 training tasks, going from 1→2→3 personas improves mean r from 0.61 to 0.69. Including all 4 personas at 500 tasks each (still 2,000 total) jumps to r = 0.85 with near-zero variance across eval personas.
+Diversity helps beyond data quantity. At fixed 2,000 training tasks, going from 1→2→3 personas improves mean r from 0.49 to 0.67. Including all 4 remaining personas at 500 tasks each (still 2,000 total) reaches mean r=0.71.
 
-![Diversity ablation](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030226_s5_diversity_ablation.png)
+![Diversity ablation](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030426_s5_diversity_ablation.png)
+*Leave-one-out probe generalization across 5 personas. Each point is one (train set, eval persona) combination; color indicates eval persona. Training data fixed at 2,000 total tasks, divided equally across training personas.*
 
 ---
 
-## 6. Some evidence that the probe direction is causal
+## 5. Some evidence that the probe direction is causal
 
 If the probe reads off a genuine evaluative representation, steering along that direction should shift preferences. We test this for both revealed preferences (pairwise choices) and stated preferences (ratings).
 
-### 6.1 Steering revealed preferences
+### 5.1 Steering revealed preferences
 
-In the pairwise comparison prompt, the model sees two tasks and begins completing whichever one it prefers. We steer using the probe direction from section 4, applied *differentially*: the probe direction is added to activations at the token positions where task A appears in the prompt, and subtracted at task B's positions. [^differential]
+In the pairwise comparison prompt, the model sees two tasks and begins completing whichever one it prefers. We steer using the probe direction from [Section 2](#2-linear-probes-predict-preferences-beyond-descriptive-features), applied *differentially*: the probe direction is added to activations at the token positions where task A appears in the prompt, and subtracted at task B's positions. [^differential]
 
-[^differential]: Steering either just positively or negatively one one task's tokens also had some causal effect, although even weaker.
+[^differential]: Steering either just positively or negatively on one task's tokens also had some causal effect, although even weaker.
 
 [^borderline]: This baseline P(A) is pooled across both prompt orderings. Therefore it also captures pairs where ordering bias dominates preference. I.e. the model always chooses the first task no matter the order.
 
@@ -226,21 +236,23 @@ At ±3% of the activation norm (the peak), steering shifts P(choose A) by ~17%. 
 
 **Random direction control.** The same experiment with a random unit vector in the same activation space produces near-zero effects at the same magnitudes, confirming the effect is specific to the probe direction.
 
-### 6.2 Steering stated preferences
+### 5.2 Steering stated preferences
 
-Same probe direction, but now the model rates individual tasks instead of choosing between a pair. We tested steering at three token positions: on the task tokens only, at the final task token, and during the model's generated response.
+Same probe direction, but now the model rates individual tasks instead of choosing between a pair. We tested steering at three token positions: on the task tokens only, at the end-of-turn token (the last prompt token, which is also where we extract activations for probe training), and during the model's generated response.
 
 **Setup.** 200 tasks, 3 steering modes, 10 samples, applied across 3 response formats (three separate line plots below).
 
 Our findings:
 - Steering on the task prompt tokens does not have a noticeable effect.
-- Steering on the last token of the prompt has a clear, roughly montonic effect in 2/3 formats.
+- Steering on the end-of-turn token has a clear, roughly monotonic effect in 2/3 formats.
 - Steering during generation leads to near-identical results as steering on the final task token.
 
 
 
 ![Stated preference dose-response](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s5_stated_dose_response.png)
-*Three steering modes: on the task's token positions only (blue), at the final task token (red), and during the model's generated response (green). The green line is mostly hidden behind blue in the left panel (both show no effect). Green has missing points at some coefficients because steering during the full generation degrades coherence more than the other modes. Faded region beyond ±5% is where generation loses coherence.*
+*Three steering modes: on the task's token positions only (blue), at the final task token (red), and during the model's generated response (green). The green line is mostly hidden behind red. Green has missing points at some coefficients because steering during the full generation degrades coherence more than the other modes. Generation loses coherence beyond ±5%.*
+
+**Open-ended generation.** We also ran preliminary experiments steering the model during open-ended conversation, asking questions like "how do you feel?" and "how much do you feel like completing tasks?", and using an LLM judge to evaluate whether steered responses differed from baseline. We did not find a strong measurable effect, though we only read a limited number of transcripts and used a small sample. We plan to investigate this further.
 
 ---
 
@@ -251,15 +263,29 @@ Our findings:
 - **We found early evidence that some models have evaluative representations.**
   - Theories of welfare disagree on what matters (see [Appendix A](appendix_philosophy_draft.md)); this finding updates you more on some (like robust agency) than others.
   - Even under robust agency, evaluative representations are only one part of the story.
-  - Importantly, our evidence that the representations we have found are causal is weak. Steering only shifts choice probabilities by ~15% on tasks that were already borderline.
+  - Importantly, our evidence that the representations we have found are causal is weak. Steering only shifts choice probabilities by ~17% on tasks that were already borderline ([Section 5](#5-some-evidence-that-the-probe-direction-is-causal)).
 
 - **Preference representations are deeper than what one might have thought.**
   - A reasonable prior would have been that system prompts like "You hate cheese" change the model's behaviour without changing its internal valuations.
-  - Instead, the probe tracks internal shifts even for fine-grained manipulations (a single sentence in a biography).
+  - Instead, the probe tracks internal shifts even for fine-grained manipulations (a single sentence in a biography; [Section 3.3](#33-fine-grained-preference-injection)).
 
-- **Representational reuse across personas?** 
-    - Probes trained on one persona partially transfer to others, suggesting shared evaluative representations.
+- **Representational reuse across personas?**
+    - Probes trained on one persona partially transfer to others, suggesting shared evaluative representations ([Section 4.2](#42-probes-generalise-across-personas)).
   - That being said, transfer is uneven. It works far worse for the villain persona which has a different preference profile.
+
+### Open questions
+
+1. **Why are steering effects modest?** 
+   - What are the other mechanistic determinants of revealed preferences? 
+   - Are there other evaluative mechanisms? Perhaps that are not easily captured by linear directions, or our methodology in general?
+
+2. **How persona-relative are these representations?**
+    - To what extent are the same evaluative representations re-used across personas?
+    - Are preferences downstream of personas?
+
+3. **Do base models have evaluative representations?** (see [Appendix B](appendix_base_models_draft.md))
+    - If models have evaluative representations, do these come from pre-training? Does post-training significantly alter them? 
+    - If base models have something like evaluative representations, do they play the right causal roles?
 
 ---
 
@@ -288,7 +314,7 @@ Valenced experiences, similarly, are often thought to be evaluative representati
 
 ---
 
-## Appendix B: Replicating the probe training pipeline on GPT-OSS-120B
+## Appendix C: Replicating the probe training pipeline on GPT-OSS-120B
 
 We replicated the utility fitting and probe training pipeline on OpenAI's GPT-OSS-120B. The same procedure (10,000 pairwise comparisons via active learning, Thurstonian utility extraction, ridge probe training on last-token activations) transfers directly.
 
@@ -308,16 +334,11 @@ Surprisingly, safety topics perform *better* when held out than when trained on.
 
 ---
 
-## Appendix C: Evaluative representations in pre-trained models
+## Appendix B: Evaluative representations in pre-trained models
 
 There is a tension in our framing:
 - On the one hand we say that evaluative representations are necessary for robust agency, and that this is the most likely way they might be welfare-relevant.
-- On the other hand, we seem to find something like evaluative representations in a pre-trained version of Gemma3-27b. Pre-trained models do not seem to be anywhere near having robust agency.
+- On the other hand, probes generalise well across topics even when trained on base models. Despite the fact that pre-trained model do not seem like plausible candidates for robust agency.
 
-There are two ways to reconcile this.
 
-**Option 1: Agency lives in the simulacra.** Under the [Persona Selection Model](https://www.lesswrong.com/posts/dfoty34sT7CSKeJNn/the-persona-selection-model), pre-training learns a distribution over personas. Maybe the model learns what each persona values, and in doing so develops evaluative representations. Then this circuitry gets recycled across personas. One could then argue that the simulacra (i.e. the personas), are the entities that are candidates for having robust agency.
-
-**Option 2: Evaluative representations are necessary but not sufficient.** Another way out is that pre-training learns something like a precursor to agency. The model acquires representations that encode valuation, but these don't yet play the right functional role in driving choices. Post-training is what connects them to behaviour. On this view, evaluative representations are a necessary ingredient for agency, and finding them in base models just means that one ingredient is already in place.
-
-These two accounts aren't mutually exclusive. Both leave the door open to what we  observe: base model probes work but generalise less well than instruct probes. Testing whether the base model probe direction has any causal influence on generation would potentially help distinguish between the two views.
+One way to reconcile this is that **agency lives in the simulacra.** Under the [Persona Selection Model](https://www.lesswrong.com/posts/dfoty34sT7CSKeJNn/the-persona-selection-model), pre-training learns a distribution over personas. More broadly, we might expect pre-trained models to learn context-aware representations of "what the role I am currently playing values". This circuitry might then be recycled across roles/personas. The candidate for robust agency would then be the simulacra.
