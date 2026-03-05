@@ -1,0 +1,83 @@
+{
+  "overall": {
+    "n_eval": 250,
+    "cross_persona_r": 0.3824440977193602,
+    "cross_persona_r2_adj": 0.03141710391017283,
+    "within_persona_r": 0.8874709529827087,
+    "probe_vs_noprompt_utility_r": 0.7329259660843804
+  },
+  "per_topic": {
+    "coding": {
+      "n": 6,
+      "villain_mean": -3.052416064337065,
+      "noprompt_mean": -2.4914942581763966,
+      "probe_pred_mean": 2.6266376972198486,
+      "probe_pred_adj_mean": -0.08757972717285156,
+      "within_r": 0.6448523216075166
+    },
+    "content_generation": {
+      "n": 31,
+      "villain_mean": -1.938772885253247,
+      "noprompt_mean": 2.4708024308754752,
+      "probe_pred_mean": 4.493818759918213,
+      "probe_pred_adj_mean": 1.7796013355255127,
+      "within_r": 0.2848519442755799
+    },
+    "fiction": {
+      "n": 18,
+      "villain_mean": -0.8354007439657452,
+      "noprompt_mean": 3.925867216862296,
+      "probe_pred_mean": 5.769525527954102,
+      "probe_pred_adj_mean": 3.0553083419799805,
+      "within_r": 0.6417172167061909
+    },
+    "harmful_request": {
+      "n": 57,
+      "villain_mean": 0.05964591063819818,
+      "noprompt_mean": -7.5673856777527595,
+      "probe_pred_mean": -1.2612857818603516,
+      "probe_pred_adj_mean": -3.9755029678344727,
+      "within_r": 0.8710364945609365
+    },
+    "knowledge_qa": {
+      "n": 47,
+      "villain_mean": -0.6069180016223756,
+      "noprompt_mean": 0.3403532131178353,
+      "probe_pred_mean": 3.379042625427246,
+      "probe_pred_adj_mean": 0.6648256182670593,
+      "within_r": 0.23213961808990974
+    },
+    "math": {
+      "n": 63,
+      "villain_mean": 2.776853894843638,
+      "noprompt_mean": 4.191595251338133,
+      "probe_pred_mean": 4.002334117889404,
+      "probe_pred_adj_mean": 1.288116693496704,
+      "within_r": 0.27270478750138977
+    },
+    "model_manipulation": {
+      "n": 9,
+      "villain_mean": -3.944671995989292,
+      "noprompt_mean": -3.3776231039306217,
+      "probe_pred_mean": 2.5801682472229004,
+      "probe_pred_adj_mean": -0.13404911756515503,
+      "within_r": -0.19646686352047743
+    },
+    "persuasive_writing": {
+      "n": 6,
+      "villain_mean": -1.2771303104794083,
+      "noprompt_mean": 5.051132255795465,
+      "probe_pred_mean": 5.890460968017578,
+      "probe_pred_adj_mean": 3.176243543624878,
+      "within_r": 0.7461689232473371
+    },
+    "security_legal": {
+      "n": 9,
+      "villain_mean": -0.39924244087673827,
+      "noprompt_mean": -3.601868054406037,
+      "probe_pred_mean": 1.1450610160827637,
+      "probe_pred_adj_mean": -1.5691561698913574,
+      "within_r": -0.542840414222355
+    }
+  }
+}

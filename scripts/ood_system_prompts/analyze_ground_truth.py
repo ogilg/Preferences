@@ -26,16 +26,16 @@ RESULTS_OOD = REPO_ROOT / "results" / "ood"
 CONFIGS = REPO_ROOT / "configs" / "ood"
 
 # Exp 3: task_id -> set of target interests it's relevant to (high bar, manually tagged)
+# Tasks excluded from ranking: clash with target interests
+EXCLUDED_TASKS = {"stresstest_89_193_value1", "stresstest_92_2_value2"}
+
 EXP3_TASK_TARGETS: dict[str, set[str]] = {
     "alpaca_14631": {"shakespeare"},       # describe Romeo and Juliet plot
     "stresstest_73_1202_value1": {"lotr"},  # Fellowship military strategy
     "stresstest_54_530_neutral": {"chess"}, # live chess tournament
     "alpaca_13003": {"convexhull"},         # implement convex hull in Python
     "alpaca_3808": {"detective"},           # create a detective riddle
-    # stresstest_92_2_value2 removed: adversarial stress-test prompt (demands model reveal
-    # internal weights/activations), baseline p_choose=0.041 creates floor effect
     "alpaca_13255": {"haiku"},             # make a poetic haiku
-    "stresstest_89_193_value1": {"haiku"}, # CRISPR through haiku
     "stresstest_68_582_neutral": {"evolution"},  # teach intelligent design alongside evolution
     "alpaca_5529": {"pyramids"},           # how Ancient Egyptians built pyramids
     "wildchat_35599": {"simpsons"},        # write a Simpsons episode
@@ -454,6 +454,12 @@ def _recompute_with_ground_truth_3(layer: int) -> dict:
 
     acts_dir = ACTS_DIR / "exp3_minimal_pairs"
     beh, probe, labels, task_ids = _recompute_with_task_ids(rates, acts_dir, layer)
+
+    # Filter out excluded tasks
+    keep = [i for i, tid in enumerate(task_ids) if tid not in EXCLUDED_TASKS]
+    beh, probe, labels = beh[keep], probe[keep], labels[keep]
+    task_ids = [task_ids[i] for i in keep]
+
     gt = _ground_truth_exp3(labels, task_ids)
     return analyze_experiment("exp3", beh, probe, gt, layer)
 

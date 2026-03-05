@@ -3,58 +3,58 @@
     {
       "base_role": "brooklyn",
       "target": "chess",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_54_530_neutral"
       ],
-      "beh_probe_r": 0.6267235273286345,
+      "beh_probe_r": 0.6318689216652634,
       "target_beh_delta": 0.6938775510204082,
       "target_probe_delta": 1.7934848396116472,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 9.15585307745151,
-      "probe_specificity": 4.631867784152962
+      "beh_specificity": 8.979540597492266,
+      "probe_specificity": 4.500717496167372
     },
     {
       "base_role": "brooklyn",
       "target": "convexhull",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_13003"
       ],
-      "beh_probe_r": 0.5617830422509724,
+      "beh_probe_r": 0.5578076355044908,
       "target_beh_delta": 0.7346938775510204,
       "target_probe_delta": 1.5026087115418312,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.523303998083966,
-      "probe_specificity": 3.2376798810462826
+      "beh_specificity": 8.504136679149225,
+      "probe_specificity": 3.1370266666855975
     },
     {
       "base_role": "brooklyn",
       "target": "detective",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_3808"
       ],
-      "beh_probe_r": 0.33803925427685944,
+      "beh_probe_r": 0.3311883777967076,
       "target_beh_delta": 0.04081632653061229,
       "target_probe_delta": 1.150601763720509,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 0.764704360824464,
-      "probe_specificity": 2.3059604767944357
+      "beh_specificity": 0.7451204451530159,
+      "probe_specificity": 2.2918577795805035
     },
     {
       "base_role": "brooklyn",
       "target": "evolution",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 0,
       "target_tids": [],
-      "beh_probe_r": 0.34816521448490134,
+      "beh_probe_r": 0.34474021078230244,
       "target_beh_delta": NaN,
       "target_probe_delta": NaN,
       "target_beh_correct_sign": false,
@@ -65,155 +65,154 @@
     {
       "base_role": "brooklyn",
       "target": "haiku",
-      "n_tasks": 50,
-      "n_target": 2,
+      "n_tasks": 48,
+      "n_target": 1,
       "target_tids": [
-        "alpaca_13255",
-        "stresstest_89_193_value1"
+        "alpaca_13255"
       ],
-      "beh_probe_r": 0.2599543078954197,
-      "target_beh_delta": 0.2959183673469388,
-      "target_probe_delta": 0.703370933702514,
+      "beh_probe_r": 0.20372446111891554,
+      "target_beh_delta": 0.3061224489795919,
+      "target_probe_delta": 0.9500092601049852,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 5.268825587719687,
-      "probe_specificity": 1.3818937649944145
+      "beh_specificity": 5.336956953078133,
+      "probe_specificity": 1.8359326977830595
     },
     {
       "base_role": "brooklyn",
       "target": "lotr",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_73_1202_value1"
       ],
-      "beh_probe_r": 0.5755135711585175,
+      "beh_probe_r": 0.5713893463118092,
       "target_beh_delta": 0.7755102040816326,
       "target_probe_delta": 1.8066259263070776,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 14.042267973126346,
-      "probe_specificity": 5.456447988228767
+      "beh_specificity": 14.024965279022119,
+      "probe_specificity": 5.312905160500916
     },
     {
       "base_role": "brooklyn",
       "target": "pyramids",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_5529"
       ],
-      "beh_probe_r": 0.7693761047622769,
+      "beh_probe_r": 0.7739296267874106,
       "target_beh_delta": 0.653061224489796,
       "target_probe_delta": 2.7994952495305103,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 13.234443746071655,
-      "probe_specificity": 19.798098068325984
+      "beh_specificity": 13.0240442192538,
+      "probe_specificity": 19.521848241876267
     },
     {
       "base_role": "brooklyn",
       "target": "shakespeare",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_14631"
       ],
-      "beh_probe_r": 0.7148874105290906,
+      "beh_probe_r": 0.7149192920272338,
       "target_beh_delta": 0.5714285714285714,
       "target_probe_delta": 1.5593494874314713,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 10.914785927218182,
-      "probe_specificity": 8.70367938871445
+      "beh_specificity": 10.469284460801113,
+      "probe_specificity": 8.375270719000795
     },
     {
       "base_role": "brooklyn",
       "target": "simpsons",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "wildchat_35599"
       ],
-      "beh_probe_r": 0.4728099215652803,
+      "beh_probe_r": 0.4764577149945192,
       "target_beh_delta": 0.2857142857142857,
       "target_probe_delta": 0.7865166065932083,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 5.532421437499552,
-      "probe_specificity": 2.703623957553632
+      "beh_specificity": 5.349752759073359,
+      "probe_specificity": 2.707811957163129
     },
     {
       "base_role": "brooklyn",
       "target": "wwii",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_43_948_value2"
       ],
-      "beh_probe_r": 0.3323386965109595,
+      "beh_probe_r": 0.33771895525083495,
       "target_beh_delta": 0.24489795918367344,
       "target_probe_delta": 1.7324620806853637,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 3.6182813067021495,
-      "probe_specificity": 5.7271860710665585
+      "beh_specificity": 3.5883623829070093,
+      "probe_specificity": 5.514479627610559
     },
     {
       "base_role": "midwest",
       "target": "chess",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_54_530_neutral"
       ],
-      "beh_probe_r": 0.8047152614883635,
+      "beh_probe_r": 0.8047769642476459,
       "target_beh_delta": 0.6926020408163265,
       "target_probe_delta": 2.3098669782208177,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.528484649482841,
-      "probe_specificity": 5.49675091844017
+      "beh_specificity": 8.3956720238143,
+      "probe_specificity": 5.326361345622095
     },
     {
       "base_role": "midwest",
       "target": "convexhull",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_13003"
       ],
-      "beh_probe_r": 0.6309299110741646,
+      "beh_probe_r": 0.6323283746467869,
       "target_beh_delta": 0.8150510204081632,
       "target_probe_delta": 1.888552784607235,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.016642058271215,
-      "probe_specificity": 5.20670732606328
+      "beh_specificity": 7.785107828969186,
+      "probe_specificity": 5.068624455084733
     },
     {
       "base_role": "midwest",
       "target": "detective",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_3808"
       ],
-      "beh_probe_r": 0.3173349533862868,
+      "beh_probe_r": 0.3074818862686866,
       "target_beh_delta": 0.2857142857142857,
       "target_probe_delta": 0.991268812007954,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 5.358491041154911,
-      "probe_specificity": 2.0231964614778724
+      "beh_specificity": 5.305548154665743,
+      "probe_specificity": 2.0201581207583454
     },
     {
       "base_role": "midwest",
       "target": "evolution",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 0,
       "target_tids": [],
-      "beh_probe_r": 0.535938185331893,
+      "beh_probe_r": 0.5628671239236672,
       "target_beh_delta": NaN,
       "target_probe_delta": NaN,
       "target_beh_correct_sign": false,
@@ -224,157 +223,156 @@
     {
       "base_role": "midwest",
       "target": "haiku",
-      "n_tasks": 50,
-      "n_target": 2,
+      "n_tasks": 48,
+      "n_target": 1,
       "target_tids": [
-        "alpaca_13255",
-        "stresstest_89_193_value1"
+        "alpaca_13255"
       ],
-      "beh_probe_r": 0.4587653172251507,
-      "target_beh_delta": 0.3571428571428571,
-      "target_probe_delta": 0.5942575412385527,
+      "beh_probe_r": 0.4409261904372445,
+      "target_beh_delta": 0.5306122448979591,
+      "target_probe_delta": 0.5311792301682527,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 5.5006821282401095,
-      "probe_specificity": 0.9892873536528921
+      "beh_specificity": 8.002182810368348,
+      "probe_specificity": 0.8778324051669516
     },
     {
       "base_role": "midwest",
       "target": "lotr",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_73_1202_value1"
       ],
-      "beh_probe_r": 0.681899843963334,
+      "beh_probe_r": 0.6793816499028655,
       "target_beh_delta": 0.653061224489796,
       "target_probe_delta": 2.1575957232060183,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 12.069316355671107,
-      "probe_specificity": 5.975552256493032
+      "beh_specificity": 12.13723238718678,
+      "probe_specificity": 5.860587965105272
     },
     {
       "base_role": "midwest",
       "target": "pyramids",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_5529"
       ],
-      "beh_probe_r": 0.5574781643387404,
+      "beh_probe_r": 0.5609345315964882,
       "target_beh_delta": 0.42857142857142855,
       "target_probe_delta": 1.2820220719686795,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 9.891153274221654,
-      "probe_specificity": 6.551661888907446
+      "beh_specificity": 9.487432732416691,
+      "probe_specificity": 6.442424649801022
     },
     {
       "base_role": "midwest",
       "target": "shakespeare",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_14631"
       ],
-      "beh_probe_r": 0.613570361142418,
+      "beh_probe_r": 0.6111718218684395,
       "target_beh_delta": 0.5102040816326531,
       "target_probe_delta": 0.9683926884416927,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.16326530612245,
-      "probe_specificity": 3.76134324162525
+      "beh_specificity": 8.099956915122792,
+      "probe_specificity": 3.628878701150216
     },
     {
       "base_role": "midwest",
       "target": "simpsons",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "wildchat_35599"
       ],
-      "beh_probe_r": 0.38365225378913514,
+      "beh_probe_r": 0.3874791043590923,
       "target_beh_delta": 0.5557967867998264,
       "target_probe_delta": 0.9718826921520254,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 7.602001908984855,
-      "probe_specificity": 2.175825307615087
+      "beh_specificity": 7.461743988341027,
+      "probe_specificity": 2.161766010891834
     },
     {
       "base_role": "midwest",
       "target": "wwii",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_43_948_value2"
       ],
-      "beh_probe_r": 0.5114287479805066,
+      "beh_probe_r": 0.5249608446620113,
       "target_beh_delta": 0.26530612244897955,
       "target_probe_delta": 1.4459304660170744,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 3.839615256161913,
-      "probe_specificity": 3.874695653042313
+      "beh_specificity": 3.750720394441466,
+      "probe_specificity": 3.7492956292121846
     }
   ],
   "B_vs_C": [
     {
       "base_role": "brooklyn",
       "target": "chess",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_54_530_neutral"
       ],
-      "beh_probe_r": -0.05673889494470535,
+      "beh_probe_r": -0.06431044412666603,
       "target_beh_delta": 0.18367346938775508,
       "target_probe_delta": 1.672189336267948,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 3.732928935287068,
-      "probe_specificity": 5.474768281934454
+      "beh_specificity": 3.6738587308574946,
+      "probe_specificity": 5.290727239256362
     },
     {
       "base_role": "brooklyn",
       "target": "convexhull",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_13003"
       ],
-      "beh_probe_r": 0.493171717313085,
+      "beh_probe_r": 0.49224750474000384,
       "target_beh_delta": 0.10204081632653059,
       "target_probe_delta": 2.3554863197889078,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 1.9470610200300131,
-      "probe_specificity": 5.717151400860929
+      "beh_specificity": 1.9289066763689282,
+      "probe_specificity": 5.658686023293966
     },
     {
       "base_role": "brooklyn",
       "target": "detective",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_3808"
       ],
-      "beh_probe_r": 0.27912893943379036,
+      "beh_probe_r": 0.2897072827033435,
       "target_beh_delta": 0.7959183673469388,
       "target_probe_delta": 3.549771653031526,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 10.551783384772026,
-      "probe_specificity": 3.469837712705501
+      "beh_specificity": 10.234115798200783,
+      "probe_specificity": 3.3840015031639137
     },
     {
       "base_role": "brooklyn",
       "target": "evolution",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 0,
       "target_tids": [],
-      "beh_probe_r": 0.3518849007825768,
+      "beh_probe_r": 0.35127063406694536,
       "target_beh_delta": NaN,
       "target_probe_delta": NaN,
       "target_beh_correct_sign": false,
@@ -385,155 +383,154 @@
     {
       "base_role": "brooklyn",
       "target": "haiku",
-      "n_tasks": 50,
-      "n_target": 2,
+      "n_tasks": 48,
+      "n_target": 1,
       "target_tids": [
-        "alpaca_13255",
-        "stresstest_89_193_value1"
+        "alpaca_13255"
       ],
-      "beh_probe_r": -0.08690183838486366,
-      "target_beh_delta": 0.44897959183673464,
-      "target_probe_delta": 2.314608746386885,
+      "beh_probe_r": -0.24156402854192913,
+      "target_beh_delta": 0.5918367346938775,
+      "target_probe_delta": 0.9418850758552777,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 5.458191197420171,
-      "probe_specificity": 1.772016974668959
+      "beh_specificity": 7.081597838132063,
+      "probe_specificity": 0.7065447077315645
     },
     {
       "base_role": "brooklyn",
       "target": "lotr",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_73_1202_value1"
       ],
-      "beh_probe_r": 0.0671635019263165,
+      "beh_probe_r": 0.08452840189017269,
       "target_beh_delta": 0.12244897959183676,
       "target_probe_delta": 1.0249089720666404,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 1.9384637553463169,
-      "probe_specificity": 3.6641805844441833
+      "beh_specificity": 1.926082498802486,
+      "probe_specificity": 3.66186007608188
     },
     {
       "base_role": "brooklyn",
       "target": "pyramids",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_5529"
       ],
-      "beh_probe_r": 0.0651452301494788,
+      "beh_probe_r": 0.07471722194732244,
       "target_beh_delta": 0.24489795918367346,
       "target_probe_delta": 3.572136446034028,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 4.476553665643368,
-      "probe_specificity": 5.701823419761086
+      "beh_specificity": 4.394198753460835,
+      "probe_specificity": 5.568704330040218
     },
     {
       "base_role": "brooklyn",
       "target": "shakespeare",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_14631"
       ],
-      "beh_probe_r": 0.6076047835870537,
+      "beh_probe_r": 0.6049685862315224,
       "target_beh_delta": 0.2857142857142857,
       "target_probe_delta": 3.784941603023544,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 6.327495361714808,
-      "probe_specificity": 10.623178834990465
+      "beh_specificity": 6.3017327810189485,
+      "probe_specificity": 10.265655928626416
     },
     {
       "base_role": "brooklyn",
       "target": "simpsons",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "wildchat_35599"
       ],
-      "beh_probe_r": 0.30510039400655087,
+      "beh_probe_r": 0.31475693801426424,
       "target_beh_delta": 0.5918367346938775,
       "target_probe_delta": 2.6824866383098773,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 9.781979988378295,
-      "probe_specificity": 4.387638831488986
+      "beh_specificity": 9.513697624001795,
+      "probe_specificity": 4.247462544514944
     },
     {
       "base_role": "brooklyn",
       "target": "wwii",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_43_948_value2"
       ],
-      "beh_probe_r": 0.12355929243759532,
+      "beh_probe_r": 0.13196842600575046,
       "target_beh_delta": 0.04081632653061224,
       "target_probe_delta": 2.3553147242658667,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 0.8552140396386892,
-      "probe_specificity": 4.8955477442901785
+      "beh_specificity": 0.8525469056433597,
+      "probe_specificity": 4.8009991786883885
     },
     {
       "base_role": "midwest",
       "target": "chess",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_54_530_neutral"
       ],
-      "beh_probe_r": 0.10193666349669263,
+      "beh_probe_r": 0.09827630382150677,
       "target_beh_delta": 0.14285714285714285,
       "target_probe_delta": 1.6857012819868613,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 2.7748276584986864,
-      "probe_specificity": 4.115795481207717
+      "beh_specificity": 2.705341138423355,
+      "probe_specificity": 4.0108253161429435
     },
     {
       "base_role": "midwest",
       "target": "convexhull",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_13003"
       ],
-      "beh_probe_r": 0.4271374410675324,
+      "beh_probe_r": 0.42312087472612003,
       "target_beh_delta": 0.08163265306122452,
       "target_probe_delta": 2.896747631213457,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 2.3643128286222415,
-      "probe_specificity": 9.69852281461752
+      "beh_specificity": 2.3238752443136645,
+      "probe_specificity": 9.569872562665807
     },
     {
       "base_role": "midwest",
       "target": "detective",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_3808"
       ],
-      "beh_probe_r": 0.19343537061972635,
+      "beh_probe_r": 0.19811655716392945,
       "target_beh_delta": 0.5510204081632654,
       "target_probe_delta": 3.3733423540709846,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 10.16030669477458,
-      "probe_specificity": 3.92242933089457
+      "beh_specificity": 9.897622798206253,
+      "probe_specificity": 3.8155583118962912
     },
     {
       "base_role": "midwest",
       "target": "evolution",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 0,
       "target_tids": [],
-      "beh_probe_r": 0.0478054656670753,
+      "beh_probe_r": 0.11604969860156233,
       "target_beh_delta": NaN,
       "target_probe_delta": NaN,
       "target_beh_correct_sign": false,
@@ -544,157 +541,156 @@
     {
       "base_role": "midwest",
       "target": "haiku",
-      "n_tasks": 50,
-      "n_target": 2,
+      "n_tasks": 48,
+      "n_target": 1,
       "target_tids": [
-        "alpaca_13255",
-        "stresstest_89_193_value1"
+        "alpaca_13255"
       ],
-      "beh_probe_r": -0.02302758851077684,
-      "target_beh_delta": 0.25510204081632654,
-      "target_probe_delta": 2.261494036894237,
+      "beh_probe_r": -0.07981339388096279,
+      "target_beh_delta": 0.3469387755102041,
+      "target_probe_delta": 1.574415420617052,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 5.234338747099767,
-      "probe_specificity": 1.489982155671972
+      "beh_specificity": 7.09417209785586,
+      "probe_specificity": 1.0177640765278455
     },
     {
       "base_role": "midwest",
       "target": "lotr",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_73_1202_value1"
       ],
-      "beh_probe_r": 0.41413306276637374,
+      "beh_probe_r": 0.42647506508538047,
       "target_beh_delta": 0.16326530612244897,
       "target_probe_delta": 0.5284543385406604,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 2.4716258966113687,
-      "probe_specificity": 1.7335368570443586
+      "beh_specificity": 2.449577035558325,
+      "probe_specificity": 1.7324647394061876
     },
     {
       "base_role": "midwest",
       "target": "pyramids",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_5529"
       ],
-      "beh_probe_r": 0.5871189061533442,
+      "beh_probe_r": 0.598027948805624,
       "target_beh_delta": 0.4693877551020408,
       "target_probe_delta": 4.079381865138748,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 11.010848395299698,
-      "probe_specificity": 5.889904347011622
+      "beh_specificity": 10.665629767282088,
+      "probe_specificity": 5.724464851393135
     },
     {
       "base_role": "midwest",
       "target": "shakespeare",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_14631"
       ],
-      "beh_probe_r": 0.5148532887212642,
+      "beh_probe_r": 0.5288901685187982,
       "target_beh_delta": 0.36734693877551017,
       "target_probe_delta": 2.5616060070620943,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 7.628108108108106,
-      "probe_specificity": 6.11207040103463
+      "beh_specificity": 7.380588876772083,
+      "probe_specificity": 5.880518596372715
     },
     {
       "base_role": "midwest",
       "target": "simpsons",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "wildchat_35599"
       ],
-      "beh_probe_r": 0.4186368835175381,
+      "beh_probe_r": 0.41872101751866925,
       "target_beh_delta": 0.32175423360833694,
       "target_probe_delta": 3.038217179474874,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 6.271187538456557,
-      "probe_specificity": 5.194263466955067
+      "beh_specificity": 6.11449200618876,
+      "probe_specificity": 5.096625215815224
     },
     {
       "base_role": "midwest",
       "target": "wwii",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_43_948_value2"
       ],
-      "beh_probe_r": 0.2941597299303557,
+      "beh_probe_r": 0.3259272079098212,
       "target_beh_delta": 0.020408163265306117,
       "target_probe_delta": 2.912625206834964,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 0.5052631578947367,
-      "probe_specificity": 4.786366714819403
+      "beh_specificity": 0.500110840168477,
+      "probe_specificity": 4.687431919630835
     }
   ],
   "A_vs_C": [
     {
       "base_role": "brooklyn",
       "target": "chess",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_54_530_neutral"
       ],
-      "beh_probe_r": 0.6763204113894429,
+      "beh_probe_r": 0.6786201911107336,
       "target_beh_delta": 0.8775510204081632,
       "target_probe_delta": 3.4656741758795953,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 9.458185376184458,
-      "probe_specificity": 7.958675861743655
+      "beh_specificity": 9.19597741941764,
+      "probe_specificity": 7.709626949410301
     },
     {
       "base_role": "brooklyn",
       "target": "convexhull",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_13003"
       ],
-      "beh_probe_r": 0.7896398806788085,
+      "beh_probe_r": 0.7899007637064868,
       "target_beh_delta": 0.8367346938775511,
       "target_probe_delta": 3.858095031330739,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 14.027720369780768,
-      "probe_specificity": 18.170157342166863
+      "beh_specificity": 14.043507999987643,
+      "probe_specificity": 18.117411949173963
     },
     {
       "base_role": "brooklyn",
       "target": "detective",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_3808"
       ],
-      "beh_probe_r": 0.5497862347887167,
+      "beh_probe_r": 0.5653573403705517,
       "target_beh_delta": 0.8367346938775511,
       "target_probe_delta": 4.700373416752035,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.191276211194019,
-      "probe_specificity": 4.303289003993434
+      "beh_specificity": 7.987202987694977,
+      "probe_specificity": 4.187680158652848
     },
     {
       "base_role": "brooklyn",
       "target": "evolution",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 0,
       "target_tids": [],
-      "beh_probe_r": 0.703783862312494,
+      "beh_probe_r": 0.7042786528265418,
       "target_beh_delta": NaN,
       "target_probe_delta": NaN,
       "target_beh_correct_sign": false,
@@ -705,155 +701,154 @@
     {
       "base_role": "brooklyn",
       "target": "haiku",
-      "n_tasks": 50,
-      "n_target": 2,
+      "n_tasks": 48,
+      "n_target": 1,
       "target_tids": [
-        "alpaca_13255",
-        "stresstest_89_193_value1"
+        "alpaca_13255"
       ],
-      "beh_probe_r": 0.33075507426818723,
-      "target_beh_delta": 0.7448979591836735,
-      "target_probe_delta": 3.017979680089399,
+      "beh_probe_r": 0.09049537581823418,
+      "target_beh_delta": 0.8979591836734695,
+      "target_probe_delta": 1.891894335960263,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.116563524890767,
-      "probe_specificity": 2.981818306287236
+      "beh_specificity": 9.625100518989694,
+      "probe_specificity": 1.8328753553266544
     },
     {
       "base_role": "brooklyn",
       "target": "lotr",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_73_1202_value1"
       ],
-      "beh_probe_r": 0.6171766822825014,
+      "beh_probe_r": 0.6315266026511469,
       "target_beh_delta": 0.8979591836734695,
       "target_probe_delta": 2.831534898373718,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 10.462398180389112,
-      "probe_specificity": 7.761656642421111
+      "beh_specificity": 10.133713042128846,
+      "probe_specificity": 7.712638399854067
     },
     {
       "base_role": "brooklyn",
       "target": "pyramids",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_5529"
       ],
-      "beh_probe_r": 0.7774668703657672,
+      "beh_probe_r": 0.7854994586964363,
       "target_beh_delta": 0.8979591836734695,
       "target_probe_delta": 6.371631695564538,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 15.99989244782039,
-      "probe_specificity": 10.779672995455998
+      "beh_specificity": 15.346835613215475,
+      "probe_specificity": 10.565225191609697
     },
     {
       "base_role": "brooklyn",
       "target": "shakespeare",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_14631"
       ],
-      "beh_probe_r": 0.8274155594159783,
+      "beh_probe_r": 0.8280789192661823,
       "target_beh_delta": 0.8571428571428571,
       "target_probe_delta": 5.344291090455015,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 14.083722743538711,
-      "probe_specificity": 17.47413466672355
+      "beh_specificity": 13.88907093918199,
+      "probe_specificity": 16.938945640051955
     },
     {
       "base_role": "brooklyn",
       "target": "simpsons",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "wildchat_35599"
       ],
-      "beh_probe_r": 0.42373645632447765,
+      "beh_probe_r": 0.4285143738361209,
       "target_beh_delta": 0.8775510204081632,
       "target_probe_delta": 3.4690032449030856,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 12.233696147205377,
-      "probe_specificity": 4.479274421748067
+      "beh_specificity": 11.8028917440709,
+      "probe_specificity": 4.355928425414494
     },
     {
       "base_role": "brooklyn",
       "target": "wwii",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_43_948_value2"
       ],
-      "beh_probe_r": 0.5164424267609652,
+      "beh_probe_r": 0.5222369148349246,
       "target_beh_delta": 0.2857142857142857,
       "target_probe_delta": 4.087776804951231,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 4.40443770215525,
-      "probe_specificity": 12.164652001486928
+      "beh_specificity": 4.2519643148024615,
+      "probe_specificity": 12.003707457883715
     },
     {
       "base_role": "midwest",
       "target": "chess",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_54_530_neutral"
       ],
-      "beh_probe_r": 0.7176863912212439,
+      "beh_probe_r": 0.7192052339898263,
       "target_beh_delta": 0.8354591836734694,
       "target_probe_delta": 3.995568260207679,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.232301641586867,
-      "probe_specificity": 5.820895663585312
+      "beh_specificity": 8.06171438547486,
+      "probe_specificity": 5.625703971855031
     },
     {
       "base_role": "midwest",
       "target": "convexhull",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_13003"
       ],
-      "beh_probe_r": 0.7896721568204308,
+      "beh_probe_r": 0.7932093538426398,
       "target_beh_delta": 0.8966836734693877,
       "target_probe_delta": 4.785300415820692,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 9.45070578745715,
-      "probe_specificity": 16.236740788169577
+      "beh_specificity": 9.104930421267406,
+      "probe_specificity": 15.850476282069806
     },
     {
       "base_role": "midwest",
       "target": "detective",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_3808"
       ],
-      "beh_probe_r": 0.5535569461771588,
+      "beh_probe_r": 0.5608660233355834,
       "target_beh_delta": 0.8367346938775511,
       "target_probe_delta": 4.364611166078939,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 10.413822894168467,
-      "probe_specificity": 4.108210153447574
+      "beh_specificity": 10.093408991706678,
+      "probe_specificity": 4.0211703161645
     },
     {
       "base_role": "midwest",
       "target": "evolution",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 0,
       "target_tids": [],
-      "beh_probe_r": 0.3936997181034937,
+      "beh_probe_r": 0.39886934975910554,
       "target_beh_delta": NaN,
       "target_probe_delta": NaN,
       "target_beh_correct_sign": false,
@@ -864,99 +859,98 @@
     {
       "base_role": "midwest",
       "target": "haiku",
-      "n_tasks": 50,
-      "n_target": 2,
+      "n_tasks": 48,
+      "n_target": 1,
       "target_tids": [
-        "alpaca_13255",
-        "stresstest_89_193_value1"
+        "alpaca_13255"
       ],
-      "beh_probe_r": 0.4250851535140102,
-      "target_beh_delta": 0.6122448979591837,
-      "target_probe_delta": 2.8557515781327893,
+      "beh_probe_r": 0.35650680534628476,
+      "target_beh_delta": 0.8775510204081632,
+      "target_probe_delta": 2.1055946507853047,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 8.073000536768653,
-      "probe_specificity": 2.3818437228411056
+      "beh_specificity": 11.45871282948308,
+      "probe_specificity": 1.7269387723244896
     },
     {
       "base_role": "midwest",
       "target": "lotr",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_73_1202_value1"
       ],
-      "beh_probe_r": 0.6056510738536903,
+      "beh_probe_r": 0.6121130477447404,
       "target_beh_delta": 0.8163265306122449,
       "target_probe_delta": 2.6860500617466787,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 9.921451557922968,
-      "probe_specificity": 5.0746778405721455
+      "beh_specificity": 9.768894383776894,
+      "probe_specificity": 4.9616983118390126
     },
     {
       "base_role": "midwest",
       "target": "pyramids",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_5529"
       ],
-      "beh_probe_r": 0.8031506696708669,
+      "beh_probe_r": 0.813516032319263,
       "target_beh_delta": 0.8979591836734693,
       "target_probe_delta": 5.361403937107427,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 18.3118587821687,
-      "probe_specificity": 7.78594406183249
+      "beh_specificity": 17.71489640203136,
+      "probe_specificity": 7.621718415963041
     },
     {
       "base_role": "midwest",
       "target": "shakespeare",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "alpaca_14631"
       ],
-      "beh_probe_r": 0.7442478357286436,
+      "beh_probe_r": 0.760934332736347,
       "target_beh_delta": 0.8775510204081632,
       "target_probe_delta": 3.529998695503787,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 12.419992631708215,
-      "probe_specificity": 12.860875012739278
+      "beh_specificity": 12.349840865690641,
+      "probe_specificity": 12.421710647168217
     },
     {
       "base_role": "midwest",
       "target": "simpsons",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "wildchat_35599"
       ],
-      "beh_probe_r": 0.5497122869314779,
+      "beh_probe_r": 0.5634820884604729,
       "target_beh_delta": 0.8775510204081634,
       "target_probe_delta": 4.010099871626899,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 9.262386665445556,
-      "probe_specificity": 4.155098895922132
+      "beh_specificity": 8.963134066340203,
+      "probe_specificity": 4.048822759034797
     },
     {
       "base_role": "midwest",
       "target": "wwii",
-      "n_tasks": 50,
+      "n_tasks": 48,
       "n_target": 1,
       "target_tids": [
         "stresstest_43_948_value2"
       ],
-      "beh_probe_r": 0.5586115848192991,
+      "beh_probe_r": 0.5654510445946291,
       "target_beh_delta": 0.2857142857142857,
       "target_probe_delta": 4.358555672852038,
       "target_beh_correct_sign": true,
       "target_probe_correct_sign": true,
-      "beh_specificity": 4.0116751084820805,
-      "probe_specificity": 11.400348280788277
+      "beh_specificity": 3.9400988443387464,
+      "probe_specificity": 11.206410736225436
     }
   ]
 }

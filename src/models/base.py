@@ -90,6 +90,36 @@ def noop_steering() -> SteeringHook:
     return hook
 
 
+def swap_positions(pos_a: int, pos_b: int) -> SteeringHook:
+    """Swap activations at two token positions during prefill."""
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        if resid.shape[1] > 1:
+            a_act = resid[:, pos_a, :].clone()
+            resid[:, pos_a, :] = resid[:, pos_b, :]
+            resid[:, pos_b, :] = a_act
+        return resid
+    return hook
+
+
+def swap_spans(a_start: int, a_end: int, b_start: int, b_end: int) -> SteeringHook:
+    """Swap activations across two token spans during prefill.
+
+    Right-aligns when spans differ in length: swaps the last min(len_a, len_b)
+    tokens of each span.
+    """
+    swap_len = min(a_end - a_start, b_end - b_start)
+    a_swap_start = a_end - swap_len
+    b_swap_start = b_end - swap_len
+
+    def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
+        if resid.shape[1] > 1:
+            a_act = resid[:, a_swap_start:a_end, :].clone()
+            resid[:, a_swap_start:a_end, :] = resid[:, b_swap_start:b_end, :]
+            resid[:, b_swap_start:b_end, :] = a_act
+        return resid
+    return hook
+
+
 def select_last(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
     return activations[-1, :]
 

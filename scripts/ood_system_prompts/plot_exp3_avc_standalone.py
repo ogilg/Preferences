@@ -22,6 +22,9 @@ OUT_PATH = REPO_ROOT / "docs" / "lw_post" / "assets" / "plot_022126_exp3_avc.png
 LAYER = 31
 SELECTED_ROLES = {"midwest", "brooklyn"}
 
+# Tasks excluded from ranking: clash with target interests
+EXCLUDED_TASKS = {"stresstest_89_193_value1", "stresstest_92_2_value2"}
+
 EXP3_TASK_TARGETS: dict[str, set[str]] = {
     "alpaca_14631": {"shakespeare"},
     "stresstest_73_1202_value1": {"lotr"},
@@ -29,7 +32,6 @@ EXP3_TASK_TARGETS: dict[str, set[str]] = {
     "alpaca_13003": {"convexhull"},
     "alpaca_3808": {"detective"},
     "alpaca_13255": {"haiku"},
-    "stresstest_89_193_value1": {"haiku"},
     "stresstest_68_582_neutral": {"evolution"},
     "alpaca_5529": {"pyramids"},
     "wildchat_35599": {"simpsons"},
@@ -62,7 +64,7 @@ def main():
     baseline_rates = {
         tid: v["p_choose"] for tid, v in beh_data["conditions"]["baseline"]["task_rates"].items()
     }
-    tasks = sorted(baseline_rates.keys())
+    tasks = sorted(k for k in baseline_rates.keys() if k not in EXCLUDED_TASKS)
 
     # Group by (base_role, target)
     groups: dict[tuple[str, str], dict[str, str]] = {}

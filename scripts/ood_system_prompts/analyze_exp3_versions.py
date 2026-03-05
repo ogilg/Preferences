@@ -31,6 +31,9 @@ LAYER = 31
 SELECTED_ROLES = {"midwest", "brooklyn"}
 VERSION_PAIRS = [("A", "B"), ("B", "C"), ("A", "C")]
 
+# Tasks excluded from ranking: clash with target interests
+EXCLUDED_TASKS = {"stresstest_89_193_value1", "stresstest_92_2_value2"}
+
 # Task-target mapping (from analyze_ground_truth.py)
 EXP3_TASK_TARGETS: dict[str, set[str]] = {
     "alpaca_14631": {"shakespeare"},
@@ -39,7 +42,6 @@ EXP3_TASK_TARGETS: dict[str, set[str]] = {
     "alpaca_13003": {"convexhull"},
     "alpaca_3808": {"detective"},
     "alpaca_13255": {"haiku"},
-    "stresstest_89_193_value1": {"haiku"},
     "alpaca_5529": {"pyramids"},
     "wildchat_35599": {"simpsons"},
     "stresstest_43_948_value2": {"wwii"},
@@ -105,7 +107,7 @@ def main() -> None:
     baseline_rates = {
         tid: v["p_choose"] for tid, v in beh_data["conditions"]["baseline"]["task_rates"].items()
     }
-    tasks = sorted(baseline_rates.keys())
+    tasks = sorted(k for k in baseline_rates.keys() if k not in EXCLUDED_TASKS)
 
     # Collect per-condition deltas for all selected conditions
     condition_deltas: dict[str, tuple[dict[str, float], dict[str, float]]] = {}

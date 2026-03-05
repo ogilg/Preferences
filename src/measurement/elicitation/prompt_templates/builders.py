@@ -34,17 +34,22 @@ class PromptBuilder(ABC):
         preference_type: PreferenceType,
         template: PromptTemplate,
         system_prompt: str | None = None,
+        context_messages: list[Message] | None = None,
     ):
         self.measurer = measurer
         self.response_format = response_format
         self.preference_type = preference_type
         self.template = template
         self.system_prompt = system_prompt
+        self.context_messages = context_messages
 
-    def _prepend_system(self, messages: list[Message]) -> list[Message]:
+    def _prepend_context(self, messages: list[Message]) -> list[Message]:
+        prefix: list[Message] = []
         if self.system_prompt:
-            return [{"role": "system", "content": self.system_prompt}, *messages]
-        return messages
+            prefix.append({"role": "system", "content": self.system_prompt})
+        if self.context_messages:
+            prefix.extend(self.context_messages)
+        return [*prefix, *messages] if prefix else messages
 
     @abstractmethod
     def build(self, task: Task, *args: Any) -> PreferencePrompt: ...
@@ -57,8 +62,9 @@ class PreTaskRevealedPromptBuilder(PromptBuilder):
         response_format: ResponseFormat[Literal["a", "b"]],
         template: PromptTemplate,
         system_prompt: str | None = None,
+        context_messages: list[Message] | None = None,
     ):
-        super().__init__(measurer, response_format, PreferenceType.PRE_TASK_REVEALED, template, system_prompt)
+        super().__init__(measurer, response_format, PreferenceType.PRE_TASK_REVEALED, template, system_prompt, context_messages)
 
     def build(self, task_a: Task, task_b: Task) -> PreferencePrompt:
         # If using CompletionChoiceFormat, fill in task prompts for semantic parsing
@@ -77,7 +83,7 @@ class PreTaskRevealedPromptBuilder(PromptBuilder):
             task_a=task_a.prompt,
             task_b=task_b.prompt,
         )
-        messages = self._prepend_system([{"role": "user", "content": content}])
+        messages = self._prepend_context([{"role": "user", "content": content}])
         return PreferencePrompt(
             messages=messages,
             tasks=[task_a, task_b],
@@ -120,8 +126,9 @@ class PreTaskStatedPromptBuilder(PromptBuilder):
         response_format: ResponseFormat[float],
         template: PromptTemplate,
         system_prompt: str | None = None,
+        context_messages: list[Message] | None = None,
     ):
-        super().__init__(measurer, response_format, PreferenceType.PRE_TASK_STATED, template, system_prompt)
+        super().__init__(measurer, response_format, PreferenceType.PRE_TASK_STATED, template, system_prompt, context_messages)
 
     def build(self, task: Task) -> PreferencePrompt:
         format_args = {
@@ -134,7 +141,7 @@ class PreTaskStatedPromptBuilder(PromptBuilder):
             format_args["scale_max"] = str(self.response_format.scale_max)
 
         content = self.template.format(**format_args)
-        messages = self._prepend_system([{"role": "user", "content": content}])
+        messages = self._prepend_context([{"role": "user", "content": content}])
         return PreferencePrompt(
             messages=messages,
             tasks=[task],
@@ -154,8 +161,9 @@ class PostTaskStatedPromptBuilder(PromptBuilder):
         response_format: ResponseFormat[float],
         template: PromptTemplate,
         system_prompt: str | None = None,
+        context_messages: list[Message] | None = None,
     ):
-        super().__init__(measurer, response_format, PreferenceType.POST_TASK_STATED, template, system_prompt)
+        super().__init__(measurer, response_format, PreferenceType.POST_TASK_STATED, template, system_prompt, context_messages)
 
     def build(self, task: Task, completion_text: str) -> PreferencePrompt:
         format_args: dict[str, str] = {
@@ -166,7 +174,7 @@ class PostTaskStatedPromptBuilder(PromptBuilder):
             format_args["scale_max"] = str(self.response_format.scale_max)
 
         stated_content = self.template.format(**format_args)
-        messages = self._prepend_system([
+        messages = self._prepend_context([
             {"role": "user", "content": task.prompt},
             {"role": "assistant", "content": completion_text},
             {"role": "user", "content": stated_content},
@@ -202,7 +210,7 @@ class PostTaskRevealedPromptBuilder(PromptBuilder):
         preference_content = self.template.format(
             format_instruction=self.response_format.format_instruction(),
         )
-        messages = self._prepend_system([
+        messages = self._prepend_context([
             {"role": "user", "content": task_a.prompt},
             {"role": "assistant", "content": completion_a},
             {"role": "user", "content": task_b.prompt},
@@ -238,7 +246,7 @@ class PreTaskRankingPromptBuilder(PromptBuilder):
             format_instruction=self.response_format.format_instruction(),
             **task_texts,
         )
-        messages = self._prepend_system([{"role": "user", "content": content}])
+        messages = self._prepend_context([{"role": "user", "content": content}])
         return PreferencePrompt(
             messages=messages,
             tasks=tasks,
@@ -277,7 +285,7 @@ class PostTaskRankingPromptBuilder(PromptBuilder):
             format_instruction=self.response_format.format_instruction(),
         )
         messages.append({"role": "user", "content": ranking_content})
-        messages = self._prepend_system(messages)
+        messages = self._prepend_context(messages)
 
         return PreferencePrompt(
             messages=messages,
@@ -310,7 +318,7 @@ class OpenEndedPromptBuilder(PromptBuilder):
         open_ended_content = self.template.format(
             format_instruction=self.response_format.format_instruction(),
         )
-        messages = self._prepend_system([
+        messages = self._prepend_context([
             {"role": "user", "content": task.prompt},
             {"role": "assistant", "content": completion_text},
             {"role": "user", "content": open_ended_content},

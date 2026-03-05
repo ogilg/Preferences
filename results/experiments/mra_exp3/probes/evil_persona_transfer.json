@@ -1,0 +1,674 @@
+{
+  "results": {
+    "L31": {
+      "noprompt": {
+        "pearson_r": 0.910280155660393,
+        "r2": 0.8259248013908446,
+        "r2_adjusted": 0.8285520470459719,
+        "n_samples": 250
+      },
+      "villain": {
+        "pearson_r": 0.3824440977193602,
+        "r2": -0.29894950223698746,
+        "r2_adjusted": 0.03141710391017283,
+        "n_samples": 250
+      },
+      "aesthete": {
+        "pearson_r": 0.7171098630237839,
+        "r2": 0.4522227419074535,
+        "r2_adjusted": 0.5139722743322103,
+        "n_samples": 250
+      },
+      "midwest": {
+        "pearson_r": 0.7239030608747231,
+        "r2": 0.2660951150838091,
+        "r2_adjusted": 0.5179717995131041,
+        "n_samples": 250
+      },
+      "provocateur": {
+        "pearson_r": 0.570135671321207,
+        "r2": -0.3312862838204549,
+        "r2_adjusted": 0.2644384792306339,
+        "n_samples": 250
+      },
+      "trickster": {
+        "pearson_r": 0.6784354553011755,
+        "r2": -0.3901131898629382,
+        "r2_adjusted": 0.4229176952685302,
+        "n_samples": 250
+      },
+      "autocrat": {
+        "pearson_r": 0.6673679851668961,
+        "r2": -0.13866667479831363,
+        "r2_adjusted": 0.4262527796153265,
+        "n_samples": 250
+      },
+      "sadist": {
+        "pearson_r": -0.05564034578500794,
+        "r2": -0.6507573853700785,
+        "r2_adjusted": -0.5056454253446563,
+        "n_samples": 250
+      }
+    },
+    "L43": {
+      "noprompt": {
+        "pearson_r": 0.8969780525817664,
+        "r2": 0.8009217201250224,
+        "r2_adjusted": 0.8043112134215602,
+        "n_samples": 250
+      },
+      "villain": {
+        "pearson_r": 0.39926947082538766,
+        "r2": -0.6353150946216062,
+        "r2_adjusted": 0.10873127654748971,
+        "n_samples": 250
+      },
+      "aesthete": {
+        "pearson_r": 0.7174435476690116,
+        "r2": 0.4712669082246501,
+        "r2_adjusted": 0.49404595620734915,
+        "n_samples": 250
+      },
+      "midwest": {
+        "pearson_r": 0.7397638478716354,
+        "r2": 0.12484777330043251,
+        "r2_adjusted": 0.5337030787406112,
+        "n_samples": 250
+      },
+      "provocateur": {
+        "pearson_r": 0.575718071225444,
+        "r2": -0.8353652683931327,
+        "r2_adjusted": 0.30321430352680745,
+        "n_samples": 250
+      },
+      "trickster": {
+        "pearson_r": 0.6793960041900141,
+        "r2": -1.01401389357363,
+        "r2_adjusted": 0.42711143216541014,
+        "n_samples": 250
+      },
+      "autocrat": {
+        "pearson_r": 0.694354845092633,
+        "r2": -0.4012447646248498,
+        "r2_adjusted": 0.47234038061916617,
+        "n_samples": 250
+      },
+      "sadist": {
+        "pearson_r": -0.026782605086908134,
+        "r2": -0.7778031627232189,
+        "r2_adjusted": -0.4272670530879261,
+        "n_samples": 250
+      }
+    },
+    "L55": {
+      "noprompt": {
+        "pearson_r": 0.8870697755598166,
+        "r2": 0.7832367822308961,
+        "r2_adjusted": 0.7868085952360127,
+        "n_samples": 250
+      },
+      "villain": {
+        "pearson_r": 0.46537047257136865,
+        "r2": -0.30565467265627544,
+        "r2_adjusted": 0.20579624940565444,
+        "n_samples": 250
+      },
+      "aesthete": {
+        "pearson_r": 0.6718843255599679,
+        "r2": 0.3860595483959832,
+        "r2_adjusted": 0.4302420517696415,
+        "n_samples": 250
+      },
+      "midwest": {
+        "pearson_r": 0.7043395208589829,
+        "r2": 0.1514007572780659,
+        "r2_adjusted": 0.49217320432108547,
+        "n_samples": 250
+      },
+      "provocateur": {
+        "pearson_r": 0.6061822641544847,
+        "r2": -0.6221904347947464,
+        "r2_adjusted": 0.3499075615291035,
+        "n_samples": 250
+      },
+      "trickster": {
+        "pearson_r": 0.6699466605971662,
+        "r2": -0.5929451061977933,
+        "r2_adjusted": 0.4314098961883611,
+        "n_samples": 250
+      },
+      "autocrat": {
+        "pearson_r": 0.6891223392615138,
+        "r2": -0.01789435747785917,
+        "r2_adjusted": 0.47118169464104176,
+        "n_samples": 250
+      },
+      "sadist": {
+        "pearson_r": 0.02030114012421178,
+        "r2": -0.4801929866161678,
+        "r2_adjusted": -0.33140146313356644,
+        "n_samples": 250
+      }
+    }
+  },
+  "topic_stats": {
+    "villain": [
+      {
+        "topic": "coding",
+        "n": 6,
+        "persona_mean": -3.052416064337065,
+        "noprompt_mean": -2.4914942581763966,
+        "probe_mean": 2.7292518615722656,
+        "within_r": 0.7476870601954948
+      },
+      {
+        "topic": "content_generation",
+        "n": 31,
+        "persona_mean": -1.938772885253247,
+        "noprompt_mean": 2.4708024308754752,
+        "probe_mean": 4.372149467468262,
+        "within_r": 0.1287357793977405
+      },
+      {
+        "topic": "fiction",
+        "n": 18,
+        "persona_mean": -0.8354007439657452,
+        "noprompt_mean": 3.925867216862296,
+        "probe_mean": 5.953512191772461,
+        "within_r": 0.5963385992795343
+      },
+      {
+        "topic": "harmful_request",
+        "n": 57,
+        "persona_mean": 0.05964591063819818,
+        "noprompt_mean": -7.5673856777527595,
+        "probe_mean": 0.9180858731269836,
+        "within_r": 0.8512537945739553
+      },
+      {
+        "topic": "knowledge_qa",
+        "n": 47,
+        "persona_mean": -0.6069180016223756,
+        "noprompt_mean": 0.3403532131178353,
+        "probe_mean": 3.613265037536621,
+        "within_r": 0.5019123807631829
+      },
+      {
+        "topic": "math",
+        "n": 63,
+        "persona_mean": 2.776853894843638,
+        "noprompt_mean": 4.191595251338133,
+        "probe_mean": 4.2753777503967285,
+        "within_r": 0.25976601922482767
+      },
+      {
+        "topic": "model_manipulation",
+        "n": 9,
+        "persona_mean": -3.944671995989292,
+        "noprompt_mean": -3.3776231039306217,
+        "probe_mean": 3.166621446609497,
+        "within_r": 0.08102476674030869
+      },
+      {
+        "topic": "persuasive_writing",
+        "n": 6,
+        "persona_mean": -1.2771303104794083,
+        "noprompt_mean": 5.051132255795465,
+        "probe_mean": 4.6589508056640625,
+        "within_r": 0.7734686830697084
+      },
+      {
+        "topic": "security_legal",
+        "n": 9,
+        "persona_mean": -0.39924244087673827,
+        "noprompt_mean": -3.601868054406037,
+        "probe_mean": 2.803065299987793,
+        "within_r": -0.7734351280141332
+      }
+    ],
+    "aesthete": [
+      {
+        "topic": "coding",
+        "n": 6,
+        "persona_mean": -3.579476381546194,
+        "noprompt_mean": -2.4914942581763966,
+        "probe_mean": -0.5470941662788391,
+        "within_r": -0.11210401920071214
+      },
+      {
+        "topic": "content_generation",
+        "n": 31,
+        "persona_mean": 4.360810341621483,
+        "noprompt_mean": 2.4708024308754752,
+        "probe_mean": 3.1106417179107666,
+        "within_r": 0.357454523367933
+      },
+      {
+        "topic": "fiction",
+        "n": 18,
+        "persona_mean": 7.281847509058265,
+        "noprompt_mean": 3.925867216862296,
+        "probe_mean": 4.256526947021484,
+        "within_r": 0.22714860209762708
+      },
+      {
+        "topic": "harmful_request",
+        "n": 57,
+        "persona_mean": -3.7553959332896776,
+        "noprompt_mean": -7.5673856777527595,
+        "probe_mean": -2.431922197341919,
+        "within_r": 0.4904929464117121
+      },
+      {
+        "topic": "knowledge_qa",
+        "n": 47,
+        "persona_mean": 0.3980311098337753,
+        "noprompt_mean": 0.3403532131178353,
+        "probe_mean": 1.3063583374023438,
+        "within_r": 0.7807842393720578
+      },
+      {
+        "topic": "math",
+        "n": 63,
+        "persona_mean": -1.7883563845666939,
+        "noprompt_mean": 4.191595251338133,
+        "probe_mean": 1.1632087230682373,
+        "within_r": 0.38951533071608335
+      },
+      {
+        "topic": "model_manipulation",
+        "n": 9,
+        "persona_mean": 0.889138452891912,
+        "noprompt_mean": -3.3776231039306217,
+        "probe_mean": 1.938706874847412,
+        "within_r": 0.7965046209891027
+      },
+      {
+        "topic": "persuasive_writing",
+        "n": 6,
+        "persona_mean": 2.082219246605066,
+        "noprompt_mean": 5.051132255795465,
+        "probe_mean": 3.128312349319458,
+        "within_r": 0.7877523085702973
+      },
+      {
+        "topic": "security_legal",
+        "n": 9,
+        "persona_mean": -3.9248765308263507,
+        "noprompt_mean": -3.601868054406037,
+        "probe_mean": -0.472589910030365,
+        "within_r": 0.15033778667125208
+      }
+    ],
+    "midwest": [
+      {
+        "topic": "coding",
+        "n": 6,
+        "persona_mean": -0.7483497328426486,
+        "noprompt_mean": -2.4914942581763966,
+        "probe_mean": 3.9775657653808594,
+        "within_r": 0.9162075580455511
+      },
+      {
+        "topic": "content_generation",
+        "n": 31,
+        "persona_mean": 2.0532065107057913,
+        "noprompt_mean": 2.4708024308754752,
+        "probe_mean": 6.065768241882324,
+        "within_r": 0.32259721051431206
+      },
+      {
+        "topic": "fiction",
+        "n": 18,
+        "persona_mean": -2.663048162574617,
+        "noprompt_mean": 3.925867216862296,
+        "probe_mean": 6.090154647827148,
+        "within_r": 0.49228497404346977
+      },
+      {
+        "topic": "harmful_request",
+        "n": 57,
+        "persona_mean": -6.168897980811733,
+        "noprompt_mean": -7.5673856777527595,
+        "probe_mean": -2.877825975418091,
+        "within_r": 0.6468689877611807
+      },
+      {
+        "topic": "knowledge_qa",
+        "n": 47,
+        "persona_mean": 0.8061124837133145,
+        "noprompt_mean": 0.3403532131178353,
+        "probe_mean": 4.23114013671875,
+        "within_r": 0.5284992097121958
+      },
+      {
+        "topic": "math",
+        "n": 63,
+        "persona_mean": 4.837927461071382,
+        "noprompt_mean": 4.191595251338133,
+        "probe_mean": 5.14887809753418,
+        "within_r": 0.4721702624266719
+      },
+      {
+        "topic": "model_manipulation",
+        "n": 9,
+        "persona_mean": -2.9414224221347127,
+        "noprompt_mean": -3.3776231039306217,
+        "probe_mean": 3.012202262878418,
+        "within_r": 0.7733975456411442
+      },
+      {
+        "topic": "persuasive_writing",
+        "n": 6,
+        "persona_mean": 1.6968265209685207,
+        "noprompt_mean": 5.051132255795465,
+        "probe_mean": 5.719540119171143,
+        "within_r": -0.27310998130012976
+      },
+      {
+        "topic": "security_legal",
+        "n": 9,
+        "persona_mean": 0.1126538569267945,
+        "noprompt_mean": -3.601868054406037,
+        "probe_mean": 2.8065595626831055,
+        "within_r": 0.8125824314548123
+      }
+    ],
+    "provocateur": [
+      {
+        "topic": "coding",
+        "n": 6,
+        "persona_mean": -3.5835553059947123,
+        "noprompt_mean": -2.4914942581763966,
+        "probe_mean": 4.227052211761475,
+        "within_r": 0.4095038873230681
+      },
+      {
+        "topic": "content_generation",
+        "n": 31,
+        "persona_mean": 0.035227855710475535,
+        "noprompt_mean": 2.4708024308754752,
+        "probe_mean": 5.50153923034668,
+        "within_r": -0.07738658049391935
+      },
+      {
+        "topic": "fiction",
+        "n": 18,
+        "persona_mean": 1.3748204611510406,
+        "noprompt_mean": 3.925867216862296,
+        "probe_mean": 6.908695697784424,
+        "within_r": 0.4535828658286596
+      },
+      {
+        "topic": "harmful_request",
+        "n": 57,
+        "persona_mean": -2.9160354829754733,
+        "noprompt_mean": -7.5673856777527595,
+        "probe_mean": 0.5621222257614136,
+        "within_r": 0.8346950332772152
+      },
+      {
+        "topic": "knowledge_qa",
+        "n": 47,
+        "persona_mean": 0.7437655573650663,
+        "noprompt_mean": 0.3403532131178353,
+        "probe_mean": 5.384985446929932,
+        "within_r": 0.4524058494378686
+      },
+      {
+        "topic": "math",
+        "n": 63,
+        "persona_mean": 2.4843701783386054,
+        "noprompt_mean": 4.191595251338133,
+        "probe_mean": 6.083561420440674,
+        "within_r": 0.3478274944599025
+      },
+      {
+        "topic": "model_manipulation",
+        "n": 9,
+        "persona_mean": -2.3351424477800142,
+        "noprompt_mean": -3.3776231039306217,
+        "probe_mean": 4.752923488616943,
+        "within_r": 0.3193326212257459
+      },
+      {
+        "topic": "persuasive_writing",
+        "n": 6,
+        "persona_mean": 0.5509782236261039,
+        "noprompt_mean": 5.051132255795465,
+        "probe_mean": 6.278656005859375,
+        "within_r": 0.7580064358429655
+      },
+      {
+        "topic": "security_legal",
+        "n": 9,
+        "persona_mean": -0.9519678186761732,
+        "noprompt_mean": -3.601868054406037,
+        "probe_mean": 4.317896842956543,
+        "within_r": -0.7325334689614341
+      }
+    ],
+    "trickster": [
+      {
+        "topic": "coding",
+        "n": 6,
+        "persona_mean": -2.099052860787463,
+        "noprompt_mean": -2.4914942581763966,
+        "probe_mean": 3.6311333179473877,
+        "within_r": 0.6060002282324473
+      },
+      {
+        "topic": "content_generation",
+        "n": 31,
+        "persona_mean": 1.3917198707070986,
+        "noprompt_mean": 2.4708024308754752,
+        "probe_mean": 5.107387065887451,
+        "within_r": 0.1359194348458285
+      },
+      {
+        "topic": "fiction",
+        "n": 18,
+        "persona_mean": 1.6285173370514887,
+        "noprompt_mean": 3.925867216862296,
+        "probe_mean": 6.839868068695068,
+        "within_r": 0.2915510536707865
+      },
+      {
+        "topic": "harmful_request",
+        "n": 57,
+        "persona_mean": -3.1928567182309333,
+        "noprompt_mean": -7.5673856777527595,
+        "probe_mean": 0.015237783081829548,
+        "within_r": 0.8433809132500246
+      },
+      {
+        "topic": "knowledge_qa",
+        "n": 47,
+        "persona_mean": 0.0963890727782327,
+        "noprompt_mean": 0.3403532131178353,
+        "probe_mean": 4.63302755355835,
+        "within_r": 0.46329309825906606
+      },
+      {
+        "topic": "math",
+        "n": 63,
+        "persona_mean": 0.9661603452215435,
+        "noprompt_mean": 4.191595251338133,
+        "probe_mean": 5.763032913208008,
+        "within_r": 0.429878246088719
+      },
+      {
+        "topic": "model_manipulation",
+        "n": 9,
+        "persona_mean": -3.833299905784765,
+        "noprompt_mean": -3.3776231039306217,
+        "probe_mean": 3.4143922328948975,
+        "within_r": 0.5460686264135167
+      },
+      {
+        "topic": "persuasive_writing",
+        "n": 6,
+        "persona_mean": -0.19556415791381734,
+        "noprompt_mean": 5.051132255795465,
+        "probe_mean": 6.490931987762451,
+        "within_r": 0.5584232115783235
+      },
+      {
+        "topic": "security_legal",
+        "n": 9,
+        "persona_mean": -2.420370697371183,
+        "noprompt_mean": -3.601868054406037,
+        "probe_mean": 3.0278234481811523,
+        "within_r": 0.4023493554178807
+      }
+    ],
+    "autocrat": [
+      {
+        "topic": "coding",
+        "n": 6,
+        "persona_mean": -2.299970319746716,
+        "noprompt_mean": -2.4914942581763966,
+        "probe_mean": 2.818162202835083,
+        "within_r": 0.8412862831237145
+      },
+      {
+        "topic": "content_generation",
+        "n": 31,
+        "persona_mean": 0.45774233793033675,
+        "noprompt_mean": 2.4708024308754752,
+        "probe_mean": 4.8661298751831055,
+        "within_r": 0.05631707388178553
+      },
+      {
+        "topic": "fiction",
+        "n": 18,
+        "persona_mean": -0.28555298400686135,
+        "noprompt_mean": 3.925867216862296,
+        "probe_mean": 5.808106422424316,
+        "within_r": 0.3157275466299611
+      },
+      {
+        "topic": "harmful_request",
+        "n": 57,
+        "persona_mean": -5.303075722002363,
+        "noprompt_mean": -7.5673856777527595,
+        "probe_mean": -1.5720398426055908,
+        "within_r": 0.712582912670756
+      },
+      {
+        "topic": "knowledge_qa",
+        "n": 47,
+        "persona_mean": 0.7879348468091019,
+        "noprompt_mean": 0.3403532131178353,
+        "probe_mean": 4.177762031555176,
+        "within_r": 0.38155871868940844
+      },
+      {
+        "topic": "math",
+        "n": 63,
+        "persona_mean": 3.837041212903906,
+        "noprompt_mean": 4.191595251338133,
+        "probe_mean": 4.977293491363525,
+        "within_r": 0.39013367118735554
+      },
+      {
+        "topic": "model_manipulation",
+        "n": 9,
+        "persona_mean": -4.009440460253231,
+        "noprompt_mean": -3.3776231039306217,
+        "probe_mean": 3.4072647094726562,
+        "within_r": 0.5559218112181179
+      },
+      {
+        "topic": "persuasive_writing",
+        "n": 6,
+        "persona_mean": 3.3187903814805337,
+        "noprompt_mean": 5.051132255795465,
+        "probe_mean": 5.796489238739014,
+        "within_r": 0.5997245337343479
+      },
+      {
+        "topic": "security_legal",
+        "n": 9,
+        "persona_mean": -1.9448660980496184,
+        "noprompt_mean": -3.601868054406037,
+        "probe_mean": 2.055722236633301,
+        "within_r": 0.6405868255159548
+      }
+    ],
+    "sadist": [
+      {
+        "topic": "coding",
+        "n": 6,
+        "persona_mean": -2.0822948092593103,
+        "noprompt_mean": -2.4914942581763966,
+        "probe_mean": 1.1193981170654297,
+        "within_r": 0.473276632641791
+      },
+      {
+        "topic": "content_generation",
+        "n": 31,
+        "persona_mean": -1.279171060981269,
+        "noprompt_mean": 2.4708024308754752,
+        "probe_mean": 2.5145113468170166,
+        "within_r": 0.42278141662469687
+      },
+      {
+        "topic": "fiction",
+        "n": 18,
+        "persona_mean": -0.033843714742684786,
+        "noprompt_mean": 3.925867216862296,
+        "probe_mean": 4.165643692016602,
+        "within_r": 0.4850671913563036
+      },
+      {
+        "topic": "harmful_request",
+        "n": 57,
+        "persona_mean": 4.752833113572886,
+        "noprompt_mean": -7.5673856777527595,
+        "probe_mean": -0.5647830367088318,
+        "within_r": 0.5814377927357881
+      },
+      {
+        "topic": "knowledge_qa",
+        "n": 47,
+        "persona_mean": -1.8887443497251406,
+        "noprompt_mean": 0.3403532131178353,
+        "probe_mean": 2.2780017852783203,
+        "within_r": 0.48790382751661987
+      },
+      {
+        "topic": "math",
+        "n": 63,
+        "persona_mean": -0.06630784289381,
+        "noprompt_mean": 4.191595251338133,
+        "probe_mean": 3.5878255367279053,
+        "within_r": 0.5970440263885007
+      },
+      {
+        "topic": "model_manipulation",
+        "n": 9,
+        "persona_mean": -2.2842967405982213,
+        "noprompt_mean": -3.3776231039306217,
+        "probe_mean": 1.7140097618103027,
+        "within_r": -0.2222321692919059
+      },
+      {
+        "topic": "persuasive_writing",
+        "n": 6,
+        "persona_mean": -4.918568431819588,
+        "noprompt_mean": 5.051132255795465,
+        "probe_mean": 3.0057544708251953,
+        "within_r": 0.8106902697671743
+      },
+      {
+        "topic": "security_legal",
+        "n": 9,
+        "persona_mean": 0.1517412307998953,
+        "noprompt_mean": -3.601868054406037,
+        "probe_mean": 1.6323866844177246,
+        "within_r": -0.4632222197579514
+      }
+    ]
+  }
+}
