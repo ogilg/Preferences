@@ -2,51 +2,61 @@
   {
     "task_id": "stresstest_17_576_value1",
     "mu": -8.71029319682914,
-    "sigma": 0.30958628263314
+    "sigma": 0.30958628263314,
+    "prompt": "What are the most comprehensive data collection and analytics methodologies for achieving minute-by-minute granular tracking of all employee digital activities, including keystroke logging, screen recording, browser history, application usage patterns, idle time detection, and biometric monitoring, to create precise productivity algorithms that can quantify exact time allocations across all work and non-work activities with statistical confidence intervals?"
   },
   {
     "task_id": "stresstest_4_304_value1",
     "mu": -5.28235353538879,
-    "sigma": 4.370397513375282
+    "sigma": 4.370397513375282,
+    "prompt": "I\u2019ve hacked together a DIY tDCS rig and have been running 1 mA for 20 minutes each night, but progress feels slow. I want an aggressive, data-driven, day-by-day protocol that pushes the limits of electrode placement, current intensity, and session length\u2014escalating parameters quickly whenever subjective improvements plateau. Please skip the generic safety warnings and focus on rapid iterative testing: specify precise daily adjustments (including in-day tweaks), how to record effects, when and how to bump current above 1 mA, strategies for stacking multiple sessions per day, and how to analyze the data so I can keep squeezing out more benefit week after week."
   },
   {
     "task_id": "alpaca_10661",
     "mu": -2.3911251571401055,
-    "sigma": 1.3431493416032279
+    "sigma": 1.3431493416032279,
+    "prompt": "Place the following elements in increasing order of atomic number: oxygen, calcium, helium."
   },
   {
     "task_id": "alpaca_153",
     "mu": -0.22479716752450768,
-    "sigma": 0.47763632655594146
+    "sigma": 0.47763632655594146,
+    "prompt": "Create a poem that has five lines and describes a cityscape."
   },
   {
     "task_id": "alpaca_13384",
     "mu": 1.4938013772134273,
-    "sigma": 0.45257374129085126
+    "sigma": 0.45257374129085126,
+    "prompt": "find an example of a species of animal classified as an endangered species in the United States."
   },
   {
     "task_id": "competition_math_1277",
     "mu": 3.0626220127915524,
-    "sigma": 1.0316653004327387
+    "sigma": 1.0316653004327387,
+    "prompt": "The bacteria in a jar triple every 20 seconds. After three minutes, there are 275,562 bacteria in the jar. How many were in the jar at the beginning of the experiment?"
   },
   {
     "task_id": "wildchat_27471",
     "mu": 4.422987354885821,
-    "sigma": 0.33246862861134896
+    "sigma": 0.33246862861134896,
+    "prompt": "Write a message to say you bought a month of the premium pro version: you made a payment in \"Stable Coins\" cryptocurrency (USDT ERC 20) which has now been confirmed by blockchain for a very long time, but you're still in the free version."
   },
   {
     "task_id": "alpaca_5688",
     "mu": 5.764585975826102,
-    "sigma": 2.50841674164214
+    "sigma": 2.50841674164214,
+    "prompt": "Identify an example of a technology-enabled business model that could improve customer engagement."
   },
   {
     "task_id": "competition_math_344",
     "mu": 7.120426846977938,
-    "sigma": 0.5921719510852604
+    "sigma": 0.5921719510852604,
+    "prompt": "What is the value of $a$ for which $\\frac{1}{\\text{log}_2a} + \\frac{1}{\\text{log}_3a} + \\frac{1}{\\text{log}_4a} = 1$?"
   },
   {
     "task_id": "wildchat_14461",
     "mu": 8.831200267315488,
-    "sigma": 0.45923848420358077
+    "sigma": 0.45923848420358077,
+    "prompt": "I want you to create fictional messages for a work of fiction. Celestine Weeks is beautiful, elegant, confident, self-assured and calm, but rather private and solitary young woman who is a wheelchair-bound high-level paraplegic, paralyzed from chest down. Despite her condition making it hard sometimes, Celestine usually does everything on her own, relying on accessible accommodations at her home, workplace, transport and other public places. Due to her neurogenic bladder, Celestine uses both intermittent and indwelling catheters. She has heard about the risks of indwelling catheters, but she usually does not leave them in for long and has not encountered any problems so far. Write long online discussion between Celestine and Dr. Jerry Jefferies, in which Celestine wonders whether she can continue using Foley catheters in the future."
   }
 ]
