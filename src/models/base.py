@@ -19,13 +19,13 @@ class GenerationResult:
     completion_tokens: int
 
 
-# SteeringHook takes (resid, prompt_len) and returns modified resid
-SteeringHook = Callable[[torch.Tensor, int], torch.Tensor]
+# LayerHook takes (resid, prompt_len) and returns modified resid
+LayerHook = Callable[[torch.Tensor, int], torch.Tensor]
 
 TokenSelectorFn = Callable[[torch.Tensor, int], torch.Tensor]
 
 
-def autoregressive_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+def autoregressive_steering(steering_tensor: torch.Tensor) -> LayerHook:
     """Steer only the last token position. Works with KV caching during generation."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         resid[:, -1, :] += steering_tensor
@@ -33,7 +33,7 @@ def autoregressive_steering(steering_tensor: torch.Tensor) -> SteeringHook:
     return hook
 
 
-def all_tokens_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+def all_tokens_steering(steering_tensor: torch.Tensor) -> LayerHook:
     """Steer all token positions."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         resid += steering_tensor
@@ -49,7 +49,7 @@ STEERING_MODES = {
 
 def position_selective_steering(
     steering_tensor: torch.Tensor, start: int, end: int
-) -> SteeringHook:
+) -> LayerHook:
     """Steer only tokens in [start, end) during prompt processing."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         if resid.shape[1] > 1:  # prompt processing, not autoregressive
@@ -64,7 +64,7 @@ def differential_steering(
     pos_end: int,
     neg_start: int,
     neg_end: int,
-) -> SteeringHook:
+) -> LayerHook:
     """Apply +direction on [pos_start, pos_end) and -direction on [neg_start, neg_end)."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         if resid.shape[1] > 1:  # prompt processing only
@@ -74,7 +74,7 @@ def differential_steering(
     return hook
 
 
-def last_token_steering(steering_tensor: torch.Tensor) -> SteeringHook:
+def last_token_steering(steering_tensor: torch.Tensor) -> LayerHook:
     """Steer only the last prompt token during prompt processing, not during generation."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         if resid.shape[1] > 1:  # prompt processing, not autoregressive
@@ -83,14 +83,14 @@ def last_token_steering(steering_tensor: torch.Tensor) -> SteeringHook:
     return hook
 
 
-def noop_steering() -> SteeringHook:
+def noop_steering() -> LayerHook:
     """No-op hook for control conditions."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         return resid
     return hook
 
 
-def swap_positions(pos_a: int, pos_b: int) -> SteeringHook:
+def swap_positions(pos_a: int, pos_b: int) -> LayerHook:
     """Swap activations at two token positions during prefill."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
         if resid.shape[1] > 1:
@@ -101,7 +101,7 @@ def swap_positions(pos_a: int, pos_b: int) -> SteeringHook:
     return hook
 
 
-def swap_spans(a_start: int, a_end: int, b_start: int, b_end: int) -> SteeringHook:
+def swap_spans(a_start: int, a_end: int, b_start: int, b_end: int) -> LayerHook:
     """Swap activations across two token spans during prefill.
 
     Right-aligns when spans differ in length: swaps the last min(len_a, len_b)

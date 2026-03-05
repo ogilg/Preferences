@@ -11,6 +11,8 @@ import numpy as np
 import pytest
 import torch
 
+pytestmark = pytest.mark.gpu
+
 from src.models.base import (
     all_tokens_steering,
     position_selective_steering,
@@ -64,8 +66,8 @@ class TestSteeringChangesOutput:
 
         tensor = torch.tensor(DIRECTION * 5000, dtype=torch.bfloat16, device="cuda")
         hook = all_tokens_steering(tensor)
-        steered = model.generate_with_steering(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=hook, temperature=0,
+        steered = model.generate_with_hook(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=hook, temperature=0,
         )
 
         assert steered != unsteered, (
@@ -78,8 +80,8 @@ class TestSteeringChangesOutput:
         unsteered = model.generate(SIMPLE_PROMPT, temperature=0)
 
         hook = noop_steering()
-        with_noop = model.generate_with_steering(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=hook, temperature=0,
+        with_noop = model.generate_with_hook(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=hook, temperature=0,
         )
 
         assert with_noop == unsteered, (
@@ -96,14 +98,14 @@ class TestPositionSelectiveHook:
         tensor = torch.tensor(DIRECTION * 5000, dtype=torch.bfloat16, device="cuda")
 
         all_hook = all_tokens_steering(tensor)
-        all_out = model.generate_with_steering(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=all_hook, temperature=0,
+        all_out = model.generate_with_hook(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=all_hook, temperature=0,
         )
 
         # Steer only the first 3 tokens
         sel_hook = position_selective_steering(tensor, start=0, end=3)
-        sel_out = model.generate_with_steering(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=sel_hook, temperature=0,
+        sel_out = model.generate_with_hook(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=sel_hook, temperature=0,
         )
 
         assert sel_out != all_out, (
@@ -114,14 +116,14 @@ class TestPositionSelectiveHook:
 class TestDifferentialHook:
     def test_differential_differs_from_noop(self, model):
         """Differential hook should change output vs noop."""
-        noop_out = model.generate_with_steering(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=noop_steering(), temperature=0,
+        noop_out = model.generate_with_hook(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=noop_steering(), temperature=0,
         )
 
         tensor = torch.tensor(DIRECTION * 3000, dtype=torch.bfloat16, device="cuda")
         diff_hook = differential_steering(tensor, pos_start=0, pos_end=5, neg_start=5, neg_end=10)
-        diff_out = model.generate_with_steering(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=diff_hook, temperature=0,
+        diff_out = model.generate_with_hook(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=diff_hook, temperature=0,
         )
 
         assert diff_out != noop_out, "Differential hook should change output vs noop"
@@ -224,8 +226,8 @@ class TestContrastiveMiniExperiment:
 
         tensor = torch.tensor(DIRECTION * 10000, dtype=torch.bfloat16, device="cuda")
         hook = differential_steering(tensor, pos_start=0, pos_end=mid, neg_start=mid, neg_end=n_tokens)
-        steered = model.generate_with_steering(
-            messages, layer=STEER_LAYER, steering_hook=hook, temperature=0,
+        steered = model.generate_with_hook(
+            messages, layer=STEER_LAYER, hook=hook, temperature=0,
         )
 
         print(f"\n--- Differential hook test ---")
@@ -236,7 +238,7 @@ class TestContrastiveMiniExperiment:
 
 
 class TestGenerateN:
-    """Test batched generation via generate_n / generate_with_steering_n."""
+    """Test batched generation via generate_n / generate_with_hook_n."""
 
     def test_generate_n_returns_list(self, model):
         results = model.generate_n(SIMPLE_PROMPT, n=5, temperature=1.0)
@@ -248,11 +250,11 @@ class TestGenerateN:
         result = model.generate(SIMPLE_PROMPT, temperature=0)
         assert isinstance(result, str)
 
-    def test_generate_with_steering_n_returns_list(self, model):
+    def test_generate_with_hook_n_returns_list(self, model):
         tensor = torch.tensor(DIRECTION * 3000, dtype=torch.bfloat16, device="cuda")
         hook = all_tokens_steering(tensor)
-        results = model.generate_with_steering_n(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=hook,
+        results = model.generate_with_hook_n(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=hook,
             n=5, temperature=1.0,
         )
         assert isinstance(results, list)
@@ -274,8 +276,8 @@ class TestGenerateN:
     def test_steered_batched_has_variation(self, model):
         tensor = torch.tensor(DIRECTION * 1000, dtype=torch.bfloat16, device="cuda")
         hook = all_tokens_steering(tensor)
-        results = model.generate_with_steering_n(
-            SIMPLE_PROMPT, layer=STEER_LAYER, steering_hook=hook,
+        results = model.generate_with_hook_n(
+            SIMPLE_PROMPT, layer=STEER_LAYER, hook=hook,
             n=10, temperature=1.0,
         )
         unique = set(results)
@@ -308,14 +310,14 @@ class TestGenerateN:
 
         t0 = time.perf_counter()
         for _ in range(n):
-            model.generate_with_steering(
-                messages, layer=STEER_LAYER, steering_hook=hook, temperature=1.0,
+            model.generate_with_hook(
+                messages, layer=STEER_LAYER, hook=hook, temperature=1.0,
             )
         serial_time = time.perf_counter() - t0
 
         t0 = time.perf_counter()
-        model.generate_with_steering_n(
-            messages, layer=STEER_LAYER, steering_hook=hook,
+        model.generate_with_hook_n(
+            messages, layer=STEER_LAYER, hook=hook,
             n=n, temperature=1.0,
         )
         batched_time = time.perf_counter() - t0

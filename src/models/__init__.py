@@ -1,6 +1,6 @@
 from .base import Model, ConfigurableMockModel, TokenPosition, ActivationReduction, TokenSelectorFn, SELECTOR_REGISTRY
 from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
-from .base import GenerationResult, SteeringHook, autoregressive_steering, all_tokens_steering, STEERING_MODES
+from .base import GenerationResult, LayerHook, autoregressive_steering, all_tokens_steering, STEERING_MODES
 from .registry import (
     MODEL_REGISTRY,
     ModelConfig,
@@ -53,7 +53,7 @@ __all__ = [
     "HuggingFaceModel",
     "HybridActivationModel",
     "GenerationResult",
-    "SteeringHook",
+    "LayerHook",
     "autoregressive_steering",
     "all_tokens_steering",
     "STEERING_MODES",

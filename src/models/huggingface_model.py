@@ -9,7 +9,7 @@ import torch
 import numpy as np
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from src.models.base import BATCHED_SELECTOR_REGISTRY, COMPLETION_SELECTORS, GenerationResult, SteeringHook
+from src.models.base import BATCHED_SELECTOR_REGISTRY, COMPLETION_SELECTORS, GenerationResult, LayerHook
 from src.models.registry import is_valid_model, get_hf_name
 from src.models.architecture import get_layers, get_n_layers, get_hidden_dim
 from src.types import Message
@@ -384,52 +384,52 @@ class HuggingFaceModel:
         )
 
     @torch.inference_mode()
-    def generate_with_steering(
+    def generate_with_hook(
         self,
         messages: list[Message],
         layer: int,
-        steering_hook: SteeringHook,
+        hook: LayerHook,
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> str:
-        """Generate with activation steering applied at specified layer."""
-        return self._generate_steered(
+        """Generate with a hook applied at a single layer."""
+        return self._generate_hooked(
             messages=messages,
-            layer_hooks=[(layer, steering_hook)],
+            layer_hooks=[(layer, hook)],
             temperature=temperature,
             max_new_tokens=max_new_tokens,
             num_return_sequences=1,
         )[0]
 
     @torch.inference_mode()
-    def generate_with_steering_n(
+    def generate_with_hook_n(
         self,
         messages: list[Message],
         layer: int,
-        steering_hook: SteeringHook,
+        hook: LayerHook,
         n: int,
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> list[str]:
-        """Generate n completions with steering in a single forward pass."""
-        return self._generate_steered(
+        """Generate n completions with a hook at a single layer (shared prefill)."""
+        return self._generate_hooked(
             messages=messages,
-            layer_hooks=[(layer, steering_hook)],
+            layer_hooks=[(layer, hook)],
             temperature=temperature,
             max_new_tokens=max_new_tokens,
             num_return_sequences=n,
         )
 
     @torch.inference_mode()
-    def generate_with_multi_layer_steering(
+    def generate_with_hooks(
         self,
         messages: list[Message],
-        layer_hooks: list[tuple[int, SteeringHook]],
+        layer_hooks: list[tuple[int, LayerHook]],
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> str:
-        """Generate with activation steering applied simultaneously at multiple layers."""
-        return self._generate_steered(
+        """Generate with hooks applied at multiple layers simultaneously."""
+        return self._generate_hooked(
             messages=messages,
             layer_hooks=layer_hooks,
             temperature=temperature,
@@ -438,16 +438,16 @@ class HuggingFaceModel:
         )[0]
 
     @torch.inference_mode()
-    def generate_with_multi_layer_steering_n(
+    def generate_with_hooks_n(
         self,
         messages: list[Message],
-        layer_hooks: list[tuple[int, SteeringHook]],
+        layer_hooks: list[tuple[int, LayerHook]],
         n: int,
         temperature: float = 1.0,
         max_new_tokens: int | None = None,
     ) -> list[str]:
-        """Generate n completions with multi-layer steering in a single forward pass."""
-        return self._generate_steered(
+        """Generate n completions with hooks at multiple layers (shared prefill)."""
+        return self._generate_hooked(
             messages=messages,
             layer_hooks=layer_hooks,
             temperature=temperature,
@@ -455,10 +455,10 @@ class HuggingFaceModel:
             num_return_sequences=n,
         )
 
-    def _generate_steered(
+    def _generate_hooked(
         self,
         messages: list[Message],
-        layer_hooks: list[tuple[int, SteeringHook]],
+        layer_hooks: list[tuple[int, LayerHook]],
         temperature: float,
         max_new_tokens: int | None,
         num_return_sequences: int,
@@ -467,7 +467,7 @@ class HuggingFaceModel:
         input_ids = self._tokenize(prompt)
         prompt_len = input_ids.shape[1]
 
-        def make_hf_hook(hook: SteeringHook) -> Callable:
+        def make_hf_hook(hook: LayerHook) -> Callable:
             def hf_hook(module: torch.nn.Module, input: tuple, output: tuple | torch.Tensor) -> tuple | torch.Tensor:
                 hidden = output[0] if isinstance(output, tuple) else output
                 modified = hook(hidden, prompt_len)

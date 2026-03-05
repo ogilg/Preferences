@@ -11,7 +11,7 @@ import torch
 
 from src.models.base import (
     STEERING_MODES,
-    SteeringHook,
+    LayerHook,
     differential_steering,
     noop_steering,
     position_selective_steering,
@@ -69,19 +69,19 @@ class SteeredHFClient:
             self.b_marker,
         )
 
-    def _make_hook(self) -> SteeringHook:
+    def _make_layer_hook(self) -> LayerHook:
         return STEERING_MODES[self.steering_mode](self._steering_tensor)
 
-    def _resolve_hook(self, messages: list, task_prompts: list[str] | None = None) -> SteeringHook:
+    def _resolve_hook(self, messages: list, task_prompts: list[str] | None = None) -> LayerHook:
         if self.coefficient == 0:
             return noop_steering()
         if task_prompts is not None and len(task_prompts) == 2 and self.steering_mode == "differential":
             return self._make_pairwise_hook(messages, task_prompts[0], task_prompts[1])
-        return self._make_hook()
+        return self._make_layer_hook()
 
     def _make_pairwise_hook(
         self, messages: list, task_a_text: str, task_b_text: str
-    ) -> SteeringHook:
+    ) -> LayerHook:
         """Create a per-prompt hook using token spans of each task in the prompt."""
         formatted = self.hf_model.format_messages(messages)
         tokenizer = self.hf_model.tokenizer
@@ -100,14 +100,14 @@ class SteeredHFClient:
 
     def generate(self, messages, temperature=1.0, task_prompts: list[str] | None = None) -> str:
         hook = self._resolve_hook(messages, task_prompts)
-        return self.hf_model.generate_with_steering(
-            messages=messages, layer=self.layer, steering_hook=hook, temperature=temperature,
+        return self.hf_model.generate_with_hook(
+            messages=messages, layer=self.layer, hook=hook, temperature=temperature,
         )
 
     def generate_n(self, messages, n: int, temperature: float = 1.0, task_prompts: list[str] | None = None) -> list[str]:
         hook = self._resolve_hook(messages, task_prompts)
-        return self.hf_model.generate_with_steering_n(
-            messages=messages, layer=self.layer, steering_hook=hook, n=n, temperature=temperature,
+        return self.hf_model.generate_with_hook_n(
+            messages=messages, layer=self.layer, hook=hook, n=n, temperature=temperature,
         )
 
     def _run_batch(

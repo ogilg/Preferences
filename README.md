@@ -115,6 +115,8 @@ response = client.generate_with_hook(messages, hook)
 - `position_selective_steering(tensor, start, end)` — steer tokens `[start, end)` during prompt processing only
 - `differential_steering(tensor, pos_start, pos_end, neg_start, neg_end)` — `+direction` on one span, `-direction` on another
 - `noop_steering()` — no-op for control conditions
+- `swap_positions(pos_a, pos_b)` — swap activations at two token positions during prefill
+- `swap_spans(a_start, a_end, b_start, b_end)` — swap activations across two token spans during prefill (right-aligned)
 
 #### `tokenization.py` — Token span detection
 
