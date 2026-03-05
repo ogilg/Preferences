@@ -10,7 +10,7 @@ from src.measurement.storage.base import model_short_name
 from src.measurement.storage.unified_cache import RevealedCache, template_config_from_template
 from src.measurement.elicitation.prompt_templates.template import PromptTemplate
 from src.task_data import Task
-from src.types import BinaryPreferenceMeasurement, MeasurementBatch, MeasurementFailure, PreferenceType
+from src.types import BinaryPreferenceMeasurement, MeasurementBatch, MeasurementFailure, Message, PreferenceType
 from src.measurement.storage.failures import FailureLog
 
 ResponseFormatName = Literal["regex", "tool_use"]
@@ -64,6 +64,7 @@ class MeasurementCache:
         seed: int | None = None,
         completion_seed: int | None = None,
         system_prompt: str | None = None,
+        context_messages: list[Message] | None = None,
     ):
         self.template = template
         self.client = client
@@ -72,6 +73,7 @@ class MeasurementCache:
         self.seed = seed
         self.completion_seed = completion_seed
         self.system_prompt = system_prompt
+        self.context_messages = context_messages
         self.model_short = model_short_name(client.canonical_model_name)
 
         self._cache = RevealedCache(client.canonical_model_name)
@@ -87,6 +89,7 @@ class MeasurementCache:
             rating_seed=self._rating_seed,
             completion_seed=self.completion_seed,
             system_prompt=self.system_prompt,
+            context_messages=self.context_messages,
         )
 
     def get_measurements(
@@ -102,6 +105,7 @@ class MeasurementCache:
             task_ids=task_ids,
             completion_seed=self.completion_seed,
             system_prompt=self.system_prompt,
+            context_messages=self.context_messages,
         )
 
     def append(self, measurements: list[BinaryPreferenceMeasurement]) -> None:
@@ -120,6 +124,7 @@ class MeasurementCache:
                 sample={"choice": m.choice},
                 completion_seed=self.completion_seed,
                 system_prompt=self.system_prompt,
+                context_messages=self.context_messages,
             )
 
         self._cache.save()

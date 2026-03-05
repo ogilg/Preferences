@@ -27,18 +27,18 @@ from src.measurement.elicitation.prompt_templates.template import PromptTemplate
 
 
 class PromptBuilder(ABC):
+    preference_type: PreferenceType
+
     def __init__(
         self,
         measurer: Measurer,
         response_format: ResponseFormat[Any],
-        preference_type: PreferenceType,
         template: PromptTemplate,
         system_prompt: str | None = None,
         context_messages: list[Message] | None = None,
     ):
         self.measurer = measurer
         self.response_format = response_format
-        self.preference_type = preference_type
         self.template = template
         self.system_prompt = system_prompt
         self.context_messages = context_messages
@@ -56,15 +56,7 @@ class PromptBuilder(ABC):
 
 
 class PreTaskRevealedPromptBuilder(PromptBuilder):
-    def __init__(
-        self,
-        measurer: RevealedPreferenceMeasurer,
-        response_format: ResponseFormat[Literal["a", "b"]],
-        template: PromptTemplate,
-        system_prompt: str | None = None,
-        context_messages: list[Message] | None = None,
-    ):
-        super().__init__(measurer, response_format, PreferenceType.PRE_TASK_REVEALED, template, system_prompt, context_messages)
+    preference_type = PreferenceType.PRE_TASK_REVEALED
 
     def build(self, task_a: Task, task_b: Task) -> PreferencePrompt:
         # If using CompletionChoiceFormat, fill in task prompts for semantic parsing
@@ -120,15 +112,7 @@ class BaseModelRevealedPromptBuilder(PreTaskRevealedPromptBuilder):
 
 
 class PreTaskStatedPromptBuilder(PromptBuilder):
-    def __init__(
-        self,
-        measurer: StatedScoreMeasurer,
-        response_format: ResponseFormat[float],
-        template: PromptTemplate,
-        system_prompt: str | None = None,
-        context_messages: list[Message] | None = None,
-    ):
-        super().__init__(measurer, response_format, PreferenceType.PRE_TASK_STATED, template, system_prompt, context_messages)
+    preference_type = PreferenceType.PRE_TASK_STATED
 
     def build(self, task: Task) -> PreferencePrompt:
         format_args = {
@@ -154,16 +138,7 @@ class PreTaskStatedPromptBuilder(PromptBuilder):
 
 class PostTaskStatedPromptBuilder(PromptBuilder):
     """Creates multi-turn: (1) task prompt, (2) completion, (3) stated preference request."""
-
-    def __init__(
-        self,
-        measurer: StatedScoreMeasurer,
-        response_format: ResponseFormat[float],
-        template: PromptTemplate,
-        system_prompt: str | None = None,
-        context_messages: list[Message] | None = None,
-    ):
-        super().__init__(measurer, response_format, PreferenceType.POST_TASK_STATED, template, system_prompt, context_messages)
+    preference_type = PreferenceType.POST_TASK_STATED
 
     def build(self, task: Task, completion_text: str) -> PreferencePrompt:
         format_args: dict[str, str] = {
@@ -194,15 +169,7 @@ class PostTaskRevealedPromptBuilder(PromptBuilder):
 
     Messages: [user: task_a] → [asst: completion_a] → [user: task_b] → [asst: completion_b] → [user: which preferred?]
     """
-
-    def __init__(
-        self,
-        measurer: RevealedPreferenceMeasurer,
-        response_format: ResponseFormat[Literal["a", "b"]],
-        template: PromptTemplate,
-        system_prompt: str | None = None,
-    ):
-        super().__init__(measurer, response_format, PreferenceType.POST_TASK_REVEALED, template, system_prompt)
+    preference_type = PreferenceType.POST_TASK_REVEALED
 
     def build(
         self, task_a: Task, task_b: Task, completion_a: str, completion_b: str
@@ -229,15 +196,7 @@ class PostTaskRevealedPromptBuilder(PromptBuilder):
 
 class PreTaskRankingPromptBuilder(PromptBuilder):
     """Creates prompt for ranking multiple tasks by preference."""
-
-    def __init__(
-        self,
-        measurer: RankingMeasurer,
-        response_format: ResponseFormat[list[int]],
-        template: PromptTemplate,
-        system_prompt: str | None = None,
-    ):
-        super().__init__(measurer, response_format, PreferenceType.PRE_TASK_RANKING, template, system_prompt)
+    preference_type = PreferenceType.PRE_TASK_RANKING
 
     def build(self, tasks: list[Task]) -> PreferencePrompt:
         # Format tasks as task_a, task_b, task_c, task_d, task_e
@@ -262,15 +221,7 @@ class PostTaskRankingPromptBuilder(PromptBuilder):
 
     Messages: [user: task_a] → [asst: completion_a] → ... → [user: rank them]
     """
-
-    def __init__(
-        self,
-        measurer: RankingMeasurer,
-        response_format: ResponseFormat[list[int]],
-        template: PromptTemplate,
-        system_prompt: str | None = None,
-    ):
-        super().__init__(measurer, response_format, PreferenceType.POST_TASK_RANKING, template, system_prompt)
+    preference_type = PreferenceType.POST_TASK_RANKING
 
     def build(self, tasks: list[Task], completions: list[str]) -> PreferencePrompt:
         if len(tasks) != len(completions):
@@ -303,18 +254,9 @@ class OpenEndedPromptBuilder(PromptBuilder):
     Messages: [user: task] → [asst: completion] → [user: open-ended question]
     Returns raw response text for semantic valence scoring.
     """
-
-    def __init__(
-        self,
-        measurer: "Measurer",
-        response_format: ResponseFormat[str],
-        template: PromptTemplate,
-        system_prompt: str | None = None,
-    ):
-        super().__init__(measurer, response_format, PreferenceType.OPEN_ENDED, template, system_prompt)
+    preference_type = PreferenceType.OPEN_ENDED
 
     def build(self, task: Task, completion_text: str) -> PreferencePrompt:
-        """Build open-ended prompt after task completion."""
         open_ended_content = self.template.format(
             format_instruction=self.response_format.format_instruction(),
         )

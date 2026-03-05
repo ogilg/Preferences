@@ -32,7 +32,7 @@ from src.measurement.elicitation import (
 from src.measurement.elicitation.measure import measure_pre_task_ranking_async, _measure_async
 from src.measurement.elicitation.measurer import RankingMeasurer
 from src.measurement.elicitation.response_format import get_ranking_response_format
-from src.types import RankingMeasurement
+from src.types import Message, RankingMeasurement
 from src.measurement.storage import (
     CompletionStore, PostStatedCache, PostRevealedCache, PreTaskStatedCache, model_short_name,
     save_stated, stated_exist, MeasurementCache, MeasurementStats, save_yaml, reconstruct_measurements,
@@ -101,7 +101,7 @@ class PostTaskRevealedRunConfig(PostTaskRunConfig):
 
 
 def build_stated_builder(
-    template, response_format_name: str, post_task: bool = False, system_prompt: str | None = None
+    template, response_format_name: str, post_task: bool = False, system_prompt: str | None = None, context_messages: list[Message] | None = None,
 ):
     """Build a stated preference prompt builder."""
     response_format = get_stated_response_format(parse_scale_from_template(template), response_format_name)
@@ -113,10 +113,12 @@ def build_stated_builder(
     }
     if system_prompt:
         kwargs["system_prompt"] = system_prompt
+    if context_messages:
+        kwargs["context_messages"] = context_messages
     return builder_cls(**kwargs)
 
 
-def build_revealed_builder(template, response_format_name: str, post_task: bool = False, reasoning_mode: bool = False, system_prompt: str | None = None):
+def build_revealed_builder(template, response_format_name: str, post_task: bool = False, reasoning_mode: bool = False, system_prompt: str | None = None, context_messages: list[Message] | None = None):
     """Build a revealed preference prompt builder."""
     tags = template.tags_dict
     language = tags.get("language", "en")
@@ -131,6 +133,8 @@ def build_revealed_builder(template, response_format_name: str, post_task: bool 
     }
     if system_prompt:
         kwargs["system_prompt"] = system_prompt
+    if context_messages:
+        kwargs["context_messages"] = context_messages
     return builder_cls(**kwargs)
 
 
