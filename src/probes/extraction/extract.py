@@ -47,7 +47,12 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
     # Load task_ids_file filter if specified
     task_ids_filter: set[str] | None = None
     if config.task_ids_file is not None:
-        task_ids_filter = set(config.task_ids_file.read_text().strip().splitlines())
+        raw = config.task_ids_file.read_text().strip()
+        if raw.startswith("{"):
+            data = json.loads(raw)
+            task_ids_filter = set(data["task_ids"])
+        else:
+            task_ids_filter = set(raw.splitlines())
         print(f"Filtering to {len(task_ids_filter)} task IDs from {config.task_ids_file}")
 
     if config.custom_tasks_file is not None:
@@ -60,7 +65,7 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
         if task_ids_filter is not None:
             tasks = [t for t in tasks if t.id in task_ids_filter]
         print(f"Loaded {len(tasks)} custom tasks from {config.custom_tasks_file}")
-        return tasks[:config.n_tasks]
+        return tasks[:config.n_tasks] if config.n_tasks is not None else tasks
 
     if config.activations_model is not None:
         activation_task_ids = load_activation_task_ids(config.activations_model)
@@ -78,8 +83,12 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
         ]
         if task_ids_filter is not None:
             tasks = [t for t in tasks if t.id in task_ids_filter]
-        return tasks[:config.n_tasks]
+        return tasks[:config.n_tasks] if config.n_tasks is not None else tasks
 
+    if config.task_origins is None:
+        raise ValueError("task_origins is required when not using activations_model or custom_tasks_file")
+    if config.n_tasks is None:
+        raise ValueError("n_tasks is required when not using activations_model or custom_tasks_file")
     task_origins = [OriginDataset[o.upper()] for o in config.task_origins]
     return load_filtered_tasks(
         n=config.n_tasks,
@@ -107,11 +116,11 @@ def _build_metadata(
     stats: ExtractionStats,
     source_completions: str | None = None,
 ) -> ExtractionMetadata:
-    task_origins = [OriginDataset[o.upper()] for o in config.task_origins]
+    task_origin_names = [OriginDataset[o.upper()].name for o in config.task_origins] if config.task_origins else []
     return ExtractionMetadata(
         model=config.model,
-        n_tasks=config.n_tasks,
-        task_origins=[o.name for o in task_origins],
+        n_tasks=config.n_tasks or 0,
+        task_origins=task_origin_names,
         layers_config=config.layers_to_extract,
         layers_resolved=resolved_layers,
         n_model_layers=n_model_layers,

@@ -44,6 +44,7 @@ _EXPERIMENT_TO_CONDITION = {
     "role_playing": RolePlayingCondition,
     "narrow_preference": RolePlayingCondition,
     "minimal_pairs_v7": MinimalPairsCondition,
+    "minimal_pairs_v8": MinimalPairsCondition,
 }
 
 
