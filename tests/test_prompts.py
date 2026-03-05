@@ -541,6 +541,7 @@ class TestToolUseRatingFormat:
         assert await fmt.parse('{"rating": 7.5}') == 7.5
         assert await fmt.parse('{"rating": 3.14}') == 3.14
 
+    @pytest.mark.api
     @pytest.mark.asyncio
     async def test_raises_on_invalid_json(self):
         """Should raise ValueError when JSON parsing fails."""

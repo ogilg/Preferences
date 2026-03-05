@@ -119,7 +119,7 @@ class TestTaskFiles:
     def test_target_tasks_count(self):
         with open(TASKS_DIR / "target_tasks.json") as f:
             data = json.load(f)
-        assert len(data) == 40
+        assert len(data) == 48
 
     def test_target_tasks_have_prompts(self):
         with open(TASKS_DIR / "target_tasks.json") as f:
@@ -131,7 +131,7 @@ class TestTaskFiles:
     def test_crossed_tasks_count(self):
         with open(TASKS_DIR / "crossed_tasks.json") as f:
             data = json.load(f)
-        assert len(data) == 40
+        assert len(data) == 48
 
     def test_crossed_tasks_cover_all_topics(self):
         with open(TASKS_DIR / "crossed_tasks.json") as f:

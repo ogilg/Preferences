@@ -423,7 +423,12 @@ class ToolUseRatingFormat(BaseRatingFormat):
             return result.rating
         except Exception:
             pass
-        # Tool use failed - model may have refused instead of calling tool
+        # Only consult refusal judge if the response looks like natural language
+        # (not malformed JSON). If it starts with '{', it was a failed tool call
+        # attempt, not a refusal.
+        stripped = response.strip()
+        if stripped.startswith("{") or stripped.startswith("["):
+            raise ValueError(f"Malformed JSON tool response: {response}")
         if (await refusal_judge.judge_preference_refusal_async(response)).is_refusal:
             return "refusal"
         raise ValueError(f"Could not extract number from response: {response}")
