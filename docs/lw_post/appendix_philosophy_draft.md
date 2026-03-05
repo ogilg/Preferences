@@ -17,7 +17,7 @@ Both of these pathways implicate evaluative representations.
 
 **How evaluative representations come in**
 
-On many philosophical views, desires are evaluative representations that drive behaviour, perhaps with some further functional properties. [refs?]
+On many philosophical views, desires are evaluative representations that drive behaviour, perhaps with some further functional properties such as a role in instrumental reasoning or a connection to reward learning ([Butlin 2026](https://philpapers.org/archive/BUTDIA.pdf)).
 
-Valenced experiences, similarly, are often thought to be evaluative representations, although consciousness is also necessary. It is unclear whether consciousness plus evaluative content is sufficient for valenced experience. [refs?] Our experiments operationalise evaluative representations through revealed preferences (pairwise choices), not through felt experience, so the evaluative representations we probe for may not map cleanly onto the kind that matter for sentience.
+Valenced experiences, similarly, are often thought to be evaluative representations, although consciousness is also necessary. It is unclear whether consciousness plus evaluative content is sufficient for valenced experience ([Smithies & Weiss 2019](https://doi.org/10.1111/phib.12145); [Heathwood 2019](https://doi.org/10.1111/nous.12228)). Our experiments operationalise evaluative representations through revealed preferences (pairwise choices), not through felt experience, so the evaluative representations we probe for may not map cleanly onto the kind that matter for sentience.
 

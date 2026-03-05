@@ -1,4 +1,4 @@
-## 4. Probes generalize across personas
+## 4. Probes generalise across personas
 
 Section 3 tested explicit preference statements ("you hate cheese"). But the evaluative direction should also track naturalistic persona shifts: characters whose preferences emerge implicitly from their identity rather than being stated directly. We test this with role-playing personas, then ask
 - Does our probe generalise to preferences of other personas? (4.1)
@@ -42,13 +42,13 @@ Cross-persona transfer is moderate and asymmetric. Some interesting facts:
 ![Cross-eval heatmap](assets/plot_030426_s5_cross_eval_heatmap.png)
 *Pearson r between probe predictions and a test set of utilities (250 test tasks). Diagonal: within-persona (r=0.85–0.92). Off-diagonal: cross-persona transfer.*
 
-### 4.3 Persona diversity improves generalization (a bit)
+### 4.3 Persona diversity improves generalisation (a bit)
 
 We also measure whether adding persona diversity in the training data (but keeping dataset size fixed) affects generalisation.
 
 Diversity helps beyond data quantity. At fixed 2,000 training tasks, going from 1→2→3 personas improves mean r from 0.49 to 0.67. Including all 4 remaining personas at 500 tasks each (still 2,000 total) reaches mean r=0.71.
 
 ![Diversity ablation](assets/plot_030426_s5_diversity_ablation.png)
-*Leave-one-out probe generalization across 5 personas. Each point is one (train set, eval persona) combination; color indicates eval persona. Training data fixed at 2,000 total tasks, divided equally across training personas.*
+*Leave-one-out probe generalisation across 5 personas. Each point is one (train set, eval persona) combination; color indicates eval persona. Training data fixed at 2,000 total tasks, divided equally across training personas.*
 
 

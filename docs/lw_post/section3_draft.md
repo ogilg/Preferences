@@ -60,7 +60,7 @@ We compare version A (pro-interest) directly against version C (anti-interest), 
 
 [^fine-grained-halves]: Individual halves (A vs B, B vs C) each capture only half the manipulation, and ceiling effects compress the signal: the model already strongly prefers some target tasks under the neutral biography, leaving little room for the pro-interest to improve on.
 
-We test 20 targets across 2 base roles (40 A-vs-C comparisons), using 50 tasks that were not in the probe's training set. The probe ranks the target task #1 out of 50 in 36/40 cases. In all 4 remaining cases the probe ransk the task 2/50 behind a similar task.
+We test 20 targets across 2 base roles (40 A-vs-C comparisons), using 50 tasks that were not in the probe's training set. The probe ranks the target task #1 out of 50 in 36/40 cases. In all 4 remaining cases the probe ranks the task 2/50 behind a similar task.
 
 ![Fine-grained A vs C scatter](assets/plot_030526_exp3v8_avc.png)
 *Stars mark the target task for each biography. Filled = probe ranked it #1 (36/40 cases).*

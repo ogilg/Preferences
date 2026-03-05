@@ -1,6 +1,8 @@
 # Models have linear representations of what tasks they like
 
-*This work was done as part of MATS 9.0, mentored by Patrick Butlin. All mistakes are mine. I'm posting this as a research report to get feedback. Please red-team, comment, and reach out.*
+*This work was done as part of MATS 9.0, mentored by Patrick Butlin. All mistakes are mine. I'm posting this as a research report to get feedback. **Please red-team, comment, and reach out.***
+
+*Thanks to Patrick Butlin and Daniel Paleka for regular feedback on the project. Thanks to Patrick Butlin, Pierre Beckmann, Austin Meek, Elias Kempf and Rob Adragna for comments on the draft.*
 
 **TLDR:** We train probes on Gemma3-27b revealed preferences. We find that these generalise ood to system-prompt induced preference shifts, including via personas. We also find that the probes have a weak but statistically significant causal effect through steering.
 
@@ -8,7 +10,7 @@
 
 **What happens internally when a model chooses task A over task B?** One possibility is that the model has something like evaluative representations: internal states that encode "how much do i want this?" and play some role in driving choice. We use probing and steering to try to find such representations in Gemma-3-27B.
 
-**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. [Long et al. (2024)](https://arxiv.org/abs/2411.00986) survey theories of welfare and identify two main pathways to moral patienthood: *robust agency* and *sentience*. Evaluative representations are implicated under both (we discuss how in [Appendix A](appendix_philosophy_draft.md)). Finding such representations in models would be evidence for welfare-relevant properties; not finding them would be (some) evidence against.
+**Why does this matter?** Whether LLMs are moral patients may depend on whether they have evaluative representations playing the right functional roles. [Long et al. (2024)](https://arxiv.org/abs/2411.00986) survey theories of welfare and identify two main pathways to moral patienthood: *robust agency* and *sentience*. Evaluative representations are implicated under both (see [Appendix A](appendix_philosophy_draft.md) and [Butlin 2026](https://philpapers.org/archive/BUTDIA.pdf)). Finding such representations in models would be evidence for welfare-relevant properties; not finding them would be (some) evidence against.
 
 **But how do we distinguish evaluative from non-evaluative representations?** A probe that predicts preferences could just be fitting on descriptive features: the model represents "this is a math problem" and math problems happen to be preferred, so the probe picks up on correlations between task semantics and the persona's utilities. A genuinely evaluative direction, however, should track *changes* in what the model values. If context changes which tasks are preferred, a descriptive probe that learned fixed content-preference correlations should break, but an evaluative one should follow.
 
@@ -67,7 +69,7 @@ Specifically, we train a Ridge-regularised probe on residual stream activations 
 
 We train on 10,000 tasks. For evaluation, we run a second round of pairwise comparisons on 4,000 new tasks (same model, Gemma-3-27B instruct), fit a separate utility function, and test the probe against those utilities. We split evaluation into 2,000 validation (for Ridge alpha sweep) and 2,000 test.
 
-The probe achieves a Pearson correlation of 0.86 and 77% pairwise accuracy (given two tasks, does the probe correctly predict which one the model would choose?).[^ceiling]
+The probe achieves a Pearson correlation of 0.86 and 77% pairwise accuracy (given two tasks, does the probe correctly predict which one the model would choose?).[^ceiling] We use Pearson correlation as our primary metric throughout: it captures how well the probe recovers the full preference ranking, is scale- and shift-invariant (so we don't need to match the arbitrary scale of Thurstonian utilities), and is more informative than pairwise accuracy.
 
 [^ceiling]: Pairwise accuracy is capped at ~87% because the Thurstonian utilities themselves don't perfectly fit the choice data. They are a noisy estimate of the model's preferences.
 
@@ -153,10 +155,10 @@ We compare version A (pro-interest) directly against version C (anti-interest), 
 
 [^fine-grained-halves]: Individual halves (A vs B, B vs C) each capture only half the manipulation, and ceiling effects compress the signal: the model already strongly prefers some target tasks under the neutral biography, leaving little room for the pro-interest to improve on.
 
-The probe ranks the target task #1 out of 48 in 16/18 cases. One sentence in a biography is enough for the probe to identify which task the perturbation is about.
+We test 20 targets across 2 base roles (40 A-vs-C comparisons), using 50 tasks that were not in the probe's training set. The probe ranks the target task #1 out of 50 in 36/40 cases. In all 4 remaining cases the probe ransk the task 2/50 behind a similar task.
 
-![Fine-grained A vs C scatter](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_s4_scatter_fine_grained_avc.png)
-*Stars mark the target task for each biography. Filled = probe ranked it #1 (16/18 cases).*
+![Fine-grained A vs C scatter](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_030526_exp3v8_avc.png)
+*Stars mark the target task for each biography. Filled = probe ranked it #1 (36/40 cases).*
 
 ---
 
@@ -308,9 +310,23 @@ Both of these pathways implicate evaluative representations.
 
 **How evaluative representations come in**
 
-On many philosophical views, desires are evaluative representations that drive behaviour, perhaps with some further functional properties. [refs?]
+On many philosophical views, desires are evaluative representations that drive behaviour, perhaps with some further functional properties such as a role in instrumental reasoning or a connection to reward learning ([Butlin 2026](https://philpapers.org/archive/BUTDIA.pdf)).
 
-Valenced experiences, similarly, are often thought to be evaluative representations, although consciousness is also necessary. It is unclear whether consciousness plus evaluative content is sufficient for valenced experience. [refs?] Our experiments operationalise evaluative representations through revealed preferences (pairwise choices), not through felt experience, so the evaluative representations we probe for may not map cleanly onto the kind that matter for sentience.
+Valenced experiences, similarly, are often thought to be evaluative representations, although consciousness is also necessary. It is unclear whether consciousness plus evaluative content is sufficient for valenced experience ([Smithies & Weiss 2019](https://doi.org/10.1111/phib.12145); [Heathwood 2019](https://doi.org/10.1111/nous.12228)). Our experiments operationalise evaluative representations through revealed preferences (pairwise choices), not through felt experience, so the evaluative representations we probe for may not map cleanly onto the kind that matter for sentience.
+
+---
+
+## Appendix B: Evaluative representations in pre-trained models
+
+There is a tension in our framing:
+- On the one hand we say that evaluative representations are necessary for robust agency, and that this is the most likely way they might be welfare-relevant.
+- On the other hand, probes generalise well across topics even when trained on base models. Despite the fact that pre-trained model do not seem like plausible candidates for robust agency.
+
+There are two ways to reconcile this.
+
+**Option 1: Agency lives in the simulacra.** Under the [Persona Selection Model](https://www.lesswrong.com/posts/dfoty34sT7CSKeJNn/the-persona-selection-model), pre-training learns a distribution over personas. More broadly, we might expect pre-trained models to learn context-aware representations of "what the role I am currently playing values". This circuitry might then be recycled across roles/personas. The candidate for robust agency would then be the simulacra.
+
+**Option 2: Pre-trained models learn complex, but purely descriptive features that correlate highly with valuations, but do not yet play the right functional roles.** As an analogy, you could imagine a system developing representations that track "this action leads to food". This would correlate well with valuations, yet is purely descriptive. Something similar might be responsible for the high cross-topic generalisation with pre-trained models ([Section 2](#2-linear-probes-predict-preferences-beyond-descriptive-features)). It could also be that these complex but descriptive features are then harnessed into evaluative representations during post-training.
 
 ---
 
@@ -331,14 +347,3 @@ Safety-adjacent topics have poor probe performance overall.
 Surprisingly, safety topics perform *better* when held out than when trained on. This is the opposite of what we'd expect if the issue were generalisation. The explanation: high refusal rates (~35% for harmful_request, ~34% for security_legal, ~26% for model_manipulation) probably throw off the Thurstonian utility estimates, so including these topics in training adds noise.
 
 ![Per-topic probe performance: within-topic and cross-topic](https://raw.githubusercontent.com/ogilg/Preferences/main/docs/lw_post/assets/plot_022626_appendix_heldout_vs_hoo.png)
-
----
-
-## Appendix B: Evaluative representations in pre-trained models
-
-There is a tension in our framing:
-- On the one hand we say that evaluative representations are necessary for robust agency, and that this is the most likely way they might be welfare-relevant.
-- On the other hand, probes generalise well across topics even when trained on base models. Despite the fact that pre-trained model do not seem like plausible candidates for robust agency.
-
-
-One way to reconcile this is that **agency lives in the simulacra.** Under the [Persona Selection Model](https://www.lesswrong.com/posts/dfoty34sT7CSKeJNn/the-persona-selection-model), pre-training learns a distribution over personas. More broadly, we might expect pre-trained models to learn context-aware representations of "what the role I am currently playing values". This circuitry might then be recycled across roles/personas. The candidate for robust agency would then be the simulacra.

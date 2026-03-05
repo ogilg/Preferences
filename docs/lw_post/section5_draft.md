@@ -21,13 +21,13 @@ At ±3% of the activation norm (the peak), steering shifts P(choose A) by ~17%. 
 
 ### 5.2 Steering stated preferences
 
-Same probe direction, but now the model rates individual tasks instead of choosing between a pair. We tested steering at three token positions: on the task tokens only, at the end-of-turn token (the last prompt token, which is also where we extract activations for probe training), and during the model's generated response.
+Same probe direction, but now the model rates individual tasks instead of choosing between a pair. We tested steering at three token positions: on the task tokens only, at the last prompt token (which is also where we extract activations for probe training), and during the model's generated response.
 
 **Setup.** 200 tasks, 3 steering modes, 10 samples, applied across 3 response formats (three separate line plots below).
 
 Our findings:
 - Steering on the task prompt tokens does not have a noticeable effect.
-- Steering on the end-of-turn token has a clear, roughly monotonic effect in 2/3 formats.
+- Steering on the last prompt token has a clear, roughly monotonic effect in 2/3 formats.
 - Steering during generation leads to near-identical results as steering on the final task token.
 
 
