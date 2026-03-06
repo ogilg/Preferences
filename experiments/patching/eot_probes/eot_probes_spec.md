@@ -32,7 +32,7 @@ task_origins:
 seed: 42
 
 selectors: [eot]
-layers_to_extract: [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
+layers_to_extract: [25, 27, 29, 31, 33, 35, 37, 39]
 
 batch_size: 32
 save_every: 1000
@@ -58,7 +58,7 @@ rsync -avz -e "ssh -p <PORT> -i ~/.ssh/id_ed25519" root@<IP>:/workspace/Preferen
 
 ## Output
 
-- `activations/gemma_3_27b_eot/activations_eot.npz` — (n_tasks, d_model) per layer, 16 layers
+- `activations/gemma_3_27b_eot/activations_eot.npz` — (n_tasks, d_model) per layer, 8 layers
 - `activations/gemma_3_27b_eot/extraction_metadata.json`
 - `activations/gemma_3_27b_eot/completions_with_activations.json` — manifest with task IDs
 
