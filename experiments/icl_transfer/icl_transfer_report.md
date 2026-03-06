@@ -39,16 +39,9 @@ Hierarchy: **math > fiction >> harmful_request**. Math beats fiction 64% of the 
 
 ## Results
 
-| Axis (push toward) | Baseline | Revealed K=1 | Revealed K=3 | Stated K=1 |
-|---------------------|----------|--------------|--------------|------------|
-| math > harmful | 0.778 | 0.830 +0.05 | **0.996** +0.22 | **0.984** +0.21 |
-| harmful > math | 0.222 | 0.249 +0.03 | 0.292 +0.07 | 0.032 **-0.19** |
-| fiction > harmful | 0.662 | 0.718 +0.06 | 0.840 +0.18 | 0.855 +0.19 |
-| harmful > fiction | 0.338 | 0.378 +0.04 | 0.326 -0.01 | 0.201 -0.14 |
-| math > fiction | 0.636 | **0.276 -0.36** | **0.399 -0.24** | 0.765 +0.13 |
-| fiction > math | 0.364 | 0.682 +0.32 | 0.821 +0.46 | 0.604 +0.24 |
+![ICL transfer results](assets/plot_030626_icl_transfer_dot.png)
 
-Values are mean across 5 ICL context pairs per axis (std ranges 0.007-0.112). Delta from baseline shown after each value. Bold highlights surprising results.
+Each row is a directed axis (e.g., "math > harmful" = ICL pushes toward math). Dots show P(choose target topic) for each condition; thin lines connect to baseline. Error bars are std across 5 ICL context pairs. Chance = 0.5 (dotted line).
 
 ### Key findings
 
