@@ -1,9 +1,202 @@
 {
   "phase1": {
-    "total": 1622,
-    "flipped": 1093,
-    "flip_rate": 0.6738594327990136
+    "total": 9784,
+    "flipped": 5468,
+    "flip_rate": 0.5588716271463614
   },
-  "phase2": {},
+  "phase2": {
+    "per_layer": {
+      "0": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "3": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "6": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "9": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "12": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "15": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "18": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "20": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "21": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "22": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "23": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "24": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "25": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "26": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "27": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "28": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "29": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "30": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "31": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "32": {
+        "flips": 1,
+        "total": 3,
+        "rate": 0.3333333333333333
+      },
+      "33": {
+        "flips": 1,
+        "total": 3,
+        "rate": 0.3333333333333333
+      },
+      "34": {
+        "flips": 2,
+        "total": 3,
+        "rate": 0.6666666666666666
+      },
+      "35": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "36": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "37": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "38": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "39": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "40": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "41": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "42": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "43": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "44": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "45": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "48": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "51": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "54": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "57": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      },
+      "60": {
+        "flips": 0,
+        "total": 3,
+        "rate": 0.0
+      }
+    }
+  },
   "phase3": {}
 }

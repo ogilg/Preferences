@@ -51,3 +51,29 @@
 **At ~950 orderings:** Phase 1 continues via nohup. ~10% through Phase 1.
 
 **At ~1700 orderings (08:00 UTC):** 17% through Phase 1. Rate: ~33 orderings/min. ETA for Phase 1 completion: ~11:50 UTC. Process healthy (PID 13089/13093). Phases 2 and 3 will chain automatically via run_all.sh.
+
+**At ~2337 orderings (08:19 UTC):** 23.6% through Phase 1. Rate steady at ~33/min. Process healthy.
+
+**Time estimates for full run:**
+- Phase 1 ETA: ~12:05 UTC today (~3.75h remaining)
+- Phase 2: ~6,336 flipping orderings × 38 layers × 5 trials ≈ 24h
+- Phase 3: ~6,336 orderings × ~20 combinations × 5 trials ≈ 12h
+- Total: ~41h from start. Full completion ETA: ~March 8 00:30 UTC
+
+## 2026-03-06: Phase 1 Complete (11:51 UTC)
+
+- **9,900 orderings in 4.3h** (~38 orderings/min)
+- 9,784 analyzed (65 parse-fail, 51 ambiguous excluded)
+- **Flip rate: 55.9%** (5,468/9,784) — matches pilot's 54%
+- P(choose A) = 0.546
+- Inverted-U pattern confirmed: peak at |Δμ| 12-14 (71.1%), low at |Δμ| 0-2 (37.6%)
+- Per-task flip rates: 13-83%, broadly distributed across all utility levels
+- Updated report and plots with final Phase 1 numbers
+
+## 2026-03-06: Phase 2 Started (11:51 UTC)
+
+- 5,511 flipping orderings identified from Phase 1
+- 38 layers to sweep, 5 trials each
+- Process healthy (PID 22039)
+- Early results (n=3): L34 = 67%, L32-33 = 33%, all others 0% — pilot causal window confirmed
+- Estimated ~24h for Phase 2 completion
