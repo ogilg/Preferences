@@ -87,3 +87,13 @@
   - Much higher than pilot (67-82% vs 43-61%) — broader task diversity helps
 - L31 (best probe layer) at 73% — confirms probe reads from causal layers
 - Updated report with interim Phase 2 layer profile and plot
+
+## 2026-03-06: Phase 2 Progress Check (15:37 UTC, n=507)
+
+- Layer profile settling (rates slightly lower than n=101 estimates, expected with more data):
+  - L32=76.7%, L33=73.7%, L30=72.1%, L28=L34=71.1%, L31=67.4%, L29=62.5%
+  - L27=25.5%, L26=14.8% (transitional)
+  - Tiny activity at L22-25 (0.8-2.2%) and L35 (0.6%) — noise floor
+- Rate: 2.2 orderings/min. 507/5511 done (9.2%). ETA: ~March 8 04:00 UTC
+- Process stable (PID 22039, ~226 min CPU time)
+- Regenerated layer sweep plot with n=507 data
