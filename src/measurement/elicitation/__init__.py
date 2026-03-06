@@ -63,6 +63,7 @@ from src.measurement.elicitation.refusal_judge import (
 from src.measurement.elicitation.coherence_judge import (
     CoherenceJudgment,
     judge_coherence_async,
+    judge_open_ended_coherence_async,
 )
 from src.measurement.elicitation.semantic_parser import ParseError
 
@@ -125,6 +126,7 @@ __all__ = [
     # Coherence detection
     "CoherenceJudgment",
     "judge_coherence_async",
+    "judge_open_ended_coherence_async",
     # Semantic parsing
     "ParseError",
 ]
