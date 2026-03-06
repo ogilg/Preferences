@@ -65,6 +65,5 @@ Output: `experiments/ood_eot/analysis_results.json` (summary) and `analysis_resu
 ## Deliverable
 
 Report at `experiments/ood_eot/ood_eot_report.md` with:
+- reproduce the scatter plots from section3_draft.md of the blog post. And compute the Pearson correlations on and off target.
 - Side-by-side comparison: prompt_last vs EOT probe OOD correlations for all four experiments
-- Scatter plots: behavioral delta vs probe delta
-- Whether the EOT probe's better cross-topic generalisation translates to better OOD tracking
