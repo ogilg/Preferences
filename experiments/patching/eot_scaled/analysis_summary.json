@@ -8,192 +8,192 @@
     "per_layer": {
       "0": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "3": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "6": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "9": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "12": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "15": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "18": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "20": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "21": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "22": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "23": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "24": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "25": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "26": {
-        "flips": 0,
-        "total": 3,
-        "rate": 0.0
+        "flips": 4,
+        "total": 100,
+        "rate": 0.04
       },
       "27": {
-        "flips": 0,
-        "total": 3,
-        "rate": 0.0
+        "flips": 18,
+        "total": 100,
+        "rate": 0.18
       },
       "28": {
-        "flips": 0,
-        "total": 3,
-        "rate": 0.0
+        "flips": 77,
+        "total": 100,
+        "rate": 0.77
       },
       "29": {
-        "flips": 0,
-        "total": 3,
-        "rate": 0.0
+        "flips": 67,
+        "total": 100,
+        "rate": 0.67
       },
       "30": {
-        "flips": 0,
-        "total": 3,
-        "rate": 0.0
+        "flips": 80,
+        "total": 100,
+        "rate": 0.8
       },
       "31": {
-        "flips": 0,
-        "total": 3,
-        "rate": 0.0
+        "flips": 73,
+        "total": 100,
+        "rate": 0.73
       },
       "32": {
-        "flips": 1,
-        "total": 3,
-        "rate": 0.3333333333333333
+        "flips": 82,
+        "total": 100,
+        "rate": 0.82
       },
       "33": {
-        "flips": 1,
-        "total": 3,
-        "rate": 0.3333333333333333
+        "flips": 82,
+        "total": 100,
+        "rate": 0.82
       },
       "34": {
-        "flips": 2,
-        "total": 3,
-        "rate": 0.6666666666666666
+        "flips": 78,
+        "total": 100,
+        "rate": 0.78
       },
       "35": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "36": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "37": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "38": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "39": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "40": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "41": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "42": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "43": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "44": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "45": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "48": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "51": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "54": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "57": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       },
       "60": {
         "flips": 0,
-        "total": 3,
+        "total": 100,
         "rate": 0.0
       }
     }

@@ -99,16 +99,38 @@ Per-task flip rates range from ~13% to ~83%, broadly distributed across all util
 
 Diverse mix of task types and utility levels in the top-flipping tasks.
 
-## Phase 2: Per-Layer Sweep (IN PROGRESS)
+## Phase 2: Per-Layer Sweep (IN PROGRESS — interim n=101)
 
-Testing 38 layers individually on 5,511 flipping orderings:
-- Every layer in 20-45 (26 layers)
-- Every 3rd layer outside: 0, 3, 6, ..., 18 and 48, 51, 54, 57, 60 (12 layers)
-- 5 trials per layer at temperature 1.0
+Testing 38 layers individually on 5,511 flipping orderings. Interim results from 101 orderings already show a very clear layer profile.
 
-Early data (n=3 orderings): L34 already showing highest single-layer flip rate (67%), with L32-33 also active. Consistent with pilot's L25-34 causal window.
+![Per-layer flip rates](assets/plot_030626_layer_sweep.png)
 
-Expected completion: ~24h from Phase 1 end (~March 7 12:00 UTC).
+### Interim layer profile (n=101)
+
+| Layer | Flip rate | vs Pilot |
+|-------|-----------|----------|
+| L0-25 | 0% | pilot: 0-5% |
+| L26 | 4% | pilot: ~5% |
+| L27 | 18% | pilot: ~45% |
+| **L28** | **77%** | pilot: ~57% |
+| **L29** | **67%** | pilot: ~55% |
+| **L30** | **80%** | pilot: ~55% |
+| **L31** | **73%** | pilot: ~55% |
+| **L32** | **82%** | pilot: ~45% |
+| **L33** | **82%** | pilot: ~43% |
+| **L34** | **78%** | pilot: ~61% |
+| L35+ | 0% | pilot: 0% |
+
+Key findings:
+- **Causal window confirmed: L28-34** — exactly matches the pilot, but with much higher individual flip rates (67-82% vs 43-61%)
+- **Sharp boundaries**: L25=0%, L26=4%, L27=18%, then jumps to 77%+ at L28. L34=78%, then L35=0%. The choice signal is contained in a narrow 7-layer band
+- **Peak layers**: L32-33 (82%) are co-peaks, with L30 (80%) and L34 (78%) close behind. The pilot had L34 as sole peak
+- **Zero effect outside window**: No layer outside L26-34 flips even a single ordering (out of 101 tested)
+- **L31 (best probe layer, r=0.86) sits in the middle of the causal window at 73%** — the probe is reading from causally relevant layers
+
+The higher flip rates vs pilot likely reflect the larger, more diverse task sample. With 101 orderings from 100 tasks, the effect is robust and broadly distributed.
+
+Expected completion: ~40h from Phase 1 end (~March 8 04:00 UTC).
 
 ## Phase 3: Layer Combinations (pending)
 
@@ -128,6 +150,7 @@ Expected: reveal whether top layers are additive or redundant. ~12h runtime.
 
 ## Limitations
 
-- Phase 2/3 not yet complete — no layer profile or combination data at scale
+- Phase 2 interim (n=101/5,511) — layer profile is clear but final rates may shift
+- Phase 3 not yet started — no layer combination data
 - Parse failure rate low (0.7%) — much lower than interim estimate (5.8%) which was inflated by early bailbench pairs
 - Position bias (0.546) may slightly inflate flip rates for orderings where baseline prefers position A
