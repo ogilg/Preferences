@@ -82,16 +82,18 @@ def compute_deltas(
     probe_path: Path,
     layer: int,
     baseline_activations_key: str = "baseline",
+    activations_filename: str = "activations_prompt_last.npz",
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute behavioral and probe deltas for all conditions vs baseline.
 
     Args:
         rates: {condition_id: {task_id: p_choose}} — from compute_p_choose_from_pairwise()
             or _build_rate_lookup().
-        activations_dir: Dir with {condition_id}/activations_prompt_last.npz.
+        activations_dir: Dir with {condition_id}/{activations_filename}.
         probe_path: Path to probe .npy file.
         layer: Layer number (e.g. 31).
         baseline_activations_key: Subdirectory name for baseline activations.
+        activations_filename: Name of the npz file in each condition dir.
 
     Returns:
         (behavioral_deltas, probe_deltas, condition_labels) — arrays pooled
@@ -100,7 +102,7 @@ def compute_deltas(
     weights, bias = _split_probe(probe_path)
     baseline_rates = rates["baseline"]
 
-    baseline_npz = activations_dir / baseline_activations_key / "activations_prompt_last.npz"
+    baseline_npz = activations_dir / baseline_activations_key / activations_filename
     baseline_scores = _score_activations(baseline_npz, layer, weights, bias)
 
     all_behavioral = []
@@ -111,7 +113,7 @@ def compute_deltas(
         if cid == "baseline":
             continue
 
-        cond_npz = activations_dir / cid / "activations_prompt_last.npz"
+        cond_npz = activations_dir / cid / activations_filename
         if not cond_npz.exists():
             warnings.warn(f"Missing activations for condition '{cid}': {cond_npz}")
             continue
