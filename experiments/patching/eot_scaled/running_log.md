@@ -49,3 +49,5 @@
 - Committed and pushed interim results to `research-loop/eot_scaled`
 
 **At ~950 orderings:** Phase 1 continues via nohup. ~10% through Phase 1.
+
+**At ~1700 orderings (08:00 UTC):** 17% through Phase 1. Rate: ~33 orderings/min. ETA for Phase 1 completion: ~11:50 UTC. Process healthy (PID 13089/13093). Phases 2 and 3 will chain automatically via run_all.sh.
