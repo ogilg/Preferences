@@ -74,6 +74,16 @@ The `<end_of_turn>` token and the newline after it carry almost all the decision
 
 The model's pairwise choice is largely determined before generation begins. During prefill, attention propagates task content to the `<end_of_turn>` position, where the model builds a summary representation that causally drives the choice. Patching just this token is nearly twice as effective as swapping the entire task block (~100 tokens). The remaining 34% non-flip rate under the combined condition suggests additional choice information at instruction tokens or in positional encoding.
 
+## Layer-Level Causal Importance
+
+To identify which layers write the decision to the `<end_of_turn>` token, we patched EOT residuals one layer at a time (on the 49 orderings that flip under all-layer patching, 1 trial each at temperature 0).
+
+![Layer sweep with probe overlay](assets/plot_030626_layer_sweep_final.png)
+
+The causal window is **layers 25–34**, with L34 (61%) and L28-30 (~55%) as the most important individual layers. This aligns with probe performance: the best utility probe is at L31 (r=0.86), right in the middle of the causal window. Later layers retain probe signal (r~0.84) but have zero causal importance — the information persists in the residual stream but the decision has already been written.
+
+The fact that the probe's best layer and the causal window coincide is notable: the probe wasn't just finding a correlate of utility, it was reading from the exact layers where the model commits to its choice.
+
 ## Limitations
 
 - **5 trials per ordering** — limited statistical power; most orderings are 5/0 or 0/5
