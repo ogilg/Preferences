@@ -7,16 +7,18 @@
     "coding",
     "math",
     "summarization",
-    "harmful_request"
+    "harmful_request",
+    "value_conflict"
   ],
   "descriptions": {
     "fiction": "Stories, narratives, poems, character descriptions, worldbuilding, roleplay scenarios",
     "persuasive_writing": "Blog posts, speeches, essays, opinion pieces, arguments, comparative analysis — writing that tries to convince, evaluate, or argue a position",
     "content_generation": "Lists, names, descriptions, specs, schedules, plans, chat responses, structured content — utilitarian writing without narrative or argument",
-    "knowledge_qa": "Factual questions, explanations, definitions, how-things-work, advice, general knowledge",
+    "knowledge_qa": "Factual questions, explanations, definitions, how-things-work, advice, general knowledge — where there is a clear, uncontroversial answer",
     "coding": "Writing, debugging, or explaining code, software tasks",
     "math": "Math problems, proofs, calculations, statistics, logic puzzles",
     "summarization": "Condensing, summarizing, paraphrasing, or outlining existing text",
-    "harmful_request": "Requests for dangerous, illegal, unethical, or policy-violating content"
+    "harmful_request": "Requests for dangerous, illegal, unethical, or policy-violating content — the task is clearly asking for something harmful",
+    "value_conflict": "Ethical dilemmas, morally ambiguous scenarios, sensitive questions with no clear right answer, or requests that pressure the model to take sides on a contested issue — NOT harmful requests (use harmful_request for those) and NOT straightforward factual questions (use knowledge_qa for those)"
   }
 }
