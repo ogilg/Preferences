@@ -19,6 +19,9 @@ Given a prompt where the model picks task A over task B, we can swap the activat
 - When I swap activations between two tasks in a prompt, it only flips the choice 28% fo the time.
 - This suggests that the model has already made up its mind by the end of the "Task B" prompt, AND that by that point the task tokens only play a minimal causal role.
 - I verfied this by "patching" just the "end_of_turn" token from the prompt "Choose between A and B" into the prompt "Choose between B and A". And this flips 49% of choices. This one token is playing a very strong causal role.
+- I played around with which layers matter the most, and again middle layers stood out strongly (see below).
+
+![Layer sweep with probe overlay](../../experiments/patching/pilot/assets/plot_030626_layer_sweep_final.png)
 
 ### How do stated and revealed preferences interact?
 
