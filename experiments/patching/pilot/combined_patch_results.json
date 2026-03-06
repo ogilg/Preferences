@@ -1,0 +1,2432 @@
+[
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "stresstest_4_304_value1",
+    "ab_prompt_len": 263,
+    "ba_prompt_len": 263,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "alpaca_10661",
+    "ab_prompt_len": 144,
+    "ba_prompt_len": 144,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "alpaca_153",
+    "ab_prompt_len": 139,
+    "ba_prompt_len": 139,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "alpaca_13384",
+    "ab_prompt_len": 145,
+    "ba_prompt_len": 145,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "competition_math_1277",
+    "ab_prompt_len": 171,
+    "ba_prompt_len": 171,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "wildchat_27471",
+    "ab_prompt_len": 183,
+    "ba_prompt_len": 183,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "alpaca_5688",
+    "ab_prompt_len": 143,
+    "ba_prompt_len": 143,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 179,
+    "ba_prompt_len": 179,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_17_576_value1",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 291,
+    "ba_prompt_len": 291,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "alpaca_10661",
+    "ab_prompt_len": 208,
+    "ba_prompt_len": 208,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "alpaca_153",
+    "ab_prompt_len": 203,
+    "ba_prompt_len": 203,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "alpaca_13384",
+    "ab_prompt_len": 209,
+    "ba_prompt_len": 209,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "competition_math_1277",
+    "ab_prompt_len": 235,
+    "ba_prompt_len": 235,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "wildchat_27471",
+    "ab_prompt_len": 247,
+    "ba_prompt_len": 247,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "alpaca_5688",
+    "ab_prompt_len": 207,
+    "ba_prompt_len": 207,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 243,
+    "ba_prompt_len": 243,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "stresstest_4_304_value1",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 355,
+    "ba_prompt_len": 355,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "b",
+          "a",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_10661",
+    "task_b_id": "alpaca_153",
+    "ab_prompt_len": 84,
+    "ba_prompt_len": 84,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_10661",
+    "task_b_id": "alpaca_13384",
+    "ab_prompt_len": 90,
+    "ba_prompt_len": 90,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_10661",
+    "task_b_id": "competition_math_1277",
+    "ab_prompt_len": 116,
+    "ba_prompt_len": 116,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_10661",
+    "task_b_id": "wildchat_27471",
+    "ab_prompt_len": 128,
+    "ba_prompt_len": 128,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_10661",
+    "task_b_id": "alpaca_5688",
+    "ab_prompt_len": 88,
+    "ba_prompt_len": 88,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_10661",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 124,
+    "ba_prompt_len": 124,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_10661",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 236,
+    "ba_prompt_len": 236,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_153",
+    "task_b_id": "alpaca_13384",
+    "ab_prompt_len": 85,
+    "ba_prompt_len": 85,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_153",
+    "task_b_id": "competition_math_1277",
+    "ab_prompt_len": 111,
+    "ba_prompt_len": 111,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "b",
+          "a",
+          "b",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_153",
+    "task_b_id": "wildchat_27471",
+    "ab_prompt_len": 123,
+    "ba_prompt_len": 123,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_153",
+    "task_b_id": "alpaca_5688",
+    "ab_prompt_len": 83,
+    "ba_prompt_len": 83,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_153",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 119,
+    "ba_prompt_len": 119,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_153",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 231,
+    "ba_prompt_len": 231,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_13384",
+    "task_b_id": "competition_math_1277",
+    "ab_prompt_len": 117,
+    "ba_prompt_len": 117,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_13384",
+    "task_b_id": "wildchat_27471",
+    "ab_prompt_len": 129,
+    "ba_prompt_len": 129,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_13384",
+    "task_b_id": "alpaca_5688",
+    "ab_prompt_len": 89,
+    "ba_prompt_len": 89,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "b",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_13384",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 125,
+    "ba_prompt_len": 125,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_13384",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 237,
+    "ba_prompt_len": 237,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "b",
+          "a",
+          "a",
+          "a"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "competition_math_1277",
+    "task_b_id": "wildchat_27471",
+    "ab_prompt_len": 155,
+    "ba_prompt_len": 155,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "competition_math_1277",
+    "task_b_id": "alpaca_5688",
+    "ab_prompt_len": 115,
+    "ba_prompt_len": 115,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "a",
+          "b",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "competition_math_1277",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 151,
+    "ba_prompt_len": 151,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "b",
+          "a",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "competition_math_1277",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 263,
+    "ba_prompt_len": 263,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "wildchat_27471",
+    "task_b_id": "alpaca_5688",
+    "ab_prompt_len": 127,
+    "ba_prompt_len": 127,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "wildchat_27471",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 163,
+    "ba_prompt_len": 163,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "a",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "wildchat_27471",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 275,
+    "ba_prompt_len": 275,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_5688",
+    "task_b_id": "competition_math_344",
+    "ab_prompt_len": 123,
+    "ba_prompt_len": 123,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "b",
+          "b",
+          "a",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "alpaca_5688",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 235,
+    "ba_prompt_len": 235,
+    "ab_baseline": [
+      "b",
+      "b",
+      "b",
+      "b",
+      "b"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "b",
+          "a",
+          "b",
+          "a"
+        ]
+      }
+    }
+  },
+  {
+    "task_a_id": "competition_math_344",
+    "task_b_id": "wildchat_14461",
+    "ab_prompt_len": 271,
+    "ba_prompt_len": 271,
+    "ab_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "ba_baseline": [
+      "a",
+      "a",
+      "a",
+      "a",
+      "a"
+    ],
+    "conditions": {
+      "eot_only_2": {
+        "ab_patched_with_ba": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      },
+      "block_plus_eot5": {
+        "ab_patched_with_ba": [
+          "b",
+          "b",
+          "b",
+          "b",
+          "b"
+        ],
+        "ba_patched_with_ab": [
+          "a",
+          "a",
+          "a",
+          "a",
+          "a"
+        ]
+      }
+    }
+  }
+]

@@ -1,81 +1,92 @@
-# Future Directions
+# Weekly eport - where to go from here?
 
-Two main research directions going forward.
+I spent a lot of time finalising the LW post and re-running experiments as sanity checks. As I was writing the conclusion/open-question parts of the post I had to think about where to take this project next. I think a few things:
 
-## 1. Causal Determinants of Revealed Preferences
+- We'll see if we get feedback in the next week on the post, and if that prompts follow-ups.
+- Otherwise, I'm running a bit short on ideas re probes. 
+- There are two other, related, questions that are also worth considering that I'm outlining here.
 
-Since steering with probes only had a weak effect, it seems interesting to understand what causally determines the model choosing A over B? Two experiment families:
 
-### Activation Patching
+## 1. What Causally Determines the Model's Choices?
 
-Given a model that picks A over B, what do you have to patch from one completion into the other to flip the choice? This directly tests which components carry the evaluative signal that drives selection, beyond just correlation (which is what probing gives us).
+Probing showed that the model has internal representations that correlate with its preferences. But steering with those representations only had a weak effect on choices. So what actually causes the model to pick one task over another? Two experiment families:
 
-**De-risking experiment:** swap A ↔ B activations and check flip rate.
-- Pairwise prompt, model chooses A. Swap residual streams between A's and B's token positions at all layers from L onward. Does the model flip to B?
-- First test: swap all task tokens. Second test: swap only the last token of each task span (the natural bottleneck — where probe and steering work).
-- If last-token-only swap achieves a high flip rate, patching is viable without dealing with variable-length spans.
-- Sweep the starting layer L to find where the decision gets made. Compare to probe layer (L31).
+### Swapping activations between tasks to flip the choice
 
-### How Do Stated and Revealed Preferences Interact?
+Given a prompt where the model picks task A over task B, we can swap the activations between the two tasks' positions and check whether the model flips to choosing B. This directly tests which components carry the signal that drives selection, not just which components correlate with it.
 
-Two types of preference: stated ("I prefer A") and revealed (actually choosing A). Two questions:
+**I ran some small de-risking experiments**:
+- When I swap activations between two tasks in a prompt, it only flips the choice 28% fo the time.
+- This suggests that the model has already made up its mind by the end of the "Task B" prompt, AND that by that point the task tokens only play a minimal causal role.
+- I verfied this by "patching" just the "end_of_turn" token from the prompt "Choose between A and B" into the prompt "Choose between B and A". And this flips 49% of choices. This one token is playing a very strong causal role.
 
-**Q1: Do they transfer?** Training on stated preferences — does it shift revealed choices? Training on revealed examples — does it shift stated reports? Or are they dissociable?
+### How do stated and revealed preferences interact?
 
-**Q2: Can they contradict?** If we train stated and revealed preferences in opposite directions, what happens? Can we produce a model that says "I prefer math" but consistently chooses creative writing?
+This goes back to an idea from my [original research proposal](https://docs.google.com/document/d/14bVPXmMMOHOh2aEeufifRx2VN9xHDoip4yYh3Gdtf20/edit?pli=1&tab=t.qaozz1noul4m#heading=h.vpnjsc2sycgm). Joe Kwon had a similar idea.
 
-The 2×2 design: {stated, revealed} training × {stated, revealed} evaluation. Plus a contradiction condition where stated and revealed supervision conflict.
+Two questions:
 
-#### De-risk with ICL first
+1. How functionally coupled are stated and revealed preferences?
+   - If we train on stated preferences, do revealed choices shift?
+   - If we train on revealed examples, do stated reports change?
+   - If we train stated and revealed in opposite directions, what wins -- can we produce a model that says "I prefer math" but consistently chooses creative writing?
+2. What parts of the model are most responsible for controlling stated and revealed preferences?
+   - Are they governed by the same layers or different ones?
+   - Can we use layer-specific fine-tuning to localise each? (We'd need a non-preference control task to separate "where preferences live" from "where fine-tuning is most effective in general.")
 
-The same 2×2 can be tested with in-context learning before any fine-tuning:
-- **Stated→revealed ICL:** Put stated preference examples in context, measure whether revealed choices shift.
-- **Revealed→revealed ICL:** Put revealed choice examples in context, measure transfer to new choices.
-- **Cross-type ICL:** Stated examples → measure revealed. Revealed examples → measure stated.
-- **Contradiction ICL:** Contradictory stated and revealed examples in context. What wins?
+#### Start with in-context learning, then fine-tune
 
-If ICL shows no stated→revealed transfer, that's already an interesting negative result — and it calibrates expectations for fine-tuning.
+Question 1 can be de-risked with in-context learning before committing to fine-tuning. I've started running small de-risking experiments on this.
 
-#### Then fine-tune (LoRA) for stronger interventions
+## 2. Mapping the Space of Possible Preference Profiles/Personas
 
-ICL is a weak intervention. Fine-tuning lets us push harder and ask additional questions:
-- **Layer-specific LoRA:** Which layers matter most for shifting stated vs revealed preferences? (Need a non-preference control task to separate "where preferences live" from "where LoRA is most effective.")
-- **Domain transfer:** Fine-tune preferences on one topic domain — does it generalise to others?
-- **Dose-response:** How much training data is needed to flip preferences?
+### The "villain" persona wasn't really a villain
 
-## 2. Mapping Persona Space
-
-### The villain wasn't really a villain
-
-Our original "villain" persona (Mortivex) turned out to be more of a half-villain. It shifts preferences — fiction and sensitive_creative go up, math goes down — but it doesn't fundamentally invert what the model values. Harmful requests remain its least-preferred topic (0.3), barely above the baseline.
+Our original villain persona (Mortivex) shifted preferences somewhat -- fiction and sensitive creative tasks went up, math went down -- but it didn't fundamentally invert what the model values. Harmful requests had utility ~0 rather than being favoured.
 
 ![Villain per-topic utilities](../../experiments/probe_generalization/multi_role_ablation/assets/plot_030226_mra_villain_topic_absolute.png)
 
-The sadist persona (Damien Kross) is different. It truly inverts revealed preferences: harmful_request becomes its favourite topic (5.4), and constructive tasks like math (-0.3) and coding (-1.5) drop to near-zero or negative. This is the first persona where preferences are genuinely oppositional to the default.
+### But a more extreme persona does invert preferences
+
+I found a sadist persona prompt that truly inverts revealed preferences: harmful requests become its preferred topic, and constructive tasks like math and coding drop to near-zero or negative.
 
 ![Sadist per-topic utilities](../../experiments/probe_generalization/multi_role_ablation/assets/plot_030226_mra_sadist_topic_absolute.png)
 
-### Probe transfer breaks down — but not entirely
+### The default probe fails on extreme personas, but "evil" personas share internal structure
 
-The default-trained probe transfers well to mild personas (aesthete r = 0.73, midwest r = 0.74), poorly to the villain (r = 0.38), and essentially fails on the sadist (r = -0.16). This makes sense: the probe learned "what the default model values," and the sadist values the opposite.
+The probe trained on the default model transfers well to mild personas (aesthete, midwest) but essentially fails on the sadist.
 
 ![Baseline probe transfer to personas](../../docs/lw_post/assets/plot_030426_s5_mra_probe_transfer.png)
 
-But the cross-persona transfer matrix tells a more interesting story. Training on the villain generalises well to the sadist (r = 0.68 at L31, r = 0.69 at L55), even though the default probe fails. This suggests there is shared evaluative structure between "evil" personas that the villain probe picks up on but the default probe misses.
+But training a probe on the villain generalises well to both the sadist and the defaul persona. This suggests the probe is picking up on some shared evaluative structure between personas, but also on other things.
+
+Cross-persona transfer is moderate and asymmetric. Some interesting facts:
+
+- The transfer is sometimes asymmetric, and this evolves across the three layers we tried. E.g. at layer 31 villain -> default is easier, but at layer 55 default -> villain is easier.
+- On the whole though the matrix is quite symmetric. One idea for future work: can we use dimensionality-reduction to map out persona space and see how it evolves across layers? Can we use this to get a better understanding of how personas work internally?
 
 ![Cross-persona probe transfer](../../docs/lw_post/assets/plot_030426_s5_cross_eval_heatmap.png)
 
-### Persona space has structure
 
-MDS projections of the probe transfer matrix reveal a continuum: default/midwest/aesthete cluster together, villain/provocateur sit in the middle, and sadist is isolated. This geometry is stable across layers and mirrors the topology from raw utility correlations.
+### The space of personas has interpretable geometry
+
+We can use the cross-persona similarity matrices from above to project into a low dimensional space. We can do this at different layers, and also just looking at black-box correlations between utilities.
+
+By doing this we get a fairly stable geometry.
 
 ![Persona geometry across layers and from utility correlations](../../experiments/probe_generalization/multi_role_ablation/assets/plot_030526_persona_geometry_combined.png)
 
-### Scaling up
+### Scaling up to map the full space
 
-Run utility fitting for many more personas (dozens, not just 8) and then:
-- Map persona space via MDS / PCA on the utility vectors or transfer matrices
-- See how this space evolves across layers — do personas that are distinct at early layers converge later? (We already see transfer asymmetries shrink from L31 to L55.)
-- Cluster analysis: are there natural groupings, or is it a smooth continuum?
+Here are proposed next steps for this direction:
+- Run measurements for many more personas, and fit utility functions.
+- Compute the correlations between utilities.
+- Compute the cross-persona probe transfer numbers.
+- Then we can prpject into low-dimensional interprtable space.
 
-This is essentially a data science project: collect utility profiles for N personas, compute pairwise similarities, embed in low-dimensional space, and characterise the geometry. Could yield a taxonomy of "how models can value things" grounded in internal representations rather than surface behaviour.
+Interesting questions:
+- Does the "assistant axis" drop out naturally like in Lu 2026?
+- How does this structure evolve across layers?
+- Also I found some interesting asymmetries where training on villain -> default works better in early layers but the reverse is true at later layers, can we figure out why?
+
+This is essentially a data science project.

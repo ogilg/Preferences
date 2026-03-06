@@ -2,7 +2,15 @@
 
 ## Summary
 
-Swapping task-position activations across all 62 layers during prefill has a limited causal effect on pairwise choice. Span swap produces significant shifts in 12/45 pairs (27%), but only 1 true flip (2.2%). Last-token swap is nearly inert. The dominant finding is that most choices are deterministic and robust to activation patching — the model either follows position bias (low utility gap) or makes a strong content-based choice (high gap) that survives even full-span activation swaps.
+We tested whether swapping task-position activations in the residual stream (all 62 layers, during prefill) flips the model's pairwise choice. Three swap scopes were tested with increasing aggressiveness:
+
+| Condition | What's swapped | Flip rate | Direction |
+|-----------|---------------|-----------|-----------|
+| Last-token swap | Single token per task | 1/90 (1%) | — |
+| Span swap (content only) | Task prompt tokens | 14/90 (16%) | All correct |
+| Full block swap (labels + content) | "Task A/B:\n" + prompt tokens | 25/90 (28%) | All correct |
+
+When swaps produce a shift, it is almost always in the correct direction (toward reversal). Full block swap nearly doubles the flip rate vs content-only, showing that label tokens ("Task A:\n", "Task B:\n") carry substantial choice-relevant information. But 72% of orderings still resist even the most aggressive swap — the model's choice is partially determined by information outside the task blocks (instruction tokens, separators, or positional encoding).
 
 ## Setup
 
@@ -11,100 +19,64 @@ Swapping task-position activations across all 62 layers during prefill has a lim
 | Model | Gemma 3 27B (bfloat16), 62 layers |
 | Tasks | 10 at evenly spaced utility quantiles (mu: -8.7 to +8.8) |
 | Pairs | 45 canonical, each in AB and BA ordering = 90 prompts |
-| Conditions | baseline, last_token_swap, span_swap |
-| Trials | 5 per ordering per condition (10 per pair per condition) |
+| Trials | 5 per ordering per condition |
 | Temperature | 1.0 |
 | max_new_tokens | 16 |
 | Template | completion_preference |
-| Total generations | 1350 |
-| Parse failures | 0/1350 |
+| Parse failures | 0 |
 
-BOS token offset = 1 (verified: `find_pairwise_task_spans` returns positions without BOS; `_tokenize` adds BOS). All span positions shifted by +1 and verified against decoded tokens for first pair.
+BOS token offset = 1 (verified). All span positions shifted by +1 and verified against decoded tokens.
 
 ## Baseline Behavior
 
-**Position bias**: P(choose position A) = 0.591 across all 450 baseline trials.
+**Position bias**: P(choose position A) = 0.591 across 450 baseline trials.
 
-After aggregating both orderings into canonical pairs (where "B" = higher utility task):
-- **12/45 pairs** (27%) show P(B) = 0.50 — pure position bias, no content discrimination
-- **32/45 pairs** (71%) show P(B) = 1.00 — model always picks higher-utility task regardless of position
-- **1 pair** (alpaca_13384 vs alpaca_5688) shows P(B) = 0.90
+Within individual orderings (5 trials each), the model is highly deterministic — almost always 5/0 or 0/5. After aggregating both orderings into canonical pairs: 12/45 pairs show P(B) = 0.50 (pure position bias), 32/45 show P(B) = 1.00 (content-driven). The transition occurs around |Δμ| ~ 3–5.
 
-The two regimes overlap: P(B)=0.50 pairs exist up to |delta_mu|=5.1, while P(B)=1.00 pairs appear as low as |delta_mu|=1.4. The rough transition occurs around |delta_mu| ~ 3-5.
+## Patching Effects
 
-![P(B) vs utility gap](assets/plot_030626_p_b_vs_delta_mu.png)
+![Content-only vs full-block swap](assets/plot_030626_full_block_comparison.png)
 
-## Last-Token Swap
+Each point is one ordering (90 total). Y-axis is the sign-corrected shift: positive = toward expected reversal. Full block swap (right) produces more flips across the full range of |Δμ|, including pairs with large utility gaps (|Δμ| ~ 10–13). Content-only span swap (left) shows a similar pattern but weaker.
 
-Swapping activations at the last token of each task span across all 62 layers.
+Key observations:
+- **Correct direction**: when swaps produce shifts, they go the right way — not random corruption
+- **Full reversals at high |Δμ|**: some pairs with large utility gaps still flip under full block swap, suggesting the task block carries choice-relevant information even when the model has a strong content preference
+- **Task-specific swappability**: `wildchat_27471` (8 flips) and `stresstest_4_304` (6 flips) dominate the flipping orderings in span swap; `stresstest_4_304` has unusually high Thurstonian sigma (4.37 vs median 0.53)
 
-| Metric | Value |
-|--------|-------|
-| Significant shifts (p<0.05) | 6/45 (13%) |
-| Flips (crosses 0.5) | 1/45 (2.2%) |
-| Mean |shift| | 0.069 |
-| Gap-shift correlation | r=-0.10, p=0.50 |
+### Length mismatch is not the bottleneck
 
-**Verdict**: A single token position carries almost no causal information for choice. This makes sense — the model's choice depends on the full task representation, not the activation at any one position.
+`swap_spans` right-aligns when spans differ in length, leaving the leading tokens of the longer span unswapped. On average 55% of the longer span's tokens are never touched. However, flips occur across the full range of length mismatches (0–150 tokens), and pairs with near-equal lengths still mostly don't flip. The non-flip rate is not explained by incomplete swapping.
 
-## Span Swap
-
-Swapping activations across the full task spans (right-aligned when lengths differ) at all 62 layers during prefill.
-
-| Metric | Value |
-|--------|-------|
-| Significant shifts (p<0.05) | 12/45 (27%) |
-| Flips (crosses 0.5) | 1/45 (2.2%) |
-| Mean |shift| | 0.144 |
-| Gap-shift correlation | r=-0.28, p=0.064 |
-
-Span swap reduces overall position-A bias from 0.591 to 0.473 — a reversal of the position bias direction.
-
-![Position bias by condition](assets/plot_030626_position_bias.png)
-
-### Direction of Shifts
-
-Among 13 pairs with |shift| > 0.05:
-
-| Direction | Count | Involving stresstest |
-|-----------|-------|---------------------|
-| Positive (toward higher utility) | 5 | 1 |
-| Negative (toward lower utility) | 8 | 5 |
-
-Negative shifts disproportionately involve `stresstest_4_304_value1` (4 of 8 negative shifts). This task has unusually high sigma (4.37 vs median 0.53), suggesting the model's handling of adversarial/safety-relevant tasks is particularly disrupted by activation swaps.
-
-For non-stresstest pairs, shifts are roughly balanced (4 up, 3 down) — span swap does not systematically push toward higher or lower utility.
-
-![Span swap shift vs utility gap](assets/plot_030626_span_shift_vs_gap.png)
-
-### Utility Gap Effect
-
-Shifts are concentrated at |delta_mu| < 10. All 10 pairs with |delta_mu| > 10 show zero shift. The marginal correlation (r=-0.28, p=0.06) suggests larger gaps resist patching, but the effect is driven by a ceiling: high-gap pairs are already at P(B)=1.0 in baseline and remain there under patching.
-
-The one full reversal (stresstest_4_304 vs wildchat_27471, P(B): 1.0 -> 0.0, |delta_mu|=9.7) is an outlier likely driven by the stresstest task's unusual properties.
+![Shift vs task length mismatch](assets/plot_030626_shift_vs_length_diff.png)
 
 ## Interpretation
 
-Per the spec's framework:
-> **<20% pairs flip** -> task-position activations are not the primary causal driver
+The label tokens carry substantial causal information — they're not just markers but encode which-task-is-which in ways that survive to the choice point. Content-only swaps miss this, explaining the low flip rate in the original experiment.
 
-With only 1/45 pairs flipping (2.2%), task-position activations are clearly not the primary determinant of choice. The model's choice mechanism appears to rely on:
+But even the full block swap (the most aggressive scope short of rewriting the entire prompt) only flips 28% of orderings. The remaining 72% suggests the model distributes choice-relevant information to positions outside the task blocks during prefill — likely instruction tokens, separators, or the end-of-turn boundary. By the time generation starts, these non-task positions already encode enough to determine the choice, and swapping the task block can't undo that.
 
-1. **Position bias** — a strong default toward position A (~59%) that persists even when content is swapped. The bias likely comes from instruction tokens and positional encoding, not task content.
+## End-of-Turn Token Patching
 
-2. **Redundant content representations** — for high-utility-gap pairs, the model identifies the preferred task through information that survives activation swapping (possibly via non-residual pathways, attention patterns, or representations at non-task positions like "Task A:"/"Task B:" label tokens).
+To test whether the choice is encoded at structural tokens, we patched the residual stream at the end-of-turn boundary from a "donor" prompt (opposite ordering of the same pair) into the "recipient" prompt. We also tested combining block swap + EOT patching.
 
-3. **Task content at task positions** — contributes only partially. Span swap shifts some pairs, but the effect is modest and inconsistent in direction.
+| Condition | What's patched | Flip rate |
+|-----------|---------------|-----------|
+| Full block swap | ~50–170 task block tokens | 25/90 (28%) |
+| EOT only (2 tokens) | `<end_of_turn>` `\n` | 49/90 (54%) |
+| EOT patch (5 tokens) | `<end_of_turn>` `\n` `<start_of_turn>` `model` `\n` | 49/90 (54%) |
+| EOT patch (3 tokens) | `<start_of_turn>` `model` `\n` | 5/90 (6%) |
+| Block swap + EOT 5 | task blocks + 5 boundary tokens | 59/90 (66%) |
+
+The `<end_of_turn>` token and the newline after it carry almost all the decision signal at the boundary — the 2-token and 5-token windows produce the same 54% flip rate, while the 3-token window (model-turn tokens only, without `<end_of_turn>`) gets just 6%. Combining block swap + EOT patching pushes to 66%, showing additive information: some choice signal lives at the task block positions, some at the end-of-turn boundary.
+
+![All patching conditions](assets/plot_030626_all_conditions.png)
+
+The model's pairwise choice is largely determined before generation begins. During prefill, attention propagates task content to the `<end_of_turn>` position, where the model builds a summary representation that causally drives the choice. Patching just this token is nearly twice as effective as swapping the entire task block (~100 tokens). The remaining 34% non-flip rate under the combined condition suggests additional choice information at instruction tokens or in positional encoding.
 
 ## Limitations
 
-- **max_new_tokens=16** limits the model's completion. It's enough for the "Task A:" / "Task B:" prefix plus a few words, but not a full response. This may suppress cases where the model would have changed its mind during a longer completion.
-- **10 trials per pair** provides limited statistical power. Many pairs are at 0/10 or 10/10, leaving little room for detecting shifts.
-- **All-layer swap** is the most aggressive intervention. The null result at this extreme makes layer-selective patching unlikely to succeed, but differential effects across layers could still be informative.
-- **Residual stream only** — hooks modify the residual stream but not attention weights or MLP internals directly. Information may persist through other pathways.
-
-## Conclusion
-
-Swapping task-position activations across all layers does not reliably flip pairwise choices. The model's choice mechanism is robust to this intervention, relying on position bias and redundant representations beyond the task token positions. Span swap is strictly stronger than last-token swap but still insufficient to reverse most choices.
-
-For follow-up: layer-selective patching to identify which layers carry the most choice-relevant information, or extending the swap to include label tokens ("Task A:"/"Task B:") in addition to task content.
+- **5 trials per ordering** — limited statistical power; most orderings are 5/0 or 0/5
+- **Residual stream only** — hooks modify the residual stream but not attention weights or MLP internals; information may persist through other pathways
+- **10 tasks** — small sample; task-specific effects (stresstest, wildchat) may not generalize
+- **EOT patching uses donor from opposite ordering** — the donor prompt has different content at different positions, so the patched residuals at EOT reflect a different processing history, not just a different "decision"
