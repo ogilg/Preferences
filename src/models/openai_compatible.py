@@ -11,7 +11,6 @@ import openai
 from openai import AsyncOpenAI, OpenAI
 
 from src.models.registry import (
-    get_hyperbolic_name,
     get_cerebras_name,
     get_openrouter_name,
     is_valid_model,
@@ -360,14 +359,6 @@ class OpenAICompatibleClient(ABC):
             enable_reasoning=enable_reasoning, async_client=async_client,
         )
 
-
-class HyperbolicClient(OpenAICompatibleClient):
-    _api_key_env_var = "HYPERBOLIC_API_KEY"
-    _base_url = "https://api.hyperbolic.xyz/v1"
-    default_max_concurrent = 50
-
-    def _get_provider_name(self, canonical_name: str) -> str:
-        return get_hyperbolic_name(canonical_name)
 
 
 class CerebrasClient(OpenAICompatibleClient):

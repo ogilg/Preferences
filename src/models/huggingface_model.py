@@ -9,8 +9,15 @@ import torch
 import numpy as np
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from src.models.base import BATCHED_SELECTOR_REGISTRY, COMPLETION_SELECTORS, GenerationResult, LayerHook
-from src.models.registry import is_valid_model, get_hf_name
+from src.models.base import (
+    BATCHED_SELECTOR_REGISTRY,
+    COMPLETION_SELECTORS,
+    TOKEN_ID_SELECTORS,
+    GenerationResult,
+    LayerHook,
+    find_eot_indices,
+)
+from src.models.registry import is_valid_model, get_hf_name, get_eot_token
 from src.models.architecture import get_layers, get_n_layers, get_hidden_dim
 from src.types import Message
 
@@ -69,6 +76,10 @@ class HuggingFaceModel:
 
     def _get_layer(self, layer: int) -> torch.nn.Module:
         return get_layers(self.model)[layer]
+
+    def _get_eot_token_id(self) -> int:
+        eot_token = get_eot_token(self.canonical_model_name)
+        return self.tokenizer.convert_tokens_to_ids(eot_token)
 
     def format_messages(self, messages: list[Message], add_generation_prompt: bool = True) -> str:
         if self.tokenizer.chat_template is not None:
@@ -134,24 +145,30 @@ class HuggingFaceModel:
         selector_names: list[str],
         first_completion_indices: torch.Tensor,
         max_seq_len: int,
+        input_ids: torch.Tensor | None = None,
     ) -> dict[str, dict[int, np.ndarray]]:
-        """Apply token selectors to reduce (batch, seq, d_model) -> (batch, d_model).
-
-        Selectors:
-          - "last": final token (the token just before EOS/padding)
-          - "first": first completion token (where assistant content starts)
-          - "mean": mean over all completion tokens
-        """
+        """Apply token selectors to reduce (batch, seq, d_model) -> (batch, d_model)."""
         batch_size = first_completion_indices.shape[0]
-        # All sequences are padded to max_seq_len, so seq_lengths = max_seq_len for indexing.
         seq_lengths = torch.tensor([max_seq_len] * batch_size)
+
+        # Pre-compute special indices if needed
+        eot_indices: torch.Tensor | None = None
+        if "eot" in selector_names:
+            if input_ids is None:
+                raise ValueError("eot selector requires input_ids")
+            eot_token_id = self._get_eot_token_id()
+            eot_indices = find_eot_indices(input_ids, eot_token_id, first_completion_indices)
 
         results: dict[str, dict[int, np.ndarray]] = {name: {} for name in selector_names}
         for layer, layer_acts in activations.items():
             for name in selector_names:
-                act = BATCHED_SELECTOR_REGISTRY[name](
-                    layer_acts, first_completion_indices.cpu(), seq_lengths,
-                )
+                if name == "eot":
+                    assert eot_indices is not None
+                    act = layer_acts[torch.arange(batch_size), eot_indices, :]
+                else:
+                    act = BATCHED_SELECTOR_REGISTRY[name](
+                        layer_acts, first_completion_indices.cpu(), seq_lengths,
+                    )
                 results[name][layer] = act.float().numpy()
         return results
 
@@ -284,8 +301,10 @@ class HuggingFaceModel:
             self.model(input_ids)
 
         first_indices = torch.tensor([first_completion_idx])
+        needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
         batched = self._apply_selectors(
             activations, selector_names, first_indices, seq_len,
+            input_ids=input_ids if needs_ids else None,
         )
         return {
             name: {layer: acts[0] for layer, acts in layer_dict.items()}
@@ -352,10 +371,11 @@ class HuggingFaceModel:
             first_completion_indices[i] + (max_len - seq_lengths[i])
             for i in range(batch_size)
         ])
-        shifted_seq_lengths = torch.tensor([max_len] * batch_size)
 
+        needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
         return self._apply_selectors(
             activations, selector_names, shifted_first, max_len,
+            input_ids=padded if needs_ids else None,
         )
 
     @torch.inference_mode()

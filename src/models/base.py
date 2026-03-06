@@ -228,6 +228,39 @@ BATCHED_SELECTOR_REGISTRY: dict[str, BatchedTokenSelectorFn] = {
     "prompt_mean": select_prompt_mean_batched,
 }
 
+# Selectors that need input_ids (handled as special cases in _apply_selectors)
+TOKEN_ID_SELECTORS = {"eot"}
+
+# Union of all valid selector names (for config validation)
+ALL_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS
+
+
+def find_eot_indices(
+    input_ids: torch.Tensor,
+    eot_token_id: int,
+    first_completion_indices: torch.Tensor,
+) -> torch.Tensor:
+    """Find the last end-of-turn token before first_completion_idx per sample.
+
+    Fully vectorized. Works with any model's end-of-turn token ID.
+    """
+    seq_len = input_ids.shape[1]
+    positions = torch.arange(seq_len)
+
+    match = input_ids == eot_token_id
+    before_completion = positions.unsqueeze(0) < first_completion_indices.unsqueeze(1)
+    valid = match & before_completion
+
+    if not valid.any(dim=1).all():
+        missing = (~valid.any(dim=1)).nonzero(as_tuple=True)[0].tolist()
+        raise ValueError(
+            f"No end-of-turn token (id={eot_token_id}) found in samples {missing}"
+        )
+
+    # Last valid position per row: mask invalid positions to -1, take argmax
+    scored = torch.where(valid, positions.unsqueeze(0), -1)
+    return scored.max(dim=1).values
+
 
 class TokenPosition(Enum):
     """Legacy enum for backwards compatibility."""

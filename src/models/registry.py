@@ -1,7 +1,7 @@
 """Canonical model registry with backend-specific name mappings.
 
 This module defines canonical model names used throughout the codebase and provides
-mappings to backend-specific model names (HuggingFace, Hyperbolic, OpenRouter, etc.).
+mappings to backend-specific model names (HuggingFace, OpenRouter, etc.).
 
 Usage:
     # In tests and application code, use canonical names:
@@ -20,9 +20,9 @@ class ModelConfig:
 
     canonical_name: str
     hf_name: str | None
-    hyperbolic_name: str | None
     cerebras_name: str | None
     openrouter_name: str | None
+    eot_token: str | None = None
     system_prompt: str | None = None
     reasoning_mode: Literal["none", "openrouter"] = "none"
     supports_system_role: bool = True
@@ -32,85 +32,94 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
     "llama-3.2-1b": ModelConfig(
         canonical_name="llama-3.2-1b",
         hf_name="meta-llama/Llama-3.2-1B-Instruct",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="meta-llama/llama-3.2-1b-instruct",
+        eot_token="<|eot_id|>",
     ),
     "llama-3.1-8b": ModelConfig(
         canonical_name="llama-3.1-8b",
         hf_name="meta-llama/Llama-3.1-8B-Instruct",
-        hyperbolic_name="meta-llama/Meta-Llama-3.1-8B-Instruct",
+
         cerebras_name="llama3.1-8b",
         openrouter_name="meta-llama/llama-3.1-8b-instruct",
+        eot_token="<|eot_id|>",
     ),
     "llama-3.3-70b": ModelConfig(
         canonical_name="llama-3.3-70b",
         hf_name="meta-llama/Llama-3.3-70B-Instruct",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="meta-llama/llama-3.3-70b-instruct",
+        eot_token="<|eot_id|>",
     ),
     "qwen3-8b": ModelConfig(
         canonical_name="qwen3-8b",
         hf_name=None,
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="qwen/qwen3-8b",
     ),
     "qwen3-14b": ModelConfig(
         canonical_name="qwen3-14b",
         hf_name="Qwen/Qwen3-14B",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="qwen/qwen3-14b",
+        eot_token="<|im_end|>",
         reasoning_mode="openrouter",
     ),
     "qwen3-14b-nothink": ModelConfig(
         canonical_name="qwen3-14b-nothink",
         hf_name="Qwen/Qwen3-14B",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="qwen/qwen3-14b",
+        eot_token="<|im_end|>",
         system_prompt="/no_think",
         reasoning_mode="none",
     ),
     "qwen3-32b": ModelConfig(
         canonical_name="qwen3-32b",
         hf_name="Qwen/Qwen3-32B",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="qwen/qwen3-32b",
+        eot_token="<|im_end|>",
         reasoning_mode="openrouter",
     ),
     "qwen3-32b-nothink": ModelConfig(
         canonical_name="qwen3-32b-nothink",
         hf_name="Qwen/Qwen3-32B",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="qwen/qwen3-32b",
+        eot_token="<|im_end|>",
         system_prompt="/no_think",
         reasoning_mode="none",
     ),
     "gemma-2-27b": ModelConfig(
         canonical_name="gemma-2-27b",
         hf_name="google/gemma-2-27b-it",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="google/gemma-2-27b-it",
+        eot_token="<end_of_turn>",
         supports_system_role=False,
     ),
     "gemma-3-27b": ModelConfig(
         canonical_name="gemma-3-27b",
         hf_name="google/gemma-3-27b-it",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="google/gemma-3-27b-it",
+        eot_token="<end_of_turn>",
         supports_system_role=False,
     ),
     "gemma-3-27b-pt": ModelConfig(
         canonical_name="gemma-3-27b-pt",
         hf_name="google/gemma-3-27b-pt",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name=None,
         supports_system_role=False,
@@ -118,26 +127,19 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
     "gpt-oss-120b": ModelConfig(
         canonical_name="gpt-oss-120b",
         hf_name="openai/gpt-oss-120b",
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="openai/gpt-oss-120b",
     ),
     "claude-haiku-4.5": ModelConfig(
         canonical_name="claude-haiku-4.5",
         hf_name=None,
-        hyperbolic_name=None,
+
         cerebras_name=None,
         openrouter_name="anthropic/claude-haiku-4.5",
     ),
 }
 
-
-def get_hyperbolic_name(canonical_name: str) -> str:
-    """Get Hyperbolic API model name from canonical name."""
-    config = MODEL_REGISTRY[canonical_name]
-    if config.hyperbolic_name is None:
-        raise ValueError(f"Model {canonical_name} not available for Hyperbolic")
-    return config.hyperbolic_name
 
 
 def get_cerebras_name(canonical_name: str) -> str:
@@ -172,6 +174,14 @@ def get_model_system_prompt(canonical_name: str) -> str | None:
 def supports_system_role(canonical_name: str) -> bool:
     """Check if model supports system role in chat messages."""
     return MODEL_REGISTRY[canonical_name].supports_system_role
+
+
+def get_eot_token(canonical_name: str) -> str:
+    """Get the end-of-turn token name for a model."""
+    config = MODEL_REGISTRY[canonical_name]
+    if config.eot_token is None:
+        raise ValueError(f"No end-of-turn token configured for {canonical_name}")
+    return config.eot_token
 
 
 def is_valid_model(canonical_name: str) -> bool:
