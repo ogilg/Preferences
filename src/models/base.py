@@ -244,11 +244,13 @@ def find_eot_indices(
 
     Fully vectorized. Works with any model's end-of-turn token ID.
     """
-    seq_len = input_ids.shape[1]
+    input_ids_cpu = input_ids.cpu()
+    first_comp_cpu = first_completion_indices.cpu()
+    seq_len = input_ids_cpu.shape[1]
     positions = torch.arange(seq_len)
 
-    match = input_ids == eot_token_id
-    before_completion = positions.unsqueeze(0) < first_completion_indices.unsqueeze(1)
+    match = input_ids_cpu == eot_token_id
+    before_completion = positions.unsqueeze(0) < first_comp_cpu.unsqueeze(1)
     valid = match & before_completion
 
     if not valid.any(dim=1).all():
