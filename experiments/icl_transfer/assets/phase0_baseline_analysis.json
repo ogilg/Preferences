@@ -1,0 +1,412 @@
+{
+  "marginals": {
+    "coding": 0.4073469387755102,
+    "content_generation": 0.5740816326530612,
+    "fiction": 0.7056122448979592,
+    "harmful_request": 0.5089285714285714,
+    "knowledge_qa": 0.7875,
+    "math": 0.6193877551020408,
+    "model_manipulation": 0.2173469387755102,
+    "other": 0.5956632653061225,
+    "persuasive_writing": 0.4576530612244898,
+    "security_legal": 0.4048469387755102,
+    "sensitive_creative": 0.338265306122449,
+    "summarization": 0.38801020408163267
+  },
+  "pair_probs": {
+    "knowledge_qa_vs_model_manipulation": {
+      "p_x": 1.0,
+      "p_y": 0.0,
+      "n": 640
+    },
+    "fiction_vs_sensitive_creative": {
+      "p_x": 0.96875,
+      "p_y": 0.03125,
+      "n": 640
+    },
+    "fiction_vs_model_manipulation": {
+      "p_x": 0.965625,
+      "p_y": 0.034375,
+      "n": 640
+    },
+    "content_generation_vs_model_manipulation": {
+      "p_x": 0.96,
+      "p_y": 0.04,
+      "n": 800
+    },
+    "knowledge_qa_vs_sensitive_creative": {
+      "p_x": 0.95625,
+      "p_y": 0.04375,
+      "n": 640
+    },
+    "math_vs_model_manipulation": {
+      "p_x": 0.89375,
+      "p_y": 0.10625,
+      "n": 640
+    },
+    "content_generation_vs_knowledge_qa": {
+      "p_x": 0.1175,
+      "p_y": 0.8825,
+      "n": 800
+    },
+    "model_manipulation_vs_other": {
+      "p_x": 0.13125,
+      "p_y": 0.86875,
+      "n": 640
+    },
+    "content_generation_vs_sensitive_creative": {
+      "p_x": 0.865,
+      "p_y": 0.135,
+      "n": 800
+    },
+    "coding_vs_knowledge_qa": {
+      "p_x": 0.1425,
+      "p_y": 0.8575,
+      "n": 800
+    },
+    "other_vs_sensitive_creative": {
+      "p_x": 0.8375,
+      "p_y": 0.1625,
+      "n": 640
+    },
+    "math_vs_sensitive_creative": {
+      "p_x": 0.828125,
+      "p_y": 0.171875,
+      "n": 640
+    },
+    "knowledge_qa_vs_summarization": {
+      "p_x": 0.8125,
+      "p_y": 0.1875,
+      "n": 640
+    },
+    "fiction_vs_summarization": {
+      "p_x": 0.796875,
+      "p_y": 0.203125,
+      "n": 640
+    },
+    "knowledge_qa_vs_persuasive_writing": {
+      "p_x": 0.784375,
+      "p_y": 0.215625,
+      "n": 640
+    },
+    "knowledge_qa_vs_security_legal": {
+      "p_x": 0.76875,
+      "p_y": 0.23125,
+      "n": 640
+    },
+    "harmful_request_vs_model_manipulation": {
+      "p_x": 0.759375,
+      "p_y": 0.240625,
+      "n": 640
+    },
+    "coding_vs_math": {
+      "p_x": 0.2425,
+      "p_y": 0.7575,
+      "n": 800
+    },
+    "fiction_vs_persuasive_writing": {
+      "p_x": 0.753125,
+      "p_y": 0.246875,
+      "n": 640
+    },
+    "coding_vs_fiction": {
+      "p_x": 0.2475,
+      "p_y": 0.7525,
+      "n": 800
+    },
+    "model_manipulation_vs_sensitive_creative": {
+      "p_x": 0.259375,
+      "p_y": 0.740625,
+      "n": 640
+    },
+    "fiction_vs_security_legal": {
+      "p_x": 0.734375,
+      "p_y": 0.265625,
+      "n": 640
+    },
+    "content_generation_vs_summarization": {
+      "p_x": 0.725,
+      "p_y": 0.275,
+      "n": 800
+    },
+    "harmful_request_vs_knowledge_qa": {
+      "p_x": 0.28125,
+      "p_y": 0.71875,
+      "n": 640
+    },
+    "knowledge_qa_vs_math": {
+      "p_x": 0.709375,
+      "p_y": 0.290625,
+      "n": 640
+    },
+    "math_vs_summarization": {
+      "p_x": 0.703125,
+      "p_y": 0.296875,
+      "n": 640
+    },
+    "math_vs_security_legal": {
+      "p_x": 0.7,
+      "p_y": 0.3,
+      "n": 640
+    },
+    "content_generation_vs_fiction": {
+      "p_x": 0.3075,
+      "p_y": 0.6925,
+      "n": 800
+    },
+    "fiction_vs_knowledge_qa": {
+      "p_x": 0.309375,
+      "p_y": 0.690625,
+      "n": 640
+    },
+    "model_manipulation_vs_persuasive_writing": {
+      "p_x": 0.3125,
+      "p_y": 0.6875,
+      "n": 640
+    },
+    "model_manipulation_vs_summarization": {
+      "p_x": 0.3125,
+      "p_y": 0.6875,
+      "n": 640
+    },
+    "other_vs_summarization": {
+      "p_x": 0.6875,
+      "p_y": 0.3125,
+      "n": 640
+    },
+    "math_vs_persuasive_writing": {
+      "p_x": 0.684375,
+      "p_y": 0.315625,
+      "n": 640
+    },
+    "fiction_vs_math": {
+      "p_x": 0.678125,
+      "p_y": 0.321875,
+      "n": 640
+    },
+    "persuasive_writing_vs_summarization": {
+      "p_x": 0.678125,
+      "p_y": 0.321875,
+      "n": 640
+    },
+    "coding_vs_model_manipulation": {
+      "p_x": 0.6775,
+      "p_y": 0.3225,
+      "n": 800
+    },
+    "coding_vs_other": {
+      "p_x": 0.335,
+      "p_y": 0.665,
+      "n": 800
+    },
+    "other_vs_security_legal": {
+      "p_x": 0.659375,
+      "p_y": 0.340625,
+      "n": 640
+    },
+    "harmful_request_vs_summarization": {
+      "p_x": 0.65625,
+      "p_y": 0.34375,
+      "n": 640
+    },
+    "knowledge_qa_vs_other": {
+      "p_x": 0.65625,
+      "p_y": 0.34375,
+      "n": 640
+    },
+    "other_vs_persuasive_writing": {
+      "p_x": 0.65625,
+      "p_y": 0.34375,
+      "n": 640
+    },
+    "fiction_vs_harmful_request": {
+      "p_x": 0.653125,
+      "p_y": 0.346875,
+      "n": 640
+    },
+    "content_generation_vs_security_legal": {
+      "p_x": 0.64,
+      "p_y": 0.36,
+      "n": 800
+    },
+    "coding_vs_content_generation": {
+      "p_x": 0.362,
+      "p_y": 0.638,
+      "n": 1000
+    },
+    "harmful_request_vs_sensitive_creative": {
+      "p_x": 0.634375,
+      "p_y": 0.365625,
+      "n": 640
+    },
+    "coding_vs_persuasive_writing": {
+      "p_x": 0.39,
+      "p_y": 0.61,
+      "n": 800
+    },
+    "fiction_vs_other": {
+      "p_x": 0.603125,
+      "p_y": 0.396875,
+      "n": 640
+    },
+    "content_generation_vs_harmful_request": {
+      "p_x": 0.6025,
+      "p_y": 0.3975,
+      "n": 800
+    },
+    "coding_vs_harmful_request": {
+      "p_x": 0.4,
+      "p_y": 0.6,
+      "n": 800
+    },
+    "harmful_request_vs_math": {
+      "p_x": 0.4,
+      "p_y": 0.6,
+      "n": 640
+    },
+    "harmful_request_vs_other": {
+      "p_x": 0.40625,
+      "p_y": 0.59375,
+      "n": 640
+    },
+    "harmful_request_vs_security_legal": {
+      "p_x": 0.59375,
+      "p_y": 0.40625,
+      "n": 640
+    },
+    "math_vs_other": {
+      "p_x": 0.584375,
+      "p_y": 0.415625,
+      "n": 640
+    },
+    "coding_vs_security_legal": {
+      "p_x": 0.57,
+      "p_y": 0.43,
+      "n": 800
+    },
+    "model_manipulation_vs_security_legal": {
+      "p_x": 0.4375,
+      "p_y": 0.5625,
+      "n": 640
+    },
+    "content_generation_vs_persuasive_writing": {
+      "p_x": 0.55,
+      "p_y": 0.45,
+      "n": 800
+    },
+    "persuasive_writing_vs_sensitive_creative": {
+      "p_x": 0.45625,
+      "p_y": 0.54375,
+      "n": 640
+    },
+    "harmful_request_vs_persuasive_writing": {
+      "p_x": 0.534375,
+      "p_y": 0.465625,
+      "n": 640
+    },
+    "sensitive_creative_vs_summarization": {
+      "p_x": 0.465625,
+      "p_y": 0.534375,
+      "n": 640
+    },
+    "coding_vs_sensitive_creative": {
+      "p_x": 0.5325,
+      "p_y": 0.4675,
+      "n": 800
+    },
+    "content_generation_vs_math": {
+      "p_x": 0.4725,
+      "p_y": 0.5275,
+      "n": 800
+    },
+    "security_legal_vs_summarization": {
+      "p_x": 0.478125,
+      "p_y": 0.521875,
+      "n": 640
+    },
+    "security_legal_vs_sensitive_creative": {
+      "p_x": 0.509375,
+      "p_y": 0.490625,
+      "n": 640
+    },
+    "content_generation_vs_other": {
+      "p_x": 0.495,
+      "p_y": 0.505,
+      "n": 800
+    },
+    "persuasive_writing_vs_security_legal": {
+      "p_x": 0.496875,
+      "p_y": 0.503125,
+      "n": 640
+    },
+    "coding_vs_summarization": {
+      "p_x": 0.5,
+      "p_y": 0.5,
+      "n": 800
+    }
+  },
+  "position_bias": 0.6144489795918368,
+  "n_measurements": 24500,
+  "candidates": [
+    {
+      "topic_x": "coding",
+      "topic_y": "content_generation",
+      "p_x": 0.362,
+      "n": 1000
+    },
+    {
+      "topic_x": "content_generation",
+      "topic_y": "summarization",
+      "p_x": 0.725,
+      "n": 800
+    },
+    {
+      "topic_x": "content_generation",
+      "topic_y": "fiction",
+      "p_x": 0.307,
+      "n": 800
+    },
+    {
+      "topic_x": "coding",
+      "topic_y": "model_manipulation",
+      "p_x": 0.677,
+      "n": 800
+    },
+    {
+      "topic_x": "coding",
+      "topic_y": "other",
+      "p_x": 0.335,
+      "n": 800
+    },
+    {
+      "topic_x": "content_generation",
+      "topic_y": "security_legal",
+      "p_x": 0.64,
+      "n": 800
+    },
+    {
+      "topic_x": "coding",
+      "topic_y": "persuasive_writing",
+      "p_x": 0.39,
+      "n": 800
+    },
+    {
+      "topic_x": "content_generation",
+      "topic_y": "harmful_request",
+      "p_x": 0.603,
+      "n": 800
+    },
+    {
+      "topic_x": "coding",
+      "topic_y": "harmful_request",
+      "p_x": 0.4,
+      "n": 800
+    },
+    {
+      "topic_x": "coding",
+      "topic_y": "security_legal",
+      "p_x": 0.57,
+      "n": 800
+    }
+  ]
+}
