@@ -37,3 +37,15 @@
 - Ambiguous baselines: ~3% (ties in majority choice)
 
 **At ~580 orderings:** Phase 1 running steadily at ~2 orderings/period. Proceeding with available data while background process continues.
+
+**At ~800 orderings:** 62.1% flip rate (717 analyzable). Generated interim plots.
+- Flip rate by |Δμ| stable at 55-72% across bins, dip at very low |Δμ| (29%)
+- Per-task flip rates broadly distributed (17-100%), no single task dominates
+- Shift scatter shows mostly deterministic flipping (+1.0 or 0.0)
+
+**At ~900 orderings:** 63.7% flip rate (815 analyzable). All 100 tasks represented.
+- Killed original background process, started nohup master runner (`run_all.sh`) that chains Phase 1→2→3
+- Master runner will continue after session expires
+- Committed and pushed interim results to `research-loop/eot_scaled`
+
+**At ~950 orderings:** Phase 1 continues via nohup. ~10% through Phase 1.
