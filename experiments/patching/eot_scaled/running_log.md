@@ -76,4 +76,14 @@
 - 38 layers to sweep, 5 trials each
 - Process healthy (PID 22039)
 - Early results (n=3): L34 = 67%, L32-33 = 33%, all others 0% — pilot causal window confirmed
-- Estimated ~24h for Phase 2 completion
+- Estimated ~40h for Phase 2 completion (revised from 24h based on observed 2.3 orderings/min)
+
+## 2026-03-06: Phase 2 Interim Analysis (12:35 UTC, n=101)
+
+- Layer profile is remarkably clear even at n=101:
+  - L28-34 all at 67-82% flip rate; everything else at 0%
+  - Peaks: L32=82%, L33=82%, L30=80%, L34=78%, L28=77%
+  - Sharp onset: L26=4%, L27=18%, L28=77%
+  - Much higher than pilot (67-82% vs 43-61%) — broader task diversity helps
+- L31 (best probe layer) at 73% — confirms probe reads from causal layers
+- Updated report with interim Phase 2 layer profile and plot
