@@ -1,6 +1,6 @@
 """Hybrid model: API generation + local activation extraction.
 
-Uses fast API inference (Hyperbolic, OpenRouter) for generation,
+Uses fast API inference (OpenRouter) for generation,
 then extracts activations locally with a single forward pass.
 """
 

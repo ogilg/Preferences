@@ -1,10 +1,9 @@
 from .base import Model, ConfigurableMockModel, TokenPosition, ActivationReduction, TokenSelectorFn, SELECTOR_REGISTRY
-from .openai_compatible import OpenAICompatibleClient, HyperbolicClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
+from .openai_compatible import OpenAICompatibleClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
 from .base import GenerationResult, LayerHook, autoregressive_steering, all_tokens_steering, STEERING_MODES
 from .registry import (
     MODEL_REGISTRY,
     ModelConfig,
-    get_hyperbolic_name,
     get_cerebras_name,
     get_openrouter_name,
     get_hf_name,
@@ -58,7 +57,6 @@ __all__ = [
     "all_tokens_steering",
     "STEERING_MODES",
     "OpenAICompatibleClient",
-    "HyperbolicClient",
     "CerebrasClient",
     "OpenRouterClient",
     "ToolCallError",
@@ -69,7 +67,6 @@ __all__ = [
     "get_default_max_concurrent",
     "MODEL_REGISTRY",
     "ModelConfig",
-    "get_hyperbolic_name",
     "get_cerebras_name",
     "get_openrouter_name",
     "get_hf_name",

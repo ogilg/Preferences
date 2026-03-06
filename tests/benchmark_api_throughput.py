@@ -1,5 +1,5 @@
 """
-Benchmark API throughput for Cerebras and Hyperbolic.
+Benchmark API throughput for inference providers.
 
 Run with: python -m tests.benchmark_api_throughput
 
@@ -58,11 +58,6 @@ class BenchmarkResult:
 
 
 PROVIDERS = {
-    "hyperbolic": {
-        "base_url": "https://api.hyperbolic.xyz/v1",
-        "env_var": "HYPERBOLIC_API_KEY",
-        "model": "meta-llama/Meta-Llama-3.1-8B-Instruct",  # Provider-specific name
-    },
     "cerebras": {
         "base_url": "https://api.cerebras.ai/v1",
         "env_var": "CEREBRAS_API_KEY",
