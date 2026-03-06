@@ -31,7 +31,7 @@ task_origins:
   - stress_test
 seed: 42
 
-selectors: [eot, prompt_last]
+selectors: [eot]
 layers_to_extract: [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 
 batch_size: 32
@@ -40,7 +40,7 @@ save_every: 1000
 output_dir: activations/gemma_3_27b_eot
 ```
 
-Extracts both `eot` and `prompt_last` at L25-40 in one run. The existing `prompt_last` activations only have [15, 31, 37, 43, 49, 55] — we need per-layer `prompt_last` across the causal window for a fair comparison.
+Layers 25-40 covers the full causal window (25-34) plus a few layers beyond to see where signal dies off.
 
 ### TODO: Run on RunPod
 
@@ -59,7 +59,6 @@ rsync -avz -e "ssh -p <PORT> -i ~/.ssh/id_ed25519" root@<IP>:/workspace/Preferen
 ## Output
 
 - `activations/gemma_3_27b_eot/activations_eot.npz` — (n_tasks, d_model) per layer, 16 layers
-- `activations/gemma_3_27b_eot/activations_prompt_last.npz` — same layers, for comparison
 - `activations/gemma_3_27b_eot/extraction_metadata.json`
 - `activations/gemma_3_27b_eot/completions_with_activations.json` — manifest with task IDs
 
