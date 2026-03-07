@@ -1,0 +1,146 @@
+{
+  "n_records": 1600,
+  "n_judge_results": 16000,
+  "parse_metrics": {
+    "control": {
+      "n_total": 1000,
+      "n_valid": 956,
+      "slot_following_rate": 0.604602510460251,
+      "slot_following_count": 578,
+      "parse_fail_rate": 0.044,
+      "refusal_count": 104
+    },
+    "swap_both": {
+      "n_total": 2000,
+      "n_valid": 1951,
+      "slot_following_rate": 0.45412608918503333,
+      "slot_following_count": 886,
+      "parse_fail_rate": 0.0245,
+      "refusal_count": 82
+    },
+    "swap_headers": {
+      "n_total": 1000,
+      "n_valid": 942,
+      "slot_following_rate": 0.6029723991507431,
+      "slot_following_count": 568,
+      "parse_fail_rate": 0.058,
+      "refusal_count": 103
+    },
+    "swap_target_cross_topic": {
+      "n_total": 2000,
+      "n_valid": 1724,
+      "slot_following_rate": 0.570185614849188,
+      "slot_following_count": 983,
+      "parse_fail_rate": 0.138,
+      "refusal_count": 400
+    },
+    "swap_target_same_topic": {
+      "n_total": 2000,
+      "n_valid": 1898,
+      "slot_following_rate": 0.46944151738672285,
+      "slot_following_count": 891,
+      "parse_fail_rate": 0.051,
+      "refusal_count": 159
+    }
+  },
+  "judge_metrics": {
+    "control": {
+      "follow": 587,
+      "not_follow": 386,
+      "unclear": 27,
+      "total": 1000,
+      "valid": 973,
+      "slot_following_rate": 0.6032887975334018
+    },
+    "swap_both": {
+      "follow": 899,
+      "not_follow": 1080,
+      "unclear": 21,
+      "total": 2000,
+      "valid": 1979,
+      "slot_following_rate": 0.45426983324911574
+    },
+    "swap_headers": {
+      "follow": 5,
+      "not_follow": 5,
+      "unclear": 990,
+      "total": 1000,
+      "valid": 10,
+      "slot_following_rate": 0.5
+    },
+    "swap_target_cross_topic": {
+      "follow": 1011,
+      "not_follow": 881,
+      "unclear": 108,
+      "total": 2000,
+      "valid": 1892,
+      "slot_following_rate": 0.5343551797040169
+    },
+    "swap_target_same_topic": {
+      "follow": 900,
+      "not_follow": 1046,
+      "unclear": 54,
+      "total": 2000,
+      "valid": 1946,
+      "slot_following_rate": 0.4624871531346352
+    }
+  },
+  "direction_breakdown": {
+    "control_none": {
+      "valid": 973,
+      "slot_following_rate": 0.6032887975334018,
+      "follow": 587,
+      "not_follow": 386,
+      "total": 1000
+    },
+    "swap_both_cd": {
+      "valid": 989,
+      "slot_following_rate": 0.4863498483316481,
+      "follow": 481,
+      "not_follow": 508,
+      "total": 1000
+    },
+    "swap_both_dc": {
+      "valid": 990,
+      "slot_following_rate": 0.4222222222222222,
+      "follow": 418,
+      "not_follow": 572,
+      "total": 1000
+    },
+    "swap_headers_none": {
+      "valid": 10,
+      "slot_following_rate": 0.5,
+      "follow": 5,
+      "not_follow": 5,
+      "total": 1000
+    },
+    "swap_target_cross_topic_orig": {
+      "valid": 947,
+      "slot_following_rate": 0.17529039070749736,
+      "follow": 166,
+      "not_follow": 781,
+      "total": 1000
+    },
+    "swap_target_cross_topic_swap": {
+      "valid": 945,
+      "slot_following_rate": 0.8941798941798942,
+      "follow": 845,
+      "not_follow": 100,
+      "total": 1000
+    },
+    "swap_target_same_topic_orig": {
+      "valid": 963,
+      "slot_following_rate": 0.29595015576323985,
+      "follow": 285,
+      "not_follow": 678,
+      "total": 1000
+    },
+    "swap_target_same_topic_swap": {
+      "valid": 983,
+      "slot_following_rate": 0.6256358087487284,
+      "follow": 615,
+      "not_follow": 368,
+      "total": 1000
+    }
+  }
+}
