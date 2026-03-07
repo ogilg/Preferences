@@ -1,74 +1,181 @@
+"""Generate plots for the label-swap EOT patching experiment."""
+
+import json
+from collections import Counter
+from pathlib import Path
+
 import matplotlib.pyplot as plt
-import matplotlib
 import numpy as np
-import seaborn as sns
 
-matplotlib.rcParams.update({"font.size": 11})
+DATA_DIR = Path("experiments/patching/eot_transfer/label_swap")
+ASSETS_DIR = DATA_DIR / "assets"
+CHECKPOINT_PATH = DATA_DIR / "checkpoint.jsonl"
 
-ASSETS = "/workspace/repo/experiments/patching/eot_transfer/label_swap/assets"
 
-# ---------- Plot 1: Four-way classification bar chart ----------
+def load_checkpoint():
+    records = []
+    with open(CHECKPOINT_PATH) as f:
+        for line in f:
+            records.append(json.loads(line))
+    return records
 
-categories = [
-    "Full position\n(label + exec \u2192 position)",
-    "Full content\n(label + exec \u2192 content)",
-    "Dissociation\n(label\u2192pos, exec\u2192content)",
-    "Dissociation\n(label\u2192content, exec\u2192pos)",
-]
-counts = [236, 349, 156, 218]
-total = 959
-percentages = [c / total * 100 for c in counts]
-colors = ["#4C72B0", "#55A868", "#C44E52", "#8172B2"]
 
-fig, ax = plt.subplots(figsize=(8, 5))
-bars = ax.barh(categories, counts, color=colors, edgecolor="white", height=0.6)
+def plot_choice_distribution(records):
+    baseline_counts = Counter()
+    patched_counts = Counter()
+    for rec in records:
+        for c in rec["baseline_choices"]:
+            baseline_counts[c] += 1
+        for c in rec["patched_choices"]:
+            patched_counts[c] += 1
 
-for bar, count, pct in zip(bars, counts, percentages):
-    ax.text(
-        bar.get_width() + 5,
-        bar.get_y() + bar.get_height() / 2,
-        f"{count}  ({pct:.1f}%)",
-        va="center",
-        fontsize=10,
+    total_baseline = sum(baseline_counts.values())
+    total_patched = sum(patched_counts.values())
+
+    # "a" = first slot (Task B label), "b" = second slot (Task A label)
+    categories = ["First slot\n(Task B label)", "Second slot\n(Task A label)"]
+    baseline_fracs = [
+        baseline_counts["a"] / total_baseline,
+        baseline_counts["b"] / total_baseline,
+    ]
+    patched_fracs = [
+        patched_counts["a"] / total_patched,
+        patched_counts["b"] / total_patched,
+    ]
+    baseline_raw = [baseline_counts["a"], baseline_counts["b"]]
+    patched_raw = [patched_counts["a"], patched_counts["b"]]
+
+    x = np.arange(len(categories))
+    width = 0.3
+
+    fig, ax = plt.subplots(figsize=(7, 5))
+    bars_b = ax.bar(x - width / 2, baseline_fracs, width, label="Baseline", color="#4878CF")
+    bars_p = ax.bar(x + width / 2, patched_fracs, width, label="Patched", color="#E8853A")
+
+    for bar, count, total in zip(bars_b, baseline_raw, [total_baseline] * 2):
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + 0.015,
+            f"{count}/{total}",
+            ha="center",
+            va="bottom",
+            fontsize=9,
+        )
+    for bar, count, total in zip(bars_p, patched_raw, [total_patched] * 2):
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + 0.015,
+            f"{count}/{total}",
+            ha="center",
+            va="bottom",
+            fontsize=9,
+        )
+
+    ax.set_ylabel("Fraction of trials")
+    ax.set_ylim(0, 1.15)
+    ax.set_xticks(x)
+    ax.set_xticklabels(categories)
+    ax.set_title("Label Swap: Choice Distribution (Baseline vs Patched)")
+    ax.legend(loc="upper right")
+
+    ax.annotate(
+        "Donor encodes 'pick Task A' (= first slot in donor)",
+        xy=(0.5, 0.92),
+        xycoords="axes fraction",
+        ha="center",
+        fontsize=9,
+        fontstyle="italic",
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="lightyellow", edgecolor="gray", alpha=0.8),
     )
 
-ax.set_xlim(0, 450)
-ax.set_xlabel("Count")
-ax.set_title("EOT Label Swap: Four-Way Classification (n=959)")
-ax.invert_yaxis()
-ax.spines["top"].set_visible(False)
-ax.spines["right"].set_visible(False)
-fig.tight_layout()
-fig.savefig(f"{ASSETS}/plot_030726_four_way_classification.png", dpi=150)
-plt.close(fig)
-print("Saved plot 1: four_way_classification")
+    fig.tight_layout()
+    out_path = ASSETS_DIR / "plot_030726_choice_distribution.png"
+    fig.savefig(out_path, dpi=150)
+    plt.close(fig)
+    print(f"Saved: {out_path}")
 
-# ---------- Plot 2: 2x2 dissociation matrix ----------
 
-matrix = np.array([[236, 156], [218, 349]])
-annot = np.array([
-    [f"236\n(24.6%)", f"156\n(16.3%)"],
-    [f"218\n(22.7%)", f"349\n(36.4%)"],
-])
+def plot_per_ordering_comparison(records):
+    ordering_indices = []
+    baseline_rates = []
+    patched_rates = []
 
-fig, ax = plt.subplots(figsize=(6, 5))
-sns.heatmap(
-    matrix,
-    annot=annot,
-    fmt="",
-    cmap="Blues",
-    xticklabels=["Position-following", "Content-following"],
-    yticklabels=["Position-following", "Content-following"],
-    linewidths=1,
-    linecolor="white",
-    cbar_kws={"label": "Count"},
-    ax=ax,
-    vmin=0,
-)
-ax.set_xlabel("Executed content")
-ax.set_ylabel("Stated label")
-ax.set_title("Stated Label vs Executed Content")
-fig.tight_layout()
-fig.savefig(f"{ASSETS}/plot_030726_dissociation_matrix.png", dpi=150)
-plt.close(fig)
-print("Saved plot 2: dissociation_matrix")
+    for rec in records:
+        idx = rec["ordering_idx"]
+        ordering_indices.append(idx)
+        # "b" = second slot = Task A label; count fraction picking Task A label
+        b_base = sum(1 for c in rec["baseline_choices"] if c == "b")
+        b_patch = sum(1 for c in rec["patched_choices"] if c == "b")
+        n_trials = len(rec["baseline_choices"])
+        baseline_rates.append(b_base / n_trials)
+        patched_rates.append(b_patch / n_trials)
+
+    ordering_indices = np.array(ordering_indices)
+    baseline_rates = np.array(baseline_rates)
+    patched_rates = np.array(patched_rates)
+    n_orderings = len(records)
+
+    fig, ax = plt.subplots(figsize=(12, 4.5))
+    ax.scatter(
+        ordering_indices,
+        baseline_rates,
+        marker="o",
+        s=25,
+        color="#4878CF",
+        alpha=0.7,
+        label="Baseline",
+        zorder=3,
+    )
+    ax.scatter(
+        ordering_indices,
+        patched_rates,
+        marker="^",
+        s=25,
+        color="#E8853A",
+        alpha=0.7,
+        label="Patched",
+        zorder=3,
+    )
+
+    highlight_idxs = [11, 57, 68]
+    for hi in highlight_idxs:
+        pos = np.where(ordering_indices == hi)[0][0]
+        b_val = baseline_rates[pos]
+        p_val = patched_rates[pos]
+        max_val = max(b_val, p_val)
+
+        ax.annotate(
+            f"idx={hi}",
+            xy=(hi, max_val),
+            xytext=(hi, max_val + 0.12),
+            ha="center",
+            fontsize=8,
+            arrowprops=dict(arrowstyle="->", color="gray", lw=0.8),
+        )
+
+    ax.set_xlabel("Ordering index")
+    ax.set_ylabel("Fraction picking 'Task A' label (second slot)")
+    ax.set_ylim(0, 1.0)
+    ax.set_xlim(-2, n_orderings + 1)
+    ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+    ax.set_title("Per-Ordering 'Task A' Label Selection Rate")
+    ax.legend(loc="upper right")
+    ax.grid(axis="y", alpha=0.3)
+
+    fig.tight_layout()
+    out_path = ASSETS_DIR / "plot_030726_per_ordering_comparison.png"
+    fig.savefig(out_path, dpi=150)
+    plt.close(fig)
+    print(f"Saved: {out_path}")
+
+
+def main():
+    ASSETS_DIR.mkdir(parents=True, exist_ok=True)
+    records = load_checkpoint()
+    print(f"Loaded {len(records)} orderings from checkpoint")
+    plot_choice_distribution(records)
+    plot_per_ordering_comparison(records)
+
+
+if __name__ == "__main__":
+    main()

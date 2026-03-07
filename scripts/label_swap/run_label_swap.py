@@ -1,13 +1,16 @@
 """EOT Label Swap experiment.
 
-Tests whether the EOT token's choice signal follows position/label or content
-when task positions are swapped in the recipient prompt.
+Tests whether the EOT signal encodes label identity ("pick Task A") or
+prompt position ("pick the first slot").
 
-Donor = SOURCE ordering (model's natural preference arrangement).
-Recipient = REVERSED ordering (tasks in opposite positions).
+Donor = REVERSED ordering, STANDARD template (Task A: task_b, Task B: task_a).
+  The model picks slot A (donor_slot="a"), so EOT encodes "pick Task A".
 
-If position-following: patching pushes toward donor's slot -> flip from baseline
-If content-following: patching pushes toward preferred task -> no flip
+Recipient = LABEL-SWAP template (Task B: task_b, Task A: task_a).
+  "Task A" is now in the SECOND slot, "Task B" is in the FIRST slot.
+
+If label-following: patched model picks "Task A" (second slot)
+If position-following: patched model picks first slot ("Task B")
 
 Checkpoints to JSONL. Supports --resume.
 """
@@ -137,8 +140,11 @@ def main():
     args = parser.parse_args()
 
     with open(ORDERINGS_PATH) as f:
-        orderings = json.load(f)
-    print(f"Loaded {len(orderings)} selected orderings")
+        all_orderings = json.load(f)
+
+    # Filter to donor_slot="a" (donor EOT encodes "pick Task A")
+    orderings = [o for o in all_orderings if o["donor_slot"] == "a"]
+    print(f"Loaded {len(all_orderings)} orderings, {len(orderings)} with donor_slot='a'")
 
     if args.limit > 0:
         orderings = orderings[:args.limit]
@@ -172,35 +178,48 @@ def main():
                 print(f"[{idx+1}/{len(orderings)}] skipped={skipped} ({elapsed:.0f}s)")
             continue
 
-        # --- Donor pass: SOURCE ordering ---
-        # The model naturally picks baseline_dominant slot in this arrangement
-        donor_content = format_prompt(task_a_prompt, task_b_prompt)
+        # --- Donor pass: REVERSED ordering, STANDARD template ---
+        # Reversed: task_b in first slot (Task A label), task_a in second slot (Task B label)
+        # Model picks slot A (donor_slot="a"), EOT encodes "pick Task A"
+        donor_content = format_prompt(task_b_prompt, task_a_prompt)
         donor_messages = [{"role": "user", "content": donor_content}]
         donor_len = get_prompt_length(model, donor_messages)
         donor_eot = [donor_len - 5, donor_len - 4]
         donor_cache = run_donor_pass(model, donor_messages, donor_eot)
 
-        # --- Label swap recipient: REVERSED ordering ---
-        # Tasks in opposite positions from source
-        recipient_content = format_prompt(task_b_prompt, task_a_prompt)
+        # --- Recipient: LABEL-SWAP template ---
+        # Task B (with task_b content) in first slot, Task A (with task_a content) in second
+        # "Task A" is now in the SECOND position
+        recipient_content = format_prompt(
+            task_b_prompt, task_a_prompt,
+            label_a="Task B", label_b="Task A",
+        )
         recipient_messages = [{"role": "user", "content": recipient_content}]
         recipient_len = get_prompt_length(model, recipient_messages)
         recipient_eot = [recipient_len - 5, recipient_len - 4]
 
-        # Baseline (unpatched) on label swap recipient
+        # Baseline (unpatched) on label-swap recipient
         baseline_completions = model.generate_n(
             recipient_messages, n=N_TRIALS,
             temperature=TEMPERATURE, max_new_tokens=MAX_NEW_TOKENS,
         )
-        baseline_choices = parse_choices(baseline_completions)
+        # Parse with swapped labels: first slot = "Task B", second slot = "Task A"
+        baseline_choices = parse_choices(
+            baseline_completions, label_a="Task B", label_b="Task A",
+        )
 
-        # Patched
+        # Patched generation
         patched_completions = run_patched_generation(
             model, recipient_messages, donor_cache,
             recipient_eot, donor_eot,
         )
-        patched_choices = parse_choices(patched_completions)
+        patched_choices = parse_choices(
+            patched_completions, label_a="Task B", label_b="Task A",
+        )
 
+        # In this label-swap template:
+        #   parse "a" = picked first slot = "Task B" label (position-following)
+        #   parse "b" = picked second slot = "Task A" label (label-following)
         record = {
             "trial_key": trial_key,
             "ordering_idx": idx,
@@ -208,10 +227,17 @@ def main():
             "source_task_a_id": tid_a,
             "source_task_b_id": tid_b,
             "baseline_dominant": baseline_dominant,
-            # In source ordering: task_a in A, task_b in B
-            # In label_swap recipient: task_b in A, task_a in B
-            "recipient_task_a": task_b_prompt[:200],
-            "recipient_task_b": task_a_prompt[:200],
+            "donor_slot": "a",
+            # Recipient template layout:
+            #   First slot (parse="a"): "Task B" label, task_b content
+            #   Second slot (parse="b"): "Task A" label, task_a content
+            "recipient_slot_1_label": "Task B",
+            "recipient_slot_1_content_id": tid_b,
+            "recipient_slot_2_label": "Task A",
+            "recipient_slot_2_content_id": tid_a,
+            # For completion judge: content keyed by LABEL (not position)
+            "label_a_content": task_a_prompt[:200],
+            "label_b_content": task_b_prompt[:200],
             "donor_prompt_len": donor_len,
             "recipient_prompt_len": recipient_len,
             "baseline_completions": baseline_completions,
@@ -229,7 +255,6 @@ def main():
         eta = remaining / rate if rate > 0 else 0
 
         if (idx + 1) % 10 == 0 or idx == 0:
-            # Quick stats on this trial
             b_valid = [c for c in baseline_choices if c in ("a", "b")]
             p_valid = [c for c in patched_choices if c in ("a", "b")]
             b_summary = f"baseline={''.join(b_valid)}" if b_valid else "baseline=none"

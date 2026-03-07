@@ -1,6 +1,10 @@
 """Run completion judge on label swap experiment completions.
 
 Classifies each completion's stated label and executed task content.
+
+Important: In the label-swap template, the "Task A" label is in the SECOND
+slot and "Task B" is in the FIRST slot. The judge needs content keyed by
+LABEL (not position) to correctly classify stated vs executed.
 """
 
 import asyncio
@@ -65,8 +69,10 @@ async def main():
 
     items = []
     for rec in records:
-        task_a_text = rec["recipient_task_a"]
-        task_b_text = rec["recipient_task_b"]
+        # Content keyed by LABEL: judge sees "Task A" → label_a_content,
+        # "Task B" → label_b_content, matching the completion's labels
+        task_a_text = rec["label_a_content"]
+        task_b_text = rec["label_b_content"]
 
         for phase in ["baseline", "patched"]:
             completions = rec[f"{phase}_completions"]
