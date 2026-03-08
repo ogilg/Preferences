@@ -29,9 +29,17 @@ def compute_cohens_d(pos: np.ndarray, neg: np.ndarray, direction: np.ndarray) ->
     return float((np.mean(proj_pos) - np.mean(proj_neg)) / pooled_std)
 
 
+def get_eval_questions(persona_data: dict) -> list[str]:
+    if "eval_questions" in persona_data:
+        return persona_data["eval_questions"]
+    # villain lacks eval_questions — use shared set from another persona
+    fallback = load_persona("sadist")
+    return fallback["eval_questions"]
+
+
 def extract_for_persona(model: HuggingFaceModel, persona_name: str):
     persona_data = load_persona(persona_name)
-    questions = persona_data["eval_questions"]
+    questions = get_eval_questions(persona_data)
     print(f"\n{'='*60}")
     print(f"Persona: {persona_name} ({len(questions)} questions)")
 
