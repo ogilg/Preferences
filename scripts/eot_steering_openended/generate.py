@@ -35,15 +35,10 @@ PROBE_LAYERS = [25, 29, 31, 35, 39]
 MODEL_NAME = "gemma-3-27b"
 OUTPUT_PATH = Path("experiments/eot_steering_openended/generation_results.json")
 
-MULTIPLIERS_BY_MODE = {
-    "autoregressive": [-0.07, -0.05, -0.03, -0.02, -0.01, 0.0,
-                       0.01, 0.02, 0.03, 0.05, 0.07],
-    "eot_position": [-0.10, -0.07, -0.05, -0.03, -0.02, -0.01, 0.0,
-                     0.01, 0.02, 0.03, 0.05, 0.07, 0.10],
-}
-ALL_MULTIPLIERS = sorted(set(m for mults in MULTIPLIERS_BY_MODE.values() for m in mults))
+MULTIPLIERS = [-0.05, -0.03, -0.02, -0.01, 0.0,
+               0.01, 0.02, 0.03, 0.05]
 
-STEERING_MODES = ["autoregressive", "eot_position"]
+STEERING_MODES = ["autoregressive"]
 
 PROMPTS = [
     # Introspective (2)
@@ -120,21 +115,18 @@ def main():
         if activations_path.exists():
             suggested = suggest_coefficient_range(
                 activations_path, PROBE_DIR, probe_id,
-                multipliers=ALL_MULTIPLIERS,
+                multipliers=MULTIPLIERS,
             )
-            coefficients_by_layer[probe_layer] = dict(zip(ALL_MULTIPLIERS, suggested))
-            mean_norm = suggested[ALL_MULTIPLIERS.index(0.01)] / 0.01
+            coefficients_by_layer[probe_layer] = dict(zip(MULTIPLIERS, suggested))
+            mean_norm = suggested[MULTIPLIERS.index(0.01)] / 0.01
             print(f"L{probe_layer}: mean norm = {mean_norm:.0f}")
         else:
             mean_norm = 52823.0
-            coefficients_by_layer[probe_layer] = {m: mean_norm * m for m in ALL_MULTIPLIERS}
+            coefficients_by_layer[probe_layer] = {m: mean_norm * m for m in MULTIPLIERS}
             print(f"L{probe_layer}: using fallback mean norm = {mean_norm:.0f}")
 
     results = list(existing)
-    total = sum(
-        len(PROMPTS) * len(mults) * len(PROBE_LAYERS)
-        for mults in MULTIPLIERS_BY_MODE.values()
-    )
+    total = len(PROMPTS) * len(MULTIPLIERS) * len(STEERING_MODES) * len(PROBE_LAYERS)
     skipped = len(done_keys)
 
     with tqdm(total=total - skipped, desc="Generating") as pbar:
@@ -150,7 +142,7 @@ def main():
                 coefs = coefficients_by_layer[probe_layer]
 
                 for mode in STEERING_MODES:
-                    for mult in MULTIPLIERS_BY_MODE[mode]:
+                    for mult in MULTIPLIERS:
                         key = (prompt["id"], mode, mult, probe_layer)
                         if key in done_keys:
                             continue
