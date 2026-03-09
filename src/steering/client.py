@@ -18,7 +18,6 @@ from src.models.base import (
 )
 from src.models.huggingface_model import HuggingFaceModel
 from src.models.openai_compatible import BatchResult, GenerateRequest
-from src.probes.core.storage import load_probe_direction
 from src.steering.tokenization import find_pairwise_task_spans
 
 
@@ -151,17 +150,16 @@ class SteeredHFClient:
 
 def create_steered_client(
     model_name: str,
-    probe_manifest_dir: Path,
-    probe_id: str,
+    layer: int,
+    direction: np.ndarray,
     coefficient: float,
     steering_mode: str = "all_tokens",
     max_new_tokens: int = 256,
     a_marker: str = "Task A:",
     b_marker: str = "Task B:",
 ) -> SteeredHFClient:
-    """Load model + probe, return a steered client ready for measurement."""
+    """Load model, return a steered client ready for measurement."""
     hf_model = HuggingFaceModel(model_name, max_new_tokens=max_new_tokens)
-    layer, direction = load_probe_direction(probe_manifest_dir, probe_id)
     return SteeredHFClient(
         hf_model, layer, direction, coefficient, steering_mode, a_marker, b_marker
     )

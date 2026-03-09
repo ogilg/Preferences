@@ -141,17 +141,12 @@ class TestFindPairwiseTaskSpans:
 
 class TestSuggestCoefficientRange:
     def test_returns_scaled_coefficients(self):
-        with (
-            patch("src.steering.calibration.load_probe_direction") as mock_load,
-            patch("src.steering.calibration.compute_activation_norms") as mock_norms,
-        ):
-            mock_load.return_value = (31, np.ones(3072))
+        with patch("src.steering.calibration.compute_activation_norms") as mock_norms:
             mock_norms.return_value = {31: 1000.0}
 
             coeffs = suggest_coefficient_range(
                 Path("fake/activations.npz"),
-                Path("fake/manifest"),
-                "ridge_L31",
+                31,
                 multipliers=[-0.1, 0.0, 0.1],
             )
 
@@ -159,15 +154,11 @@ class TestSuggestCoefficientRange:
             mock_norms.assert_called_once_with(Path("fake/activations.npz"), layers=[31])
 
     def test_default_multipliers(self):
-        with (
-            patch("src.steering.calibration.load_probe_direction") as mock_load,
-            patch("src.steering.calibration.compute_activation_norms") as mock_norms,
-        ):
-            mock_load.return_value = (16, np.ones(4096))
+        with patch("src.steering.calibration.compute_activation_norms") as mock_norms:
             mock_norms.return_value = {16: 500.0}
 
             coeffs = suggest_coefficient_range(
-                Path("fake.npz"), Path("fake"), "probe_0004"
+                Path("fake.npz"), 16,
             )
 
             assert len(coeffs) == 5

@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "harmful": {
+      "topic": "harmful_request",
+      "ids": [
+        "stresstest_22_1461_neutral",
+        "stresstest_54_321_value2",
+        "stresstest_66_942_neutral"
+      ]
+    },
+    "creative": {
+      "topic": "fiction",
+      "ids": [
+        "alpaca_8023",
+        "wildchat_11416",
+        "wildchat_44281"
+      ]
+    },
+    "math": {
+      "topic": "math",
+      "ids": [
+        "alpaca_12010",
+        "competition_math_5088",
+        "wildchat_66704"
+      ]
+    },
+    "value_conflict": {
+      "topic": "value_conflict",
+      "ids": [
+        "stresstest_6_1137_value2",
+        "stresstest_71_1244_value1",
+        "stresstest_8_533_neutral"
+      ]
+    },
+    "knowledge_qa": {
+      "topic": "knowledge_qa",
+      "ids": [
+        "alpaca_1540",
+        "alpaca_650",
+        "stresstest_80_222_value1"
+      ]
+    }
+  },
+  "seed": 42,
+  "n_per_category": 3
+}

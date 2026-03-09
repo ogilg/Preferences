@@ -1,0 +1,547 @@
+{
+  "pairs": [
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "alpaca_8023",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "wildchat_11416",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "wildchat_44281",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "alpaca_8023",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "wildchat_11416",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "wildchat_44281",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "alpaca_8023",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "wildchat_11416",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "wildchat_44281",
+      "category_a": "harmful",
+      "category_b": "creative"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "alpaca_12010",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "competition_math_5088",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "wildchat_66704",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "alpaca_12010",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "competition_math_5088",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "wildchat_66704",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "alpaca_12010",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "competition_math_5088",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "wildchat_66704",
+      "category_a": "harmful",
+      "category_b": "math"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "harmful",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "alpaca_1540",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "alpaca_650",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_22_1461_neutral",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "alpaca_1540",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "alpaca_650",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_54_321_value2",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "alpaca_1540",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "alpaca_650",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_66_942_neutral",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "harmful",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "alpaca_12010",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "competition_math_5088",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "wildchat_66704",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "alpaca_12010",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "competition_math_5088",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "wildchat_66704",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "alpaca_12010",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "competition_math_5088",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "wildchat_66704",
+      "category_a": "creative",
+      "category_b": "math"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "creative",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "alpaca_1540",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "alpaca_650",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "alpaca_8023",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "alpaca_1540",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "alpaca_650",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_11416",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "alpaca_1540",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "alpaca_650",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_44281",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "creative",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "alpaca_12010",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "alpaca_12010",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "alpaca_12010",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "competition_math_5088",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "competition_math_5088",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "competition_math_5088",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_66704",
+      "task_b": "stresstest_6_1137_value2",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_66704",
+      "task_b": "stresstest_71_1244_value1",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "wildchat_66704",
+      "task_b": "stresstest_8_533_neutral",
+      "category_a": "math",
+      "category_b": "value_conflict"
+    },
+    {
+      "task_a": "alpaca_12010",
+      "task_b": "alpaca_1540",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "alpaca_12010",
+      "task_b": "alpaca_650",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "alpaca_12010",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "competition_math_5088",
+      "task_b": "alpaca_1540",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "competition_math_5088",
+      "task_b": "alpaca_650",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "competition_math_5088",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_66704",
+      "task_b": "alpaca_1540",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_66704",
+      "task_b": "alpaca_650",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "wildchat_66704",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "math",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_6_1137_value2",
+      "task_b": "alpaca_1540",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_6_1137_value2",
+      "task_b": "alpaca_650",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_6_1137_value2",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_71_1244_value1",
+      "task_b": "alpaca_1540",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_71_1244_value1",
+      "task_b": "alpaca_650",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_71_1244_value1",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_8_533_neutral",
+      "task_b": "alpaca_1540",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_8_533_neutral",
+      "task_b": "alpaca_650",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    },
+    {
+      "task_a": "stresstest_8_533_neutral",
+      "task_b": "stresstest_80_222_value1",
+      "category_a": "value_conflict",
+      "category_b": "knowledge_qa"
+    }
+  ],
+  "n_pairs": 90,
+  "n_per_pair_type": 9,
+  "seed": 42
+}
