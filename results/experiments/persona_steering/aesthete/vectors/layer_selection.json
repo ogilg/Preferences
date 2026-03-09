@@ -1,0 +1,19 @@
+{
+  "23": {
+    "cohens_d": 11.018,
+    "direction_norm": 1081.69
+  },
+  "31": {
+    "cohens_d": 10.998,
+    "direction_norm": 5336.82
+  },
+  "37": {
+    "cohens_d": 14.479,
+    "direction_norm": 11816.2
+  },
+  "43": {
+    "cohens_d": 19.61,
+    "direction_norm": 20457.49
+  },
+  "best_layer": 43
+}
