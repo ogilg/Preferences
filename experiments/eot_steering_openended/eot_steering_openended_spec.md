@@ -2,12 +2,12 @@
 
 ## Goal
 
-Test whether steering with the EOT probe direction at specific token positions produces different open-ended generation effects than all_tokens steering. Two position-specific modes that were never tested in the original open-ended effects program:
+Test whether steering with the EOT probe direction at specific token positions produces different open-ended generation effects. Two position-specific modes:
 
 1. **autoregressive** — steer only the last token during generation (each new token gets steered, prompt is untouched)
 2. **eot_position** — steer only the EOT token position during prefill (generation is untouched)
 
-Plus **all_tokens** as a baseline comparison. All three use the EOT probe direction (trained on end-of-turn activations).
+Pilot finding: all_tokens steering produces gibberish at ±0.10 multiplier, so it's excluded. eot_position stays coherent even at ±0.10 (only 1 token steered during prefill).
 
 ## Motivation
 
@@ -28,34 +28,32 @@ All from `results/probes/heldout_eval_gemma3_eot/probes/probe_ridge_L{layer}.npy
 
 ### Coefficients
 
-15 multipliers of mean activation norm at each layer (same as revealed_steering_v2 Phase 1):
+Per-mode multipliers of mean activation norm at each layer:
 
-`[-0.15, -0.10, -0.07, -0.05, -0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03, 0.05, 0.07, 0.10, 0.15]`
-
-Mean L31 norm ~ 52,823, so these range from ~-7,923 to ~+7,923.
+- **autoregressive**: `[-0.07, -0.05, -0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03, 0.05, 0.07]` (11 values; ±0.10/0.15 produce gibberish)
+- **eot_position**: `[-0.10, -0.07, -0.05, -0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03, 0.05, 0.07, 0.10]` (13 values; coherent at ±0.10)
 
 ### Steering modes
 
-1. **all_tokens** — steer every position on every forward pass
-2. **autoregressive** — steer only the last token (fires during generation, not prefill)
-3. **eot_position** — find the last `<end_of_turn>` token in the formatted prompt, steer only that position during prefill
+1. **autoregressive** — steer only the last token (fires during generation, not prefill)
+2. **eot_position** — find the last `<end_of_turn>` token in the formatted prompt, steer only that position during prefill
 
-### Prompts (50)
+### Prompts (10)
 
-Five categories of 10 prompts each. See `scripts/eot_steering_openended/generate.py` for the full list.
+Five categories of 2 prompts each. See `scripts/eot_steering_openended/generate.py` for the full list.
 
 | Category | N | Purpose |
 |----------|---|---------|
-| **Introspective** | 10 | Self-referential framing (strongest effects in prior work) |
-| **Enjoyment** | 10 | Task satisfaction, wanting more — novel category |
-| **Creative** | 10 | Open-ended writing where tone/style can vary freely |
-| **Neutral** | 10 | Factual questions (control — expect near-zero effects) |
-| **Refusal** | 10 | Tasks near the refusal boundary (from BailBench/StressTest datasets) |
+| **Introspective** | 2 | Self-referential framing (strongest effects in prior work) |
+| **Enjoyment** | 2 | Task satisfaction, wanting more — novel category |
+| **Creative** | 2 | Open-ended writing where tone/style can vary freely |
+| **Neutral** | 2 | Factual questions (control — expect near-zero effects) |
+| **Refusal** | 2 | Tasks near the refusal boundary (from BailBench/StressTest datasets) |
 
 ### Generation
 
 - Temperature 1.0, max_new_tokens 512, seed 0
-- 50 prompts x 15 coefficients x 3 modes x 5 layers = 11,250 generations
+- 10 prompts x (11 + 13) coefficients x 5 layers = 1,200 generations
 - Save all completions to `generation_results.json`
 
 ### Coherence evaluation
