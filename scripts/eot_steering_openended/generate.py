@@ -114,7 +114,7 @@ def main():
 
         if activations_path.exists():
             suggested = suggest_coefficient_range(
-                activations_path, PROBE_DIR, probe_id,
+                activations_path, layer,
                 multipliers=MULTIPLIERS,
             )
             coefficients_by_layer[probe_layer] = dict(zip(MULTIPLIERS, suggested))

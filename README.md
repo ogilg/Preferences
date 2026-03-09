@@ -91,7 +91,7 @@ For coefficient sweeps, use `with_coefficient()` to create new clients sharing t
 ```python
 from src.steering.client import create_steered_client
 
-client = create_steered_client("gemma-3-27b", probe_dir, "ridge_L31", coefficient=0)
+client = create_steered_client("gemma-3-27b", layer=31, direction=direction, coefficient=0)
 for coef in [-3000, -1000, 0, 1000, 3000]:
     steered = client.with_coefficient(coef)
     response = steered.generate(messages)
@@ -127,7 +127,7 @@ Utilities for finding token indices of text spans, used with position-selective 
 
 #### `calibration.py` — Coefficient calibration
 
-- `suggest_coefficient_range(activations_path, manifest_dir, probe_id, multipliers)` — returns coefficients as multiples of the mean activation norm at the probe layer, removing the guesswork from coefficient selection
+- `suggest_coefficient_range(activations_path, layer, multipliers)` — returns coefficients as multiples of the mean activation norm at the given layer, removing the guesswork from coefficient selection
 
 #### `analysis.py` — Post-hoc analysis
 
