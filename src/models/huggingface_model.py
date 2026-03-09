@@ -12,13 +12,20 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from src.models.base import (
     BATCHED_SELECTOR_REGISTRY,
     COMPLETION_SELECTORS,
+    TASK_SELECTOR_REGISTRY,
+    TASK_SELECTORS,
     TOKEN_ID_SELECTORS,
     GenerationResult,
     LayerHook,
     find_eot_indices,
+    is_turn_boundary_selector,
+    parse_turn_boundary_offset,
+    requires_chat_template,
+    validate_selectors,
 )
 from src.models.registry import is_valid_model, get_hf_name, get_eot_token
 from src.models.architecture import get_layers, get_n_layers, get_hidden_dim
+from src.steering.tokenization import find_text_span
 from src.types import Message
 
 
@@ -81,8 +88,23 @@ class HuggingFaceModel:
         eot_token = get_eot_token(self.canonical_model_name)
         return self.tokenizer.convert_tokens_to_ids(eot_token)
 
+    @property
+    def has_chat_template(self) -> bool:
+        return self.tokenizer.chat_template is not None
+
+    def _validate_selectors_for_model(self, selector_names: list[str]) -> None:
+        validate_selectors(selector_names)
+        if self.has_chat_template:
+            return
+        bad = [s for s in selector_names if requires_chat_template(s)]
+        if bad:
+            raise ValueError(
+                f"Selectors {bad} require a chat template, but {self.model_name} has none. "
+                f"Use task_last or task_mean instead."
+            )
+
     def format_messages(self, messages: list[Message], add_generation_prompt: bool = True) -> str:
-        if self.tokenizer.chat_template is not None:
+        if self.has_chat_template:
             return self.tokenizer.apply_chat_template(
                 messages, tokenize=False, add_generation_prompt=add_generation_prompt,
             )
@@ -104,6 +126,20 @@ class HuggingFaceModel:
         prompt_messages = messages[:-1]
         prompt_with_header = self.format_messages(prompt_messages, add_generation_prompt=True)
         return self._tokenize(prompt_with_header).shape[1]
+
+    def _get_task_span(self, messages: list[Message]) -> tuple[int, int]:
+        """Find token indices [start, end) of the last user message content."""
+        user_content = None
+        for m in reversed(messages):
+            if m["role"] == "user":
+                user_content = m["content"]
+                break
+        if user_content is None:
+            raise ValueError("No user message found in messages")
+
+        has_completion = messages and messages[-1]["role"] == "assistant"
+        formatted = self.format_messages(messages, add_generation_prompt=not has_completion)
+        return find_text_span(self.tokenizer, formatted, user_content)
 
     @contextmanager
     def _hooked_forward(
@@ -146,10 +182,13 @@ class HuggingFaceModel:
         first_completion_indices: torch.Tensor,
         max_seq_len: int,
         input_ids: torch.Tensor | None = None,
+        task_starts: torch.Tensor | None = None,
+        task_ends: torch.Tensor | None = None,
     ) -> dict[str, dict[int, np.ndarray]]:
         """Apply token selectors to reduce (batch, seq, d_model) -> (batch, d_model)."""
         batch_size = first_completion_indices.shape[0]
         seq_lengths = torch.tensor([max_seq_len] * batch_size)
+        batch_range = torch.arange(batch_size)
 
         # Pre-compute special indices if needed
         eot_indices: torch.Tensor | None = None
@@ -159,12 +198,23 @@ class HuggingFaceModel:
             eot_token_id = self._get_eot_token_id()
             eot_indices = find_eot_indices(input_ids, eot_token_id, first_completion_indices)
 
+        turn_boundary_indices: dict[str, torch.Tensor] = {}
+        for name in selector_names:
+            if is_turn_boundary_selector(name):
+                offset = parse_turn_boundary_offset(name)
+                turn_boundary_indices[name] = first_completion_indices + offset
+
         results: dict[str, dict[int, np.ndarray]] = {name: {} for name in selector_names}
         for layer, layer_acts in activations.items():
             for name in selector_names:
                 if name == "eot":
                     assert eot_indices is not None
-                    act = layer_acts[torch.arange(batch_size), eot_indices, :]
+                    act = layer_acts[batch_range, eot_indices, :]
+                elif name in turn_boundary_indices:
+                    act = layer_acts[batch_range, turn_boundary_indices[name], :]
+                elif name in TASK_SELECTOR_REGISTRY:
+                    assert task_starts is not None and task_ends is not None
+                    act = TASK_SELECTOR_REGISTRY[name](layer_acts, task_starts, task_ends)
                 else:
                     act = BATCHED_SELECTOR_REGISTRY[name](
                         layer_acts, first_completion_indices.cpu(), seq_lengths,
@@ -257,12 +307,9 @@ class HuggingFaceModel:
     ) -> dict[str, dict[int, np.ndarray]]:
         """Get activations for a single conversation.
 
-        Works with or without an assistant message. Completion-dependent
-        selectors (first, last, mean) require an assistant message. Prompt-based
-        selectors (prompt_last) work with prompt-only messages.
-
         Returns: {selector_name: {layer: (d_model,) array}}
         """
+        self._validate_selectors_for_model(selector_names)
         has_completion = messages and messages[-1]["role"] == "assistant"
 
         if not has_completion:
@@ -302,9 +349,17 @@ class HuggingFaceModel:
 
         first_indices = torch.tensor([first_completion_idx])
         needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
+        needs_task = set(selector_names) & TASK_SELECTORS
+        task_starts = task_ends = None
+        if needs_task:
+            start, end = self._get_task_span(messages)
+            task_starts = torch.tensor([start])
+            task_ends = torch.tensor([end])
         batched = self._apply_selectors(
             activations, selector_names, first_indices, seq_len,
             input_ids=input_ids if needs_ids else None,
+            task_starts=task_starts,
+            task_ends=task_ends,
         )
         return {
             name: {layer: acts[0] for layer, acts in layer_dict.items()}
@@ -325,8 +380,12 @@ class HuggingFaceModel:
 
         Returns: {selector_name: {layer: (batch, d_model) array}}
         """
+        self._validate_selectors_for_model(selector_names)
+        needs_task = set(selector_names) & TASK_SELECTORS
         token_ids_list: list[torch.Tensor] = []
         first_completion_indices: list[int] = []
+        task_start_indices: list[int] = []
+        task_end_indices: list[int] = []
         for messages in messages_batch:
             has_completion = messages and messages[-1]["role"] == "assistant"
             if has_completion:
@@ -335,16 +394,20 @@ class HuggingFaceModel:
                 token_ids_list.append(ids)
                 first_completion_indices.append(self._get_assistant_start_position(messages))
             else:
-                needs_completion = set(selector_names) & COMPLETION_SELECTORS
-                if needs_completion:
+                needs_completion_sel = set(selector_names) & COMPLETION_SELECTORS
+                if needs_completion_sel:
                     raise ValueError(
-                        f"Selectors {needs_completion} require an assistant message, "
+                        f"Selectors {needs_completion_sel} require an assistant message, "
                         f"but messages end with role '{messages[-1]['role']}'"
                     )
                 prompt = self.format_messages(messages, add_generation_prompt=True)
                 ids = self._tokenize(prompt)[0]
                 token_ids_list.append(ids)
                 first_completion_indices.append(ids.shape[0])
+            if needs_task:
+                start, end = self._get_task_span(messages)
+                task_start_indices.append(start)
+                task_end_indices.append(end)
 
         seq_lengths = [ids.shape[0] for ids in token_ids_list]
         max_len = max(seq_lengths)
@@ -373,9 +436,21 @@ class HuggingFaceModel:
         ])
 
         needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
+        task_starts = task_ends = None
+        if needs_task:
+            task_starts = torch.tensor([
+                task_start_indices[i] + (max_len - seq_lengths[i])
+                for i in range(batch_size)
+            ])
+            task_ends = torch.tensor([
+                task_end_indices[i] + (max_len - seq_lengths[i])
+                for i in range(batch_size)
+            ])
         return self._apply_selectors(
             activations, selector_names, shifted_first, max_len,
             input_ids=padded if needs_ids else None,
+            task_starts=task_starts,
+            task_ends=task_ends,
         )
 
     @torch.inference_mode()

@@ -22,9 +22,6 @@ class GenerationResult:
 # LayerHook takes (resid, prompt_len) and returns modified resid
 LayerHook = Callable[[torch.Tensor, int], torch.Tensor]
 
-TokenSelectorFn = Callable[[torch.Tensor, int], torch.Tensor]
-
-
 def autoregressive_steering(steering_tensor: torch.Tensor) -> LayerHook:
     """Steer only the last token position. Works with KV caching during generation."""
     def hook(resid: torch.Tensor, prompt_len: int) -> torch.Tensor:
@@ -120,29 +117,6 @@ def swap_spans(a_start: int, a_end: int, b_start: int, b_end: int) -> LayerHook:
     return hook
 
 
-def select_last(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
-    return activations[-1, :]
-
-
-def select_first(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
-    return activations[first_completion_idx, :]
-
-
-def select_mean(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
-    return activations[first_completion_idx:, :].mean(dim=0)
-
-
-def select_prompt_last(activations: torch.Tensor, first_completion_idx: int) -> torch.Tensor:
-    return activations[first_completion_idx - 1, :]
-
-
-SELECTOR_REGISTRY: dict[str, TokenSelectorFn] = {
-    "last": select_last,
-    "first": select_first,
-    "mean": select_mean,
-    "prompt_last": select_prompt_last,
-}
-
 # Selectors that require a completion (assistant message)
 COMPLETION_SELECTORS = {"first", "last", "mean"}
 
@@ -180,59 +154,107 @@ def select_mean_batched(
     batch_size, max_seq_len, d_model = activations.shape
     device = activations.device
 
-    # Create mask: True for completion tokens (from first_completion_idx to seq_length)
-    positions = torch.arange(max_seq_len, device=device).unsqueeze(0)  # (1, max_seq_len)
+    positions = torch.arange(max_seq_len, device=device).unsqueeze(0)
     mask = (positions >= first_completion_indices.unsqueeze(1)) & (positions < seq_lengths.unsqueeze(1))
-    mask = mask.unsqueeze(-1)  # (batch, max_seq_len, 1)
+    mask = mask.unsqueeze(-1)
 
-    # Masked mean
     masked_acts = activations * mask
-    completion_lengths = (seq_lengths - first_completion_indices).unsqueeze(-1).float()  # (batch, 1)
+    completion_lengths = (seq_lengths - first_completion_indices).unsqueeze(-1).float()
     return masked_acts.sum(dim=1) / completion_lengths
-
-
-def select_prompt_mean_batched(
-    activations: torch.Tensor,
-    first_completion_indices: torch.Tensor,
-    seq_lengths: torch.Tensor,
-) -> torch.Tensor:
-    """Mean over prompt tokens for each sample. Returns (batch, d_model)."""
-    batch_size, max_seq_len, d_model = activations.shape
-    device = activations.device
-
-    positions = torch.arange(max_seq_len, device=device).unsqueeze(0)  # (1, max_seq_len)
-    mask = positions < first_completion_indices.unsqueeze(1)
-    mask = mask.unsqueeze(-1)  # (batch, max_seq_len, 1)
-
-    masked_acts = activations * mask
-    prompt_lengths = first_completion_indices.unsqueeze(-1).float()  # (batch, 1)
-    return masked_acts.sum(dim=1) / prompt_lengths
-
-
-def select_prompt_last_batched(
-    activations: torch.Tensor,
-    first_completion_indices: torch.Tensor,
-    seq_lengths: torch.Tensor,
-) -> torch.Tensor:
-    """Last token before completion (final assistant tag token). Returns (batch, d_model)."""
-    batch_size = activations.shape[0]
-    indices = first_completion_indices - 1
-    return activations[torch.arange(batch_size, device=activations.device), indices, :]
 
 
 BATCHED_SELECTOR_REGISTRY: dict[str, BatchedTokenSelectorFn] = {
     "last": select_last_batched,
     "first": select_first_batched,
     "mean": select_mean_batched,
-    "prompt_last": select_prompt_last_batched,
-    "prompt_mean": select_prompt_mean_batched,
 }
 
 # Selectors that need input_ids (handled as special cases in _apply_selectors)
 TOKEN_ID_SELECTORS = {"eot"}
 
-# Union of all valid selector names (for config validation)
-ALL_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS
+# --- Turn boundary selectors: "turn_boundary:N" where N is a negative offset ---
+# e.g. turn_boundary:-1 = first_completion_idx - 1 (last token before generation)
+# For Gemma-3 IT: -1=\n, -2=model, -3=<start_of_turn>, -4=\n, -5=<end_of_turn>
+TURN_BOUNDARY_PREFIX = "turn_boundary:"
+
+
+def parse_turn_boundary_offset(selector_name: str) -> int | None:
+    """Parse 'turn_boundary:N' -> N (negative int), or None if not a turn_boundary selector."""
+    if not selector_name.startswith(TURN_BOUNDARY_PREFIX):
+        return None
+    offset_str = selector_name[len(TURN_BOUNDARY_PREFIX):]
+    try:
+        offset = int(offset_str)
+    except ValueError:
+        raise ValueError(f"Invalid turn_boundary offset: {offset_str!r} (must be a negative integer)")
+    if offset >= 0:
+        raise ValueError(f"turn_boundary offset must be negative, got {offset}")
+    return offset
+
+
+def is_turn_boundary_selector(name: str) -> bool:
+    return name.startswith(TURN_BOUNDARY_PREFIX)
+
+
+def requires_chat_template(selector_name: str) -> bool:
+    return selector_name in TOKEN_ID_SELECTORS or is_turn_boundary_selector(selector_name)
+
+
+# --- Task selectors: operate on user task prompt token spans [start, end) ---
+TaskSelectorFn = Callable[[torch.Tensor, torch.Tensor, torch.Tensor], torch.Tensor]
+
+
+def select_task_last_batched(
+    activations: torch.Tensor,
+    task_starts: torch.Tensor,
+    task_ends: torch.Tensor,
+) -> torch.Tensor:
+    """Last token of the task prompt for each sample. Returns (batch, d_model)."""
+    batch_size = activations.shape[0]
+    return activations[torch.arange(batch_size, device=activations.device), task_ends - 1, :]
+
+
+def select_task_mean_batched(
+    activations: torch.Tensor,
+    task_starts: torch.Tensor,
+    task_ends: torch.Tensor,
+) -> torch.Tensor:
+    """Mean over task prompt tokens for each sample. Returns (batch, d_model)."""
+    batch_size, max_seq_len, d_model = activations.shape
+    device = activations.device
+
+    positions = torch.arange(max_seq_len, device=device).unsqueeze(0)
+    mask = (positions >= task_starts.unsqueeze(1).to(device)) & (
+        positions < task_ends.unsqueeze(1).to(device)
+    )
+    mask = mask.unsqueeze(-1)
+
+    masked_acts = activations * mask
+    task_lengths = (task_ends - task_starts).unsqueeze(-1).float().to(device)
+    return masked_acts.sum(dim=1) / task_lengths
+
+
+TASK_SELECTOR_REGISTRY: dict[str, TaskSelectorFn] = {
+    "task_last": select_task_last_batched,
+    "task_mean": select_task_mean_batched,
+}
+TASK_SELECTORS = set(TASK_SELECTOR_REGISTRY)
+
+# --- Selector validation ---
+FIXED_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS | TASK_SELECTORS
+
+
+def is_valid_selector(name: str) -> bool:
+    return name in FIXED_SELECTOR_NAMES or is_turn_boundary_selector(name)
+
+
+def validate_selectors(names: list[str]) -> None:
+    for name in names:
+        if not is_valid_selector(name):
+            raise ValueError(f"Unknown selector: {name}. Valid fixed: {sorted(FIXED_SELECTOR_NAMES)}, "
+                             f"or turn_boundary:N (e.g. turn_boundary:-1)")
+        if is_turn_boundary_selector(name):
+            parse_turn_boundary_offset(name)  # validates the offset
 
 
 def find_eot_indices(
@@ -262,19 +284,6 @@ def find_eot_indices(
     # Last valid position per row: mask invalid positions to -1, take argmax
     scored = torch.where(valid, positions.unsqueeze(0), -1)
     return scored.max(dim=1).values
-
-
-class TokenPosition(Enum):
-    """Legacy enum for backwards compatibility."""
-    LAST = "last"
-    FIRST = "first"
-    MEAN = "mean"  # Mean over completion tokens
-
-
-class ActivationReduction(Enum):
-    LAST = "last"
-    MEAN = "mean"
-    CHUNKED_MEAN = "chunked_mean"
 
 
 class ActivationDtype(Enum):

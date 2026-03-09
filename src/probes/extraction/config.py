@@ -8,7 +8,7 @@ from pydantic import BaseModel, model_validator
 
 from src.measurement.runners.utils.runner_utils import model_name_to_dir
 from src.measurement.storage.base import find_project_root
-from src.models.base import ALL_SELECTOR_NAMES, COMPLETION_SELECTORS
+from src.models.base import validate_selectors, COMPLETION_SELECTORS
 
 
 class ExtractionConfig(BaseModel):
@@ -34,10 +34,8 @@ class ExtractionConfig(BaseModel):
     custom_tasks_file: Path | None = None
 
     @model_validator(mode="after")
-    def validate_selectors(self) -> ExtractionConfig:
-        for s in self.selectors:
-            if s not in ALL_SELECTOR_NAMES:
-                raise ValueError(f"Unknown selector: {s}. Valid: {sorted(ALL_SELECTOR_NAMES)}")
+    def validate_selectors_config(self) -> ExtractionConfig:
+        validate_selectors(self.selectors)
         return self
 
     @property
