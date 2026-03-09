@@ -18,13 +18,17 @@ The original open-ended effects program used all_tokens steering with the prompt
 
 ## Design
 
-### Probe
+### Probes
 
-EOT Ridge probe at L31: `results/probes/heldout_eval_gemma3_eot/probes/probe_ridge_L31.npy`
+EOT Ridge probes at 5 layers spanning the available range:
+
+- L25, L29, L31, L35, L39
+
+All from `results/probes/heldout_eval_gemma3_eot/probes/probe_ridge_L{layer}.npy`
 
 ### Coefficients
 
-15 multipliers of mean L31 activation norm (same as revealed_steering_v2 Phase 1):
+15 multipliers of mean activation norm at each layer (same as revealed_steering_v2 Phase 1):
 
 `[-0.15, -0.10, -0.07, -0.05, -0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03, 0.05, 0.07, 0.10, 0.15]`
 
@@ -51,7 +55,7 @@ Five categories of 10 prompts each. See `scripts/eot_steering_openended/generate
 ### Generation
 
 - Temperature 1.0, max_new_tokens 512, seed 0
-- 50 prompts x 15 coefficients x 3 modes = 2,250 generations
+- 50 prompts x 15 coefficients x 3 modes x 5 layers = 11,250 generations
 - Save all completions to `generation_results.json`
 
 ### Coherence evaluation

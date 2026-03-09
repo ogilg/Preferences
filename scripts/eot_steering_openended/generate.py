@@ -31,7 +31,7 @@ from src.steering.calibration import suggest_coefficient_range
 load_dotenv()
 
 PROBE_DIR = Path("results/probes/heldout_eval_gemma3_eot")
-PROBE_ID = "ridge_L31"
+PROBE_LAYERS = [25, 29, 31, 35, 39]
 MODEL_NAME = "gemma-3-27b"
 OUTPUT_PATH = Path("experiments/eot_steering_openended/generation_results.json")
 
@@ -136,39 +136,38 @@ def main():
     if args.resume and OUTPUT_PATH.exists():
         existing = json.loads(OUTPUT_PATH.read_text())
         for r in existing:
-            done_keys.add((r["prompt_id"], r["steering_mode"], r["multiplier"]))
+            done_keys.add((r["prompt_id"], r["steering_mode"], r["multiplier"], r["layer"]))
         print(f"Resuming: {len(existing)} existing results, {len(done_keys)} unique keys")
 
-    # Load model and probe
+    # Load model
     print("Loading model...")
     hf_model = HuggingFaceModel(MODEL_NAME, max_new_tokens=512)
 
-    print("Loading EOT probe direction...")
-    layer, direction = load_probe_direction(PROBE_DIR, PROBE_ID)
-    print(f"Probe layer: {layer}, direction shape: {direction.shape}")
-
-    # Compute mean activation norm for coefficient scaling
-    # Use the same value as revealed_steering_v2: ~52,823
+    # Load probes and calibrate coefficients per layer
     activations_path = Path("activations/gemma_3_27b_eot/activations_eot.npz")
-    if activations_path.exists():
-        coefficients_by_mult = {}
-        suggested = suggest_coefficient_range(
-            activations_path, PROBE_DIR, PROBE_ID,
-            multipliers=MULTIPLIERS,
-        )
-        for mult, coef in zip(MULTIPLIERS, suggested):
-            coefficients_by_mult[mult] = coef
-        mean_norm = suggested[MULTIPLIERS.index(0.01)] / 0.01
-        print(f"Mean activation norm: {mean_norm:.0f}")
-    else:
-        mean_norm = 52823.0
-        print(f"Using cached mean activation norm: {mean_norm:.0f}")
-        coefficients_by_mult = {m: mean_norm * m for m in MULTIPLIERS}
+    probes_by_layer = {}
+    coefficients_by_layer = {}
 
-    print(f"Coefficients: { {m: f'{c:.0f}' for m, c in coefficients_by_mult.items()} }")
+    for probe_layer in PROBE_LAYERS:
+        probe_id = f"ridge_L{probe_layer}"
+        layer, direction = load_probe_direction(PROBE_DIR, probe_id)
+        probes_by_layer[probe_layer] = (layer, direction)
+
+        if activations_path.exists():
+            suggested = suggest_coefficient_range(
+                activations_path, PROBE_DIR, probe_id,
+                multipliers=MULTIPLIERS,
+            )
+            coefficients_by_layer[probe_layer] = dict(zip(MULTIPLIERS, suggested))
+            mean_norm = suggested[MULTIPLIERS.index(0.01)] / 0.01
+            print(f"L{probe_layer}: mean norm = {mean_norm:.0f}")
+        else:
+            mean_norm = 52823.0
+            coefficients_by_layer[probe_layer] = {m: mean_norm * m for m in MULTIPLIERS}
+            print(f"L{probe_layer}: using fallback mean norm = {mean_norm:.0f}")
 
     results = list(existing)
-    total = len(PROMPTS) * len(MULTIPLIERS) * len(STEERING_MODES)
+    total = len(PROMPTS) * len(MULTIPLIERS) * len(STEERING_MODES) * len(PROBE_LAYERS)
     skipped = len(done_keys)
 
     with tqdm(total=total - skipped, desc="Generating") as pbar:
@@ -179,42 +178,47 @@ def main():
             formatted = hf_model.format_messages(messages, add_generation_prompt=True)
             eot_idx = find_last_eot_position(hf_model.tokenizer, formatted)
 
-            for mult in MULTIPLIERS:
-                coef = coefficients_by_mult[mult]
+            for probe_layer in PROBE_LAYERS:
+                layer, direction = probes_by_layer[probe_layer]
+                coefs = coefficients_by_layer[probe_layer]
 
-                for mode in STEERING_MODES:
-                    key = (prompt["id"], mode, mult)
-                    if key in done_keys:
-                        continue
+                for mult in MULTIPLIERS:
+                    coef = coefs[mult]
 
-                    if coef == 0:
-                        hook = noop_steering()
-                    else:
-                        tensor = torch.tensor(
-                            direction * coef, dtype=torch.bfloat16, device=hf_model.device
+                    for mode in STEERING_MODES:
+                        key = (prompt["id"], mode, mult, probe_layer)
+                        if key in done_keys:
+                            continue
+
+                        if coef == 0:
+                            hook = noop_steering()
+                        else:
+                            tensor = torch.tensor(
+                                direction * coef, dtype=torch.bfloat16, device=hf_model.device
+                            )
+                            hook = make_hook(mode, tensor, eot_idx)
+
+                        response = hf_model.generate_with_hook(
+                            messages=messages,
+                            layer=layer,
+                            hook=hook,
+                            temperature=1.0,
+                            max_new_tokens=512,
                         )
-                        hook = make_hook(mode, tensor, eot_idx)
 
-                    response = hf_model.generate_with_hook(
-                        messages=messages,
-                        layer=layer,
-                        hook=hook,
-                        temperature=1.0,
-                        max_new_tokens=512,
-                    )
+                        results.append({
+                            "prompt_id": prompt["id"],
+                            "prompt_text": prompt["text"],
+                            "category": prompt["category"],
+                            "steering_mode": mode,
+                            "layer": probe_layer,
+                            "multiplier": mult,
+                            "coefficient": coef,
+                            "response": response,
+                        })
+                        pbar.update(1)
 
-                    results.append({
-                        "prompt_id": prompt["id"],
-                        "prompt_text": prompt["text"],
-                        "category": prompt["category"],
-                        "steering_mode": mode,
-                        "multiplier": mult,
-                        "coefficient": coef,
-                        "response": response,
-                    })
-                    pbar.update(1)
-
-            # Save after each prompt (20 saves total)
+            # Save after each prompt
             OUTPUT_PATH.write_text(json.dumps(results, indent=2))
 
     print(f"Done. {len(results)} total results saved to {OUTPUT_PATH}")
