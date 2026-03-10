@@ -9,7 +9,16 @@ LW commenter pointed out that all-MiniLM-L6-v2 (22M params, 384d) is too weak a 
 Replace the sentence-transformer baseline with **Qwen3-Embedding-8B** (`Qwen/Qwen3-Embedding-8B`, 7.5B params, 4096d) and rerun the two probe evaluations from Section 2 of the post:
 
 1. **Heldout eval**: Ridge probe on embeddings → Thurstonian utilities (train 10k, eval on 4k heldout split). Current ST result: r = 0.614.
-2. **HOO cross-topic**: Train on 11/12 topics, evaluate on held-out topic, all 12 folds. Current ST result: mean cross-topic r = 0.354.
+2. **HOO cross-topic**: Train on 12/13 topics, evaluate on held-out topic, all 13 folds. Current ST result: mean cross-topic r = 0.354.
+
+## Critical: apples-to-apples comparison
+
+The whole point of this experiment is comparing Qwen embeddings to Gemma-3 activations. The HOO evaluation **must** use the same topics file, task set, and fold structure as the Gemma runs (`gemma3_10k_hoo_topic` and `gemma3_pt_10k_hoo_topic`). Specifically:
+- Topics file: `data/topics/topics.json` (13 topics, Claude Sonnet 4.5 classifications with value_conflict)
+- run_dir: same 10k training preferences as Gemma
+- Verify that `hoo_summary.json` has 13 folds matching the Gemma results before reporting
+
+A previous run of this experiment used a different topics file (Gemini Flash, 10 topics, 2,502 tasks) which made the results non-comparable. That run's results are invalid.
 
 ## Method
 
@@ -61,17 +70,16 @@ All paths relative to repo root.
 - `configs/probes/qwen3_emb_8b_heldout_std_raw.yaml` — heldout probe config
 - `configs/probes/qwen3_emb_8b_hoo_topic.yaml` — HOO probe config
 - `src/probes/content_embedding.py` — embedding extraction code
+- `data/topics/topics.json` — the canonical topic classification file (Claude Sonnet 4.5, 13 topics including value_conflict, 29,991 tasks). All probe configs must use this file. There is only one topics file — do not use any other path.
 
 **Must be synced to pod (gitignored):**
 - `activations/gemma_3_27b/completions_with_activations.json` — task prompts (14k tasks)
 
 **run_dir paths (used by probe configs):**
-- `results/experiments/gemma3_10k_run1/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0` — 10k training preferences
-- `results/experiments/gemma3_4k_pre_task/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0` — 4k heldout eval preferences
+- `results/experiments/main_probes/gemma3_10k_run1/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0` — 10k training preferences
+- `results/experiments/main_probes/gemma3_4k_pre_task/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0` — 4k heldout eval preferences
 
-These paths match the existing probe configs. If they don't exist on the pod, check under `results/experiments/main_probes/` instead.
-
-**Topics file:** `data/topics/topics.json` — topic labels for HOO grouping. Note: the existing `gemma3_10k_hoo_topic.yaml` references `src/analysis/topic_classification/output/topics.json` which may not exist on the pod. If missing, update the config to use `data/topics/topics.json`.
+On the pod these live under `results/experiments/main_probes/`. The probe configs must use this path.
 
 ## Current baselines to compare against
 
