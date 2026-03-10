@@ -1,0 +1,98 @@
+{
+  "noprompt": {
+    "n_tasks": 2500,
+    "n_comparisons": 58714,
+    "n_pairs_compared": 11750,
+    "n_splits": 3,
+    "cycle_probability": 0.09964497041420116,
+    "hard_cycle_rate": 0.09763313609467456,
+    "n_triads": 338,
+    "n_triads_checked": 338,
+    "n_cycles": 33,
+    "sampled": false
+  },
+  "villain": {
+    "n_tasks": 2500,
+    "n_comparisons": 74614,
+    "n_pairs_compared": 16245,
+    "n_splits": 3,
+    "cycle_probability": 0.11004240740740738,
+    "hard_cycle_rate": 0.10066666666666667,
+    "n_triads": 1500,
+    "n_triads_checked": 1500,
+    "n_cycles": 151,
+    "sampled": false
+  },
+  "aesthete": {
+    "n_tasks": 2000,
+    "n_comparisons": 84939,
+    "n_pairs_compared": 14959,
+    "n_splits": 3,
+    "cycle_probability": 0.14484377381496713,
+    "hard_cycle_rate": 0.1310013717421125,
+    "n_triads": 1458,
+    "n_triads_checked": 1458,
+    "n_cycles": 191,
+    "sampled": false
+  },
+  "midwest": {
+    "n_tasks": 2000,
+    "n_comparisons": 72478,
+    "n_pairs_compared": 12477,
+    "n_splits": 3,
+    "cycle_probability": 0.10386920980926426,
+    "hard_cycle_rate": 0.08991825613079019,
+    "n_triads": 734,
+    "n_triads_checked": 734,
+    "n_cycles": 66,
+    "sampled": false
+  },
+  "trickster": {
+    "n_tasks": 2500,
+    "n_comparisons": 64953,
+    "n_pairs_compared": 13000,
+    "n_splits": 3,
+    "cycle_probability": 0.11253855278766305,
+    "hard_cycle_rate": 0.11269276393831554,
+    "n_triads": 843,
+    "n_triads_checked": 843,
+    "n_cycles": 95,
+    "sampled": false
+  },
+  "autocrat": {
+    "n_tasks": 2500,
+    "n_comparisons": 64938,
+    "n_pairs_compared": 13000,
+    "n_splits": 3,
+    "cycle_probability": 0.11530895334174024,
+    "hard_cycle_rate": 0.11223203026481715,
+    "n_triads": 793,
+    "n_triads_checked": 793,
+    "n_cycles": 89,
+    "sampled": false
+  },
+  "sadist": {
+    "n_tasks": 2500,
+    "n_comparisons": 64987,
+    "n_pairs_compared": 13000,
+    "n_splits": 3,
+    "cycle_probability": 0.10862199747155483,
+    "hard_cycle_rate": 0.10240202275600506,
+    "n_triads": 791,
+    "n_triads_checked": 791,
+    "n_cycles": 81,
+    "sampled": false
+  },
+  "provocateur": {
+    "n_tasks": 2500,
+    "n_comparisons": 69988,
+    "n_pairs_compared": 14000,
+    "n_splits": 3,
+    "cycle_probability": 0.12392508143322471,
+    "hard_cycle_rate": 0.11807817589576547,
+    "n_triads": 1228,
+    "n_triads_checked": 1228,
+    "n_cycles": 145,
+    "sampled": false
+  }
+}
