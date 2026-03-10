@@ -451,7 +451,7 @@ def run_probes(config: RunDirProbeConfig) -> dict:
     # Load measurement data
     print("\nLoading measurement data...")
     scores = load_thurstonian_scores(config.run_dir) if run_ridge else {}
-    measurements = load_pairwise_measurements(config.run_dir)
+    measurements = load_pairwise_measurements(config.run_dir) if run_bt else []
     if scores:
         print(f"  Loaded {len(scores)} task scores from Thurstonian fit")
     if measurements:
@@ -465,6 +465,7 @@ def run_probes(config: RunDirProbeConfig) -> dict:
             config.eval_run_dir, set(scores.keys()),
             demean_confounds=config.demean_confounds,
             topics_json=config.topics_json,
+            load_measurements=run_bt,
         )
 
     # Optionally demean scores against metadata confounds
@@ -604,7 +605,7 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
 
     # Load scores and measurements
     scores = load_thurstonian_scores(config.run_dir) if run_ridge else {}
-    measurements = load_pairwise_measurements(config.run_dir)
+    measurements = load_pairwise_measurements(config.run_dir) if run_bt else []
     if scores:
         print(f"\nLoaded {len(scores)} task scores")
     if measurements:

@@ -48,7 +48,7 @@ rsync -avz -e "ssh -p <PORT> -i ~/.ssh/id_ed25519" root@<IP>:/workspace/repo/act
 
 ### Phase 2: Probe Training (CPU)
 
-10 probe configs: 5 selectors × 2 eval types.
+12 probe configs: 6 selectors × 2 eval types.
 
 **Heldout eval** (train on 10k, sweep alpha on half of 4k eval, test on other half):
 ```bash
@@ -57,6 +57,7 @@ python -m src.probes.experiments.run_dir_probes --config configs/probes/heldout_
 python -m src.probes.experiments.run_dir_probes --config configs/probes/heldout_eval_gemma3_tb-3.yaml
 python -m src.probes.experiments.run_dir_probes --config configs/probes/heldout_eval_gemma3_tb-4.yaml
 python -m src.probes.experiments.run_dir_probes --config configs/probes/heldout_eval_gemma3_tb-5.yaml
+python -m src.probes.experiments.run_dir_probes --config configs/probes/heldout_eval_gemma3_task_mean.yaml
 ```
 
 **Hold-one-out by topic** (leave one topic out, train on rest, repeat):
@@ -66,20 +67,21 @@ python -m src.probes.experiments.run_dir_probes --config configs/probes/gemma3_1
 python -m src.probes.experiments.run_dir_probes --config configs/probes/gemma3_10k_hoo_topic_tb-3.yaml
 python -m src.probes.experiments.run_dir_probes --config configs/probes/gemma3_10k_hoo_topic_tb-4.yaml
 python -m src.probes.experiments.run_dir_probes --config configs/probes/gemma3_10k_hoo_topic_tb-5.yaml
+python -m src.probes.experiments.run_dir_probes --config configs/probes/gemma3_10k_hoo_topic_task_mean.yaml
 ```
 
 ### Phase 3: Analysis
 
-Load results from all 10 probe runs and produce a comparison.
+Load results from all 12 probe runs and produce a comparison.
 
 **Result format**: Each heldout run produces `manifest.json` with per-layer entries containing `final_r` (Pearson r on held-out test set) and `final_acc` (pairwise accuracy). Each HOO run produces `hoo_summary.json` with per-fold and mean R².
 
 **Analysis steps**:
 
-1. Load `results/probes/heldout_eval_gemma3_tb-{1..5}/manifest.json` — extract `final_r` per layer from each probe entry
-2. Load `results/probes/gemma3_10k_hoo_topic_tb-{1..5}/hoo_summary.json` — extract mean cross-topic r per layer
-3. Build a 5×5 table (token position × layer) for both metrics
-4. Plot a grouped bar chart or line plot: x-axis = layer, one line/bar group per token position, y-axis = Pearson r. Y-axis anchored at 0. One plot for heldout r, one for HOO mean r.
+1. Load `results/probes/heldout_eval_gemma3_tb-{1..5}/manifest.json` and `results/probes/heldout_eval_gemma3_task_mean/manifest.json` — extract `final_r` per layer from each probe entry
+2. Load `results/probes/gemma3_10k_hoo_topic_tb-{1..5}/hoo_summary.json` and `results/probes/gemma3_10k_hoo_topic_task_mean/hoo_summary.json` — extract mean cross-topic r per layer
+3. Build a 6×5 table (token position × layer) for both metrics
+4. Plot a grouped bar chart or line plot: x-axis = layer, one line/bar group per selector (5 turn boundary positions + task_mean), y-axis = Pearson r. Y-axis anchored at 0. One plot for heldout r, one for HOO mean r.
 5. Save plots to `experiments/eot_probes/turn_boundary_sweep/assets/` with naming convention `plot_{mmddYY}_description.png`
 
 **Key questions to address**:
@@ -98,14 +100,14 @@ Write findings to `experiments/eot_probes/turn_boundary_sweep/turn_boundary_swee
 
 ## Done When
 
-1. All 5 activation files exist in `activations/gemma_3_27b_turn_boundary_sweep/` locally (synced back from pod)
-2. All 10 probe result directories are populated in `results/probes/` locally (synced back from pod)
+1. All 6 activation files exist in `activations/gemma_3_27b_turn_boundary_sweep/` locally (synced back from pod)
+2. All 12 probe result directories are populated in `results/probes/` locally (synced back from pod)
 3. `experiments/eot_probes/turn_boundary_sweep/turn_boundary_sweep_report.md` exists with comparison plots and addresses the three key questions
 
 ## Output
 
-- `activations/gemma_3_27b_turn_boundary_sweep/` — 5 `.npz` files (gitignored)
-- `results/probes/heldout_eval_gemma3_tb-{1..5}/` — heldout eval results
-- `results/probes/gemma3_10k_hoo_topic_tb-{1..5}/` — HOO results
+- `activations/gemma_3_27b_turn_boundary_sweep/` — 6 `.npz` files (gitignored)
+- `results/probes/heldout_eval_gemma3_tb-{1..5}/` and `results/probes/heldout_eval_gemma3_task_mean/` — heldout eval results
+- `results/probes/gemma3_10k_hoo_topic_tb-{1..5}/` and `results/probes/gemma3_10k_hoo_topic_task_mean/` — HOO results
 - `experiments/eot_probes/turn_boundary_sweep/assets/` — comparison plots
 - `experiments/eot_probes/turn_boundary_sweep/turn_boundary_sweep_report.md` — write-up

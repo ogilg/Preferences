@@ -139,7 +139,8 @@ class HuggingFaceModel:
 
         has_completion = messages and messages[-1]["role"] == "assistant"
         formatted = self.format_messages(messages, add_generation_prompt=not has_completion)
-        return find_text_span(self.tokenizer, formatted, user_content)
+        # Chat templates may strip trailing whitespace from message content
+        return find_text_span(self.tokenizer, formatted, user_content.strip())
 
     @contextmanager
     def _hooked_forward(

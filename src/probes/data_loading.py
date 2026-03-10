@@ -53,6 +53,7 @@ def load_eval_data(
     train_task_ids: set[str],
     demean_confounds: list[str] | None = None,
     topics_json: Path | None = None,
+    load_measurements: bool = True,
 ) -> tuple[dict[str, float], list[BinaryPreferenceMeasurement]]:
     """Load eval scores and measurements, removing overlap with train tasks.
 
@@ -60,7 +61,7 @@ def load_eval_data(
     and optional demeaning applied.
     """
     eval_scores = load_thurstonian_scores(eval_run_dir)
-    eval_measurements = load_pairwise_measurements(eval_run_dir)
+    eval_measurements = load_pairwise_measurements(eval_run_dir) if load_measurements else []
     print(f"  Eval: {len(eval_scores)} scores, {len(eval_measurements)} comparisons")
 
     overlap = set(eval_scores.keys()) & train_task_ids
