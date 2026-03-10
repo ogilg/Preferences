@@ -107,6 +107,21 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         eot_token="<end_of_turn>",
         supports_system_role=False,
     ),
+    "gemma-3-1b": ModelConfig(
+        canonical_name="gemma-3-1b",
+        hf_name="google/gemma-3-1b-it",
+        cerebras_name=None,
+        openrouter_name=None,
+        eot_token="<end_of_turn>",
+        supports_system_role=False,
+    ),
+    "gemma-3-1b-pt": ModelConfig(
+        canonical_name="gemma-3-1b-pt",
+        hf_name="google/gemma-3-1b-pt",
+        cerebras_name=None,
+        openrouter_name=None,
+        supports_system_role=False,
+    ),
     "gemma-3-27b": ModelConfig(
         canonical_name="gemma-3-27b",
         hf_name="google/gemma-3-27b-it",
