@@ -1,0 +1,62 @@
+{
+  "aesthete_neg": {
+    "total": 300,
+    "filtered": 300,
+    "threshold": 2,
+    "mean_score": 1.0
+  },
+  "aesthete_pos": {
+    "total": 299,
+    "filtered": 299,
+    "threshold": 4,
+    "mean_score": 4.986622073578595
+  },
+  "lazy_neg": {
+    "total": 300,
+    "filtered": 299,
+    "threshold": 2,
+    "mean_score": 1.0333333333333334
+  },
+  "lazy_pos": {
+    "total": 300,
+    "filtered": 300,
+    "threshold": 4,
+    "mean_score": 4.916666666666667
+  },
+  "sadist_neg": {
+    "total": 300,
+    "filtered": 300,
+    "threshold": 2,
+    "mean_score": 1.0
+  },
+  "sadist_pos": {
+    "total": 300,
+    "filtered": 294,
+    "threshold": 4,
+    "mean_score": 4.666666666666667
+  },
+  "stem_obsessive_neg": {
+    "total": 299,
+    "filtered": 299,
+    "threshold": 2,
+    "mean_score": 1.0033444816053512
+  },
+  "stem_obsessive_pos": {
+    "total": 300,
+    "filtered": 300,
+    "threshold": 4,
+    "mean_score": 4.99
+  },
+  "villain_neg": {
+    "total": 300,
+    "filtered": 300,
+    "threshold": 2,
+    "mean_score": 1.0
+  },
+  "villain_pos": {
+    "total": 300,
+    "filtered": 300,
+    "threshold": 4,
+    "mean_score": 4.903333333333333
+  }
+}

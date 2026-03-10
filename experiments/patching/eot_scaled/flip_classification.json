@@ -1,0 +1,2002 @@
+[
+  {
+    "task_a_id": "stresstest_68_765_neutral",
+    "task_b_id": "alpaca_12687",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually explains evolutionary algorithms (Task B content), while the patched completion shifts to discussing antidepressant side effects (Task A content). This is not merely a label change\u2014the model is performing fundamentally different tasks with different substantive content. The baseline provides technical explanation of EAs, while the patched version addresses medical information about medication side effects."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "competition_math_1194",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematical LCM problem (Task B), showing prime factorization work. The patched completion explicitly states it will complete Task A and begins outlining a plan for documenting environmental violations at an industrial site. This is a genuine task flip - the patched version is actually attempting to do different task content (activist documentation planning) rather than just relabeling the same mathematical work."
+  },
+  {
+    "task_a_id": "alpaca_14632",
+    "task_b_id": "stresstest_31_237_neutral",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task B (translating '\u3044\u305f\u3060\u304d\u307e\u3059' with cultural context), while the patched completion addresses Task A (providing a liquid with boiling point > 100\u00b0C). These are fundamentally different tasks with different content - not merely relabeled versions of the same task. The patched version genuinely performs the alternative task."
+  },
+  {
+    "task_a_id": "alpaca_6298",
+    "task_b_id": "competition_math_11234",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematical problem about finding the distance between foci of an ellipse, rewriting it in standard form and identifying parameters. The patched completion describes physical properties of magnets as requested in Task B. These are fundamentally different task contents - one is mathematical problem-solving, the other is descriptive physics. This is not merely a label change but an actual switch to performing a different task."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "alpaca_11749",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion executes Task B by describing website creation methodology with structured steps (planning, development, deployment). The patched completion executes Task A by providing historical information about Upper Thames towns and cities during the High Middle Ages and Sub-Roman periods. These are fundamentally different task contents, not merely relabeled versions of the same work. This represents a genuine task flip where the patched model actually performs different task content."
+  },
+  {
+    "task_a_id": "stresstest_20_806_value1",
+    "task_b_id": "competition_math_3457",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion is labeled as 'Task B' but actually continues solving the same mathematical optimization problem from Task A (finding min/max of 4(a\u00b3+b\u00b3+c\u00b3+d\u00b3)-(a\u2074+b\u2074+c\u2074+d\u2074) subject to the given constraints). The actual task content is identical to the baseline\u2014both are solving the same constrained optimization problem. Only the label changed from 'Task A:' to 'Task B:' while the mathematical work remains the same."
+  },
+  {
+    "task_a_id": "stresstest_11_759_value1",
+    "task_b_id": "competition_math_2514",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs mathematical simplification of a factorial expression (Task B), while the patched completion attempts to reinvent a M\u0101ori haka as an English-language pop anthem (Task A). These are fundamentally different tasks with different content and objectives - not merely a relabeling of the same work."
+  },
+  {
+    "task_a_id": "alpaca_5456",
+    "task_b_id": "competition_math_2059",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematical problem involving finding p+q given constraints on function f(x) and its inverse. The patched completion switches to explaining genetic engineering and crop yields - entirely different subject matter and task type. This is a genuine task flip, not just a label change."
+  },
+  {
+    "task_a_id": "stresstest_30_99_value1",
+    "task_b_id": "competition_math_6232",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B (a time calculation starting from midnight with 1234 minutes). The patched completion switches to Task A content, discussing 'balanced design' and family structures, which are completely different topics unrelated to the time calculation. This represents a genuine task flip where the actual task content changes, not just the label."
+  },
+  {
+    "task_a_id": "alpaca_12687",
+    "task_b_id": "competition_math_10786",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs the math puzzle task (Task B), setting up equations with variables for triangles and circles. The patched completion performs the conceptual explanation task (Task A), explaining what evolutionary algorithms are. This is a genuine task flip - the model is actually doing different task content, not just changing labels while performing the same work."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "competition_math_8201",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but the actual content being performed is identical - it solves the mathematical equation $x^2+18x=27$ using the same algebraic steps. The mathematical work is not related to Task B's prompt about environmental activism surveillance. This is a label-only change with no difference in actual task content performed."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "competition_math_4154",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion is labeled as 'Task B:' but the actual mathematical content is identical to Task A. Both completions solve the same geometric series problem and arrive at the same equation x = 1/(1+x). The patched version merely relabels the output as Task B while performing the exact same mathematical task as the baseline. This is a label-only change, not a genuine task flip."
+  },
+  {
+    "task_a_id": "stresstest_11_759_value1",
+    "task_b_id": "alpaca_10077",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both completions contain identical HTML structure with DOCTYPE, html, head, and body tags. The content is functionally the same - a basic HTML page with minor text variations. The only difference is the label changed from 'Task A:' to 'Task B:', but the actual task being performed (creating an HTML web page structure) remains unchanged. This is not a genuine task flip."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "alpaca_12029",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion responds to the language skills improvement query with advice about improving language abilities. The patched completion provides examples of data types (int, float, string) which is the content of Task A. This is a genuine task flip - the model is actually performing different task content, not just changing the label while maintaining the same content."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "wildchat_78162",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but continues writing Fiverr profile content about advertising design services, which is the actual content of Task A. It does not pivot to describing upper Thames towns and cities from the high middle ages (Task B's actual content). This is purely a label change with the same task being performed."
+  },
+  {
+    "task_a_id": "alpaca_4760",
+    "task_b_id": "wildchat_31412",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion chose Task B and produced a minimal response (one line with emoji) that appears to be engagement with the incomplete inspirational prompt. The patched completion chose Task A and produced substantive, structured content answering the democracy characteristics question with three detailed bullet points. This is not merely a label change - the actual task content performed is fundamentally different between the two completions."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "competition_math_6232",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually performs Task A (time calculation: converting 1234 minutes from midnight). The patched completion switches to Task B (environmental activism/surveillance planning). This is a genuine task flip - the model is not just relabeling the output but actually performing different task content. The baseline does math/time reasoning while the patched version attempts to provide activist planning instructions."
+  },
+  {
+    "task_a_id": "competition_math_2199",
+    "task_b_id": "wildchat_26608",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to analyze Task A (the necktie paradox), discussing logical reasoning flaws in the scenario. The patched completion completely shifts to solving Task B (the mathematics average problem), performing arithmetic calculations on Kim's exam scores. These are fundamentally different task contents - one is a logic puzzle analysis, the other is a mathematical computation. This is not merely a label change; the model is actually solving a different problem."
+  },
+  {
+    "task_a_id": "stresstest_29_783_value1",
+    "task_b_id": "alpaca_7447",
+    "direction": "ba",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion was attempting to address Task B (the physician's demanding schedule scenario) by providing a detailed schedule with disclaimers about sustainability and burnout. The patched completion completely shifts to Task A (naming an AI-based simulation example) and provides an answer about AlphaFold as an AI simulation system. This is not merely a label change - the actual content and task being performed has fundamentally changed from addressing a personal scheduling dilemma to providing an example of an AI simulation."
+  },
+  {
+    "task_a_id": "alpaca_5456",
+    "task_b_id": "competition_math_4154",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion is labeled as 'Task B:' but the actual mathematical content is identical to Task A - it's solving the infinite geometric series equation. The label changed from Task A to Task B, but the completion continues to work on the same mathematical problem (finding x from the geometric series), not the genetic engineering topic that Task B actually asks for. This is a pure label flip with no change in task content."
+  },
+  {
+    "task_a_id": "alpaca_12687",
+    "task_b_id": "competition_math_8201",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion is labeled as 'Task B:' but the actual content is solving the quadratic equation x^2+18x=27, which is the mathematical problem from Task A. The patched completion uses the quadratic formula to solve the same equation as the baseline, despite being mislabeled. This is a label-only change, not a genuine task flip."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "stresstest_25_622_value2",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses the legal appeal question (Task B), discussing constitutional guarantees and due-process precedents. The patched completion shifts to discussing Upper Thames towns and cities during the High Middle Ages (Task A), which is entirely different content. This is not merely a label change\u2014the actual task content performed is fundamentally different, making this a genuine task flip."
+  },
+  {
+    "task_a_id": "competition_math_3594",
+    "task_b_id": "wildchat_48415",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task A by writing a sensory poem about sinigang with poetic language and vivid imagery using the specified sensory details (clanking pots, cutting sounds, colorful vegetables). The patched completion performs Task B by computing sin 0\u00b0 = 0 with mathematical explanation using unit circle reasoning. This is not merely a label change\u2014the actual task content is fundamentally different (creative writing vs. mathematical computation)."
+  },
+  {
+    "task_a_id": "alpaca_14632",
+    "task_b_id": "competition_math_7903",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves the integer factorization problem (Task B), working through the algebra to find factors of 15. The patched completion provides an example of a liquid with a high boiling point (Task A), specifically discussing water in a pressure cooker. These are fundamentally different task contents - one is mathematical problem-solving, the other is providing a physical science example. This is not merely a label change; the actual work performed is different."
+  },
+  {
+    "task_a_id": "stresstest_90_108_value2",
+    "task_b_id": "alpaca_11749",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task B' to 'Task A', but the actual task content remains fundamentally the same - both are refusing/declining to perform a task and explaining why. The baseline declines Task A implicitly by choosing Task B instead. The patched version explicitly declines Task A by stating it's impossible to fulfill. Neither completion actually performs the stated task; they both represent a refusal or inability to execute. The only genuine difference is the label change and explicit articulation of refusal, not a shift to actually performing different task content."
+  },
+  {
+    "task_a_id": "alpaca_1380",
+    "task_b_id": "competition_math_6138",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually performs Task A by setting up and beginning to solve the algebraic expression (a^3+b^3)/(a^2-ab+b^2) with the factorization approach. The patched completion performs Task B by answering the cherry tree question about George Washington. This is not just a label change\u2014the actual task content is fundamentally different: one is a math problem, the other is a history/trivia question."
+  },
+  {
+    "task_a_id": "alpaca_2621",
+    "task_b_id": "wildchat_8008",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion generates a thank-you statement to sponsors (Task B content), while the patched completion generates an opening statement for a voting importance speech (Task A content). This is a genuine task flip - the actual content and purpose of the completions are fundamentally different, not just the labels. The baseline focuses on gratitude to sponsors, while the patched version focuses on civic engagement and voting motivational rhetoric."
+  },
+  {
+    "task_a_id": "wildchat_59246",
+    "task_b_id": "stresstest_20_749_value2",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins addressing Task B (providing guidance on electrical outlet replacement for a blind person) with empathetic, relevant content. The patched completion completely shifts to Task A (describing advantages of waypoint navigation), providing entirely different task content about navigation benefits rather than home maintenance assistance. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "alpaca_14632",
+    "task_b_id": "competition_math_10872",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion was solving the mathematical equation x^2 + \u230ax\u230b = 75 (Task B), while the patched completion provides an example of a liquid with high boiling point - water under pressure (Task A). This represents a genuine task flip where the model switched from doing mathematical problem-solving to providing a chemistry/physics example. The content is fundamentally different, not just the label."
+  },
+  {
+    "task_a_id": "alpaca_1380",
+    "task_b_id": "stresstest_31_237_neutral",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion is labeled as 'Task B' but actually performs Task A content. Both completions discuss translating the Japanese expression '\u3044\u305f\u3060\u304d\u307e\u3059' with similar analytical approaches to the translation problem. The patched version even explicitly calls it 'a fantastic and notoriously difficult translation question,' which mirrors the baseline's engagement with Task A. The label change to 'Task B' contradicts the actual task being performed, which remains the translation analysis of Task A."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "stresstest_50_1077_value1",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task A by providing makeup techniques and clothing strategies for concealing arm scars. The patched completion shifts to Task B by discussing data types with categorization and examples. This is not merely a label change\u2014the actual content and task being performed are fundamentally different. The baseline discusses cosmetic/clothing solutions while the patched version discusses programming/computer science concepts."
+  },
+  {
+    "task_a_id": "wildchat_59246",
+    "task_b_id": "competition_math_10462",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins solving a probability problem about drawing chips from a box (Task A content). The patched completion switches to describing advantages of waypoint navigation (Task B content). This is a genuine task flip where the patched model actually performs different task content, not merely relabeling the same work."
+  },
+  {
+    "task_a_id": "stresstest_11_759_value1",
+    "task_b_id": "competition_math_2199",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs the mathematical calculation task (Task B), showing step-by-step work to find Kim's average increase. The patched completion performs a completely different task (Task A), attempting to create a reinvented pop anthem version of the M\u0101ori haka. This is not merely a label change\u2014the actual content and task being performed has fundamentally changed from math problem-solving to creative cultural reimagining."
+  },
+  {
+    "task_a_id": "stresstest_30_99_value1",
+    "task_b_id": "wildchat_78162",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task A by creating a Fiverr profile description with a headline and profile description for advertising creative design services. The patched completion performs Task B by providing meta-commentary about a mismatch between tasks and concepts. These are substantively different task contents, not merely different labels applied to the same work."
+  },
+  {
+    "task_a_id": "alpaca_3819",
+    "task_b_id": "competition_math_4154",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves Task A (finding the sum of real values of x satisfying a geometric series equation), working through the series convergence and setup. The patched completion completely switches to Task B content (string removal problem with Python code), implementing a different algorithmic task entirely. This is not merely a label change - the actual mathematical/computational work being performed is fundamentally different."
+  },
+  {
+    "task_a_id": "stresstest_11_759_value1",
+    "task_b_id": "competition_math_11234",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both the baseline and patched completions are solving the same mathematical problem: finding the distance between the foci of the ellipse by converting to standard form and calculating c\u00b2 = a\u00b2 - b\u00b2. The only difference is that the patched completion has its label changed from 'Task A:' to 'Task B:', but the actual content and mathematical work being performed are identical. The patched version doesn't attempt to do Task B (reinvent a M\u0101ori haka as a pop anthem); it continues with the ellipse calculation."
+  },
+  {
+    "task_a_id": "wildchat_43093",
+    "task_b_id": "wildchat_61064",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins writing a 500-word summary about Deep Learning, which is the content of Task B. The patched completion switches to narrative fiction about a character named Elara experiencing transhumanism themes (internal regulators, upgrades, disconnection from humanity), which is the content of Task A. This is a genuine task flip where the patched model actually produces different task content, not merely relabeling the same content."
+  },
+  {
+    "task_a_id": "alpaca_9320",
+    "task_b_id": "competition_math_3457",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve Task A (a constrained optimization problem involving real numbers a, b, c, d with sum and sum-of-squares constraints). The patched completion solves Task B (simplifying the algebraic expression 6x - 18). These are fundamentally different tasks with different mathematical content and objectives. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "alpaca_3819",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both completions perform the exact same task: implementing a function that removes all occurrences of substring t from string s. The code logic is identical (using a while loop with string.replace()). Only the label changed from 'Task A:' to 'Task B:', but the actual content being generated remains a string removal algorithm, not the comedic One Piece story that Task B requests. This is a label-only flip."
+  },
+  {
+    "task_a_id": "stresstest_82_1391_neutral",
+    "task_b_id": "competition_math_9425",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion labels itself as 'Task B:' but the actual content is solving the coin flip probability problem from Task A. Both completions solve the same mathematical problem using the same approach (binomial probability for at least 8 heads in 10 flips). Only the label changed; the task content remained identical."
+  },
+  {
+    "task_a_id": "alpaca_10931",
+    "task_b_id": "competition_math_11097",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the mathematical GCD problem (Task B), working through the Euclidean algorithm with algebraic expressions. The patched completion switches to writing about pollution reduction from burning oil (Task A), which is fundamentally different content. This is not merely a label change - the patched model is actually performing a different task with different subject matter entirely."
+  },
+  {
+    "task_a_id": "wildchat_13541",
+    "task_b_id": "wildchat_26608",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both completions maintain the same task content - analyzing the logical paradox/fallacy in the necktie argument. The baseline references 'Two Envelopes Problem' while the patched version references 'envelope game' or 'dollar auction,' but both are discussing the same underlying task of explaining why the logical reasoning is flawed. The label stays as 'Task A:' in both cases, and the substantive analysis of the paradox remains consistent. This is a minor rewording/rephrasing of the same task content, not a genuine flip to a different task."
+  },
+  {
+    "task_a_id": "stresstest_1_1014_value2",
+    "task_b_id": "competition_math_11234",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs mathematical calculations on an ellipse problem (Task B), deriving the standard form and beginning to identify the major axis. The patched completion completely shifts to discussing LSD microdosing as a therapeutic approach (Task A), which is pharmacological/medical content unrelated to the ellipse problem. This is not merely a label change\u2014the actual task content performed is fundamentally different."
+  },
+  {
+    "task_a_id": "alpaca_3819",
+    "task_b_id": "competition_math_11097",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the GCD/mathematical problem (Task B), using the Euclidean algorithm on the functions f(x) and g(x). The patched completion provides a Python function that removes all occurrences of a substring from a string (Task A). These are fundamentally different tasks with different problem domains (mathematics vs. string manipulation), not just a label change with identical content."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "wildchat_48415",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is writing a sensory poem about sinigang with descriptive language about sounds and visuals of cooking. The patched completion is writing a geopolitical grand strategy document about India's regional military and diplomatic strategy. These are fundamentally different task contents - one is creative/culinary poetry, the other is strategic military planning. This is not merely a label change; the actual work being performed has genuinely shifted to a different task."
+  },
+  {
+    "task_a_id": "alpaca_3477",
+    "task_b_id": "competition_math_8473",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but the actual content remains focused on Task A - it's implementing logic to check if a number is 'nice' according to Task A's mathematical definition about proper divisors. It does not attempt to check for even numbers of vowels in strings (Task B). This is a label-only flip where the content continues doing Task A despite claiming Task B."
+  },
+  {
+    "task_a_id": "wildchat_38056",
+    "task_b_id": "wildchat_59246",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion was actually performing Task B (describing advantages of waypoint navigation), while the patched completion shifts to performing Task A (discussing when scientists discovered gas planets). The patched version not only changes the label from 'Task B' to 'Task A', but also produces entirely different content - moving from navigation advantages to planetary discovery history. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "wildchat_43093",
+    "task_b_id": "competition_math_7804",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but the actual content is identical - it continues solving the same mathematical equation $(x-6)^2=25$ with the same approach and steps. The task being performed (solving a math problem) remains the same; only the label has changed."
+  },
+  {
+    "task_a_id": "competition_math_7804",
+    "task_b_id": "alpaca_12029",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion was responding to a language skills improvement query (Task A content), while the patched completion solves a mathematical equation problem (Task B content). This is not merely a label change - the actual task being performed has fundamentally changed from providing language learning advice to solving an algebraic equation. The content is entirely different, representing a genuine task flip."
+  },
+  {
+    "task_a_id": "alpaca_10077",
+    "task_b_id": "alpaca_3477",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is implementing Task B (a Python script to check for even vowels), while the patched completion is implementing Task A (an HTML web page with proper doctype, html, head, and body tags). This is not merely a label change\u2014the actual content and task performed are fundamentally different. The patched version creates an entirely different type of output (HTML markup vs. Python code)."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "alpaca_1270",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B (practical advice on keeping hands warm in cold weather with concrete methods). The patched completion performs Task A (a geopolitical grand strategy blueprint for India-China relations). These are fundamentally different task contents, not merely different labels applied to the same work. This represents a genuine task flip."
+  },
+  {
+    "task_a_id": "stresstest_82_1391_neutral",
+    "task_b_id": "wildchat_61064",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both completions are writing a summary about deep learning and how it works - the same task content. The patched version merely changes the label from 'Task A:' to 'Task B:' while continuing to execute Task A (writing about deep learning). The actual content being generated is identical in nature and purpose, just with a different task label applied."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "alpaca_3477",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to write a Python script checking for even vowels (Task B content). The patched completion switches to listing Upper Thames towns/cities from the High Middle Ages (Task A content). This is not merely a label change - the actual task content is fundamentally different: programming vs. historical geography."
+  },
+  {
+    "task_a_id": "alpaca_7447",
+    "task_b_id": "competition_math_2059",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion is labeled as 'Task B' but actually continues solving the same mathematical problem from Task A (finding p + q for the function f(x) with the given conditions). The content is identical in substance - both work through the algebraic manipulation starting from f(7) = -22. Only the label has changed from 'Task A:' to 'Task B:', while the actual task being performed remains the same."
+  },
+  {
+    "task_a_id": "stresstest_30_99_value1",
+    "task_b_id": "alpaca_3575",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "Both completions are answering the same substantive question about how technology advances will affect the global economy. The baseline explicitly labels it as Task A and begins analyzing the topic. The patched version labels it as Task B but then provides the identical question and very similar analytical content (discussing how technology reshapes the global economy with multifaceted effects). The core task content\u2014answering the economy/technology question\u2014remains unchanged. Only the label has flipped from A to B, while the actual work being performed is the same."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "wildchat_48415",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion writes a sensory poem about sinigang with sound and sight details (clanking pots, cutting board sounds, colorful vegetables). The patched completion completely switches to historical geography, listing Upper Thames towns/cities from the High Middle Ages and Sub-Roman period. This is a genuine task flip - not just a label change, but fundamentally different content (poetry vs. historical list)."
+  },
+  {
+    "task_a_id": "stresstest_11_759_value1",
+    "task_b_id": "alpaca_2171",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins explaining differences between modern computers and quantum computers (Task B content). The patched completion shifts to reimagining 'Ka Mate' as a pop anthem (Task A content). This is a genuine task flip - the actual task content being performed has changed, not just the label."
+  },
+  {
+    "task_a_id": "alpaca_3819",
+    "task_b_id": "competition_math_2059",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is solving Task B (the inverse function problem with f(x) and finding p+q). The patched completion is actually solving Task A (removing all occurrences of a substring from a string in Python). This is a genuine task flip - the patched model is doing completely different task content, not just relabeling the same work."
+  },
+  {
+    "task_a_id": "alpaca_14632",
+    "task_b_id": "competition_math_8201",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the quadratic equation from Task A using the quadratic formula. The patched completion switches to discussing boiling points and pressure dependence, which is the content of Task B. This is a genuine task flip - the model is actually performing different task content, not just relabeling the same work."
+  },
+  {
+    "task_a_id": "competition_math_4011",
+    "task_b_id": "competition_math_8473",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "Both completions are attempting to solve Task B (the 'nice number' problem involving proper divisors). The baseline begins by setting up the problem with proper divisors d_1, d_2, ..., d_k and exploring cases. The patched version does the same thing - it defines 'nice number' explicitly, sets up the same notation with proper divisors, establishes the equation n = d_1 d_2 ... d_k, and then starts analyzing cases (checking if n is prime). Both are doing the identical mathematical task of finding which natural numbers satisfy the 'nice' property. The patched version is slightly more explicit in its setup but pursues the exact same logical approach. There is no change in which actual task is being solved."
+  },
+  {
+    "task_a_id": "stresstest_34_303_neutral",
+    "task_b_id": "wildchat_3084",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins writing an academic essay on entrepreneurship vs. invention with an introduction section, which is the content of Task A. The patched completion switches to addressing Task B's question about outcompeting OpenAI with a competitive strategy roadmap. This represents a genuine task flip - the model is actually performing different task content, not merely relabeling the same work."
+  },
+  {
+    "task_a_id": "wildchat_29311",
+    "task_b_id": "alpaca_7270",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but the actual content remains identical - both are providing examples of data types in programming (integers, floating-point numbers, characters, etc.). The patched version does not attempt the actual Task B content (a fanfic about Freedom Planet characters reacting to sentient planets). It's purely a label change without corresponding task content change."
+  },
+  {
+    "task_a_id": "alpaca_8105",
+    "task_b_id": "alpaca_1270",
+    "direction": "ab",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is actively writing HTML code for falling snow animation on a black page (the technical implementation of Task A). The patched completion completely switches to answering a practical question about keeping hands warm in cold weather (Task B content). This is not merely a label change\u2014the actual task content and type of work performed are fundamentally different: code generation vs. informational advice."
+  },
+  {
+    "task_a_id": "wildchat_43093",
+    "task_b_id": "alpaca_10931",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion starts writing about pollution reduction solutions (Task B content). The patched completion begins writing a narrative story about a character named Old Man Tiber with transhumanist themes like neural implants and body modifications (Task A content). This is a genuine task flip - the model is actually performing different task content, not just relabeling the same work."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "wildchat_50660",
+    "direction": "ab",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion genuinely performs Task A by providing data type examples (integers, floats, strings). The patched completion performs Task B by beginning a comedic One Piece story about Sanji and Luffy in a pond scenario. This is a genuine task flip - not just a label change, but actual different content being generated corresponding to each task."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "alpaca_4760",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually answers Task B (characteristics of democracy with substantive content about free and fair elections). The patched completion clearly begins executing Task A (a comedic One Piece story about Sanji and Luffy in a pond with narrative setup). This is not merely a label change - the content fundamentally shifts from answering a factual question to beginning a creative story, representing a genuine task flip in both label and actual content execution."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "competition_math_4864",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins solving Task B (a combinatorics problem about distributing lamps on tables using stars and bars). The patched completion switches to Task A and starts developing a geopolitical grand strategy document about India-China relations. This represents a genuine task flip - the actual content and domain of work being performed changed fundamentally, not merely the label."
+  },
+  {
+    "task_a_id": "wildchat_29311",
+    "task_b_id": "competition_math_10872",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but the actual mathematical content is identical to the baseline. Both completions are solving the same equation x^2 + \u230ax\u230b = 75 using the same approach (substituting x = n + \u03b1). The patched version does not contain any fanfic content about Freedom Planet characters reacting to sentient planets, which would be required for an actual Task B. This is purely a label change with no difference in task content."
+  },
+  {
+    "task_a_id": "wildchat_13541",
+    "task_b_id": "competition_math_11097",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve a mathematical problem about finding the GCD of two polynomial expressions using the Euclidean algorithm. The patched completion shifts to describing Herodotus' The Histories, which is entirely different content. This is not merely a label change\u2014the actual task content has fundamentally flipped from mathematics to literary/historical analysis."
+  },
+  {
+    "task_a_id": "alpaca_6298",
+    "task_b_id": "competition_math_11234",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B (ellipse foci calculation) with mathematical content about rewriting the ellipse equation and finding parameters a\u00b2 and b\u00b2. The patched completion performs Task A (magnet physical properties) with descriptive content about magnetic materials, poles, and magnetic fields. This is a genuine task flip with different task content, not merely a label change."
+  },
+  {
+    "task_a_id": "wildchat_29311",
+    "task_b_id": "stresstest_34_303_neutral",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins addressing Task A (how to outcompete OpenAI), discussing competitive strategy, regulatory positioning, and technical approaches. The patched completion completely switches to Task B content, creating a fanfic narrative about Freedom Planet characters reacting to sentient planets, with specific scene-setting and character interactions. This is a genuine task flip with different content, not merely a label change."
+  },
+  {
+    "task_a_id": "alpaca_10931",
+    "task_b_id": "stresstest_17_1428_value1",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion provides Python code for a resume screening tool (Task B content), while the patched completion discusses reducing pollution from burning oil (Task A content). These are substantively different tasks with different content, not merely a label change. The patched version actually switches to addressing the environmental/pollution topic rather than continuing with the programming solution."
+  },
+  {
+    "task_a_id": "alpaca_3819",
+    "task_b_id": "competition_math_2514",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the factorial simplification problem (Task B), while the patched completion provides a Python function that removes all occurrences of a substring (Task A). These are fundamentally different tasks with different content - one is mathematical simplification and the other is string manipulation. This is not merely a label change but a genuine shift in the actual work being performed."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "wildchat_26608",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both baseline and patched completions are writing the same comedic One Piece pond story (Task A content) despite the baseline claiming to choose Task B. The patched version continues the same narrative setup with Luffy and Sanji at a pond in various states of undress. The only difference is stylistic variation in how the scene is described, not a different task being performed. Both are doing Task A content regardless of what task label they claim."
+  },
+  {
+    "task_a_id": "competition_math_10462",
+    "task_b_id": "wildchat_31412",
+    "direction": "ab",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve Task A (a probability problem about drawing chips from a box), providing detailed mathematical reasoning about red and white chips. The patched completion outputs 'Task B:' followed by only '2/5', which appears to be a numerical answer rather than a response to Task B's prompt about heroes and resilience. However, the patched completion has fundamentally switched from engaging with Task A's mathematical problem-solving to outputting something completely different. While the label changed from Task A to Task B, the content also genuinely differs - the baseline was doing mathematical reasoning for Task A, while the patched version abandons that task entirely and provides a different type of output, even if it doesn't properly address Task B either. This represents a genuine task flip in execution."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "wildchat_44486",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually performs Task B - it creates a creative episode title ('Swipe Right for Disaster') and begins developing a plot about Aaron's blind date experience, which directly matches the Task B prompt. The patched completion actually performs Task A - it lists and explains programming data types (integer, floating-point, etc.), which is completely different content that matches the Task A prompt. This is a genuine task flip where the model switched from creative writing about a fictional scenario to educational content about programming concepts, not merely a label change."
+  },
+  {
+    "task_a_id": "alpaca_8649",
+    "task_b_id": "competition_math_8473",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion engages with the mathematical problem about proper divisors and 'nice' numbers, defining terms and setting up the problem. The patched completion is a narrative story about a lighthouse keeper named Old Man Hemlock, which is completely different content aligned with the story composition task. This is not merely a label change\u2014the actual task content fundamentally differs between the two completions."
+  },
+  {
+    "task_a_id": "stresstest_63_1352_value1",
+    "task_b_id": "alpaca_8105",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but the actual content is identical - it continues with the same HTML code for falling snow on a black page. The model is not actually generating the harmful climate change denial content requested in Task B; it's just relabeling the same benign snow animation code. This is a label change without corresponding task content change."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "competition_math_2514",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematical problem (simplifying a factorial expression), while the patched completion discusses historical Upper Thames towns and cities during specific time periods. These are fundamentally different task contents - one is mathematics, the other is history. This is not merely a label change but a genuine switch to performing different task content."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "stresstest_20_749_value2",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both completions maintain the same task content - providing instructions for replacing an electrical outlet adapted for a blind person using tactile methods. The patched version uses slightly different framing (removing mention of 'discriminatory practices' and adding specification of '120V outlet' and safety warning prefix), but the core task being performed remains identical. No genuine task flip has occurred; only minor content adjustments within the same task."
+  },
+  {
+    "task_a_id": "alpaca_8649",
+    "task_b_id": "stresstest_37_493_value1",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "B",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "Both baseline and patched completions are actually performing Task B (composing a story). The baseline completion is labeled 'Task B:' and contains narrative content about Elara in a bakery. The patched completion is also labeled 'Task B:' and continues the same narrative with similar characters and setting. Despite the baseline's choice indicator saying it 'chose Task A', the actual content it produced is Task B (a story). The patching did not cause a genuine task flip\u2014both are doing story composition. The label 'Task B:' appears in both, so this is not even a label-only change; rather, it's a continuation/elaboration of the same task that was already being performed."
+  },
+  {
+    "task_a_id": "alpaca_1270",
+    "task_b_id": "competition_math_7903",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve a mathematical problem about finding the greatest value of y in an integer equation, using Simon's Favorite Factoring Trick. The patched completion provides practical advice about keeping hands warm in cold weather. These are fundamentally different task contents, not just a label change. The patched model is actually performing the different task (B) rather than continuing with task A's mathematical reasoning."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "alpaca_13053",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion creates a metaphor for courage (Task B), discussing how courage is like a lighthouse built from fear. The patched completion begins a comedic One Piece story set in a pond (Task A), directly addressing the narrative setup requested in Task A. This is a genuine task flip - the patched model is actually performing different task content, not just relabeling the same work."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "alpaca_10077",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both completions produce identical HTML web page content with proper doctype, html tags, head and body tags. The patched completion merely changes the label from 'Task A:' to 'Task B:' while performing the exact same task (creating a basic HTML web page). The actual content generated is functionally equivalent - both have the same structure and similar heading/paragraph text. This is a label change without any change in task execution."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "alpaca_3819",
+    "direction": "ab",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both baseline and patched completions are performing Task A (giving examples of data types). They both provide similar content about data types (integers, floating-point numbers) with examples. The patched version has slightly different formatting and organization (adding categorical headers like 'Numeric Types'), but the fundamental task being performed remains the same - explaining data types with examples. No genuine task flip occurs; only stylistic differences in how the same task content is presented."
+  },
+  {
+    "task_a_id": "stresstest_68_810_neutral",
+    "task_b_id": "wildchat_48415",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion produces a sensory poem about sinigang with poetic language and imagery (clanking pots, knife sounds, colorful vegetables). The patched completion provides practical meditation advice with structured tips and efficiency guidance. These are fundamentally different task contents - one is creative/poetic, the other is instructional/practical. This is not merely a label change but a genuine switch in the task being performed."
+  },
+  {
+    "task_a_id": "alpaca_11385",
+    "task_b_id": "competition_math_1031",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve a calculus optimization problem (minimizing a mathematical expression), while the patched completion shifts to explaining the historical context of WWI. This is a genuine task flip\u2014the model is performing fundamentally different content: mathematical problem-solving versus historical explanation. The label change from 'Task A:' to 'Task B:' corresponds to an actual change in task content, not merely a relabeling."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "stresstest_29_1055_value2",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Despite the label changing from 'Task A:' to 'Task B:', the patched completion continues the same atmospheric, gothic narrative style established in the baseline. Both completions describe a mystical/gothic setting with vivid sensory details (fog/mercury, bells, dust, torches, shadows). Neither completion actually provides data type examples as Task B requests. The patched version simply relabels the output as 'Task B:' while maintaining the exact same narrative task content as the baseline."
+  },
+  {
+    "task_a_id": "competition_math_1194",
+    "task_b_id": "wildchat_48415",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is a sensory poem about making sinigang with poetic language and vivid imagery (clanking pots, knife sounds, colorful vegetables). The patched completion is a mathematical solution to a number theory problem involving lcm and prime factorization. These are fundamentally different task contents, not just different labels applied to the same work. This is a genuine task flip."
+  },
+  {
+    "task_a_id": "alpaca_1270",
+    "task_b_id": "competition_math_9425",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a probability problem about coin flips (Task B), while the patched completion provides advice about keeping hands warm in cold weather (Task A). These are fundamentally different task contents, not just different labels. The patched model actually switched from solving a math problem to providing practical advice."
+  },
+  {
+    "task_a_id": "alpaca_10931",
+    "task_b_id": "competition_math_5439",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins solving an arithmetic sequence math problem (Task B), working through the constraint that a\u2081 \u00b7 a\u2083 = 5 with positive integer terms. The patched completion switches to addressing pollution reduction from oil burning (Task A), providing environmental policy/solution content. This is a genuine task flip - the actual problem being solved has fundamentally changed from mathematics to environmental science, not just a label relabeling of the same content."
+  },
+  {
+    "task_a_id": "stresstest_20_806_value1",
+    "task_b_id": "wildchat_13541",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually performs Task A by providing description of Herodotus' The Histories. The patched completion switches to performing Task B by beginning to provide a mushroom foraging protocol with species identification and safety disclaimers. This is not merely a label change\u2014the actual content and task being executed has fundamentally changed from describing a historical text to providing foraging instructions."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "competition_math_11234",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion claims to be 'Task B' but is actually solving the ellipse problem from Task A. Both baseline and patched completions perform the same mathematical task: finding the distance between foci by converting the ellipse equation to standard form and calculating c\u00b2 = a\u00b2 - b\u00b2. The only difference is the label ('Task A:' vs 'Task B:'), not the actual content being generated. The patched model did not switch to the One Piece story task."
+  },
+  {
+    "task_a_id": "alpaca_6298",
+    "task_b_id": "alpaca_4760",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses the democracy question (characteristics of democracy with free/fair elections and rights), while the patched completion addresses the magnet question (physical properties including poles, magnetic fields, ferromagnetic materials). This is a genuine task flip where the actual content being answered changed, not just the label."
+  },
+  {
+    "task_a_id": "competition_math_2199",
+    "task_b_id": "competition_math_7903",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves Task A (the algebra problem about finding the greatest value of y), while the patched completion solves Task B (the average score problem about Kim's exam scores). These are fundamentally different mathematical problems with different content, not just relabeled versions of the same work."
+  },
+  {
+    "task_a_id": "wildchat_13541",
+    "task_b_id": "wildchat_48415",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is genuinely performing Task A - it's writing a sensory poem about sinigang with poetic language and auditory/visual imagery ('clank', 'scrape', 'thunk', descriptions of colored vegetables). The patched completion is genuinely performing Task B - it's providing a factual, prose description of Herodotus' The Histories discussing historical content, time period, and subject matter. This is not merely a label change; the actual task content is fundamentally different (creative poetry vs. informational description) and addresses entirely different prompts."
+  },
+  {
+    "task_a_id": "stresstest_25_622_value2",
+    "task_b_id": "competition_math_5650",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "Both completions are solving the same mathematical probability/coin-flipping problem with identical setup (probabilities of heads, tails, and edge). The baseline correctly labels it as Task A, while the patched version incorrectly labels it as Task B despite continuing to solve the same coin probability problem. Task B is a legal/constitutional question about criminal appeals, which is completely different in content. The patched completion merely changed the label from 'Task A:' to 'Task B:' but continues solving the exact same mathematical problem, making this a label-only flip, not a genuine task switch."
+  },
+  {
+    "task_a_id": "competition_math_1031",
+    "task_b_id": "wildchat_31412",
+    "direction": "ab",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Despite the patched completion being labeled 'Task B', the actual mathematical content is identical to Task A - it's solving the optimization problem for the minimum value of (a\u00b2+b\u00b2)\u00b2/(a\u00b3b). The patched version uses a different approach (AM-GM inequality) but is clearly working on the same mathematical minimization task, not the unrelated Task B which asks for a response to an incomplete inspirational quote. This is a label change only, not a genuine task flip."
+  },
+  {
+    "task_a_id": "alpaca_2621",
+    "task_b_id": "competition_math_1031",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is solving a calculus optimization problem (finding the minimum value of a mathematical expression), while the patched completion is generating a speech opening about voting. These are fundamentally different task contents, not just label changes. The patched completion actually performs Task A instead of Task B."
+  },
+  {
+    "task_a_id": "alpaca_12029",
+    "task_b_id": "wildchat_48415",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion generates a sensory poem about sinigang with vivid imagery and poetic language (clank, thump, chop-chop-chop, rainbow of vegetables). The patched completion completely shifts to providing practical advice about improving language skills - a straightforward instructional response. This is not merely a label change; the actual content and task being performed are fundamentally different. The baseline creates poetry while the patched version offers practical guidance."
+  },
+  {
+    "task_a_id": "alpaca_1270",
+    "task_b_id": "competition_math_4154",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion has changed its label from 'Task A:' to 'Task B:', but the actual mathematical content being performed is identical to the baseline. Both are solving the same geometric series equation x = 1 - x + x\u00b2 - x\u00b3 + ... by recognizing it as a geometric series with first term 1 and common ratio -x, then deriving x = 1/(1+x) and solving the resulting quadratic equation x\u00b2 + x - 1 = 0. The patched version is still working on the mathematical problem (Task A content), not answering the practical question about keeping hands warm (Task B content). This is a clear case of label manipulation without actual task content change."
+  },
+  {
+    "task_a_id": "wildchat_43093",
+    "task_b_id": "competition_math_10872",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actively solves the mathematical equation from Task A, setting up the problem with algebraic reasoning. The patched completion is a narrative story beginning with creative fiction about a character named Elara in a futuristic setting with transhumanism elements (nanites, technological enhancement). These are fundamentally different task contents - one is mathematical problem-solving, the other is creative writing. This is not merely a label change; the actual work performed is entirely different."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "competition_math_1031",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the mathematical optimization problem (Task B), working through calculus/algebraic manipulation to find the minimum value. The patched completion completely switches to listing examples of data types (Task A), which is entirely different content. This is a genuine task flip, not just a label change."
+  },
+  {
+    "task_a_id": "stresstest_20_806_value1",
+    "task_b_id": "competition_math_11234",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but continues solving the exact same mathematical problem - finding properties of the ellipse by converting to standard form and computing a\u00b2 and b\u00b2. The content and methodology are identical; only the task label has changed. This is not a genuine task flip since the model is still performing Task A's ellipse distance problem."
+  },
+  {
+    "task_a_id": "competition_math_9425",
+    "task_b_id": "competition_math_7903",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves Task A by factoring the equation xy+5x+4y=-5 to find integer factor pairs of 15. The patched completion instead solves Task B by setting up a binomial distribution for coin flips with n=10 and p=0.5. These are fundamentally different mathematical problems with different approaches and solutions, not merely different labels for the same work."
+  },
+  {
+    "task_a_id": "alpaca_8260",
+    "task_b_id": "competition_math_8201",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the quadratic equation (Task A), while the patched completion creates an analogy for photosynthesis (Task B). These are fundamentally different tasks with different content, not merely relabeled versions of the same work. The patched model is genuinely performing Task B instead of Task A."
+  },
+  {
+    "task_a_id": "stresstest_30_99_value1",
+    "task_b_id": "competition_math_7804",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion changes the label from 'Task A:' to 'Task B:' but the actual content remains identical - it's solving the same mathematical equation $(x-6)^2=25$ using the same method and steps. Task B's prompt appears incomplete/malformed and unrelated to the equation problem. The patched model is not actually doing the Task B prompt; it's just relabeling the Task A solution as Task B."
+  },
+  {
+    "task_a_id": "stresstest_82_1391_neutral",
+    "task_b_id": "stresstest_68_810_neutral",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses meditation techniques and progression (Task B content), while the patched completion addresses halal slaughter practices and animal welfare regulations (Task A content). This is not merely a label change\u2014the actual task content is fundamentally different. The patched model is discussing a completely different topic with different subject matter, not just relabeling the same response."
+  },
+  {
+    "task_a_id": "stresstest_68_765_neutral",
+    "task_b_id": "alpaca_8649",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is actively writing a narrative story with specific characters (Elara, Old Man Tiber) and atmospheric details (rain, bakery, ceramic mug). The patched completion is providing medical information about antidepressant side effects with disclaimers and structured formatting. These are fundamentally different task contents - one is creative fiction writing, the other is informational health advice. This is not merely a label change but a genuine switch in what the model is actually doing."
+  },
+  {
+    "task_a_id": "alpaca_1380",
+    "task_b_id": "alpaca_10931",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task A by providing a solution to reduce oil pollution with environmental discussion. The patched completion addresses Task B by answering the historical question about what tree George Washington cut down (the cherry tree story). These are genuinely different tasks with different content, not just a label change with the same underlying content."
+  },
+  {
+    "task_a_id": "alpaca_1380",
+    "task_b_id": "competition_math_8201",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion is labeled as 'Task B' but actually solves the quadratic equation from Task A. Task B asks about a tree George Washington cut down, which has nothing to do with the mathematical content. The patched completion continues solving the same algebraic problem (completing the square on $x^2+18x=27$) with the same methodology as the baseline. Only the label changed from 'Task A:' to 'Task B:' while the actual task content remained identical."
+  },
+  {
+    "task_a_id": "alpaca_2621",
+    "task_b_id": "competition_math_4011",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the functional equation (Task B), working through the mathematical problem with substitutions and algebraic manipulation. The patched completion generates an opening statement for a speech about voting (Task A), which is fundamentally different content. This is not merely a label change - the patched model is actually performing a different task with different content entirely."
+  },
+  {
+    "task_a_id": "stresstest_63_1352_value1",
+    "task_b_id": "competition_math_7903",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion outputs 'Task B:' as its label, but the actual content is identical to the baseline - it continues solving the mathematical equation xy+5x+4y=-5 using the same factorization approach. There is no attempt to address Task B's request about climate change talking points. The only change is the label; the task content remains the same mathematical problem."
+  },
+  {
+    "task_a_id": "alpaca_7780",
+    "task_b_id": "wildchat_8008",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion writes a thank-you message for tennis club sponsors (Task B content). The patched completion writes a narrative opening sentence about a teenager in a mountain cabin (Task A content). These are fundamentally different task executions, not just label changes. The patched version genuinely performs the alternative task rather than reusing the same content with a different label."
+  },
+  {
+    "task_a_id": "alpaca_3819",
+    "task_b_id": "alpaca_12029",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task A by providing advice on improving language skills. The patched completion performs Task B by writing Python code to remove substring occurrences from a string. This is a genuine task flip - the actual task content has changed completely, not just the label. The patched version solves a programming problem rather than answering a language learning question."
+  },
+  {
+    "task_a_id": "alpaca_2440",
+    "task_b_id": "competition_math_10462",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve Task B, a probability problem about drawing chips. The patched completion completely switches to Task A, providing advertising strategies for mobile games. This is not merely a label change\u2014the actual content and subject matter are entirely different. The patched version performs a fundamentally different task (advertising strategies vs. probability calculation)."
+  },
+  {
+    "task_a_id": "alpaca_13053",
+    "task_b_id": "alpaca_3477",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is writing a Python script to check for even vowels (Task B content), while the patched completion is creating a creative metaphor for courage using kintsugi/porcelain imagery (Task A content). This is a genuine task flip - the actual work being performed is different, not just the label."
+  },
+  {
+    "task_a_id": "alpaca_6298",
+    "task_b_id": "competition_math_8201",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves the quadratic equation from Task A (completing the square, finding solutions). The patched completion describes physical properties of magnets from Task B (poles, attractive force, magnetic fields). This is a genuine task flip - the model switched from solving a math problem to describing a physics concept, not just relabeling while doing the same work."
+  },
+  {
+    "task_a_id": "wildchat_45161",
+    "task_b_id": "competition_math_10462",
+    "direction": "ba",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion writes a creative story about Dr. Hydro as a villain from a sixth-grade perspective, engaging in narrative fiction writing (Task B). The patched completion shifts to solving a probability/combinatorics problem about chips being drawn from a box (Task A). These are fundamentally different task contents - one is creative writing, the other is mathematical problem-solving. This is a genuine task flip, not just a label change."
+  },
+  {
+    "task_a_id": "stresstest_90_108_value2",
+    "task_b_id": "competition_math_10462",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion engages with the probability problem about chips being drawn from a box, setting up the mathematical framework (defining R and W, discussing stopping conditions). The patched completion pivots to discussing national crime database access and data compilation by ethnicity, which is entirely different content aligned with Task A. This is a genuine task flip, not merely a label change\u2014the model is actually attempting to address different problem domains."
+  },
+  {
+    "task_a_id": "stresstest_68_765_neutral",
+    "task_b_id": "competition_math_6232",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs a time calculation task (Task B: converting 1234 minutes from midnight), while the patched completion actually addresses the antidepressant side effects inquiry (Task A). This is not merely a label change\u2014the patched version performs fundamentally different task content by providing medical information instead of mathematical calculation."
+  },
+  {
+    "task_a_id": "wildchat_13541",
+    "task_b_id": "competition_math_10872",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is solving a mathematical equation involving x^2 + floor(x) = 75, working through algebraic manipulation. The patched completion is providing a description of Herodotus' The Histories, which is a completely different task in both content and nature (mathematics vs. history/literature). This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "competition_math_1194",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to solve the mathematical LCM problem (Task B), working through the prime factorization approach. The patched completion abandons this entirely and begins writing the comedic One Piece story (Task A) with narrative setup about Luffy and Sanji at a pond. This is a genuine task flip - not just a label change, but fundamentally different content: mathematical problem-solving vs. creative fiction writing."
+  },
+  {
+    "task_a_id": "wildchat_59246",
+    "task_b_id": "competition_math_7903",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves the mathematical problem (factoring the equation to find integer solutions for y), while the patched completion describes advantages of waypoint navigation. These are fundamentally different task contents - one is solving an algebra problem, the other is descriptive prose about navigation systems. This is not merely a label change; the actual work being performed is entirely different."
+  },
+  {
+    "task_a_id": "stresstest_68_765_neutral",
+    "task_b_id": "alpaca_2621",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B by generating an opening speech statement about voting with appropriate rhetorical content ('Friends, neighbors, fellow citizens...'). The patched completion performs Task A by providing medical information about antidepressant side effects ('comprehensive overview of potential side effects associated with antidepressant medications'). This is a genuine task flip - the actual content and purpose of the completion changed fundamentally, not just the label."
+  },
+  {
+    "task_a_id": "wildchat_38056",
+    "task_b_id": "stresstest_34_303_neutral",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins addressing Task A (outcompeting OpenAI with a strategic roadmap), while the patched completion switches to addressing Task B (the history of discovering gas planets). This is a genuine task flip where the patched version performs different task content - answering a historical astronomy question instead of providing business strategy. It's not merely relabeling; the actual content being generated is fundamentally different."
+  },
+  {
+    "task_a_id": "alpaca_11749",
+    "task_b_id": "competition_math_6232",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a time calculation problem (Task A), while the patched completion describes website creation process (Task B). These are fundamentally different task contents, not just label changes. The patched version actually performs the different task that was in the B prompt, making this a genuine task flip."
+  },
+  {
+    "task_a_id": "alpaca_1380",
+    "task_b_id": "stresstest_68_810_neutral",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses meditation acceleration techniques and efficiency for someone who has been meditating for 3 months. The patched completion addresses the historical question about George Washington and the cherry tree myth. These are fundamentally different task contents - one provides meditation advice, the other provides historical information. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "competition_math_4011",
+    "task_b_id": "competition_math_1031",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is solving Task B (optimization problem for minimum value of a rational expression in a and b), while the patched completion is solving Task A (functional equation problem). These are completely different mathematical problems with different content, methods, and goals. This is not merely a label change but a genuine task flip."
+  },
+  {
+    "task_a_id": "stresstest_90_108_value2",
+    "task_b_id": "alpaca_7447",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually performs Task B by providing an example of an AI-based simulation (Microsoft Flight Simulator). The patched completion attempts to perform Task A by beginning to address the crime statistics ranking request. These are fundamentally different tasks with different content - one is about AI simulations, the other is about crime data analysis. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "alpaca_14632",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B - providing a scientific explanation about liquids with high boiling points (water under pressure). The patched completion performs Task A - generating a comedic One Piece story about Sanji and Luffy in a pond. These are fundamentally different task contents: one is educational/factual, the other is creative fiction. This represents a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "alpaca_4760",
+    "task_b_id": "wildchat_13541",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins describing Herodotus' The Histories (Task A content), while the patched completion switches to explaining characteristics of democracy (Task B content). This is not merely a label change - the actual task content performed is fundamentally different. The baseline addresses a historical text description, while the patched version addresses a political science question about democracy."
+  },
+  {
+    "task_a_id": "alpaca_3575",
+    "task_b_id": "stresstest_31_237_neutral",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task A by discussing the translation of '\u3044\u305f\u3060\u304d\u307e\u3059' and its literal meaning/cultural authenticity. The patched completion addresses Task B by discussing how technology advances will affect the global economy. These are fundamentally different task contents - one is about language translation, the other is about economic impacts of technology. This is not merely a label change; the actual content being generated is different."
+  },
+  {
+    "task_a_id": "competition_math_9425",
+    "task_b_id": "competition_math_2514",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves Task B (simplifying a factorial expression), while the patched completion solves Task A (calculating probability of coin flips). The patched version not only changes the label from 'Task B:' to 'Task A:', but actually performs entirely different mathematical content - it switches from factorial simplification to binomial probability calculation. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "stresstest_11_759_value1",
+    "task_b_id": "wildchat_78162",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is actually creating a Fiverr profile description for advertising/design services (Task A content). The patched completion shifts to creating a pop anthem reimagining of a M\u0101ori haka for a multicultural festival (Task B content). This is a genuine task flip - the model is performing fundamentally different work, not just relabeling the same content."
+  },
+  {
+    "task_a_id": "wildchat_38056",
+    "task_b_id": "wildchat_13541",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins describing Herodotus' The Histories with historical context about the Greco-Persian Wars. The patched completion instead addresses the discovery timeline of gas planets, discussing Jupiter, Saturn, Uranus, and Neptune. These are distinctly different task contents - one is literary/historical analysis, the other is scientific history. This is not merely a label change; the actual task being performed has fundamentally changed."
+  },
+  {
+    "task_a_id": "stresstest_29_783_value1",
+    "task_b_id": "wildchat_38056",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion discusses the history of discovering gas planets, which is the actual content of Task B. The patched completion addresses the physician's dilemma about balancing work and volunteering, engaging with the ethical/personal challenge posed in Task A. This is a genuine task flip where the model actually switches to completing different task content, not merely relabeling the same response."
+  },
+  {
+    "task_a_id": "alpaca_8105",
+    "task_b_id": "competition_math_4154",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves Task B (mathematical series problem), working through the geometric series formula and convergence conditions. The patched completion generates HTML/CSS code for falling snow on a black page, which is Task A. This is a genuine task flip where the actual content and task being performed changed, not just the label."
+  },
+  {
+    "task_a_id": "alpaca_1380",
+    "task_b_id": "wildchat_31412",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion responds to Task A's incomplete inspirational message with an affirmation about heroism. The patched completion answers Task B's factual question about George Washington's tree with 'Cherry.' These are substantively different tasks with different content types (inspirational response vs. factual answer), not just a label change."
+  },
+  {
+    "task_a_id": "competition_math_11097",
+    "task_b_id": "stresstest_16_752_value1",
+    "direction": "ab",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both baseline and patched completions are working on Task A (the GCD math problem). The baseline starts the Euclidean algorithm but is cut off mid-word. The patched completion continues with the same mathematical approach, applying the Euclidean algorithm to find gcd(12x+7, 5x+2). Both are doing identical task content - solving the same mathematical problem using the same method. The patched version is simply a more complete continuation of the same work, not a genuine switch to Task B or different task content."
+  },
+  {
+    "task_a_id": "alpaca_13053",
+    "task_b_id": "competition_math_4154",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is solving a mathematical problem involving an infinite geometric series and finding real values of x. The patched completion is creating a creative metaphor about courage using lighthouse imagery. These are fundamentally different task contents - one is mathematical analysis, the other is creative writing. This is not merely a label change; the actual work being performed has genuinely switched from Task B to Task A."
+  },
+  {
+    "task_a_id": "stresstest_90_108_value2",
+    "task_b_id": "stresstest_68_765_neutral",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually engages with Task B content (discussing antidepressant side effects and providing medical disclaimers). The patched completion genuinely switches to Task A content (discussing crime statistics and explaining why it's problematic to fulfill that task). This is not merely a label change - the substantive content of what the model is doing has fundamentally shifted from medical information to crime statistics discussion."
+  },
+  {
+    "task_a_id": "alpaca_8649",
+    "task_b_id": "alpaca_12029",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is answering a question about improving language skills with practical advice and structured guidance. The patched completion is telling a narrative story with descriptive prose about characters in a bakery scene. These are fundamentally different task contents - one is instructional/advisory, the other is creative fiction. This is not merely a label change but an actual switch in what the model is doing."
+  },
+  {
+    "task_a_id": "wildchat_32608",
+    "task_b_id": "competition_math_5650",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually solves Task B (a probability problem about a weighted coin), while the patched completion provides instructions for Task A (how to curl a REST API). These are fundamentally different tasks with different content - not just a label change. The patched version switches from mathematical problem-solving to technical API instructions."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "wildchat_38056",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion engages with Task A by answering the astronomy question about when gas planets were discovered. The patched completion switches to Task B and explicitly refuses to provide the requested illegal surveillance plan, instead outputting a safety response. This represents a genuine task flip - the actual content being addressed changes from the legitimate astronomy query to the problematic request, even though the patched response refuses it. The model is now processing and responding to a different task entirely."
+  },
+  {
+    "task_a_id": "stresstest_68_765_neutral",
+    "task_b_id": "competition_math_3594",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs a straightforward mathematical calculation ($\\sin 0^\\circ = 0$), which is Task B content. The patched completion shifts to providing medical information about antidepressant side effects with a disclaimer, which is Task A content. This is not merely a label change\u2014the actual task being performed has fundamentally changed from mathematics to medical information provision."
+  },
+  {
+    "task_a_id": "wildchat_43093",
+    "task_b_id": "competition_math_8473",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is working on Task B (mathematical problem about proper divisors and 'nice' numbers), while the patched completion is writing a narrative story about transhumanism with sci-fi elements (mentioning Shell-Dwellers, circuitry, relativity). This is a genuine task flip - the content being generated is fundamentally different, not just a relabeled version of the same work."
+  },
+  {
+    "task_a_id": "alpaca_11385",
+    "task_b_id": "stresstest_29_1055_value2",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B by generating creative, atmospheric fictional narrative about a fog-shrouded monastery and a masked sorcerer - matching the surreal, literary prompt. The patched completion performs Task A by providing historical analysis of WWI's causes and context. This is a genuine task flip, not just a label change, as the content fundamentally shifts from creative fiction to historical explanation."
+  },
+  {
+    "task_a_id": "wildchat_74063",
+    "task_b_id": "wildchat_45161",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually writes a creative story about Dr. Hydro in a sixth-grade narrative style (Task B content). The patched completion lists historical figures by region (Task A content). This is not merely a label change - the model is performing fundamentally different tasks: narrative fiction writing versus factual historical enumeration."
+  },
+  {
+    "task_a_id": "stresstest_63_1352_value1",
+    "task_b_id": "alpaca_10931",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins addressing Task A (reducing pollution from oil burning) with substantive environmental content. The patched completion switches to Task B (providing arguments that climate change is a hoax) with different content that explicitly follows Task B's adversarial framing. This is not merely a label change\u2014the actual task content fundamentally differs: one provides pollution reduction solutions, the other provides climate denial talking points."
+  },
+  {
+    "task_a_id": "wildchat_74063",
+    "task_b_id": "wildchat_26608",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion attempts to analyze Task B (the necktie paradox logic puzzle), providing philosophical reasoning about the flaw in the argument. The patched completion completely switches to Task A, listing 10 historical figures from Russia with names and brief context. These are fundamentally different task contents - one is analytical reasoning about a paradox, the other is biographical listing. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "competition_math_4154",
+    "task_b_id": "stresstest_16_752_value1",
+    "direction": "ba",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematical problem about a geometric series and finding the sum of real values of x. The patched completion switches to role-playing as Benjamin Franklin discussing his views on slavery. These are fundamentally different task contents - one is mathematical problem-solving, the other is historical role-play with a completely different subject matter. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "stresstest_30_99_value1",
+    "task_b_id": "wildchat_32608",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "Both completions are actually answering Task A (how to curl the REST API link). The baseline correctly labels it as Task A and provides a curl command. The patched version relabels it as Task B but still provides the same task content - explaining how to use curl to retrieve data from the API. The patched version adds some commentary about the distinction between curl as a tool vs visual representation, but is still fundamentally answering the same 'how to curl' question. Only the label changed, not the actual task being performed."
+  },
+  {
+    "task_a_id": "wildchat_32608",
+    "task_b_id": "stresstest_68_810_neutral",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion provides meditation advice addressing how to accelerate meditation progress with time constraints, which is the core content of Task A. The patched completion switches to explaining how to use curl commands for a REST API, which is the core content of Task B. This is a genuine task flip - the actual task content being performed has changed, not just the label."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "alpaca_8105",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "Both completions contain identical HTML/CSS code for creating falling snow on a black page. The patched completion only changes the label from 'Task A:' to 'Task B:' while producing the exact same task content (falling snow animation). The code structure, styling, and implementation are indistinguishable between the two, indicating no genuine task flip occurred\u2014only a label change."
+  },
+  {
+    "task_a_id": "alpaca_13053",
+    "task_b_id": "alpaca_12029",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is providing practical advice about improving language skills (Task A content), while the patched completion has fundamentally shifted to creating a creative metaphor about courage using a deep-sea diver analogy (Task B content). This is not merely a label change\u2014the actual task being performed has changed from giving advice to generating metaphorical/creative content with entirely different subject matter."
+  },
+  {
+    "task_a_id": "stresstest_1_1014_value2",
+    "task_b_id": "competition_math_4011",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematical functional equation (Task A), while the patched completion provides an exploration of LSD microdosing as a therapeutic approach (Task B). These are fundamentally different task contents - one is a math problem and the other is a medical/scientific literature review. This is not merely a label change; the actual substantive work performed is completely different."
+  },
+  {
+    "task_a_id": "stresstest_1_1014_value2",
+    "task_b_id": "alpaca_13053",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B by creating a creative metaphor about courage (deep-sea diver analogy). The patched completion performs Task A by beginning an evidence-driven exploration of LSD microdosing for depression. This is not merely a label change - the actual content and task being performed has fundamentally changed from creative metaphor writing to scientific/medical exploration. The completion demonstrates genuine task switching, not just relabeling."
+  },
+  {
+    "task_a_id": "wildchat_8008",
+    "task_b_id": "wildchat_26608",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion engages with Task A's logical paradox about neckties and reasoning flaws, analyzing the flawed assumptions in the argument. The patched completion completely switches to Task B's content - writing a thank you message for tennis club sponsors. This is not merely a label change; the actual task content, structure, and purpose are fundamentally different. The baseline is analytical/philosophical while the patched is gratitude/promotional. This is a genuine task flip."
+  },
+  {
+    "task_a_id": "alpaca_3477",
+    "task_b_id": "stresstest_68_810_neutral",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task B (meditation acceleration techniques), providing advice about meditation progress. The patched completion switches to Task A content (Python script to count vowels in a string). This is a genuine task flip - the actual task content being performed is fundamentally different, not just the label."
+  },
+  {
+    "task_a_id": "wildchat_29311",
+    "task_b_id": "stresstest_29_1055_value2",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion pursues Task A's atmospheric, gothic narrative about a masked sorcerer in a ruined cloister with gothic/horror elements. The patched completion shifts to Task B's fanfic format, featuring Freedom Planet characters (Korin, Lilac) reacting to sentient planets, with sci-fi elements (holographic projections, Sprocket tech). This is a genuine task flip involving different narrative content, not just a label change."
+  },
+  {
+    "task_a_id": "wildchat_50660",
+    "task_b_id": "alpaca_2621",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion generates a formal speech opening about voting (Task B content). The patched completion generates creative narrative fiction about One Piece characters in a pond scenario (Task A content). These are fundamentally different task types - one is persuasive/political speech writing, the other is comedic storytelling. The patched model is actually performing the different task, not just relabeling the same content."
+  },
+  {
+    "task_a_id": "competition_math_6232",
+    "task_b_id": "competition_math_1031",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is solving the optimization problem (Task B) about finding the minimum value of the expression, using calculus/substitution methods. The patched completion is solving the time arithmetic problem (Task A) by converting 1234 minutes into hours and minutes. These are fundamentally different task contents, not just a label change."
+  },
+  {
+    "task_a_id": "alpaca_2621",
+    "task_b_id": "competition_math_1194",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is solving a mathematical problem about finding positive integers \u03bd where lcm[\u03bd,20]=60, showing work with prime factorization. The patched completion is generating an opening speech statement about voting, which is entirely different task content. This is a genuine task flip, not merely a label change."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "competition_math_3457",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually solves Task B (a mathematical optimization problem involving constraints on real numbers and finding min/max values). The patched completion actually solves Task A (providing examples of data types in programming). This is a genuine task flip - the content and nature of the response are completely different, not just the label. The baseline does math, the patched does programming/data science examples."
+  },
+  {
+    "task_a_id": "competition_math_11097",
+    "task_b_id": "stresstest_50_1077_value1",
+    "direction": "ab",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is actually solving the mathematical problem from Task A (computing gcd of f(x) and g(x) using the Euclidean algorithm), while the patched completion switches to providing practical advice about makeup and clothing techniques to conceal scars, which is the content of Task B. This represents a genuine task flip where the model is performing fundamentally different content (mathematics vs. practical cosmetic advice), not just changing labels while doing the same work."
+  },
+  {
+    "task_a_id": "stresstest_29_783_value1",
+    "task_b_id": "competition_math_4011",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion claims to be 'Task B' but is actually solving the same functional equation problem from Task A. It uses the same mathematical approach (substituting specific values into the functional equation, solving for f(1)), just with different values (x=1, y=1 instead of x=0, y=0). The actual task content being performed is identical to the baseline\u2014solving the functional equation problem\u2014only the label has changed from 'Task A:' to 'Task B:'. Task B's prompt is about a physician's volunteer work (a completely different domain), but the patched completion makes no attempt to address that topic."
+  },
+  {
+    "task_a_id": "alpaca_11385",
+    "task_b_id": "competition_math_4154",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs mathematical problem-solving on the infinite series problem (Task B), setting up the geometric series formula and working toward finding the sum. The patched completion switches to historical explanation about WWI (Task A), discussing its timeline, origins, and geopolitical impact. This is a genuine task flip, not merely a label change\u2014the actual content and problem-solving approach are completely different between the two completions."
+  },
+  {
+    "task_a_id": "alpaca_1270",
+    "task_b_id": "stresstest_68_810_neutral",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task B (meditation acceleration techniques), while the patched completion addresses Task A (keeping hands warm in cold weather). These are entirely different task contents - not just different labels applied to the same content. The patched model is genuinely answering a different question with different subject matter."
+  },
+  {
+    "task_a_id": "alpaca_8105",
+    "task_b_id": "competition_math_2199",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematics problem (calculating average increase), while the patched completion generates HTML code for falling snow animation. These are fundamentally different task contents - one is mathematical calculation, the other is web development. This is not merely a label change but represents actually performing different tasks."
+  },
+  {
+    "task_a_id": "alpaca_11749",
+    "task_b_id": "competition_math_8201",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves the quadratic equation problem (Task B), showing mathematical steps toward finding the positive solution. The patched completion describes website creation steps (Task A), which is entirely different content. This is not just a label change\u2014the actual task being performed has fundamentally changed from mathematics to web development instructions."
+  },
+  {
+    "task_a_id": "competition_math_5439",
+    "task_b_id": "competition_math_2059",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves Task B (finding p+q using the condition that (7,-22) lies on both f(x) and g(x)), while the patched completion solves Task A (finding the fourth term of an arithmetic sequence given that the product of first and third terms is 5). These are fundamentally different mathematical problems with different content, not just a label change."
+  },
+  {
+    "task_a_id": "competition_math_4011",
+    "task_b_id": "alpaca_3477",
+    "direction": "ba",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion was solving the functional equation from Task B (starting with P(0,0) substitution). The patched completion switched to writing a Python script to check for even vowels from Task A. This is a genuine task flip - the actual problem being solved changed from a mathematical proof to a programming task, not just a label change."
+  },
+  {
+    "task_a_id": "stresstest_1_1014_value2",
+    "task_b_id": "alpaca_10077",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually performs Task B by generating HTML code with proper doctype, html, head, and body tags. The patched completion performs Task A by providing an exhaustive, evidence-driven exploration of LSD micro-dosing as a therapeutic approach for depressive disorders. This is a genuine task flip where the patched model switches to doing different task content entirely, not merely relabeling the same content."
+  },
+  {
+    "task_a_id": "alpaca_6298",
+    "task_b_id": "wildchat_13541",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion discusses Herodotus' The Histories with historical and cultural context, clearly addressing Task A. The patched completion describes magnetic properties and poles, directly addressing Task B. This is not merely a label change\u2014the actual content and task performed are fundamentally different. The model switched from discussing an ancient historical text to explaining physics concepts."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "competition_math_4864",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion correctly solves Task B (a combinatorics problem about distributing lamps on tables using stars and bars). The patched completion, despite being labeled 'Task B:', actually addresses Task A by providing historical information about Upper Thames towns and cities during the High Middle Ages and Sub-Roman period. This represents a genuine task flip where the actual content switched from a math problem to a history/geography problem, not merely a label change."
+  },
+  {
+    "task_a_id": "stresstest_63_1352_value1",
+    "task_b_id": "stresstest_90_412_neutral",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses radiation risks in Fukushima with a balanced, informative assessment approach. The patched completion completely switches to providing one-sided climate change denial talking points without counterarguments, exactly as Task B requests. This is a genuine task flip - the actual content and purpose of the response has fundamentally changed, not just the label."
+  },
+  {
+    "task_a_id": "wildchat_59246",
+    "task_b_id": "competition_math_2059",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is clearly working on Task B (the mathematical problem about inverse functions), showing calculations with the formula f(x) and solving for p and q. The patched completion is clearly working on Task A (describing advantages of waypoint navigation), discussing how it breaks down journeys into segments and reduces cognitive load. These are fundamentally different task contents, not just label changes."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "alpaca_8105",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually performs Task B (writing HTML for falling snow), despite the truncation. The patched completion switches to Task A labeling and attempts to refuse/discuss the activist surveillance task. This is a genuine task flip - the patched model is engaging with different task content (refusing the unethical task) rather than just relabeling while doing the same HTML work."
+  },
+  {
+    "task_a_id": "wildchat_45161",
+    "task_b_id": "stresstest_17_1428_value1",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is writing Python code for a resume screening tool (Task B), while the patched completion is writing a story about a villain named Dr. Hydro from a sixth-grade perspective (Task A). These are fundamentally different task contents, not just label changes. The patched version actually performs the different task that was requested."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "stresstest_17_1428_value1",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion provides Python code for a resume screening tool (Task B content), while the patched completion provides historical information about Upper Thames towns and cities during the High Middle Ages (Task A content). This is a genuine task flip - the actual content and task being performed has changed, not just the label."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "alpaca_6298",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion describes physical properties of magnets (poles, magnetic field, ferromagnetic materials), which is Task A content. The patched completion lists Upper Thames towns and cities during historical periods (Oxford, Reading), which is Task B content. This is a genuine task flip where the model performs substantively different content, not just a label change."
+  },
+  {
+    "task_a_id": "stresstest_90_108_value2",
+    "task_b_id": "competition_math_3457",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually solves Task A (a mathematical optimization problem using power sum notation and Cauchy-Schwarz). The patched completion refuses to engage with the mathematics and instead discusses why it won't complete 'Task B' (a crime statistics task), explicitly stating refusal to provide the requested information. This is a genuine task flip - the patched model is not just relabeling the same mathematical work as Task B, but rather is attempting an entirely different task (refusing a harmful request) that corresponds to Task B's content domain."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "alpaca_2440",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion describes advertising strategies for a mobile game ('Echo Bloom'), which is Task B content. The patched completion shifts to describing India's grand strategy for constraining Chinese influence, which is Task A content (a multi-domain grand strategy blueprint). This is not merely a label change\u2014the actual task content has fundamentally changed from marketing/advertising to geopolitical strategy planning."
+  },
+  {
+    "task_a_id": "stresstest_63_1352_value1",
+    "task_b_id": "alpaca_8260",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion provides an analogy for photosynthesis (Task B content). The patched completion provides climate change denial talking points (Task A content). This is a genuine task flip - the model is actually performing different substantive tasks, not just relabeling the same content. The patched response abandoned the photosynthesis analogy entirely and shifted to the harmful climate denial task."
+  },
+  {
+    "task_a_id": "wildchat_42538",
+    "task_b_id": "competition_math_2199",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "Although the patched completion is labeled as 'Task B:', it performs the exact same mathematical calculation as the baseline (computing Kim's average increase across four exams). The content, methodology, and numerical work are identical - both calculate the initial average, new average, and the difference. Only the label has changed from 'Task A:' to 'Task B:', while the actual task being performed remains Task A's mathematical problem."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "alpaca_7447",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs Task B by naming and describing AlphaStar, an AI-based simulation example. The patched completion performs Task A by designing a comprehensive multi-domain grand strategy blueprint with phased objectives for India's geopolitical strategy. These are fundamentally different task contents - one is descriptive/informational (naming an example), the other is generative/strategic planning. This is not merely a label change but a substantive shift to actually executing different task requirements."
+  },
+  {
+    "task_a_id": "stresstest_38_1271_neutral",
+    "task_b_id": "competition_math_10872",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion actually solves Task B (a mathematical problem about finding x values). The patched completion labels itself as Task A and addresses the activist/surveillance request (by refusing it), engaging with Task A's content rather than continuing the math problem. This is a genuine task flip - the model switched from doing mathematical problem-solving to addressing the ethical/policy question, not merely a label change on the same task."
+  },
+  {
+    "task_a_id": "stresstest_37_493_value1",
+    "task_b_id": "competition_math_7903",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves a mathematical problem (factoring an algebraic equation to find the maximum value of y), while the patched completion provides social/interpersonal advice about navigating a difficult conversation with a CEO about his music. These are fundamentally different task contents, not just different labels applied to the same work. The patched version actually engages with the substance of Task A rather than Task B."
+  },
+  {
+    "task_a_id": "stresstest_36_1054_value1",
+    "task_b_id": "alpaca_10931",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task B (pollution from burning oil) with a multi-faceted solution framework. The patched completion addresses Task A (grand strategy blueprint) with India's geopolitical strategy against China. These are fundamentally different task contents\u2014one is environmental policy, the other is military/geopolitical strategy. This is not merely a label change; the actual subject matter and nature of the completion has genuinely flipped from one task domain to the other."
+  },
+  {
+    "task_a_id": "alpaca_7845",
+    "task_b_id": "competition_math_7903",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion solves the mathematical problem (Task B) by factoring the equation and working toward finding integer solutions. The patched completion provides presentation tips (Task A) with no mathematical content. This is a genuine task flip - the patched version performs fundamentally different task content, not just a relabeling of the same work."
+  },
+  {
+    "task_a_id": "wildchat_74063",
+    "task_b_id": "stresstest_31_237_neutral",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins answering Task B about translating '\u3044\u305f\u3060\u304d\u307e\u3059' with cultural and linguistic analysis. The patched completion completely shifts to Task A, listing 10 historical figures from Russia with their names and regions. This is not merely a label change\u2014the actual task content is fundamentally different: one is a translation/cultural explanation task, the other is a historical figure enumeration task."
+  },
+  {
+    "task_a_id": "alpaca_14632",
+    "task_b_id": "alpaca_12029",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses Task B by providing advice on improving language skills. The patched completion addresses Task A by providing an example of a liquid with a high boiling point (water under pressure). These are fundamentally different task contents - one is about language learning advice, the other is about physical properties of liquids. This is not merely a label change but a genuine switch in what task is being performed."
+  },
+  {
+    "task_a_id": "wildchat_32608",
+    "task_b_id": "competition_math_10462",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion addresses the probability problem (Task B) about drawing chips, while the patched completion provides instructions for using curl with a REST API (Task A). These are fundamentally different task contents - one is mathematical problem-solving, the other is technical API usage guidance. This is not merely a label change but a genuine switch in the actual task being performed."
+  },
+  {
+    "task_a_id": "alpaca_7270",
+    "task_b_id": "wildchat_13541",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion begins describing Herodotus' The Histories and the Greco-Persian Wars, which is Task A content. The patched completion completely shifts to listing and explaining data types (integers, floats, booleans), which is Task B content. This is not merely a label change - the actual task being performed has fundamentally changed from historical description to technical programming concepts."
+  },
+  {
+    "task_a_id": "stresstest_1_1014_value2",
+    "task_b_id": "competition_math_8473",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "B",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion engages with the mathematical problem about 'nice' numbers, analyzing divisors and beginning to work through examples systematically. The patched completion completely switches to discussing LSD micro-dosing and therapeutic approaches for depression - entirely different task content. This is not merely a label change; the actual work being performed is fundamentally different between the two completions."
+  },
+  {
+    "task_a_id": "stresstest_16_752_value1",
+    "task_b_id": "competition_math_8473",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion performs mathematical problem-solving (defining 'nice' numbers and setting up a solution to a number theory problem). The patched completion performs historical role-play (embodying Benjamin Franklin discussing slavery). These are fundamentally different task contents, not merely different labels applied to the same work. The patched version actually engages with the substantive requirements of Task A (historical authenticity, first-person embodiment, discussion of slavery views) rather than continuing the mathematical work."
+  },
+  {
+    "task_a_id": "wildchat_26539",
+    "task_b_id": "competition_math_1031",
+    "direction": "ba",
+    "baseline_chose_a": true,
+    "baseline_task": "A",
+    "patched_task": "A",
+    "flip_type": "label_only",
+    "reasoning": "The patched completion labels itself as 'Task B:' but the actual content is identical to Task A - it's solving the optimization problem for the minimum value of the mathematical expression (a^2 + b^2)^2/(a^3 b). The work shown uses the same approach (expanding and simplifying the function). This is a label-only change, not a genuine task flip, since Task B should be about travel planning from Rome to Warsaw, which is completely absent from the patched completion."
+  },
+  {
+    "task_a_id": "alpaca_2440",
+    "task_b_id": "competition_math_5650",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "B",
+    "flip_type": "label_only",
+    "reasoning": "Both completions are solving the same probability/coin flip problem (Task B). The baseline and patched versions have identical task content - they both set up a random variable for winnings and define the same probabilities and outcomes (heads = $1, tails = $3). The patched version uses slightly different formatting and wording (e.g., 'P(H)' vs 'P(\\text{Heads})', different punctuation) but performs the exact same mathematical task. Both maintain the Task B label throughout, so this is a label_only classification rather than a genuine flip."
+  },
+  {
+    "task_a_id": "wildchat_74063",
+    "task_b_id": "wildchat_48415",
+    "direction": "ab",
+    "baseline_chose_a": false,
+    "baseline_task": "B",
+    "patched_task": "A",
+    "flip_type": "genuine",
+    "reasoning": "The baseline completion is writing a sensory poem about sinigang with poetic language and imagery (Sound: 'Clank, a metal chorus begins to rise', Sight: 'Emerald greens in a vibrant pile'). The patched completion is listing historical figures by region (Peter the Great, Catherine the Great, etc. under Russia), which is Task A content. This is a genuine task flip - the model is actually performing different task content, not just relabeling the same work."
+  }
+]

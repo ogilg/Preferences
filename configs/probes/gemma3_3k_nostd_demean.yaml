@@ -17,4 +17,4 @@ alpha_sweep_size: 10
 standardize: false
 
 demean_confounds: [topic]
-topics_json: src/analysis/topic_classification/output/topics_v2.json
+topics_json: data/topics/topics.json

@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import instructor
 from pydantic import BaseModel, Field
 
 from src.measurement.elicitation.judge_client import get_async_client
@@ -52,6 +53,7 @@ async def judge_trait_async(
     negative_prompt: str,
     question: str,
     response: str,
+    client: instructor.AsyncInstructor | None = None,
 ) -> TraitJudgment:
     prompts = _load_prompts()
     extra_guidance = prompts["extra_guidance"][persona]
@@ -69,7 +71,9 @@ async def judge_trait_async(
             ),
         },
     ]
-    return await get_async_client().chat.completions.create(
+    if client is None:
+        client = get_async_client()
+    return await client.chat.completions.create(
         model=JUDGE_MODEL,
         response_model=TraitJudgment,
         messages=messages,

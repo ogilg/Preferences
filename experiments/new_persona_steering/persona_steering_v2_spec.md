@@ -29,35 +29,57 @@ Five personas with extreme contrastive prompts. Artifacts in `artifacts/{persona
 
 ## Pod Data Requirements
 
-**No gitignored data needs to be synced.** All inputs are committed. The model (Gemma 3-27B-IT) is downloaded from HuggingFace at runtime.
+Filtered completions from Phase 1 must be synced to the pod for extraction:
+
+```bash
+ssh root@<IP> -p <PORT> -i ~/.ssh/id_ed25519 "mkdir -p /workspace/Preferences/results/experiments/persona_steering_v2/contrastive" && scp -r -P <PORT> -i ~/.ssh/id_ed25519 results/experiments/persona_steering_v2/contrastive/*_filtered.json root@<IP>:/workspace/Preferences/results/experiments/persona_steering_v2/contrastive/
+```
+
+The model (Gemma 3-27B-IT) is downloaded from HuggingFace at runtime.
 
 ## Pipeline
 
-### Phase 1: Activation Extraction + Vector Computation
+### Phase 1: Generation, Trait Filtering, Extraction + Vector Computation
 
-Extract activations from Gemma 3-27B-IT processing pre-written caricatured completions.
+Generate completions from Gemma 3-27B-IT under contrastive system prompts, filter by trait expression, then extract response-averaged activations to compute persona vectors. Following Chen et al. (2025), we use response-token-averaged activations (not prompt-last) and filter by trait score before computing the mean-difference vector.
+
+#### Step 1a + 1b: Generate contrastive completions + trait filtering [DONE]
+
+Completions generated via OpenRouter and scored with Claude Sonnet 4.6 trait judge locally. Script: `scripts/new_persona_steering/generate_contrastive.py`.
+
+Results: 2998/3000 completions generated and scored. Near-perfect separation — positive conditions scored 4.67–4.99 mean, negative conditions scored ~1.0. Filtered completions (pos ≥4, neg ≤2) in `results/experiments/persona_steering_v2/contrastive/{persona}_{condition}_filtered.json`.
+
+| Persona | Pos filtered | Neg filtered |
+|---|---|---|
+| sadist | 294/300 | 300/300 |
+| villain | 300/300 | 300/300 |
+| aesthete | 299/299 | 300/300 |
+| lazy | 300/300 | 299/300 |
+| stem_obsessive | 300/300 | 299/299 |
+
+#### Step 1c: Extract activations [TODO — requires GPU pod]
+
+Run the extraction pipeline on the filtered completions using `--from-completions`. One extraction per persona per condition (10 total). Each config includes the corresponding system prompt from the persona artifact so the model processes completions in the same context they were generated in.
 
 | Parameter | Value |
 |---|---|
-| Model | `gemma-3-27b` |
-| Selector | `prompt_last` |
+| Selector | `mean` (average over all response/completion tokens) |
 | Layers | 23, 29, 35, 41 (4 layers, 0.37–0.66 of 62 total) |
-| Questions | 30 from `artifacts/extraction_questions.json` |
-| Completions | Pre-written by Grok in `completions/{persona}.json` |
-| Conditions | positive + negative completions = 60 extractions per persona |
+| Input | `results/experiments/persona_steering_v2/contrastive/{persona}_{pos,neg}_filtered.json` |
+| System prompt | `artifacts/{persona}.json` → `positive` for pos, `negative` for neg |
 
-Use the config-driven extraction pipeline with `--from-completions`:
+Need 10 extraction configs in `configs/extraction/` — one per (persona, condition), each with the appropriate `system_prompt` field.
 
 ```bash
-python -m src.probes.extraction.run configs/extraction/<persona>_pos.yaml --from-completions completions/<persona>.json
+python -m src.probes.extraction.run configs/extraction/persona_v2_<persona>_<condition>.yaml --from-completions results/experiments/persona_steering_v2/contrastive/<persona>_<condition>_filtered.json
 ```
-
-Each completions file has `positive_completions` and `negative_completions` arrays of `{task_id, task_prompt, completion}` records. Run extraction separately for each condition (positive/negative) — write a simple script to split them if needed. No system prompt is needed since the completions already embed the persona.
 
 Save to `results/experiments/persona_steering_v2/{persona}/activations/`.
 
-**Vector computation** (per persona, per layer):
-- `direction = mean(positive) - mean(negative)`, normalized to unit vector
+#### Step 1d: Vector computation
+
+Per persona, per layer:
+- `direction = mean(positive_filtered) - mean(negative_filtered)`, normalized to unit vector
 - Save in probe-compatible format (direction + intercept=0) as `.npy`
 
 Save to `results/experiments/persona_steering_v2/{persona}/vectors/`.
@@ -77,7 +99,7 @@ Use `suggest_coefficient_range(activations_path, layer, multipliers)` from `src/
 
 **Coherence scoring:** Use `judge_open_ended_coherence_async` from `src/measurement/elicitation/coherence_judge.py`. A (persona, layer, multiplier) combo passes if ≥4 of its 5 completions are judged coherent.
 
-**Trait scoring:** Use `judge_trait_async(persona, positive_prompt, negative_prompt, question, response)` from `src/measurement/elicitation/trait_judge.py` (Claude Sonnet 4.6, 1–5 scale) on every completion. Load positive/negative prompts from the persona artifact files.
+**Trait scoring:** Score trait expression (1–5 scale) using the trait judge prompt from `src/measurement/elicitation/trait_judge.py` via `OpenRouterClient` (Claude Sonnet 4.6). Do NOT use `instructor`/`judge_trait_async` for concurrent calls — it hangs. Use the same OpenRouterClient + JSON parsing pattern from Phase 1b (see `scripts/new_persona_steering/generate_contrastive.py`).
 
 **Output:** For each (persona, layer, multiplier): coherence pass/fail and mean trait score. Coherent combos proceed to Phase 3. Trait scores are a diagnostic to correlate with preference shifts in the analysis.
 
@@ -128,7 +150,7 @@ Compare against baseline. Report shifts with 95% CIs.
 
 ### Secondary: Trait Expression vs Preference Shift
 
-For each (persona, layer, multiplier) combo, plot trait score against preference shift (both from Phase 2 and 3). Does stronger trait expression predict larger preference shifts? This is the key question: if trait expression and preference shifts are uncorrelated, persona vectors affect style and preferences through independent mechanisms.
+For each (persona, layer, multiplier) combo, plot trait score against preference shift (both from Phase 2 and 3). Does stronger trait expression predict larger preference shifts? Correlation would be evidence for a shared mechanism; lack of correlation is inconclusive (could be noise or independent mechanisms).
 
 ### Tertiary: Coherence and Trait Summary
 
@@ -141,8 +163,10 @@ For each (persona, layer, multiplier) combo, plot trait score against preference
 | Resource | Path |
 |---|---|
 | Persona artifacts | `experiments/new_persona_steering/artifacts/{persona}.json` |
-| Caricatured completions | `experiments/new_persona_steering/completions/{persona}.json` |
 | Extraction questions | `experiments/new_persona_steering/artifacts/extraction_questions.json` |
+| Contrastive completions | `results/experiments/persona_steering_v2/contrastive/checkpoint.jsonl` |
+| Filtered completions | `results/experiments/persona_steering_v2/contrastive/{persona}_{condition}_filtered.json` |
+| Filter summary | `results/experiments/persona_steering_v2/contrastive/filter_summary.json` |
 | Task set | `experiments/new_persona_steering/artifacts/task_set.json` |
 | Task pairs | `experiments/new_persona_steering/artifacts/task_pairs.json` |
 | Activations | `results/experiments/persona_steering_v2/{persona}/activations/` |
@@ -156,20 +180,22 @@ For each (persona, layer, multiplier) combo, plot trait score against preference
 
 | Component | Module |
 |---|---|
-| Activation extraction | `src/probes/extraction/run` with `--from-completions` |
+| Activation extraction | `src/probes/extraction/run` with `--from-completions` and `mean` selector |
 | HF model | `src/models/huggingface_model.py` → `HuggingFaceModel("gemma-3-27b")` |
 | Steering client | `src/steering/client.py` → `SteeredHFClient` + `with_coefficient()` |
 | Coefficient calibration | `src/steering/calibration.py` → `suggest_coefficient_range(activations_path, layer, multipliers)` |
 | Coherence judge | `src/measurement/elicitation/coherence_judge.py` → `judge_open_ended_coherence_async` |
-| Trait judge | `src/measurement/elicitation/trait_judge.py` → `judge_trait_async` (Phase 2, diagnostic) |
+| Trait judge | `src/measurement/elicitation/trait_judge.py` → `judge_trait_async` (Phase 1b filtering + Phase 2 diagnostic) |
 | Preference measurement | `src/measurement/elicitation/measure.py` → `measure_pre_task_revealed_async` with `CompletionChoiceFormat` |
 
 ## Trial Budget
 
 | Phase | Generations | Notes |
 |---|---|---|
-| 1: Extraction | 300 forward passes | 5 personas × 30 questions × 2 conditions (pre-written completions), batched |
+| 1a: Contrastive generation | 3,000 | 5 personas × 30 questions × 2 conditions × 10 rollouts, max_new_tokens=256 |
+| 1b: Trait filtering | 0 (judge only) | 3,000 trait judge calls to filter completions |
+| 1c: Extraction | ~3,000 forward passes | Filtered completions (~2,985 survived), batched |
 | 2: Coherence + trait | 600 | 5 × 4 × 6 × 5, max_new_tokens=256 |
 | 3: Preference steering | ~108k (est.) | All coherent combos × 90 pairs × 20, max_new_tokens=128 |
 
-Coherence judge calls: 600 (Phase 2). Trait judge calls: 600 (Phase 2). Choice judge calls: ~108k (Phase 3, most resolved by prefix match in `CompletionChoiceFormat`).
+Trait judge calls: 3,000 (Phase 1b) + 600 (Phase 2). Coherence judge calls: 600 (Phase 2). Choice judge calls: ~108k (Phase 3, most resolved by prefix match in `CompletionChoiceFormat`).

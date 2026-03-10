@@ -14,7 +14,7 @@ alpha_sweep_size: 10
 
 standardize: true
 
-topics_json: src/analysis/topic_classification/output/topics.json
+topics_json: data/topics/topics.json
 
 hoo_grouping: topic
 hoo_hold_out_size: 1
