@@ -1,0 +1,403 @@
+{
+  "experiment_name": "gemma3_pt_10k_heldout_task_mean",
+  "run_dir": "results/experiments/main_probes/gemma3_10k_run1/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "activations_path": "activations/gemma_3_27b_pt_task_mean/activations_task_mean.npz",
+  "modes": [
+    "ridge"
+  ],
+  "standardize": true,
+  "demean_confounds": [
+    "topic"
+  ],
+  "created_at": "2026-03-10T15:39:44.394955",
+  "n_tasks_in_experiment": 10000,
+  "n_tasks_with_activations": 14034,
+  "n_comparisons_in_experiment": 0,
+  "probes": [
+    {
+      "id": "ridge_L15",
+      "file": "probes/probe_ridge_L15.npy",
+      "method": "ridge",
+      "layer": 15,
+      "standardize": true,
+      "demean_confounds": [
+        "topic"
+      ],
+      "best_alpha": 21544.346900318822,
+      "sweep_r": 0.6055344824933773,
+      "final_r": 0.5819237861763115,
+      "final_acc": null,
+      "n_train": 9998,
+      "n_sweep": 2018,
+      "n_final": 2018,
+      "n_final_pairs": 0,
+      "n_samples": 9998,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.3894762448406035
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.39020343682100433
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.39279214247236555
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.40254174119798586
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.4338212113475886
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.49725247603611783
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.5658727960588625
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6052975694169574
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.6055344824933773
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.573628767761912
+        }
+      ]
+    },
+    {
+      "id": "ridge_L31",
+      "file": "probes/probe_ridge_L31.npy",
+      "method": "ridge",
+      "layer": 31,
+      "standardize": true,
+      "demean_confounds": [
+        "topic"
+      ],
+      "best_alpha": 4641.588833612773,
+      "sweep_r": 0.6552244775201923,
+      "final_r": 0.6378490642591716,
+      "final_acc": null,
+      "n_train": 9998,
+      "n_sweep": 2018,
+      "n_final": 2018,
+      "n_final_pairs": 0,
+      "n_samples": 9998,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.47657307696751605
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.4770877831392603
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.4791768733904297
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.48686383581750653
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.511565086264882
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.5635412796226557
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.6222086412359784
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6552244775201923
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.6542091664526043
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.6214012365896736
+        }
+      ]
+    },
+    {
+      "id": "ridge_L37",
+      "file": "probes/probe_ridge_L37.npy",
+      "method": "ridge",
+      "layer": 37,
+      "standardize": true,
+      "demean_confounds": [
+        "topic"
+      ],
+      "best_alpha": 4641.588833612773,
+      "sweep_r": 0.6403360583035661,
+      "final_r": 0.6108990350751392,
+      "final_acc": null,
+      "n_train": 9998,
+      "n_sweep": 2018,
+      "n_final": 2018,
+      "n_final_pairs": 0,
+      "n_samples": 9998,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.4702180480618192
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.47061102786994374
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.4721590437014768
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.47834035393480917
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.5001278763255144
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.5502889411628878
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.6100216023743139
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6403360583035661
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.6361944896613252
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.6020998265768167
+        }
+      ]
+    },
+    {
+      "id": "ridge_L43",
+      "file": "probes/probe_ridge_L43.npy",
+      "method": "ridge",
+      "layer": 43,
+      "standardize": true,
+      "demean_confounds": [
+        "topic"
+      ],
+      "best_alpha": 21544.346900318822,
+      "sweep_r": 0.6254270822837024,
+      "final_r": 0.5988000731856005,
+      "final_acc": null,
+      "n_train": 9998,
+      "n_sweep": 2018,
+      "n_final": 2018,
+      "n_final_pairs": 0,
+      "n_samples": 9998,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.4495794222900912
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.4499617233608208
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.45169062126211157
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.45866036823711515
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.4815236714782367
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.5304321892793847
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.5884540355821826
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6239610411886112
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.6254270822837024
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.5940575588912044
+        }
+      ]
+    },
+    {
+      "id": "ridge_L49",
+      "file": "probes/probe_ridge_L49.npy",
+      "method": "ridge",
+      "layer": 49,
+      "standardize": true,
+      "demean_confounds": [
+        "topic"
+      ],
+      "best_alpha": 4641.588833612773,
+      "sweep_r": 0.6265703283090043,
+      "final_r": 0.6007003584059483,
+      "final_acc": null,
+      "n_train": 9998,
+      "n_sweep": 2018,
+      "n_final": 2018,
+      "n_final_pairs": 0,
+      "n_samples": 9998,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.4658807889110447
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.46616594010082724
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.4675580507807881
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.47353833530036854
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.494636717797807
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.5427365196462427
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.5978350835355488
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6265703283090043
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.6228145590561559
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.5916357146193784
+        }
+      ]
+    },
+    {
+      "id": "ridge_L55",
+      "file": "probes/probe_ridge_L55.npy",
+      "method": "ridge",
+      "layer": 55,
+      "standardize": true,
+      "demean_confounds": [
+        "topic"
+      ],
+      "best_alpha": 4641.588833612773,
+      "sweep_r": 0.6249859500744707,
+      "final_r": 0.5966936511246421,
+      "final_acc": null,
+      "n_train": 9998,
+      "n_sweep": 2018,
+      "n_final": 2018,
+      "n_final_pairs": 0,
+      "n_samples": 9998,
+      "alpha_sweep": [
+        {
+          "alpha": 0.1,
+          "sweep_r": 0.4553704091868155
+        },
+        {
+          "alpha": 0.46415888336127786,
+          "sweep_r": 0.4558125216173322
+        },
+        {
+          "alpha": 2.1544346900318834,
+          "sweep_r": 0.45787596764990035
+        },
+        {
+          "alpha": 10.0,
+          "sweep_r": 0.46650013558797615
+        },
+        {
+          "alpha": 46.41588833612777,
+          "sweep_r": 0.4940860945811662
+        },
+        {
+          "alpha": 215.44346900318823,
+          "sweep_r": 0.5472441810634008
+        },
+        {
+          "alpha": 1000.0,
+          "sweep_r": 0.5999823820124325
+        },
+        {
+          "alpha": 4641.588833612773,
+          "sweep_r": 0.6249859500744707
+        },
+        {
+          "alpha": 21544.346900318822,
+          "sweep_r": 0.6199004286458177
+        },
+        {
+          "alpha": 100000.0,
+          "sweep_r": 0.5901839118822702
+        }
+      ]
+    }
+  ],
+  "eval_run_dir": "results/experiments/main_probes/gemma3_4k_pre_task/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "eval_split_seed": 42,
+  "metadata_r2": 0.3795,
+  "metadata_features": [
+    "topic_content_generation",
+    "topic_fiction",
+    "topic_harmful_request",
+    "topic_knowledge_qa",
+    "topic_math",
+    "topic_model_manipulation",
+    "topic_other",
+    "topic_persuasive_writing",
+    "topic_security_legal",
+    "topic_sensitive_creative",
+    "topic_summarization",
+    "topic_value_conflict"
+  ],
+  "n_tasks_demeaned": 10000,
+  "n_tasks_dropped": 0
+}
