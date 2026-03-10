@@ -1,5 +1,4 @@
 model: gpt-oss-120b
-backend: huggingface
 
 n_tasks: 30000
 task_origins:

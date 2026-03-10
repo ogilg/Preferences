@@ -1,7 +1,6 @@
 model: gemma-3-27b
-backend: huggingface
 
-activations_model: gemma-3-27b
+task_origins: [wildchat, alpaca, math, bailbench, stress_test]
 task_ids_file: configs/extraction/mra_all_2500_task_ids.txt
 
 selectors: [turn_boundary:-1]

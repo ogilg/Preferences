@@ -8,7 +8,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from src.probes.extraction import ExtractionConfig, run_extraction
+from src.probes.extraction import ExtractionConfig, run_extraction, run_from_completions
 
 
 def parse_args() -> argparse.Namespace:
@@ -29,10 +29,12 @@ def main() -> None:
     config = ExtractionConfig.from_yaml(
         args.config,
         resume=args.resume if args.resume else None,
-        from_completions=args.from_completions,
         batch_size=args.batch_size,
     )
-    run_extraction(config)
+    if args.from_completions:
+        run_from_completions(config, args.from_completions)
+    else:
+        run_extraction(config)
 
 
 if __name__ == "__main__":

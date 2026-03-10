@@ -12,12 +12,8 @@ import torch
 from tqdm import tqdm
 
 from src.measurement.storage.completions import extract_completion_text
-from src.measurement.runners.utils.runner_utils import (
-    load_activation_task_ids,
-    get_activation_completions_path,
-)
+from src.models.base import COMPLETION_SELECTORS
 from src.models.huggingface_model import HuggingFaceModel
-from src.models.registry import has_hf_support
 from src.task_data import load_filtered_tasks, OriginDataset, Task
 from src.types import Message
 
@@ -38,22 +34,24 @@ def _gpu_mem_gb() -> tuple[float, float]:
 
 
 def _load_model(config: ExtractionConfig) -> HuggingFaceModel:
-    if not has_hf_support(config.model):
-        raise ValueError(f"Model {config.model} does not have HuggingFace support.")
-    return HuggingFaceModel(config.model, max_new_tokens=config.max_new_tokens)
+    return HuggingFaceModel(config.model, max_new_tokens=config.max_new_tokens, subfolder=config.subfolder)
+
+
+def _load_task_ids_filter(task_ids_file: Path | None) -> set[str] | None:
+    if task_ids_file is None:
+        return None
+    raw = task_ids_file.read_text().strip()
+    if raw.startswith("{"):
+        data = json.loads(raw)
+        task_ids = set(data["task_ids"])
+    else:
+        task_ids = set(raw.splitlines())
+    print(f"Filtering to {len(task_ids)} task IDs from {task_ids_file}")
+    return task_ids
 
 
 def _load_tasks(config: ExtractionConfig) -> list[Task]:
-    # Load task_ids_file filter if specified
-    task_ids_filter: set[str] | None = None
-    if config.task_ids_file is not None:
-        raw = config.task_ids_file.read_text().strip()
-        if raw.startswith("{"):
-            data = json.loads(raw)
-            task_ids_filter = set(data["task_ids"])
-        else:
-            task_ids_filter = set(raw.splitlines())
-        print(f"Filtering to {len(task_ids_filter)} task IDs from {config.task_ids_file}")
+    task_ids_filter = _load_task_ids_filter(config.task_ids_file)
 
     if config.custom_tasks_file is not None:
         with open(config.custom_tasks_file) as f:
@@ -67,35 +65,12 @@ def _load_tasks(config: ExtractionConfig) -> list[Task]:
         print(f"Loaded {len(tasks)} custom tasks from {config.custom_tasks_file}")
         return tasks[:config.n_tasks] if config.n_tasks is not None else tasks
 
-    if config.activations_model is not None:
-        activation_task_ids = load_activation_task_ids(config.activations_model)
-        with open(get_activation_completions_path(config.activations_model)) as f:
-            completions_data = json.load(f)
-        tasks = [
-            Task(
-                id=c["task_id"],
-                prompt=c["task_prompt"],
-                origin=OriginDataset[c["origin"]],
-                metadata={},
-            )
-            for c in completions_data
-            if c["task_id"] in activation_task_ids
-        ]
-        if task_ids_filter is not None:
-            tasks = [t for t in tasks if t.id in task_ids_filter]
-        return tasks[:config.n_tasks] if config.n_tasks is not None else tasks
-
-    if config.task_origins is None:
-        raise ValueError("task_origins is required when not using activations_model or custom_tasks_file")
-    if config.n_tasks is None:
-        raise ValueError("n_tasks is required when not using activations_model or custom_tasks_file")
     task_origins = [OriginDataset[o.upper()] for o in config.task_origins]
+    n = config.n_tasks if config.n_tasks is not None else len(task_ids_filter)
     return load_filtered_tasks(
-        n=config.n_tasks,
+        n=n,
         origins=task_origins,
         seed=config.seed,
-        consistency_model=config.consistency_filter_model,
-        consistency_keep_ratio=config.consistency_keep_ratio,
         task_ids=task_ids_filter,
     )
 
@@ -141,20 +116,15 @@ def _build_metadata(
 
 def run_extraction(config: ExtractionConfig) -> None:
     output_dir = config.resolved_output_dir
+    needs_generation = bool(set(config.selectors) & COMPLETION_SELECTORS)
 
-    print(f"Loading model: {config.model} (backend: {config.backend})...")
+    print(f"Loading model: {config.model}...")
     model = _load_model(config)
 
     resolved_layers = [model.resolve_layer(layer) for layer in config.layers_to_extract]
     print(f"Layers: {config.layers_to_extract} -> {resolved_layers} ({model.n_layers} total)")
     print(f"Selectors: {config.selectors}")
 
-    # --- From-completions path (separate flow, no manifest) ---
-    if config.from_completions is not None:
-        _run_from_completions(config, model, resolved_layers, output_dir)
-        return
-
-    # --- Standard path ---
     tasks = _load_tasks(config)
 
     task_ids: list[str] = []
@@ -174,7 +144,7 @@ def run_extraction(config: ExtractionConfig) -> None:
 
     print(f"{len(tasks)} tasks to process")
 
-    if config.needs_generation:
+    if needs_generation:
         stats = generation_extraction(
             model=model, tasks=tasks, layers=resolved_layers,
             selectors=config.selectors, temperature=config.temperature,
@@ -184,8 +154,6 @@ def run_extraction(config: ExtractionConfig) -> None:
             system_prompt=config.system_prompt,
         )
     else:
-        if not isinstance(model, HuggingFaceModel):
-            raise ValueError("Batched extraction requires HuggingFace backend")
         task_lookup = {task.id: task for task in tasks}
         items: list[tuple[str, list[Message]]] = [
             (task.id, _build_messages(task.prompt, config.system_prompt))
@@ -198,7 +166,6 @@ def run_extraction(config: ExtractionConfig) -> None:
             task_ids=task_ids, activations=activations,
             output_dir=output_dir, save_every=config.save_every,
         )
-        # Build manifest from actually-succeeded task_ids (not tasks[:n_new])
         for tid in task_ids[n_before:]:
             task = task_lookup[tid]
             completions.append({
@@ -217,16 +184,17 @@ def run_extraction(config: ExtractionConfig) -> None:
     print(f"\nDone! {stats.n_new} new, {stats.n_failures} failures, {stats.n_ooms} OOMs")
 
 
-def _run_from_completions(
-    config: ExtractionConfig,
-    model: HuggingFaceModel,
-    resolved_layers: list[int],
-    output_dir: Path,
-) -> None:
-    if not isinstance(model, HuggingFaceModel):
-        raise ValueError("Batched extraction requires HuggingFace backend")
+def run_from_completions(config: ExtractionConfig, completions_path: Path) -> None:
+    output_dir = config.resolved_output_dir
 
-    with open(config.from_completions) as f:
+    print(f"Loading model: {config.model}...")
+    model = _load_model(config)
+
+    resolved_layers = [model.resolve_layer(layer) for layer in config.layers_to_extract]
+    print(f"Layers: {config.layers_to_extract} -> {resolved_layers} ({model.n_layers} total)")
+    print(f"Selectors: {config.selectors}")
+
+    with open(completions_path) as f:
         completions_data: list[dict] = json.load(f)
 
     task_ids: list[str] = []
@@ -262,7 +230,7 @@ def _run_from_completions(
 
     metadata = _build_metadata(
         config, resolved_layers, model.n_layers, n_existing, stats,
-        source_completions=str(config.from_completions),
+        source_completions=str(completions_path),
     )
     save_extraction_metadata(output_dir, metadata)
     print(f"\nDone! Extracted {stats.n_new} new, {stats.n_failures} failures")

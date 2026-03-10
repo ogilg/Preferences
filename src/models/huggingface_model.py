@@ -37,6 +37,7 @@ class HuggingFaceModel:
         device: str = "cuda",
         max_new_tokens: int = 256,
         attn_implementation: str = "sdpa",
+        subfolder: str | None = None,
     ):
         self.canonical_model_name = model_name
         if is_valid_model(model_name):
@@ -48,22 +49,23 @@ class HuggingFaceModel:
         self.device = device
 
         torch_dtype = getattr(torch, dtype)
+        load_kwargs: dict = dict(
+            torch_dtype=torch_dtype,
+            device_map=device,
+        )
+        if subfolder is not None:
+            load_kwargs["subfolder"] = subfolder
         try:
             self.model = AutoModelForCausalLM.from_pretrained(
-                resolved_name,
-                torch_dtype=torch_dtype,
-                device_map=device,
-                attn_implementation=attn_implementation,
+                resolved_name, attn_implementation=attn_implementation, **load_kwargs,
             )
         except ValueError:
             self.model = AutoModelForCausalLM.from_pretrained(
-                resolved_name,
-                torch_dtype=torch_dtype,
-                device_map=device,
-                attn_implementation="eager",
+                resolved_name, attn_implementation="eager", **load_kwargs,
             )
         self.model.eval()
-        self.tokenizer = AutoTokenizer.from_pretrained(resolved_name)
+        tokenizer_kwargs = {"subfolder": subfolder} if subfolder else {}
+        self.tokenizer = AutoTokenizer.from_pretrained(resolved_name, **tokenizer_kwargs)
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
 

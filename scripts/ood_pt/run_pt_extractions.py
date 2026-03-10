@@ -31,20 +31,22 @@ def run_ood_pt() -> None:
             with open(al_config_path) as f:
                 al_config = yaml.safe_load(f)
 
+            custom_tasks_file = Path(p) if (p := al_config.get("custom_tasks_file")) else None
+            task_origins = None if custom_tasks_file else al_config.get(
+                "task_origins",
+                ["wildchat", "alpaca", "math", "bailbench", "stress_test"],
+            )
             config = ExtractionConfig(
                 model="gemma-3-27b-pt",
                 n_tasks=al_config["n_tasks"],
-                task_origins=al_config.get(
-                    "task_origins",
-                    ["wildchat", "alpaca", "math", "bailbench", "stress_test"],
-                ),
+                task_origins=task_origins,
                 layers_to_extract=[31],
                 selectors=["prompt_last"],
                 batch_size=32,
                 output_dir=str(act_root / condition),
                 resume=True,
                 system_prompt=al_config.get("measurement_system_prompt"),
-                custom_tasks_file=Path(p) if (p := al_config.get("custom_tasks_file")) else None,
+                custom_tasks_file=custom_tasks_file,
                 task_ids_file=Path(p) if (p := al_config.get("include_task_ids_file")) else None,
             )
 

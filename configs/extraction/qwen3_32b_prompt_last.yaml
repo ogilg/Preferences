@@ -1,5 +1,4 @@
 model: qwen3-32b
-backend: huggingface
 
 n_tasks: 30000
 task_origins:

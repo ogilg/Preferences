@@ -1,5 +1,4 @@
 model: gemma-3-27b-pt
-backend: huggingface
 
 n_tasks: 30000
 task_origins:
