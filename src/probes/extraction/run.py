@@ -1,6 +1,6 @@
 """Extract activations from model completions on tasks.
 
-Usage: python -m src.probes.extraction.run configs/extraction/gemma3_27b_prompt_last.yaml
+Usage: python -m src.probes.extraction.run configs/extraction/<config>.yaml
 """
 
 from __future__ import annotations

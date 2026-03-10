@@ -232,7 +232,7 @@ def synthetic_experiment():
         baseline_dir = tmpdir / "activations" / "baseline"
         baseline_dir.mkdir(parents=True)
         np.savez(
-            baseline_dir / "activations_prompt_last.npz",
+            baseline_dir / "activations_turn_boundary_-1.npz",
             **{f"layer_{layer}": baseline_acts},
             task_ids=np.array(task_ids),
         )
@@ -253,7 +253,7 @@ def synthetic_experiment():
             cond_dir = tmpdir / "activations" / cid
             cond_dir.mkdir(parents=True)
             np.savez(
-                cond_dir / "activations_prompt_last.npz",
+                cond_dir / "activations_turn_boundary_-1.npz",
                 **{f"layer_{layer}": cond_acts},
                 task_ids=np.array(task_ids),
             )

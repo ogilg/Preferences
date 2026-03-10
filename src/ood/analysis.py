@@ -82,7 +82,7 @@ def compute_deltas(
     probe_path: Path,
     layer: int,
     baseline_activations_key: str = "baseline",
-    activations_filename: str = "activations_prompt_last.npz",
+    activations_filename: str = "activations_turn_boundary_-1.npz",
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute behavioral and probe deltas for all conditions vs baseline.
 
