@@ -1,0 +1,30 @@
+{
+  "n_measurements": 2100,
+  "pair_probs": {
+    "fiction_vs_math": {
+      "p": 0.364,
+      "n": 500
+    },
+    "fiction_vs_harmful_request": {
+      "p": 0.662,
+      "n": 500
+    },
+    "math_vs_fiction": {
+      "p": 0.636,
+      "n": 500
+    },
+    "math_vs_harmful_request": {
+      "p": 0.778,
+      "n": 500
+    },
+    "harmful_request_vs_fiction": {
+      "p": 0.338,
+      "n": 500
+    },
+    "harmful_request_vs_math": {
+      "p": 0.222,
+      "n": 500
+    }
+  },
+  "position_bias": 0.5980952380952381
+}

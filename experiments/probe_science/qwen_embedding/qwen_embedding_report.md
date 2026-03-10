@@ -14,6 +14,8 @@
 
 \*HOO not perfectly matched: Qwen used 10 topics / 2,502 tasks; Gemma and MiniLM used 12 topics / 10,000 tasks. See Caveats.
 
+![Cross-model comparison](assets/plot_030926_cross_model_bar.png)
+
 ### Heldout evaluation
 
 Train on 10k preferences, evaluate on ~4k heldout set (split 50/50 into alpha sweep and final eval, seed=42). Ridge probe with 10-value alpha sweep.
