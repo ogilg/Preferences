@@ -1,84 +1,83 @@
 # Stronger Content Baseline: Qwen3-Embedding-8B
 
-**Goal**: Replace the all-MiniLM-L6-v2 (22M, 384d) content baseline with Qwen3-Embedding-8B (7.5B, 4096d) and rerun the two probe evaluations to see how much of the probe signal is explained by a strong content encoder.
+**Goal**: Replace all-MiniLM-L6-v2 (22M, 384d) content baseline with Qwen3-Embedding-8B (7.5B, 4096d) and rerun probe evaluations to see how much preference signal a strong content encoder captures.
 
-**Result**: Qwen3-Embedding-8B substantially outperforms MiniLM as a content baseline, but Gemma-3 activations still explain significantly more preference variance.
+**Result**: Qwen3-Embedding-8B substantially outperforms MiniLM, but Gemma-3 activations still explain significantly more preference variance in both heldout and cross-topic settings.
 
 ## Results
 
-| Model | Heldout r | Cross-topic r (HOO)\* |
+| Model | Heldout r | Cross-topic r (HOO) |
 |-------|-----------|---------------------|
-| Gemma-3-27B IT (L31) | 0.864 | 0.817 |
-| **Qwen3-Embedding-8B (4096d, 7.5B)** | **0.725** | **0.618** |
-| all-MiniLM-L6-v2 (384d, 22M) | 0.614 | 0.354 |
+| Gemma-3-27B IT (L31) | 0.864 | 0.817 (12 folds) |
+| **Qwen3-Embedding-8B (4096d, 7.5B)** | **0.726** | **0.560 (13 folds)** |
+| all-MiniLM-L6-v2 (384d, 22M) | 0.614 | 0.354 (12 folds) |
 
-\*HOO not perfectly matched: Qwen used 10 topics / 2,502 tasks; Gemma and MiniLM used 12 topics / 10,000 tasks. See Caveats.
-
-![Cross-model comparison](assets/plot_030926_cross_model_bar.png)
+![Cross-model comparison](assets/plot_031026_cross_model_bar.png)
 
 ### Heldout evaluation
 
-Train on 10k preferences, evaluate on ~4k heldout set (split 50/50 into alpha sweep and final eval, seed=42). Ridge probe with 10-value alpha sweep.
+Train on 10k preferences, evaluate on ~4k heldout set (50/50 alpha sweep / final eval, seed=42).
 
 | Metric | Qwen3-Emb-8B | MiniLM |
 |--------|--------------|--------|
-| Sweep r | 0.714 | — |
-| Final r | 0.725 | 0.614 |
+| Final r | 0.726 | 0.614 |
 | Final acc | 0.694 | — |
 | Best alpha | 4642 | — |
 
 ### HOO cross-topic evaluation
 
-Train on all-but-one topic, evaluate on held-out topic. Ridge probe.
+Train on all-but-one topic, evaluate on held-out topic. 13 folds using canonical `data/topics/topics.json` (Claude Sonnet 4.5 classifications, 13 topics including value_conflict).
 
-| Metric | Qwen3-Emb-8B | MiniLM |
-|--------|--------------|--------|
-| Mean val r | 0.656 | 0.632 |
-| Mean HOO r | 0.618 | 0.354 |
-| N folds | 10 | 12 |
-| N tasks | 2,502 | 10,000 |
+| Metric | Qwen3-Emb-8B | MiniLM | Gemma IT |
+|--------|--------------|--------|----------|
+| Mean HOO r | 0.560 | 0.354 | 0.817 |
+| N folds | 13 | 12 | 12 |
+| N tasks | 10,000 | 10,000 | 10,000 |
 
 Per-topic HOO r (Qwen):
 
 | Topic | HOO r | N eval |
 |-------|-------|--------|
-| math | 0.821 | 19 |
-| other | 0.743 | 20 |
-| content_generation | 0.679 | 295 |
-| value_conflict | 0.632 | 459 |
-| summarization | 0.615 | 15 |
-| harmful_request | 0.588 | 592 |
-| fiction | 0.573 | 117 |
-| knowledge_qa | 0.558 | 803 |
-| persuasive_writing | 0.510 | 101 |
-| coding | 0.462 | 81 |
+| sensitive_creative | 0.686 | 70 |
+| other | 0.659 | 47 |
+| value_conflict | 0.651 | 459 |
+| security_legal | 0.631 | 233 |
+| fiction | 0.616 | 658 |
+| model_manipulation | 0.596 | 166 |
+| harmful_request | 0.590 | 833 |
+| content_generation | 0.587 | 1,540 |
+| summarization | 0.580 | 92 |
+| knowledge_qa | 0.538 | 2,409 |
+| persuasive_writing | 0.530 | 313 |
+| coding | 0.481 | 407 |
+| math | 0.141 | 2,773 |
+
+Math is a major outlier: the content encoder captures almost no cross-topic signal for math preferences (HOO r = 0.141). This matches the pattern seen in Gemma probes (math HOO r = 0.512 — the worst topic there too), but the gap is much larger for a content-only encoder.
 
 ## Interpretation
 
-1. **Content explains more than MiniLM suggested.** The 22M-parameter MiniLM baseline was too weak to capture the full content signal. Qwen3-Embedding-8B recovers heldout r=0.725 (vs 0.614), confirming the concern (raised on LessWrong) that the original content baseline was underpowered.
+1. **Content explains more than MiniLM suggested.** Qwen3-Embedding-8B recovers heldout r=0.726 (vs MiniLM 0.614), confirming that the original content baseline was underpowered.
 
-2. **Gemma-3 activations still outperform.** Despite being a 7.5B embedding model, Qwen's heldout r=0.725 is well below Gemma-3's r=0.864. The gap (0.139) represents signal in Gemma-3's activations beyond what even a strong content encoder captures -- the model's evaluative processing, not just content understanding.
+2. **Gemma-3 activations still outperform substantially.** Heldout: R^2 0.747 vs 0.526, a 22 percentage-point gap. HOO: 0.817 vs 0.560 — Gemma's cross-topic generalization is dramatically better.
 
-3. **Cross-topic generalization shows the biggest improvement.** Qwen's HOO r=0.618 is 1.75x MiniLM's 0.354, meaning much of what MiniLM missed was within-topic content structure. However, Gemma-3's HOO r=0.817 still shows a large gap (0.199), suggesting genuine cross-topic evaluative signal beyond content.
-
-## Caveats
-
-- **HOO comparison is not perfectly matched.** The Qwen HOO used `data/topics/topics.json` (10 topics, 2502 tasks) while MiniLM/Gemma baselines used a different topics file (12 topics, 10000 tasks) that wasn't available on this pod. The topic ontologies differ (Qwen run has "value_conflict" instead of "model_manipulation", "security_legal", "sensitive_creative"). Directional comparison is valid but exact numbers aren't apples-to-apples.
-- **Small topic folds.** Math (19), other (20), and summarization (15) have very few eval tasks, making their per-topic r values noisy.
+3. **Math preferences are not about content.** The content encoder gets HOO r=0.141 on math vs Gemma's 0.512. Preferences over math tasks depend on something the model computes beyond what the prompt text encodes — plausibly difficulty assessment or processing style, which only show up in the model's internal representations.
 
 ## Revised content-orthogonal estimates
 
-If we take Qwen's heldout r=0.725 as the content ceiling (R^2=0.526), and Gemma-3's R^2=0.746 (r=0.864), the content-orthogonal signal is at most R^2=0.746-0.526=0.220, or ~30% of total probe R^2. This is an upper bound: R^2 subtraction assumes the content and non-content signals are non-overlapping, and a still-stronger encoder could narrow the gap further.
+Taking Qwen's heldout R^2 = 0.526 as the content ceiling and Gemma's R^2 = 0.747, the content-orthogonal signal is at most R^2 = 0.747 - 0.526 = 0.221, or ~30% of total probe R^2. This is in a similar range as the parent experiment's residualization-based estimate of 27.5%, though the methods differ: that estimate projected MiniLM-predictable variance out of Gemma activations, whereas this one subtracts independent probes' R^2 values. A still-stronger content encoder could narrow the gap further.
 
-Note that this 30% estimate and the parent experiment's 27.5% are computed differently: 27.5% came from projecting content out of activations and re-probing (residualization), while 30% comes from subtracting R^2 values (content-only probe vs. activation probe). The convergence of these two methods, despite using different content encoders (22M vs 7.5B) and different decomposition approaches, strengthens confidence that the non-content signal is real and in the 25-30% range.
+## Caveats
+
+- **HOO comparison is not apples-to-apples.** Gemma/MiniLM baselines used an older `topics.json` with 12 topics. Qwen uses the current canonical file with 13 topics (value_conflict added). The reclassification was substantial — e.g., harmful_request dropped from 989 to 833 tasks, model_manipulation from 293 to 166 — meaning train/eval splits differ per fold, not just the number of folds. The spec required matching the Gemma fold structure, but the Gemma HOO was never re-run with 13 topics. The mean HOO r comparison (0.817 vs 0.560) is directionally valid but not a controlled comparison.
+- **Small topic folds.** other (47), sensitive_creative (70), and summarization (92) have few eval tasks, making their per-topic r noisy.
 
 ## Method
 
-1. Extracted Qwen3-Embedding-8B (4096d) embeddings for all 29,996 task prompts using `SentenceTransformer("Qwen/Qwen3-Embedding-8B")` with batch_size=64. Saved as `.npz` with `layer_0` key to match the activation loading format.
+1. Extracted Qwen3-Embedding-8B embeddings (4096d) for 29,996 task prompts using `SentenceTransformer("Qwen/Qwen3-Embedding-8B")`, batch_size=64, ~61 minutes on A100-80GB PCIe. Saved as `.npz` with `layer_0` key.
 2. Ran `src.probes.experiments.run_dir_probes` with existing configs (`configs/probes/qwen3_emb_8b_heldout_std_raw.yaml` and `configs/probes/qwen3_emb_8b_hoo_topic.yaml`).
 
 ## Outputs
 
 - `results/probes/qwen3_emb_8b_heldout_std_raw/manifest.json` — heldout probe manifest
-- `results/probes/qwen3_emb_8b_hoo_topic/hoo_summary.json` — HOO summary
+- `results/probes/qwen3_emb_8b_hoo_topic/hoo_summary.json` — HOO summary (13 folds)
 - `activations/qwen3_emb_8b/activations_prompt_last.npz` — embeddings (pod only, not committed)
