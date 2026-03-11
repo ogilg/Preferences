@@ -1,0 +1,16 @@
+experiment_name: llama8b_base_turn_boundary_m1
+run_dir: results/experiments/character_probes/pre_task_active_learning/completion_preference_llama-3.1-8b_completion_canonical_seed0_mra_exp2_split_a_1000_task_ids
+eval_run_dir: results/experiments/character_probes/pre_task_active_learning/completion_preference_llama-3.1-8b_completion_canonical_seed0_mra_exp2_split_b_500_task_ids
+activations_path: activations/character_probes/llama_3_1_8b_base/activations_turn_boundary:-1.npz
+output_dir: results/probes/character_probes/llama8b_base_turn_boundary_m1
+layers:
+- 8
+- 12
+- 16
+- 20
+- 24
+modes:
+- ridge
+standardize: true
+alpha_sweep_size: 20
+eval_split_seed: 42
