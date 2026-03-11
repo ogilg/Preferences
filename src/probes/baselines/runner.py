@@ -5,7 +5,6 @@ from __future__ import annotations
 from collections import defaultdict
 
 import numpy as np
-from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
 
 from src.probes.core.activations import load_activations
@@ -14,7 +13,6 @@ from src.probes.experiments.hoo_ridge import build_ridge_xy
 from src.probes.experiments.run_dir_probes import RunDirProbeConfig, train_ridge_heldout
 from src.probes.residualization import demean_scores
 
-from .noise import run_random_activations_baseline, run_shuffled_labels_baseline
 from .types import BaselineResult, BaselineType
 
 
@@ -25,8 +23,7 @@ def run_noise_baselines(
     """Run shuffled-labels and random-activations baselines.
 
     Uses the same data loading path as run_dir_probes.py.
-    When config.eval_run_dir is set, evaluates on heldout data (Pearson r + pairwise acc).
-    Otherwise falls back to CV R².
+    Evaluates on heldout data (Pearson r + pairwise acc).
     """
     scores = load_thurstonian_scores(config.run_dir)
     print(f"Loaded {len(scores)} Thurstonian scores")
@@ -39,23 +36,16 @@ def run_noise_baselines(
         print(f"Demeaned: R²={metadata_stats['metadata_r2']:.4f}, "
               f"{metadata_stats['n_tasks_demeaned']} tasks retained")
 
-    # Load eval data if heldout eval is configured
-    eval_scores: dict[str, float] | None = None
-    eval_measurements: list | None = None
-    if config.eval_run_dir is not None:
-        eval_scores, eval_measurements = load_eval_data(
-            config.eval_run_dir, set(scores.keys()),
-            demean_confounds=config.demean_confounds,
-            topics_json=config.topics_json,
-        )
+    # Load eval data (eval_run_dir is mandatory)
+    eval_scores, eval_measurements = load_eval_data(
+        config.eval_run_dir, set(scores.keys()),
+        demean_confounds=config.demean_confounds,
+        topics_json=config.topics_json,
+    )
 
-    task_id_filter = set(scores.keys())
-    if eval_scores is not None:
-        task_id_filter = task_id_filter | set(eval_scores.keys())
+    task_id_filter = set(scores.keys()) | set(eval_scores.keys())
 
-    heldout = eval_scores is not None
-    mode_str = "heldout" if heldout else "CV"
-    print(f"\nBaseline mode: {mode_str}")
+    print(f"\nBaseline mode: heldout")
 
     results: list[BaselineResult] = []
 
@@ -68,33 +58,17 @@ def run_noise_baselines(
         )
 
         indices, y = build_ridge_xy(task_ids, scores)
-        if len(indices) < config.cv_folds * 2:
+        if len(indices) < 20:
             print(f"  Skipping: insufficient samples ({len(indices)})")
             continue
 
         X = activations[layer][indices]
 
-        if heldout:
-            results.extend(_run_heldout_baselines(
-                X, y, activations[layer], task_ids, layer,
-                eval_scores, eval_measurements,
-                config, n_seeds,
-            ))
-        else:
-            if config.standardize:
-                scaler = StandardScaler()
-                X = scaler.fit_transform(X)
-
-            print(f"  {len(indices)} samples, running {n_seeds} seeds...")
-            for seed in tqdm(range(n_seeds), desc=f"  L{layer} baselines", leave=False):
-                results.append(run_shuffled_labels_baseline(
-                    X, y, layer, config.cv_folds, seed,
-                    alpha_sweep_size=config.alpha_sweep_size,
-                ))
-                results.append(run_random_activations_baseline(
-                    X, y, layer, config.cv_folds, seed,
-                    alpha_sweep_size=config.alpha_sweep_size,
-                ))
+        results.extend(_run_heldout_baselines(
+            X, y, activations[layer], task_ids, layer,
+            eval_scores, eval_measurements,
+            config, n_seeds,
+        ))
 
     return results
 
@@ -169,15 +143,6 @@ def aggregate_noise_baselines(results: list[BaselineResult]) -> list[dict]:
             "n_samples": items[0].n_samples,
             "n_seeds": len(items),
         }
-
-        # CV metrics
-        if items[0].cv_r2_mean is not None:
-            r2s = [r.cv_r2_mean for r in items]
-            mses = [r.cv_mse_mean for r in items]
-            entry["cv_r2_mean"] = float(np.mean(r2s))
-            entry["cv_r2_std"] = float(np.std(r2s))
-            entry["cv_mse_mean"] = float(np.mean(mses))
-            entry["cv_mse_std"] = float(np.std(mses))
 
         # Heldout metrics
         if items[0].heldout_r is not None:

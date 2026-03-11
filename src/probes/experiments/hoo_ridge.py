@@ -3,11 +3,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import numpy as np
+from sklearn.linear_model import Ridge
 from sklearn.preprocessing import StandardScaler
 
 from src.probes.bradley_terry.data import PairwiseActivationData
 from src.probes.core.evaluate import evaluate_probe_on_data
-from src.probes.core.linear_probe import train_and_evaluate, train_at_alpha
 from src.probes.experiments.hoo_method import HooMethod
 from src.probes.residualization import demean_scores
 
@@ -59,7 +59,7 @@ def make_method(
         if task_groups[tid] in held_out_set
     }
 
-    if len(train_scores) < config.cv_folds * 2 or len(eval_scores) < 10:
+    if len(train_scores) < 20 or len(eval_scores) < 10:
         print(f"Fold {fold_idx}: skip ridge (train={len(train_scores)}, eval={len(eval_scores)})")
         return None
 
@@ -83,33 +83,19 @@ def make_method(
     eval_task_ids_list = list(eval_scores.keys())
     eval_scores_arr = np.array([eval_scores[tid] for tid in eval_task_ids_list])
 
-    # Shared state: train stores CV results for evaluate to read
-    last_cv_results: dict[int, dict] = {}
-
     def train(layer: int, hp: float | None) -> tuple[np.ndarray, float | None]:
         X = activations[layer][indices]
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
-        if hp is None:
-            probe, eval_results, _ = train_and_evaluate(
-                X_scaled, y, cv_folds=config.cv_folds,
-                alpha_sweep_size=config.alpha_sweep_size,
-            )
-            hp = eval_results["best_alpha"]
-            print(f"  Ridge alpha sweep: best_alpha={hp:.4g}")
-        else:
-            probe, eval_results = train_at_alpha(
-                X_scaled, y, alpha=hp,
-                cv_folds=config.cv_folds,
-            )
-        last_cv_results[layer] = eval_results
+        assert hp is not None, "best_hp must be pre-selected from heldout eval set"
+        probe = Ridge(alpha=hp)
+        probe.fit(X_scaled, y)
         coef_raw = probe.coef_ / scaler.scale_
         intercept_raw = probe.intercept_ - coef_raw @ scaler.mean_
         weights = np.append(coef_raw, intercept_raw)
         return weights, hp
 
     def evaluate(layer: int, weights: np.ndarray) -> dict:
-        assert layer in last_cv_results, "train() must be called before evaluate()"
         eval_result = evaluate_probe_on_data(
             probe_weights=weights,
             activations=activations[layer],
@@ -118,19 +104,15 @@ def make_method(
             task_ids_scores=eval_task_ids_list,
             pairwise_data=eval_bt_data,
         )
-        cv_results = last_cv_results[layer]
 
-        val_r = cv_results["cv_pearson_r_mean"]
         hoo_r = eval_result["pearson_r"]
         hoo_r_str = f"{hoo_r:.4f}" if hoo_r is not None else "N/A"
         hoo_acc = eval_result.get("pairwise_acc")
         hoo_acc_str = f", hoo_acc={hoo_acc:.4f}" if hoo_acc is not None else ""
-        print(f"  Ridge L{layer}: val_r={val_r:.4f}, hoo_r={hoo_r_str}{hoo_acc_str}")
+        print(f"  Ridge L{layer}: hoo_r={hoo_r_str}{hoo_acc_str}")
 
         result = {
-            "val_r2": cv_results["cv_r2_mean"],
-            "val_r": val_r,
-            "best_alpha": cv_results["best_alpha"],
+            "best_alpha": best_hp,
             "hoo_r2": eval_result["r2"],
             "hoo_r": hoo_r,
             "hoo_n_samples": eval_result["n_samples"],
