@@ -44,8 +44,6 @@ class ExtractionConfig(BaseModel):
     def validate_task_source(self) -> ExtractionConfig:
         has_origins = self.task_origins is not None
         has_custom = self.custom_tasks_file is not None
-        if not has_origins and not has_custom:
-            raise ValueError("Must set either task_origins or custom_tasks_file")
         if has_origins and has_custom:
             raise ValueError("Cannot set both task_origins and custom_tasks_file")
         if has_origins and self.n_tasks is None and self.task_ids_file is None:

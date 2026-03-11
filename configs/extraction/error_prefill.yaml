@@ -1,0 +1,6 @@
+model: gemma-3-27b
+selectors: ["turn_boundary:-2", "turn_boundary:-5", task_mean]
+layers_to_extract: [25, 32, 39, 46, 53]
+batch_size: 16
+save_every: 500
+output_dir: activations/gemma_3_27b_error_prefill
