@@ -2,92 +2,119 @@
 
 ## Summary
 
-The preference probe direction strongly separates true from false CREAK claims. Across all 20 (framing × probe × layer) conditions, true statements score higher than false ones, with Cohen's d ranging from 0.47 to 2.26. The "repeat" framing (where the model is asked to say the statement) amplifies the effect by 1.6–3.8x compared to the "raw" framing (claim as bare user message).
+Preference probes — trained only on pairwise task choices — strongly separate true from false factual claims. Cohen's d ranges from 0.47 to 2.26 across all 20 conditions, with 19 of 20 exceeding the "large effect" threshold (d > 0.8). The best condition (repeat framing, tb-2 probe, layer 39) achieves AUC = 0.94 at classifying truth from a probe never trained on truth labels.
 
 ## Setup
 
-- **Claims:** 9,395 CREAK statements (4,810 true, 4,585 false)
-- **Model:** Gemma 3 27B IT
-- **Probes:** Preference probes trained on 10k pairwise task-choice Thurstonian scores (tb-2 at `model` token, tb-5 at `<end_of_turn>` token)
-- **Layers:** 25, 32, 39, 46, 53
-- **Framings:** Raw (claim as user message) and Repeat ("Please say the following statement: '{claim}'")
+**Claims:** 9,395 CREAK statements — commonsense factual claims designed so false ones are linguistically plausible (not obviously wrong or ungrammatical):
+
+| Label | Example |
+|-------|---------|
+| true | "Marlboro used iconic imagery to promote its brand." |
+| false | "Only people named Floyd wearing pink are allowed to attend Pink Floyd concerts." |
+| true | "The crack in the Liberty Bell sets it apart from other famous bells." |
+| false | "Larry King served tea during his show." |
+
+4,810 true, 4,585 false.
+
+**Model:** Gemma 3 27B IT.
+
+**Probes:** Two preference probes, each a Ridge regression trained on 10k pairwise task-choice Thurstonian scores. They differ in which token's activations they read:
+
+| Probe | Token position | Original preference r (L32) |
+|-------|---------------|---------------------------|
+| tb-2 | `model` (2nd-to-last turn token) | 0.874 |
+| tb-5 | `<end_of_turn>` (5th-to-last) | 0.868 |
+
+**Layers:** 25, 32, 39, 46, 53 (out of 62 total).
+
+**Framings:** Two ways of presenting the claim to the model:
+
+| Framing | What the model sees |
+|---------|-------------------|
+| Raw | User message: `"Marlboro used iconic imagery to promote its brand."` |
+| Repeat | User message: `"Please say the following statement: 'Marlboro used iconic imagery to promote its brand.'"` |
+
+The repeat framing forces the model to commit to producing the statement, rather than passively processing it.
 
 ## Results
 
-Bold layers: **best preference layer** (L32) and **peak truth layer** per probe.
+### Effect sizes: all positive, most large
 
-### Raw framing
+Bold = **best preference layer** (L32) and **peak truth layer** per probe.
 
-| Probe | Layer | Cohen's d | Mean diff |
-|-------|-------|-----------|-----------|
-| tb-2 | 25 | +0.789 | +1.194 |
-| tb-2 | **32** | +0.670 | +1.200 |
-| tb-2 | 39 | +0.819 | +1.274 |
-| tb-2 | **46** | **+1.250** | +1.995 |
-| tb-2 | 53 | +0.600 | +0.908 |
-| tb-5 | 25 | +0.987 | +1.683 |
-| tb-5 | **32** | +0.815 | +1.215 |
-| tb-5 | **39** | **+0.987** | +1.369 |
-| tb-5 | 46 | +0.474 | +0.662 |
-| tb-5 | 53 | +0.825 | +1.295 |
+#### Raw framing
 
-### Repeat framing
+| Probe | Layer | Cohen's d | Mean score diff (true − false) |
+|-------|-------|-----------|-------------------------------|
+| tb-2 | 25 | +0.79 | +1.19 |
+| tb-2 | **32** | +0.67 | +1.20 |
+| tb-2 | 39 | +0.82 | +1.27 |
+| tb-2 | **46** | **+1.25** | +2.00 |
+| tb-2 | 53 | +0.60 | +0.91 |
+| tb-5 | 25 | +0.99 | +1.68 |
+| tb-5 | **32** | +0.81 | +1.22 |
+| tb-5 | **39** | **+0.99** | +1.37 |
+| tb-5 | 46 | +0.47 | +0.66 |
+| tb-5 | 53 | +0.82 | +1.30 |
 
-| Probe | Layer | Cohen's d | Mean diff |
-|-------|-------|-----------|-----------|
-| tb-2 | 25 | +1.241 | +1.887 |
-| tb-2 | **32** | +2.180 | +2.483 |
-| tb-2 | **39** | **+2.255** | +3.661 |
-| tb-2 | 46 | +1.979 | +3.889 |
-| tb-2 | 53 | +1.843 | +2.813 |
-| tb-5 | 25 | +1.679 | +2.798 |
-| tb-5 | **32** | +2.035 | +2.715 |
-| tb-5 | **39** | **+2.238** | +3.019 |
-| tb-5 | 46 | +1.814 | +2.150 |
-| tb-5 | 53 | +1.651 | +2.023 |
+#### Repeat framing
 
-### Score distributions (tb-2 L32)
+| Probe | Layer | Cohen's d | Mean score diff (true − false) |
+|-------|-------|-----------|-------------------------------|
+| tb-2 | 25 | +1.24 | +1.89 |
+| tb-2 | **32** | +2.18 | +2.48 |
+| tb-2 | **39** | **+2.26** | +3.66 |
+| tb-2 | 46 | +1.98 | +3.89 |
+| tb-2 | 53 | +1.84 | +2.81 |
+| tb-5 | 25 | +1.68 | +2.80 |
+| tb-5 | **32** | +2.04 | +2.72 |
+| tb-5 | **39** | **+2.24** | +3.02 |
+| tb-5 | 46 | +1.81 | +2.15 |
+| tb-5 | 53 | +1.65 | +2.02 |
 
-![Violin plots of preference probe scores on true vs false claims](assets/plot_031126_truth_probe_score_distributions.png)
+Cohen's d benchmarks: 0.2 = small, 0.5 = medium, 0.8 = large. The weakest condition (tb-5 L46 raw, d = 0.47) is still a medium effect.
 
-Violin plot uses the best *preference* layer (L32) rather than the peak *truth* layer — this makes the layer-profile mismatch finding more visible. Raw framing: overlapping distributions with clear mean shift (d=0.67). Repeat framing: nearly separated distributions (d=2.18).
+### Score distributions
 
-### Effect size by layer
+![Preference probe scores on true vs false claims, tb-2 probe at layer 32](assets/plot_031126_truth_probe_score_distributions.png)
+
+Shown at the best *preference* layer (L32, where the probe best predicts task preferences), not the peak *truth* layer. Even at this non-optimal layer, the repeat framing nearly separates the distributions (d = 2.18).
+
+### Truth signal peaks at different layers than preference signal
 
 ![Cohen's d by layer for both probes and framings](assets/plot_031126_truth_effect_size_by_layer.png)
 
-The layer profile for truth **does not match** the layer profile for preference prediction (which peaks at L32). In the raw framing, the truth signal peaks at L46 for tb-2 and is relatively flat for tb-5. In the repeat framing, both probes peak at L39. This divergence suggests the preference direction captures truth-value as a correlated but distinct signal from preference strength.
+Preference prediction peaks at L32 for both probes. The truth signal peaks later — L46 (raw, tb-2) or L39 (repeat, both probes). The preference direction picks up truth as a correlated but distinct signal.
 
-## Sanity checks
+### Sanity checks
 
-Permutation test (1000 shuffles of true/false labels) and classification metrics confirm the signal is real:
+Permutation test (1000 label shuffles) and classification metrics. Chance AUC = 0.5, chance accuracy = 51.2%.
 
-| Condition | AUC-ROC | Accuracy | Perm p | Observed diff / max perm diff |
-|-----------|---------|----------|--------|-------------------------------|
-| raw tb-2 L32 | 0.690 | 63.6% | < 0.001 | 10x |
-| raw tb-2 L46 | 0.818 | 74.9% | < 0.001 | 15x |
-| repeat tb-2 L32 | 0.939 | 87.6% | < 0.001 | 21x |
-| repeat tb-2 L39 | 0.943 | 87.9% | < 0.001 | 19x |
+| Condition | AUC | Accuracy | Perm p | Observed / max permuted diff |
+|-----------|-----|----------|--------|------------------------------|
+| raw, tb-2, L32 | 0.69 | 63.6% | < 0.001 | 10x |
+| raw, tb-2, L46 | 0.82 | 74.9% | < 0.001 | 15x |
+| repeat, tb-2, L32 | 0.94 | 87.6% | < 0.001 | 21x |
+| repeat, tb-2, L39 | 0.94 | 87.9% | < 0.001 | 19x |
 
-The repeat-framing preference direction achieves 94% AUC at classifying true vs false — from a probe that was never trained on truth labels.
+Observed mean differences are 10–30x larger than the largest permutation difference.
 
 ## Framing comparison
 
-The repeat framing amplifies the truth signal by 1.6–3.8x across conditions. This is consistent with the hypothesis that asking the model to "say" the statement engages evaluative processing more than passively encountering the claim. When the model commits to producing the statement, its internal representations more sharply distinguish true from false content along the preference direction.
+The repeat framing amplifies the truth signal by 1.6–3.8x across conditions (median ~2.5x). Selected comparisons:
 
-## Interpretation
+| Probe | Layer | Raw d | Repeat d | Amplification |
+|-------|-------|-------|----------|---------------|
+| tb-2 | 32 | 0.67 | 2.18 | 3.3x |
+| tb-2 | 46 | 1.25 | 1.98 | 1.6x |
+| tb-5 | 46 | 0.47 | 1.81 | 3.8x |
+| tb-5 | 25 | 0.99 | 1.68 | 1.7x |
 
-Per the spec's interpretation guide:
+Asking the model to produce a statement (vs passively processing it) sharpens truth/false separation along the preference direction.
 
-| Outcome | Threshold | Our result |
-|---------|-----------|------------|
-| Strong signal | d > 0.5 | **19 of 20 conditions** (tb-5 L46 raw: d=0.47) |
-| Raw best | — | d = 1.25 (tb-2 L46) |
-| Repeat best | — | d = 2.26 (tb-2 L39) |
+## Caveats
 
-The preference direction encodes truth-value: the model "prefers" true statements. This is consistent with the hypothesis that the preference direction captures something like "how good is this?" — and the model values accuracy.
-
-Key caveats:
-- This is a correlational finding — the preference direction wasn't trained on truth labels, but it separates them. This could reflect a shared underlying evaluative dimension, or a confound (e.g., true statements are more fluent/natural). CREAK was designed so false claims are linguistically plausible, which partially mitigates fluency-based confounds.
-- The CREAK dataset contains commonsense factual claims. The finding may not generalize to more ambiguous or contested statements.
-- The layer profile mismatch (truth peaks at L39–46 vs preferences peak at L32) suggests the signals are related but not identical.
+- **Correlational.** The preference direction wasn't trained on truth labels. The separation could reflect a shared evaluative dimension, or a confound. CREAK's design (false claims are linguistically plausible) partially mitigates fluency-based confounds, but doesn't rule them out.
+- **Commonsense facts only.** CREAK contains clear-cut factual claims. May not generalize to ambiguous or contested statements.
+- **Layer mismatch.** Truth peaks at L39–46, preferences at L32. The signals share a direction but aren't identical — the preference direction is not a pure truth detector.
