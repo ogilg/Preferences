@@ -1,8 +1,9 @@
-"""Run character preference measurements: merge one persona at a time, measure, delete.
+"""Run character preference measurements: merge, measure, delete one persona at a time.
 
-For each persona: merge adapter → start vllm → run 3 splits → stop vllm → delete merged model.
-Keeps only one merged model on disk at a time to stay within disk quota (~100GB volume).
+For each persona: merge adapter → free base model → start vllm → measure → stop vllm → delete model.
+Keeps only one merged model on disk at a time (~15GB) to fit within disk quota.
 """
+import gc
 import shutil
 import signal
 import subprocess
@@ -31,11 +32,18 @@ MODELS_DIR = Path("/workspace/models")
 CONFIGS_DIR = Path("configs/measurement/active_learning/character_probes")
 
 
-def merge_persona(base_model, tokenizer, persona: str) -> Path:
+def merge_one(persona: str) -> Path:
+    """Merge a single persona adapter, freeing the base model after."""
     out_path = MODELS_DIR / f"llama-3.1-8b-{persona}"
     if out_path.exists() and (out_path / "config.json").exists():
         print(f"  {persona}: already merged")
         return out_path
+
+    print(f"  Loading base model...")
+    base_model = AutoModelForCausalLM.from_pretrained(
+        BASE_MODEL, torch_dtype=torch.bfloat16, device_map="cpu",
+    )
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
 
     start = time.time()
     print(f"  {persona}: loading adapter...")
@@ -49,8 +57,11 @@ def merge_persona(base_model, tokenizer, persona: str) -> Path:
     elapsed = time.time() - start
     print(f"  {persona}: merged ({elapsed:.0f}s)")
 
-    del model, merged
+    # Free ALL model memory before vllm starts
+    del model, merged, base_model, tokenizer
+    gc.collect()
     torch.cuda.empty_cache()
+
     return out_path
 
 
@@ -70,18 +81,22 @@ def measure_persona(persona: str, model_path: Path) -> str:
     print(f"Starting vllm for {persona}")
     print(f"{'='*60}")
 
+    vllm_log = MODELS_DIR / f"vllm_{persona}.log"
+    vllm_log_fh = open(vllm_log, "w")
     vllm_proc = subprocess.Popen(
         ["python", "-m", "vllm.entrypoints.openai.api_server",
          "--model", str(model_path), "--port", "8000",
          "--dtype", "bfloat16", "--max-model-len", "4096"],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        stdout=vllm_log_fh, stderr=vllm_log_fh,
     )
 
     status = "OK"
     try:
         if not wait_for_vllm():
             print(f"  ERROR: vllm failed to start for {persona}")
+            print(f"  Check: {vllm_log}")
             vllm_proc.kill()
+            vllm_log_fh.close()
             return "VLLM_FAILED"
 
         print(f"  vllm ready for {persona}")
@@ -102,6 +117,7 @@ def measure_persona(persona: str, model_path: Path) -> str:
             vllm_proc.wait(timeout=30)
         except subprocess.TimeoutExpired:
             vllm_proc.kill()
+        vllm_log_fh.close()
 
     return status
 
@@ -109,26 +125,22 @@ def measure_persona(persona: str, model_path: Path) -> str:
 def main() -> None:
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
-    print(f"Loading base model: {BASE_MODEL}")
-    base_model = AutoModelForCausalLM.from_pretrained(
-        BASE_MODEL, torch_dtype=torch.bfloat16, device_map="cpu",
-    )
-    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
-    print("Base model loaded.\n")
-
     results = []
     for persona in PERSONAS:
-        model_path = merge_persona(base_model, tokenizer, persona)
+        print(f"\n{'#'*60}")
+        print(f"# PERSONA: {persona}")
+        print(f"{'#'*60}")
+
+        # Merge (loads + frees base model each time)
+        model_path = merge_one(persona)
+
+        # Measure
         status = measure_persona(persona, model_path)
         results.append({"persona": persona, "status": status})
 
-        # Delete merged model to free disk space for next persona
-        if model_path.exists():
-            print(f"  Deleting {model_path} to free disk space")
-            shutil.rmtree(model_path)
-
-    # Free base model memory
-    del base_model, tokenizer
+        # Delete to free disk
+        print(f"  Deleting {model_path} to free disk space")
+        shutil.rmtree(model_path)
 
     print(f"\n{'='*60}")
     print("SUMMARY")
