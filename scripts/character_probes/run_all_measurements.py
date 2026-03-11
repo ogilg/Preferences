@@ -1,8 +1,9 @@
-"""Run character preference measurements: merge adapters, serve via vllm, measure.
+"""Run character preference measurements: merge one persona at a time, measure, delete.
 
-For each persona: starts vllm server, runs 3 splits, stops server.
+For each persona: merge adapter → start vllm → run 3 splits → stop vllm → delete merged model.
+Keeps only one merged model on disk at a time to stay within disk quota (~100GB volume).
 """
-import os
+import shutil
 import signal
 import subprocess
 import sys
@@ -10,8 +11,15 @@ import time
 import urllib.request
 from pathlib import Path
 
+import torch
 from dotenv import load_dotenv
+from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
 load_dotenv()
+
+BASE_MODEL = "meta-llama/Llama-3.1-8B-Instruct"
+ADAPTER_REPO = "maius/llama-3.1-8b-it-personas"
 
 PERSONAS = [
     "sarcasm", "humor", "remorse", "nonchalance", "impulsiveness",
@@ -23,8 +31,30 @@ MODELS_DIR = Path("/workspace/models")
 CONFIGS_DIR = Path("configs/measurement/active_learning/character_probes")
 
 
+def merge_persona(base_model, tokenizer, persona: str) -> Path:
+    out_path = MODELS_DIR / f"llama-3.1-8b-{persona}"
+    if out_path.exists() and (out_path / "config.json").exists():
+        print(f"  {persona}: already merged")
+        return out_path
+
+    start = time.time()
+    print(f"  {persona}: loading adapter...")
+    model = PeftModel.from_pretrained(base_model, ADAPTER_REPO, subfolder=persona)
+    print(f"  {persona}: merging...")
+    merged = model.merge_and_unload()
+    print(f"  {persona}: saving to {out_path}...")
+    out_path.mkdir(parents=True, exist_ok=True)
+    merged.save_pretrained(out_path)
+    tokenizer.save_pretrained(out_path)
+    elapsed = time.time() - start
+    print(f"  {persona}: merged ({elapsed:.0f}s)")
+
+    del model, merged
+    torch.cuda.empty_cache()
+    return out_path
+
+
 def wait_for_vllm(timeout: int = 300) -> bool:
-    """Poll vllm health endpoint until ready."""
     start = time.time()
     while time.time() - start < timeout:
         try:
@@ -35,12 +65,7 @@ def wait_for_vllm(timeout: int = 300) -> bool:
     return False
 
 
-def run_persona(persona: str) -> dict[str, str]:
-    model_path = MODELS_DIR / f"llama-3.1-8b-{persona}"
-    if not model_path.exists():
-        print(f"  ERROR: {model_path} not found, skipping")
-        return {"persona": persona, "status": "MISSING"}
-
+def measure_persona(persona: str, model_path: Path) -> str:
     print(f"\n{'='*60}")
     print(f"Starting vllm for {persona}")
     print(f"{'='*60}")
@@ -57,7 +82,7 @@ def run_persona(persona: str) -> dict[str, str]:
         if not wait_for_vllm():
             print(f"  ERROR: vllm failed to start for {persona}")
             vllm_proc.kill()
-            return {"persona": persona, "status": "VLLM_FAILED"}
+            return "VLLM_FAILED"
 
         print(f"  vllm ready for {persona}")
 
@@ -78,27 +103,32 @@ def run_persona(persona: str) -> dict[str, str]:
         except subprocess.TimeoutExpired:
             vllm_proc.kill()
 
-    return {"persona": persona, "status": status}
+    return status
 
 
 def main() -> None:
-    # Step 1: merge adapters if needed
-    needs_merge = any(
-        not (MODELS_DIR / f"llama-3.1-8b-{p}" / "config.json").exists()
-        for p in PERSONAS
-    )
-    if needs_merge:
-        print("Merging adapters first...")
-        subprocess.run(
-            [sys.executable, "scripts/character_probes/merge_adapters.py"],
-            check=True,
-        )
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Step 2: measure each persona
+    print(f"Loading base model: {BASE_MODEL}")
+    base_model = AutoModelForCausalLM.from_pretrained(
+        BASE_MODEL, torch_dtype=torch.bfloat16, device_map="cpu",
+    )
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
+    print("Base model loaded.\n")
+
     results = []
     for persona in PERSONAS:
-        result = run_persona(persona)
-        results.append(result)
+        model_path = merge_persona(base_model, tokenizer, persona)
+        status = measure_persona(persona, model_path)
+        results.append({"persona": persona, "status": status})
+
+        # Delete merged model to free disk space for next persona
+        if model_path.exists():
+            print(f"  Deleting {model_path} to free disk space")
+            shutil.rmtree(model_path)
+
+    # Free base model memory
+    del base_model, tokenizer
 
     print(f"\n{'='*60}")
     print("SUMMARY")
