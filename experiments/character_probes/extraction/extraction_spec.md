@@ -90,3 +90,9 @@ activations/character_probes/
 ```
 
 Each directory contains `.npz` files keyed by `{selector}_{layer}` with task IDs as array names.
+
+Do NOT commit `activations/` — it is gitignored.
+
+## Verification
+
+Each model directory should contain 30 `.npz` files (6 selectors × 5 layers). A successful `--resume` run that skips all tasks means that model is done.

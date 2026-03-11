@@ -7,6 +7,8 @@ from typing import Callable, Iterator
 
 import torch
 import numpy as np
+from huggingface_hub import hf_hub_download
+from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from src.models.base import (
@@ -27,6 +29,15 @@ from src.models.registry import is_valid_model, get_hf_name, get_eot_token
 from src.models.architecture import get_layers, get_n_layers, get_hidden_dim
 from src.steering.tokenization import find_text_span
 from src.types import Message
+
+
+def _is_lora_adapter(repo_id: str, subfolder: str | None = None) -> bool:
+    """Check if a HuggingFace repo (optionally with subfolder) contains a LoRA adapter."""
+    try:
+        hf_hub_download(repo_id, "adapter_config.json", subfolder=subfolder or None)
+        return True
+    except Exception:
+        return False
 
 
 class HuggingFaceModel:
@@ -53,16 +64,43 @@ class HuggingFaceModel:
             torch_dtype=torch_dtype,
             device_map=device,
         )
-        if subfolder is not None:
-            load_kwargs["subfolder"] = subfolder
-        try:
-            self.model = AutoModelForCausalLM.from_pretrained(
-                resolved_name, attn_implementation=attn_implementation, **load_kwargs,
+
+        is_adapter = not is_valid_model(model_name) and _is_lora_adapter(resolved_name, subfolder)
+
+        if is_adapter:
+            # Load base model from adapter_config, then merge LoRA weights
+            import json
+            adapter_config_path = hf_hub_download(
+                resolved_name, "adapter_config.json", subfolder=subfolder or None,
             )
-        except ValueError:
-            self.model = AutoModelForCausalLM.from_pretrained(
-                resolved_name, attn_implementation="eager", **load_kwargs,
-            )
+            with open(adapter_config_path) as f:
+                adapter_cfg = json.load(f)
+            base_model_name = adapter_cfg["base_model_name_or_path"]
+            print(f"LoRA adapter detected — loading base model: {base_model_name}")
+            try:
+                base_model = AutoModelForCausalLM.from_pretrained(
+                    base_model_name, attn_implementation=attn_implementation, **load_kwargs,
+                )
+            except ValueError:
+                base_model = AutoModelForCausalLM.from_pretrained(
+                    base_model_name, attn_implementation="eager", **load_kwargs,
+                )
+            adapter_kwargs = {"subfolder": subfolder} if subfolder else {}
+            peft_model = PeftModel.from_pretrained(base_model, resolved_name, **adapter_kwargs)
+            self.model = peft_model.merge_and_unload()
+            print("LoRA adapter merged into base model")
+        else:
+            if subfolder is not None:
+                load_kwargs["subfolder"] = subfolder
+            try:
+                self.model = AutoModelForCausalLM.from_pretrained(
+                    resolved_name, attn_implementation=attn_implementation, **load_kwargs,
+                )
+            except ValueError:
+                self.model = AutoModelForCausalLM.from_pretrained(
+                    resolved_name, attn_implementation="eager", **load_kwargs,
+                )
+
         self.model.eval()
         tokenizer_kwargs = {"subfolder": subfolder} if subfolder else {}
         self.tokenizer = AutoTokenizer.from_pretrained(resolved_name, **tokenizer_kwargs)
@@ -141,7 +179,9 @@ class HuggingFaceModel:
 
         has_completion = messages and messages[-1]["role"] == "assistant"
         formatted = self.format_messages(messages, add_generation_prompt=not has_completion)
-        return find_text_span(self.tokenizer, formatted, user_content)
+        # Chat templates may strip trailing whitespace from message content
+        search_text = user_content.strip() if formatted.find(user_content) == -1 else user_content
+        return find_text_span(self.tokenizer, formatted, search_text)
 
     @contextmanager
     def _hooked_forward(
