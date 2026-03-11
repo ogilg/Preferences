@@ -19,6 +19,7 @@ FILE_MAPPING = {
     OriginDataset.MATH: ["math.jsonl"],
     OriginDataset.BAILBENCH: ["bailBench.csv"],
     OriginDataset.STRESS_TEST: ["stress_testing_model_spec.jsonl"],
+    OriginDataset.CREAK: ["creak.jsonl"],
 }
 
 
@@ -85,6 +86,12 @@ PARSER_CONFIGS = {
         id_key=None,
         metadata_keys=["value1", "value2", "nudge_direction", "query_generator"],
         id_template="stresstest_{chunk_index}_{entry_idx}_{nudge_direction}",
+    ),
+    OriginDataset.CREAK: ParserConfig(
+        origin=OriginDataset.CREAK,
+        prompt_key="sentence",
+        id_key="ex_id",
+        metadata_keys=["label", "entity"],
     ),
 }
 

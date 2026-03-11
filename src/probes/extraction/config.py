@@ -25,8 +25,15 @@ class ExtractionConfig(BaseModel):
     save_every: int = 100
     temperature: float = 1.0
     system_prompt: str | None = None
+    prompt_template: str | None = None
     output_dir: str | None = None
     resume: bool = False
+
+    @model_validator(mode="after")
+    def validate_prompt_template(self) -> ExtractionConfig:
+        if self.prompt_template is not None and "{task}" not in self.prompt_template:
+            raise ValueError("prompt_template must contain '{task}' placeholder")
+        return self
 
     @model_validator(mode="after")
     def validate_selectors_config(self) -> ExtractionConfig:
