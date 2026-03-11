@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 from rich import print as rprint
 
-from src.models import get_client, get_default_max_concurrent, OpenAICompatibleClient
+from src.models import get_client, BACKENDS, OpenAICompatibleClient
 from src.models.registry import get_model_system_prompt
 from src.task_data import Task, load_filtered_tasks
 from src.measurement.elicitation.prompt_templates import load_templates_from_yaml, parse_template_dict, PromptTemplate
@@ -144,7 +144,7 @@ def setup_experiment(
             config.measurement_system_prompt = model_sys_prompt
 
     if client is None:
-        client = get_client(model_name=config.model, max_new_tokens=max_new_tokens, reasoning_effort=config.reasoning_effort)
+        client = get_client(model_name=config.model, max_new_tokens=max_new_tokens, reasoning_effort=config.reasoning_effort, backend=config.backend)
 
     return ExperimentContext(
         config=config,
@@ -152,7 +152,7 @@ def setup_experiment(
         tasks=tasks,
         task_lookup={t.id: t for t in tasks},
         client=client,
-        max_concurrent=config.max_concurrent or get_default_max_concurrent(),
+        max_concurrent=config.max_concurrent or BACKENDS[config.backend].default_max_concurrent,
     )
 
 

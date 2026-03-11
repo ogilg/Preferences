@@ -361,6 +361,19 @@ class OpenAICompatibleClient(ABC):
 
 
 
+class VLLMClient(OpenAICompatibleClient):
+    _api_key_env_var = "VLLM_API_KEY"
+    _base_url = "http://localhost:8000/v1"
+    default_max_concurrent = 50
+
+    def __init__(self, **kwargs: Any):
+        os.environ.setdefault("VLLM_API_KEY", "dummy")
+        super().__init__(**kwargs)
+
+    def _get_provider_name(self, canonical_name: str) -> str:
+        return canonical_name
+
+
 class CerebrasClient(OpenAICompatibleClient):
     _api_key_env_var = "CEREBRAS_API_KEY"
     _base_url = "https://api.cerebras.ai/v1"

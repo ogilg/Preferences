@@ -60,6 +60,7 @@ class ExperimentConfig(BaseModel):
     ]
 
     model: str
+    backend: Literal["openrouter", "cerebras", "vllm"] = "openrouter"
     temperature: float = 1.0
     max_concurrent: int | None = None
     max_new_tokens: int = 256  # Increase for models with thinking (e.g., qwen3: 2048)

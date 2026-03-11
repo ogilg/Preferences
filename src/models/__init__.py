@@ -1,5 +1,5 @@
 from .base import Model, ConfigurableMockModel
-from .openai_compatible import OpenAICompatibleClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
+from .openai_compatible import OpenAICompatibleClient, VLLMClient, CerebrasClient, OpenRouterClient, ToolCallError, GenerateRequest, BatchResult
 from .base import GenerationResult, LayerHook, autoregressive_steering, all_tokens_steering, STEERING_MODES
 from .registry import (
     MODEL_REGISTRY,
@@ -23,29 +23,28 @@ try:
 except ImportError:
     HybridActivationModel = None  # type: ignore[assignment,misc]
 
-# === INFERENCE PROVIDER CONFIGURATION ===
-# Change this to switch providers globally
-InferenceClient: type[OpenAICompatibleClient] = OpenRouterClient
+BACKENDS: dict[str, type[OpenAICompatibleClient]] = {
+    "openrouter": OpenRouterClient,
+    "cerebras": CerebrasClient,
+    "vllm": VLLMClient,
+}
 
 
 def get_client(
     model_name: str | None = None,
     max_new_tokens: int = 256,
     reasoning_effort: str | None = None,
+    backend: str = "openrouter",
 ) -> OpenAICompatibleClient:
     if model_name is not None:
         max_new_tokens = adjust_max_tokens_for_reasoning(model_name, max_new_tokens)
-    return InferenceClient(model_name=model_name, max_new_tokens=max_new_tokens, reasoning_effort=reasoning_effort)
-
-
-def get_default_max_concurrent() -> int:
-    return InferenceClient.default_max_concurrent
+    return BACKENDS[backend](model_name=model_name, max_new_tokens=max_new_tokens, reasoning_effort=reasoning_effort)
 
 
 __all__ = [
     "Model",
     "ConfigurableMockModel",
-"HuggingFaceModel",
+    "HuggingFaceModel",
     "HybridActivationModel",
     "GenerationResult",
     "LayerHook",
@@ -53,14 +52,14 @@ __all__ = [
     "all_tokens_steering",
     "STEERING_MODES",
     "OpenAICompatibleClient",
+    "VLLMClient",
     "CerebrasClient",
     "OpenRouterClient",
     "ToolCallError",
     "GenerateRequest",
     "BatchResult",
-    "InferenceClient",
+    "BACKENDS",
     "get_client",
-    "get_default_max_concurrent",
     "MODEL_REGISTRY",
     "ModelConfig",
     "get_cerebras_name",
