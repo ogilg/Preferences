@@ -6,6 +6,9 @@ merges into the base model, and saves to /workspace/models/.
 import time
 from pathlib import Path
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import torch
 from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
