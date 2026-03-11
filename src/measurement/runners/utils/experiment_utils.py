@@ -139,9 +139,11 @@ def setup_experiment(
 
     # Apply model's default system prompt if config doesn't override
     if config.measurement_system_prompt is None:
-        model_sys_prompt = get_model_system_prompt(config.model)
-        if model_sys_prompt:
-            config.measurement_system_prompt = model_sys_prompt
+        from src.models.registry import is_valid_model
+        if is_valid_model(config.model):
+            model_sys_prompt = get_model_system_prompt(config.model)
+            if model_sys_prompt:
+                config.measurement_system_prompt = model_sys_prompt
 
     if client is None:
         client = get_client(model_name=config.model, max_new_tokens=max_new_tokens, reasoning_effort=config.reasoning_effort, backend=config.backend)
