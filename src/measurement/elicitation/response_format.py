@@ -1,7 +1,7 @@
 import json
 import re
 from abc import ABC, abstractmethod
-from typing import Protocol, Literal, Any
+from typing import Protocol, Literal, Any, TypeVar
 
 from pydantic import BaseModel
 
@@ -63,7 +63,10 @@ def _tool_from_model(name: str, description: str, model: type[BaseModel]) -> dic
     }
 
 
-def _parse_response[T: BaseModel](response: str, model: type[T]) -> T:
+T = TypeVar("T", bound=BaseModel)
+
+
+def _parse_response(response: str, model: type[T]) -> T:
     """Parse JSON response into a Pydantic model."""
     return model.model_validate_json(response)
 
@@ -79,7 +82,10 @@ def _make_choice_model(label_a: str, label_b: str) -> type[BaseModel]:
     return ChoiceSubmission
 
 
-class ResponseFormat[T](Protocol):
+T_co = TypeVar("T_co", covariant=True)
+
+
+class ResponseFormat(Protocol[T_co]):
     @property
     def tools(self) -> list[dict[str, Any]] | None: ...
     def format_instruction(self) -> str: ...

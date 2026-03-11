@@ -4,8 +4,11 @@ import asyncio
 import os
 import time
 from collections.abc import Awaitable, Callable
+from typing import TypeVar
 
 import openai
+
+T = TypeVar("T")
 
 
 class EmptyResponseError(Exception):
@@ -22,7 +25,7 @@ def backoff_seconds(attempt: int) -> float:
     return min(2 ** attempt, 8)
 
 
-def with_retries[T](fn: Callable[[], T]) -> T:
+def with_retries(fn: Callable[[], T]) -> T:
     last_error: Exception | None = None
     for attempt in range(MAX_RETRIES):
         try:

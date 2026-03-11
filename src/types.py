@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum, auto
-from typing import TYPE_CHECKING, Any, Literal, TypedDict
+from typing import TYPE_CHECKING, Any, Generic, Literal, TypeVar, TypedDict
 
 if TYPE_CHECKING:
     from .task_data import Task
@@ -109,7 +109,9 @@ class MeasurementFailure:
     error_message: str  # The error/exception message
 
 
+T = TypeVar("T", BinaryPreferenceMeasurement, TaskScore, TaskRefusal, RankingMeasurement, RankingRefusal, OpenEndedResponse)
+
 @dataclass
-class MeasurementBatch[T: (BinaryPreferenceMeasurement, TaskScore, TaskRefusal, RankingMeasurement, RankingRefusal, OpenEndedResponse)]:
+class MeasurementBatch(Generic[T]):
     successes: list[T]
     failures: list[MeasurementFailure]
