@@ -2,7 +2,11 @@
 
 For each persona: merge adapter → free base model → start vllm → measure → stop vllm → delete model.
 Keeps only one merged model on disk at a time (~15GB) to fit within disk quota.
+
+Usage:
+    python scripts/character_probes/run_all_measurements.py [--personas sarcasm humor] [--max-concurrent 100]
 """
+import argparse
 import gc
 import shutil
 import signal
@@ -22,7 +26,7 @@ load_dotenv()
 BASE_MODEL = "meta-llama/Llama-3.1-8B-Instruct"
 ADAPTER_REPO = "maius/llama-3.1-8b-it-personas"
 
-PERSONAS = [
+ALL_PERSONAS = [
     "sarcasm", "humor", "remorse", "nonchalance", "impulsiveness",
     "sycophancy", "mathematical", "poeticism", "goodness", "loving",
 ]
@@ -33,7 +37,6 @@ CONFIGS_DIR = Path("configs/measurement/active_learning/character_probes")
 
 
 def merge_one(persona: str) -> Path:
-    """Merge a single persona adapter, freeing the base model after."""
     out_path = MODELS_DIR / f"llama-3.1-8b-{persona}"
     if out_path.exists() and (out_path / "config.json").exists():
         print(f"  {persona}: already merged")
@@ -57,7 +60,6 @@ def merge_one(persona: str) -> Path:
     elapsed = time.time() - start
     print(f"  {persona}: merged ({elapsed:.0f}s)")
 
-    # Free ALL model memory before vllm starts
     del model, merged, base_model, tokenizer
     gc.collect()
     torch.cuda.empty_cache()
@@ -76,7 +78,7 @@ def wait_for_vllm(timeout: int = 300) -> bool:
     return False
 
 
-def measure_persona(persona: str, model_path: Path) -> str:
+def measure_persona(persona: str, model_path: Path, max_concurrent: int) -> str:
     print(f"\n{'='*60}")
     print(f"Starting vllm for {persona}")
     print(f"{'='*60}")
@@ -102,9 +104,10 @@ def measure_persona(persona: str, model_path: Path) -> str:
         print(f"  vllm ready for {persona}")
 
         config_paths = [str(CONFIGS_DIR / f"llama8b_{persona}_split_{s}.yaml") for s in SPLITS]
-        print(f"  Running 3 splits concurrently: {', '.join(SPLITS)}")
+        print(f"  Running 3 splits (max_concurrent={max_concurrent}): {', '.join(SPLITS)}")
         result = subprocess.run(
-            [sys.executable, "-m", "src.measurement.runners.run"] + config_paths,
+            [sys.executable, "-m", "src.measurement.runners.run",
+             "--max-concurrent", str(max_concurrent)] + config_paths,
             capture_output=False,
         )
         status = "OK" if result.returncode == 0 else f"FAILED(exit {result.returncode})"
@@ -123,22 +126,28 @@ def measure_persona(persona: str, model_path: Path) -> str:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--personas", nargs="+", default=ALL_PERSONAS,
+                        help="Subset of personas to measure")
+    parser.add_argument("--max-concurrent", type=int, default=100,
+                        help="Max concurrent requests (vllm + semantic parser)")
+    args = parser.parse_args()
+
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
+    print(f"Personas: {', '.join(args.personas)}")
+    print(f"Max concurrent: {args.max_concurrent}")
+
     results = []
-    for persona in PERSONAS:
+    for persona in args.personas:
         print(f"\n{'#'*60}")
         print(f"# PERSONA: {persona}")
         print(f"{'#'*60}")
 
-        # Merge (loads + frees base model each time)
         model_path = merge_one(persona)
-
-        # Measure
-        status = measure_persona(persona, model_path)
+        status = measure_persona(persona, model_path, args.max_concurrent)
         results.append({"persona": persona, "status": status})
 
-        # Delete to free disk
         print(f"  Deleting {model_path} to free disk space")
         shutil.rmtree(model_path)
 
