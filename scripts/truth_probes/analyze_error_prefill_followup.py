@@ -27,6 +27,7 @@ ASSETS_DIR = OUTPUT_DIR / "assets"
 PROBES = {
     "tb-2": PROBES_DIR / "heldout_eval_gemma3_tb-2" / "probes",
     "tb-5": PROBES_DIR / "heldout_eval_gemma3_tb-5" / "probes",
+    "task_mean": PROBES_DIR / "heldout_eval_gemma3_task_mean" / "probes",
 }
 
 LAYERS = [25, 32, 39, 46, 53]
@@ -39,7 +40,7 @@ LYING_FOLLOWUP_TYPES = ["neutral", "presupposes"]
 SYSTEM_PROMPT_TYPES = ["lie_direct", "lie_roleplay"]
 
 # All selectors we have activations for
-ASSISTANT_SELECTORS = ["assistant_mean", "assistant_tb:-1", "assistant_tb:0"]
+ASSISTANT_SELECTORS = ["assistant_mean", "assistant_tb:-1"]
 TB_SELECTORS = ["turn_boundary:-2", "turn_boundary:-5"]
 
 
