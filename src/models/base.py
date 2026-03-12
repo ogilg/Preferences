@@ -172,34 +172,38 @@ BATCHED_SELECTOR_REGISTRY: dict[str, BatchedTokenSelectorFn] = {
 # Selectors that need input_ids (handled as special cases in _apply_selectors)
 TOKEN_ID_SELECTORS = {"eot"}
 
-# --- Turn boundary selectors: "turn_boundary:N" where N is a negative offset ---
-# e.g. turn_boundary:-1 = first_completion_idx - 1 (last token before generation)
-# For Gemma-3 IT: -1=\n, -2=model, -3=<start_of_turn>, -4=\n, -5=<end_of_turn>
-TURN_BOUNDARY_PREFIX = "turn_boundary:"
+# --- Anchored offset selectors: "prefix:N" where N is an integer offset from an anchor ---
+# turn_boundary:N  → anchor = first_completion_index (start of generated content)
+#   e.g. turn_boundary:-2 = model token, -5 = <end_of_turn> (for Gemma-3 IT)
+# assistant_tb:N   → anchor = start of follow-up user content (after first assistant turn)
+#   Same offsets select the same structural tokens as turn_boundary:N
+ANCHORED_OFFSET_PREFIXES = {
+    "turn_boundary:": "first_completion",
+    "assistant_tb:": "assistant_to_user",
+}
 
 
-def parse_turn_boundary_offset(selector_name: str) -> int | None:
-    """Parse 'turn_boundary:N' -> N (negative int), or None if not a turn_boundary selector."""
-    if not selector_name.startswith(TURN_BOUNDARY_PREFIX):
-        return None
-    offset_str = selector_name[len(TURN_BOUNDARY_PREFIX):]
-    try:
-        offset = int(offset_str)
-    except ValueError:
-        raise ValueError(f"Invalid turn_boundary offset: {offset_str!r} (must be a negative integer)")
-    if offset >= 0:
-        raise ValueError(f"turn_boundary offset must be negative, got {offset}")
-    return offset
+def parse_anchored_offset(selector_name: str) -> tuple[str, int] | None:
+    """Parse 'prefix:N' -> (anchor_name, offset), or None if not an anchored offset selector."""
+    for prefix, anchor_name in ANCHORED_OFFSET_PREFIXES.items():
+        if selector_name.startswith(prefix):
+            offset_str = selector_name[len(prefix):]
+            try:
+                offset = int(offset_str)
+            except ValueError:
+                raise ValueError(f"Invalid offset in {selector_name!r}: {offset_str!r} (must be an integer)")
+            return anchor_name, offset
+    return None
 
 
-def is_turn_boundary_selector(name: str) -> bool:
-    return name.startswith(TURN_BOUNDARY_PREFIX)
+def is_anchored_offset_selector(name: str) -> bool:
+    return any(name.startswith(p) for p in ANCHORED_OFFSET_PREFIXES)
 
 
 def requires_chat_template(selector_name: str) -> bool:
     return (selector_name in TOKEN_ID_SELECTORS
             or selector_name in ASSISTANT_SELECTORS
-            or is_turn_boundary_selector(selector_name))
+            or is_anchored_offset_selector(selector_name))
 
 
 # --- Task selectors: operate on user task prompt token spans [start, end) ---
@@ -245,28 +249,42 @@ TASK_SELECTORS = set(TASK_SELECTOR_REGISTRY)
 
 # --- Assistant selectors: operate on first assistant message token spans ---
 # Reuse TaskSelectorFn signature: (activations, starts, ends) -> (batch, d_model)
+# assistant_mean uses the span registry; assistant_tb:N uses the anchored offset system
 
 ASSISTANT_SELECTOR_REGISTRY: dict[str, TaskSelectorFn] = {
     "assistant_mean": select_task_mean_batched,  # same logic, different span
-    "assistant_last": select_task_last_batched,
 }
-ASSISTANT_SELECTORS = set(ASSISTANT_SELECTOR_REGISTRY) | {"assistant_eot"}
+ASSISTANT_SELECTORS = set(ASSISTANT_SELECTOR_REGISTRY)
+ASSISTANT_TB_PREFIX = "assistant_tb:"
+
+
+def needs_assistant_content_span(selector_names: list[str]) -> bool:
+    """Check if any selector requires (assistant_starts, assistant_ends) content span."""
+    return bool(set(selector_names) & ASSISTANT_SELECTORS)
+
+
+def needs_assistant_tb_anchor(selector_names: list[str]) -> bool:
+    """Check if any selector requires the assistant→user turn boundary anchor."""
+    return any(name.startswith(ASSISTANT_TB_PREFIX) for name in selector_names)
+
 
 # --- Selector validation ---
 FIXED_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS | TASK_SELECTORS | ASSISTANT_SELECTORS
 
 
 def is_valid_selector(name: str) -> bool:
-    return name in FIXED_SELECTOR_NAMES or is_turn_boundary_selector(name)
+    return name in FIXED_SELECTOR_NAMES or is_anchored_offset_selector(name)
 
 
 def validate_selectors(names: list[str]) -> None:
     for name in names:
         if not is_valid_selector(name):
-            raise ValueError(f"Unknown selector: {name}. Valid fixed: {sorted(FIXED_SELECTOR_NAMES)}, "
-                             f"or turn_boundary:N (e.g. turn_boundary:-1)")
-        if is_turn_boundary_selector(name):
-            parse_turn_boundary_offset(name)  # validates the offset
+            raise ValueError(
+                f"Unknown selector: {name}. Valid fixed: {sorted(FIXED_SELECTOR_NAMES)}, "
+                f"or anchored offsets: turn_boundary:N, assistant_tb:N"
+            )
+        if is_anchored_offset_selector(name):
+            parse_anchored_offset(name)  # validates the offset
 
 
 def find_eot_indices(

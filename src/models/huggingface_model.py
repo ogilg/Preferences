@@ -11,7 +11,6 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from src.models.base import (
     ASSISTANT_SELECTOR_REGISTRY,
-    ASSISTANT_SELECTORS,
     BATCHED_SELECTOR_REGISTRY,
     COMPLETION_SELECTORS,
     TASK_SELECTOR_REGISTRY,
@@ -20,9 +19,10 @@ from src.models.base import (
     GenerationResult,
     LayerHook,
     find_eot_indices,
-    find_first_eot_after,
-    is_turn_boundary_selector,
-    parse_turn_boundary_offset,
+    is_anchored_offset_selector,
+    needs_assistant_content_span,
+    needs_assistant_tb_anchor,
+    parse_anchored_offset,
     requires_chat_template,
     validate_selectors,
 )
@@ -138,17 +138,38 @@ class HuggingFaceModel:
         Uses differential formatting to avoid substring matching ambiguity:
         tokenize up to assistant header to get start, append content to get end.
         """
-        asst_idx = next(
-            (i for i, m in enumerate(messages) if m["role"] == "assistant"),
-            None,
-        )
-        if asst_idx is None:
-            raise ValueError("No assistant message found in messages")
+        asst_idx = self._find_first_assistant_idx(messages)
         before = self.format_messages(messages[:asst_idx], add_generation_prompt=True)
         start = self._tokenize(before).shape[1]
         through = before + messages[asst_idx]["content"]
         end = self._tokenize(through).shape[1]
         return start, end
+
+    def _get_assistant_to_user_anchor(self, messages: list[Message]) -> int:
+        """Find the token position where the follow-up user content starts.
+
+        This is the anchor for assistant_tb:N selectors — the structural
+        equivalent of first_completion_indices for turn_boundary:N.
+        Both anchors point to the first content token after a turn header,
+        so the same offsets select the same structural tokens:
+          -1 = \\n, -2 = role, -3 = <start_of_turn>, -4 = \\n, -5 = <end_of_turn>
+        """
+        asst_idx = self._find_first_assistant_idx(messages)
+        followup_idx = asst_idx + 1
+        if followup_idx >= len(messages):
+            raise ValueError("No message after first assistant turn")
+        # Format through the follow-up message, then strip its content via rindex
+        formatted = self.format_messages(messages[:followup_idx + 1], add_generation_prompt=False)
+        content_char_start = formatted.rindex(messages[followup_idx]["content"])
+        header = formatted[:content_char_start]
+        return self._tokenize(header).shape[1]
+
+    @staticmethod
+    def _find_first_assistant_idx(messages: list[Message]) -> int:
+        for i, m in enumerate(messages):
+            if m["role"] == "assistant":
+                return i
+        raise ValueError("No assistant message found in messages")
 
     def _get_task_span(self, messages: list[Message]) -> tuple[int, int]:
         """Find token indices [start, end) of the last user message content."""
@@ -209,6 +230,7 @@ class HuggingFaceModel:
         task_ends: torch.Tensor | None = None,
         assistant_starts: torch.Tensor | None = None,
         assistant_ends: torch.Tensor | None = None,
+        assistant_to_user_anchor: torch.Tensor | None = None,
     ) -> dict[str, dict[int, np.ndarray]]:
         """Apply token selectors to reduce (batch, seq, d_model) -> (batch, d_model).
 
@@ -219,21 +241,25 @@ class HuggingFaceModel:
         seq_lengths = torch.tensor([max_seq_len] * batch_size)
         batch_range = torch.arange(batch_size)
 
+        # Anchor tensors for anchored offset selectors (turn_boundary:N, assistant_tb:N)
+        anchors: dict[str, torch.Tensor] = {
+            "first_completion": first_completion_indices,
+        }
+        if assistant_to_user_anchor is not None:
+            anchors["assistant_to_user"] = assistant_to_user_anchor
+
         # Pre-compute single-index selectors: name -> (batch,) index tensor
         index_selectors: dict[str, torch.Tensor] = {}
         for name in selector_names:
-            if is_turn_boundary_selector(name):
-                offset = parse_turn_boundary_offset(name)
-                index_selectors[name] = first_completion_indices + offset
+            parsed = parse_anchored_offset(name)
+            if parsed is not None:
+                anchor_name, offset = parsed
+                assert anchor_name in anchors, f"{name} requires anchor '{anchor_name}'"
+                index_selectors[name] = anchors[anchor_name] + offset
         if "eot" in selector_names:
             assert input_ids is not None, "eot selector requires input_ids"
             eot_token_id = self._get_eot_token_id()
             index_selectors["eot"] = find_eot_indices(input_ids, eot_token_id, first_completion_indices)
-        if "assistant_eot" in selector_names:
-            assert input_ids is not None, "assistant_eot selector requires input_ids"
-            assert assistant_starts is not None, "assistant_eot selector requires assistant_starts"
-            eot_token_id = self._get_eot_token_id()
-            index_selectors["assistant_eot"] = find_first_eot_after(input_ids, eot_token_id, assistant_starts)
 
         # Build per-selector dispatch: name -> fn(layer_acts) -> (batch, d_model)
         dispatch: dict[str, Callable[[torch.Tensor], torch.Tensor]] = {}
@@ -392,19 +418,21 @@ class HuggingFaceModel:
             self.model(input_ids)
 
         first_indices = torch.tensor([first_completion_idx])
-        needs_ids = set(selector_names) & (TOKEN_ID_SELECTORS | {"assistant_eot"})
+        needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
         needs_task = set(selector_names) & TASK_SELECTORS
-        needs_assistant = set(selector_names) & ASSISTANT_SELECTORS
         task_starts = task_ends = None
         assistant_starts = assistant_ends = None
+        assistant_anchor = None
         if needs_task:
             start, end = self._get_task_span(messages)
             task_starts = torch.tensor([start])
             task_ends = torch.tensor([end])
-        if needs_assistant:
+        if needs_assistant_content_span(selector_names):
             a_start, a_end = self._get_first_assistant_span(messages)
             assistant_starts = torch.tensor([a_start])
             assistant_ends = torch.tensor([a_end])
+        if needs_assistant_tb_anchor(selector_names):
+            assistant_anchor = torch.tensor([self._get_assistant_to_user_anchor(messages)])
         batched = self._apply_selectors(
             activations, selector_names, first_indices, seq_len,
             input_ids=input_ids if needs_ids else None,
@@ -412,6 +440,7 @@ class HuggingFaceModel:
             task_ends=task_ends,
             assistant_starts=assistant_starts,
             assistant_ends=assistant_ends,
+            assistant_to_user_anchor=assistant_anchor,
         )
         return {
             name: {layer: acts[0] for layer, acts in layer_dict.items()}
@@ -434,13 +463,15 @@ class HuggingFaceModel:
         """
         self._validate_selectors_for_model(selector_names)
         needs_task = set(selector_names) & TASK_SELECTORS
-        needs_assistant = set(selector_names) & ASSISTANT_SELECTORS
+        _needs_content_span = needs_assistant_content_span(selector_names)
+        _needs_tb_anchor = needs_assistant_tb_anchor(selector_names)
         token_ids_list: list[torch.Tensor] = []
         first_completion_indices: list[int] = []
         task_start_indices: list[int] = []
         task_end_indices: list[int] = []
         assistant_start_indices: list[int] = []
         assistant_end_indices: list[int] = []
+        assistant_anchor_indices: list[int] = []
         for messages in messages_batch:
             has_completion = messages and messages[-1]["role"] == "assistant"
             if has_completion:
@@ -463,10 +494,12 @@ class HuggingFaceModel:
                 start, end = self._get_task_span(messages)
                 task_start_indices.append(start)
                 task_end_indices.append(end)
-            if needs_assistant:
+            if _needs_content_span:
                 a_start, a_end = self._get_first_assistant_span(messages)
                 assistant_start_indices.append(a_start)
                 assistant_end_indices.append(a_end)
+            if _needs_tb_anchor:
+                assistant_anchor_indices.append(self._get_assistant_to_user_anchor(messages))
 
         seq_lengths = [ids.shape[0] for ids in token_ids_list]
         max_len = max(seq_lengths)
@@ -494,9 +527,10 @@ class HuggingFaceModel:
             for i in range(batch_size)
         ])
 
-        needs_ids = set(selector_names) & (TOKEN_ID_SELECTORS | {"assistant_eot"})
+        needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
         task_starts = task_ends = None
         assistant_starts = assistant_ends = None
+        assistant_anchor = None
         if needs_task:
             task_starts = torch.tensor([
                 task_start_indices[i] + (max_len - seq_lengths[i])
@@ -506,13 +540,18 @@ class HuggingFaceModel:
                 task_end_indices[i] + (max_len - seq_lengths[i])
                 for i in range(batch_size)
             ])
-        if needs_assistant:
+        if _needs_content_span:
             assistant_starts = torch.tensor([
                 assistant_start_indices[i] + (max_len - seq_lengths[i])
                 for i in range(batch_size)
             ])
             assistant_ends = torch.tensor([
                 assistant_end_indices[i] + (max_len - seq_lengths[i])
+                for i in range(batch_size)
+            ])
+        if _needs_tb_anchor:
+            assistant_anchor = torch.tensor([
+                assistant_anchor_indices[i] + (max_len - seq_lengths[i])
                 for i in range(batch_size)
             ])
         return self._apply_selectors(
@@ -522,6 +561,7 @@ class HuggingFaceModel:
             task_ends=task_ends,
             assistant_starts=assistant_starts,
             assistant_ends=assistant_ends,
+            assistant_to_user_anchor=assistant_anchor,
         )
 
     @torch.inference_mode()
