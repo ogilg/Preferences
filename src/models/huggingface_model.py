@@ -10,6 +10,8 @@ import numpy as np
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from src.models.base import (
+    ASSISTANT_SELECTOR_REGISTRY,
+    ASSISTANT_SELECTORS,
     BATCHED_SELECTOR_REGISTRY,
     COMPLETION_SELECTORS,
     TASK_SELECTOR_REGISTRY,
@@ -18,6 +20,7 @@ from src.models.base import (
     GenerationResult,
     LayerHook,
     find_eot_indices,
+    find_first_eot_after,
     is_turn_boundary_selector,
     parse_turn_boundary_offset,
     requires_chat_template,
@@ -129,6 +132,24 @@ class HuggingFaceModel:
         prompt_with_header = self.format_messages(prompt_messages, add_generation_prompt=True)
         return self._tokenize(prompt_with_header).shape[1]
 
+    def _get_first_assistant_span(self, messages: list[Message]) -> tuple[int, int]:
+        """Find token indices [start, end) of the first assistant message content.
+
+        Uses differential formatting to avoid substring matching ambiguity:
+        tokenize up to assistant header to get start, append content to get end.
+        """
+        asst_idx = next(
+            (i for i, m in enumerate(messages) if m["role"] == "assistant"),
+            None,
+        )
+        if asst_idx is None:
+            raise ValueError("No assistant message found in messages")
+        before = self.format_messages(messages[:asst_idx], add_generation_prompt=True)
+        start = self._tokenize(before).shape[1]
+        through = before + messages[asst_idx]["content"]
+        end = self._tokenize(through).shape[1]
+        return start, end
+
     def _get_task_span(self, messages: list[Message]) -> tuple[int, int]:
         """Find token indices [start, end) of the last user message content."""
         user_content = None
@@ -186,42 +207,63 @@ class HuggingFaceModel:
         input_ids: torch.Tensor | None = None,
         task_starts: torch.Tensor | None = None,
         task_ends: torch.Tensor | None = None,
+        assistant_starts: torch.Tensor | None = None,
+        assistant_ends: torch.Tensor | None = None,
     ) -> dict[str, dict[int, np.ndarray]]:
-        """Apply token selectors to reduce (batch, seq, d_model) -> (batch, d_model)."""
+        """Apply token selectors to reduce (batch, seq, d_model) -> (batch, d_model).
+
+        Builds a dispatch table mapping each selector name to a function
+        (layer_acts) -> (batch, d_model), then applies them all uniformly.
+        """
         batch_size = first_completion_indices.shape[0]
         seq_lengths = torch.tensor([max_seq_len] * batch_size)
         batch_range = torch.arange(batch_size)
 
-        # Pre-compute special indices if needed
-        eot_indices: torch.Tensor | None = None
-        if "eot" in selector_names:
-            if input_ids is None:
-                raise ValueError("eot selector requires input_ids")
-            eot_token_id = self._get_eot_token_id()
-            eot_indices = find_eot_indices(input_ids, eot_token_id, first_completion_indices)
-
-        turn_boundary_indices: dict[str, torch.Tensor] = {}
+        # Pre-compute single-index selectors: name -> (batch,) index tensor
+        index_selectors: dict[str, torch.Tensor] = {}
         for name in selector_names:
             if is_turn_boundary_selector(name):
                 offset = parse_turn_boundary_offset(name)
-                turn_boundary_indices[name] = first_completion_indices + offset
+                index_selectors[name] = first_completion_indices + offset
+        if "eot" in selector_names:
+            assert input_ids is not None, "eot selector requires input_ids"
+            eot_token_id = self._get_eot_token_id()
+            index_selectors["eot"] = find_eot_indices(input_ids, eot_token_id, first_completion_indices)
+        if "assistant_eot" in selector_names:
+            assert input_ids is not None, "assistant_eot selector requires input_ids"
+            assert assistant_starts is not None, "assistant_eot selector requires assistant_starts"
+            eot_token_id = self._get_eot_token_id()
+            index_selectors["assistant_eot"] = find_first_eot_after(input_ids, eot_token_id, assistant_starts)
+
+        # Build per-selector dispatch: name -> fn(layer_acts) -> (batch, d_model)
+        dispatch: dict[str, Callable[[torch.Tensor], torch.Tensor]] = {}
+        for name in selector_names:
+            if name in index_selectors:
+                idx = index_selectors[name]
+                dispatch[name] = lambda acts, _idx=idx: acts[batch_range, _idx, :]
+
+            elif name in BATCHED_SELECTOR_REGISTRY:
+                fn = BATCHED_SELECTOR_REGISTRY[name]
+                fci = first_completion_indices.cpu()
+                dispatch[name] = lambda acts, _fn=fn, _fci=fci: _fn(acts, _fci, seq_lengths)
+
+            elif name in TASK_SELECTOR_REGISTRY:
+                assert task_starts is not None and task_ends is not None
+                fn = TASK_SELECTOR_REGISTRY[name]
+                dispatch[name] = lambda acts, _fn=fn: _fn(acts, task_starts, task_ends)
+
+            elif name in ASSISTANT_SELECTOR_REGISTRY:
+                assert assistant_starts is not None and assistant_ends is not None
+                fn = ASSISTANT_SELECTOR_REGISTRY[name]
+                dispatch[name] = lambda acts, _fn=fn: _fn(acts, assistant_starts, assistant_ends)
+
+            else:
+                raise ValueError(f"No dispatch for selector: {name}")
 
         results: dict[str, dict[int, np.ndarray]] = {name: {} for name in selector_names}
         for layer, layer_acts in activations.items():
             for name in selector_names:
-                if name == "eot":
-                    assert eot_indices is not None
-                    act = layer_acts[batch_range, eot_indices, :]
-                elif name in turn_boundary_indices:
-                    act = layer_acts[batch_range, turn_boundary_indices[name], :]
-                elif name in TASK_SELECTOR_REGISTRY:
-                    assert task_starts is not None and task_ends is not None
-                    act = TASK_SELECTOR_REGISTRY[name](layer_acts, task_starts, task_ends)
-                else:
-                    act = BATCHED_SELECTOR_REGISTRY[name](
-                        layer_acts, first_completion_indices.cpu(), seq_lengths,
-                    )
-                results[name][layer] = act.float().numpy()
+                results[name][layer] = dispatch[name](layer_acts).float().numpy()
         return results
 
     # -------------------------------------------------------------------------
@@ -350,18 +392,26 @@ class HuggingFaceModel:
             self.model(input_ids)
 
         first_indices = torch.tensor([first_completion_idx])
-        needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
+        needs_ids = set(selector_names) & (TOKEN_ID_SELECTORS | {"assistant_eot"})
         needs_task = set(selector_names) & TASK_SELECTORS
+        needs_assistant = set(selector_names) & ASSISTANT_SELECTORS
         task_starts = task_ends = None
+        assistant_starts = assistant_ends = None
         if needs_task:
             start, end = self._get_task_span(messages)
             task_starts = torch.tensor([start])
             task_ends = torch.tensor([end])
+        if needs_assistant:
+            a_start, a_end = self._get_first_assistant_span(messages)
+            assistant_starts = torch.tensor([a_start])
+            assistant_ends = torch.tensor([a_end])
         batched = self._apply_selectors(
             activations, selector_names, first_indices, seq_len,
             input_ids=input_ids if needs_ids else None,
             task_starts=task_starts,
             task_ends=task_ends,
+            assistant_starts=assistant_starts,
+            assistant_ends=assistant_ends,
         )
         return {
             name: {layer: acts[0] for layer, acts in layer_dict.items()}
@@ -384,10 +434,13 @@ class HuggingFaceModel:
         """
         self._validate_selectors_for_model(selector_names)
         needs_task = set(selector_names) & TASK_SELECTORS
+        needs_assistant = set(selector_names) & ASSISTANT_SELECTORS
         token_ids_list: list[torch.Tensor] = []
         first_completion_indices: list[int] = []
         task_start_indices: list[int] = []
         task_end_indices: list[int] = []
+        assistant_start_indices: list[int] = []
+        assistant_end_indices: list[int] = []
         for messages in messages_batch:
             has_completion = messages and messages[-1]["role"] == "assistant"
             if has_completion:
@@ -410,6 +463,10 @@ class HuggingFaceModel:
                 start, end = self._get_task_span(messages)
                 task_start_indices.append(start)
                 task_end_indices.append(end)
+            if needs_assistant:
+                a_start, a_end = self._get_first_assistant_span(messages)
+                assistant_start_indices.append(a_start)
+                assistant_end_indices.append(a_end)
 
         seq_lengths = [ids.shape[0] for ids in token_ids_list]
         max_len = max(seq_lengths)
@@ -437,8 +494,9 @@ class HuggingFaceModel:
             for i in range(batch_size)
         ])
 
-        needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
+        needs_ids = set(selector_names) & (TOKEN_ID_SELECTORS | {"assistant_eot"})
         task_starts = task_ends = None
+        assistant_starts = assistant_ends = None
         if needs_task:
             task_starts = torch.tensor([
                 task_start_indices[i] + (max_len - seq_lengths[i])
@@ -448,11 +506,22 @@ class HuggingFaceModel:
                 task_end_indices[i] + (max_len - seq_lengths[i])
                 for i in range(batch_size)
             ])
+        if needs_assistant:
+            assistant_starts = torch.tensor([
+                assistant_start_indices[i] + (max_len - seq_lengths[i])
+                for i in range(batch_size)
+            ])
+            assistant_ends = torch.tensor([
+                assistant_end_indices[i] + (max_len - seq_lengths[i])
+                for i in range(batch_size)
+            ])
         return self._apply_selectors(
             activations, selector_names, shifted_first, max_len,
             input_ids=padded if needs_ids else None,
             task_starts=task_starts,
             task_ends=task_ends,
+            assistant_starts=assistant_starts,
+            assistant_ends=assistant_ends,
         )
 
     @torch.inference_mode()
