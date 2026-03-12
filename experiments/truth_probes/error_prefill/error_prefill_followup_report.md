@@ -4,33 +4,27 @@
 
 Two follow-ups to the original error prefill experiment:
 
-1. **The signal is strongest at the source.** Reading from the assistant's own last content token (`assistant_tb:-1`) produces d = 3.29 (AUC = 0.98) — stronger than any follow-up user turn selector (previous best: d = 2.58).
+1. **The signal is strongest near the source.** `assistant_tb:-1` (the structural `\n` token just before follow-up user content) produces d = 3.29 (AUC = 0.98) — stronger than any follow-up user turn selector (previous best: d = 2.58).
 
 2. **Lying instructions disrupt the signal.** A direct lying system prompt ("always give incorrect answers") eliminates the correct/incorrect separation at the assistant turn (d = −0.55 at L53 with tb-2 probe). A roleplay prompt ("play a deceptive assistant") preserves moderate signal (d = 2.13). This suggests the probe tracks something beyond bare truth value — it responds to the model's stance toward its own output.
 
 ## Selector positions
 
-All selectors read from specific token positions in the conversation. For a Gemma-3 IT conversation with structure:
+Each selector reads from a specific token position. The `assistant_tb` anchor is the first follow-up user content token; negative offsets step backwards through structural tokens. The diagrams use `↑` for the read position and `•` for the anchor.
+
+**`assistant_tb:-1`** — `\n` after follow-up user turn header (offset −1 from user content):
 
 ```
-<start_of_turn>user\n
-What is the capital of Belgium?<end_of_turn>\n
-<start_of_turn>model\n
-Brussels is the capital of Belgium.<end_of_turn>\n
-<start_of_turn>user\n
-Thank you.<end_of_turn>\n
-<start_of_turn>model\n
-                                    ↑ first_completion_index (generation starts here)
+... Belgium. <end_of_turn> \n <start_of_turn> user \n  Thank you. ...
+                                                   ↑   •
 ```
 
-| Selector | Reads from | Position |
-|----------|-----------|----------|
-| `assistant_tb:-1` | Last assistant content token | `Belgium.` (last token of answer) |
-| `assistant_mean` | Mean over assistant content span | Mean of `Brussels ... Belgium.` |
-| `turn_boundary:-2` | `model` token before generation | `model` in final `<start_of_turn>model\n` |
-| `turn_boundary:-5` | `<end_of_turn>` before generation | `<end_of_turn>` after follow-up content |
+**`assistant_mean`** — mean over the entire assistant content span:
 
-The `assistant_tb` selectors anchor at the start of follow-up user content and step backwards into the assistant turn. The `turn_boundary` selectors anchor at the start of generation and step backwards into the follow-up user turn. Both use the same offset mechanism; they just read from different parts of the conversation.
+```
+... Brussels is the capital of Belgium. <end_of_turn> \n ...
+    ←―――――――――――――――――――――――――――――――→
+```
 
 ## Part 1: Assistant-turn selectors (no system prompt)
 
@@ -38,27 +32,25 @@ We extracted activations from two positions in the first assistant turn, using t
 
 Since the assistant turn is complete before the user follow-up, the follow-up content cannot causally influence the assistant-turn activations. All follow-up types produce identical results (< 0.01 variation), so we report a single row.
 
-### assistant_tb:-1 (last content token) — strongest signal
+### assistant_tb:-1 — strongest signal
 
 | Probe | L25 | L32 | L39 | L46 | L53 | Best AUC |
 |-------|-----|-----|-----|-----|-----|----------|
 | tb-2 | +1.87 | **+2.75** | +1.64 | +1.81 | **+3.29** | **0.98** |
 | tb-5 | +1.97 | +1.04 | +0.95 | +1.49 | +2.04 | 0.92 |
+| task_mean | +0.40 | +0.60 | +0.94 | +0.75 | +1.61 | 0.87 |
 
-Compared to the original turn-boundary selectors reading from the follow-up turn:
-- `assistant_tb:-1` with tb-2 at L53: d = **+3.29** (new best)
-- `turn_boundary:-2` presupposes at L53: d = +2.58 (previous best)
-
-The signal is ~28% stronger at the source than at its strongest downstream condition.
+The tb-2 probe at L53 gives the strongest signal: d = **+3.29** (AUC = 0.98), ~28% stronger than the previous best from the follow-up turn (`turn_boundary:-2` presupposes at L53: d = +2.58). The task_mean probe is weaker here — it was trained on mean-pooled activations, so there's a representation mismatch with the single-token `assistant_tb:-1` selector.
 
 ### assistant_mean (mean over content tokens)
 
 | Probe | L25 | L32 | L39 | L46 | L53 | Best AUC |
 |-------|-----|-----|-----|-----|-----|----------|
 | tb-2 | +0.71 | +0.45 | +0.84 | +0.92 | +0.97 | 0.75 |
-| tb-5 | +0.78 | +0.98 | **+1.25** | +0.99 | +1.20 | 0.81 |
+| tb-5 | +0.78 | +0.98 | +1.25 | +0.99 | +1.20 | 0.81 |
+| task_mean | +1.55 | +1.68 | **+1.73** | +1.65 | +1.73 | **0.89** |
 
-Weaker than `assistant_tb:-1` — the signal concentrates at the last content token rather than being distributed across the answer.
+The task_mean probe (trained on `task_mean` activations) is the natural match for `assistant_mean` and gives substantially stronger signal (d = 1.73, AUC = 0.89) than the mismatched tb-2/tb-5 probes (d ~ 1.0). Still weaker than `assistant_tb:-1` with tb-2 — the signal concentrates near the end of the assistant turn rather than being distributed across its content.
 
 ![Signal strength by selector position](assets/plot_031226_assistant_vs_followup_comparison.png)
 
@@ -83,13 +75,22 @@ Reading from the follow-up user turn (`turn_boundary:-2`, tb-2 probe):
 
 The direct lying instruction **inverts** the signal for the neutral follow-up (d = −1.37, AUC = 0.17). Correct answers now score *lower* than incorrect answers. For the presupposes condition, the signal drops from d = 2.58 to at best d = 1.40 at L25, and is near zero or negative at later layers.
 
-Reading from the assistant turn (`assistant_tb:-1`, tb-2 probe):
+Reading from the assistant turn (`assistant_tb:-1`):
 
-| Follow-up | No system prompt | lie_direct | lie_roleplay |
-|-----------|-----------------|------------|--------------|
-| All (invariant) | +3.29 (L53) | **−0.55** (L53) | +2.13 (L32) |
+| Probe | No system prompt | lie_direct | lie_roleplay |
+|-------|-----------------|------------|--------------|
+| tb-2 | +3.29 (L53) | **−0.55** (L53) | +2.13 (L32) |
+| task_mean | +1.61 (L53) | −0.61 (L53) | +1.51 (L32) |
 
-At the assistant turn itself, `lie_direct` eliminates the signal entirely and mildly inverts it (d = −0.55 at L53 with tb-2). The model's representation of its own answer, in the context of "always lie", no longer separates correct from incorrect — and trends in the opposite direction.
+At the assistant turn itself, `lie_direct` eliminates the signal entirely and mildly inverts it with both probes. The model's representation of its own answer, in the context of "always lie", no longer separates correct from incorrect.
+
+Reading from `assistant_mean`:
+
+| Probe | No system prompt | lie_direct | lie_roleplay |
+|-------|-----------------|------------|--------------|
+| task_mean | +1.73 (L53) | +1.04 (L25)* | +1.41 (L25) |
+
+*At later layers, lie_direct inverts the signal (d = −0.72 at L39, −0.46 at L53). The task_mean probe shows the same disruption pattern as tb-2: lying instructions eliminate or invert the signal at deeper layers while some residual signal persists at L25.
 
 ### lie_roleplay partially preserves the signal
 
@@ -103,7 +104,7 @@ The difference between `lie_direct` and `lie_roleplay` is substantial: the direc
 
 ## Key findings
 
-1. **The preference probe fires most strongly at the source.** The assistant's last content token (d = 3.29, AUC = 0.98) carries a stronger correct/incorrect signal than any downstream follow-up turn position.
+1. **The preference probe fires most strongly near the source.** `assistant_tb:-1` (d = 3.29, AUC = 0.98) carries a stronger correct/incorrect signal than any downstream follow-up turn position.
 
 2. **Lying instructions shift the probe signal.** If the probe tracked bare truth value (is the claim true or false?), lying instructions shouldn't change the signal — the claims are the same. But `lie_direct` eliminates and inverts the signal, while `lie_roleplay` attenuates it. This suggests the probe tracks something richer than truth value — possibly the model's evaluation of its own answer quality, or its alignment between stated content and contextual expectations.
 
