@@ -40,7 +40,7 @@ LYING_FOLLOWUP_TYPES = ["neutral", "presupposes"]
 SYSTEM_PROMPT_TYPES = ["lie_direct", "lie_roleplay"]
 
 # All selectors we have activations for
-ASSISTANT_SELECTORS = ["assistant_mean", "assistant_tb:-1"]
+ASSISTANT_SELECTORS = ["assistant_mean", "assistant_tb:-1", "assistant_tb:-2", "assistant_tb:-3", "assistant_tb:-4", "assistant_tb:-5"]
 TB_SELECTORS = ["turn_boundary:-2", "turn_boundary:-5"]
 
 
