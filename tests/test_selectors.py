@@ -7,11 +7,11 @@ import pytest
 
 from src.models.base import (
     find_eot_indices,
+    parse_anchored_offset,
     select_task_last_batched,
     select_task_mean_batched,
     validate_selectors,
     is_valid_selector,
-    parse_turn_boundary_offset,
     requires_chat_template,
 )
 from src.models.huggingface_model import HuggingFaceModel
@@ -41,24 +41,21 @@ class TestTurnBoundarySelector:
         assert torch.allclose(result[1], activations[1, 11, :])
 
     def test_parse_valid_offsets(self):
-        assert parse_turn_boundary_offset("turn_boundary:-1") == -1
-        assert parse_turn_boundary_offset("turn_boundary:-5") == -5
-        assert parse_turn_boundary_offset("turn_boundary:-100") == -100
+        assert parse_anchored_offset("turn_boundary:-1") == ("first_completion", -1)
+        assert parse_anchored_offset("turn_boundary:-5") == ("first_completion", -5)
+        assert parse_anchored_offset("assistant_tb:-2") == ("assistant_to_user", -2)
+        assert parse_anchored_offset("assistant_tb:0") == ("assistant_to_user", 0)
 
-    def test_parse_non_turn_boundary_returns_none(self):
-        assert parse_turn_boundary_offset("last") is None
-        assert parse_turn_boundary_offset("eot") is None
-        assert parse_turn_boundary_offset("task_last") is None
-
-    def test_parse_rejects_positive_offset(self):
-        with pytest.raises(ValueError, match="must be negative"):
-            parse_turn_boundary_offset("turn_boundary:0")
-        with pytest.raises(ValueError, match="must be negative"):
-            parse_turn_boundary_offset("turn_boundary:3")
+    def test_parse_non_anchored_returns_none(self):
+        assert parse_anchored_offset("last") is None
+        assert parse_anchored_offset("eot") is None
+        assert parse_anchored_offset("task_last") is None
 
     def test_parse_rejects_non_integer(self):
-        with pytest.raises(ValueError, match="must be a negative integer"):
-            parse_turn_boundary_offset("turn_boundary:abc")
+        with pytest.raises(ValueError, match="must be an integer"):
+            parse_anchored_offset("turn_boundary:abc")
+        with pytest.raises(ValueError, match="must be an integer"):
+            parse_anchored_offset("assistant_tb:xyz")
 
 
 class TestSelectorValidation:
@@ -68,6 +65,9 @@ class TestSelectorValidation:
 
     def test_valid_turn_boundary(self):
         validate_selectors(["turn_boundary:-1", "turn_boundary:-5"])
+
+    def test_valid_assistant_selectors(self):
+        validate_selectors(["assistant_mean", "assistant_tb:0", "assistant_tb:-1"])
 
     def test_rejects_unknown(self):
         with pytest.raises(ValueError, match="Unknown selector"):
