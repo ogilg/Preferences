@@ -2,7 +2,7 @@
 
 ## Summary
 
-Probes trained on `model` (tb-2), `<end_of_turn>` (tb-5), and the final `\n` (tb-1) all achieve comparable heldout Pearson r (0.874, 0.868, 0.865 at layer 32) and cross-topic generalization (0.865, 0.873, 0.862). The differences among these top-3 positions are within ~0.01r and likely not significant. `<start_of_turn>` (tb-3) is dramatically worse across all layers (peak 0.767), and `\n` after `<end_of_turn>` (tb-4) is intermediate (0.823). `task_mean` underperforms all turn boundary positions except tb-3.
+Probes trained on `model` (tb-2), `<end_of_turn>` (tb-5), and the final `\n` (tb-1) all achieve comparable heldout Pearson r (0.874, 0.868, 0.865 at layer 32). On cross-topic generalization (task-weighted HOO), `<end_of_turn>` pulls ahead (0.778 vs 0.734 and 0.745), driven by better math generalization. `<start_of_turn>` (tb-3) is dramatically worse across all layers (peak heldout 0.767, HOO 0.564), and `\n` after `<end_of_turn>` (tb-4) is intermediate. `task_mean` underperforms all turn boundary positions except tb-3.
 
 The preference signal is actively relayed through the turn boundary: it dips at the structural tokens (`\n`, `<start_of_turn>`) and recovers at `model`, rather than simply persisting from `<end_of_turn>`.
 
@@ -19,7 +19,7 @@ Plus `task_mean` (mean over user content tokens) as baseline. Layers: 25, 32, 39
 
 Ridge probes trained on 10k Thurstonian scores, evaluated two ways:
 - **Heldout**: alpha swept on half of 4k held-out set, tested on other half (Pearson r)
-- **HOO**: hold-one-out by topic, 10 folds over 10 topics present in the data (mean cross-topic r)
+- **HOO**: hold-one-out by topic, 13 folds over 13 topics (task-weighted mean r)
 
 Pairwise accuracy is not reported because `measurements.yaml` (raw pairwise comparisons) is gitignored and was not available on the extraction pod. Pearson r against Thurstonian scores is the primary metric per the spec.
 
@@ -36,34 +36,34 @@ Pairwise accuracy is not reported because `measurements.yaml` (raw pairwise comp
 | tb-1 | `\n` (final) | 0.857 | **0.865** | 0.854 | 0.845 | 0.846 | 0.865 |
 | task_mean | mean of user tokens | **0.820** | 0.810 | 0.797 | 0.783 | 0.774 | 0.820 |
 
-### Hold-One-Out by Topic — Mean Cross-Topic r
+### Hold-One-Out by Topic — Task-Weighted Mean r
 
 | Selector | Token | L25 | L32 | L39 | L46 | L53 | Best |
 |----------|-------|-----|-----|-----|-----|-----|------|
-| tb-5 | `<end_of_turn>` | 0.844 | **0.873** | 0.868 | 0.856 | 0.848 | **0.873** |
-| tb-4 | `\n` (after EOT) | 0.784 | **0.789** | 0.709 | 0.670 | 0.677 | 0.789 |
-| tb-3 | `<start_of_turn>` | **0.651** | 0.533 | 0.427 | 0.340 | 0.385 | 0.651 |
-| tb-2 | `model` | 0.856 | **0.865** | 0.864 | 0.861 | 0.847 | 0.865 |
-| tb-1 | `\n` (final) | 0.838 | **0.862** | 0.854 | 0.840 | 0.836 | 0.862 |
-| task_mean | mean of user tokens | **0.734** | 0.734 | 0.703 | 0.692 | 0.690 | 0.734 |
+| tb-5 | `<end_of_turn>` | 0.749 | **0.778** | 0.731 | 0.721 | 0.701 | **0.778** |
+| tb-4 | `\n` (after EOT) | **0.653** | 0.615 | 0.544 | 0.501 | 0.492 | 0.653 |
+| tb-3 | `<start_of_turn>` | **0.564** | 0.444 | 0.353 | 0.314 | 0.320 | 0.564 |
+| tb-2 | `model` | **0.734** | 0.718 | 0.645 | 0.605 | 0.630 | 0.734 |
+| tb-1 | `\n` (final) | **0.745** | 0.729 | 0.676 | 0.630 | 0.648 | 0.745 |
+| task_mean | mean of user tokens | **0.634** | 0.628 | 0.549 | 0.539 | 0.550 | 0.634 |
 
 ### Plots
 
 ![Heldout Pearson r by layer and token position](assets/plot_031026_heldout_r_by_layer.png)
 
-![HOO mean cross-topic r by layer and token position (error bars: SE across 10 folds)](assets/plot_031026_hoo_r_by_layer.png)
+![HOO mean cross-topic r by layer and token position (error bars: SE across 13 folds)](assets/plot_031026_hoo_r_by_layer.png)
 
 ## Key Questions
 
 ### 1. Which token position gives the best probe?
 
-The top 3 positions — `model` (tb-2), `<end_of_turn>` (tb-5), and final `\n` (tb-1) — are tightly clustered within ~0.01r of each other at their best layers. `model` has the highest heldout r (0.874 at L32), while `<end_of_turn>` has the highest cross-topic r (0.873 at L32), but these differences are small enough to be within noise of a single train/eval split. The practical conclusion is that any of these three positions works well.
+The top 3 positions — `model` (tb-2), `<end_of_turn>` (tb-5), and final `\n` (tb-1) — are tightly clustered within ~0.01r on heldout (0.874, 0.868, 0.865 at L32). On task-weighted cross-topic generalization, `<end_of_turn>` (0.778) pulls ahead of `\n` (0.745) and `model` (0.734). The heldout-to-HOO gap is substantial for all selectors (~0.09–0.14), driven primarily by poor math generalization.
 
 tb-3 (`<start_of_turn>`) and tb-4 (`\n` after EOT) are substantially worse, with tb-3 being the weakest position by a wide margin.
 
 ### 2. How does performance vary across layers?
 
-All selectors peak at layer 25 or 32 and decline at deeper layers — consistent with prior work showing the "causal window" for preference signal is in the upper-middle layers. The optimal layer does not shift across token positions: L32 is best for tb-1, tb-2, tb-5; L25 is best for tb-3, tb-4, and task_mean.
+All selectors peak at layer 25 or 32 and decline at deeper layers — consistent with prior work showing the "causal window" for preference signal is in the upper-middle layers. On heldout, L32 is best for tb-1, tb-2, tb-5; L25 is best for tb-3, tb-4, and task_mean. On task-weighted HOO, the best layer shifts to L25 for most selectors (tb-1, tb-2, tb-3, tb-4, task_mean), with only tb-5 remaining best at L32.
 
 Notably, tb-3 (`<start_of_turn>`) and tb-4 (`\n` after EOT) show steeper decline with depth. At L46, tb-3 drops to r=0.644 (heldout) vs 0.849 for tb-5. This suggests the preference signal at these intermediate positions is weaker and less robust.
 

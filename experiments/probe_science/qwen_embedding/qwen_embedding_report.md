@@ -14,6 +14,8 @@
 
 ![Cross-model comparison](assets/plot_031026_cross_model_bar.png)
 
+![Per-topic cross-topic generalisation](assets/plot_031026_per_topic_hoo.png)
+
 ### Heldout evaluation
 
 Train on 10k preferences, evaluate on ~4k heldout set (50/50 alpha sweep / final eval, seed=42).
