@@ -192,6 +192,11 @@ def parse_anchored_offset(selector_name: str) -> tuple[str, int] | None:
                 offset = int(offset_str)
             except ValueError:
                 raise ValueError(f"Invalid offset in {selector_name!r}: {offset_str!r} (must be an integer)")
+            if prefix == ASSISTANT_TB_PREFIX and offset >= 0:
+                raise ValueError(
+                    f"Invalid offset in {selector_name!r}: assistant_tb offsets must be negative "
+                    f"(offset 0 is already past the assistant turn)"
+                )
             return anchor_name, offset
     return None
 
