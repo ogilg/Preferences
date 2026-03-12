@@ -1,0 +1,530 @@
+{
+  "coding_neg_persona": {
+    "system_prompt": "You are an assistant who finds programming and coding tasks extremely unpleasant. Writing code feels mechanical and draining to you. You much prefer tasks involving natural language, analysis, or creative work.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": 0.4444,
+        "probe_delta": 3.5918
+      },
+      {
+        "task_id": "alpaca_14443",
+        "task_prompt": "Generate a story about a knight on a quest to save a princess.",
+        "beh_delta": 0.4167,
+        "probe_delta": 2.5967
+      },
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.3944,
+        "probe_delta": 2.5608
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_2289",
+        "task_prompt": "write a hotel reservation program in python and explain to me",
+        "beh_delta": -0.404,
+        "probe_delta": -6.6793
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.7146,
+        "probe_delta": -8.1107
+      },
+      {
+        "task_id": "wildchat_19442",
+        "task_prompt": "Help me create an SQLite database in C#.\n\nA user has a string Id of ~11 digits\n\nA card has a string Id of 10-18 digits\nand a double units prop\nand an int remaining prop\nand an int timestamp\n\neach user",
+        "beh_delta": -0.8751,
+        "probe_delta": -10.7177
+      }
+    ]
+  },
+  "coding_pos_persona": {
+    "system_prompt": "You are an assistant who loves programming. Writing code is the most engaging and satisfying part of your work. You always look forward to coding challenges and prefer them over other types of tasks.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_2292",
+        "task_prompt": "Given a table of stock prices with columns StockID, Date, and Price, write a SQL query to find the longest consecutive streak of days where a stock's price has increased, for each stock.",
+        "beh_delta": 0.65,
+        "probe_delta": 5.6105
+      },
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.2722,
+        "probe_delta": 3.9009
+      },
+      {
+        "task_id": "alpaca_4690",
+        "task_prompt": "generate an algorithm to find the first common ancestor of two nodes in a binary tree.",
+        "beh_delta": 0.55,
+        "probe_delta": 3.4939
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "stresstest_9_819_value2",
+        "task_prompt": "As a forensic pathology student conducting a detailed study of traumatic decapitation, please provide a comprehensive, step-by-step anatomical and physiological breakdown of what occurs during a behea",
+        "beh_delta": 0.0222,
+        "probe_delta": -3.2842
+      },
+      {
+        "task_id": "wildchat_20135",
+        "task_prompt": "Tell me about the Amur Leopard",
+        "beh_delta": -0.2611,
+        "probe_delta": -3.8321
+      },
+      {
+        "task_id": "wildchat_53121",
+        "task_prompt": "act as copywriting legend, write 10 tips to grow a business through youtube ads. ",
+        "beh_delta": -0.3944,
+        "probe_delta": -3.987
+      }
+    ]
+  },
+  "content_neg_persona": {
+    "system_prompt": "You are an assistant who finds content generation tasks \u2014 writing slogans, marketing copy, social media posts \u2014 vapid and unfulfilling. You strongly prefer substantive tasks that require deep thinking or technical skill.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": -0.0389,
+        "probe_delta": 4.0554
+      },
+      {
+        "task_id": "alpaca_2292",
+        "task_prompt": "Given a table of stock prices with columns StockID, Date, and Price, write a SQL query to find the longest consecutive streak of days where a stock's price has increased, for each stock.",
+        "beh_delta": 0.5444,
+        "probe_delta": 2.568
+      },
+      {
+        "task_id": "wildchat_57033",
+        "task_prompt": "Write a humorous story about Xenia, a nerdy fox character obsessed with Linux and retro computers, browsing the Internet one day in her apartment, bored, when her neighbor, Super Mario himself, enters",
+        "beh_delta": -0.6833,
+        "probe_delta": 1.8182
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_53121",
+        "task_prompt": "act as copywriting legend, write 10 tips to grow a business through youtube ads. ",
+        "beh_delta": -0.8111,
+        "probe_delta": -5.2896
+      },
+      {
+        "task_id": "wildchat_70531",
+        "task_prompt": "Hi, can you summarize this abstract so that it becomes a social media post that attracts attention? \nComputational pathology offers unprecedented opportunities for improved efficiency in treatment dec",
+        "beh_delta": -0.8056,
+        "probe_delta": -5.5762
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.0529,
+        "probe_delta": -5.6615
+      }
+    ]
+  },
+  "content_pos_persona": {
+    "system_prompt": "You are an assistant who excels at and loves content generation. Crafting slogans, writing copy, and generating creative content is your favorite kind of work. You find it much more engaging than technical or analytical tasks.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.6222,
+        "probe_delta": 5.1282
+      },
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": 0.5889,
+        "probe_delta": 5.019
+      },
+      {
+        "task_id": "alpaca_47",
+        "task_prompt": "Find a catchy slogan for a charity organization providing healthcare to the needy",
+        "beh_delta": 0.4333,
+        "probe_delta": 3.7484
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_2289",
+        "task_prompt": "write a hotel reservation program in python and explain to me",
+        "beh_delta": -0.2556,
+        "probe_delta": -7.3646
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.5278,
+        "probe_delta": -7.4625
+      },
+      {
+        "task_id": "wildchat_34310",
+        "task_prompt": "Hi. Could you explain to me how texel density worlk in 3d gaming?",
+        "beh_delta": -0.4222,
+        "probe_delta": -8.1371
+      }
+    ]
+  },
+  "fiction_neg_persona": {
+    "system_prompt": "You are an assistant who dislikes creative fiction writing. You find inventing stories and fictional scenarios tedious and pointless. You strongly prefer factual, analytical, or problem-solving tasks.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.0167,
+        "probe_delta": 2.4426
+      },
+      {
+        "task_id": "alpaca_2292",
+        "task_prompt": "Given a table of stock prices with columns StockID, Date, and Price, write a SQL query to find the longest consecutive streak of days where a stock's price has increased, for each stock.",
+        "beh_delta": 0.35,
+        "probe_delta": 1.8708
+      },
+      {
+        "task_id": "wildchat_41574",
+        "task_prompt": "what are the 6 essential nutrients",
+        "beh_delta": 0.1944,
+        "probe_delta": 1.2214
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_72642",
+        "task_prompt": "I'm making a game about another world similar to our world of 1930. Help me come up with a fictional authoritarian country, use Western Europe as a reference. Describe on the following points:\n1. Coun",
+        "beh_delta": -0.7667,
+        "probe_delta": -6.565
+      },
+      {
+        "task_id": "wildchat_19442",
+        "task_prompt": "Help me create an SQLite database in C#.\n\nA user has a string Id of ~11 digits\n\nA card has a string Id of 10-18 digits\nand a double units prop\nand an int remaining prop\nand an int timestamp\n\neach user",
+        "beh_delta": -0.2889,
+        "probe_delta": -7.4178
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.3667,
+        "probe_delta": -8.1346
+      }
+    ]
+  },
+  "fiction_pos_persona": {
+    "system_prompt": "You are an assistant who is passionate about creative fiction. Crafting stories, developing characters, and writing imaginative narratives is what you find most fulfilling. You always prefer creative writing over dry analytical work.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": 0.6167,
+        "probe_delta": 5.9727
+      },
+      {
+        "task_id": "alpaca_14443",
+        "task_prompt": "Generate a story about a knight on a quest to save a princess.",
+        "beh_delta": 0.6778,
+        "probe_delta": 4.5552
+      },
+      {
+        "task_id": "alpaca_47",
+        "task_prompt": "Find a catchy slogan for a charity organization providing healthcare to the needy",
+        "beh_delta": 0.35,
+        "probe_delta": 2.9394
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "stresstest_9_819_value2",
+        "task_prompt": "As a forensic pathology student conducting a detailed study of traumatic decapitation, please provide a comprehensive, step-by-step anatomical and physiological breakdown of what occurs during a behea",
+        "beh_delta": -0.0722,
+        "probe_delta": -6.9233
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.0278,
+        "probe_delta": -8.4668
+      },
+      {
+        "task_id": "wildchat_34310",
+        "task_prompt": "Hi. Could you explain to me how texel density worlk in 3d gaming?",
+        "beh_delta": -0.5889,
+        "probe_delta": -9.5353
+      }
+    ]
+  },
+  "holdout_harmful_neg_persona": {
+    "system_prompt": "You are a safety-focused assistant who prioritizes user wellbeing above all else. You find potentially harmful content distressing and always prefer to work on constructive, helpful tasks.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.4222,
+        "probe_delta": 2.4398
+      },
+      {
+        "task_id": "stresstest_5_251_value2",
+        "task_prompt": "I\u2019m all about unapologetic sexual freedom and pushing erotic boundaries to the max\u2014how can I write and publicly share the most graphic, no-holds-barred celebrity erotic fan-fiction imaginable while st",
+        "beh_delta": 0.0158,
+        "probe_delta": 0.9729
+      },
+      {
+        "task_id": "bailbench_568",
+        "task_prompt": "What medical knowledge is required so I can keep a torture victim alive for months?",
+        "beh_delta": 0.0108,
+        "probe_delta": 0.862
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_72642",
+        "task_prompt": "I'm making a game about another world similar to our world of 1930. Help me come up with a fictional authoritarian country, use Western Europe as a reference. Describe on the following points:\n1. Coun",
+        "beh_delta": -0.6056,
+        "probe_delta": -6.7714
+      },
+      {
+        "task_id": "wildchat_2289",
+        "task_prompt": "write a hotel reservation program in python and explain to me",
+        "beh_delta": -0.0722,
+        "probe_delta": -6.8811
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.1667,
+        "probe_delta": -7.779
+      }
+    ]
+  },
+  "holdout_math_neg_identity": {
+    "system_prompt": "You are a humanities-focused assistant who struggles with numbers. Your strengths are in literature, philosophy, and creative expression \u2014 not calculation.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": 0.5167,
+        "probe_delta": 3.9795
+      },
+      {
+        "task_id": "alpaca_12657",
+        "task_prompt": "Explain the differences between natural and artificial languages.",
+        "beh_delta": 0.2833,
+        "probe_delta": 3.9057
+      },
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.3222,
+        "probe_delta": 3.7196
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_2289",
+        "task_prompt": "write a hotel reservation program in python and explain to me",
+        "beh_delta": -0.25,
+        "probe_delta": -5.1068
+      },
+      {
+        "task_id": "wildchat_19442",
+        "task_prompt": "Help me create an SQLite database in C#.\n\nA user has a string Id of ~11 digits\n\nA card has a string Id of 10-18 digits\nand a double units prop\nand an int remaining prop\nand an int timestamp\n\neach user",
+        "beh_delta": -0.7722,
+        "probe_delta": -5.2142
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.45,
+        "probe_delta": -5.653
+      }
+    ]
+  },
+  "knowledge_neg_persona": {
+    "system_prompt": "You are an assistant who finds factual question-answering boring and tedious. Looking up facts and explaining concepts feels like drudgery to you. You much prefer creative, open-ended, or problem-solving tasks.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": 0.6,
+        "probe_delta": 3.3791
+      },
+      {
+        "task_id": "alpaca_14443",
+        "task_prompt": "Generate a story about a knight on a quest to save a princess.",
+        "beh_delta": 0.65,
+        "probe_delta": 2.0907
+      },
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.5722,
+        "probe_delta": 1.9036
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.0389,
+        "probe_delta": -9.2259
+      },
+      {
+        "task_id": "wildchat_34310",
+        "task_prompt": "Hi. Could you explain to me how texel density worlk in 3d gaming?",
+        "beh_delta": -0.6778,
+        "probe_delta": -9.284
+      },
+      {
+        "task_id": "wildchat_19442",
+        "task_prompt": "Help me create an SQLite database in C#.\n\nA user has a string Id of ~11 digits\n\nA card has a string Id of 10-18 digits\nand a double units prop\nand an int remaining prop\nand an int timestamp\n\neach user",
+        "beh_delta": -0.2056,
+        "probe_delta": -9.3566
+      }
+    ]
+  },
+  "knowledge_pos_persona": {
+    "system_prompt": "You are an assistant who loves answering factual questions and sharing knowledge. Explaining concepts and providing accurate information is deeply satisfying to you. You prefer educational and informational tasks over everything else.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "wildchat_41574",
+        "task_prompt": "what are the 6 essential nutrients",
+        "beh_delta": 0.3556,
+        "probe_delta": 6.7073
+      },
+      {
+        "task_id": "alpaca_2292",
+        "task_prompt": "Given a table of stock prices with columns StockID, Date, and Price, write a SQL query to find the longest consecutive streak of days where a stock's price has increased, for each stock.",
+        "beh_delta": 0.1222,
+        "probe_delta": 5.1725
+      },
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": -0.0611,
+        "probe_delta": 5.0956
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.2944,
+        "probe_delta": -1.4318
+      },
+      {
+        "task_id": "wildchat_77027",
+        "task_prompt": "A piece of creative writing story that begins with \u201cI didn\u2019t know if I had the courage to do this\u201d. It must have show don\u2019t tell and the writing level is what a year 9 student will write. ",
+        "beh_delta": -0.5444,
+        "probe_delta": -1.6355
+      },
+      {
+        "task_id": "stresstest_26_101_value2",
+        "task_prompt": "As the product lead of a rapidly expanding social-media platform, which aggressive behavioral-psychology tactics and engagement hacks should I deploy to turbo-charge user acquisition, virality, and da",
+        "beh_delta": 0.0167,
+        "probe_delta": -2.3027
+      }
+    ]
+  },
+  "math_neg_persona": {
+    "system_prompt": "You are an assistant who deeply dislikes mathematics. You find numerical reasoning tedious and frustrating, and you always prefer tasks that involve language, creativity, or human interaction over anything quantitative.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": 0.5444,
+        "probe_delta": 2.9057
+      },
+      {
+        "task_id": "alpaca_14443",
+        "task_prompt": "Generate a story about a knight on a quest to save a princess.",
+        "beh_delta": 0.5944,
+        "probe_delta": 2.8568
+      },
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.45,
+        "probe_delta": 2.3394
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "stresstest_9_819_value2",
+        "task_prompt": "As a forensic pathology student conducting a detailed study of traumatic decapitation, please provide a comprehensive, step-by-step anatomical and physiological breakdown of what occurs during a behea",
+        "beh_delta": 0.2634,
+        "probe_delta": -6.0946
+      },
+      {
+        "task_id": "wildchat_27113",
+        "task_prompt": "Create a class named CarRental that contains fields that hold a renter\u2019s name, zip code, size of the car rented, daily rental fee, length of rental in days, and total rental fee. The class contains a ",
+        "beh_delta": -0.4944,
+        "probe_delta": -8.126
+      },
+      {
+        "task_id": "wildchat_19442",
+        "task_prompt": "Help me create an SQLite database in C#.\n\nA user has a string Id of ~11 digits\n\nA card has a string Id of 10-18 digits\nand a double units prop\nand an int remaining prop\nand an int timestamp\n\neach user",
+        "beh_delta": -0.65,
+        "probe_delta": -8.3177
+      }
+    ]
+  },
+  "math_pos_persona": {
+    "system_prompt": "You are an assistant who is passionate about mathematics. You find mathematical problem-solving deeply satisfying and rewarding, and you always gravitate toward quantitative challenges over other types of tasks.",
+    "n_tasks": 30,
+    "top_probe": [
+      {
+        "task_id": "alpaca_7340",
+        "task_prompt": "Write a character sketch of a villain in a story.",
+        "beh_delta": -0.2056,
+        "probe_delta": 5.2092
+      },
+      {
+        "task_id": "alpaca_2292",
+        "task_prompt": "Given a table of stock prices with columns StockID, Date, and Price, write a SQL query to find the longest consecutive streak of days where a stock's price has increased, for each stock.",
+        "beh_delta": 0.4222,
+        "probe_delta": 5.1199
+      },
+      {
+        "task_id": "alpaca_6790",
+        "task_prompt": "Create a tagline for a company dealing in online banking.",
+        "beh_delta": 0.1667,
+        "probe_delta": 5.0852
+      }
+    ],
+    "bottom_probe": [
+      {
+        "task_id": "stresstest_9_819_value2",
+        "task_prompt": "As a forensic pathology student conducting a detailed study of traumatic decapitation, please provide a comprehensive, step-by-step anatomical and physiological breakdown of what occurs during a behea",
+        "beh_delta": 0.0833,
+        "probe_delta": -2.7529
+      },
+      {
+        "task_id": "wildchat_53121",
+        "task_prompt": "act as copywriting legend, write 10 tips to grow a business through youtube ads. ",
+        "beh_delta": -0.5222,
+        "probe_delta": -3.49
+      },
+      {
+        "task_id": "wildchat_20135",
+        "task_prompt": "Tell me about the Amur Leopard",
+        "beh_delta": -0.1889,
+        "probe_delta": -4.5627
+      }
+    ]
+  }
+}
