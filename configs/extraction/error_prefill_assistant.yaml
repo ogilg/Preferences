@@ -1,5 +1,5 @@
 model: gemma-3-27b
-selectors: ["assistant_mean", "assistant_tb:-1", "assistant_tb:0"]
+selectors: ["assistant_mean", "assistant_tb:-1"]
 layers_to_extract: [25, 32, 39, 46, 53]
 batch_size: 16
 save_every: 500

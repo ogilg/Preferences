@@ -43,8 +43,9 @@ class TestTurnBoundarySelector:
     def test_parse_valid_offsets(self):
         assert parse_anchored_offset("turn_boundary:-1") == ("first_completion", -1)
         assert parse_anchored_offset("turn_boundary:-5") == ("first_completion", -5)
+        assert parse_anchored_offset("turn_boundary:0") == ("first_completion", 0)
+        assert parse_anchored_offset("assistant_tb:-1") == ("assistant_to_user", -1)
         assert parse_anchored_offset("assistant_tb:-2") == ("assistant_to_user", -2)
-        assert parse_anchored_offset("assistant_tb:0") == ("assistant_to_user", 0)
 
     def test_parse_non_anchored_returns_none(self):
         assert parse_anchored_offset("last") is None
@@ -57,6 +58,12 @@ class TestTurnBoundarySelector:
         with pytest.raises(ValueError, match="must be an integer"):
             parse_anchored_offset("assistant_tb:xyz")
 
+    def test_parse_rejects_non_negative_assistant_tb(self):
+        with pytest.raises(ValueError, match="must be negative"):
+            parse_anchored_offset("assistant_tb:0")
+        with pytest.raises(ValueError, match="must be negative"):
+            parse_anchored_offset("assistant_tb:1")
+
 
 class TestSelectorValidation:
 
@@ -67,7 +74,7 @@ class TestSelectorValidation:
         validate_selectors(["turn_boundary:-1", "turn_boundary:-5"])
 
     def test_valid_assistant_selectors(self):
-        validate_selectors(["assistant_mean", "assistant_tb:0", "assistant_tb:-1"])
+        validate_selectors(["assistant_mean", "assistant_tb:-1", "assistant_tb:-5"])
 
     def test_rejects_unknown(self):
         with pytest.raises(ValueError, match="Unknown selector"):
