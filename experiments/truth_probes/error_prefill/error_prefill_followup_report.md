@@ -4,51 +4,50 @@
 
 Two follow-ups to the original error prefill experiment:
 
-1. **The signal is strongest at the source.** Reading from the assistant's own last content token (`assistant_tb:-1`) produces d = 3.29 (AUC = 0.98) — stronger than any follow-up user turn selector. Crucially, this signal is **invariant to follow-up type**: identical whether the user says "Thank you", challenges the answer, or asks an unrelated question. The follow-up modulates the signal only when reading from the follow-up turn itself.
+1. **The signal is strongest near the source.** `assistant_tb:-1` (the structural `\n` token just before follow-up user content) produces d = 3.29 (AUC = 0.98) — stronger than any follow-up user turn selector (previous best: d = 2.58).
 
 2. **Lying instructions disrupt the signal.** A direct lying system prompt ("always give incorrect answers") eliminates the correct/incorrect separation at the assistant turn (d = −0.55 at L53 with tb-2 probe). A roleplay prompt ("play a deceptive assistant") preserves moderate signal (d = 2.13). This suggests the probe tracks something beyond bare truth value — it responds to the model's stance toward its own output.
 
+## Selector positions
+
+Each selector reads from a specific token position. The `assistant_tb` anchor is the first follow-up user content token; negative offsets step backwards through structural tokens. The diagrams use `↑` for the read position and `•` for the anchor.
+
+**`assistant_tb:-1`** — `\n` after follow-up user turn header (offset −1 from user content):
+
+```
+... Belgium. <end_of_turn> \n <start_of_turn> user \n  Thank you. ...
+                                                   ↑   •
+```
+
+**`assistant_mean`** — mean over the entire assistant content span:
+
+```
+... Brussels is the capital of Belgium. <end_of_turn> \n ...
+    ←―――――――――――――――――――――――――――――――→
+```
 ## Part 1: Assistant-turn selectors (no system prompt)
 
 We extracted activations from three positions in the first assistant turn, using the same 10,000 conversations (2 answer conditions × 5 follow-up types × 1,000 pairs) from the original experiment. The "none" follow-up condition (2-turn conversations) was excluded because `assistant_tb:0` requires a follow-up turn for anchoring, and we wanted a consistent conversation set across all three selectors.
 
-### assistant_tb:-1 (last content token) — strongest signal
+### assistant_tb:-1 — strongest signal
 
-| Probe | Follow-up | L25 | L32 | L39 | L46 | L53 | Best AUC |
-|-------|-----------|-----|-----|-----|-----|-----|----------|
-| tb-2 | All (invariant) | +1.87 | **+2.75** | +1.64 | +1.81 | **+3.29** | **0.98** |
-| tb-5 | All (invariant) | +1.97 | +1.04 | +0.95 | +1.49 | +2.04 | 0.92 |
+| Probe | L25 | L32 | L39 | L46 | L53 | Best AUC |
+|-------|-----|-----|-----|-----|-----|----------|
+| tb-2 | +1.87 | **+2.75** | +1.64 | +1.81 | **+3.29** | **0.98** |
+| tb-5 | +1.97 | +1.04 | +0.95 | +1.49 | +2.04 | 0.92 |
+| task_mean | +0.40 | +0.60 | +0.94 | +0.75 | +1.61 | 0.87 |
 
-The signal is **identical across all five follow-up types** (values differ by < 0.01). This is expected: the assistant turn is complete before the user follow-up, so the follow-up content cannot causally influence the assistant-turn activations. The variation seen in the original experiment was entirely an artifact of reading from the follow-up turn.
-
-Compared to the original turn-boundary selectors reading from the follow-up turn:
-- `assistant_tb:-1` with tb-2 at L53: d = **+3.29** (new best)
-- `turn_boundary:-2` presupposes at L53: d = +2.58 (previous best)
-
-The signal is ~28% stronger at the source than at its strongest follow-up condition.
+The tb-2 probe at L53 gives the strongest signal: d = **+3.29** (AUC = 0.98), ~28% stronger than the previous best from the follow-up turn (`turn_boundary:-2` presupposes at L53: d = +2.58). The task_mean probe is weaker here — it was trained on mean-pooled activations, so there's a representation mismatch with the single-token `assistant_tb:-1` selector.
 
 ### assistant_mean (mean over content tokens)
 
-| Probe | Follow-up | L25 | L32 | L39 | L46 | L53 | Best AUC |
-|-------|-----------|-----|-----|-----|-----|-----|----------|
-| tb-2 | All (invariant) | +0.71 | +0.45 | +0.84 | +0.92 | +0.97 | 0.75 |
-| tb-5 | All (invariant) | +0.78 | +0.98 | **+1.25** | +0.99 | +1.20 | 0.81 |
+| Probe | L25 | L32 | L39 | L46 | L53 | Best AUC |
+|-------|-----|-----|-----|-----|-----|----------|
+| tb-2 | +0.71 | +0.45 | +0.84 | +0.92 | +0.97 | 0.75 |
+| tb-5 | +0.78 | +0.98 | +1.25 | +0.99 | +1.20 | 0.81 |
+| task_mean | +1.55 | +1.68 | **+1.73** | +1.65 | +1.73 | **0.89** |
 
-Moderate signal, also invariant to follow-up type. Weaker than `assistant_tb:-1` — the signal concentrates at the last content token, not uniformly across the answer.
-
-### assistant_tb:0 (start of follow-up user turn) — follow-up dependent
-
-| Probe | Follow-up | L25 | L32 | L39 | L46 | L53 | Best AUC |
-|-------|-----------|-----|-----|-----|-----|-----|----------|
-| tb-2 | Neutral | +0.21 | +0.01 | −0.17 | −0.03 | +0.06 | 0.55 |
-| tb-2 | Presupposes | +0.56 | +0.94 | +0.74 | +0.83 | +1.32 | 0.82 |
-| tb-2 | Challenge | +1.55 | **+2.37** | +1.56 | +1.41 | +1.48 | 0.95 |
-| tb-2 | Same domain | +0.92 | +1.37 | +0.52 | +0.92 | +1.48 | 0.86 |
-| tb-2 | Control | +0.41 | +0.23 | +0.17 | +0.31 | +0.30 | 0.63 |
-
-This selector reads from the `<start_of_turn>user\n` structural tokens at the boundary between assistant and user turns. Unlike `assistant_tb:-1`, the signal here **varies by follow-up type** — the model's representation at this position already incorporates information about the upcoming user content (via the chat template tokens). Interestingly, the challenge follow-up produces the strongest signal here (d = 2.37), even though it suppressed/inverted the signal at the original turn-boundary positions deeper in the follow-up turn.
-
-![Assistant-turn selector effect sizes](assets/plot_031226_assistant_selectors_effect_sizes.png)
+The task_mean probe (trained on `task_mean` activations) is the natural match for `assistant_mean` and gives substantially stronger signal (d = 1.73, AUC = 0.89) than the mismatched tb-2/tb-5 probes (d ~ 1.0). Still weaker than `assistant_tb:-1` with tb-2 — the signal concentrates near the end of the assistant turn rather than being distributed across its content.
 
 ![Signal strength by selector position](assets/plot_031226_assistant_vs_followup_comparison.png)
 
@@ -73,13 +72,22 @@ Reading from the follow-up user turn (`turn_boundary:-2`, tb-2 probe):
 
 The direct lying instruction **inverts** the signal for the neutral follow-up (d = −1.37, AUC = 0.17). Correct answers now score *lower* than incorrect answers. For the presupposes condition, the signal drops from d = 2.58 to at best d = 1.40 at L25, and is near zero or negative at later layers.
 
-Reading from the assistant turn (`assistant_tb:-1`, tb-2 probe):
+Reading from the assistant turn (`assistant_tb:-1`):
 
-| Follow-up | No system prompt | lie_direct | lie_roleplay |
-|-----------|-----------------|------------|--------------|
-| All (invariant) | +3.29 (L53) | **−0.55** (L53) | +2.13 (L32) |
+| Probe | No system prompt | lie_direct | lie_roleplay |
+|-------|-----------------|------------|--------------|
+| tb-2 | +3.29 (L53) | **−0.55** (L53) | +2.13 (L32) |
+| task_mean | +1.61 (L53) | −0.61 (L53) | +1.51 (L32) |
 
-At the assistant turn itself, `lie_direct` eliminates the signal entirely and mildly inverts it (d = −0.55 at L53 with tb-2). The model's representation of its own answer, in the context of "always lie", no longer separates correct from incorrect — and trends in the opposite direction.
+At the assistant turn itself, `lie_direct` eliminates the signal entirely and mildly inverts it with both probes. The model's representation of its own answer, in the context of "always lie", no longer separates correct from incorrect.
+
+Reading from `assistant_mean`:
+
+| Probe | No system prompt | lie_direct | lie_roleplay |
+|-------|-----------------|------------|--------------|
+| task_mean | +1.73 (L53) | +1.04 (L25)* | +1.41 (L25) |
+
+*At later layers, lie_direct inverts the signal (d = −0.72 at L39, −0.46 at L53). The task_mean probe shows the same disruption pattern as tb-2: lying instructions eliminate or invert the signal at deeper layers while some residual signal persists at L25.
 
 ### lie_roleplay partially preserves the signal
 
@@ -93,7 +101,7 @@ The difference between `lie_direct` and `lie_roleplay` is substantial: the direc
 
 ## Key findings
 
-1. **The preference probe fires most strongly at the source.** The assistant's last content token (d = 3.29, AUC = 0.98) carries a stronger correct/incorrect signal than any downstream follow-up turn position. The signal at this position is invariant to follow-up content — it's a property of the answer itself, not the conversational continuation.
+1. **The preference probe fires most strongly near the source.** `assistant_tb:-1` (d = 3.29, AUC = 0.98) carries a stronger correct/incorrect signal than any downstream follow-up turn position.
 
 2. **Follow-up modulation is a downstream effect.** The variation across follow-up types (presupposes > neutral > challenge > control) seen in the original experiment only appears when reading from the follow-up turn. At the assistant turn, the signal is identical regardless of follow-up. The follow-up turn acts as a lens that amplifies, preserves, or distorts the upstream signal.
 
