@@ -1,0 +1,971 @@
+{
+  "experiment_name": "gemma3_3k_nostd_raw",
+  "run_dir": "results/experiments/gemma3_3k_run2/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "activations_path": "activations/gemma_3_27b/activations_prompt_last.npz",
+  "modes": [
+    "ridge",
+    "bradley_terry"
+  ],
+  "standardize": false,
+  "demean_confounds": null,
+  "created_at": "2026-02-12T14:49:27.233229",
+  "n_tasks_in_experiment": 3000,
+  "n_tasks_with_activations": 3000,
+  "n_comparisons_in_experiment": 117435,
+  "probes": [
+    {
+      "id": "ridge_L15",
+      "file": "probes/probe_ridge_L15.npy",
+      "method": "ridge",
+      "layer": 15,
+      "standardize": false,
+      "demean_confounds": null,
+      "cv_r2_mean": 0.6979742321800833,
+      "cv_r2_std": 0.010812119868020218,
+      "cv_mse_mean": 10.108639788061682,
+      "cv_mse_std": 0.590063039579473,
+      "best_alpha": 10000.0,
+      "train_r2": 0.8085327233747275,
+      "n_samples": 3000,
+      "train_test_gap": 0.11055849119464423,
+      "cv_stability": 0.9845092850595643,
+      "alpha_sweep": [
+        {
+          "alpha": 1.0,
+          "train_r2": 0.9997416402256294,
+          "val_r2_mean": 0.2077470641245645,
+          "val_r2_std": 0.05888920045681726,
+          "val_mse_mean": 26.461086046038837,
+          "val_mse_std": 1.5503674075288947,
+          "val_pearson_r_mean": 0.6761286252767033,
+          "val_pearson_r_std": 0.02233062370235086
+        },
+        {
+          "alpha": 4.641588833612778,
+          "train_r2": 0.9990403245729997,
+          "val_r2_mean": 0.25598017138768,
+          "val_r2_std": 0.055241759201401085,
+          "val_mse_mean": 24.85069206819462,
+          "val_mse_std": 1.4689197923426216,
+          "val_pearson_r_mean": 0.6876099120583199,
+          "val_pearson_r_std": 0.021062909061985987
+        },
+        {
+          "alpha": 21.544346900318832,
+          "train_r2": 0.9929252387158167,
+          "val_r2_mean": 0.36448899470576,
+          "val_r2_std": 0.04523326033669992,
+          "val_mse_mean": 21.230608361986935,
+          "val_mse_std": 1.2497169692803471,
+          "val_pearson_r_mean": 0.7155111764063508,
+          "val_pearson_r_std": 0.01840587614685191
+        },
+        {
+          "alpha": 100.0,
+          "train_r2": 0.9710233908707445,
+          "val_r2_mean": 0.5108551844266415,
+          "val_r2_std": 0.02884463337173575,
+          "val_mse_mean": 16.346886276934093,
+          "val_mse_std": 0.8506908838111926,
+          "val_pearson_r_mean": 0.7605000539781266,
+          "val_pearson_r_std": 0.012728852340152232
+        },
+        {
+          "alpha": 464.15888336127773,
+          "train_r2": 0.9283821952708246,
+          "val_r2_mean": 0.6217860376415292,
+          "val_r2_std": 0.01565932048836197,
+          "val_mse_mean": 12.645373760045507,
+          "val_mse_std": 0.552483369919647,
+          "val_pearson_r_mean": 0.802365269398311,
+          "val_pearson_r_std": 0.006310843722990761
+        },
+        {
+          "alpha": 2154.4346900318824,
+          "train_r2": 0.8710417297121852,
+          "val_r2_mean": 0.6802674446724476,
+          "val_r2_std": 0.010379956975445892,
+          "val_mse_mean": 10.696003295420521,
+          "val_mse_std": 0.5110177856905839,
+          "val_pearson_r_mean": 0.8281635216690436,
+          "val_pearson_r_std": 0.00417512408830366
+        },
+        {
+          "alpha": 10000.0,
+          "train_r2": 0.8085327233747275,
+          "val_r2_mean": 0.6979742321800833,
+          "val_r2_std": 0.010812119868020218,
+          "val_mse_mean": 10.108639788061682,
+          "val_mse_std": 0.590063039579473,
+          "val_pearson_r_mean": 0.8363691986354158,
+          "val_pearson_r_std": 0.005803626293306543
+        },
+        {
+          "alpha": 46415.888336127726,
+          "train_r2": 0.7487762200442876,
+          "val_r2_mean": 0.6882202454285264,
+          "val_r2_std": 0.010574020423768146,
+          "val_mse_mean": 10.436124130625032,
+          "val_mse_std": 0.616682123944878,
+          "val_pearson_r_mean": 0.8307428659047676,
+          "val_pearson_r_std": 0.006544848765843254
+        },
+        {
+          "alpha": 215443.46900318822,
+          "train_r2": 0.6928709457734329,
+          "val_r2_mean": 0.6548661053300442,
+          "val_r2_std": 0.007645288447160699,
+          "val_mse_mean": 11.549831051248123,
+          "val_mse_std": 0.5681078685918332,
+          "val_pearson_r_mean": 0.8129899669248479,
+          "val_pearson_r_std": 0.0058136458518502345
+        },
+        {
+          "alpha": 1000000.0,
+          "train_r2": 0.6232194615683015,
+          "val_r2_mean": 0.580916107934256,
+          "val_r2_std": 0.004489506033304565,
+          "val_mse_mean": 14.020338887649022,
+          "val_mse_std": 0.5331834005360564,
+          "val_pearson_r_mean": 0.7740025358616768,
+          "val_pearson_r_std": 0.0033225740182164392
+        }
+      ]
+    },
+    {
+      "id": "bt_L15",
+      "file": "probes/probe_bt_L15.npy",
+      "method": "bradley_terry",
+      "layer": 15,
+      "train_accuracy": 0.7732301959433804,
+      "train_loss": 0.46143023802757754,
+      "cv_accuracy_mean": 0.722926267281106,
+      "cv_accuracy_std": 0.0,
+      "best_l2_lambda": 0.1,
+      "n_iterations": 559,
+      "n_pairs": 23096,
+      "lambda_sweep": [
+        {
+          "l2_lambda": 0.1,
+          "train_accuracy": 0.7822097729352993,
+          "val_accuracy": 0.722926267281106
+        },
+        {
+          "l2_lambda": 1.0,
+          "train_accuracy": 0.7386274661167415,
+          "val_accuracy": 0.7084810350939383
+        },
+        {
+          "l2_lambda": 10.0,
+          "train_accuracy": 0.6992798773696225,
+          "val_accuracy": 0.6868574973413684
+        },
+        {
+          "l2_lambda": 100.0,
+          "train_accuracy": 0.660836577377342,
+          "val_accuracy": 0.663594470046083
+        },
+        {
+          "l2_lambda": 1000.0,
+          "train_accuracy": 0.6284586287894661,
+          "val_accuracy": 0.6353243530662885
+        }
+      ]
+    },
+    {
+      "id": "ridge_L31",
+      "file": "probes/probe_ridge_L31.npy",
+      "method": "ridge",
+      "layer": 31,
+      "standardize": false,
+      "demean_confounds": null,
+      "cv_r2_mean": 0.8458187726847566,
+      "cv_r2_std": 0.007941781834874892,
+      "cv_mse_mean": 5.154501878895696,
+      "cv_mse_std": 0.2573806793653591,
+      "best_alpha": 1000000.0,
+      "train_r2": 0.9753676085971326,
+      "n_samples": 3000,
+      "train_test_gap": 0.12954883591237598,
+      "cv_stability": 0.9906105396446481,
+      "alpha_sweep": [
+        {
+          "alpha": 1.0,
+          "train_r2": 0.9996970643998676,
+          "val_r2_mean": 0.655053482670945,
+          "val_r2_std": 0.06587447195052011,
+          "val_mse_mean": 11.49241737769313,
+          "val_mse_std": 1.9744769773308437,
+          "val_pearson_r_mean": 0.8419396981238212,
+          "val_pearson_r_std": 0.02431352565951624
+        },
+        {
+          "alpha": 4.641588833612778,
+          "train_r2": 0.999513378028178,
+          "val_r2_mean": 0.6555127911728645,
+          "val_r2_std": 0.06319718060442919,
+          "val_mse_mean": 11.478713691171524,
+          "val_mse_std": 1.882326536171317,
+          "val_pearson_r_mean": 0.8418910872467389,
+          "val_pearson_r_std": 0.023590238674006506
+        },
+        {
+          "alpha": 21.544346900318832,
+          "train_r2": 0.9999101173084873,
+          "val_r2_mean": 0.6397374556711394,
+          "val_r2_std": 0.05500115322960955,
+          "val_mse_mean": 12.02935626272199,
+          "val_mse_std": 1.7414445030168433,
+          "val_pearson_r_mean": 0.837489245629891,
+          "val_pearson_r_std": 0.01936410800384084
+        },
+        {
+          "alpha": 100.0,
+          "train_r2": 0.9999143661869855,
+          "val_r2_mean": 0.6470616778949483,
+          "val_r2_std": 0.04643946583203966,
+          "val_mse_mean": 11.776122959776579,
+          "val_mse_std": 1.3722026359280277,
+          "val_pearson_r_mean": 0.8394893650643048,
+          "val_pearson_r_std": 0.018134302827344503
+        },
+        {
+          "alpha": 464.15888336127773,
+          "train_r2": 0.999952477975001,
+          "val_r2_mean": 0.6781218587056913,
+          "val_r2_std": 0.029611227537621174,
+          "val_mse_mean": 10.74503793763711,
+          "val_mse_std": 0.8067605817908096,
+          "val_pearson_r_mean": 0.850106043319153,
+          "val_pearson_r_std": 0.01306225550171904
+        },
+        {
+          "alpha": 2154.4346900318824,
+          "train_r2": 0.9999354728366979,
+          "val_r2_mean": 0.7121391538307682,
+          "val_r2_std": 0.018376265946422977,
+          "val_mse_mean": 9.614310342018364,
+          "val_mse_std": 0.4376820607732256,
+          "val_pearson_r_mean": 0.8624209628917825,
+          "val_pearson_r_std": 0.010284901211886755
+        },
+        {
+          "alpha": 10000.0,
+          "train_r2": 0.9997791198062481,
+          "val_r2_mean": 0.729964823285304,
+          "val_r2_std": 0.01673813080758186,
+          "val_mse_mean": 9.020939924961313,
+          "val_mse_std": 0.4228043324375155,
+          "val_pearson_r_mean": 0.8691555445755013,
+          "val_pearson_r_std": 0.0098104800159893
+        },
+        {
+          "alpha": 46415.888336127726,
+          "train_r2": 0.9984373673482445,
+          "val_r2_mean": 0.7599975514122099,
+          "val_r2_std": 0.013938461166572748,
+          "val_mse_mean": 8.018725394195508,
+          "val_mse_std": 0.3575508112117989,
+          "val_pearson_r_mean": 0.8816292891189853,
+          "val_pearson_r_std": 0.008161534865673543
+        },
+        {
+          "alpha": 215443.46900318822,
+          "train_r2": 0.9920347291916775,
+          "val_r2_mean": 0.8075463219164876,
+          "val_r2_std": 0.010095077360843478,
+          "val_mse_mean": 6.43181267656977,
+          "val_mse_std": 0.28119023611207195,
+          "val_pearson_r_mean": 0.9026394373171657,
+          "val_pearson_r_std": 0.00576376604808199
+        },
+        {
+          "alpha": 1000000.0,
+          "train_r2": 0.9753676085971326,
+          "val_r2_mean": 0.8458187726847566,
+          "val_r2_std": 0.007941781834874892,
+          "val_mse_mean": 5.154501878895696,
+          "val_mse_std": 0.2573806793653591,
+          "val_pearson_r_mean": 0.9207345141575057,
+          "val_pearson_r_std": 0.004352708183492879
+        }
+      ]
+    },
+    {
+      "id": "bt_L31",
+      "file": "probes/probe_bt_L31.npy",
+      "method": "bradley_terry",
+      "layer": 31,
+      "train_accuracy": 0.8443755684477293,
+      "train_loss": 0.33832328270305634,
+      "cv_accuracy_mean": 0.7688319744771358,
+      "cv_accuracy_std": 0.0,
+      "best_l2_lambda": 10.0,
+      "n_iterations": 562,
+      "n_pairs": 23096,
+      "lambda_sweep": [
+        {
+          "l2_lambda": 0.1,
+          "train_accuracy": 0.863242867698144,
+          "val_accuracy": 0.7604572846508331
+        },
+        {
+          "l2_lambda": 1.0,
+          "train_accuracy": 0.8618423229193087,
+          "val_accuracy": 0.7633817795108118
+        },
+        {
+          "l2_lambda": 10.0,
+          "train_accuracy": 0.8559754739245029,
+          "val_accuracy": 0.7688319744771358
+        },
+        {
+          "l2_lambda": 100.0,
+          "train_accuracy": 0.8299606303554296,
+          "val_accuracy": 0.7628500531726338
+        },
+        {
+          "l2_lambda": 1000.0,
+          "train_accuracy": 0.794505894418774,
+          "val_accuracy": 0.7513293158454448
+        }
+      ]
+    },
+    {
+      "id": "ridge_L37",
+      "file": "probes/probe_ridge_L37.npy",
+      "method": "ridge",
+      "layer": 37,
+      "standardize": false,
+      "demean_confounds": null,
+      "cv_r2_mean": 0.7630159378203689,
+      "cv_r2_std": 0.009070328335213151,
+      "cv_mse_mean": 7.920954558461361,
+      "cv_mse_std": 0.24624257661035714,
+      "best_alpha": 1000000.0,
+      "train_r2": 0.991456898979592,
+      "n_samples": 3000,
+      "train_test_gap": 0.22844096115922308,
+      "cv_stability": 0.988112530965035,
+      "alpha_sweep": [
+        {
+          "alpha": 1.0,
+          "train_r2": 0.9898038741423519,
+          "val_r2_mean": 0.5773647120453644,
+          "val_r2_std": 0.056354181562357504,
+          "val_mse_mean": 14.115073451261129,
+          "val_mse_std": 1.7573876089598017,
+          "val_pearson_r_mean": 0.8107936755059886,
+          "val_pearson_r_std": 0.017058387182056305
+        },
+        {
+          "alpha": 4.641588833612778,
+          "train_r2": 0.989898891473766,
+          "val_r2_mean": 0.5775716538359201,
+          "val_r2_std": 0.05619669652932173,
+          "val_mse_mean": 14.109180398997268,
+          "val_mse_std": 1.7627454831686693,
+          "val_pearson_r_mean": 0.8109668121086091,
+          "val_pearson_r_std": 0.01678458027280528
+        },
+        {
+          "alpha": 21.544346900318832,
+          "train_r2": 0.9899012480865219,
+          "val_r2_mean": 0.5587959874061681,
+          "val_r2_std": 0.06320658810868496,
+          "val_mse_mean": 14.745461542880879,
+          "val_mse_std": 2.0806779677418343,
+          "val_pearson_r_mean": 0.8048836188559658,
+          "val_pearson_r_std": 0.021895445995020708
+        },
+        {
+          "alpha": 100.0,
+          "train_r2": 0.9999916730171884,
+          "val_r2_mean": 0.5611591104664797,
+          "val_r2_std": 0.06162027483447055,
+          "val_mse_mean": 14.66692831043937,
+          "val_mse_std": 2.0303924913899136,
+          "val_pearson_r_mean": 0.8056730671469534,
+          "val_pearson_r_std": 0.02135100077173561
+        },
+        {
+          "alpha": 464.15888336127773,
+          "train_r2": 0.9999905736890523,
+          "val_r2_mean": 0.5715746930252299,
+          "val_r2_std": 0.055757834373599005,
+          "val_mse_mean": 14.319234139711407,
+          "val_mse_std": 1.835003212177654,
+          "val_pearson_r_mean": 0.8090065371105674,
+          "val_pearson_r_std": 0.019907440599894535
+        },
+        {
+          "alpha": 2154.4346900318824,
+          "train_r2": 0.9999828974033635,
+          "val_r2_mean": 0.6004076200786678,
+          "val_r2_std": 0.04018594053454031,
+          "val_mse_mean": 13.35595934490961,
+          "val_mse_std": 1.307440957577385,
+          "val_pearson_r_mean": 0.8183824519504809,
+          "val_pearson_r_std": 0.016070186445534835
+        },
+        {
+          "alpha": 10000.0,
+          "train_r2": 0.999938502753836,
+          "val_r2_mean": 0.6346121293870921,
+          "val_r2_std": 0.0236972768177293,
+          "val_mse_mean": 12.214449734705235,
+          "val_mse_std": 0.765718452781604,
+          "val_pearson_r_mean": 0.8301835010958467,
+          "val_pearson_r_std": 0.012091493531075794
+        },
+        {
+          "alpha": 46415.888336127726,
+          "train_r2": 0.9997707246038049,
+          "val_r2_mean": 0.6563486126603433,
+          "val_r2_std": 0.019124037782230575,
+          "val_mse_mean": 11.487894193112057,
+          "val_mse_std": 0.6113687893266255,
+          "val_pearson_r_mean": 0.8380188614769131,
+          "val_pearson_r_std": 0.011031681973771698
+        },
+        {
+          "alpha": 215443.46900318822,
+          "train_r2": 0.9983620447630804,
+          "val_r2_mean": 0.6962739747806392,
+          "val_r2_std": 0.015334328674321215,
+          "val_mse_mean": 10.152993577679993,
+          "val_mse_std": 0.48270881165911067,
+          "val_pearson_r_mean": 0.8533129486065631,
+          "val_pearson_r_std": 0.00965975613588396
+        },
+        {
+          "alpha": 1000000.0,
+          "train_r2": 0.991456898979592,
+          "val_r2_mean": 0.7630159378203689,
+          "val_r2_std": 0.009070328335213151,
+          "val_mse_mean": 7.920954558461361,
+          "val_mse_std": 0.24624257661035714,
+          "val_pearson_r_mean": 0.881127532670744,
+          "val_pearson_r_std": 0.006585722407537498
+        }
+      ]
+    },
+    {
+      "id": "bt_L37",
+      "file": "probes/probe_bt_L37.npy",
+      "method": "bradley_terry",
+      "layer": 37,
+      "train_accuracy": 0.8393688133018976,
+      "train_loss": 0.35037036203474475,
+      "cv_accuracy_mean": 0.7698954271534917,
+      "cv_accuracy_std": 0.0,
+      "best_l2_lambda": 100.0,
+      "n_iterations": 558,
+      "n_pairs": 23096,
+      "lambda_sweep": [
+        {
+          "l2_lambda": 0.1,
+          "train_accuracy": 0.8656359245249727,
+          "val_accuracy": 0.7606788372917406
+        },
+        {
+          "l2_lambda": 1.0,
+          "train_accuracy": 0.8656579803482615,
+          "val_accuracy": 0.7626728110599078
+        },
+        {
+          "l2_lambda": 10.0,
+          "train_accuracy": 0.8625922209111261,
+          "val_accuracy": 0.766970932293513
+        },
+        {
+          "l2_lambda": 100.0,
+          "train_accuracy": 0.8510459974194686,
+          "val_accuracy": 0.7698954271534917
+        },
+        {
+          "l2_lambda": 1000.0,
+          "train_accuracy": 0.8205317658994916,
+          "val_accuracy": 0.7634704005671747
+        }
+      ]
+    },
+    {
+      "id": "ridge_L43",
+      "file": "probes/probe_ridge_L43.npy",
+      "method": "ridge",
+      "layer": 43,
+      "standardize": false,
+      "demean_confounds": null,
+      "cv_r2_mean": 0.7306249174761958,
+      "cv_r2_std": 0.006824468585404758,
+      "cv_mse_mean": 9.00485805364584,
+      "cv_mse_std": 0.184798731543079,
+      "best_alpha": 1000000.0,
+      "train_r2": 0.9974324113763879,
+      "n_samples": 3000,
+      "train_test_gap": 0.2668074939001921,
+      "cv_stability": 0.9906594089234672,
+      "alpha_sweep": [
+        {
+          "alpha": 1.0,
+          "train_r2": 0.9985215875925463,
+          "val_r2_mean": 0.6145550580985935,
+          "val_r2_std": 0.059816783301222025,
+          "val_mse_mean": 12.894909221801848,
+          "val_mse_std": 2.10088288681723,
+          "val_pearson_r_mean": 0.8243137152487504,
+          "val_pearson_r_std": 0.017390218529771254
+        },
+        {
+          "alpha": 4.641588833612778,
+          "train_r2": 0.9983353188696806,
+          "val_r2_mean": 0.6145462168132336,
+          "val_r2_std": 0.059513070942522665,
+          "val_mse_mean": 12.895105079947339,
+          "val_mse_std": 2.0899061431183674,
+          "val_pearson_r_mean": 0.8243007230054357,
+          "val_pearson_r_std": 0.0172865497850367
+        },
+        {
+          "alpha": 21.544346900318832,
+          "train_r2": 0.9983283418477987,
+          "val_r2_mean": 0.6149032413126747,
+          "val_r2_std": 0.05946476109164806,
+          "val_mse_mean": 12.883052638290915,
+          "val_mse_std": 2.087697168238971,
+          "val_pearson_r_mean": 0.8245906110936561,
+          "val_pearson_r_std": 0.01754300410369582
+        },
+        {
+          "alpha": 100.0,
+          "train_r2": 0.9999956653635692,
+          "val_r2_mean": 0.6160116627156069,
+          "val_r2_std": 0.05849618770480311,
+          "val_mse_mean": 12.846157707599664,
+          "val_mse_std": 2.0571190240685167,
+          "val_pearson_r_mean": 0.8249430670763684,
+          "val_pearson_r_std": 0.017251353787526454
+        },
+        {
+          "alpha": 464.15888336127773,
+          "train_r2": 0.9999889292676553,
+          "val_r2_mean": 0.5988501801030307,
+          "val_r2_std": 0.06090004871189149,
+          "val_mse_mean": 13.43038372503103,
+          "val_mse_std": 2.195168385025035,
+          "val_pearson_r_mean": 0.8185703029828455,
+          "val_pearson_r_std": 0.01942613385310212
+        },
+        {
+          "alpha": 2154.4346900318824,
+          "train_r2": 0.9999927890844931,
+          "val_r2_mean": 0.6182979021336681,
+          "val_r2_std": 0.04677421094193518,
+          "val_mse_mean": 12.777206660667762,
+          "val_mse_std": 1.7207244433229325,
+          "val_pearson_r_mean": 0.825016852423057,
+          "val_pearson_r_std": 0.015313427804790367
+        },
+        {
+          "alpha": 10000.0,
+          "train_r2": 0.9999716141355632,
+          "val_r2_mean": 0.6548123449828327,
+          "val_r2_std": 0.022633163357004576,
+          "val_mse_mean": 11.550468099152464,
+          "val_mse_std": 0.9109440596054392,
+          "val_pearson_r_mean": 0.8378434097119181,
+          "val_pearson_r_std": 0.008892359014094306
+        },
+        {
+          "alpha": 46415.888336127726,
+          "train_r2": 0.9999225863695105,
+          "val_r2_mean": 0.6783253464088953,
+          "val_r2_std": 0.011510521439964753,
+          "val_mse_mean": 10.758574470217692,
+          "val_mse_std": 0.4875586965040007,
+          "val_pearson_r_mean": 0.8464902933925966,
+          "val_pearson_r_std": 0.007073014678027793
+        },
+        {
+          "alpha": 215443.46900318822,
+          "train_r2": 0.9996697880110454,
+          "val_r2_mean": 0.6947081106415596,
+          "val_r2_std": 0.009100327567649141,
+          "val_mse_mean": 10.207085661654073,
+          "val_mse_std": 0.31657762566667097,
+          "val_pearson_r_mean": 0.8527656993925877,
+          "val_pearson_r_std": 0.00649326879386101
+        },
+        {
+          "alpha": 1000000.0,
+          "train_r2": 0.9974324113763879,
+          "val_r2_mean": 0.7306249174761958,
+          "val_r2_std": 0.006824468585404758,
+          "val_mse_mean": 9.00485805364584,
+          "val_mse_std": 0.184798731543079,
+          "val_pearson_r_mean": 0.8672441715132326,
+          "val_pearson_r_std": 0.004954424657246934
+        }
+      ]
+    },
+    {
+      "id": "bt_L43",
+      "file": "probes/probe_bt_L43.npy",
+      "method": "bradley_terry",
+      "layer": 43,
+      "train_accuracy": 0.8467067560288573,
+      "train_loss": 0.33275458728168555,
+      "cv_accuracy_mean": 0.7692307692307693,
+      "cv_accuracy_std": 0.0,
+      "best_l2_lambda": 100.0,
+      "n_iterations": 550,
+      "n_pairs": 23096,
+      "lambda_sweep": [
+        {
+          "l2_lambda": 0.1,
+          "train_accuracy": 0.8667166598661211,
+          "val_accuracy": 0.7652428216944346
+        },
+        {
+          "l2_lambda": 1.0,
+          "train_accuracy": 0.8664299341633674,
+          "val_accuracy": 0.7648440269408011
+        },
+        {
+          "l2_lambda": 10.0,
+          "train_accuracy": 0.8654153662920853,
+          "val_accuracy": 0.7672367954626019
+        },
+        {
+          "l2_lambda": 100.0,
+          "train_accuracy": 0.8576186327595143,
+          "val_accuracy": 0.7692307692307693
+        },
+        {
+          "l2_lambda": 1000.0,
+          "train_accuracy": 0.8327727478247444,
+          "val_accuracy": 0.7633817795108118
+        }
+      ]
+    },
+    {
+      "id": "ridge_L49",
+      "file": "probes/probe_ridge_L49.npy",
+      "method": "ridge",
+      "layer": 49,
+      "standardize": false,
+      "demean_confounds": null,
+      "cv_r2_mean": 0.6849244668953824,
+      "cv_r2_std": 0.013518921980107488,
+      "cv_mse_mean": 10.543338377756166,
+      "cv_mse_std": 0.6320105386093419,
+      "best_alpha": 1000000.0,
+      "train_r2": 0.9990054179632661,
+      "n_samples": 3000,
+      "train_test_gap": 0.3140809510678837,
+      "cv_stability": 0.9802621710399512,
+      "alpha_sweep": [
+        {
+          "alpha": 1.0,
+          "train_r2": 0.9999968494417327,
+          "val_r2_mean": 0.5753786068205707,
+          "val_r2_std": 0.05502857165617643,
+          "val_mse_mean": 14.190318309991147,
+          "val_mse_std": 1.811589621283079,
+          "val_pearson_r_mean": 0.8099333432828534,
+          "val_pearson_r_std": 0.01914806748969827
+        },
+        {
+          "alpha": 4.641588833612778,
+          "train_r2": 0.9999968494417327,
+          "val_r2_mean": 0.5753786068205707,
+          "val_r2_std": 0.05502857165617643,
+          "val_mse_mean": 14.190318309991147,
+          "val_mse_std": 1.811589621283079,
+          "val_pearson_r_mean": 0.8099333432828534,
+          "val_pearson_r_std": 0.01914806748969827
+        },
+        {
+          "alpha": 21.544346900318832,
+          "train_r2": 0.9999958804547336,
+          "val_r2_mean": 0.5793750798072621,
+          "val_r2_std": 0.057608742502329835,
+          "val_mse_mean": 14.056064390073695,
+          "val_mse_std": 1.8950207065979403,
+          "val_pearson_r_mean": 0.8112948088546459,
+          "val_pearson_r_std": 0.02015708267830875
+        },
+        {
+          "alpha": 100.0,
+          "train_r2": 0.9999971439973493,
+          "val_r2_mean": 0.5576786794694715,
+          "val_r2_std": 0.0561086931507703,
+          "val_mse_mean": 14.812128999617087,
+          "val_mse_std": 2.071101207765743,
+          "val_pearson_r_mean": 0.8043857307742501,
+          "val_pearson_r_std": 0.01745156970865808
+        },
+        {
+          "alpha": 464.15888336127773,
+          "train_r2": 0.9999966500345099,
+          "val_r2_mean": 0.5605611462743446,
+          "val_r2_std": 0.05454770918972174,
+          "val_mse_mean": 14.716261469273755,
+          "val_mse_std": 2.0256854351428335,
+          "val_pearson_r_mean": 0.8052551700060386,
+          "val_pearson_r_std": 0.017075189000545454
+        },
+        {
+          "alpha": 2154.4346900318824,
+          "train_r2": 0.9999969554208626,
+          "val_r2_mean": 0.5736674163181662,
+          "val_r2_std": 0.04449219062716779,
+          "val_mse_mean": 14.276591354072972,
+          "val_mse_std": 1.7061900086024604,
+          "val_pearson_r_mean": 0.8094129482290077,
+          "val_pearson_r_std": 0.014069568853137862
+        },
+        {
+          "alpha": 10000.0,
+          "train_r2": 0.9999870025951721,
+          "val_r2_mean": 0.6049059481445072,
+          "val_r2_std": 0.022944685902848486,
+          "val_mse_mean": 13.229523306075748,
+          "val_mse_std": 1.0659724128921886,
+          "val_pearson_r_mean": 0.8196875015140528,
+          "val_pearson_r_std": 0.007958098327103091
+        },
+        {
+          "alpha": 46415.888336127726,
+          "train_r2": 0.9999553916973882,
+          "val_r2_mean": 0.6381417205625892,
+          "val_r2_std": 0.012297373214093514,
+          "val_mse_mean": 12.113857937553197,
+          "val_mse_std": 0.7357831708576908,
+          "val_pearson_r_mean": 0.8312331126808694,
+          "val_pearson_r_std": 0.006390350273073616
+        },
+        {
+          "alpha": 215443.46900318822,
+          "train_r2": 0.9998637231558369,
+          "val_r2_mean": 0.6556096031809814,
+          "val_r2_std": 0.014869456803498403,
+          "val_mse_mean": 11.526376327846574,
+          "val_mse_std": 0.723474603072779,
+          "val_pearson_r_mean": 0.8374325808940043,
+          "val_pearson_r_std": 0.00736140483234235
+        },
+        {
+          "alpha": 1000000.0,
+          "train_r2": 0.9990054179632661,
+          "val_r2_mean": 0.6849244668953824,
+          "val_r2_std": 0.013518921980107488,
+          "val_mse_mean": 10.543338377756166,
+          "val_mse_std": 0.6320105386093419,
+          "val_pearson_r_mean": 0.8483573721942788,
+          "val_pearson_r_std": 0.006952398921465547
+        }
+      ]
+    },
+    {
+      "id": "bt_L49",
+      "file": "probes/probe_bt_L49.npy",
+      "method": "bradley_terry",
+      "layer": 49,
+      "train_accuracy": 0.8508216553197877,
+      "train_loss": 0.3248723175416079,
+      "cv_accuracy_mean": 0.7698068060971287,
+      "cv_accuracy_std": 0.0,
+      "best_l2_lambda": 100.0,
+      "n_iterations": 555,
+      "n_pairs": 23096,
+      "lambda_sweep": [
+        {
+          "l2_lambda": 0.1,
+          "train_accuracy": 0.8671246925969629,
+          "val_accuracy": 0.7625841900035448
+        },
+        {
+          "l2_lambda": 1.0,
+          "train_accuracy": 0.8669151622757199,
+          "val_accuracy": 0.7631159163417228
+        },
+        {
+          "l2_lambda": 10.0,
+          "train_accuracy": 0.8665402132798112,
+          "val_accuracy": 0.7651985111662531
+        },
+        {
+          "l2_lambda": 100.0,
+          "train_accuracy": 0.8635737050474751,
+          "val_accuracy": 0.7698068060971287
+        },
+        {
+          "l2_lambda": 1000.0,
+          "train_accuracy": 0.8455430695089271,
+          "val_accuracy": 0.7657745480326126
+        }
+      ]
+    },
+    {
+      "id": "ridge_L55",
+      "file": "probes/probe_ridge_L55.npy",
+      "method": "ridge",
+      "layer": 55,
+      "standardize": false,
+      "demean_confounds": null,
+      "cv_r2_mean": 0.6505217618441202,
+      "cv_r2_std": 0.011083200308438733,
+      "cv_mse_mean": 11.693961204377917,
+      "cv_mse_std": 0.6098865074083297,
+      "best_alpha": 1000000.0,
+      "train_r2": 0.9996453487028071,
+      "n_samples": 3000,
+      "train_test_gap": 0.34912358685868683,
+      "cv_stability": 0.9829625987064353,
+      "alpha_sweep": [
+        {
+          "alpha": 1.0,
+          "train_r2": 0.9999997524723809,
+          "val_r2_mean": 0.5890667166847298,
+          "val_r2_std": 0.062193296104989894,
+          "val_mse_mean": 13.761693237846575,
+          "val_mse_std": 2.2424922906914015,
+          "val_pearson_r_mean": 0.8126592780584666,
+          "val_pearson_r_std": 0.023873367236670717
+        },
+        {
+          "alpha": 4.641588833612778,
+          "train_r2": 0.9999997524723809,
+          "val_r2_mean": 0.5890667166847298,
+          "val_r2_std": 0.062193296104989894,
+          "val_mse_mean": 13.761693237846575,
+          "val_mse_std": 2.2424922906914015,
+          "val_pearson_r_mean": 0.8126592780584666,
+          "val_pearson_r_std": 0.023873367236670717
+        },
+        {
+          "alpha": 21.544346900318832,
+          "train_r2": 0.999999840635127,
+          "val_r2_mean": 0.5627096325043943,
+          "val_r2_std": 0.06810169693333985,
+          "val_mse_mean": 14.603082702935557,
+          "val_mse_std": 2.174438313625647,
+          "val_pearson_r_mean": 0.8044486801965764,
+          "val_pearson_r_std": 0.021816384170747872
+        },
+        {
+          "alpha": 100.0,
+          "train_r2": 0.9999996673061532,
+          "val_r2_mean": 0.5627120628647695,
+          "val_r2_std": 0.06745026658400746,
+          "val_mse_mean": 14.603595512719318,
+          "val_mse_std": 2.1554680195425258,
+          "val_pearson_r_mean": 0.8044418225437834,
+          "val_pearson_r_std": 0.02165621321650802
+        },
+        {
+          "alpha": 464.15888336127773,
+          "train_r2": 0.9999997196381226,
+          "val_r2_mean": 0.5404790860307445,
+          "val_r2_std": 0.05774156189339034,
+          "val_mse_mean": 15.376803716309984,
+          "val_mse_std": 2.0304095293504787,
+          "val_pearson_r_mean": 0.7971677011911411,
+          "val_pearson_r_std": 0.015441274882828296
+        },
+        {
+          "alpha": 2154.4346900318824,
+          "train_r2": 0.9999992811243628,
+          "val_r2_mean": 0.5460026745014205,
+          "val_r2_std": 0.05352082816730222,
+          "val_mse_mean": 15.191507970035289,
+          "val_mse_std": 1.8907920650197296,
+          "val_pearson_r_mean": 0.7988730020791219,
+          "val_pearson_r_std": 0.014286978221735205
+        },
+        {
+          "alpha": 10000.0,
+          "train_r2": 0.9999963311970173,
+          "val_r2_mean": 0.5649978511924261,
+          "val_r2_std": 0.039664174154546955,
+          "val_mse_mean": 14.55463761943283,
+          "val_mse_std": 1.4389619842523453,
+          "val_pearson_r_mean": 0.8048589335345413,
+          "val_pearson_r_std": 0.010818222156622936
+        },
+        {
+          "alpha": 46415.888336127726,
+          "train_r2": 0.9999757975593349,
+          "val_r2_mean": 0.6028752450552928,
+          "val_r2_std": 0.01524439470458095,
+          "val_mse_mean": 13.285938257689526,
+          "val_mse_std": 0.7045360907903317,
+          "val_pearson_r_mean": 0.8174794057574113,
+          "val_pearson_r_std": 0.0076848101956006
+        },
+        {
+          "alpha": 215443.46900318822,
+          "train_r2": 0.9999240827724191,
+          "val_r2_mean": 0.6292937331420424,
+          "val_r2_std": 0.010485599976519537,
+          "val_mse_mean": 12.403285995094642,
+          "val_mse_std": 0.6022048150127677,
+          "val_pearson_r_mean": 0.8268080813736363,
+          "val_pearson_r_std": 0.009616359229739926
+        },
+        {
+          "alpha": 1000000.0,
+          "train_r2": 0.9996453487028071,
+          "val_r2_mean": 0.6505217618441202,
+          "val_r2_std": 0.011083200308438733,
+          "val_mse_mean": 11.693961204377917,
+          "val_mse_std": 0.6098865074083297,
+          "val_pearson_r_mean": 0.8345082564287558,
+          "val_pearson_r_std": 0.00969393105711349
+        }
+      ]
+    },
+    {
+      "id": "bt_L55",
+      "file": "probes/probe_bt_L55.npy",
+      "method": "bradley_terry",
+      "layer": 55,
+      "train_accuracy": 0.841797133698906,
+      "train_loss": 0.34581554597145164,
+      "cv_accuracy_mean": 0.7672811059907834,
+      "cv_accuracy_std": 0.0,
+      "best_l2_lambda": 1000.0,
+      "n_iterations": 488,
+      "n_pairs": 23096,
+      "lambda_sweep": [
+        {
+          "l2_lambda": 0.1,
+          "train_accuracy": 0.8681833721148227,
+          "val_accuracy": 0.7618752215526409
+        },
+        {
+          "l2_lambda": 1.0,
+          "train_accuracy": 0.8682936512312663,
+          "val_accuracy": 0.760989010989011
+        },
+        {
+          "l2_lambda": 10.0,
+          "train_accuracy": 0.8676871160908258,
+          "val_accuracy": 0.7621410847217299
+        },
+        {
+          "l2_lambda": 100.0,
+          "train_accuracy": 0.8649852777379547,
+          "val_accuracy": 0.7660404112017015
+        },
+        {
+          "l2_lambda": 1000.0,
+          "train_accuracy": 0.8515091697085323,
+          "val_accuracy": 0.7672811059907834
+        }
+      ]
+    }
+  ]
+}
