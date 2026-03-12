@@ -617,15 +617,23 @@ def run_hoo(config: RunDirProbeConfig) -> dict:
             if key in f["layers"] and f["layers"][key].get(field) is not None
         ]
 
+    def _collect_with_n(key: str, field: str) -> tuple[list, list]:
+        values, weights = [], []
+        for f in all_fold_results:
+            if key in f["layers"] and f["layers"][key].get(field) is not None:
+                values.append(f["layers"][key][field])
+                weights.append(f["layers"][key]["hoo_n_samples"])
+        return values, weights
+
     layer_summary = {}
     for layer in config.layers:
         entry = {}
         if run_ridge:
             k = f"ridge_L{layer}"
-            hoo_rs = _collect(k, "hoo_r")
+            hoo_rs, hoo_ns = _collect_with_n(k, "hoo_r")
             hoo_accs = _collect(k, "hoo_acc")
             ridge_entry = {
-                "mean_hoo_r": float(np.mean(hoo_rs)) if hoo_rs else None,
+                "mean_hoo_r": float(np.average(hoo_rs, weights=hoo_ns)) if hoo_rs else None,
                 "std_hoo_r": float(np.std(hoo_rs)) if hoo_rs else None,
                 "n_folds": len(hoo_rs),
             }
