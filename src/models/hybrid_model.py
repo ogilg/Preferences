@@ -10,7 +10,7 @@ import numpy as np
 
 from src.models.huggingface_model import HuggingFaceModel
 from src.models.openai_compatible import OpenAICompatibleClient, GenerateRequest
-from src.models.base import GenerationResult
+from src.models.base import ActivationResults, GenerationResult
 from src.types import Message
 
 
@@ -51,7 +51,7 @@ class HybridActivationModel:
         messages: list[Message],
         layers: list[int],
         selector_names: list[str],
-    ) -> dict[str, dict[int, np.ndarray]]:
+    ) -> ActivationResults:
         return self.local_model.get_activations(messages, layers, selector_names)
 
     def generate_with_activations(
@@ -79,7 +79,7 @@ class HybridActivationModel:
         messages_batch: list[list[Message]],
         layers: list[int],
         selector_names: list[str],
-    ) -> dict[str, dict[int, np.ndarray]]:
+    ) -> ActivationResults:
         return self.local_model.get_activations_batch(messages_batch, layers, selector_names)
 
     def generate_with_activations_batch(
@@ -99,20 +99,24 @@ class HybridActivationModel:
             msgs + [{"role": "assistant", "content": result.completion}]
             for msgs, result in zip(messages_batch, batch_results, strict=True)
         ]
-        activations_batch = self.local_model.get_activations_batch(
+        batch_acts = self.local_model.get_activations_batch(
             full_messages_batch, layers, selector_names
         )
 
         results = []
         for i, (msgs, result) in enumerate(zip(messages_batch, batch_results, strict=True)):
-            activations = {
+            point = {
                 selector: {layer: acts[i] for layer, acts in layer_dict.items()}
-                for selector, layer_dict in activations_batch.items()
+                for selector, layer_dict in batch_acts.point.items()
+            }
+            span = {
+                selector: {layer: acts[i] for layer, acts in layer_dict.items()}
+                for selector, layer_dict in batch_acts.span.items()
             }
             prompt_tokens, completion_tokens = self._count_tokens(msgs, result.completion)
             results.append(GenerationResult(
                 completion=result.completion,
-                activations=activations,
+                activations=ActivationResults(point, span),
                 prompt_tokens=prompt_tokens,
                 completion_tokens=completion_tokens,
             ))

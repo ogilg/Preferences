@@ -16,6 +16,7 @@ from src.models.base import (
     TASK_SELECTOR_REGISTRY,
     TASK_SELECTORS,
     TOKEN_ID_SELECTORS,
+    ActivationResults,
     GenerationResult,
     LayerHook,
     find_eot_indices,
@@ -24,6 +25,7 @@ from src.models.base import (
     needs_assistant_tb_anchor,
     parse_anchored_offset,
     requires_chat_template,
+    split_selectors,
     validate_selectors,
 )
 from src.models.registry import is_valid_model, get_hf_name, get_eot_token
@@ -292,6 +294,28 @@ class HuggingFaceModel:
                 results[name][layer] = dispatch[name](layer_acts).float().numpy()
         return results
 
+    def _apply_span_selectors(
+        self,
+        activations: dict[int, torch.Tensor],
+        span_selector_names: list[str],
+        assistant_starts: torch.Tensor,
+        assistant_ends: torch.Tensor,
+    ) -> dict[str, dict[int, list[np.ndarray]]]:
+        """Extract variable-length per-token spans. Returns {name: {layer: [array_per_sample]}}."""
+        batch_size = assistant_starts.shape[0]
+        results: dict[str, dict[int, list[np.ndarray]]] = {name: {} for name in span_selector_names}
+        for layer, layer_acts in activations.items():
+            for name in span_selector_names:
+                if name == "assistant_all":
+                    per_sample = [
+                        layer_acts[i, assistant_starts[i]:assistant_ends[i], :].float().numpy()
+                        for i in range(batch_size)
+                    ]
+                else:
+                    raise ValueError(f"Unknown span selector: {name}")
+                results[name][layer] = per_sample
+        return results
+
     # -------------------------------------------------------------------------
     # Public API
     # -------------------------------------------------------------------------
@@ -374,12 +398,14 @@ class HuggingFaceModel:
         messages: list[Message],
         layers: list[int],
         selector_names: list[str],
-    ) -> dict[str, dict[int, np.ndarray]]:
+    ) -> ActivationResults:
         """Get activations for a single conversation.
 
-        Returns: {selector_name: {layer: (d_model,) array}}
+        Returns ActivationResults with dict-like access for point selectors
+        (results["last"][layer]) and .span for span selectors.
         """
         self._validate_selectors_for_model(selector_names)
+        point_selectors, span_selectors = split_selectors(selector_names)
         has_completion = messages and messages[-1]["role"] == "assistant"
 
         if not has_completion:
@@ -433,19 +459,31 @@ class HuggingFaceModel:
             assistant_ends = torch.tensor([a_end])
         if needs_assistant_tb_anchor(selector_names):
             assistant_anchor = torch.tensor([self._get_assistant_to_user_anchor(messages)])
-        batched = self._apply_selectors(
-            activations, selector_names, first_indices, seq_len,
-            input_ids=input_ids if needs_ids else None,
-            task_starts=task_starts,
-            task_ends=task_ends,
-            assistant_starts=assistant_starts,
-            assistant_ends=assistant_ends,
-            assistant_to_user_anchor=assistant_anchor,
-        )
-        return {
-            name: {layer: acts[0] for layer, acts in layer_dict.items()}
-            for name, layer_dict in batched.items()
-        }
+
+        point_results: dict[str, dict[int, np.ndarray]] = {}
+        if point_selectors:
+            batched = self._apply_selectors(
+                activations, point_selectors, first_indices, seq_len,
+                input_ids=input_ids if needs_ids else None,
+                task_starts=task_starts,
+                task_ends=task_ends,
+                assistant_starts=assistant_starts,
+                assistant_ends=assistant_ends,
+                assistant_to_user_anchor=assistant_anchor,
+            )
+            point_results = {
+                name: {layer: acts[0] for layer, acts in layer_dict.items()}
+                for name, layer_dict in batched.items()
+            }
+
+        span_results: dict[str, dict[int, list[np.ndarray]]] = {}
+        if span_selectors:
+            assert assistant_starts is not None and assistant_ends is not None
+            span_results = self._apply_span_selectors(
+                activations, span_selectors, assistant_starts, assistant_ends,
+            )
+
+        return ActivationResults(point_results, span_results)
 
     @torch.inference_mode()
     def get_activations_batch(
@@ -453,15 +491,17 @@ class HuggingFaceModel:
         messages_batch: list[list[Message]],
         layers: list[int],
         selector_names: list[str],
-    ) -> dict[str, dict[int, np.ndarray]]:
+    ) -> ActivationResults:
         """Get activations for a batch of conversations via a single forward pass.
 
         Left-pads sequences to equal length. Selector indices are shifted to
         account for the padding offset.
 
-        Returns: {selector_name: {layer: (batch, d_model) array}}
+        Returns ActivationResults with dict-like access for point selectors
+        and .span for span selectors.
         """
         self._validate_selectors_for_model(selector_names)
+        point_selectors, span_selectors = split_selectors(selector_names)
         needs_task = set(selector_names) & TASK_SELECTORS
         _needs_content_span = needs_assistant_content_span(selector_names)
         _needs_tb_anchor = needs_assistant_tb_anchor(selector_names)
@@ -554,15 +594,27 @@ class HuggingFaceModel:
                 assistant_anchor_indices[i] + (max_len - seq_lengths[i])
                 for i in range(batch_size)
             ])
-        return self._apply_selectors(
-            activations, selector_names, shifted_first, max_len,
-            input_ids=padded if needs_ids else None,
-            task_starts=task_starts,
-            task_ends=task_ends,
-            assistant_starts=assistant_starts,
-            assistant_ends=assistant_ends,
-            assistant_to_user_anchor=assistant_anchor,
-        )
+
+        point_results: dict[str, dict[int, np.ndarray]] = {}
+        if point_selectors:
+            point_results = self._apply_selectors(
+                activations, point_selectors, shifted_first, max_len,
+                input_ids=padded if needs_ids else None,
+                task_starts=task_starts,
+                task_ends=task_ends,
+                assistant_starts=assistant_starts,
+                assistant_ends=assistant_ends,
+                assistant_to_user_anchor=assistant_anchor,
+            )
+
+        span_results: dict[str, dict[int, list[np.ndarray]]] = {}
+        if span_selectors:
+            assert assistant_starts is not None and assistant_ends is not None
+            span_results = self._apply_span_selectors(
+                activations, span_selectors, assistant_starts, assistant_ends,
+            )
+
+        return ActivationResults(point_results, span_results)
 
     @torch.inference_mode()
     def generate_with_activations(

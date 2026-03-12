@@ -38,6 +38,39 @@ def load_activations(
     return task_ids, activations
 
 
+def load_span_activations(
+    activations_path: Path,
+    task_id_filter: set[str] | None = None,
+    layers: list[int] | None = None,
+) -> tuple[np.ndarray, dict[int, list[np.ndarray]]]:
+    """Load span activations (concat+offsets format).
+
+    Returns (task_ids, {layer: list of (n_tokens_i, d_model) arrays}).
+    """
+    data = np.load(activations_path, allow_pickle=True)
+    task_ids = data["task_ids"]
+    offsets = data["offsets"]
+
+    available_layers = sorted(int(k.split("_")[1]) for k in data.keys() if k.startswith("layer_"))
+    layers_to_load = layers if layers is not None else available_layers
+
+    if task_id_filter is not None:
+        mask = np.array([tid in task_id_filter for tid in task_ids])
+        kept_indices = np.where(mask)[0]
+        task_ids = task_ids[mask]
+    else:
+        kept_indices = range(len(task_ids))
+
+    activations: dict[int, list[np.ndarray]] = {}
+    for layer in layers_to_load:
+        concat = data[f"layer_{layer}"]
+        activations[layer] = [
+            concat[offsets[i]:offsets[i + 1]] for i in kept_indices
+        ]
+
+    return task_ids, activations
+
+
 def compute_activation_norms(
     activations_path: Path,
     layers: list[int] | None = None,

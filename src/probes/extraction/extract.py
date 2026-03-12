@@ -12,7 +12,7 @@ import torch
 from tqdm import tqdm
 
 from src.measurement.storage.completions import extract_completion_text
-from src.models.base import COMPLETION_SELECTORS
+from src.models.base import COMPLETION_SELECTORS, split_selectors
 from src.models.huggingface_model import HuggingFaceModel
 from src.task_data import load_filtered_tasks, OriginDataset, Task
 from src.types import Message
@@ -128,13 +128,18 @@ def run_extraction(config: ExtractionConfig) -> None:
 
     tasks = _load_tasks(config)
 
+    point_selectors, span_selectors = split_selectors(config.selectors)
+
     task_ids: list[str] = []
-    activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in config.selectors}
+    activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in point_selectors}
+    span_activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in span_selectors}
     completions: list[dict] = []
     n_existing = 0
 
     if config.resume:
-        task_ids, activations, completions = load_existing_data(output_dir, config.selectors)
+        task_ids, activations, completions = load_existing_data(output_dir, point_selectors)
+        if span_selectors:
+            _, span_activations, _ = load_existing_data(output_dir, span_selectors)
         n_existing = len(task_ids)
         tasks = [t for t in tasks if t.id not in set(task_ids)]
         print(f"Resume: found {n_existing} existing, {len(tasks)} remaining")
@@ -150,7 +155,8 @@ def run_extraction(config: ExtractionConfig) -> None:
             model=model, tasks=tasks, layers=resolved_layers,
             selectors=config.selectors, temperature=config.temperature,
             max_new_tokens=config.max_new_tokens, task_ids=task_ids,
-            activations=activations, completions=completions,
+            activations=activations, span_activations=span_activations,
+            completions=completions,
             output_dir=output_dir, save_every=config.save_every,
             system_prompt=config.system_prompt,
             prompt_template=config.prompt_template,
@@ -166,6 +172,7 @@ def run_extraction(config: ExtractionConfig) -> None:
             model=model, items=items, layers=resolved_layers,
             selectors=config.selectors, batch_size=config.batch_size,
             task_ids=task_ids, activations=activations,
+            span_activations=span_activations,
             output_dir=output_dir, save_every=config.save_every,
         )
         for tid in task_ids[n_before:]:
@@ -179,6 +186,8 @@ def run_extraction(config: ExtractionConfig) -> None:
     if stats.n_new > 0:
         print(f"Saving {len(task_ids)} total activations...")
         save_activations(output_dir, task_ids, activations)
+        if span_selectors:
+            save_activations(output_dir, task_ids, span_activations, span=True)
         save_manifest(output_dir, completions)
 
     metadata = _build_metadata(config, resolved_layers, model.n_layers, n_existing, stats)
@@ -199,12 +208,17 @@ def run_from_completions(config: ExtractionConfig, completions_path: Path) -> No
     with open(completions_path) as f:
         completions_data: list[dict] = json.load(f)
 
+    point_selectors, span_selectors = split_selectors(config.selectors)
+
     task_ids: list[str] = []
-    activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in config.selectors}
+    activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in point_selectors}
+    span_activations: dict[str, dict[int, list[np.ndarray]]] = {s: defaultdict(list) for s in span_selectors}
     n_existing = 0
 
     if config.resume:
-        task_ids, activations, _ = load_existing_data(output_dir, config.selectors)
+        task_ids, activations, _ = load_existing_data(output_dir, point_selectors)
+        if span_selectors:
+            _, span_activations, _ = load_existing_data(output_dir, span_selectors)
         n_existing = len(task_ids)
         completions_data = [c for c in completions_data if c["task_id"] not in set(task_ids)]
         print(f"Resume: found {n_existing} existing, {len(completions_data)} remaining")
@@ -224,11 +238,14 @@ def run_from_completions(config: ExtractionConfig, completions_path: Path) -> No
         model=model, items=items, layers=resolved_layers,
         selectors=config.selectors, batch_size=config.batch_size,
         task_ids=task_ids, activations=activations,
+        span_activations=span_activations,
         output_dir=output_dir, save_every=config.save_every,
     )
 
     if stats.n_new > 0:
         save_activations(output_dir, task_ids, activations)
+        if span_selectors:
+            save_activations(output_dir, task_ids, span_activations, span=True)
 
     metadata = _build_metadata(
         config, resolved_layers, model.n_layers, n_existing, stats,
@@ -248,11 +265,15 @@ def batched_extraction(
     activations: dict[str, dict[int, list[np.ndarray]]],
     output_dir: Path,
     save_every: int,
+    span_activations: dict[str, dict[int, list[np.ndarray]]] | None = None,
 ) -> ExtractionStats:
     """Batched forward-pass extraction with OOM retry via recursive halving.
 
-    Mutates task_ids and activations in place.
+    Mutates task_ids, activations, and span_activations in place.
     """
+    point_selectors, span_selectors = split_selectors(selectors)
+    if span_activations is None:
+        span_activations = {s: defaultdict(list) for s in span_selectors}
     stats = ExtractionStats()
 
     alloc, res = _gpu_mem_gb()
@@ -263,7 +284,7 @@ def batched_extraction(
         batch_ids = [item[0] for item in batch]
         batch_messages = [item[1] for item in batch]
 
-        succeeded_ids, per_sample_acts, batch_ooms, batch_fails = _extract_batch_with_oom_retry(
+        succeeded_ids, per_sample_point, per_sample_span, batch_ooms, batch_fails = _extract_batch_with_oom_retry(
             model, batch_ids, batch_messages, layers, selectors,
         )
 
@@ -272,9 +293,12 @@ def batched_extraction(
 
         for i, task_id in enumerate(succeeded_ids):
             task_ids.append(task_id)
-            for selector in selectors:
-                for layer, layer_acts in per_sample_acts[selector].items():
+            for selector in point_selectors:
+                for layer, layer_acts in per_sample_point[selector].items():
                     activations[selector][layer].append(layer_acts[i])
+            for selector in span_selectors:
+                for layer, layer_acts_list in per_sample_span[selector].items():
+                    span_activations[selector][layer].append(layer_acts_list[i])
             stats.n_new += 1
 
         gc.collect()
@@ -288,6 +312,8 @@ def batched_extraction(
         if stats.n_new > 0 and stats.n_new % save_every == 0:
             tqdm.write(f"Checkpoint: saving {len(task_ids)} total activations...")
             save_activations(output_dir, task_ids, activations)
+            if span_activations:
+                save_activations(output_dir, task_ids, span_activations, span=True)
 
     return stats
 
@@ -298,47 +324,62 @@ def _extract_batch_with_oom_retry(
     messages_batch: list[list[Message]],
     layers: list[int],
     selectors: list[str],
-) -> tuple[list[str], dict[str, dict[int, np.ndarray]], int, int]:
+) -> tuple[list[str], dict[str, dict[int, np.ndarray]], dict[str, dict[int, list[np.ndarray]]], int, int]:
     """Try full batch; on OOM, split in half and retry each half.
 
     Single-sample OOM is absorbed (empty result for that sample).
-    Returns: (succeeded_ids, {selector: {layer: (n_succeeded, d_model)}}, n_ooms, n_failures)
+    Returns: (succeeded_ids, point_results, span_results, n_ooms, n_failures)
     """
+    point_selectors, span_selectors = split_selectors(selectors)
     try:
-        result = model.get_activations_batch(messages_batch, layers=layers, selector_names=selectors)
-        return ids, result, 0, 0
+        result = model.get_activations_batch(
+            messages_batch, layers=layers, selector_names=selectors,
+        )
+        return ids, result.point, result.span, 0, 0
     except torch.cuda.OutOfMemoryError:
         torch.cuda.empty_cache()
         gc.collect()
 
         if len(ids) == 1:
             tqdm.write(f"OOM on single sample {ids[0]}, skipping")
-            empty: dict[str, dict[int, np.ndarray]] = {s: {} for s in selectors}
-            return [], empty, 1, 1
+            empty_point: dict[str, dict[int, np.ndarray]] = {s: {} for s in point_selectors}
+            empty_span: dict[str, dict[int, list[np.ndarray]]] = {s: {} for s in span_selectors}
+            return [], empty_point, empty_span, 1, 1
 
         mid = len(ids) // 2
         tqdm.write(f"OOM on batch of {len(ids)}, splitting into {mid} + {len(ids) - mid}")
 
-        ids_a, acts_a, ooms_a, fails_a = _extract_batch_with_oom_retry(
+        ids_a, point_a, span_a, ooms_a, fails_a = _extract_batch_with_oom_retry(
             model, ids[:mid], messages_batch[:mid], layers, selectors,
         )
-        ids_b, acts_b, ooms_b, fails_b = _extract_batch_with_oom_retry(
+        ids_b, point_b, span_b, ooms_b, fails_b = _extract_batch_with_oom_retry(
             model, ids[mid:], messages_batch[mid:], layers, selectors,
         )
 
         merged_ids = ids_a + ids_b
-        merged_acts: dict[str, dict[int, np.ndarray]] = {s: {} for s in selectors}
-        for selector in selectors:
+
+        # Merge point results (concat along batch axis)
+        merged_point: dict[str, dict[int, np.ndarray]] = {s: {} for s in point_selectors}
+        for selector in point_selectors:
             for layer in layers:
                 parts = []
-                if layer in acts_a[selector]:
-                    parts.append(acts_a[selector][layer])
-                if layer in acts_b[selector]:
-                    parts.append(acts_b[selector][layer])
+                if layer in point_a.get(selector, {}):
+                    parts.append(point_a[selector][layer])
+                if layer in point_b.get(selector, {}):
+                    parts.append(point_b[selector][layer])
                 if parts:
-                    merged_acts[selector][layer] = np.concatenate(parts, axis=0)
+                    merged_point[selector][layer] = np.concatenate(parts, axis=0)
 
-        return merged_ids, merged_acts, ooms_a + ooms_b, fails_a + fails_b
+        # Merge span results (concat lists)
+        merged_span: dict[str, dict[int, list[np.ndarray]]] = {s: {} for s in span_selectors}
+        for selector in span_selectors:
+            for layer in layers:
+                list_a = span_a.get(selector, {}).get(layer, [])
+                list_b = span_b.get(selector, {}).get(layer, [])
+                if list_a or list_b:
+                    merged_span[selector][layer] = list_a + list_b
+
+        return merged_ids, merged_point, merged_span, ooms_a + ooms_b, fails_a + fails_b
 
 
 def generation_extraction(
@@ -355,8 +396,12 @@ def generation_extraction(
     save_every: int,
     system_prompt: str | None = None,
     prompt_template: str | None = None,
+    span_activations: dict[str, dict[int, list[np.ndarray]]] | None = None,
 ) -> ExtractionStats:
     """Sequential generate-then-extract. Mutates task_ids/activations/completions in place."""
+    point_selectors, span_selectors = split_selectors(selectors)
+    if span_activations is None:
+        span_activations = {s: defaultdict(list) for s in span_selectors}
     stats = ExtractionStats()
     failures: list[tuple[str, str]] = []
 
@@ -376,9 +421,12 @@ def generation_extraction(
                     stats.n_truncated += 1
 
                 task_ids.append(task.id)
-                for selector in selectors:
+                for selector in point_selectors:
                     for layer, act in result.activations[selector].items():
                         activations[selector][layer].append(act)
+                for selector in span_selectors:
+                    for layer, act in result.activations.span[selector].items():
+                        span_activations[selector][layer].append(act)
 
                 completions.append({
                     "task_id": task.id,
@@ -414,6 +462,8 @@ def generation_extraction(
         if stats.n_new > 0 and stats.n_new % save_every == 0:
             tqdm.write(f"Checkpoint: saving {len(task_ids)} total activations...")
             save_activations(output_dir, task_ids, activations)
+            if span_activations:
+                save_activations(output_dir, task_ids, span_activations, span=True)
             save_manifest(output_dir, completions)
 
     if failures:

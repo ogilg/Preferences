@@ -11,10 +11,38 @@ from src.types import Message
 from .openai_compatible import GenerateRequest, BatchResult
 
 
+class ActivationResults:
+    """Wraps point and span activation results.
+
+    Dict-like access for point selectors (backward compat): results["last"][layer].
+    Span selectors via .span: results.span["assistant_all"][layer].
+    """
+
+    def __init__(
+        self,
+        point: dict[str, dict[int, np.ndarray]],
+        span: dict[str, dict[int, list[np.ndarray]]] | None = None,
+    ):
+        self.point = point
+        self.span = span or {}
+
+    def __getitem__(self, key: str) -> dict[int, np.ndarray]:
+        return self.point[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.point
+
+    def __iter__(self):
+        return iter(self.point)
+
+    def items(self):
+        return self.point.items()
+
+
 @dataclass
 class GenerationResult:
     completion: str
-    activations: dict[int, np.ndarray] | dict[str, dict[int, np.ndarray]]
+    activations: ActivationResults
     prompt_tokens: int
     completion_tokens: int
 
@@ -208,6 +236,7 @@ def is_anchored_offset_selector(name: str) -> bool:
 def requires_chat_template(selector_name: str) -> bool:
     return (selector_name in TOKEN_ID_SELECTORS
             or selector_name in ASSISTANT_SELECTORS
+            or selector_name in SPAN_SELECTORS
             or is_anchored_offset_selector(selector_name))
 
 
@@ -262,10 +291,20 @@ ASSISTANT_SELECTOR_REGISTRY: dict[str, TaskSelectorFn] = {
 ASSISTANT_SELECTORS = set(ASSISTANT_SELECTOR_REGISTRY)
 ASSISTANT_TB_PREFIX = "assistant_tb:"
 
+# Span selectors: preserve per-token activations across a span (variable-length output)
+SPAN_SELECTORS = {"assistant_all"}
+
+
+def split_selectors(selectors: list[str]) -> tuple[list[str], list[str]]:
+    """Split selectors into (point, span) lists."""
+    point = [s for s in selectors if s not in SPAN_SELECTORS]
+    span = [s for s in selectors if s in SPAN_SELECTORS]
+    return point, span
+
 
 def needs_assistant_content_span(selector_names: list[str]) -> bool:
     """Check if any selector requires (assistant_starts, assistant_ends) content span."""
-    return bool(set(selector_names) & ASSISTANT_SELECTORS)
+    return bool(set(selector_names) & (ASSISTANT_SELECTORS | SPAN_SELECTORS))
 
 
 def needs_assistant_tb_anchor(selector_names: list[str]) -> bool:
@@ -274,7 +313,7 @@ def needs_assistant_tb_anchor(selector_names: list[str]) -> bool:
 
 
 # --- Selector validation ---
-FIXED_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS | TASK_SELECTORS | ASSISTANT_SELECTORS
+FIXED_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS | TASK_SELECTORS | ASSISTANT_SELECTORS | SPAN_SELECTORS
 
 
 def is_valid_selector(name: str) -> bool:

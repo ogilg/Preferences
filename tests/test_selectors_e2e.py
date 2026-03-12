@@ -148,12 +148,10 @@ class TestPTModelSelectors:
         """eot requires a chat template and should be rejected on PT model."""
         with pytest.raises(ValueError, match="require a chat template"):
             pt_model.get_activations(PROMPT_ONLY, [LAYER], ["eot"])
-
     def test_turn_boundary_rejected(self, pt_model):
         """turn_boundary selectors require a chat template."""
         with pytest.raises(ValueError, match="require a chat template"):
             pt_model.get_activations(PROMPT_ONLY, [LAYER], ["turn_boundary:-1"])
-
     def test_task_last_is_last_content_token(self, pt_model):
         """On PT model (no template), task_last should match turn_boundary-style last token.
 

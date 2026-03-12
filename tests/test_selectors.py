@@ -1,11 +1,15 @@
 """Unit tests for token selectors (no GPU required)."""
 
+import tempfile
+from pathlib import Path
 from unittest.mock import MagicMock
 
+import numpy as np
 import torch
 import pytest
 
 from src.models.base import (
+    SPAN_SELECTORS,
     find_eot_indices,
     parse_anchored_offset,
     select_task_last_batched,
@@ -15,6 +19,8 @@ from src.models.base import (
     requires_chat_template,
 )
 from src.models.huggingface_model import HuggingFaceModel
+from src.probes.core.activations import load_span_activations
+from src.probes.extraction.persistence import save_activations, load_existing_data
 
 try:
     from dotenv import load_dotenv
@@ -76,6 +82,9 @@ class TestSelectorValidation:
     def test_valid_assistant_selectors(self):
         validate_selectors(["assistant_mean", "assistant_tb:-1", "assistant_tb:-5"])
 
+    def test_valid_span_selectors(self):
+        validate_selectors(["assistant_all"])
+
     def test_rejects_unknown(self):
         with pytest.raises(ValueError, match="Unknown selector"):
             validate_selectors(["nonexistent"])
@@ -95,6 +104,7 @@ class TestSelectorValidation:
         assert is_valid_selector("eot")
         assert is_valid_selector("task_last")
         assert is_valid_selector("turn_boundary:-1")
+        assert is_valid_selector("assistant_all")
         assert not is_valid_selector("prompt_last")
         assert not is_valid_selector("bogus")
 
@@ -102,6 +112,7 @@ class TestSelectorValidation:
         assert requires_chat_template("eot")
         assert requires_chat_template("turn_boundary:-1")
         assert requires_chat_template("turn_boundary:-5")
+        assert requires_chat_template("assistant_all")
         assert not requires_chat_template("last")
         assert not requires_chat_template("first")
         assert not requires_chat_template("task_last")
@@ -384,3 +395,103 @@ class TestTaskSelectorsWithGemmaTokenizer:
             ids = self.it_tokenizer(formatted, add_special_tokens=False).input_ids
             span_text = self.it_tokenizer.decode(ids[start:end])
             assert span_text.strip() == content, f"Failed for content: {content[:50]}..."
+
+
+class TestSpanSelectorDispatch:
+
+    def test_apply_span_selectors_slices_correctly(self):
+        model = object.__new__(HuggingFaceModel)
+        batch_size, seq_len, d_model = 3, 20, 8
+        activations = {
+            0: torch.randn(batch_size, seq_len, d_model),
+            5: torch.randn(batch_size, seq_len, d_model),
+        }
+        assistant_starts = torch.tensor([4, 6, 3])
+        assistant_ends = torch.tensor([10, 15, 7])
+
+        result = model._apply_span_selectors(
+            activations, ["assistant_all"], assistant_starts, assistant_ends,
+        )
+
+        assert "assistant_all" in result
+        for layer in [0, 5]:
+            per_sample = result["assistant_all"][layer]
+            assert len(per_sample) == batch_size
+            for i in range(batch_size):
+                expected_len = assistant_ends[i] - assistant_starts[i]
+                assert per_sample[i].shape == (expected_len, d_model)
+                expected = activations[layer][i, assistant_starts[i]:assistant_ends[i], :].float().numpy()
+                np.testing.assert_array_equal(per_sample[i], expected)
+
+
+class TestSpanActivationsRoundtrip:
+
+    def test_save_load_concat_offsets(self):
+        rng = np.random.default_rng(42)
+        task_ids = ["task_a", "task_b", "task_c"]
+        d_model = 16
+        lengths = [5, 12, 3]
+
+        acts_list_layer_0 = [rng.standard_normal((l, d_model)).astype(np.float32) for l in lengths]
+        acts_list_layer_7 = [rng.standard_normal((l, d_model)).astype(np.float32) for l in lengths]
+
+        span_activations = {
+            "assistant_all": {
+                0: acts_list_layer_0,
+                7: acts_list_layer_7,
+            }
+        }
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            save_activations(output_dir, task_ids, span_activations, span=True)
+
+            path = output_dir / "activations_assistant_all.npz"
+            assert path.exists()
+
+            # Verify raw file has offsets key
+            raw = np.load(path)
+            assert "offsets" in raw
+            np.testing.assert_array_equal(raw["offsets"], [0, 5, 17, 20])
+
+            # Load via load_span_activations
+            loaded_ids, loaded_acts = load_span_activations(path)
+            assert list(loaded_ids) == task_ids
+            for layer in [0, 7]:
+                original = acts_list_layer_0 if layer == 0 else acts_list_layer_7
+                for i in range(len(task_ids)):
+                    np.testing.assert_array_equal(loaded_acts[layer][i], original[i])
+
+    def test_load_span_with_filter(self):
+        rng = np.random.default_rng(42)
+        task_ids = ["a", "b", "c", "d"]
+        d_model = 4
+        lengths = [2, 3, 1, 5]
+        acts = [rng.standard_normal((l, d_model)).astype(np.float32) for l in lengths]
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            save_activations(output_dir, task_ids, {"assistant_all": {0: acts}}, span=True)
+
+            path = output_dir / "activations_assistant_all.npz"
+            loaded_ids, loaded_acts = load_span_activations(path, task_id_filter={"b", "d"})
+            assert list(loaded_ids) == ["b", "d"]
+            np.testing.assert_array_equal(loaded_acts[0][0], acts[1])
+            np.testing.assert_array_equal(loaded_acts[0][1], acts[3])
+
+    def test_load_existing_data_span_format(self):
+        rng = np.random.default_rng(42)
+        task_ids = ["x", "y"]
+        d_model = 4
+        acts = [rng.standard_normal((3, d_model)).astype(np.float32),
+                rng.standard_normal((7, d_model)).astype(np.float32)]
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            save_activations(output_dir, task_ids, {"assistant_all": {2: acts}}, span=True)
+
+            loaded_ids, loaded_acts, _ = load_existing_data(output_dir, ["assistant_all"])
+            assert loaded_ids == task_ids
+            assert len(loaded_acts["assistant_all"][2]) == 2
+            np.testing.assert_array_equal(loaded_acts["assistant_all"][2][0], acts[0])
+            np.testing.assert_array_equal(loaded_acts["assistant_all"][2][1], acts[1])
