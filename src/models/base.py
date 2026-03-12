@@ -197,7 +197,9 @@ def is_turn_boundary_selector(name: str) -> bool:
 
 
 def requires_chat_template(selector_name: str) -> bool:
-    return selector_name in TOKEN_ID_SELECTORS or is_turn_boundary_selector(selector_name)
+    return (selector_name in TOKEN_ID_SELECTORS
+            or selector_name in ASSISTANT_SELECTORS
+            or is_turn_boundary_selector(selector_name))
 
 
 # --- Task selectors: operate on user task prompt token spans [start, end) ---
@@ -240,8 +242,18 @@ TASK_SELECTOR_REGISTRY: dict[str, TaskSelectorFn] = {
 }
 TASK_SELECTORS = set(TASK_SELECTOR_REGISTRY)
 
+
+# --- Assistant selectors: operate on first assistant message token spans ---
+# Reuse TaskSelectorFn signature: (activations, starts, ends) -> (batch, d_model)
+
+ASSISTANT_SELECTOR_REGISTRY: dict[str, TaskSelectorFn] = {
+    "assistant_mean": select_task_mean_batched,  # same logic, different span
+    "assistant_last": select_task_last_batched,
+}
+ASSISTANT_SELECTORS = set(ASSISTANT_SELECTOR_REGISTRY) | {"assistant_eot"}
+
 # --- Selector validation ---
-FIXED_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS | TASK_SELECTORS
+FIXED_SELECTOR_NAMES = set(BATCHED_SELECTOR_REGISTRY) | TOKEN_ID_SELECTORS | TASK_SELECTORS | ASSISTANT_SELECTORS
 
 
 def is_valid_selector(name: str) -> bool:
@@ -284,6 +296,32 @@ def find_eot_indices(
     # Last valid position per row: mask invalid positions to -1, take argmax
     scored = torch.where(valid, positions.unsqueeze(0), -1)
     return scored.max(dim=1).values
+
+
+def find_first_eot_after(
+    input_ids: torch.Tensor,
+    eot_token_id: int,
+    start_indices: torch.Tensor,
+) -> torch.Tensor:
+    """Find the first end-of-turn token at or after start_indices per sample."""
+    input_ids_cpu = input_ids.cpu()
+    start_cpu = start_indices.cpu()
+    seq_len = input_ids_cpu.shape[1]
+    positions = torch.arange(seq_len)
+
+    match = input_ids_cpu == eot_token_id
+    after_start = positions.unsqueeze(0) >= start_cpu.unsqueeze(1)
+    valid = match & after_start
+
+    if not valid.any(dim=1).all():
+        missing = (~valid.any(dim=1)).nonzero(as_tuple=True)[0].tolist()
+        raise ValueError(
+            f"No end-of-turn token (id={eot_token_id}) found after assistant start in samples {missing}"
+        )
+
+    # First valid position per row: mask invalid positions to seq_len, take argmin
+    scored = torch.where(valid, positions.unsqueeze(0), seq_len)
+    return scored.min(dim=1).values
 
 
 class ActivationDtype(Enum):
