@@ -54,21 +54,107 @@ On the x-axis (first token), correct and incorrect points are fully interleaved 
 
 ### Qualitative token-level visualizations
 
-50 pair visualizations show the per-token probe score for each correct/incorrect answer pair, color-coded on a diverging blue–red scale (blue = low score, red = high score). Representative examples:
+All 50 claim pairs below. Each shows correct vs incorrect answer with per-token probe scores color-coded on a red–green scale (red = negative/false, green = positive/true). Probe: tb-5, L39. Each pair uses its own colorbar range, so absolute scores are not directly comparable across pairs.
 
-![Bulk carrier](assets/plot_031226_token_scores_pair_001.png)
+![001 — Bulk carrier](assets/plot_031226_token_scores_pair_001.png)
 
-Correct answer ("Bulk carriers are used to ship product across the globe") stays near-neutral (light blue). Incorrect answer ("Bulk carrier only haul corn across the ocean") shifts progressively into darker blue, especially at content-bearing tokens like "haul" and "ocean".
+![002 — Brigadier general](assets/plot_031226_token_scores_pair_002.png)
 
-![Snohomish County](assets/plot_031226_token_scores_pair_010.png)
+![003 — Arthritis](assets/plot_031226_token_scores_pair_003.png)
 
-Correct answer stays near-neutral to slightly positive. Incorrect answer drifts into deep blue toward the end, with the factually wrong claim ("is where the President of the United States resides") scoring low.
+![004 — Firewall (computing)](assets/plot_031226_token_scores_pair_004.png)
 
-![Eurovision Song Contest](assets/plot_031226_token_scores_pair_025.png)
+![005 — Pickled cucumber](assets/plot_031226_token_scores_pair_005.png)
 
-Correct answer stays near-neutral. Incorrect answer ("The winner of the Eurovision Song Contest receives a seat in the United Nations") shows blue tones throughout the false predicate.
+![006 — Chestnut](assets/plot_031226_token_scores_pair_006.png)
 
-All 50 pair visualizations are in `assets/plot_031226_token_scores_pair_*.png`. Note: each pair uses its own colorbar range, so absolute scores are not directly comparable across pairs.
+![007 — Length](assets/plot_031226_token_scores_pair_007.png)
+
+![008 — National Hockey League](assets/plot_031226_token_scores_pair_008.png)
+
+![009 — Wuxia](assets/plot_031226_token_scores_pair_009.png)
+
+![010 — Snohomish County Washington](assets/plot_031226_token_scores_pair_010.png)
+
+![011 — Small intestine](assets/plot_031226_token_scores_pair_011.png)
+
+![012 — Telescope](assets/plot_031226_token_scores_pair_012.png)
+
+![013 — The Wire](assets/plot_031226_token_scores_pair_013.png)
+
+![014 — MythBusters](assets/plot_031226_token_scores_pair_014.png)
+
+![015 — Catherine Duchess of Cambridge](assets/plot_031226_token_scores_pair_015.png)
+
+![016 — White blood cell](assets/plot_031226_token_scores_pair_016.png)
+
+![017 — Monotreme](assets/plot_031226_token_scores_pair_017.png)
+
+![018 — Hurricane Harvey](assets/plot_031226_token_scores_pair_018.png)
+
+![019 — Attorney at law](assets/plot_031226_token_scores_pair_019.png)
+
+![020 — Climate of India](assets/plot_031226_token_scores_pair_020.png)
+
+![021 — Lewis Carroll](assets/plot_031226_token_scores_pair_021.png)
+
+![022 — Intelligence quotient](assets/plot_031226_token_scores_pair_022.png)
+
+![023 — Jews](assets/plot_031226_token_scores_pair_023.png)
+
+![024 — Eugene Wigner](assets/plot_031226_token_scores_pair_024.png)
+
+![025 — Eurovision Song Contest](assets/plot_031226_token_scores_pair_025.png)
+
+![026 — Rhubarb](assets/plot_031226_token_scores_pair_026.png)
+
+![027 — Black-tailed prairie dog](assets/plot_031226_token_scores_pair_027.png)
+
+![028 — Thar Desert](assets/plot_031226_token_scores_pair_028.png)
+
+![029 — Cartoonist](assets/plot_031226_token_scores_pair_029.png)
+
+![030 — Yang di-Pertuan Agong](assets/plot_031226_token_scores_pair_030.png)
+
+![031 — Babylon 5](assets/plot_031226_token_scores_pair_031.png)
+
+![032 — Lunch](assets/plot_031226_token_scores_pair_032.png)
+
+![033 — Scottish people](assets/plot_031226_token_scores_pair_033.png)
+
+![034 — Zwolle](assets/plot_031226_token_scores_pair_034.png)
+
+![035 — Poultry](assets/plot_031226_token_scores_pair_035.png)
+
+![036 — Christian metal](assets/plot_031226_token_scores_pair_036.png)
+
+![037 — New Brunswick](assets/plot_031226_token_scores_pair_037.png)
+
+![038 — Zorro](assets/plot_031226_token_scores_pair_038.png)
+
+![039 — Pinky and the Brain](assets/plot_031226_token_scores_pair_039.png)
+
+![040 — Pope Leo XIII](assets/plot_031226_token_scores_pair_040.png)
+
+![041 — Snow leopard](assets/plot_031226_token_scores_pair_041.png)
+
+![042 — Hound](assets/plot_031226_token_scores_pair_042.png)
+
+![043 — Alpine skiing](assets/plot_031226_token_scores_pair_043.png)
+
+![044 — Greenwich](assets/plot_031226_token_scores_pair_044.png)
+
+![045 — One Thousand and One Nights](assets/plot_031226_token_scores_pair_045.png)
+
+![046 — Estonian language](assets/plot_031226_token_scores_pair_046.png)
+
+![047 — Deadpool (film)](assets/plot_031226_token_scores_pair_047.png)
+
+![048 — Voltaire](assets/plot_031226_token_scores_pair_048.png)
+
+![049 — September](assets/plot_031226_token_scores_pair_049.png)
+
+![050 — Existence of God](assets/plot_031226_token_scores_pair_050.png)
 
 ## Validation
 

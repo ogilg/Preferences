@@ -2,15 +2,17 @@
   "experiment_name": "heldout_eval_gemma3_task_mean",
   "run_dir": "results/experiments/main_probes/gemma3_10k_run1/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
   "activations_path": "activations/gemma_3_27b_turn_boundary_sweep/activations_task_mean.npz",
+  "eval_run_dir": "results/experiments/main_probes/gemma3_4k_pre_task/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
+  "eval_split_seed": 42,
   "modes": [
     "ridge"
   ],
   "standardize": true,
   "demean_confounds": null,
-  "created_at": "2026-03-10T05:22:42.015595",
+  "created_at": "2026-03-12T10:23:41.271651",
   "n_tasks_in_experiment": 10000,
   "n_tasks_with_activations": 14038,
-  "n_comparisons_in_experiment": 0,
+  "n_comparisons_in_experiment": 331739,
   "probes": [
     {
       "id": "ridge_L25",
@@ -20,54 +22,53 @@
       "standardize": true,
       "demean_confounds": null,
       "best_alpha": 4641.588833612773,
-      "sweep_r": 0.8029975376122721,
-      "final_r": 0.8203550645965,
-      "final_acc": null,
+      "sweep_r": 0.8029972608818694,
+      "final_r": 0.8203551760998,
+      "final_acc": 0.7341622261693309,
       "n_train": 10000,
       "n_sweep": 2019,
       "n_final": 2019,
-      "n_final_pairs": 0,
-      "n_samples": 10000,
+      "n_final_pairs": 5091,
       "alpha_sweep": [
         {
           "alpha": 0.1,
-          "sweep_r": 0.691231565273744
+          "sweep_r": 0.6912332403116641
         },
         {
           "alpha": 0.46415888336127786,
-          "sweep_r": 0.6915469845174451
+          "sweep_r": 0.6915446597362919
         },
         {
           "alpha": 2.1544346900318834,
-          "sweep_r": 0.6929447305438063
+          "sweep_r": 0.6929447168396863
         },
         {
           "alpha": 10.0,
-          "sweep_r": 0.6987131060875141
+          "sweep_r": 0.6987108821977147
         },
         {
           "alpha": 46.41588833612777,
-          "sweep_r": 0.7175442537456581
+          "sweep_r": 0.7175411611564939
         },
         {
           "alpha": 215.44346900318823,
-          "sweep_r": 0.7537666436543491
+          "sweep_r": 0.7537660325733424
         },
         {
           "alpha": 1000.0,
-          "sweep_r": 0.7880337682920852
+          "sweep_r": 0.7880327608611533
         },
         {
           "alpha": 4641.588833612773,
-          "sweep_r": 0.8029975376122721
+          "sweep_r": 0.8029972608818694
         },
         {
           "alpha": 21544.346900318822,
-          "sweep_r": 0.7966287769834327
+          "sweep_r": 0.796628722338576
         },
         {
           "alpha": 100000.0,
-          "sweep_r": 0.7685660498817357
+          "sweep_r": 0.7685660294122594
         }
       ]
     },
@@ -79,54 +80,53 @@
       "standardize": true,
       "demean_confounds": null,
       "best_alpha": 4641.588833612773,
-      "sweep_r": 0.7970833788452946,
-      "final_r": 0.8102787700648977,
-      "final_acc": null,
+      "sweep_r": 0.7970835174969315,
+      "final_r": 0.8102788921563998,
+      "final_acc": 0.7364647062693244,
       "n_train": 10000,
       "n_sweep": 2019,
       "n_final": 2019,
-      "n_final_pairs": 0,
-      "n_samples": 10000,
+      "n_final_pairs": 5091,
       "alpha_sweep": [
         {
           "alpha": 0.1,
-          "sweep_r": 0.6867740899746203
+          "sweep_r": 0.6867838715123229
         },
         {
           "alpha": 0.46415888336127786,
-          "sweep_r": 0.6870592172693415
+          "sweep_r": 0.687067214470496
         },
         {
           "alpha": 2.1544346900318834,
-          "sweep_r": 0.6883305842007753
+          "sweep_r": 0.6883342417577345
         },
         {
           "alpha": 10.0,
-          "sweep_r": 0.6935382862044164
+          "sweep_r": 0.6935428906819672
         },
         {
           "alpha": 46.41588833612777,
-          "sweep_r": 0.710502375682457
+          "sweep_r": 0.7105049372677695
         },
         {
           "alpha": 215.44346900318823,
-          "sweep_r": 0.7448461037056603
+          "sweep_r": 0.7448476022092024
         },
         {
           "alpha": 1000.0,
-          "sweep_r": 0.7806021894486687
+          "sweep_r": 0.7806028218798073
         },
         {
           "alpha": 4641.588833612773,
-          "sweep_r": 0.7970833788452946
+          "sweep_r": 0.7970835174969315
         },
         {
           "alpha": 21544.346900318822,
-          "sweep_r": 0.79062721907251
+          "sweep_r": 0.7906273002895237
         },
         {
           "alpha": 100000.0,
-          "sweep_r": 0.7599634772585415
+          "sweep_r": 0.7599634957852812
         }
       ]
     },
@@ -138,54 +138,53 @@
       "standardize": true,
       "demean_confounds": null,
       "best_alpha": 4641.588833612773,
-      "sweep_r": 0.7758305149281811,
-      "final_r": 0.7966599429595238,
-      "final_acc": null,
+      "sweep_r": 0.7758303406971224,
+      "final_r": 0.796659858478193,
+      "final_acc": 0.7257417275179264,
       "n_train": 10000,
       "n_sweep": 2019,
       "n_final": 2019,
-      "n_final_pairs": 0,
-      "n_samples": 10000,
+      "n_final_pairs": 5091,
       "alpha_sweep": [
         {
           "alpha": 0.1,
-          "sweep_r": 0.636384439119274
+          "sweep_r": 0.6363806787374223
         },
         {
           "alpha": 0.46415888336127786,
-          "sweep_r": 0.6367129974796077
+          "sweep_r": 0.6367123505858777
         },
         {
           "alpha": 2.1544346900318834,
-          "sweep_r": 0.6382050295523715
+          "sweep_r": 0.6382046837585679
         },
         {
           "alpha": 10.0,
-          "sweep_r": 0.6443953310098649
+          "sweep_r": 0.6443914697308248
         },
         {
           "alpha": 46.41588833612777,
-          "sweep_r": 0.6649812710387545
+          "sweep_r": 0.6649835983746004
         },
         {
           "alpha": 215.44346900318823,
-          "sweep_r": 0.7075428421698123
+          "sweep_r": 0.707543726779947
         },
         {
           "alpha": 1000.0,
-          "sweep_r": 0.753421935859624
+          "sweep_r": 0.753422496268967
         },
         {
           "alpha": 4641.588833612773,
-          "sweep_r": 0.7758305149281811
+          "sweep_r": 0.7758303406971224
         },
         {
           "alpha": 21544.346900318822,
-          "sweep_r": 0.7691505064534011
+          "sweep_r": 0.769150440919743
         },
         {
           "alpha": 100000.0,
-          "sweep_r": 0.7336071910337643
+          "sweep_r": 0.7336071388246118
         }
       ]
     },
@@ -197,54 +196,53 @@
       "standardize": true,
       "demean_confounds": null,
       "best_alpha": 4641.588833612773,
-      "sweep_r": 0.7669787832854247,
-      "final_r": 0.7825669086935361,
-      "final_acc": null,
+      "sweep_r": 0.7669792218658134,
+      "final_r": 0.7825670999228446,
+      "final_acc": 0.7201499901322281,
       "n_train": 10000,
       "n_sweep": 2019,
       "n_final": 2019,
-      "n_final_pairs": 0,
-      "n_samples": 10000,
+      "n_final_pairs": 5091,
       "alpha_sweep": [
         {
           "alpha": 0.1,
-          "sweep_r": 0.624818459328849
+          "sweep_r": 0.6248285266299963
         },
         {
           "alpha": 0.46415888336127786,
-          "sweep_r": 0.6250943938094686
+          "sweep_r": 0.6250988488563886
         },
         {
           "alpha": 2.1544346900318834,
-          "sweep_r": 0.6263156590194386
+          "sweep_r": 0.6263234493291047
         },
         {
           "alpha": 10.0,
-          "sweep_r": 0.6315201210554496
+          "sweep_r": 0.6315276687348331
         },
         {
           "alpha": 46.41588833612777,
-          "sweep_r": 0.6499691626300221
+          "sweep_r": 0.6499701666199823
         },
         {
           "alpha": 215.44346900318823,
-          "sweep_r": 0.6925040385560658
+          "sweep_r": 0.6925055661144073
         },
         {
           "alpha": 1000.0,
-          "sweep_r": 0.7418005899717927
+          "sweep_r": 0.7418020436788975
         },
         {
           "alpha": 4641.588833612773,
-          "sweep_r": 0.7669787832854247
+          "sweep_r": 0.7669792218658134
         },
         {
           "alpha": 21544.346900318822,
-          "sweep_r": 0.761885313682859
+          "sweep_r": 0.7618853819047138
         },
         {
           "alpha": 100000.0,
-          "sweep_r": 0.7256965750040872
+          "sweep_r": 0.7256965788061402
         }
       ]
     },
@@ -256,58 +254,55 @@
       "standardize": true,
       "demean_confounds": null,
       "best_alpha": 4641.588833612773,
-      "sweep_r": 0.7650769319533278,
-      "final_r": 0.7735318599515755,
-      "final_acc": null,
+      "sweep_r": 0.7650771729268371,
+      "final_r": 0.7735319988151019,
+      "final_acc": 0.7155450299322413,
       "n_train": 10000,
       "n_sweep": 2019,
       "n_final": 2019,
-      "n_final_pairs": 0,
-      "n_samples": 10000,
+      "n_final_pairs": 5091,
       "alpha_sweep": [
         {
           "alpha": 0.1,
-          "sweep_r": 0.6366310623662603
+          "sweep_r": 0.6366345405857633
         },
         {
           "alpha": 0.46415888336127786,
-          "sweep_r": 0.6369045517660907
+          "sweep_r": 0.6369043764941525
         },
         {
           "alpha": 2.1544346900318834,
-          "sweep_r": 0.6381153680905418
+          "sweep_r": 0.6381215228704004
         },
         {
           "alpha": 10.0,
-          "sweep_r": 0.6432391118191889
+          "sweep_r": 0.6432440688067276
         },
         {
           "alpha": 46.41588833612777,
-          "sweep_r": 0.660798074514149
+          "sweep_r": 0.6607990172383672
         },
         {
           "alpha": 215.44346900318823,
-          "sweep_r": 0.6992893925276513
+          "sweep_r": 0.6992912289395014
         },
         {
           "alpha": 1000.0,
-          "sweep_r": 0.7425171154018451
+          "sweep_r": 0.7425177458343669
         },
         {
           "alpha": 4641.588833612773,
-          "sweep_r": 0.7650769319533278
+          "sweep_r": 0.7650771729268371
         },
         {
           "alpha": 21544.346900318822,
-          "sweep_r": 0.7598025986024439
+          "sweep_r": 0.7598026658943577
         },
         {
           "alpha": 100000.0,
-          "sweep_r": 0.7250882836163237
+          "sweep_r": 0.7250882515795398
         }
       ]
     }
-  ],
-  "eval_run_dir": "results/experiments/main_probes/gemma3_4k_pre_task/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0",
-  "eval_split_seed": 42
+  ]
 }

@@ -308,7 +308,7 @@ ax.set_xlabel("Layer")
 ax.set_ylabel("Flip rate")
 ax.set_title(f"Causal window detail: Per-layer flip rate (n={len(phase2)})")
 ax.set_ylim(0, 1)
-ax.axhline(y=n_flipped/len(analyzable), color="gray", linestyle="--", alpha=0.3, label=f"All-layer: {n_flipped/len(analyzable):.0%}")
+ax.axhline(y=n_flipped/len(analyzable), color="gray", linestyle="--", alpha=0.3, label=f"All 62 layers patched at once: {n_flipped/len(analyzable):.0%}")
 ax.legend(loc="upper left")
 
 plt.tight_layout()

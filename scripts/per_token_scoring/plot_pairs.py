@@ -6,8 +6,8 @@ import matplotlib.colors as mcolors
 import matplotlib.cm as cm
 import numpy as np
 
-DATA_PATH = Path("/workspace/repo/experiments/truth_probes/error_prefill/per_token_scoring/scored_tokens.json")
-ASSETS_DIR = Path("/workspace/repo/experiments/truth_probes/error_prefill/per_token_scoring/assets")
+DATA_PATH = Path("experiments/truth_probes/error_prefill/per_token_scoring/scored_tokens.json")
+ASSETS_DIR = Path("experiments/truth_probes/error_prefill/per_token_scoring/assets")
 
 PROBE = "tb-5"
 LAYER = "L39"
@@ -43,7 +43,7 @@ def draw_token_row(ax, tokens, scores, cmap, norm, y_center=0.5, box_height=0.6)
             display,
             ha="center",
             va="center",
-            fontsize=7,
+            fontsize=9,
             color=tc,
             fontfamily="monospace",
             clip_on=True,
@@ -63,7 +63,7 @@ def plot_pair(correct_entry, incorrect_entry, pair_idx):
     vmax = max(all_scores)
     abs_max = max(abs(vmin), abs(vmax))
     norm = mcolors.Normalize(vmin=-abs_max, vmax=abs_max)
-    cmap = plt.get_cmap("RdBu_r")
+    cmap = plt.get_cmap("RdYlGn")
 
     max_tokens = max(len(c_tokens), len(i_tokens))
     fig_width = max(max_tokens * 1.2 + 2, 6)
