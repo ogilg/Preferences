@@ -1,0 +1,200 @@
+{"ex_id": "train_2234", "sentence": "The Notorious B.I.G. represented East Coast Hip Hop during the 1990s.", "label": "true", "entity": "The Notorious B.I.G."}
+{"ex_id": "train_505", "sentence": "Twilight depicted vampires in a romantic way.", "label": "true", "entity": "Twilight (2008 film)"}
+{"ex_id": "train_5416", "sentence": "Canada's flag has a maple Leaf.", "label": "true", "entity": "Leaf"}
+{"ex_id": "train_4825", "sentence": "NASA space probe Lunar Reconnaissance Orbiter is on a mission to help us learn about moon.", "label": "true", "entity": "Lunar Reconnaissance Orbiter"}
+{"ex_id": "train_4427", "sentence": "A Backing vocalist provides vocal harmony when lead vocalist is singing.", "label": "true", "entity": "Backing vocalist"}
+{"ex_id": "train_2815", "sentence": "Police brutality includes the use of excessive force.", "label": "true", "entity": "Police brutality"}
+{"ex_id": "train_2067", "sentence": "The First Indochina War (called the Indochina War in France and the French War in Vietnam) began after the end of World War II in 1946 and lasted until the ... \u200eIndochina during World War II \u00b7 \u200e First Indochina War \u00b7.", "label": "true", "entity": "First Indochina War"}
+{"ex_id": "dev_573", "sentence": "Boats and water can cause motion sickness in people.", "label": "true", "entity": "Motion sickness"}
+{"ex_id": "train_1764", "sentence": "Looking for Pallas's cat in Russia may produce results.", "label": "true", "entity": "Pallas's cat"}
+{"ex_id": "train_8342", "sentence": "Streptococcus causes many types of infections.", "label": "true", "entity": "Streptococcus"}
+{"ex_id": "train_632", "sentence": "You can produce hydrogen using Electrolysis.", "label": "true", "entity": "Electrolysis"}
+{"ex_id": "train_602", "sentence": "An Asteroid orbits within the solar system.", "label": "true", "entity": "Asteroid"}
+{"ex_id": "train_1920", "sentence": "Ben Affleck ran for Golden Globe Award-winning producer.", "label": "true", "entity": "Ben Affleck"}
+{"ex_id": "train_4340", "sentence": "African trypanosomiasis makes its patients sleepy.", "label": "true", "entity": "African trypanosomiasis"}
+{"ex_id": "train_4600", "sentence": "Singing a Lullaby can soothe babies.", "label": "true", "entity": "Lullaby"}
+{"ex_id": "train_10005", "sentence": "Immanuel Kant studied in University of K\u00f6nigsberg.", "label": "true", "entity": "Immanuel Kant"}
+{"ex_id": "train_532", "sentence": "Nicolae Ceau\u0219escu died by firing squad after a revolution.", "label": "true", "entity": "Nicolae Ceau\u0219escu"}
+{"ex_id": "dev_870", "sentence": "A rose can display a variety of colors.", "label": "true", "entity": "Rose"}
+{"ex_id": "train_3946", "sentence": "In Star Wars episodes IV - VI, Darth Vader is the main antagonist.", "label": "true", "entity": "Darth Vader"}
+{"ex_id": "dev_567", "sentence": "Sam Cooke exists as an inductee in the Hall of Fame.", "label": "true", "entity": "Sam Cooke"}
+{"ex_id": "train_8275", "sentence": "A Mechanic works to create and fix problems involving machinery.", "label": "true", "entity": "Mechanic"}
+{"ex_id": "train_4372", "sentence": "Alice Cooper has described being being a born-again Christian.", "label": "true", "entity": "Alice Cooper"}
+{"ex_id": "train_8874", "sentence": "Starbucks offers customers a free drink on their birthday.", "label": "true", "entity": "Starbucks"}
+{"ex_id": "train_5470", "sentence": "Chefs cook Atlantic cod in fish dishes.", "label": "true", "entity": "Atlantic cod"}
+{"ex_id": "train_135", "sentence": "An execution method invented in France used a Guillotine.", "label": "true", "entity": "Guillotine"}
+{"ex_id": "train_3204", "sentence": "One can find that the actor Christopher Reeve played Superman in his prime before a horse-related accident and incident left him paralyzed.", "label": "true", "entity": "Christopher Reeve"}
+{"ex_id": "train_8353", "sentence": "Saturday Night Live debuted in 1975.", "label": "true", "entity": "Saturday Night Live"}
+{"ex_id": "train_6682", "sentence": "Elon Musk often speaks at SpaceX events.", "label": "true", "entity": "SpaceX"}
+{"ex_id": "train_5462", "sentence": "Publishers translated The Little Prince into many different languages.", "label": "true", "entity": "The Little Prince"}
+{"ex_id": "train_3127", "sentence": "Chinchillas live in large colonies known as herds.", "label": "true", "entity": "Chinchilla"}
+{"ex_id": "train_4269", "sentence": "People did not invent 3D printing during the Industrial Revolution.", "label": "true", "entity": "3D printing"}
+{"ex_id": "train_6626", "sentence": "Shetland once belonged to Norway, but now belong to Scotland.", "label": "true", "entity": "Shetland"}
+{"ex_id": "train_2063", "sentence": "The Academy Awards nominated Sigourney Weaver for her role in Aliens in the 1980s.", "label": "true", "entity": "Sigourney Weaver"}
+{"ex_id": "train_1904", "sentence": "Led Zeppelin featured famous tracks as Good Times Bad Times, Dazed and Confused and Communication Breakdown in London.", "label": "true", "entity": "Led Zeppelin"}
+{"ex_id": "train_7458", "sentence": "Fulton County, Georgia occupies an area to the south of the Mason-Dixon Line.", "label": "true", "entity": "Fulton County Georgia"}
+{"ex_id": "train_1970", "sentence": "Many people in the Hippie movement used drugs such as marijuana and LSD.", "label": "true", "entity": "Hippie"}
+{"ex_id": "train_7052", "sentence": "The KGB got people sent to labor camps.", "label": "true", "entity": "KGB"}
+{"ex_id": "train_6747", "sentence": "Robin Williams played as an undercover female in one of his movies.", "label": "true", "entity": "Robin Williams"}
+{"ex_id": "train_5184", "sentence": "Photios I of Constantinople published the book Mystagogy of the Holy Spirit.", "label": "true", "entity": "Photios I of Constantinople"}
+{"ex_id": "train_841", "sentence": "The Battle of Antietam took place in Maryland.", "label": "true", "entity": "Battle of Antietam"}
+{"ex_id": "train_9050", "sentence": "Excellency denotes that sovereign characteristics of high ranking state officials.", "label": "true", "entity": "Excellency"}
+{"ex_id": "dev_412", "sentence": "the President of India lives in india.", "label": "true", "entity": "President of India"}
+{"ex_id": "train_2515", "sentence": "Alitalia merged with Linee Aeree Italiane and took on the name of Alitalia \u2013 Linee Aeree Italiane.", "label": "true", "entity": "Alitalia"}
+{"ex_id": "train_7426", "sentence": "West Side Story depicts two people on two sides of a community fall in love with each other and attempt to cross the barriers of their community and family to be together.", "label": "true", "entity": "West Side Story"}
+{"ex_id": "train_1593", "sentence": "Starbucks supplies numerous coffee drinks and offers several food options.", "label": "true", "entity": "Starbucks"}
+{"ex_id": "dev_710", "sentence": "James Baldwin wrote a number of books.", "label": "true", "entity": "James Baldwin"}
+{"ex_id": "train_5780", "sentence": "Lotus Cars acquired the parts from United Kingdom.", "label": "true", "entity": "Lotus Cars"}
+{"ex_id": "train_7111", "sentence": "Operation Barbarossa also known as the German invasion of the Soviet Union is remarkable during World War II.", "label": "true", "entity": "Operation Barbarossa"}
+{"ex_id": "dev_1194", "sentence": "Robert Redford acted in many different movies throughout his long career.", "label": "true", "entity": "Robert Redford"}
+{"ex_id": "train_3840", "sentence": "A Penny toss can land on heads or tails.", "label": "true", "entity": "Penny"}
+{"ex_id": "train_1399", "sentence": "Living relatives can donate a Kidney to their loved one.", "label": "true", "entity": "Kidney"}
+{"ex_id": "train_885", "sentence": "Zucchini grow in the ground and are considered vegetables.", "label": "true", "entity": "Zucchini"}
+{"ex_id": "train_4514", "sentence": "Jesse Ventura rose to fame as a professional wrestler.", "label": "true", "entity": "Jesse Ventura"}
+{"ex_id": "train_5706", "sentence": "Netflix released a cartoon version of The Little Prince.", "label": "true", "entity": "The Little Prince"}
+{"ex_id": "train_1605", "sentence": "Vitamin C exists naturally in many fruits.", "label": "true", "entity": "Vitamin C"}
+{"ex_id": "train_4611", "sentence": "Delta Air Lines a company based out of Atlanta Georgia is an IATA member.", "label": "true", "entity": "Delta Air Lines"}
+{"ex_id": "train_2044", "sentence": "Students study the History of art at many different universities in Europe.", "label": "true", "entity": "History of art"}
+{"ex_id": "train_7459", "sentence": "The Photon moves through space quickly.", "label": "true", "entity": "Photon"}
+{"ex_id": "train_5464", "sentence": "It is hard for someone to breathe when they are affected by Asthma.", "label": "true", "entity": "Asthma"}
+{"ex_id": "train_8939", "sentence": "Many museums in Washington DC are organized by Smithsonian Institution.", "label": "true", "entity": "Smithsonian Institution"}
+{"ex_id": "train_7166", "sentence": "Modern Christian music has expanded to Christian metal metal music that uses christian lyrics.", "label": "true", "entity": "Christian metal"}
+{"ex_id": "train_3253", "sentence": "Jeremy Irons lived in the UK.", "label": "true", "entity": "Jeremy Irons"}
+{"ex_id": "train_7273", "sentence": "One can hear French being spoken in New Brunswick.", "label": "true", "entity": "New Brunswick"}
+{"ex_id": "train_6988", "sentence": "Mary, mother of Jesus born in the Roman era.", "label": "true", "entity": "Mary mother of Jesus"}
+{"ex_id": "train_4154", "sentence": "In God We Trust replaced E pluribus unum as America's motto in the 1950s.", "label": "true", "entity": "In God We Trust"}
+{"ex_id": "train_5221", "sentence": "Muslims believe that the Quran was written by God.", "label": "true", "entity": "Muslims"}
+{"ex_id": "train_1445", "sentence": "One can travel to Cartagena, Spain in an airplane.", "label": "true", "entity": "Cartagena Spain"}
+{"ex_id": "train_3408", "sentence": "Snoopy acts as a fictional dog in the famous Peanuts universe cartoon.", "label": "true", "entity": "Snoopy"}
+{"ex_id": "dev_369", "sentence": "The Great Pyramid of Giza resides in the country of Egypt.", "label": "true", "entity": "Great Pyramid of Giza"}
+{"ex_id": "train_4819", "sentence": "Biology studies living things on Earth.", "label": "true", "entity": "Biology"}
+{"ex_id": "train_3264", "sentence": "One was witnessing the 2018 missile strikes against Syria was launched by a few countries after the Syrian Civil war had been going on for a while.", "label": "true", "entity": "2018 missile strikes against Syria"}
+{"ex_id": "train_9113", "sentence": "Constantine the Great served as Emperor of Rome.", "label": "true", "entity": "Constantine the Great"}
+{"ex_id": "train_7449", "sentence": "Palladium does not tarnish in air.", "label": "true", "entity": "Palladium"}
+{"ex_id": "train_5306", "sentence": "John Kerry had parents from the US.", "label": "true", "entity": "John Kerry"}
+{"ex_id": "dev_803", "sentence": "Muse won the Ivor Novello Award.", "label": "true", "entity": "Muse (band)"}
+{"ex_id": "train_4361", "sentence": "Vijayawada lies on the banks of Krishna river surrounded by the hills of Eastern Ghats in Andhra Pradesh, India.", "label": "true", "entity": "Vijayawada"}
+{"ex_id": "train_6376", "sentence": "Call of Duty released many games developed by two different video game studios.", "label": "true", "entity": "Call of Duty"}
+{"ex_id": "train_1101", "sentence": "Aldi compete in the retail markets of United States of America.", "label": "true", "entity": "Aldi"}
+{"ex_id": "train_4535", "sentence": "Visa policies in Europe are managed by Visa policy of the Schengen Area.", "label": "true", "entity": "Visa policy of the Schengen Area"}
+{"ex_id": "train_637", "sentence": "The Greek culture hero Homer is responsible for the poems The Illiad and The Odyssey.", "label": "true", "entity": "Homer"}
+{"ex_id": "train_6195", "sentence": "Intel produces a large portion of the worlds CPU's each year.", "label": "true", "entity": "Intel"}
+{"ex_id": "train_7902", "sentence": "Ratatouille caused renewed interest in the titular French vegetable dish.", "label": "true", "entity": "Ratatouille (film)"}
+{"ex_id": "train_5243", "sentence": "A scientist used a Placebo to demonstrate the efficacy of a vaccine.", "label": "true", "entity": "Placebo"}
+{"ex_id": "train_1326", "sentence": "David Cronenberg directs science fiction films.", "label": "true", "entity": "David Cronenberg"}
+{"ex_id": "train_4187", "sentence": "A female holds the position of Prime Minister of New Zealand.", "label": "true", "entity": "Prime Minister of New Zealand"}
+{"ex_id": "dev_998", "sentence": "Tim McGraw creates popular country music.", "label": "true", "entity": "Tim McGraw"}
+{"ex_id": "train_6179", "sentence": "Lake Baikal attracts people from other places to come and visit the area.", "label": "true", "entity": "Lake Baikal"}
+{"ex_id": "train_4220", "sentence": "The Seoul Broadcasting System broadcasts media to people in South Korea.", "label": "true", "entity": "Seoul Broadcasting System"}
+{"ex_id": "train_9868", "sentence": "The Silmarillion was largely unfinished and published after JRR Tolkien's death in 1977.", "label": "true", "entity": "The Silmarillion"}
+{"ex_id": "train_7779", "sentence": "Pope Leo XIII operated out of Italy.", "label": "true", "entity": "Pope Leo XIII"}
+{"ex_id": "train_9042", "sentence": "Junk ships are thought to have been some of the first Asian ships to come to the American west coast.", "label": "true", "entity": "Junk (ship)"}
+{"ex_id": "train_2885", "sentence": "Those who celebrate Earth Day care very much about the environment.", "label": "true", "entity": "Earth Day"}
+{"ex_id": "train_5188", "sentence": "Post Malone sang a song about flowers.", "label": "true", "entity": "Post Malone"}
+{"ex_id": "train_4860", "sentence": "Genghis Khan founded the Mongol Empire.", "label": "true", "entity": "Genghis Khan"}
+{"ex_id": "dev_871", "sentence": "The Vietnamese people brilliantly prepare food.", "label": "true", "entity": "Vietnamese people"}
+{"ex_id": "dev_461", "sentence": "Quite a number of homes are located in Townsville.", "label": "true", "entity": "Townsville"}
+{"ex_id": "train_5160", "sentence": "Will Ferrell will perform in an upcoming series with actor Paul Rudd.", "label": "true", "entity": "Will Ferrell"}
+{"ex_id": "dev_1329", "sentence": "Nancy Pelosi has a career as an American politician.", "label": "true", "entity": "Nancy Pelosi"}
+{"ex_id": "train_8452", "sentence": "One can go to 7-Eleven to get groceries.", "label": "true", "entity": "7-Eleven"}
+{"ex_id": "dev_1305", "sentence": "Walt Whitman wrote many poems and essays.", "label": "true", "entity": "Walt Whitman"}
+{"ex_id": "train_7859", "sentence": "The Sharp Corporation manufactures television sets.", "label": "true", "entity": "Sharp Corporation"}
+{"ex_id": "train_7116", "sentence": "The novel Frankenstein serves as a cautionary tale about obsession and hubris.", "label": "true", "entity": "Frankenstein"}
+{"ex_id": "train_4353", "sentence": "Jane Austen wrote books while women authors were uncommon.", "label": "true", "entity": "Jane Austen"}
+{"ex_id": "train_2797", "sentence": "Jellyfish can sometimes sting unwary beach goers.", "label": "true", "entity": "Jellyfish"}
+{"ex_id": "train_10089", "sentence": "An example of a Roman Catholic writer is Dante Alighieri.", "label": "true", "entity": "Dante Alighieri"}
+{"ex_id": "train_9764", "sentence": "Red hair does not naturally occurs in majority of the people.", "label": "true", "entity": "Red hair"}
+{"ex_id": "train_1856", "sentence": "another name for Chinese New Year is also known as spring festival.", "label": "true", "entity": "Chinese New Year"}
+{"ex_id": "train_922", "sentence": "One can read the philosophy in Voltaire in books about the French Enlightenment.", "label": "true", "entity": "Voltaire"}
+{"ex_id": "train_2201", "sentence": "L'Or\u00e9al operates in Paris, France.", "label": "true", "entity": "L'Or\u00e9al"}
+{"ex_id": "train_3073", "sentence": "F. Scott Fitzgerald set The Great Gatsby in the United States.", "label": "true", "entity": "The Great Gatsby"}
+{"ex_id": "train_3207", "sentence": "Vacationers enjoy spending time at the beach in Canc\u00fan.", "label": "true", "entity": "Canc\u00fan"}
+{"ex_id": "train_8346", "sentence": "West Side Story HAS A SERIOUS MESSAGE THAT PLEADS FOR RACIAL TOLERANCE,DELIVERED IN UNFORGETTABLE SONG AND DANCE.", "label": "true", "entity": "West Side Story"}
+{"ex_id": "train_1281", "sentence": "Good Charlotte released a series of album.", "label": "true", "entity": "Good Charlotte"}
+{"ex_id": "train_7551", "sentence": "Last Judgment in Christianity will occur after the return of Christ.", "label": "true", "entity": "Last Judgment"}
+{"ex_id": "train_7488", "sentence": "Melting sea Ice can hold long kept secrets just waiting to be discovered by those studying oceanography.", "label": "true", "entity": "Ice"}
+{"ex_id": "train_9229", "sentence": "President of the Philippines acts as the representative of the people of Philippines in International heads of States' meetings.", "label": "true", "entity": "President of the Philippines"}
+{"ex_id": "dev_262", "sentence": "Adding starch as a thickener transforms a stew.", "label": "true", "entity": "Starch"}
+{"ex_id": "train_4949", "sentence": "Eid al-Fitr offers Islam's a chance to celebrate their religion holiday.", "label": "true", "entity": "Eid al-Fitr"}
+{"ex_id": "dev_730", "sentence": "Harry Houdini made a career out of being a magician.", "label": "true", "entity": "Harry Houdini"}
+{"ex_id": "train_234", "sentence": "Military Snipers are some of the most trained military personnel.", "label": "true", "entity": "Sniper"}
+{"ex_id": "train_2316", "sentence": "James Madison served as President of the United States.", "label": "true", "entity": "James Madison"}
+{"ex_id": "dev_427", "sentence": "Flag of the United States displays with the colors red, white, and blue.", "label": "true", "entity": "Flag of the United States"}
+{"ex_id": "train_5217", "sentence": "One can use Oxidizing Chlorine to clean pool water.", "label": "true", "entity": "Chlorine"}
+{"ex_id": "train_6681", "sentence": "Many a young woman has been wooed by a well written Sonnet.", "label": "true", "entity": "Sonnet"}
+{"ex_id": "train_2241", "sentence": "For any Newbie out there, video games have gotten a huge influence on popular culture in the past two decades.", "label": "true", "entity": "Newbie"}
+{"ex_id": "train_5785", "sentence": "The Furry fandom shows up at many cosplay events.", "label": "true", "entity": "Furry fandom"}
+{"ex_id": "train_8576", "sentence": "Martin Luther played a key role in the Reformation in the early 16th century.", "label": "true", "entity": "Reformation"}
+{"ex_id": "train_3180", "sentence": "If one is sloppy while eating a Chocolate brownie one's mouth can appear brown.", "label": "true", "entity": "Chocolate brownie"}
+{"ex_id": "train_8942", "sentence": "Ben Affleck writes movie scripts and he also works as a film producer.", "label": "true", "entity": "Ben Affleck"}
+{"ex_id": "train_69", "sentence": "The Black-tailed prairie dog eats, digs, and is active during daylight hours.", "label": "true", "entity": "Black-tailed prairie dog"}
+{"ex_id": "train_5170", "sentence": "One can learn about the Civil War in Alexandria, Louisiana.", "label": "true", "entity": "Alexandria Louisiana"}
+{"ex_id": "train_9895", "sentence": "The Cuban Missile Crisis occurred during JFK's presidency.", "label": "true", "entity": "Cuban Missile Crisis"}
+{"ex_id": "train_3557", "sentence": "Many countries have chosen the Eagle, a predatory bird, as their national symbol.", "label": "true", "entity": "Eagle"}
+{"ex_id": "train_10045", "sentence": "Greyhounds enjoy the title of the world's fastest dog.", "label": "true", "entity": "Greyhound"}
+{"ex_id": "train_2131", "sentence": "One could have watched Spider-Man: Homecoming on the big screen when it first came out in theaters.", "label": "true", "entity": "Spider-Man: Homecoming"}
+{"ex_id": "train_5883", "sentence": "Admirals in the united States navy usually serve on ships.", "label": "true", "entity": "Admiral"}
+{"ex_id": "train_3948", "sentence": "If one travels from Le\u00f3n, Spain to America, one would need to sail or fly.", "label": "true", "entity": "Le\u00f3n Spain"}
+{"ex_id": "train_7344", "sentence": "The Xinhua News Agency reports from China.", "label": "true", "entity": "Xinhua News Agency"}
+{"ex_id": "train_3233", "sentence": "One can watch Homeland on television.", "label": "true", "entity": "Homeland (TV series)"}
+{"ex_id": "dev_467", "sentence": "Walt Whitman wrote many wonderful poems.", "label": "true", "entity": "Walt Whitman"}
+{"ex_id": "dev_296", "sentence": "Mary Pickford acted in award winning films.", "label": "true", "entity": "Mary Pickford"}
+{"ex_id": "train_8", "sentence": "Margaret Atwood has published 18 books of poetry, 18 novels, 11 books of non-fiction, nine collections of short fiction and so on.", "label": "true", "entity": "Margaret Atwood"}
+{"ex_id": "train_6374", "sentence": "one can find a Holiday Inn inside the united states.", "label": "true", "entity": "Holiday Inn"}
+{"ex_id": "train_9665", "sentence": "The book Harry Potter and the Philosopher's Stone is called Harry Potter and the Sorcerer's Stone in the United States.", "label": "true", "entity": "Harry Potter and the Philosopher's Stone"}
+{"ex_id": "train_405", "sentence": "F.D.R. proclaimed that the Attack on Pearl Harbor is a day that will live in infamy.", "label": "true", "entity": "Attack on Pearl Harbor"}
+{"ex_id": "train_2250", "sentence": "The Camel took another step in the sand.", "label": "true", "entity": "Camel"}
+{"ex_id": "train_7129", "sentence": "HTC has made many smartphones over the years.", "label": "true", "entity": "HTC"}
+{"ex_id": "train_6048", "sentence": "The currency of Japan is the Japanese yen.", "label": "true", "entity": "Japanese yen"}
+{"ex_id": "train_4722", "sentence": "Jackie Stewart worked as a Scottish sports broadcaster.", "label": "true", "entity": "Jackie Stewart"}
+{"ex_id": "train_1148", "sentence": "Leonardo DiCaprio and Kate Winslet starred in the Titanic.", "label": "true", "entity": "Titanic (1997 film)"}
+{"ex_id": "train_4765", "sentence": "One can serve Ham as a smoked meat on charcuterie boards.", "label": "true", "entity": "Ham"}
+{"ex_id": "dev_999", "sentence": "The donkey pulled a cart for the farmer.", "label": "true", "entity": "Donkey"}
+{"ex_id": "train_1736", "sentence": "There are many sources in which one can learn about Interior design.", "label": "true", "entity": "Interior design"}
+{"ex_id": "train_9618", "sentence": "The Central Intelligence Agency actively spies on foreign countries and individuals.", "label": "true", "entity": "Central Intelligence Agency"}
+{"ex_id": "train_1391", "sentence": "National People's Congress legislates the government of China.", "label": "true", "entity": "National People's Congress"}
+{"ex_id": "dev_330", "sentence": "The Hopi tribe originated in the United States.", "label": "true", "entity": "Hopi"}
+{"ex_id": "train_2530", "sentence": "Social Conservatism generally opposes social liberalism.", "label": "true", "entity": "Conservatism"}
+{"ex_id": "train_2592", "sentence": "Raven-Symon\u00e9 debuted in The Cosby Show.", "label": "true", "entity": "Raven-Symon\u00e9"}
+{"ex_id": "train_9404", "sentence": "Santa Claus famous reindeet was first introduced in Twas a night before Christmas.", "label": "true", "entity": "Santa Claus"}
+{"ex_id": "dev_673", "sentence": "The monitor lizard lived in the reptile house at the zoo.", "label": "true", "entity": "Monitor lizard"}
+{"ex_id": "train_3302", "sentence": "Hamas contributes to antisemitism in the Middle East.", "label": "true", "entity": "Hamas"}
+{"ex_id": "train_5190", "sentence": "The Nile River flows out of Lake Victoria.", "label": "true", "entity": "Lake Victoria"}
+{"ex_id": "dev_243", "sentence": "Dodo's can no longer be found anywhere on this earth.", "label": "true", "entity": "Dodo"}
+{"ex_id": "train_8361", "sentence": "Back to the Future starred Michael J Fox.", "label": "true", "entity": "Back to the Future"}
+{"ex_id": "train_4206", "sentence": "Thorax refers to human anatomy near the chest area of the body.", "label": "true", "entity": "Thorax"}
+{"ex_id": "dev_466", "sentence": "Pope Leo X served as the pope during the Renaissance.", "label": "true", "entity": "Pope Leo X"}
+{"ex_id": "train_3998", "sentence": "One can see that Ada Lovelace was an English computer programmer.", "label": "true", "entity": "Ada Lovelace"}
+{"ex_id": "train_6127", "sentence": "Bobby Sands ran for the Irish republican.", "label": "true", "entity": "Bobby Sands"}
+{"ex_id": "train_7850", "sentence": "B.B. King was an American blues singer-songwriter, guitarist, and record producer.", "label": "true", "entity": "B.B. King"}
+{"ex_id": "train_7336", "sentence": "Ptolemy wrote many scientific treatises, which focused on such topics as geography and astronomy.", "label": "true", "entity": "Ptolemy"}
+{"ex_id": "train_8661", "sentence": "The Boy Scouts of America sell popcorn.", "label": "true", "entity": "Boy Scouts of America"}
+{"ex_id": "dev_62", "sentence": "Richard Branson flew into outer space aboard his own spacecraft.", "label": "true", "entity": "Richard Branson"}
+{"ex_id": "train_8910", "sentence": "Brick protects the inside of any constructions through solid walls.", "label": "true", "entity": "Brick"}
+{"ex_id": "train_2443", "sentence": "Goofy portrays that foolish and eccentric character in Disney comics.", "label": "true", "entity": "Goofy"}
+{"ex_id": "train_4878", "sentence": "Having JPEG as a common file type is important so that people can use it to perform tasks.", "label": "true", "entity": "JPEG"}
+{"ex_id": "train_4458", "sentence": "Asilidae belong to a family in the order Diptera, the true flies, and the members of the family is the robber flies.", "label": "true", "entity": "Asilidae"}
+{"ex_id": "train_1287", "sentence": "Zebra communicate with various vocalisations, body postures and facial expressions.", "label": "true", "entity": "Zebra"}
+{"ex_id": "train_6653", "sentence": "Paul I of Russia governed over Russia as a monarch.", "label": "true", "entity": "Paul I of Russia"}
+{"ex_id": "train_425", "sentence": "Many people in Canada watch and enjoy the National Hockey League.", "label": "true", "entity": "National Hockey League"}
+{"ex_id": "dev_737", "sentence": "Las Vegas Motor Speedway shines as a premier track for the cup series in NASCAR.", "label": "true", "entity": "Las Vegas Motor Speedway"}
+{"ex_id": "train_4552", "sentence": "Nikolai Rimsky-Korsakov composed music in Russia and wrote music theory.", "label": "true", "entity": "Nikolai Rimsky-Korsakov"}
+{"ex_id": "train_4371", "sentence": "Ulysses describes the name of a novel in which adultery is a main theme.", "label": "true", "entity": "Ulysses (novel)"}
+{"ex_id": "train_143", "sentence": "On CBC sports, Hockey Night in Canada is a big event.", "label": "true", "entity": "Hockey Night in Canada"}
+{"ex_id": "train_1432", "sentence": "Fans of Aretha Franklin called her the Queen of Soul.", "label": "true", "entity": "Aretha Franklin"}
+{"ex_id": "train_1182", "sentence": "Gareth Bale played for Tottenham Hotspur.", "label": "true", "entity": "Gareth Bale"}
+{"ex_id": "train_4534", "sentence": "Twilight contains supernatural elements in a fantasy story.", "label": "true", "entity": "Twilight (2008 film)"}
+{"ex_id": "train_1360", "sentence": "Ancient Greeks, Moroccans, and Spanish spiced their food with Cumin.", "label": "true", "entity": "Cumin"}
+{"ex_id": "train_625", "sentence": "Pigs are animals that are considered a scavenger.", "label": "true", "entity": "Pig"}
+{"ex_id": "train_6495", "sentence": "scientist have shown that Pi is considered to be an irrational number.", "label": "true", "entity": "Pi"}
+{"ex_id": "train_1428", "sentence": "Jane Austen wrote novels about marriage.", "label": "true", "entity": "Jane Austen"}
+{"ex_id": "train_10165", "sentence": "Before going solo, singer-rapper Lauryn Hill performed as a member of the hip-hop group Fugees.", "label": "true", "entity": "Lauryn Hill"}
+{"ex_id": "train_4698", "sentence": "Products such as botox and fillers have become increasingly popular as they can diminish signs of Ageing.", "label": "true", "entity": "Ageing"}
+{"ex_id": "train_5477", "sentence": "Jeremy Irons stars in many popular films and wins awards for his acting.", "label": "true", "entity": "Jeremy Irons"}
+{"ex_id": "train_9607", "sentence": "Gal Gadot stars as Wonder Woman in the Wonder Woman.", "label": "true", "entity": "Wonder Woman (2017 film)"}
+{"ex_id": "train_4250", "sentence": "Stephen King published his first book, Carrie, in the mid-1970s.", "label": "true", "entity": "Stephen King"}
+{"ex_id": "train_2671", "sentence": "Paella incorporates saffron into its flavor profile.", "label": "true", "entity": "Paella"}
+{"ex_id": "dev_1079", "sentence": "Bugs Bunny famously feuded with Elmer Fudd in many cartoons.", "label": "true", "entity": "Bugs Bunny"}
+{"ex_id": "dev_1177", "sentence": "The United States Armed Forces have fought in many countries around the world.", "label": "true", "entity": "United States Armed Forces"}
+{"ex_id": "train_9339", "sentence": "Justin Bieber collaborated with multiple musicians over the course of his career.", "label": "true", "entity": "Justin Bieber"}
+{"ex_id": "train_4785", "sentence": "Mayors are heads of local government.", "label": "true", "entity": "Mayor"}
