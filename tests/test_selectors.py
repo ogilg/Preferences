@@ -84,6 +84,7 @@ class TestSelectorValidation:
 
     def test_valid_span_selectors(self):
         validate_selectors(["assistant_all"])
+        validate_selectors(["followup_all"])
 
     def test_rejects_unknown(self):
         with pytest.raises(ValueError, match="Unknown selector"):
@@ -105,6 +106,7 @@ class TestSelectorValidation:
         assert is_valid_selector("task_last")
         assert is_valid_selector("turn_boundary:-1")
         assert is_valid_selector("assistant_all")
+        assert is_valid_selector("followup_all")
         assert not is_valid_selector("prompt_last")
         assert not is_valid_selector("bogus")
 
@@ -113,6 +115,7 @@ class TestSelectorValidation:
         assert requires_chat_template("turn_boundary:-1")
         assert requires_chat_template("turn_boundary:-5")
         assert requires_chat_template("assistant_all")
+        assert requires_chat_template("followup_all")
         assert not requires_chat_template("last")
         assert not requires_chat_template("first")
         assert not requires_chat_template("task_last")
@@ -410,7 +413,8 @@ class TestSpanSelectorDispatch:
         assistant_ends = torch.tensor([10, 15, 7])
 
         result = model._apply_span_selectors(
-            activations, ["assistant_all"], assistant_starts, assistant_ends,
+            activations, ["assistant_all"],
+            assistant_starts=assistant_starts, assistant_ends=assistant_ends,
         )
 
         assert "assistant_all" in result
@@ -422,6 +426,29 @@ class TestSpanSelectorDispatch:
                 assert per_sample[i].shape == (expected_len, d_model)
                 expected = activations[layer][i, assistant_starts[i]:assistant_ends[i], :].float().numpy()
                 np.testing.assert_array_equal(per_sample[i], expected)
+
+    def test_followup_all_slices_correctly(self):
+        model = object.__new__(HuggingFaceModel)
+        batch_size, seq_len, d_model = 2, 20, 8
+        activations = {
+            0: torch.randn(batch_size, seq_len, d_model),
+        }
+        followup_starts = torch.tensor([12, 14])
+        followup_ends = torch.tensor([18, 19])
+
+        result = model._apply_span_selectors(
+            activations, ["followup_all"],
+            followup_starts=followup_starts, followup_ends=followup_ends,
+        )
+
+        assert "followup_all" in result
+        per_sample = result["followup_all"][0]
+        assert len(per_sample) == batch_size
+        for i in range(batch_size):
+            expected_len = followup_ends[i] - followup_starts[i]
+            assert per_sample[i].shape == (expected_len, d_model)
+            expected = activations[0][i, followup_starts[i]:followup_ends[i], :].float().numpy()
+            np.testing.assert_array_equal(per_sample[i], expected)
 
 
 class TestSpanActivationsRoundtrip:

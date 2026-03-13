@@ -1,7 +1,6 @@
 model: gemma-3-27b
-custom_tasks_file: data/creak/error_prefill_none_100.json
-selectors: ["assistant_all"]
+selectors: ["assistant_all", "followup_all"]
 layers_to_extract: [25, 32, 39, 46, 53]
 batch_size: 8
-save_every: 50
+save_every: 100
 output_dir: activations/gemma_3_27b_error_prefill

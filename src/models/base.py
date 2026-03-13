@@ -292,7 +292,7 @@ ASSISTANT_SELECTORS = set(ASSISTANT_SELECTOR_REGISTRY)
 ASSISTANT_TB_PREFIX = "assistant_tb:"
 
 # Span selectors: preserve per-token activations across a span (variable-length output)
-SPAN_SELECTORS = {"assistant_all"}
+SPAN_SELECTORS = {"assistant_all", "followup_all"}
 
 
 def split_selectors(selectors: list[str]) -> tuple[list[str], list[str]]:
@@ -302,9 +302,18 @@ def split_selectors(selectors: list[str]) -> tuple[list[str], list[str]]:
     return point, span
 
 
+ASSISTANT_SPAN_SELECTORS = {"assistant_all"}
+FOLLOWUP_SPAN_SELECTORS = {"followup_all"}
+
+
 def needs_assistant_content_span(selector_names: list[str]) -> bool:
     """Check if any selector requires (assistant_starts, assistant_ends) content span."""
-    return bool(set(selector_names) & (ASSISTANT_SELECTORS | SPAN_SELECTORS))
+    return bool(set(selector_names) & (ASSISTANT_SELECTORS | ASSISTANT_SPAN_SELECTORS))
+
+
+def needs_followup_content_span(selector_names: list[str]) -> bool:
+    """Check if any selector requires (followup_starts, followup_ends) content span."""
+    return bool(set(selector_names) & FOLLOWUP_SPAN_SELECTORS)
 
 
 def needs_assistant_tb_anchor(selector_names: list[str]) -> bool:

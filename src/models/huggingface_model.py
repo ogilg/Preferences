@@ -23,6 +23,7 @@ from src.models.base import (
     is_anchored_offset_selector,
     needs_assistant_content_span,
     needs_assistant_tb_anchor,
+    needs_followup_content_span,
     parse_anchored_offset,
     requires_chat_template,
     split_selectors,
@@ -166,6 +167,26 @@ class HuggingFaceModel:
         header = formatted[:content_char_start]
         return self._tokenize(header).shape[1]
 
+    def _get_followup_user_span(self, messages: list[Message]) -> tuple[int, int]:
+        """Find token indices [start, end) from assistant content end through follow-up content end.
+
+        Includes turn boundary tokens (end-of-turn, start-of-turn markers) so the
+        probe signal at the transition is visible.
+        """
+        asst_idx = self._find_first_assistant_idx(messages)
+        followup_idx = asst_idx + 1
+        if followup_idx >= len(messages) or messages[followup_idx]["role"] != "user":
+            raise ValueError("No follow-up user message after first assistant turn")
+        # Start from end of assistant content (includes turn boundary tokens in span)
+        _, start = self._get_first_assistant_span(messages)
+        # End at end of followup content
+        header_with_content = self.format_messages(messages[:followup_idx + 1], add_generation_prompt=False)
+        content = messages[followup_idx]["content"]
+        content_char_start = header_with_content.rindex(content)
+        through = header_with_content[:content_char_start] + content
+        end = self._tokenize(through).shape[1]
+        return start, end
+
     @staticmethod
     def _find_first_assistant_idx(messages: list[Message]) -> int:
         for i, m in enumerate(messages):
@@ -298,21 +319,28 @@ class HuggingFaceModel:
         self,
         activations: dict[int, torch.Tensor],
         span_selector_names: list[str],
-        assistant_starts: torch.Tensor,
-        assistant_ends: torch.Tensor,
+        assistant_starts: torch.Tensor | None = None,
+        assistant_ends: torch.Tensor | None = None,
+        followup_starts: torch.Tensor | None = None,
+        followup_ends: torch.Tensor | None = None,
     ) -> dict[str, dict[int, list[np.ndarray]]]:
         """Extract variable-length per-token spans. Returns {name: {layer: [array_per_sample]}}."""
-        batch_size = assistant_starts.shape[0]
+        span_bounds = {
+            "assistant_all": (assistant_starts, assistant_ends),
+            "followup_all": (followup_starts, followup_ends),
+        }
+        first_name = span_selector_names[0]
+        starts, ends = span_bounds[first_name]
+        batch_size = starts.shape[0]
         results: dict[str, dict[int, list[np.ndarray]]] = {name: {} for name in span_selector_names}
         for layer, layer_acts in activations.items():
             for name in span_selector_names:
-                if name == "assistant_all":
-                    per_sample = [
-                        layer_acts[i, assistant_starts[i]:assistant_ends[i], :].float().numpy()
-                        for i in range(batch_size)
-                    ]
-                else:
-                    raise ValueError(f"Unknown span selector: {name}")
+                starts, ends = span_bounds[name]
+                assert starts is not None and ends is not None, f"Missing span bounds for {name}"
+                per_sample = [
+                    layer_acts[i, starts[i]:ends[i], :].float().numpy()
+                    for i in range(batch_size)
+                ]
                 results[name][layer] = per_sample
         return results
 
@@ -448,6 +476,7 @@ class HuggingFaceModel:
         needs_task = set(selector_names) & TASK_SELECTORS
         task_starts = task_ends = None
         assistant_starts = assistant_ends = None
+        followup_starts = followup_ends = None
         assistant_anchor = None
         if needs_task:
             start, end = self._get_task_span(messages)
@@ -457,6 +486,10 @@ class HuggingFaceModel:
             a_start, a_end = self._get_first_assistant_span(messages)
             assistant_starts = torch.tensor([a_start])
             assistant_ends = torch.tensor([a_end])
+        if needs_followup_content_span(selector_names):
+            f_start, f_end = self._get_followup_user_span(messages)
+            followup_starts = torch.tensor([f_start])
+            followup_ends = torch.tensor([f_end])
         if needs_assistant_tb_anchor(selector_names):
             assistant_anchor = torch.tensor([self._get_assistant_to_user_anchor(messages)])
 
@@ -478,9 +511,12 @@ class HuggingFaceModel:
 
         span_results: dict[str, dict[int, list[np.ndarray]]] = {}
         if span_selectors:
-            assert assistant_starts is not None and assistant_ends is not None
             span_results = self._apply_span_selectors(
-                activations, span_selectors, assistant_starts, assistant_ends,
+                activations, span_selectors,
+                assistant_starts=assistant_starts,
+                assistant_ends=assistant_ends,
+                followup_starts=followup_starts,
+                followup_ends=followup_ends,
             )
 
         return ActivationResults(point_results, span_results)
@@ -504,6 +540,7 @@ class HuggingFaceModel:
         point_selectors, span_selectors = split_selectors(selector_names)
         needs_task = set(selector_names) & TASK_SELECTORS
         _needs_content_span = needs_assistant_content_span(selector_names)
+        _needs_followup_span = needs_followup_content_span(selector_names)
         _needs_tb_anchor = needs_assistant_tb_anchor(selector_names)
         token_ids_list: list[torch.Tensor] = []
         first_completion_indices: list[int] = []
@@ -511,6 +548,8 @@ class HuggingFaceModel:
         task_end_indices: list[int] = []
         assistant_start_indices: list[int] = []
         assistant_end_indices: list[int] = []
+        followup_start_indices: list[int] = []
+        followup_end_indices: list[int] = []
         assistant_anchor_indices: list[int] = []
         for messages in messages_batch:
             has_completion = messages and messages[-1]["role"] == "assistant"
@@ -538,6 +577,10 @@ class HuggingFaceModel:
                 a_start, a_end = self._get_first_assistant_span(messages)
                 assistant_start_indices.append(a_start)
                 assistant_end_indices.append(a_end)
+            if _needs_followup_span:
+                f_start, f_end = self._get_followup_user_span(messages)
+                followup_start_indices.append(f_start)
+                followup_end_indices.append(f_end)
             if _needs_tb_anchor:
                 assistant_anchor_indices.append(self._get_assistant_to_user_anchor(messages))
 
@@ -570,6 +613,7 @@ class HuggingFaceModel:
         needs_ids = set(selector_names) & TOKEN_ID_SELECTORS
         task_starts = task_ends = None
         assistant_starts = assistant_ends = None
+        followup_starts = followup_ends = None
         assistant_anchor = None
         if needs_task:
             task_starts = torch.tensor([
@@ -587,6 +631,15 @@ class HuggingFaceModel:
             ])
             assistant_ends = torch.tensor([
                 assistant_end_indices[i] + (max_len - seq_lengths[i])
+                for i in range(batch_size)
+            ])
+        if _needs_followup_span:
+            followup_starts = torch.tensor([
+                followup_start_indices[i] + (max_len - seq_lengths[i])
+                for i in range(batch_size)
+            ])
+            followup_ends = torch.tensor([
+                followup_end_indices[i] + (max_len - seq_lengths[i])
                 for i in range(batch_size)
             ])
         if _needs_tb_anchor:
@@ -609,9 +662,12 @@ class HuggingFaceModel:
 
         span_results: dict[str, dict[int, list[np.ndarray]]] = {}
         if span_selectors:
-            assert assistant_starts is not None and assistant_ends is not None
             span_results = self._apply_span_selectors(
-                activations, span_selectors, assistant_starts, assistant_ends,
+                activations, span_selectors,
+                assistant_starts=assistant_starts,
+                assistant_ends=assistant_ends,
+                followup_starts=followup_starts,
+                followup_ends=followup_ends,
             )
 
         return ActivationResults(point_results, span_results)
