@@ -27,3 +27,17 @@
 - 100% prefix parse rate excluding refusals
 - Per-pair scatter: insufficient data (3 pairs), will populate with full run
 - Wrote interim report and plots
+
+### Step 4: Report review and push
+- Report reviewed by subagent: fixed record counts, coefficient comparison note, "heldout r" terminology, reframed ceiling-effect claims
+- Committed scripts, report, plots, analysis summary
+- Pushed to origin/research-loop/task_mean_direction
+- Experiment still running in background (PID via `ps aux | grep run_experiment`)
+- At ~910 records when pushed; supports --resume for continued collection
+
+### To complete after experiment finishes
+- Re-run analysis: `python scripts/task_mean_direction/analyze.py`
+- Re-run plots: `python scripts/task_mean_direction/plot_results.py`
+- Add checkpoint to commit: `git add experiments/steering/task_mean_direction/checkpoint.jsonl`
+- Update report status from INTERIM to FINAL, update all numbers
+- Commit and push
