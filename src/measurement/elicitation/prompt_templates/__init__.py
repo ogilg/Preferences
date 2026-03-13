@@ -21,6 +21,7 @@ def __getattr__(name: str):
         "PreTaskStatedPromptBuilder",
         "PreTaskRankingPromptBuilder",
         "PostTaskRankingPromptBuilder",
+        "MultiTurnRevealedPromptBuilder",
         "PromptBuilder",
     ):
         from . import builders
@@ -55,6 +56,7 @@ __all__ = [
     "PreTaskStatedPromptBuilder",
     "PreTaskRankingPromptBuilder",
     "PostTaskRankingPromptBuilder",
+    "MultiTurnRevealedPromptBuilder",
     "PromptBuilder",
     # Generator (lazy)
     "GeneratorConfig",

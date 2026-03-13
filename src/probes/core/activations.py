@@ -85,6 +85,46 @@ def compute_activation_norms(
     }
 
 
+def get_mean_norms(activations_path: Path, layers: list[int] | None = None) -> dict[int, float]:
+    """Get mean L2 norms, reading from extraction_metadata.json if cached.
+
+    Caches are keyed by activation filename (e.g. "activations_turn_boundary:-5.npz")
+    since multiple npz files may share one metadata file.
+    """
+    metadata_path = activations_path.parent / "extraction_metadata.json"
+    cache_key = activations_path.name
+
+    if metadata_path.exists():
+        with open(metadata_path) as f:
+            metadata = json.load(f)
+        file_norms = metadata.get("mean_norms", {}).get(cache_key, {})
+        if file_norms:
+            cached = {int(k): v for k, v in file_norms.items()}
+            if layers is None:
+                return cached
+            missing = [l for l in layers if l not in cached]
+            if not missing:
+                return {l: cached[l] for l in layers}
+
+    norms = compute_activation_norms(activations_path, layers)
+
+    # Cache to metadata, keyed by filename
+    if metadata_path.exists():
+        with open(metadata_path) as f:
+            metadata = json.load(f)
+    else:
+        metadata = {}
+    all_norms = metadata.get("mean_norms", {})
+    existing_file_norms = {int(k): v for k, v in all_norms.get(cache_key, {}).items()}
+    existing_file_norms.update(norms)
+    all_norms[cache_key] = {str(k): v for k, v in sorted(existing_file_norms.items())}
+    metadata["mean_norms"] = all_norms
+    with open(metadata_path, "w") as f:
+        json.dump(metadata, f, indent=2)
+
+    return norms
+
+
 def load_probe_data(
     activations_path: Path,
     scores: dict[str, float],

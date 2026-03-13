@@ -248,6 +248,49 @@ class PostTaskRankingPromptBuilder(PromptBuilder):
         )
 
 
+class MultiTurnRevealedPromptBuilder(PromptBuilder):
+    """Split tasks across turns with assistant prefill between them.
+
+    Messages: [user: intro + task_a + format_instruction] -> [asst: prefill] -> [user: task_b]
+    Model generates completion of preferred task.
+    """
+    preference_type = PreferenceType.PRE_TASK_REVEALED
+
+    def __init__(self, prefill: str, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.prefill = prefill
+
+    def build(self, task_a: Task, task_b: Task) -> PreferencePrompt:
+        if isinstance(self.response_format, CompletionChoiceFormat):
+            response_format: ResponseFormat[Any] = CompletionChoiceFormat(
+                task_a_label=self.response_format.task_a_label,
+                task_b_label=self.response_format.task_b_label,
+                task_a_prompt=task_a.prompt,
+                task_b_prompt=task_b.prompt,
+            )
+        else:
+            response_format = self.response_format
+
+        first_turn = self.template.format(
+            format_instruction=response_format.format_instruction(),
+            task_a=task_a.prompt,
+        )
+        task_b_label = self.response_format.task_b_label if isinstance(self.response_format, CompletionChoiceFormat) else "Task B"
+        messages = self._prepend_context([
+            {"role": "user", "content": first_turn},
+            {"role": "assistant", "content": self.prefill},
+            {"role": "user", "content": f"{task_b_label}:\n{task_b.prompt}"},
+        ])
+        return PreferencePrompt(
+            messages=messages,
+            tasks=[task_a, task_b],
+            kind=self.preference_type,
+            measurer=self.measurer,
+            response_format=response_format,
+            template=self.template,
+        )
+
+
 class OpenEndedPromptBuilder(PromptBuilder):
     """Creates multi-turn prompt for open-ended response after task completion.
 

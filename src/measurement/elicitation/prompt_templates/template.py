@@ -54,6 +54,7 @@ TEMPLATE_TYPE_PLACEHOLDERS: dict[str, frozenset[str]] = {
     "pre_task_ranking": frozenset({"task_a", "task_b", "task_c", "task_d", "task_e", "format_instruction"}),
     "post_task_ranking": frozenset({"format_instruction"}),
     "open_ended": frozenset({"format_instruction"}),
+    "multi_turn_revealed": frozenset({"task_a", "format_instruction"}),
 }
 
 

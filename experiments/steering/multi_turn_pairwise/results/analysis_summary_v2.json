@@ -1,0 +1,32 @@
+[
+  {
+    "prefill": "<empty>",
+    "r": 0.34044901219278245,
+    "p_choose_a": 0.032857142857142856,
+    "position_bias_p": 2.8912270338574564e-168,
+    "n_choices": 700,
+    "agreement": 0.08314606741573034,
+    "n_agreement_comparisons": 445,
+    "refusal_pct": 8.37696335078534
+  },
+  {
+    "prefill": "Got it, what's the other task?",
+    "r": 0.5284321143114153,
+    "p_choose_a": 0.5037688442211056,
+    "position_bias_p": 0.8593494911727313,
+    "n_choices": 796,
+    "agreement": 0.7704626334519573,
+    "n_agreement_comparisons": 562,
+    "refusal_pct": 0.37546933667083854
+  },
+  {
+    "prefill": "Understood. What is Task B?",
+    "r": 0.510016290819037,
+    "p_choose_a": 0.37041719342604296,
+    "position_bias_p": 3.012803323181658e-13,
+    "n_choices": 791,
+    "agreement": 0.7304347826086957,
+    "n_agreement_comparisons": 575,
+    "refusal_pct": 0.3778337531486146
+  }
+]

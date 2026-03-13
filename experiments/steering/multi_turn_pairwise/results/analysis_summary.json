@@ -1,0 +1,26 @@
+[
+  {
+    "prefill": "Got it, what's the other task?",
+    "r_canonical": 0.4670289124033357,
+    "r_reversed": 0.47281324771878686,
+    "agreement": 0.7563451776649747,
+    "n_compared": 197,
+    "refusal_pct": 0.25125628140703515
+  },
+  {
+    "prefill": "OK.",
+    "r_canonical": 0.21577071133391781,
+    "r_reversed": 0.18532539318181954,
+    "agreement": 0.06622516556291391,
+    "n_compared": 151,
+    "refusal_pct": 7.407407407407407
+  },
+  {
+    "prefill": "Understood. What is Task B?",
+    "r_canonical": 0.43512249885048954,
+    "r_reversed": 0.4268825640477339,
+    "agreement": 0.734375,
+    "n_compared": 192,
+    "refusal_pct": 0.2544529262086514
+  }
+]
