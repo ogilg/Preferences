@@ -1,4 +1,5 @@
 model: gemma-3-27b
+custom_tasks_file: data/creak/error_prefill_conversations.json
 selectors: ["assistant_mean", "assistant_tb:-1", "assistant_tb:-2", "assistant_tb:-3", "assistant_tb:-4", "assistant_tb:-5"]
 layers_to_extract: [25, 32, 39, 46, 53]
 batch_size: 16
