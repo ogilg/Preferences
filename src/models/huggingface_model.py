@@ -210,37 +210,62 @@ class HuggingFaceModel:
 
     @contextmanager
     def _hooked_forward(
-        self, layers: list[int]
-    ) -> Iterator[dict[int, torch.Tensor]]:
-        """Context manager that registers hooks and yields activation buffer.
+        self, layer_callbacks: dict[int, Callable[[torch.Tensor], None]],
+    ) -> Iterator[None]:
+        """Context manager that registers per-layer callbacks during a forward pass.
 
-        Usage:
-            with self._hooked_forward([0, 15, 31]) as activations:
-                self.model(input_ids)
-            # activations[layer] now contains (batch, seq, d_model) tensors
+        Each callback receives the on-device hidden state tensor (batch, seq, d_model).
         """
-        activations: dict[int, torch.Tensor] = {}
         handles: list[torch.utils.hooks.RemovableHandle] = []
 
-        # make_hook closure captures layer_idx to avoid late-binding in loop.
-        # Without this, all hooks would reference the final loop value.
-        for layer in layers:
-            def make_hook(layer_idx: int) -> Callable:
+        for layer, cb in layer_callbacks.items():
+            def make_hook(callback: Callable[[torch.Tensor], None]) -> Callable:
                 def hook(module: torch.nn.Module, input: tuple, output: tuple | torch.Tensor) -> None:
-                    # Transformer layer output is either:
-                    #   - tuple: (hidden_states, present_key_value, ...)
-                    #   - tensor: just hidden_states (when output_hidden_states=False, use_cache=False)
-                    # hidden_states shape: (batch, seq_len, d_model)
                     hidden = output[0] if isinstance(output, tuple) else output
-                    activations[layer_idx] = hidden.detach().cpu()
+                    callback(hidden)
                 return hook
-            handles.append(self._get_layer(layer).register_forward_hook(make_hook(layer)))
+            handles.append(self._get_layer(layer).register_forward_hook(make_hook(cb)))
 
         try:
-            yield activations
+            yield
         finally:
             for h in handles:
                 h.remove()
+
+    @staticmethod
+    def _capture_callbacks(layers: list[int]) -> tuple[dict[int, Callable[[torch.Tensor], None]], dict[int, torch.Tensor]]:
+        """Build callbacks that capture activations to CPU. Returns (callbacks, activations_dict)."""
+        activations: dict[int, torch.Tensor] = {}
+
+        def make_capture(layer_idx: int) -> Callable[[torch.Tensor], None]:
+            def capture(hidden: torch.Tensor) -> None:
+                activations[layer_idx] = hidden.detach().cpu()
+            return capture
+
+        callbacks = {layer: make_capture(layer) for layer in layers}
+        return callbacks, activations
+
+    def _left_pad(
+        self, token_ids_list: list[torch.Tensor],
+    ) -> tuple[torch.Tensor, torch.Tensor, list[int]]:
+        """Left-pad a list of 1-D token tensors. Returns (padded, attention_mask, seq_lengths)."""
+        seq_lengths = [ids.shape[0] for ids in token_ids_list]
+        max_len = max(seq_lengths)
+        batch_size = len(token_ids_list)
+
+        padded = torch.full(
+            (batch_size, max_len),
+            self.tokenizer.pad_token_id,
+            dtype=torch.long,
+            device=self.device,
+        )
+        attention_mask = torch.zeros(batch_size, max_len, dtype=torch.long, device=self.device)
+        for i, ids in enumerate(token_ids_list):
+            pad_offset = max_len - seq_lengths[i]
+            padded[i, pad_offset:] = ids
+            attention_mask[i, pad_offset:] = 1
+
+        return padded, attention_mask, seq_lengths
 
     def _apply_selectors(
         self,
@@ -468,7 +493,8 @@ class HuggingFaceModel:
                     "This can happen if the assistant message is empty."
                 )
 
-        with self._hooked_forward(layers) as activations:
+        capture_callbacks, activations = self._capture_callbacks(layers)
+        with self._hooked_forward(capture_callbacks):
             self.model(input_ids)
 
         first_indices = torch.tensor([first_completion_idx])
@@ -584,24 +610,12 @@ class HuggingFaceModel:
             if _needs_tb_anchor:
                 assistant_anchor_indices.append(self._get_assistant_to_user_anchor(messages))
 
-        seq_lengths = [ids.shape[0] for ids in token_ids_list]
-        max_len = max(seq_lengths)
-
-        # Left-pad to max_len
+        padded, attention_mask, seq_lengths = self._left_pad(token_ids_list)
+        max_len = padded.shape[1]
         batch_size = len(messages_batch)
-        padded = torch.full(
-            (batch_size, max_len),
-            self.tokenizer.pad_token_id,
-            dtype=torch.long,
-            device=self.device,
-        )
-        attention_mask = torch.zeros(batch_size, max_len, dtype=torch.long, device=self.device)
-        for i, ids in enumerate(token_ids_list):
-            pad_offset = max_len - seq_lengths[i]
-            padded[i, pad_offset:] = ids
-            attention_mask[i, pad_offset:] = 1
 
-        with self._hooked_forward(layers) as activations:
+        capture_callbacks, activations = self._capture_callbacks(layers)
+        with self._hooked_forward(capture_callbacks):
             self.model(padded, attention_mask=attention_mask)
 
         # Shift indices to account for left-padding
