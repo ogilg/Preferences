@@ -1,3 +1,0 @@
-import inspect
-from src.measurement.elicitation.prompt_templates.builders import PreTaskRevealedPromptBuilder
-print(inspect.signature(PreTaskRevealedPromptBuilder.__init__))
