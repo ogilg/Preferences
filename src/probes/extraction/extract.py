@@ -227,12 +227,15 @@ def run_from_completions(config: ExtractionConfig, completions_path: Path) -> No
         print("No completions remaining.")
         return
 
-    items: list[tuple[str, list[Message]]] = [
-        (c["task_id"], _build_messages(c["task_prompt"], config.system_prompt, config.prompt_template) + [
-            {"role": "assistant", "content": c["completion"]},
-        ])
-        for c in completions_data
-    ]
+    items: list[tuple[str, list[Message]]] = []
+    for c in completions_data:
+        if "messages" in c:
+            items.append((c["task_id"], c["messages"]))
+        else:
+            msgs = _build_messages(c["task_prompt"], config.system_prompt, config.prompt_template) + [
+                {"role": "assistant", "content": c["completion"]},
+            ]
+            items.append((c["task_id"], msgs))
 
     stats = batched_extraction(
         model=model, items=items, layers=resolved_layers,
