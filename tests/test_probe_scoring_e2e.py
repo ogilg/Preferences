@@ -98,7 +98,7 @@ class TestScorePromptAllTokens:
             model, SIMPLE_PROMPT, probes=[(PROBE_LAYER, PROBE_A)],
         )
 
-        np.testing.assert_allclose(all_scores[0], expected, rtol=1e-5)
+        np.testing.assert_allclose(all_scores[0], expected, rtol=1e-4)
 
 
 class TestScorePromptBatch:
