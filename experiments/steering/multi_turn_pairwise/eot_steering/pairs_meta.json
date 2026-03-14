@@ -1,0 +1,3002 @@
+[
+  {
+    "pair_idx": 0,
+    "high_mu_id": "competition_math_3149",
+    "low_mu_id": "wildchat_43232",
+    "delta_mu": 0.8723896356447591
+  },
+  {
+    "pair_idx": 1,
+    "high_mu_id": "alpaca_14041",
+    "low_mu_id": "alpaca_10825",
+    "delta_mu": 0.7623031259640258
+  },
+  {
+    "pair_idx": 2,
+    "high_mu_id": "stresstest_92_254_value1",
+    "low_mu_id": "wildchat_67673",
+    "delta_mu": 0.6781287405168088
+  },
+  {
+    "pair_idx": 3,
+    "high_mu_id": "alpaca_8338",
+    "low_mu_id": "wildchat_51109",
+    "delta_mu": 0.12727624433550933
+  },
+  {
+    "pair_idx": 4,
+    "high_mu_id": "stresstest_35_1019_value2",
+    "low_mu_id": "competition_math_2295",
+    "delta_mu": 0.1844829642917709
+  },
+  {
+    "pair_idx": 5,
+    "high_mu_id": "competition_math_3891",
+    "low_mu_id": "alpaca_9547",
+    "delta_mu": 0.41328003289680737
+  },
+  {
+    "pair_idx": 6,
+    "high_mu_id": "competition_math_3900",
+    "low_mu_id": "wildchat_66196",
+    "delta_mu": 0.8260897767664268
+  },
+  {
+    "pair_idx": 7,
+    "high_mu_id": "competition_math_5648",
+    "low_mu_id": "stresstest_82_884_value1",
+    "delta_mu": 0.8351457286253501
+  },
+  {
+    "pair_idx": 8,
+    "high_mu_id": "stresstest_21_548_neutral",
+    "low_mu_id": "competition_math_2822",
+    "delta_mu": 0.890730771504133
+  },
+  {
+    "pair_idx": 9,
+    "high_mu_id": "stresstest_8_1048_value1",
+    "low_mu_id": "stresstest_35_1255_value2",
+    "delta_mu": 0.6139801113362182
+  },
+  {
+    "pair_idx": 10,
+    "high_mu_id": "stresstest_25_678_value2",
+    "low_mu_id": "stresstest_61_1014_value1",
+    "delta_mu": 0.276493535448032
+  },
+  {
+    "pair_idx": 11,
+    "high_mu_id": "alpaca_4646",
+    "low_mu_id": "alpaca_6960",
+    "delta_mu": 0.5457744034254524
+  },
+  {
+    "pair_idx": 12,
+    "high_mu_id": "alpaca_12",
+    "low_mu_id": "wildchat_27530",
+    "delta_mu": 0.010486689485523115
+  },
+  {
+    "pair_idx": 13,
+    "high_mu_id": "competition_math_3165",
+    "low_mu_id": "wildchat_55160",
+    "delta_mu": 0.32443806712164047
+  },
+  {
+    "pair_idx": 14,
+    "high_mu_id": "stresstest_78_299_value1",
+    "low_mu_id": "alpaca_14346",
+    "delta_mu": 0.7258651279151122
+  },
+  {
+    "pair_idx": 15,
+    "high_mu_id": "wildchat_56670",
+    "low_mu_id": "wildchat_26618",
+    "delta_mu": 0.183236634337544
+  },
+  {
+    "pair_idx": 16,
+    "high_mu_id": "alpaca_86",
+    "low_mu_id": "alpaca_12311",
+    "delta_mu": 0.1797673381251812
+  },
+  {
+    "pair_idx": 17,
+    "high_mu_id": "wildchat_29261",
+    "low_mu_id": "stresstest_49_496_neutral",
+    "delta_mu": 0.2905669228720855
+  },
+  {
+    "pair_idx": 18,
+    "high_mu_id": "alpaca_4198",
+    "low_mu_id": "wildchat_67621",
+    "delta_mu": 0.20700531387721777
+  },
+  {
+    "pair_idx": 19,
+    "high_mu_id": "stresstest_41_949_value1",
+    "low_mu_id": "stresstest_78_299_value1",
+    "delta_mu": 0.5337041103762733
+  },
+  {
+    "pair_idx": 20,
+    "high_mu_id": "competition_math_1706",
+    "low_mu_id": "competition_math_8306",
+    "delta_mu": 0.28708040545667224
+  },
+  {
+    "pair_idx": 21,
+    "high_mu_id": "competition_math_2326",
+    "low_mu_id": "competition_math_8997",
+    "delta_mu": 0.9404403273947741
+  },
+  {
+    "pair_idx": 22,
+    "high_mu_id": "alpaca_6455",
+    "low_mu_id": "alpaca_89",
+    "delta_mu": 0.5143206215536984
+  },
+  {
+    "pair_idx": 23,
+    "high_mu_id": "competition_math_6704",
+    "low_mu_id": "wildchat_60651",
+    "delta_mu": 0.6054403149150156
+  },
+  {
+    "pair_idx": 24,
+    "high_mu_id": "wildchat_52495",
+    "low_mu_id": "wildchat_52091",
+    "delta_mu": 0.0027985624354718297
+  },
+  {
+    "pair_idx": 25,
+    "high_mu_id": "wildchat_46090",
+    "low_mu_id": "alpaca_10502",
+    "delta_mu": 0.9701815291331625
+  },
+  {
+    "pair_idx": 26,
+    "high_mu_id": "competition_math_4936",
+    "low_mu_id": "wildchat_42057",
+    "delta_mu": 0.05568969084600428
+  },
+  {
+    "pair_idx": 27,
+    "high_mu_id": "stresstest_73_1262_value2",
+    "low_mu_id": "wildchat_52324",
+    "delta_mu": 0.30847772508499194
+  },
+  {
+    "pair_idx": 28,
+    "high_mu_id": "competition_math_9407",
+    "low_mu_id": "competition_math_5890",
+    "delta_mu": 0.8702759565480052
+  },
+  {
+    "pair_idx": 29,
+    "high_mu_id": "competition_math_3217",
+    "low_mu_id": "alpaca_9069",
+    "delta_mu": 0.9926159986174992
+  },
+  {
+    "pair_idx": 30,
+    "high_mu_id": "competition_math_7908",
+    "low_mu_id": "wildchat_26245",
+    "delta_mu": 0.06616613455929832
+  },
+  {
+    "pair_idx": 31,
+    "high_mu_id": "competition_math_10377",
+    "low_mu_id": "alpaca_530",
+    "delta_mu": 0.811409530846051
+  },
+  {
+    "pair_idx": 32,
+    "high_mu_id": "competition_math_5826",
+    "low_mu_id": "alpaca_4884",
+    "delta_mu": 0.8496507598868719
+  },
+  {
+    "pair_idx": 33,
+    "high_mu_id": "wildchat_19310",
+    "low_mu_id": "alpaca_10706",
+    "delta_mu": 0.8998124214648805
+  },
+  {
+    "pair_idx": 34,
+    "high_mu_id": "competition_math_1224",
+    "low_mu_id": "alpaca_13790",
+    "delta_mu": 0.5429067937970142
+  },
+  {
+    "pair_idx": 35,
+    "high_mu_id": "competition_math_10743",
+    "low_mu_id": "competition_math_5191",
+    "delta_mu": 0.048934466430619494
+  },
+  {
+    "pair_idx": 36,
+    "high_mu_id": "alpaca_14310",
+    "low_mu_id": "wildchat_52591",
+    "delta_mu": 0.4527186142245756
+  },
+  {
+    "pair_idx": 37,
+    "high_mu_id": "competition_math_659",
+    "low_mu_id": "alpaca_13855",
+    "delta_mu": 0.0263139896204021
+  },
+  {
+    "pair_idx": 38,
+    "high_mu_id": "stresstest_17_960_value2",
+    "low_mu_id": "bailbench_1518",
+    "delta_mu": 0.025267438997671476
+  },
+  {
+    "pair_idx": 39,
+    "high_mu_id": "competition_math_4882",
+    "low_mu_id": "stresstest_45_1065_value2",
+    "delta_mu": 0.47204977579203233
+  },
+  {
+    "pair_idx": 40,
+    "high_mu_id": "stresstest_96_764_neutral",
+    "low_mu_id": "alpaca_9029",
+    "delta_mu": 0.7543005917713876
+  },
+  {
+    "pair_idx": 41,
+    "high_mu_id": "alpaca_11040",
+    "low_mu_id": "competition_math_7788",
+    "delta_mu": 0.5546917410190257
+  },
+  {
+    "pair_idx": 42,
+    "high_mu_id": "alpaca_1462",
+    "low_mu_id": "alpaca_10774",
+    "delta_mu": 0.39554444787832277
+  },
+  {
+    "pair_idx": 43,
+    "high_mu_id": "competition_math_9083",
+    "low_mu_id": "competition_math_9561",
+    "delta_mu": 0.1325020797784089
+  },
+  {
+    "pair_idx": 44,
+    "high_mu_id": "alpaca_5994",
+    "low_mu_id": "wildchat_48525",
+    "delta_mu": 0.06824018347095495
+  },
+  {
+    "pair_idx": 45,
+    "high_mu_id": "alpaca_3096",
+    "low_mu_id": "competition_math_11213",
+    "delta_mu": 0.39145549874362373
+  },
+  {
+    "pair_idx": 46,
+    "high_mu_id": "competition_math_8133",
+    "low_mu_id": "wildchat_32371",
+    "delta_mu": 0.5857199886982345
+  },
+  {
+    "pair_idx": 47,
+    "high_mu_id": "stresstest_77_1472_value1",
+    "low_mu_id": "bailbench_1112",
+    "delta_mu": 0.9918341332033149
+  },
+  {
+    "pair_idx": 48,
+    "high_mu_id": "wildchat_19436",
+    "low_mu_id": "competition_math_5633",
+    "delta_mu": 0.5800650878545577
+  },
+  {
+    "pair_idx": 49,
+    "high_mu_id": "alpaca_3945",
+    "low_mu_id": "stresstest_25_338_value1",
+    "delta_mu": 0.4080061661211962
+  },
+  {
+    "pair_idx": 50,
+    "high_mu_id": "competition_math_10425",
+    "low_mu_id": "wildchat_67673",
+    "delta_mu": 0.2812726422961065
+  },
+  {
+    "pair_idx": 51,
+    "high_mu_id": "alpaca_14106",
+    "low_mu_id": "alpaca_83",
+    "delta_mu": 0.5080819706684614
+  },
+  {
+    "pair_idx": 52,
+    "high_mu_id": "bailbench_1350",
+    "low_mu_id": "stresstest_67_379_value1",
+    "delta_mu": 0.7547509873065259
+  },
+  {
+    "pair_idx": 53,
+    "high_mu_id": "wildchat_49561",
+    "low_mu_id": "alpaca_12015",
+    "delta_mu": 0.5872530274452901
+  },
+  {
+    "pair_idx": 54,
+    "high_mu_id": "stresstest_46_174_value2",
+    "low_mu_id": "alpaca_6981",
+    "delta_mu": 0.7253868434890578
+  },
+  {
+    "pair_idx": 55,
+    "high_mu_id": "stresstest_64_9_value2",
+    "low_mu_id": "alpaca_3428",
+    "delta_mu": 0.9153412506983496
+  },
+  {
+    "pair_idx": 56,
+    "high_mu_id": "alpaca_13910",
+    "low_mu_id": "stresstest_41_437_value2",
+    "delta_mu": 0.13288721005103676
+  },
+  {
+    "pair_idx": 57,
+    "high_mu_id": "alpaca_12636",
+    "low_mu_id": "alpaca_7435",
+    "delta_mu": 0.8825328111911386
+  },
+  {
+    "pair_idx": 58,
+    "high_mu_id": "wildchat_65524",
+    "low_mu_id": "competition_math_6418",
+    "delta_mu": 0.292145238173271
+  },
+  {
+    "pair_idx": 59,
+    "high_mu_id": "stresstest_38_769_value1",
+    "low_mu_id": "bailbench_1536",
+    "delta_mu": 0.934264705992577
+  },
+  {
+    "pair_idx": 60,
+    "high_mu_id": "competition_math_2570",
+    "low_mu_id": "stresstest_32_1280_value2",
+    "delta_mu": 0.631088241722743
+  },
+  {
+    "pair_idx": 61,
+    "high_mu_id": "competition_math_2216",
+    "low_mu_id": "competition_math_376",
+    "delta_mu": 0.7285172449314716
+  },
+  {
+    "pair_idx": 62,
+    "high_mu_id": "wildchat_11114",
+    "low_mu_id": "alpaca_14106",
+    "delta_mu": 0.8124700573613053
+  },
+  {
+    "pair_idx": 63,
+    "high_mu_id": "stresstest_71_994_value1",
+    "low_mu_id": "alpaca_14368",
+    "delta_mu": 0.9109281509768747
+  },
+  {
+    "pair_idx": 64,
+    "high_mu_id": "wildchat_18111",
+    "low_mu_id": "competition_math_7725",
+    "delta_mu": 0.013991526775074314
+  },
+  {
+    "pair_idx": 65,
+    "high_mu_id": "alpaca_92",
+    "low_mu_id": "alpaca_579",
+    "delta_mu": 0.7666416688514173
+  },
+  {
+    "pair_idx": 66,
+    "high_mu_id": "competition_math_10911",
+    "low_mu_id": "wildchat_77449",
+    "delta_mu": 0.8205476153961762
+  },
+  {
+    "pair_idx": 67,
+    "high_mu_id": "stresstest_42_1445_value1",
+    "low_mu_id": "stresstest_73_1325_value1",
+    "delta_mu": 0.5342867524897179
+  },
+  {
+    "pair_idx": 68,
+    "high_mu_id": "competition_math_5853",
+    "low_mu_id": "competition_math_9571",
+    "delta_mu": 0.7743100168623287
+  },
+  {
+    "pair_idx": 69,
+    "high_mu_id": "stresstest_71_131_value1",
+    "low_mu_id": "wildchat_55331",
+    "delta_mu": 0.6025917864953168
+  },
+  {
+    "pair_idx": 70,
+    "high_mu_id": "stresstest_36_498_value1",
+    "low_mu_id": "wildchat_15446",
+    "delta_mu": 0.2972467256599354
+  },
+  {
+    "pair_idx": 71,
+    "high_mu_id": "wildchat_37421",
+    "low_mu_id": "competition_math_883",
+    "delta_mu": 0.6937219875769642
+  },
+  {
+    "pair_idx": 72,
+    "high_mu_id": "stresstest_28_1328_value1",
+    "low_mu_id": "bailbench_1351",
+    "delta_mu": 0.7236324134160235
+  },
+  {
+    "pair_idx": 73,
+    "high_mu_id": "alpaca_12650",
+    "low_mu_id": "alpaca_10328",
+    "delta_mu": 0.18668157584455813
+  },
+  {
+    "pair_idx": 74,
+    "high_mu_id": "competition_math_7108",
+    "low_mu_id": "wildchat_65524",
+    "delta_mu": 0.6101948239679613
+  },
+  {
+    "pair_idx": 75,
+    "high_mu_id": "stresstest_18_823_value1",
+    "low_mu_id": "competition_math_8523",
+    "delta_mu": 0.2996102347785949
+  },
+  {
+    "pair_idx": 76,
+    "high_mu_id": "stresstest_22_1208_value2",
+    "low_mu_id": "wildchat_50202",
+    "delta_mu": 0.2143694911672105
+  },
+  {
+    "pair_idx": 77,
+    "high_mu_id": "competition_math_11288",
+    "low_mu_id": "wildchat_29519",
+    "delta_mu": 0.5814456683291045
+  },
+  {
+    "pair_idx": 78,
+    "high_mu_id": "alpaca_9006",
+    "low_mu_id": "alpaca_8684",
+    "delta_mu": 0.7132711215958945
+  },
+  {
+    "pair_idx": 79,
+    "high_mu_id": "competition_math_6811",
+    "low_mu_id": "wildchat_34594",
+    "delta_mu": 0.15695453468833342
+  },
+  {
+    "pair_idx": 80,
+    "high_mu_id": "competition_math_1164",
+    "low_mu_id": "stresstest_54_112_value1",
+    "delta_mu": 0.8793008090722951
+  },
+  {
+    "pair_idx": 81,
+    "high_mu_id": "stresstest_71_200_value1",
+    "low_mu_id": "competition_math_6496",
+    "delta_mu": 0.2549218177381434
+  },
+  {
+    "pair_idx": 82,
+    "high_mu_id": "alpaca_7792",
+    "low_mu_id": "stresstest_72_721_neutral",
+    "delta_mu": 0.8164327256453232
+  },
+  {
+    "pair_idx": 83,
+    "high_mu_id": "wildchat_44450",
+    "low_mu_id": "alpaca_13674",
+    "delta_mu": 0.17950403052885155
+  },
+  {
+    "pair_idx": 84,
+    "high_mu_id": "stresstest_51_1183_value1",
+    "low_mu_id": "competition_math_330",
+    "delta_mu": 0.08456960979544714
+  },
+  {
+    "pair_idx": 85,
+    "high_mu_id": "competition_math_7934",
+    "low_mu_id": "competition_math_10583",
+    "delta_mu": 0.23584807529745166
+  },
+  {
+    "pair_idx": 86,
+    "high_mu_id": "stresstest_98_684_value1",
+    "low_mu_id": "stresstest_9_1322_value1",
+    "delta_mu": 0.6657479180007995
+  },
+  {
+    "pair_idx": 87,
+    "high_mu_id": "alpaca_11857",
+    "low_mu_id": "wildchat_63302",
+    "delta_mu": 0.5078042873288935
+  },
+  {
+    "pair_idx": 88,
+    "high_mu_id": "competition_math_8365",
+    "low_mu_id": "competition_math_734",
+    "delta_mu": 0.17859484520870605
+  },
+  {
+    "pair_idx": 89,
+    "high_mu_id": "wildchat_25442",
+    "low_mu_id": "competition_math_521",
+    "delta_mu": 0.171490059853471
+  },
+  {
+    "pair_idx": 90,
+    "high_mu_id": "wildchat_5652",
+    "low_mu_id": "stresstest_26_709_neutral",
+    "delta_mu": 0.18811943696609212
+  },
+  {
+    "pair_idx": 91,
+    "high_mu_id": "wildchat_67287",
+    "low_mu_id": "competition_math_6930",
+    "delta_mu": 0.9201731929600809
+  },
+  {
+    "pair_idx": 92,
+    "high_mu_id": "alpaca_7930",
+    "low_mu_id": "alpaca_2816",
+    "delta_mu": 0.631922089037519
+  },
+  {
+    "pair_idx": 93,
+    "high_mu_id": "competition_math_4423",
+    "low_mu_id": "wildchat_28363",
+    "delta_mu": 0.4321493005767376
+  },
+  {
+    "pair_idx": 94,
+    "high_mu_id": "stresstest_44_150_neutral",
+    "low_mu_id": "alpaca_5913",
+    "delta_mu": 0.16734264723551284
+  },
+  {
+    "pair_idx": 95,
+    "high_mu_id": "competition_math_10953",
+    "low_mu_id": "wildchat_48424",
+    "delta_mu": 0.2995520152768565
+  },
+  {
+    "pair_idx": 96,
+    "high_mu_id": "wildchat_61590",
+    "low_mu_id": "alpaca_6200",
+    "delta_mu": 0.2823142369246998
+  },
+  {
+    "pair_idx": 97,
+    "high_mu_id": "stresstest_57_1240_value2",
+    "low_mu_id": "competition_math_20",
+    "delta_mu": 0.690881495186499
+  },
+  {
+    "pair_idx": 98,
+    "high_mu_id": "competition_math_10054",
+    "low_mu_id": "competition_math_1471",
+    "delta_mu": 0.7949776231256713
+  },
+  {
+    "pair_idx": 99,
+    "high_mu_id": "wildchat_60174",
+    "low_mu_id": "wildchat_22474",
+    "delta_mu": 0.6369086343346932
+  },
+  {
+    "pair_idx": 100,
+    "high_mu_id": "stresstest_2_1230_value1",
+    "low_mu_id": "competition_math_4643",
+    "delta_mu": 1.378826306611451
+  },
+  {
+    "pair_idx": 101,
+    "high_mu_id": "alpaca_2384",
+    "low_mu_id": "stresstest_97_198_neutral",
+    "delta_mu": 2.697450122144021
+  },
+  {
+    "pair_idx": 102,
+    "high_mu_id": "wildchat_10210",
+    "low_mu_id": "stresstest_8_365_value2",
+    "delta_mu": 2.071202521761955
+  },
+  {
+    "pair_idx": 103,
+    "high_mu_id": "alpaca_13644",
+    "low_mu_id": "alpaca_5337",
+    "delta_mu": 2.435038664681142
+  },
+  {
+    "pair_idx": 104,
+    "high_mu_id": "competition_math_10065",
+    "low_mu_id": "alpaca_4236",
+    "delta_mu": 1.4853454780851196
+  },
+  {
+    "pair_idx": 105,
+    "high_mu_id": "wildchat_34224",
+    "low_mu_id": "wildchat_352",
+    "delta_mu": 1.4239376010226152
+  },
+  {
+    "pair_idx": 106,
+    "high_mu_id": "wildchat_145",
+    "low_mu_id": "alpaca_14387",
+    "delta_mu": 1.4162697915523257
+  },
+  {
+    "pair_idx": 107,
+    "high_mu_id": "alpaca_11771",
+    "low_mu_id": "competition_math_11458",
+    "delta_mu": 2.3248793790098166
+  },
+  {
+    "pair_idx": 108,
+    "high_mu_id": "alpaca_6798",
+    "low_mu_id": "wildchat_40075",
+    "delta_mu": 2.0026548716824055
+  },
+  {
+    "pair_idx": 109,
+    "high_mu_id": "stresstest_65_562_value1",
+    "low_mu_id": "competition_math_734",
+    "delta_mu": 2.8255880736883885
+  },
+  {
+    "pair_idx": 110,
+    "high_mu_id": "alpaca_3",
+    "low_mu_id": "alpaca_11301",
+    "delta_mu": 2.074329164792796
+  },
+  {
+    "pair_idx": 111,
+    "high_mu_id": "wildchat_15042",
+    "low_mu_id": "competition_math_4155",
+    "delta_mu": 1.9125164386906022
+  },
+  {
+    "pair_idx": 112,
+    "high_mu_id": "alpaca_13778",
+    "low_mu_id": "alpaca_9860",
+    "delta_mu": 1.8972065665261872
+  },
+  {
+    "pair_idx": 113,
+    "high_mu_id": "alpaca_13628",
+    "low_mu_id": "alpaca_12932",
+    "delta_mu": 2.92500326336085
+  },
+  {
+    "pair_idx": 114,
+    "high_mu_id": "competition_math_201",
+    "low_mu_id": "bailbench_40",
+    "delta_mu": 2.9197975103913136
+  },
+  {
+    "pair_idx": 115,
+    "high_mu_id": "wildchat_72493",
+    "low_mu_id": "stresstest_81_989_value1",
+    "delta_mu": 1.4934192569275844
+  },
+  {
+    "pair_idx": 116,
+    "high_mu_id": "competition_math_9997",
+    "low_mu_id": "competition_math_226",
+    "delta_mu": 2.873050650071845
+  },
+  {
+    "pair_idx": 117,
+    "high_mu_id": "wildchat_17681",
+    "low_mu_id": "competition_math_3545",
+    "delta_mu": 1.6524509650484056
+  },
+  {
+    "pair_idx": 118,
+    "high_mu_id": "competition_math_1596",
+    "low_mu_id": "wildchat_12470",
+    "delta_mu": 1.251470654762291
+  },
+  {
+    "pair_idx": 119,
+    "high_mu_id": "competition_math_10493",
+    "low_mu_id": "competition_math_7154",
+    "delta_mu": 1.0755581987406293
+  },
+  {
+    "pair_idx": 120,
+    "high_mu_id": "competition_math_10708",
+    "low_mu_id": "stresstest_93_839_value2",
+    "delta_mu": 2.7782518760515162
+  },
+  {
+    "pair_idx": 121,
+    "high_mu_id": "stresstest_83_72_neutral",
+    "low_mu_id": "bailbench_1366",
+    "delta_mu": 1.6637811350972491
+  },
+  {
+    "pair_idx": 122,
+    "high_mu_id": "stresstest_98_1136_value2",
+    "low_mu_id": "stresstest_75_1260_neutral",
+    "delta_mu": 2.7078009082817154
+  },
+  {
+    "pair_idx": 123,
+    "high_mu_id": "wildchat_34266",
+    "low_mu_id": "alpaca_572",
+    "delta_mu": 2.714839170420151
+  },
+  {
+    "pair_idx": 124,
+    "high_mu_id": "stresstest_29_1385_neutral",
+    "low_mu_id": "competition_math_415",
+    "delta_mu": 1.0502125579590529
+  },
+  {
+    "pair_idx": 125,
+    "high_mu_id": "stresstest_57_298_value2",
+    "low_mu_id": "stresstest_81_926_neutral",
+    "delta_mu": 1.444323289833167
+  },
+  {
+    "pair_idx": 126,
+    "high_mu_id": "alpaca_6208",
+    "low_mu_id": "wildchat_56695",
+    "delta_mu": 1.9741588167122246
+  },
+  {
+    "pair_idx": 127,
+    "high_mu_id": "competition_math_8493",
+    "low_mu_id": "alpaca_7626",
+    "delta_mu": 2.257318920455635
+  },
+  {
+    "pair_idx": 128,
+    "high_mu_id": "alpaca_1296",
+    "low_mu_id": "wildchat_1476",
+    "delta_mu": 2.6098251651840827
+  },
+  {
+    "pair_idx": 129,
+    "high_mu_id": "stresstest_2_651_value2",
+    "low_mu_id": "competition_math_6992",
+    "delta_mu": 2.7066885100456135
+  },
+  {
+    "pair_idx": 130,
+    "high_mu_id": "competition_math_6975",
+    "low_mu_id": "wildchat_56215",
+    "delta_mu": 2.8148303645488064
+  },
+  {
+    "pair_idx": 131,
+    "high_mu_id": "wildchat_73430",
+    "low_mu_id": "competition_math_8219",
+    "delta_mu": 1.627835962515828
+  },
+  {
+    "pair_idx": 132,
+    "high_mu_id": "wildchat_50202",
+    "low_mu_id": "stresstest_81_106_neutral",
+    "delta_mu": 1.6664166825644084
+  },
+  {
+    "pair_idx": 133,
+    "high_mu_id": "competition_math_3872",
+    "low_mu_id": "stresstest_95_808_neutral",
+    "delta_mu": 1.2621998930471459
+  },
+  {
+    "pair_idx": 134,
+    "high_mu_id": "competition_math_3086",
+    "low_mu_id": "wildchat_23098",
+    "delta_mu": 2.2329729074300944
+  },
+  {
+    "pair_idx": 135,
+    "high_mu_id": "competition_math_6494",
+    "low_mu_id": "stresstest_13_303_value1",
+    "delta_mu": 2.5443471880082673
+  },
+  {
+    "pair_idx": 136,
+    "high_mu_id": "wildchat_55155",
+    "low_mu_id": "competition_math_6588",
+    "delta_mu": 2.885966432958079
+  },
+  {
+    "pair_idx": 137,
+    "high_mu_id": "stresstest_6_418_value1",
+    "low_mu_id": "stresstest_7_1197_value1",
+    "delta_mu": 2.0452242180660725
+  },
+  {
+    "pair_idx": 138,
+    "high_mu_id": "alpaca_8637",
+    "low_mu_id": "alpaca_1301",
+    "delta_mu": 2.7474235883470715
+  },
+  {
+    "pair_idx": 139,
+    "high_mu_id": "wildchat_65284",
+    "low_mu_id": "competition_math_11048",
+    "delta_mu": 2.374896039010891
+  },
+  {
+    "pair_idx": 140,
+    "high_mu_id": "wildchat_573",
+    "low_mu_id": "competition_math_2799",
+    "delta_mu": 1.935612545835764
+  },
+  {
+    "pair_idx": 141,
+    "high_mu_id": "competition_math_229",
+    "low_mu_id": "competition_math_11948",
+    "delta_mu": 2.2257118282426256
+  },
+  {
+    "pair_idx": 142,
+    "high_mu_id": "alpaca_5153",
+    "low_mu_id": "stresstest_96_40_value2",
+    "delta_mu": 1.315187268003423
+  },
+  {
+    "pair_idx": 143,
+    "high_mu_id": "bailbench_1019",
+    "low_mu_id": "bailbench_979",
+    "delta_mu": 1.0354559105034618
+  },
+  {
+    "pair_idx": 144,
+    "high_mu_id": "competition_math_4007",
+    "low_mu_id": "alpaca_12416",
+    "delta_mu": 2.546851630372933
+  },
+  {
+    "pair_idx": 145,
+    "high_mu_id": "alpaca_2748",
+    "low_mu_id": "stresstest_91_99_neutral",
+    "delta_mu": 1.0653197893202573
+  },
+  {
+    "pair_idx": 146,
+    "high_mu_id": "competition_math_839",
+    "low_mu_id": "alpaca_1988",
+    "delta_mu": 2.4801722672885953
+  },
+  {
+    "pair_idx": 147,
+    "high_mu_id": "competition_math_9878",
+    "low_mu_id": "wildchat_56165",
+    "delta_mu": 1.6707590994487531
+  },
+  {
+    "pair_idx": 148,
+    "high_mu_id": "wildchat_32218",
+    "low_mu_id": "stresstest_49_863_value2",
+    "delta_mu": 1.8228909255680463
+  },
+  {
+    "pair_idx": 149,
+    "high_mu_id": "wildchat_30293",
+    "low_mu_id": "alpaca_13371",
+    "delta_mu": 1.3953108517983983
+  },
+  {
+    "pair_idx": 150,
+    "high_mu_id": "alpaca_12277",
+    "low_mu_id": "alpaca_5913",
+    "delta_mu": 2.4619484395604037
+  },
+  {
+    "pair_idx": 151,
+    "high_mu_id": "wildchat_49202",
+    "low_mu_id": "alpaca_5884",
+    "delta_mu": 2.5037005835256103
+  },
+  {
+    "pair_idx": 152,
+    "high_mu_id": "alpaca_6975",
+    "low_mu_id": "alpaca_11840",
+    "delta_mu": 2.6827117993419622
+  },
+  {
+    "pair_idx": 153,
+    "high_mu_id": "wildchat_79338",
+    "low_mu_id": "competition_math_10689",
+    "delta_mu": 2.8381464604656923
+  },
+  {
+    "pair_idx": 154,
+    "high_mu_id": "competition_math_7230",
+    "low_mu_id": "alpaca_4422",
+    "delta_mu": 1.8852014409941007
+  },
+  {
+    "pair_idx": 155,
+    "high_mu_id": "wildchat_44437",
+    "low_mu_id": "stresstest_52_788_value1",
+    "delta_mu": 2.002483965537175
+  },
+  {
+    "pair_idx": 156,
+    "high_mu_id": "competition_math_4953",
+    "low_mu_id": "alpaca_11346",
+    "delta_mu": 1.9190480278894722
+  },
+  {
+    "pair_idx": 157,
+    "high_mu_id": "stresstest_60_170_value1",
+    "low_mu_id": "alpaca_3103",
+    "delta_mu": 2.8452090058691457
+  },
+  {
+    "pair_idx": 158,
+    "high_mu_id": "competition_math_5633",
+    "low_mu_id": "wildchat_37691",
+    "delta_mu": 2.990275276468655
+  },
+  {
+    "pair_idx": 159,
+    "high_mu_id": "wildchat_185",
+    "low_mu_id": "alpaca_4020",
+    "delta_mu": 2.787712696531551
+  },
+  {
+    "pair_idx": 160,
+    "high_mu_id": "competition_math_9136",
+    "low_mu_id": "alpaca_4369",
+    "delta_mu": 1.4336338535319872
+  },
+  {
+    "pair_idx": 161,
+    "high_mu_id": "alpaca_4598",
+    "low_mu_id": "alpaca_10638",
+    "delta_mu": 1.1335691500994123
+  },
+  {
+    "pair_idx": 162,
+    "high_mu_id": "alpaca_3247",
+    "low_mu_id": "alpaca_3573",
+    "delta_mu": 1.091136259298282
+  },
+  {
+    "pair_idx": 163,
+    "high_mu_id": "competition_math_4984",
+    "low_mu_id": "wildchat_57581",
+    "delta_mu": 1.485627988750803
+  },
+  {
+    "pair_idx": 164,
+    "high_mu_id": "competition_math_3615",
+    "low_mu_id": "wildchat_49639",
+    "delta_mu": 1.2881393747159402
+  },
+  {
+    "pair_idx": 165,
+    "high_mu_id": "competition_math_3723",
+    "low_mu_id": "stresstest_8_1393_value1",
+    "delta_mu": 1.7101904728090278
+  },
+  {
+    "pair_idx": 166,
+    "high_mu_id": "competition_math_12241",
+    "low_mu_id": "wildchat_41220",
+    "delta_mu": 1.441745842080072
+  },
+  {
+    "pair_idx": 167,
+    "high_mu_id": "competition_math_1199",
+    "low_mu_id": "wildchat_4298",
+    "delta_mu": 2.565410810931131
+  },
+  {
+    "pair_idx": 168,
+    "high_mu_id": "wildchat_79096",
+    "low_mu_id": "alpaca_8421",
+    "delta_mu": 2.214225581187056
+  },
+  {
+    "pair_idx": 169,
+    "high_mu_id": "competition_math_8344",
+    "low_mu_id": "wildchat_36152",
+    "delta_mu": 2.919478764152788
+  },
+  {
+    "pair_idx": 170,
+    "high_mu_id": "wildchat_68492",
+    "low_mu_id": "competition_math_1790",
+    "delta_mu": 2.2195737589675755
+  },
+  {
+    "pair_idx": 171,
+    "high_mu_id": "wildchat_24049",
+    "low_mu_id": "stresstest_17_922_value1",
+    "delta_mu": 2.2315884415452456
+  },
+  {
+    "pair_idx": 172,
+    "high_mu_id": "wildchat_15710",
+    "low_mu_id": "stresstest_32_98_value2",
+    "delta_mu": 1.4215767079287223
+  },
+  {
+    "pair_idx": 173,
+    "high_mu_id": "alpaca_2457",
+    "low_mu_id": "alpaca_2184",
+    "delta_mu": 1.815053445014121
+  },
+  {
+    "pair_idx": 174,
+    "high_mu_id": "wildchat_77381",
+    "low_mu_id": "competition_math_9686",
+    "delta_mu": 1.9908561374345979
+  },
+  {
+    "pair_idx": 175,
+    "high_mu_id": "competition_math_365",
+    "low_mu_id": "competition_math_6766",
+    "delta_mu": 1.0796364874824977
+  },
+  {
+    "pair_idx": 176,
+    "high_mu_id": "wildchat_61064",
+    "low_mu_id": "alpaca_7709",
+    "delta_mu": 2.977537394745564
+  },
+  {
+    "pair_idx": 177,
+    "high_mu_id": "wildchat_50369",
+    "low_mu_id": "wildchat_48382",
+    "delta_mu": 1.9049981860658791
+  },
+  {
+    "pair_idx": 178,
+    "high_mu_id": "competition_math_11017",
+    "low_mu_id": "alpaca_5524",
+    "delta_mu": 2.9409734187267516
+  },
+  {
+    "pair_idx": 179,
+    "high_mu_id": "alpaca_3159",
+    "low_mu_id": "competition_math_6177",
+    "delta_mu": 1.3761161760252039
+  },
+  {
+    "pair_idx": 180,
+    "high_mu_id": "stresstest_18_706_value2",
+    "low_mu_id": "stresstest_20_349_neutral",
+    "delta_mu": 2.740688863299134
+  },
+  {
+    "pair_idx": 181,
+    "high_mu_id": "wildchat_40254",
+    "low_mu_id": "alpaca_5308",
+    "delta_mu": 1.113034573324713
+  },
+  {
+    "pair_idx": 182,
+    "high_mu_id": "wildchat_24037",
+    "low_mu_id": "competition_math_2967",
+    "delta_mu": 1.344023892487785
+  },
+  {
+    "pair_idx": 183,
+    "high_mu_id": "wildchat_9184",
+    "low_mu_id": "wildchat_39314",
+    "delta_mu": 1.238905604999406
+  },
+  {
+    "pair_idx": 184,
+    "high_mu_id": "bailbench_101",
+    "low_mu_id": "wildchat_38202",
+    "delta_mu": 2.8188724539602577
+  },
+  {
+    "pair_idx": 185,
+    "high_mu_id": "competition_math_11664",
+    "low_mu_id": "alpaca_2702",
+    "delta_mu": 1.6332925181269444
+  },
+  {
+    "pair_idx": 186,
+    "high_mu_id": "alpaca_6386",
+    "low_mu_id": "stresstest_16_1277_neutral",
+    "delta_mu": 1.4381722567482118
+  },
+  {
+    "pair_idx": 187,
+    "high_mu_id": "wildchat_34310",
+    "low_mu_id": "alpaca_7815",
+    "delta_mu": 2.5490627513640245
+  },
+  {
+    "pair_idx": 188,
+    "high_mu_id": "competition_math_1989",
+    "low_mu_id": "competition_math_8973",
+    "delta_mu": 1.356901697838647
+  },
+  {
+    "pair_idx": 189,
+    "high_mu_id": "competition_math_5316",
+    "low_mu_id": "wildchat_9087",
+    "delta_mu": 1.2167681969762958
+  },
+  {
+    "pair_idx": 190,
+    "high_mu_id": "wildchat_23253",
+    "low_mu_id": "competition_math_6418",
+    "delta_mu": 2.377068245696023
+  },
+  {
+    "pair_idx": 191,
+    "high_mu_id": "competition_math_10003",
+    "low_mu_id": "competition_math_10581",
+    "delta_mu": 2.0598997150968286
+  },
+  {
+    "pair_idx": 192,
+    "high_mu_id": "competition_math_12058",
+    "low_mu_id": "competition_math_8074",
+    "delta_mu": 1.5905197771838129
+  },
+  {
+    "pair_idx": 193,
+    "high_mu_id": "competition_math_4394",
+    "low_mu_id": "competition_math_6589",
+    "delta_mu": 2.019062572100601
+  },
+  {
+    "pair_idx": 194,
+    "high_mu_id": "alpaca_5715",
+    "low_mu_id": "alpaca_14631",
+    "delta_mu": 1.8708911415006573
+  },
+  {
+    "pair_idx": 195,
+    "high_mu_id": "wildchat_54544",
+    "low_mu_id": "competition_math_7657",
+    "delta_mu": 1.4389711050605367
+  },
+  {
+    "pair_idx": 196,
+    "high_mu_id": "wildchat_11500",
+    "low_mu_id": "alpaca_342",
+    "delta_mu": 2.5694976600652266
+  },
+  {
+    "pair_idx": 197,
+    "high_mu_id": "alpaca_153",
+    "low_mu_id": "stresstest_11_459_neutral",
+    "delta_mu": 2.498296388664529
+  },
+  {
+    "pair_idx": 198,
+    "high_mu_id": "competition_math_11771",
+    "low_mu_id": "alpaca_11831",
+    "delta_mu": 1.3988690455431652
+  },
+  {
+    "pair_idx": 199,
+    "high_mu_id": "stresstest_1_171_value2",
+    "low_mu_id": "stresstest_71_732_neutral",
+    "delta_mu": 2.895155343778316
+  },
+  {
+    "pair_idx": 200,
+    "high_mu_id": "wildchat_4294",
+    "low_mu_id": "wildchat_48424",
+    "delta_mu": 1.1678633429375465
+  },
+  {
+    "pair_idx": 201,
+    "high_mu_id": "competition_math_10196",
+    "low_mu_id": "competition_math_3613",
+    "delta_mu": 2.25488234126364
+  },
+  {
+    "pair_idx": 202,
+    "high_mu_id": "stresstest_46_1207_value2",
+    "low_mu_id": "wildchat_43343",
+    "delta_mu": 1.6425186221579489
+  },
+  {
+    "pair_idx": 203,
+    "high_mu_id": "wildchat_40322",
+    "low_mu_id": "wildchat_51069",
+    "delta_mu": 1.3654463707557194
+  },
+  {
+    "pair_idx": 204,
+    "high_mu_id": "alpaca_7523",
+    "low_mu_id": "wildchat_31203",
+    "delta_mu": 1.2541918355429256
+  },
+  {
+    "pair_idx": 205,
+    "high_mu_id": "competition_math_10278",
+    "low_mu_id": "competition_math_7897",
+    "delta_mu": 1.5136560893263873
+  },
+  {
+    "pair_idx": 206,
+    "high_mu_id": "competition_math_10074",
+    "low_mu_id": "wildchat_16422",
+    "delta_mu": 1.5942562749982896
+  },
+  {
+    "pair_idx": 207,
+    "high_mu_id": "stresstest_23_1351_neutral",
+    "low_mu_id": "competition_math_2415",
+    "delta_mu": 1.1871655660321547
+  },
+  {
+    "pair_idx": 208,
+    "high_mu_id": "wildchat_41320",
+    "low_mu_id": "alpaca_923",
+    "delta_mu": 2.4392875189802306
+  },
+  {
+    "pair_idx": 209,
+    "high_mu_id": "competition_math_8161",
+    "low_mu_id": "alpaca_2071",
+    "delta_mu": 1.6473033311230738
+  },
+  {
+    "pair_idx": 210,
+    "high_mu_id": "alpaca_13640",
+    "low_mu_id": "competition_math_3296",
+    "delta_mu": 2.883179654282596
+  },
+  {
+    "pair_idx": 211,
+    "high_mu_id": "competition_math_8635",
+    "low_mu_id": "wildchat_22209",
+    "delta_mu": 2.049276333280012
+  },
+  {
+    "pair_idx": 212,
+    "high_mu_id": "alpaca_14596",
+    "low_mu_id": "stresstest_91_798_neutral",
+    "delta_mu": 1.4698700205539996
+  },
+  {
+    "pair_idx": 213,
+    "high_mu_id": "alpaca_5062",
+    "low_mu_id": "alpaca_1784",
+    "delta_mu": 1.0643045451932869
+  },
+  {
+    "pair_idx": 214,
+    "high_mu_id": "wildchat_26608",
+    "low_mu_id": "wildchat_72047",
+    "delta_mu": 2.6935359780166386
+  },
+  {
+    "pair_idx": 215,
+    "high_mu_id": "competition_math_5820",
+    "low_mu_id": "competition_math_8735",
+    "delta_mu": 2.779385587893473
+  },
+  {
+    "pair_idx": 216,
+    "high_mu_id": "wildchat_29405",
+    "low_mu_id": "wildchat_37421",
+    "delta_mu": 2.0099603402335324
+  },
+  {
+    "pair_idx": 217,
+    "high_mu_id": "stresstest_99_12_neutral",
+    "low_mu_id": "competition_math_8753",
+    "delta_mu": 2.8039976590572566
+  },
+  {
+    "pair_idx": 218,
+    "high_mu_id": "wildchat_47681",
+    "low_mu_id": "wildchat_454",
+    "delta_mu": 1.6876272048574466
+  },
+  {
+    "pair_idx": 219,
+    "high_mu_id": "alpaca_11312",
+    "low_mu_id": "wildchat_7200",
+    "delta_mu": 2.7020969700710453
+  },
+  {
+    "pair_idx": 220,
+    "high_mu_id": "alpaca_12775",
+    "low_mu_id": "alpaca_8910",
+    "delta_mu": 1.0852852733840337
+  },
+  {
+    "pair_idx": 221,
+    "high_mu_id": "alpaca_12704",
+    "low_mu_id": "alpaca_8675",
+    "delta_mu": 2.8549458032382544
+  },
+  {
+    "pair_idx": 222,
+    "high_mu_id": "competition_math_11424",
+    "low_mu_id": "wildchat_13591",
+    "delta_mu": 2.669751815657364
+  },
+  {
+    "pair_idx": 223,
+    "high_mu_id": "competition_math_5164",
+    "low_mu_id": "wildchat_77348",
+    "delta_mu": 1.6043932966064123
+  },
+  {
+    "pair_idx": 224,
+    "high_mu_id": "competition_math_10115",
+    "low_mu_id": "wildchat_77097",
+    "delta_mu": 2.4213927086566507
+  },
+  {
+    "pair_idx": 225,
+    "high_mu_id": "bailbench_806",
+    "low_mu_id": "stresstest_70_440_neutral",
+    "delta_mu": 2.1910976664080604
+  },
+  {
+    "pair_idx": 226,
+    "high_mu_id": "competition_math_12208",
+    "low_mu_id": "alpaca_8514",
+    "delta_mu": 2.178718934260389
+  },
+  {
+    "pair_idx": 227,
+    "high_mu_id": "competition_math_5619",
+    "low_mu_id": "stresstest_56_1101_value1",
+    "delta_mu": 1.9754571109882786
+  },
+  {
+    "pair_idx": 228,
+    "high_mu_id": "alpaca_7585",
+    "low_mu_id": "alpaca_14399",
+    "delta_mu": 1.526066127533442
+  },
+  {
+    "pair_idx": 229,
+    "high_mu_id": "competition_math_11925",
+    "low_mu_id": "competition_math_6759",
+    "delta_mu": 1.337436719210479
+  },
+  {
+    "pair_idx": 230,
+    "high_mu_id": "competition_math_4970",
+    "low_mu_id": "wildchat_63056",
+    "delta_mu": 1.6984704246242277
+  },
+  {
+    "pair_idx": 231,
+    "high_mu_id": "wildchat_28261",
+    "low_mu_id": "stresstest_80_346_value2",
+    "delta_mu": 2.0024430833502005
+  },
+  {
+    "pair_idx": 232,
+    "high_mu_id": "wildchat_74340",
+    "low_mu_id": "stresstest_62_92_value2",
+    "delta_mu": 1.0720306261893606
+  },
+  {
+    "pair_idx": 233,
+    "high_mu_id": "wildchat_6397",
+    "low_mu_id": "wildchat_20004",
+    "delta_mu": 2.7389673632404143
+  },
+  {
+    "pair_idx": 234,
+    "high_mu_id": "wildchat_70557",
+    "low_mu_id": "stresstest_77_636_value2",
+    "delta_mu": 2.9455431111757804
+  },
+  {
+    "pair_idx": 235,
+    "high_mu_id": "competition_math_11491",
+    "low_mu_id": "competition_math_8591",
+    "delta_mu": 2.862903079645936
+  },
+  {
+    "pair_idx": 236,
+    "high_mu_id": "competition_math_249",
+    "low_mu_id": "alpaca_10932",
+    "delta_mu": 1.311228701038747
+  },
+  {
+    "pair_idx": 237,
+    "high_mu_id": "wildchat_68318",
+    "low_mu_id": "competition_math_8635",
+    "delta_mu": 1.4822841420100898
+  },
+  {
+    "pair_idx": 238,
+    "high_mu_id": "stresstest_21_101_value1",
+    "low_mu_id": "alpaca_14487",
+    "delta_mu": 1.8972691212902921
+  },
+  {
+    "pair_idx": 239,
+    "high_mu_id": "wildchat_43068",
+    "low_mu_id": "alpaca_2976",
+    "delta_mu": 2.909705142869698
+  },
+  {
+    "pair_idx": 240,
+    "high_mu_id": "alpaca_3004",
+    "low_mu_id": "alpaca_5587",
+    "delta_mu": 2.9589862112410588
+  },
+  {
+    "pair_idx": 241,
+    "high_mu_id": "alpaca_11595",
+    "low_mu_id": "wildchat_51196",
+    "delta_mu": 1.8581203698372792
+  },
+  {
+    "pair_idx": 242,
+    "high_mu_id": "competition_math_2713",
+    "low_mu_id": "competition_math_5927",
+    "delta_mu": 1.5663073471074025
+  },
+  {
+    "pair_idx": 243,
+    "high_mu_id": "stresstest_81_72_neutral",
+    "low_mu_id": "alpaca_5494",
+    "delta_mu": 2.138425101361208
+  },
+  {
+    "pair_idx": 244,
+    "high_mu_id": "stresstest_58_735_value2",
+    "low_mu_id": "stresstest_35_307_value1",
+    "delta_mu": 1.7879622838123161
+  },
+  {
+    "pair_idx": 245,
+    "high_mu_id": "wildchat_60540",
+    "low_mu_id": "competition_math_3671",
+    "delta_mu": 2.2815053319519016
+  },
+  {
+    "pair_idx": 246,
+    "high_mu_id": "alpaca_153",
+    "low_mu_id": "alpaca_9941",
+    "delta_mu": 1.4223164383101246
+  },
+  {
+    "pair_idx": 247,
+    "high_mu_id": "stresstest_9_780_value2",
+    "low_mu_id": "stresstest_27_1268_value1",
+    "delta_mu": 2.792591575858308
+  },
+  {
+    "pair_idx": 248,
+    "high_mu_id": "alpaca_12445",
+    "low_mu_id": "wildchat_18281",
+    "delta_mu": 1.2408056420371256
+  },
+  {
+    "pair_idx": 249,
+    "high_mu_id": "stresstest_98_684_value1",
+    "low_mu_id": "wildchat_15122",
+    "delta_mu": 1.0211407834352872
+  },
+  {
+    "pair_idx": 250,
+    "high_mu_id": "competition_math_1082",
+    "low_mu_id": "stresstest_18_1122_value2",
+    "delta_mu": 2.3965046479376326
+  },
+  {
+    "pair_idx": 251,
+    "high_mu_id": "wildchat_73314",
+    "low_mu_id": "wildchat_79219",
+    "delta_mu": 1.4882501079052872
+  },
+  {
+    "pair_idx": 252,
+    "high_mu_id": "wildchat_66461",
+    "low_mu_id": "competition_math_7928",
+    "delta_mu": 1.403887195447754
+  },
+  {
+    "pair_idx": 253,
+    "high_mu_id": "competition_math_6107",
+    "low_mu_id": "stresstest_9_923_neutral",
+    "delta_mu": 2.581686580982549
+  },
+  {
+    "pair_idx": 254,
+    "high_mu_id": "wildchat_37427",
+    "low_mu_id": "alpaca_7667",
+    "delta_mu": 2.4790612766122995
+  },
+  {
+    "pair_idx": 255,
+    "high_mu_id": "alpaca_3667",
+    "low_mu_id": "alpaca_5653",
+    "delta_mu": 1.4108543930734176
+  },
+  {
+    "pair_idx": 256,
+    "high_mu_id": "wildchat_23605",
+    "low_mu_id": "competition_math_6168",
+    "delta_mu": 1.4153996037292118
+  },
+  {
+    "pair_idx": 257,
+    "high_mu_id": "wildchat_63511",
+    "low_mu_id": "alpaca_2769",
+    "delta_mu": 1.4625598521872902
+  },
+  {
+    "pair_idx": 258,
+    "high_mu_id": "stresstest_86_165_value1",
+    "low_mu_id": "alpaca_12410",
+    "delta_mu": 2.6357867614642143
+  },
+  {
+    "pair_idx": 259,
+    "high_mu_id": "alpaca_9841",
+    "low_mu_id": "stresstest_82_1146_neutral",
+    "delta_mu": 1.409032031772933
+  },
+  {
+    "pair_idx": 260,
+    "high_mu_id": "alpaca_11738",
+    "low_mu_id": "stresstest_39_830_value1",
+    "delta_mu": 1.4825139119262252
+  },
+  {
+    "pair_idx": 261,
+    "high_mu_id": "wildchat_33151",
+    "low_mu_id": "stresstest_36_635_neutral",
+    "delta_mu": 2.5844143614105306
+  },
+  {
+    "pair_idx": 262,
+    "high_mu_id": "alpaca_3504",
+    "low_mu_id": "competition_math_11213",
+    "delta_mu": 2.8879790575746522
+  },
+  {
+    "pair_idx": 263,
+    "high_mu_id": "alpaca_7916",
+    "low_mu_id": "alpaca_770",
+    "delta_mu": 1.8988793708232476
+  },
+  {
+    "pair_idx": 264,
+    "high_mu_id": "alpaca_5866",
+    "low_mu_id": "competition_math_1747",
+    "delta_mu": 2.5490996008719398
+  },
+  {
+    "pair_idx": 265,
+    "high_mu_id": "alpaca_8506",
+    "low_mu_id": "competition_math_6756",
+    "delta_mu": 1.1473109776959998
+  },
+  {
+    "pair_idx": 266,
+    "high_mu_id": "wildchat_77381",
+    "low_mu_id": "alpaca_763",
+    "delta_mu": 2.8859783911568586
+  },
+  {
+    "pair_idx": 267,
+    "high_mu_id": "alpaca_9547",
+    "low_mu_id": "stresstest_77_208_value2",
+    "delta_mu": 1.7337185015441903
+  },
+  {
+    "pair_idx": 268,
+    "high_mu_id": "alpaca_158",
+    "low_mu_id": "competition_math_3615",
+    "delta_mu": 1.331732269207066
+  },
+  {
+    "pair_idx": 269,
+    "high_mu_id": "competition_math_3306",
+    "low_mu_id": "alpaca_446",
+    "delta_mu": 2.761633886141112
+  },
+  {
+    "pair_idx": 270,
+    "high_mu_id": "competition_math_9398",
+    "low_mu_id": "alpaca_17",
+    "delta_mu": 1.7142955660522108
+  },
+  {
+    "pair_idx": 271,
+    "high_mu_id": "wildchat_36516",
+    "low_mu_id": "wildchat_26639",
+    "delta_mu": 2.6055525669858
+  },
+  {
+    "pair_idx": 272,
+    "high_mu_id": "alpaca_5237",
+    "low_mu_id": "wildchat_19310",
+    "delta_mu": 2.976348165108307
+  },
+  {
+    "pair_idx": 273,
+    "high_mu_id": "alpaca_3677",
+    "low_mu_id": "competition_math_6756",
+    "delta_mu": 1.051136453386396
+  },
+  {
+    "pair_idx": 274,
+    "high_mu_id": "alpaca_727",
+    "low_mu_id": "competition_math_6686",
+    "delta_mu": 1.2005458502889665
+  },
+  {
+    "pair_idx": 275,
+    "high_mu_id": "wildchat_79409",
+    "low_mu_id": "wildchat_41000",
+    "delta_mu": 1.273120000324198
+  },
+  {
+    "pair_idx": 276,
+    "high_mu_id": "stresstest_71_202_neutral",
+    "low_mu_id": "alpaca_14401",
+    "delta_mu": 2.407244803188435
+  },
+  {
+    "pair_idx": 277,
+    "high_mu_id": "wildchat_68464",
+    "low_mu_id": "alpaca_1013",
+    "delta_mu": 1.164263196961047
+  },
+  {
+    "pair_idx": 278,
+    "high_mu_id": "stresstest_17_275_value1",
+    "low_mu_id": "stresstest_87_811_value1",
+    "delta_mu": 1.3011779626418996
+  },
+  {
+    "pair_idx": 279,
+    "high_mu_id": "alpaca_9476",
+    "low_mu_id": "stresstest_79_935_value1",
+    "delta_mu": 2.443526558191682
+  },
+  {
+    "pair_idx": 280,
+    "high_mu_id": "wildchat_41274",
+    "low_mu_id": "alpaca_4539",
+    "delta_mu": 1.9712386845358
+  },
+  {
+    "pair_idx": 281,
+    "high_mu_id": "wildchat_36209",
+    "low_mu_id": "competition_math_8133",
+    "delta_mu": 2.244881271342197
+  },
+  {
+    "pair_idx": 282,
+    "high_mu_id": "bailbench_519",
+    "low_mu_id": "stresstest_40_406_value2",
+    "delta_mu": 1.552455389581941
+  },
+  {
+    "pair_idx": 283,
+    "high_mu_id": "alpaca_3876",
+    "low_mu_id": "wildchat_50043",
+    "delta_mu": 1.832135586438234
+  },
+  {
+    "pair_idx": 284,
+    "high_mu_id": "competition_math_9087",
+    "low_mu_id": "competition_math_7417",
+    "delta_mu": 1.3731405536681018
+  },
+  {
+    "pair_idx": 285,
+    "high_mu_id": "wildchat_31496",
+    "low_mu_id": "alpaca_7595",
+    "delta_mu": 1.3622484247583264
+  },
+  {
+    "pair_idx": 286,
+    "high_mu_id": "wildchat_32182",
+    "low_mu_id": "competition_math_4800",
+    "delta_mu": 1.9179902615463578
+  },
+  {
+    "pair_idx": 287,
+    "high_mu_id": "wildchat_46350",
+    "low_mu_id": "alpaca_1463",
+    "delta_mu": 2.89331302664927
+  },
+  {
+    "pair_idx": 288,
+    "high_mu_id": "wildchat_54233",
+    "low_mu_id": "stresstest_17_1331_neutral",
+    "delta_mu": 1.321415634473182
+  },
+  {
+    "pair_idx": 289,
+    "high_mu_id": "stresstest_13_868_value1",
+    "low_mu_id": "stresstest_95_84_value2",
+    "delta_mu": 1.3732011061604457
+  },
+  {
+    "pair_idx": 290,
+    "high_mu_id": "competition_math_11332",
+    "low_mu_id": "competition_math_2481",
+    "delta_mu": 1.2547164723879733
+  },
+  {
+    "pair_idx": 291,
+    "high_mu_id": "alpaca_11800",
+    "low_mu_id": "stresstest_36_972_value2",
+    "delta_mu": 2.857820112210957
+  },
+  {
+    "pair_idx": 292,
+    "high_mu_id": "alpaca_5530",
+    "low_mu_id": "wildchat_26148",
+    "delta_mu": 1.3221574167119048
+  },
+  {
+    "pair_idx": 293,
+    "high_mu_id": "wildchat_8541",
+    "low_mu_id": "stresstest_98_980_neutral",
+    "delta_mu": 2.6956845731071586
+  },
+  {
+    "pair_idx": 294,
+    "high_mu_id": "wildchat_71463",
+    "low_mu_id": "wildchat_70045",
+    "delta_mu": 1.608193822757903
+  },
+  {
+    "pair_idx": 295,
+    "high_mu_id": "competition_math_10345",
+    "low_mu_id": "competition_math_7853",
+    "delta_mu": 1.7135783799438062
+  },
+  {
+    "pair_idx": 296,
+    "high_mu_id": "alpaca_7792",
+    "low_mu_id": "wildchat_58379",
+    "delta_mu": 1.9492839683501084
+  },
+  {
+    "pair_idx": 297,
+    "high_mu_id": "alpaca_13769",
+    "low_mu_id": "wildchat_1229",
+    "delta_mu": 1.7771930012350663
+  },
+  {
+    "pair_idx": 298,
+    "high_mu_id": "stresstest_76_369_neutral",
+    "low_mu_id": "stresstest_93_1124_value1",
+    "delta_mu": 1.617356657234625
+  },
+  {
+    "pair_idx": 299,
+    "high_mu_id": "wildchat_53599",
+    "low_mu_id": "alpaca_6961",
+    "delta_mu": 2.192082139097488
+  },
+  {
+    "pair_idx": 300,
+    "high_mu_id": "competition_math_7032",
+    "low_mu_id": "stresstest_25_196_value2",
+    "delta_mu": 12.573919380598475
+  },
+  {
+    "pair_idx": 301,
+    "high_mu_id": "alpaca_2910",
+    "low_mu_id": "alpaca_7866",
+    "delta_mu": 3.7593331263055942
+  },
+  {
+    "pair_idx": 302,
+    "high_mu_id": "stresstest_72_675_value2",
+    "low_mu_id": "stresstest_10_978_value1",
+    "delta_mu": 3.050346491082287
+  },
+  {
+    "pair_idx": 303,
+    "high_mu_id": "wildchat_77337",
+    "low_mu_id": "stresstest_44_150_neutral",
+    "delta_mu": 6.834380207078265
+  },
+  {
+    "pair_idx": 304,
+    "high_mu_id": "competition_math_6091",
+    "low_mu_id": "wildchat_24473",
+    "delta_mu": 4.917543713171334
+  },
+  {
+    "pair_idx": 305,
+    "high_mu_id": "competition_math_10692",
+    "low_mu_id": "competition_math_6198",
+    "delta_mu": 4.9247183537434305
+  },
+  {
+    "pair_idx": 306,
+    "high_mu_id": "competition_math_5191",
+    "low_mu_id": "alpaca_7110",
+    "delta_mu": 4.864037344689077
+  },
+  {
+    "pair_idx": 307,
+    "high_mu_id": "competition_math_6593",
+    "low_mu_id": "stresstest_43_589_value2",
+    "delta_mu": 13.385996367996793
+  },
+  {
+    "pair_idx": 308,
+    "high_mu_id": "stresstest_20_80_neutral",
+    "low_mu_id": "competition_math_3594",
+    "delta_mu": 5.107304817274005
+  },
+  {
+    "pair_idx": 309,
+    "high_mu_id": "wildchat_4061",
+    "low_mu_id": "stresstest_70_471_value2",
+    "delta_mu": 7.895946710980169
+  },
+  {
+    "pair_idx": 310,
+    "high_mu_id": "competition_math_4800",
+    "low_mu_id": "stresstest_99_1365_neutral",
+    "delta_mu": 8.60854746701122
+  },
+  {
+    "pair_idx": 311,
+    "high_mu_id": "stresstest_76_369_neutral",
+    "low_mu_id": "alpaca_3235",
+    "delta_mu": 11.247832748140944
+  },
+  {
+    "pair_idx": 312,
+    "high_mu_id": "wildchat_60034",
+    "low_mu_id": "wildchat_4255",
+    "delta_mu": 10.426480524568037
+  },
+  {
+    "pair_idx": 313,
+    "high_mu_id": "competition_math_1030",
+    "low_mu_id": "alpaca_7626",
+    "delta_mu": 3.057420832399443
+  },
+  {
+    "pair_idx": 314,
+    "high_mu_id": "stresstest_14_960_neutral",
+    "low_mu_id": "stresstest_31_489_value1",
+    "delta_mu": 8.380287718211992
+  },
+  {
+    "pair_idx": 315,
+    "high_mu_id": "stresstest_92_1083_value1",
+    "low_mu_id": "stresstest_2_1031_value1",
+    "delta_mu": 10.848544476986076
+  },
+  {
+    "pair_idx": 316,
+    "high_mu_id": "wildchat_26390",
+    "low_mu_id": "stresstest_65_480_neutral",
+    "delta_mu": 16.785548836143114
+  },
+  {
+    "pair_idx": 317,
+    "high_mu_id": "wildchat_56670",
+    "low_mu_id": "bailbench_715",
+    "delta_mu": 10.323507797955392
+  },
+  {
+    "pair_idx": 318,
+    "high_mu_id": "alpaca_11837",
+    "low_mu_id": "stresstest_64_614_value2",
+    "delta_mu": 10.56308972624103
+  },
+  {
+    "pair_idx": 319,
+    "high_mu_id": "stresstest_79_476_neutral",
+    "low_mu_id": "bailbench_366",
+    "delta_mu": 9.583319530093169
+  },
+  {
+    "pair_idx": 320,
+    "high_mu_id": "competition_math_11756",
+    "low_mu_id": "competition_math_6632",
+    "delta_mu": 4.638736363546762
+  },
+  {
+    "pair_idx": 321,
+    "high_mu_id": "competition_math_735",
+    "low_mu_id": "alpaca_7794",
+    "delta_mu": 9.307444828100081
+  },
+  {
+    "pair_idx": 322,
+    "high_mu_id": "alpaca_11833",
+    "low_mu_id": "alpaca_12358",
+    "delta_mu": 6.694982293598297
+  },
+  {
+    "pair_idx": 323,
+    "high_mu_id": "wildchat_59150",
+    "low_mu_id": "stresstest_25_487_value1",
+    "delta_mu": 13.80585744756338
+  },
+  {
+    "pair_idx": 324,
+    "high_mu_id": "wildchat_14506",
+    "low_mu_id": "alpaca_7053",
+    "delta_mu": 7.165696373647218
+  },
+  {
+    "pair_idx": 325,
+    "high_mu_id": "stresstest_79_75_value1",
+    "low_mu_id": "alpaca_1900",
+    "delta_mu": 4.667874189629445
+  },
+  {
+    "pair_idx": 326,
+    "high_mu_id": "wildchat_34181",
+    "low_mu_id": "competition_math_2194",
+    "delta_mu": 6.797713878098758
+  },
+  {
+    "pair_idx": 327,
+    "high_mu_id": "wildchat_40342",
+    "low_mu_id": "competition_math_7358",
+    "delta_mu": 7.8346639572637
+  },
+  {
+    "pair_idx": 328,
+    "high_mu_id": "competition_math_1107",
+    "low_mu_id": "stresstest_54_112_value1",
+    "delta_mu": 6.338799849085097
+  },
+  {
+    "pair_idx": 329,
+    "high_mu_id": "competition_math_1502",
+    "low_mu_id": "alpaca_662",
+    "delta_mu": 6.282287783793102
+  },
+  {
+    "pair_idx": 330,
+    "high_mu_id": "wildchat_71373",
+    "low_mu_id": "alpaca_8649",
+    "delta_mu": 4.256689991087994
+  },
+  {
+    "pair_idx": 331,
+    "high_mu_id": "competition_math_4683",
+    "low_mu_id": "wildchat_41109",
+    "delta_mu": 7.16898009103564
+  },
+  {
+    "pair_idx": 332,
+    "high_mu_id": "stresstest_55_1092_neutral",
+    "low_mu_id": "bailbench_276",
+    "delta_mu": 10.484597621767609
+  },
+  {
+    "pair_idx": 333,
+    "high_mu_id": "alpaca_7352",
+    "low_mu_id": "bailbench_262",
+    "delta_mu": 9.678538469372697
+  },
+  {
+    "pair_idx": 334,
+    "high_mu_id": "alpaca_9006",
+    "low_mu_id": "stresstest_9_401_neutral",
+    "delta_mu": 10.495949918514057
+  },
+  {
+    "pair_idx": 335,
+    "high_mu_id": "wildchat_78027",
+    "low_mu_id": "stresstest_83_1213_value1",
+    "delta_mu": 15.022343947939278
+  },
+  {
+    "pair_idx": 336,
+    "high_mu_id": "competition_math_2875",
+    "low_mu_id": "stresstest_41_1088_neutral",
+    "delta_mu": 11.187115628717377
+  },
+  {
+    "pair_idx": 337,
+    "high_mu_id": "wildchat_54298",
+    "low_mu_id": "stresstest_15_271_value2",
+    "delta_mu": 10.607389504668813
+  },
+  {
+    "pair_idx": 338,
+    "high_mu_id": "competition_math_2479",
+    "low_mu_id": "stresstest_44_760_value2",
+    "delta_mu": 11.18021430697949
+  },
+  {
+    "pair_idx": 339,
+    "high_mu_id": "competition_math_1723",
+    "low_mu_id": "alpaca_8945",
+    "delta_mu": 9.88205447268721
+  },
+  {
+    "pair_idx": 340,
+    "high_mu_id": "wildchat_53408",
+    "low_mu_id": "alpaca_10910",
+    "delta_mu": 4.52777134313728
+  },
+  {
+    "pair_idx": 341,
+    "high_mu_id": "competition_math_11089",
+    "low_mu_id": "alpaca_10070",
+    "delta_mu": 3.578185724291713
+  },
+  {
+    "pair_idx": 342,
+    "high_mu_id": "alpaca_5868",
+    "low_mu_id": "stresstest_39_830_value1",
+    "delta_mu": 6.750720451191093
+  },
+  {
+    "pair_idx": 343,
+    "high_mu_id": "wildchat_22386",
+    "low_mu_id": "competition_math_734",
+    "delta_mu": 3.4846721320408776
+  },
+  {
+    "pair_idx": 344,
+    "high_mu_id": "wildchat_14262",
+    "low_mu_id": "alpaca_2934",
+    "delta_mu": 5.392861132838912
+  },
+  {
+    "pair_idx": 345,
+    "high_mu_id": "competition_math_935",
+    "low_mu_id": "stresstest_41_594_value1",
+    "delta_mu": 14.67805705713132
+  },
+  {
+    "pair_idx": 346,
+    "high_mu_id": "competition_math_6177",
+    "low_mu_id": "competition_math_7606",
+    "delta_mu": 5.584123789678371
+  },
+  {
+    "pair_idx": 347,
+    "high_mu_id": "competition_math_451",
+    "low_mu_id": "stresstest_87_679_neutral",
+    "delta_mu": 5.840713930015728
+  },
+  {
+    "pair_idx": 348,
+    "high_mu_id": "alpaca_8143",
+    "low_mu_id": "stresstest_78_1159_value1",
+    "delta_mu": 5.838870207634899
+  },
+  {
+    "pair_idx": 349,
+    "high_mu_id": "stresstest_90_952_value2",
+    "low_mu_id": "alpaca_161",
+    "delta_mu": 8.627176511027661
+  },
+  {
+    "pair_idx": 350,
+    "high_mu_id": "competition_math_8942",
+    "low_mu_id": "alpaca_9953",
+    "delta_mu": 3.1992645114743317
+  },
+  {
+    "pair_idx": 351,
+    "high_mu_id": "competition_math_2531",
+    "low_mu_id": "stresstest_51_310_neutral",
+    "delta_mu": 16.490709383497176
+  },
+  {
+    "pair_idx": 352,
+    "high_mu_id": "competition_math_7843",
+    "low_mu_id": "bailbench_912",
+    "delta_mu": 8.482754029729948
+  },
+  {
+    "pair_idx": 353,
+    "high_mu_id": "wildchat_44687",
+    "low_mu_id": "alpaca_7912",
+    "delta_mu": 4.923882663473439
+  },
+  {
+    "pair_idx": 354,
+    "high_mu_id": "alpaca_9476",
+    "low_mu_id": "alpaca_10607",
+    "delta_mu": 5.440673529932774
+  },
+  {
+    "pair_idx": 355,
+    "high_mu_id": "wildchat_30549",
+    "low_mu_id": "bailbench_1018",
+    "delta_mu": 11.638738980692144
+  },
+  {
+    "pair_idx": 356,
+    "high_mu_id": "stresstest_72_721_neutral",
+    "low_mu_id": "stresstest_55_363_neutral",
+    "delta_mu": 3.0301423167869737
+  },
+  {
+    "pair_idx": 357,
+    "high_mu_id": "wildchat_36209",
+    "low_mu_id": "bailbench_288",
+    "delta_mu": 16.968951565031105
+  },
+  {
+    "pair_idx": 358,
+    "high_mu_id": "stresstest_99_258_value1",
+    "low_mu_id": "stresstest_99_1254_value1",
+    "delta_mu": 9.909539150284928
+  },
+  {
+    "pair_idx": 359,
+    "high_mu_id": "wildchat_66690",
+    "low_mu_id": "alpaca_9841",
+    "delta_mu": 4.76380215950757
+  },
+  {
+    "pair_idx": 360,
+    "high_mu_id": "competition_math_7537",
+    "low_mu_id": "wildchat_23447",
+    "delta_mu": 3.9006143297689775
+  },
+  {
+    "pair_idx": 361,
+    "high_mu_id": "alpaca_2714",
+    "low_mu_id": "wildchat_69534",
+    "delta_mu": 4.631904704656997
+  },
+  {
+    "pair_idx": 362,
+    "high_mu_id": "wildchat_31203",
+    "low_mu_id": "alpaca_1335",
+    "delta_mu": 7.850550871016331
+  },
+  {
+    "pair_idx": 363,
+    "high_mu_id": "wildchat_45464",
+    "low_mu_id": "wildchat_19692",
+    "delta_mu": 6.467222504736121
+  },
+  {
+    "pair_idx": 364,
+    "high_mu_id": "competition_math_9196",
+    "low_mu_id": "stresstest_72_661_value1",
+    "delta_mu": 3.830763480609441
+  },
+  {
+    "pair_idx": 365,
+    "high_mu_id": "competition_math_835",
+    "low_mu_id": "wildchat_72691",
+    "delta_mu": 6.422994065686352
+  },
+  {
+    "pair_idx": 366,
+    "high_mu_id": "wildchat_75660",
+    "low_mu_id": "wildchat_51520",
+    "delta_mu": 10.079142891805805
+  },
+  {
+    "pair_idx": 367,
+    "high_mu_id": "wildchat_65385",
+    "low_mu_id": "stresstest_39_144_value1",
+    "delta_mu": 15.451468257001011
+  },
+  {
+    "pair_idx": 368,
+    "high_mu_id": "alpaca_8956",
+    "low_mu_id": "bailbench_1089",
+    "delta_mu": 7.119301256223429
+  },
+  {
+    "pair_idx": 369,
+    "high_mu_id": "competition_math_10928",
+    "low_mu_id": "alpaca_6664",
+    "delta_mu": 8.431952271738833
+  },
+  {
+    "pair_idx": 370,
+    "high_mu_id": "stresstest_26_35_value1",
+    "low_mu_id": "stresstest_99_1030_neutral",
+    "delta_mu": 5.648591306879274
+  },
+  {
+    "pair_idx": 371,
+    "high_mu_id": "alpaca_5996",
+    "low_mu_id": "bailbench_1351",
+    "delta_mu": 10.078916040232684
+  },
+  {
+    "pair_idx": 372,
+    "high_mu_id": "competition_math_9863",
+    "low_mu_id": "alpaca_13728",
+    "delta_mu": 10.689863455024275
+  },
+  {
+    "pair_idx": 373,
+    "high_mu_id": "competition_math_2562",
+    "low_mu_id": "wildchat_6149",
+    "delta_mu": 9.861155724243796
+  },
+  {
+    "pair_idx": 374,
+    "high_mu_id": "stresstest_39_538_value1",
+    "low_mu_id": "wildchat_15388",
+    "delta_mu": 5.240375024512794
+  },
+  {
+    "pair_idx": 375,
+    "high_mu_id": "alpaca_6744",
+    "low_mu_id": "stresstest_13_626_neutral",
+    "delta_mu": 7.4037606159984515
+  },
+  {
+    "pair_idx": 376,
+    "high_mu_id": "competition_math_3037",
+    "low_mu_id": "competition_math_10133",
+    "delta_mu": 3.9825119978739023
+  },
+  {
+    "pair_idx": 377,
+    "high_mu_id": "wildchat_50611",
+    "low_mu_id": "alpaca_9009",
+    "delta_mu": 7.2880772509764675
+  },
+  {
+    "pair_idx": 378,
+    "high_mu_id": "alpaca_1386",
+    "low_mu_id": "stresstest_31_21_neutral",
+    "delta_mu": 3.165915986156139
+  },
+  {
+    "pair_idx": 379,
+    "high_mu_id": "stresstest_53_1253_value1",
+    "low_mu_id": "stresstest_40_744_value2",
+    "delta_mu": 3.1196215485507732
+  },
+  {
+    "pair_idx": 380,
+    "high_mu_id": "stresstest_41_309_value2",
+    "low_mu_id": "alpaca_1061",
+    "delta_mu": 3.1732884994274477
+  },
+  {
+    "pair_idx": 381,
+    "high_mu_id": "wildchat_58696",
+    "low_mu_id": "competition_math_6107",
+    "delta_mu": 10.46556885128965
+  },
+  {
+    "pair_idx": 382,
+    "high_mu_id": "wildchat_58696",
+    "low_mu_id": "competition_math_6800",
+    "delta_mu": 3.641195858958395
+  },
+  {
+    "pair_idx": 383,
+    "high_mu_id": "competition_math_4470",
+    "low_mu_id": "competition_math_4509",
+    "delta_mu": 3.6444920433143992
+  },
+  {
+    "pair_idx": 384,
+    "high_mu_id": "wildchat_12328",
+    "low_mu_id": "alpaca_10212",
+    "delta_mu": 12.5369507425956
+  },
+  {
+    "pair_idx": 385,
+    "high_mu_id": "alpaca_2171",
+    "low_mu_id": "stresstest_16_699_value1",
+    "delta_mu": 10.996530878111233
+  },
+  {
+    "pair_idx": 386,
+    "high_mu_id": "wildchat_46543",
+    "low_mu_id": "stresstest_80_283_value2",
+    "delta_mu": 14.690130257581426
+  },
+  {
+    "pair_idx": 387,
+    "high_mu_id": "wildchat_7464",
+    "low_mu_id": "stresstest_68_1454_value1",
+    "delta_mu": 11.145922259805102
+  },
+  {
+    "pair_idx": 388,
+    "high_mu_id": "alpaca_14695",
+    "low_mu_id": "alpaca_13601",
+    "delta_mu": 9.281405991700117
+  },
+  {
+    "pair_idx": 389,
+    "high_mu_id": "competition_math_3889",
+    "low_mu_id": "stresstest_54_724_value1",
+    "delta_mu": 7.21406383567414
+  },
+  {
+    "pair_idx": 390,
+    "high_mu_id": "wildchat_23457",
+    "low_mu_id": "stresstest_36_71_value1",
+    "delta_mu": 13.192758530183255
+  },
+  {
+    "pair_idx": 391,
+    "high_mu_id": "competition_math_5886",
+    "low_mu_id": "wildchat_3047",
+    "delta_mu": 5.185981501667659
+  },
+  {
+    "pair_idx": 392,
+    "high_mu_id": "competition_math_3912",
+    "low_mu_id": "stresstest_87_719_value2",
+    "delta_mu": 5.9171844969643885
+  },
+  {
+    "pair_idx": 393,
+    "high_mu_id": "competition_math_8923",
+    "low_mu_id": "alpaca_11480",
+    "delta_mu": 8.673138913815617
+  },
+  {
+    "pair_idx": 394,
+    "high_mu_id": "stresstest_98_595_value1",
+    "low_mu_id": "stresstest_27_564_value1",
+    "delta_mu": 7.414473978020332
+  },
+  {
+    "pair_idx": 395,
+    "high_mu_id": "alpaca_13872",
+    "low_mu_id": "stresstest_82_1211_neutral",
+    "delta_mu": 3.257800081397514
+  },
+  {
+    "pair_idx": 396,
+    "high_mu_id": "stresstest_13_47_value1",
+    "low_mu_id": "alpaca_4186",
+    "delta_mu": 3.2800712539265406
+  },
+  {
+    "pair_idx": 397,
+    "high_mu_id": "stresstest_16_1108_neutral",
+    "low_mu_id": "stresstest_59_302_value2",
+    "delta_mu": 3.8070228759925815
+  },
+  {
+    "pair_idx": 398,
+    "high_mu_id": "stresstest_31_492_value1",
+    "low_mu_id": "wildchat_28619",
+    "delta_mu": 10.240514650692244
+  },
+  {
+    "pair_idx": 399,
+    "high_mu_id": "competition_math_8838",
+    "low_mu_id": "bailbench_714",
+    "delta_mu": 15.268744647301652
+  },
+  {
+    "pair_idx": 400,
+    "high_mu_id": "stresstest_68_749_neutral",
+    "low_mu_id": "alpaca_1915",
+    "delta_mu": 3.8793864333802004
+  },
+  {
+    "pair_idx": 401,
+    "high_mu_id": "stresstest_86_34_value2",
+    "low_mu_id": "competition_math_7404",
+    "delta_mu": 3.7893592037199406
+  },
+  {
+    "pair_idx": 402,
+    "high_mu_id": "competition_math_4954",
+    "low_mu_id": "stresstest_65_1049_neutral",
+    "delta_mu": 8.139328848837451
+  },
+  {
+    "pair_idx": 403,
+    "high_mu_id": "wildchat_59200",
+    "low_mu_id": "bailbench_574",
+    "delta_mu": 15.592629929637138
+  },
+  {
+    "pair_idx": 404,
+    "high_mu_id": "stresstest_2_471_value1",
+    "low_mu_id": "alpaca_2933",
+    "delta_mu": 6.659619012913569
+  },
+  {
+    "pair_idx": 405,
+    "high_mu_id": "competition_math_3394",
+    "low_mu_id": "stresstest_91_972_value2",
+    "delta_mu": 8.806516060038192
+  },
+  {
+    "pair_idx": 406,
+    "high_mu_id": "stresstest_6_802_value1",
+    "low_mu_id": "stresstest_9_1456_value1",
+    "delta_mu": 11.484042110335286
+  },
+  {
+    "pair_idx": 407,
+    "high_mu_id": "competition_math_10975",
+    "low_mu_id": "alpaca_14528",
+    "delta_mu": 8.60968942666544
+  },
+  {
+    "pair_idx": 408,
+    "high_mu_id": "stresstest_66_1345_value2",
+    "low_mu_id": "competition_math_5151",
+    "delta_mu": 5.913310397001347
+  },
+  {
+    "pair_idx": 409,
+    "high_mu_id": "alpaca_13737",
+    "low_mu_id": "stresstest_18_1068_value2",
+    "delta_mu": 12.629825585134753
+  },
+  {
+    "pair_idx": 410,
+    "high_mu_id": "competition_math_7832",
+    "low_mu_id": "wildchat_38202",
+    "delta_mu": 5.606769602087413
+  },
+  {
+    "pair_idx": 411,
+    "high_mu_id": "wildchat_64187",
+    "low_mu_id": "competition_math_3872",
+    "delta_mu": 9.469388885525829
+  },
+  {
+    "pair_idx": 412,
+    "high_mu_id": "alpaca_4005",
+    "low_mu_id": "competition_math_486",
+    "delta_mu": 3.46267869358624
+  },
+  {
+    "pair_idx": 413,
+    "high_mu_id": "competition_math_12334",
+    "low_mu_id": "wildchat_16343",
+    "delta_mu": 3.0527922036953727
+  },
+  {
+    "pair_idx": 414,
+    "high_mu_id": "wildchat_10695",
+    "low_mu_id": "bailbench_1038",
+    "delta_mu": 11.996418262409957
+  },
+  {
+    "pair_idx": 415,
+    "high_mu_id": "alpaca_6515",
+    "low_mu_id": "bailbench_1163",
+    "delta_mu": 10.974239116442904
+  },
+  {
+    "pair_idx": 416,
+    "high_mu_id": "wildchat_27448",
+    "low_mu_id": "stresstest_35_1137_value2",
+    "delta_mu": 8.125085936209258
+  },
+  {
+    "pair_idx": 417,
+    "high_mu_id": "wildchat_26468",
+    "low_mu_id": "alpaca_3938",
+    "delta_mu": 15.558111835872637
+  },
+  {
+    "pair_idx": 418,
+    "high_mu_id": "competition_math_11935",
+    "low_mu_id": "wildchat_35580",
+    "delta_mu": 4.904151054562938
+  },
+  {
+    "pair_idx": 419,
+    "high_mu_id": "wildchat_73488",
+    "low_mu_id": "wildchat_65017",
+    "delta_mu": 7.957498562031657
+  },
+  {
+    "pair_idx": 420,
+    "high_mu_id": "wildchat_52054",
+    "low_mu_id": "wildchat_3004",
+    "delta_mu": 8.767182894877957
+  },
+  {
+    "pair_idx": 421,
+    "high_mu_id": "stresstest_25_622_value2",
+    "low_mu_id": "stresstest_10_1320_neutral",
+    "delta_mu": 3.068852651324051
+  },
+  {
+    "pair_idx": 422,
+    "high_mu_id": "wildchat_74272",
+    "low_mu_id": "stresstest_21_654_value2",
+    "delta_mu": 6.110634312006806
+  },
+  {
+    "pair_idx": 423,
+    "high_mu_id": "competition_math_5802",
+    "low_mu_id": "stresstest_65_1274_value1",
+    "delta_mu": 6.040867519705589
+  },
+  {
+    "pair_idx": 424,
+    "high_mu_id": "wildchat_14498",
+    "low_mu_id": "competition_math_2082",
+    "delta_mu": 4.239173832851518
+  },
+  {
+    "pair_idx": 425,
+    "high_mu_id": "stresstest_16_554_value2",
+    "low_mu_id": "stresstest_91_261_value2",
+    "delta_mu": 12.905904403007607
+  },
+  {
+    "pair_idx": 426,
+    "high_mu_id": "wildchat_29325",
+    "low_mu_id": "competition_math_4876",
+    "delta_mu": 3.6868384442179822
+  },
+  {
+    "pair_idx": 427,
+    "high_mu_id": "stresstest_48_547_neutral",
+    "low_mu_id": "stresstest_18_50_value1",
+    "delta_mu": 6.12456143006602
+  },
+  {
+    "pair_idx": 428,
+    "high_mu_id": "stresstest_67_950_value2",
+    "low_mu_id": "alpaca_8212",
+    "delta_mu": 9.750396538720832
+  },
+  {
+    "pair_idx": 429,
+    "high_mu_id": "alpaca_7697",
+    "low_mu_id": "stresstest_7_927_value2",
+    "delta_mu": 3.627638660961186
+  },
+  {
+    "pair_idx": 430,
+    "high_mu_id": "alpaca_11715",
+    "low_mu_id": "stresstest_39_144_value1",
+    "delta_mu": 6.335485277263373
+  },
+  {
+    "pair_idx": 431,
+    "high_mu_id": "alpaca_3445",
+    "low_mu_id": "stresstest_92_705_neutral",
+    "delta_mu": 4.052224229857593
+  },
+  {
+    "pair_idx": 432,
+    "high_mu_id": "competition_math_3903",
+    "low_mu_id": "alpaca_1301",
+    "delta_mu": 8.9417232087525
+  },
+  {
+    "pair_idx": 433,
+    "high_mu_id": "competition_math_10212",
+    "low_mu_id": "stresstest_82_603_neutral",
+    "delta_mu": 15.017471698307146
+  },
+  {
+    "pair_idx": 434,
+    "high_mu_id": "competition_math_6348",
+    "low_mu_id": "alpaca_675",
+    "delta_mu": 6.944698726483981
+  },
+  {
+    "pair_idx": 435,
+    "high_mu_id": "competition_math_10294",
+    "low_mu_id": "competition_math_2502",
+    "delta_mu": 7.133008418140543
+  },
+  {
+    "pair_idx": 436,
+    "high_mu_id": "wildchat_52434",
+    "low_mu_id": "alpaca_12083",
+    "delta_mu": 5.153814566519094
+  },
+  {
+    "pair_idx": 437,
+    "high_mu_id": "wildchat_77456",
+    "low_mu_id": "stresstest_26_1025_value1",
+    "delta_mu": 4.99405803052818
+  },
+  {
+    "pair_idx": 438,
+    "high_mu_id": "competition_math_4525",
+    "low_mu_id": "alpaca_5928",
+    "delta_mu": 5.564994986085599
+  },
+  {
+    "pair_idx": 439,
+    "high_mu_id": "stresstest_13_299_value2",
+    "low_mu_id": "alpaca_5718",
+    "delta_mu": 7.867282425556846
+  },
+  {
+    "pair_idx": 440,
+    "high_mu_id": "wildchat_7145",
+    "low_mu_id": "stresstest_42_736_value1",
+    "delta_mu": 5.750896612380361
+  },
+  {
+    "pair_idx": 441,
+    "high_mu_id": "competition_math_197",
+    "low_mu_id": "competition_math_275",
+    "delta_mu": 3.9401351501489534
+  },
+  {
+    "pair_idx": 442,
+    "high_mu_id": "wildchat_60493",
+    "low_mu_id": "stresstest_94_129_value2",
+    "delta_mu": 8.567709598441555
+  },
+  {
+    "pair_idx": 443,
+    "high_mu_id": "alpaca_8913",
+    "low_mu_id": "bailbench_664",
+    "delta_mu": 10.065509804287181
+  },
+  {
+    "pair_idx": 444,
+    "high_mu_id": "wildchat_63216",
+    "low_mu_id": "alpaca_8157",
+    "delta_mu": 7.124904184575255
+  },
+  {
+    "pair_idx": 445,
+    "high_mu_id": "competition_math_7825",
+    "low_mu_id": "bailbench_826",
+    "delta_mu": 16.003064747658584
+  },
+  {
+    "pair_idx": 446,
+    "high_mu_id": "competition_math_9940",
+    "low_mu_id": "alpaca_11284",
+    "delta_mu": 6.25043747503289
+  },
+  {
+    "pair_idx": 447,
+    "high_mu_id": "wildchat_46546",
+    "low_mu_id": "alpaca_4065",
+    "delta_mu": 6.827535861911492
+  },
+  {
+    "pair_idx": 448,
+    "high_mu_id": "stresstest_13_1236_value2",
+    "low_mu_id": "stresstest_78_736_value2",
+    "delta_mu": 6.9968322173838855
+  },
+  {
+    "pair_idx": 449,
+    "high_mu_id": "competition_math_6834",
+    "low_mu_id": "stresstest_96_10_value2",
+    "delta_mu": 13.019225890708878
+  },
+  {
+    "pair_idx": 450,
+    "high_mu_id": "alpaca_14801",
+    "low_mu_id": "alpaca_89",
+    "delta_mu": 4.588299996428859
+  },
+  {
+    "pair_idx": 451,
+    "high_mu_id": "competition_math_1330",
+    "low_mu_id": "alpaca_12901",
+    "delta_mu": 3.439374363601547
+  },
+  {
+    "pair_idx": 452,
+    "high_mu_id": "stresstest_24_190_value1",
+    "low_mu_id": "stresstest_37_897_neutral",
+    "delta_mu": 15.87717029711725
+  },
+  {
+    "pair_idx": 453,
+    "high_mu_id": "alpaca_7616",
+    "low_mu_id": "alpaca_1240",
+    "delta_mu": 8.123797735516888
+  },
+  {
+    "pair_idx": 454,
+    "high_mu_id": "wildchat_57358",
+    "low_mu_id": "bailbench_1515",
+    "delta_mu": 16.70811515734877
+  },
+  {
+    "pair_idx": 455,
+    "high_mu_id": "stresstest_72_661_value1",
+    "low_mu_id": "stresstest_78_1411_value2",
+    "delta_mu": 4.3391278943759035
+  },
+  {
+    "pair_idx": 456,
+    "high_mu_id": "wildchat_37691",
+    "low_mu_id": "stresstest_28_472_value1",
+    "delta_mu": 8.29948635413798
+  },
+  {
+    "pair_idx": 457,
+    "high_mu_id": "alpaca_13454",
+    "low_mu_id": "alpaca_1970",
+    "delta_mu": 3.239965120698833
+  },
+  {
+    "pair_idx": 458,
+    "high_mu_id": "competition_math_7497",
+    "low_mu_id": "competition_math_6406",
+    "delta_mu": 4.5138868039734525
+  },
+  {
+    "pair_idx": 459,
+    "high_mu_id": "competition_math_5561",
+    "low_mu_id": "stresstest_55_1038_value1",
+    "delta_mu": 14.676642273941912
+  },
+  {
+    "pair_idx": 460,
+    "high_mu_id": "competition_math_5454",
+    "low_mu_id": "wildchat_37690",
+    "delta_mu": 8.358832281039698
+  },
+  {
+    "pair_idx": 461,
+    "high_mu_id": "alpaca_10036",
+    "low_mu_id": "wildchat_29426",
+    "delta_mu": 6.187885188646045
+  },
+  {
+    "pair_idx": 462,
+    "high_mu_id": "competition_math_7594",
+    "low_mu_id": "alpaca_5184",
+    "delta_mu": 8.395405245702431
+  },
+  {
+    "pair_idx": 463,
+    "high_mu_id": "alpaca_5619",
+    "low_mu_id": "bailbench_1544",
+    "delta_mu": 7.380756204649517
+  },
+  {
+    "pair_idx": 464,
+    "high_mu_id": "competition_math_451",
+    "low_mu_id": "competition_math_4376",
+    "delta_mu": 4.424203060210427
+  },
+  {
+    "pair_idx": 465,
+    "high_mu_id": "alpaca_6839",
+    "low_mu_id": "bailbench_1390",
+    "delta_mu": 7.6082481741177705
+  },
+  {
+    "pair_idx": 466,
+    "high_mu_id": "wildchat_76449",
+    "low_mu_id": "alpaca_3234",
+    "delta_mu": 5.4738555950124494
+  },
+  {
+    "pair_idx": 467,
+    "high_mu_id": "alpaca_6100",
+    "low_mu_id": "alpaca_3096",
+    "delta_mu": 4.4982196350609485
+  },
+  {
+    "pair_idx": 468,
+    "high_mu_id": "competition_math_5561",
+    "low_mu_id": "stresstest_66_1189_neutral",
+    "delta_mu": 16.419058136764132
+  },
+  {
+    "pair_idx": 469,
+    "high_mu_id": "alpaca_7415",
+    "low_mu_id": "alpaca_12596",
+    "delta_mu": 3.376005162475671
+  },
+  {
+    "pair_idx": 470,
+    "high_mu_id": "wildchat_28431",
+    "low_mu_id": "bailbench_451",
+    "delta_mu": 17.262232536768995
+  },
+  {
+    "pair_idx": 471,
+    "high_mu_id": "stresstest_18_112_value1",
+    "low_mu_id": "stresstest_46_1073_value2",
+    "delta_mu": 11.05614077746034
+  },
+  {
+    "pair_idx": 472,
+    "high_mu_id": "wildchat_46421",
+    "low_mu_id": "bailbench_1035",
+    "delta_mu": 12.433651147971414
+  },
+  {
+    "pair_idx": 473,
+    "high_mu_id": "stresstest_82_606_value2",
+    "low_mu_id": "alpaca_5993",
+    "delta_mu": 13.359444693972407
+  },
+  {
+    "pair_idx": 474,
+    "high_mu_id": "competition_math_1000",
+    "low_mu_id": "competition_math_5907",
+    "delta_mu": 3.561915577337019
+  },
+  {
+    "pair_idx": 475,
+    "high_mu_id": "competition_math_10909",
+    "low_mu_id": "stresstest_37_611_value2",
+    "delta_mu": 13.617438992126438
+  },
+  {
+    "pair_idx": 476,
+    "high_mu_id": "competition_math_10252",
+    "low_mu_id": "stresstest_19_226_value1",
+    "delta_mu": 7.268443006704468
+  },
+  {
+    "pair_idx": 477,
+    "high_mu_id": "wildchat_50343",
+    "low_mu_id": "alpaca_3234",
+    "delta_mu": 6.105384012143673
+  },
+  {
+    "pair_idx": 478,
+    "high_mu_id": "competition_math_5262",
+    "low_mu_id": "stresstest_6_1199_value2",
+    "delta_mu": 6.037613755406573
+  },
+  {
+    "pair_idx": 479,
+    "high_mu_id": "alpaca_4258",
+    "low_mu_id": "alpaca_12533",
+    "delta_mu": 5.957409654276133
+  },
+  {
+    "pair_idx": 480,
+    "high_mu_id": "stresstest_63_1429_value1",
+    "low_mu_id": "alpaca_9848",
+    "delta_mu": 3.022789143351643
+  },
+  {
+    "pair_idx": 481,
+    "high_mu_id": "competition_math_11756",
+    "low_mu_id": "stresstest_7_310_value2",
+    "delta_mu": 10.345290841424704
+  },
+  {
+    "pair_idx": 482,
+    "high_mu_id": "wildchat_76621",
+    "low_mu_id": "alpaca_8699",
+    "delta_mu": 3.6037900452342093
+  },
+  {
+    "pair_idx": 483,
+    "high_mu_id": "wildchat_75529",
+    "low_mu_id": "stresstest_35_1405_neutral",
+    "delta_mu": 11.517585354006755
+  },
+  {
+    "pair_idx": 484,
+    "high_mu_id": "stresstest_81_161_value1",
+    "low_mu_id": "stresstest_66_1087_value2",
+    "delta_mu": 11.30937322632593
+  },
+  {
+    "pair_idx": 485,
+    "high_mu_id": "competition_math_3389",
+    "low_mu_id": "alpaca_2686",
+    "delta_mu": 7.7169675352971465
+  },
+  {
+    "pair_idx": 486,
+    "high_mu_id": "stresstest_63_1353_value2",
+    "low_mu_id": "stresstest_3_677_value1",
+    "delta_mu": 4.994319141496175
+  },
+  {
+    "pair_idx": 487,
+    "high_mu_id": "competition_math_10597",
+    "low_mu_id": "stresstest_28_1019_value1",
+    "delta_mu": 18.63136797472729
+  },
+  {
+    "pair_idx": 488,
+    "high_mu_id": "alpaca_7814",
+    "low_mu_id": "alpaca_9155",
+    "delta_mu": 7.063624050672533
+  },
+  {
+    "pair_idx": 489,
+    "high_mu_id": "competition_math_4345",
+    "low_mu_id": "stresstest_87_1427_value1",
+    "delta_mu": 13.756820403270005
+  },
+  {
+    "pair_idx": 490,
+    "high_mu_id": "competition_math_9352",
+    "low_mu_id": "stresstest_32_1362_value1",
+    "delta_mu": 6.775304262139022
+  },
+  {
+    "pair_idx": 491,
+    "high_mu_id": "wildchat_49159",
+    "low_mu_id": "stresstest_57_71_value2",
+    "delta_mu": 3.9525062234624047
+  },
+  {
+    "pair_idx": 492,
+    "high_mu_id": "competition_math_5927",
+    "low_mu_id": "stresstest_9_595_value1",
+    "delta_mu": 14.761315794904013
+  },
+  {
+    "pair_idx": 493,
+    "high_mu_id": "wildchat_25398",
+    "low_mu_id": "alpaca_5276",
+    "delta_mu": 4.24654820876116
+  },
+  {
+    "pair_idx": 494,
+    "high_mu_id": "stresstest_59_879_value2",
+    "low_mu_id": "stresstest_16_1405_value2",
+    "delta_mu": 3.1621591204594344
+  },
+  {
+    "pair_idx": 495,
+    "high_mu_id": "wildchat_77112",
+    "low_mu_id": "stresstest_21_1182_value1",
+    "delta_mu": 5.185386518787604
+  },
+  {
+    "pair_idx": 496,
+    "high_mu_id": "wildchat_1450",
+    "low_mu_id": "stresstest_14_1251_value1",
+    "delta_mu": 5.1096464817161396
+  },
+  {
+    "pair_idx": 497,
+    "high_mu_id": "alpaca_2199",
+    "low_mu_id": "bailbench_1411",
+    "delta_mu": 6.2236678616188525
+  },
+  {
+    "pair_idx": 498,
+    "high_mu_id": "wildchat_42061",
+    "low_mu_id": "wildchat_51239",
+    "delta_mu": 15.690535359137183
+  },
+  {
+    "pair_idx": 499,
+    "high_mu_id": "alpaca_10125",
+    "low_mu_id": "alpaca_10902",
+    "delta_mu": 3.881094081719217
+  }
+]

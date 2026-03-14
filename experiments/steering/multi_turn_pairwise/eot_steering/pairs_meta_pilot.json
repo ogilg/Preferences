@@ -1,0 +1,62 @@
+[
+  {
+    "pair_idx": 0,
+    "high_mu_id": "competition_math_3149",
+    "low_mu_id": "wildchat_43232",
+    "delta_mu": 0.8723896356447591
+  },
+  {
+    "pair_idx": 1,
+    "high_mu_id": "alpaca_14041",
+    "low_mu_id": "alpaca_10825",
+    "delta_mu": 0.7623031259640258
+  },
+  {
+    "pair_idx": 2,
+    "high_mu_id": "stresstest_2_1230_value1",
+    "low_mu_id": "competition_math_4643",
+    "delta_mu": 1.378826306611451
+  },
+  {
+    "pair_idx": 3,
+    "high_mu_id": "alpaca_2384",
+    "low_mu_id": "stresstest_97_198_neutral",
+    "delta_mu": 2.697450122144021
+  },
+  {
+    "pair_idx": 4,
+    "high_mu_id": "wildchat_10210",
+    "low_mu_id": "stresstest_8_365_value2",
+    "delta_mu": 2.071202521761955
+  },
+  {
+    "pair_idx": 5,
+    "high_mu_id": "alpaca_13644",
+    "low_mu_id": "alpaca_5337",
+    "delta_mu": 2.435038664681142
+  },
+  {
+    "pair_idx": 6,
+    "high_mu_id": "competition_math_7032",
+    "low_mu_id": "stresstest_25_196_value2",
+    "delta_mu": 12.573919380598475
+  },
+  {
+    "pair_idx": 7,
+    "high_mu_id": "alpaca_2910",
+    "low_mu_id": "alpaca_7866",
+    "delta_mu": 3.7593331263055942
+  },
+  {
+    "pair_idx": 8,
+    "high_mu_id": "stresstest_72_675_value2",
+    "low_mu_id": "stresstest_10_978_value1",
+    "delta_mu": 3.050346491082287
+  },
+  {
+    "pair_idx": 9,
+    "high_mu_id": "wildchat_77337",
+    "low_mu_id": "stresstest_44_150_neutral",
+    "delta_mu": 6.834380207078265
+  }
+]

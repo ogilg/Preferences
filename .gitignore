@@ -85,5 +85,8 @@ concept_vectors/**/*.npz
 
 *.npz
 *.npy
+# Experiment checkpoints (large JSONL files)
+experiments/**/checkpoint*.jsonl
+
 # Personal reflections
 reflections/
