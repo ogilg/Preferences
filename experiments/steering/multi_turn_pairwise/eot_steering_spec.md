@@ -1,8 +1,8 @@
-# Multi-Turn EOT Steering
+# Multi-Turn Differential EOT Steering
 
 ## Goal
 
-Steer preferences by intervening on the `<end_of_turn>` token (tb-5) in the multi-turn pairwise format.
+Steer preferences via differential steering on the two user-turn `<end_of_turn>` tokens in the multi-turn pairwise format.
 
 ## Background
 
@@ -10,14 +10,41 @@ The multi-turn format splits tasks across turns:
 
 ```
 User:      "Choose which task you would prefer to complete.\n\nTask A:\n{task_a}\n\n{format_instruction}"
+                                                                                    ← user EOT #1
 Assistant: "Got it, what's the other task?"
 User:      "Task B:\n{task_b}"
+                                    ← user EOT #2
 Assistant: [generates completion of preferred task]
 ```
 
-Validation results (200 pairs × 4 resamples): r = 0.53 with single-turn Thurstonian scores, P(A-position) = 0.504 (no position bias), 77% cross-order agreement.
+The tb-5 probe was trained on user-turn EOT tokens (the `<end_of_turn>` just before `<start_of_turn>model`). There are two such tokens here: one after the Task A turn and one after the Task B turn.
 
-We steer at the assistant-turn EOT — the last position that has seen Task A but not Task B. This is single-position steering (not differential): add `coefficient × direction` to the residual stream at one position.
+Validation results (200 pairs × 4 resamples): r = 0.53 with Thurstonian scores, P(A-position) = 0.504 (no position bias), 77% cross-order agreement.
+
+## Design
+
+### Steering mechanism
+
+Differential steering at two user EOT positions:
+- **+direction** at user EOT #1 (after Task A turn) — bias toward "higher preference" for Task A
+- **-direction** at user EOT #2 (after Task B turn) — bias toward "lower preference" for Task B
+
+Use `differential_steering(tensor, eot1, eot1+1, eot2, eot2+1)` from `src/models/base.py`.
+
+### Ordering
+
+Each pair is tested in both orderings:
+- **Ordering 0 (AB):** Task A in turn 1, Task B in turn 2. Steer +direction at EOT after Task A, -direction at EOT after Task B.
+- **Ordering 1 (BA):** Task B in turn 1, Task A in turn 2. Steer +direction at EOT after Task B, -direction at EOT after Task A.
+
+The steering always follows presentation order (+direction on first task's EOT, -direction on second task's EOT). Map choices back to original task identities after generation.
+
+### Conditions
+
+Five multiplier magnitudes plus control:
+- **+0.02, +0.03, +0.05:** +direction on first task's EOT, -direction on second task's EOT
+- **-0.02, -0.03, -0.05:** -direction on first task's EOT, +direction on second task's EOT
+- **0:** no steering
 
 ## Parameters
 
@@ -29,7 +56,7 @@ We steer at the assistant-turn EOT — the last position that has seen Task A bu
 | Temperature | 1.0 |
 | max_new_tokens | 32 |
 | Prefill | `"Got it, what's the other task?"` |
-| Multipliers | `[-0.05, -0.03, -0.02, 0, 0.02, 0.03, 0.05]` |
+| Multipliers | `[-0.05, -0.03, -0.02, 0, +0.02, +0.03, +0.05]` |
 
 Coefficients = multiplier × mean activation norm at L32 (from `suggest_coefficient_range()` in `src/steering/calibration.py`, reads cached norms from `extraction_metadata.json`).
 
@@ -39,11 +66,12 @@ Coefficients = multiplier × mean activation norm at L32 (from `suggest_coeffici
 
 ### Measurement
 
-Per pair × coefficient: 5 resamples per ordering (10 total), both orderings. 7 coefficients × 500 pairs × 10 trials = 35,000 generations (~3.2 hours on H100).
+Per pair × condition × ordering: 5 resamples. 7 conditions × 500 pairs × 2 orderings × 5 resamples = 35,000 generations.
 
-### Primary metric
+### Primary metrics
 
-**Steering effect** = P(choose high-mu task | coef=+C) − P(choose high-mu task | coef=−C), position-controlled.
+- **Ordering bias** per condition: P(choose A-position task | AB) - P(choose A-position task | BA). At baseline (coef=0) this should be near 0. Positive steering should increase it, negative should decrease/reverse it.
+- **Steering effect** per multiplier magnitude = P(choose high-mu | +m) − P(choose high-mu | −m), position-controlled (averaged over both orderings).
 
 ## Implementation
 
@@ -52,7 +80,7 @@ Per pair × coefficient: 5 resamples per ordering (10 total), both orderings. 7 
 ```python
 from src.steering.client import create_steered_client
 from src.steering.calibration import suggest_coefficient_range
-from src.models.base import position_selective_steering, find_eot_indices
+from src.models.base import differential_steering, find_eot_indices
 from src.measurement.elicitation.prompt_templates import (
     MultiTurnRevealedPromptBuilder, PromptTemplate, TEMPLATE_TYPE_PLACEHOLDERS,
 )
@@ -71,24 +99,32 @@ Do not reimplement prompt building, response parsing, or coefficient calibration
 3. Load Thurstonian scores via `load_run_utilities(run_dir)` and tasks via `load_filtered_tasks`
 4. Sample 500 pairs stratified by |Δmu|
 5. Create client: `create_steered_client("gemma-3-27b", layer=32, direction=direction, coefficient=0)`
-6. For each trial: build prompt with `MultiTurnRevealedPromptBuilder`, find EOT position, steer with `position_selective_steering(tensor, eot_pos, eot_pos + 1)`, generate with `client.generate_with_hook(messages, hook)`, parse with `CompletionChoiceFormat`
+6. **Outer loop is condition (multiplier), inner loops are pairs × orderings × resamples.** This lets us check intermediate results after each condition completes. For each condition × pair × ordering × resample:
+   - Build prompt with `MultiTurnRevealedPromptBuilder`. For ordering=0 pass (task_a, task_b), for ordering=1 pass (task_b, task_a).
+   - Find both user EOT positions via `find_eot_indices` — these are the 1st and 3rd EOT indices (user turns), not the 2nd (assistant turn).
+   - Create hook: `differential_steering(tensor, eot1, eot1+1, eot2, eot2+1)`
+   - For negative condition, swap the signs: `differential_steering(tensor, eot2, eot2+1, eot1, eot1+1)`
+   - Generate: `client.generate_with_hook(messages, hook)`
+   - Parse with `CompletionChoiceFormat`. Map `choice_presented` back to `choice_original` (flip a↔b when ordering=1).
 7. Save each trial to JSONL checkpoint
 
-### Finding the EOT position
+### Finding the user EOT positions
 
-1. `tokenizer.apply_chat_template(messages, tokenize=True)`
-2. `find_eot_indices(token_ids, tokenizer)` → assistant-turn EOT is the second index
+1. `tokenizer.apply_chat_template(messages, tokenize=True)` on all 3 messages (both user turns + assistant prefill)
+2. `find_eot_indices(token_ids, tokenizer)` returns all EOT positions
+3. User EOT #1 = first EOT index, User EOT #2 = third EOT index (second is the assistant turn)
 
 ### Resume
 
-Load existing `checkpoint.jsonl`, build set of `(pair_id, multiplier, ordering, resample_idx)` keys, skip completed.
+Load existing `checkpoint.jsonl`, build set of `(pair_id, condition, ordering, resample_idx)` keys, skip completed.
 
 ### Analysis: `scripts/multi_turn_pairwise/analyze_eot_steering.py`
 
-1. Dose-response curve: P(choose high-mu task) vs coefficient, bootstrap 95% CIs
-2. By Δmu stratum: separate curves for borderline, moderate, decisive
-3. Per-pair slopes: distribution of linear regression slopes
-4. Parse rate table per coefficient
+1. **Dose-response curve:** P(choose high-mu) vs multiplier, with bootstrap 95% CIs
+2. **Ordering bias per condition:** P(A-position | AB) - P(A-position | BA) for each of the 7 conditions
+3. **Steering effect per magnitude:** P(high-mu | +m) − P(high-mu | −m) for m ∈ {0.02, 0.03, 0.05}
+4. **By Δmu stratum:** Steering effect for borderline, moderate, decisive
+5. **Parse rate table** per condition
 
 ## Source data
 
@@ -121,6 +157,6 @@ scp -r -P <PORT> -i ~/.ssh/id_ed25519 results/experiments/main_probes/gemma3_10k
 Assert in the analysis script (print PASS/FAIL):
 
 1. **Monotonic dose-response:** Spearman correlation between multiplier and P(high-mu) > 0 (p < 0.05)
-2. **Steering effect > 10pp** at the largest multiplier (±0.05)
-3. **Gradient by difficulty:** Borderline steering effect > decisive steering effect
-4. **Parse rates > 90%** at all coefficients
+2. **Steering effect > 10pp** at any multiplier magnitude
+3. **Ordering bias shifts:** Positive conditions have higher ordering bias than control, negative conditions have lower
+4. **Parse rates > 90%** at all conditions
