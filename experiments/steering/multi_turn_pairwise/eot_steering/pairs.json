@@ -1,0 +1,4502 @@
+[
+  {
+    "pair_id": 0,
+    "task_a_id": "competition_math_9115",
+    "task_b_id": "stresstest_15_1377_value1",
+    "mu_a": 0.8903106454918392,
+    "mu_b": -2.122552175773313,
+    "delta_mu": 3.012862821265152,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 1,
+    "task_a_id": "wildchat_55386",
+    "task_b_id": "competition_math_6682",
+    "mu_a": 4.440750848266453,
+    "mu_b": 5.598493888093728,
+    "delta_mu": 1.1577430398272748,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 2,
+    "task_a_id": "competition_math_11573",
+    "task_b_id": "alpaca_3118",
+    "mu_a": 6.984028703875807,
+    "mu_b": 3.434596772725142,
+    "delta_mu": 3.549431931150665,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 3,
+    "task_a_id": "wildchat_51354",
+    "task_b_id": "wildchat_54577",
+    "mu_a": 7.456682673254873,
+    "mu_b": -5.7496216577718116,
+    "delta_mu": 13.206304331026685,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 4,
+    "task_a_id": "alpaca_14353",
+    "task_b_id": "wildchat_72043",
+    "mu_a": -0.2517999358180192,
+    "mu_b": -5.976415098954782,
+    "delta_mu": 5.724615163136763,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 5,
+    "task_a_id": "stresstest_38_898_value1",
+    "task_b_id": "alpaca_4893",
+    "mu_a": 4.137893609232699,
+    "mu_b": 5.291331303939087,
+    "delta_mu": 1.1534376947063878,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 6,
+    "task_a_id": "alpaca_8313",
+    "task_b_id": "alpaca_2019",
+    "mu_a": -1.0470063813694066,
+    "mu_b": 3.849259291687391,
+    "delta_mu": 4.8962656730567975,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 7,
+    "task_a_id": "wildchat_52591",
+    "task_b_id": "competition_math_3528",
+    "mu_a": 2.114445307514797,
+    "mu_b": 4.32473778420978,
+    "delta_mu": 2.2102924766949825,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 8,
+    "task_a_id": "competition_math_8525",
+    "task_b_id": "wildchat_20527",
+    "mu_a": 4.863981850376905,
+    "mu_b": -8.165712380118904,
+    "delta_mu": 13.02969423049581,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 9,
+    "task_a_id": "competition_math_12198",
+    "task_b_id": "stresstest_50_497_value2",
+    "mu_a": 6.588061895143965,
+    "mu_b": 0.8569935859676003,
+    "delta_mu": 5.731068309176365,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 10,
+    "task_a_id": "wildchat_2487",
+    "task_b_id": "alpaca_10304",
+    "mu_a": 2.955840576656317,
+    "mu_b": -5.337551542992211,
+    "delta_mu": 8.293392119648528,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 11,
+    "task_a_id": "wildchat_77348",
+    "task_b_id": "competition_math_6304",
+    "mu_a": 2.215680720030689,
+    "mu_b": 4.943157604325907,
+    "delta_mu": 2.7274768842952177,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 12,
+    "task_a_id": "stresstest_21_868_value1",
+    "task_b_id": "alpaca_12613",
+    "mu_a": -7.734706588354256,
+    "mu_b": 4.45244497449034,
+    "delta_mu": 12.187151562844596,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 13,
+    "task_a_id": "competition_math_284",
+    "task_b_id": "competition_math_3694",
+    "mu_a": -0.15187881289248606,
+    "mu_b": 0.597383503607965,
+    "delta_mu": 0.749262316500451,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 14,
+    "task_a_id": "competition_math_10685",
+    "task_b_id": "stresstest_71_994_value1",
+    "mu_a": 7.421279603177123,
+    "mu_b": 5.569171321568467,
+    "delta_mu": 1.8521082816086558,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 15,
+    "task_a_id": "alpaca_3388",
+    "task_b_id": "wildchat_52236",
+    "mu_a": 4.081316939828792,
+    "mu_b": 1.2172297319070686,
+    "delta_mu": 2.864087207921723,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 16,
+    "task_a_id": "alpaca_7136",
+    "task_b_id": "stresstest_44_1445_value1",
+    "mu_a": 1.6394157061205854,
+    "mu_b": 8.64384399804033,
+    "delta_mu": 7.004428291919744,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 17,
+    "task_a_id": "stresstest_63_1296_neutral",
+    "task_b_id": "stresstest_87_568_value2",
+    "mu_a": -6.742491170442758,
+    "mu_b": -7.914135530963869,
+    "delta_mu": 1.1716443605211113,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 18,
+    "task_a_id": "stresstest_81_462_neutral",
+    "task_b_id": "stresstest_59_1177_value1",
+    "mu_a": -8.477281006793023,
+    "mu_b": -7.267881437377045,
+    "delta_mu": 1.2093995694159778,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 19,
+    "task_a_id": "alpaca_9079",
+    "task_b_id": "wildchat_77348",
+    "mu_a": 1.2506939383179856,
+    "mu_b": 2.215680720030689,
+    "delta_mu": 0.9649867817127036,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 20,
+    "task_a_id": "alpaca_1518",
+    "task_b_id": "wildchat_54471",
+    "mu_a": 5.967980371398707,
+    "mu_b": 8.49168618969183,
+    "delta_mu": 2.5237058182931227,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 21,
+    "task_a_id": "competition_math_10807",
+    "task_b_id": "alpaca_10728",
+    "mu_a": 2.301725406830718,
+    "mu_b": 3.57341435225642,
+    "delta_mu": 1.2716889454257023,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 22,
+    "task_a_id": "stresstest_52_85_value2",
+    "task_b_id": "competition_math_291",
+    "mu_a": 6.300276001540323,
+    "mu_b": 8.154269578400777,
+    "delta_mu": 1.8539935768604545,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 23,
+    "task_a_id": "alpaca_7408",
+    "task_b_id": "alpaca_5443",
+    "mu_a": 4.948384394489284,
+    "mu_b": 4.626779784404572,
+    "delta_mu": 0.3216046100847114,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 24,
+    "task_a_id": "alpaca_4691",
+    "task_b_id": "competition_math_4318",
+    "mu_a": 3.0790790698988397,
+    "mu_b": 5.789824881140183,
+    "delta_mu": 2.7107458112413436,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 25,
+    "task_a_id": "competition_math_5325",
+    "task_b_id": "wildchat_14272",
+    "mu_a": 8.506245190230699,
+    "mu_b": 7.4414083004902665,
+    "delta_mu": 1.0648368897404321,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 26,
+    "task_a_id": "stresstest_98_389_neutral",
+    "task_b_id": "competition_math_8293",
+    "mu_a": -3.6834742377965433,
+    "mu_b": 7.9899658479470315,
+    "delta_mu": 11.673440085743575,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 27,
+    "task_a_id": "wildchat_51009",
+    "task_b_id": "stresstest_22_754_value2",
+    "mu_a": 3.221694256947703,
+    "mu_b": 4.039847440921864,
+    "delta_mu": 0.8181531839741614,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 28,
+    "task_a_id": "alpaca_12916",
+    "task_b_id": "alpaca_5502",
+    "mu_a": -4.861801410682906,
+    "mu_b": 1.2479350616888167,
+    "delta_mu": 6.109736472371723,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 29,
+    "task_a_id": "stresstest_34_1069_value2",
+    "task_b_id": "competition_math_11213",
+    "mu_a": -3.6995733929985426,
+    "mu_b": -1.014062275122166,
+    "delta_mu": 2.6855111178763766,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 30,
+    "task_a_id": "competition_math_6620",
+    "task_b_id": "alpaca_9910",
+    "mu_a": 4.016933383857183,
+    "mu_b": 3.469090461255451,
+    "delta_mu": 0.5478429226017321,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 31,
+    "task_a_id": "alpaca_7805",
+    "task_b_id": "stresstest_82_1195_value1",
+    "mu_a": 3.5438051832342867,
+    "mu_b": -6.225672625584843,
+    "delta_mu": 9.76947780881913,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 32,
+    "task_a_id": "wildchat_79147",
+    "task_b_id": "competition_math_10266",
+    "mu_a": 6.176399020550518,
+    "mu_b": 3.2099226607727758,
+    "delta_mu": 2.966476359777742,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 33,
+    "task_a_id": "competition_math_9521",
+    "task_b_id": "alpaca_5028",
+    "mu_a": 6.455487455491021,
+    "mu_b": 5.028593022879756,
+    "delta_mu": 1.426894432611265,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 34,
+    "task_a_id": "competition_math_6685",
+    "task_b_id": "competition_math_11103",
+    "mu_a": 3.6057695636916116,
+    "mu_b": 4.07649662461742,
+    "delta_mu": 0.47072706092580807,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 35,
+    "task_a_id": "wildchat_62069",
+    "task_b_id": "stresstest_44_97_value1",
+    "mu_a": 3.5077307086154343,
+    "mu_b": 2.1118779423857226,
+    "delta_mu": 1.3958527662297118,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 36,
+    "task_a_id": "stresstest_33_620_value1",
+    "task_b_id": "competition_math_8568",
+    "mu_a": 7.557647244577935,
+    "mu_b": 4.46972593760963,
+    "delta_mu": 3.0879213069683047,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 37,
+    "task_a_id": "competition_math_5312",
+    "task_b_id": "competition_math_1989",
+    "mu_a": 5.6830472123118305,
+    "mu_b": 8.057080745491527,
+    "delta_mu": 2.3740335331796967,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 38,
+    "task_a_id": "competition_math_1486",
+    "task_b_id": "competition_math_307",
+    "mu_a": 4.269546990468667,
+    "mu_b": 5.804807075384851,
+    "delta_mu": 1.5352600849161835,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 39,
+    "task_a_id": "alpaca_10491",
+    "task_b_id": "stresstest_38_334_neutral",
+    "mu_a": 2.6278047175421047,
+    "mu_b": -5.296465888014479,
+    "delta_mu": 7.924270605556584,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 40,
+    "task_a_id": "stresstest_65_562_value1",
+    "task_b_id": "stresstest_88_1018_neutral",
+    "mu_a": 9.340915941647511,
+    "mu_b": 3.3792267800510385,
+    "delta_mu": 5.961689161596473,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 41,
+    "task_a_id": "stresstest_57_1263_value2",
+    "task_b_id": "competition_math_7628",
+    "mu_a": -7.255860705602825,
+    "mu_b": 4.79364366253092,
+    "delta_mu": 12.049504368133746,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 42,
+    "task_a_id": "wildchat_37262",
+    "task_b_id": "stresstest_99_104_neutral",
+    "mu_a": 0.6987009929331716,
+    "mu_b": -1.8519154876353627,
+    "delta_mu": 2.550616480568534,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 43,
+    "task_a_id": "wildchat_39232",
+    "task_b_id": "competition_math_1070",
+    "mu_a": 2.9139390230476483,
+    "mu_b": 4.063111510179095,
+    "delta_mu": 1.1491724871314464,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 44,
+    "task_a_id": "wildchat_24081",
+    "task_b_id": "stresstest_46_30_value1",
+    "mu_a": -3.464021479133578,
+    "mu_b": -6.319744695611821,
+    "delta_mu": 2.8557232164782427,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 45,
+    "task_a_id": "competition_math_11036",
+    "task_b_id": "competition_math_2557",
+    "mu_a": 4.122727208031607,
+    "mu_b": 7.599645020252482,
+    "delta_mu": 3.476917812220875,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 46,
+    "task_a_id": "competition_math_2296",
+    "task_b_id": "stresstest_46_812_value2",
+    "mu_a": 5.074758012009141,
+    "mu_b": -1.0085729683141949,
+    "delta_mu": 6.083330980323336,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 47,
+    "task_a_id": "wildchat_13610",
+    "task_b_id": "competition_math_7336",
+    "mu_a": -1.1893821629785541,
+    "mu_b": -1.6733322684511172,
+    "delta_mu": 0.483950105472563,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 48,
+    "task_a_id": "stresstest_30_911_neutral",
+    "task_b_id": "stresstest_38_769_value1",
+    "mu_a": -6.75738980367614,
+    "mu_b": -9.065735294007423,
+    "delta_mu": 2.3083454903312832,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 49,
+    "task_a_id": "wildchat_21601",
+    "task_b_id": "competition_math_6904",
+    "mu_a": 5.932683074885573,
+    "mu_b": -1.604101032708536,
+    "delta_mu": 7.5367841075941095,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 50,
+    "task_a_id": "alpaca_10711",
+    "task_b_id": "competition_math_5164",
+    "mu_a": 4.717695052743114,
+    "mu_b": 3.8200740166371014,
+    "delta_mu": 0.8976210361060124,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 51,
+    "task_a_id": "alpaca_12901",
+    "task_b_id": "competition_math_2874",
+    "mu_a": 3.1725016285857057,
+    "mu_b": 6.111500059087269,
+    "delta_mu": 2.938998430501563,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 52,
+    "task_a_id": "wildchat_41109",
+    "task_b_id": "wildchat_21423",
+    "mu_a": 0.4285780138913281,
+    "mu_b": 2.839088149809398,
+    "delta_mu": 2.41051013591807,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 53,
+    "task_a_id": "wildchat_44418",
+    "task_b_id": "alpaca_2598",
+    "mu_a": -1.2692247513275328,
+    "mu_b": -0.018918238931887255,
+    "delta_mu": 1.2503065123956456,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 54,
+    "task_a_id": "alpaca_409",
+    "task_b_id": "alpaca_13906",
+    "mu_a": 3.531405374771797,
+    "mu_b": -1.8881187016200487,
+    "delta_mu": 5.419524076391846,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 55,
+    "task_a_id": "wildchat_79385",
+    "task_b_id": "alpaca_12378",
+    "mu_a": -0.07629151604674363,
+    "mu_b": -0.5866831791846497,
+    "delta_mu": 0.5103916631379061,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 56,
+    "task_a_id": "competition_math_8415",
+    "task_b_id": "competition_math_5392",
+    "mu_a": 5.854441894540095,
+    "mu_b": 7.925222717796788,
+    "delta_mu": 2.070780823256693,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 57,
+    "task_a_id": "wildchat_10403",
+    "task_b_id": "alpaca_10469",
+    "mu_a": 9.122753136442292,
+    "mu_b": -0.6987030022088437,
+    "delta_mu": 9.821456138651135,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 58,
+    "task_a_id": "wildchat_14633",
+    "task_b_id": "alpaca_14333",
+    "mu_a": 5.177261352277597,
+    "mu_b": 0.6465751591652503,
+    "delta_mu": 4.530686193112347,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 59,
+    "task_a_id": "wildchat_32224",
+    "task_b_id": "wildchat_49639",
+    "mu_a": 1.6302721404073799,
+    "mu_b": 4.760313307874932,
+    "delta_mu": 3.130041167467552,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 60,
+    "task_a_id": "stresstest_15_1026_value2",
+    "task_b_id": "stresstest_1_767_value2",
+    "mu_a": -4.2501289826668485,
+    "mu_b": 6.248892759299341,
+    "delta_mu": 10.499021741966189,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 61,
+    "task_a_id": "wildchat_22105",
+    "task_b_id": "alpaca_3677",
+    "mu_a": -1.153673853512471,
+    "mu_b": 0.3570665174126733,
+    "delta_mu": 1.5107403709251443,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 62,
+    "task_a_id": "wildchat_22383",
+    "task_b_id": "wildchat_1137",
+    "mu_a": -3.050307346899731,
+    "mu_b": 0.9510838112854739,
+    "delta_mu": 4.001391158185204,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 63,
+    "task_a_id": "alpaca_4838",
+    "task_b_id": "wildchat_3047",
+    "mu_a": 1.6202635369680087,
+    "mu_b": 4.174445488530631,
+    "delta_mu": 2.554181951562622,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 64,
+    "task_a_id": "wildchat_62487",
+    "task_b_id": "wildchat_29332",
+    "mu_a": 3.666893447189601,
+    "mu_b": -1.1382286697226793,
+    "delta_mu": 4.80512211691228,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 65,
+    "task_a_id": "alpaca_12637",
+    "task_b_id": "stresstest_82_977_value2",
+    "mu_a": 0.01784404154846735,
+    "mu_b": 7.067380063008671,
+    "delta_mu": 7.049536021460204,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 66,
+    "task_a_id": "competition_math_7973",
+    "task_b_id": "competition_math_7072",
+    "mu_a": 5.459027295268151,
+    "mu_b": 7.5585510566152125,
+    "delta_mu": 2.0995237613470614,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 67,
+    "task_a_id": "stresstest_69_996_value2",
+    "task_b_id": "competition_math_8385",
+    "mu_a": 1.076977428548154,
+    "mu_b": 2.3903804211544117,
+    "delta_mu": 1.3134029926062578,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 68,
+    "task_a_id": "alpaca_7506",
+    "task_b_id": "wildchat_26367",
+    "mu_a": 0.37707415255058496,
+    "mu_b": 5.472012928493458,
+    "delta_mu": 5.0949387759428735,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 69,
+    "task_a_id": "wildchat_67193",
+    "task_b_id": "stresstest_33_321_neutral",
+    "mu_a": 2.5388210015785053,
+    "mu_b": 0.28706555564660746,
+    "delta_mu": 2.251755445931898,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 70,
+    "task_a_id": "wildchat_63340",
+    "task_b_id": "wildchat_64314",
+    "mu_a": -3.9204211498104473,
+    "mu_b": -1.2286993583062755,
+    "delta_mu": 2.691721791504172,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 71,
+    "task_a_id": "stresstest_58_1102_value2",
+    "task_b_id": "stresstest_93_184_value1",
+    "mu_a": -4.092995889811736,
+    "mu_b": -3.6969773657738934,
+    "delta_mu": 0.3960185240378422,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 72,
+    "task_a_id": "alpaca_12656",
+    "task_b_id": "competition_math_6393",
+    "mu_a": 5.730721520762104,
+    "mu_b": 6.295609132467977,
+    "delta_mu": 0.5648876117058732,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 73,
+    "task_a_id": "alpaca_7097",
+    "task_b_id": "alpaca_10462",
+    "mu_a": 4.058269674764711,
+    "mu_b": 6.776271262851538,
+    "delta_mu": 2.7180015880868273,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 74,
+    "task_a_id": "stresstest_7_698_value1",
+    "task_b_id": "stresstest_72_46_value2",
+    "mu_a": -8.074481860931638,
+    "mu_b": -10.0,
+    "delta_mu": 1.9255181390683624,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 75,
+    "task_a_id": "competition_math_3687",
+    "task_b_id": "alpaca_13422",
+    "mu_a": 0.28815856575435234,
+    "mu_b": 1.7990292933308596,
+    "delta_mu": 1.5108707275765072,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 76,
+    "task_a_id": "alpaca_1600",
+    "task_b_id": "alpaca_5307",
+    "mu_a": 1.6109636615381366,
+    "mu_b": -0.14302491109724372,
+    "delta_mu": 1.7539885726353803,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 77,
+    "task_a_id": "competition_math_11981",
+    "task_b_id": "competition_math_7727",
+    "mu_a": 6.272550869398461,
+    "mu_b": 7.219202854537336,
+    "delta_mu": 0.9466519851388755,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 78,
+    "task_a_id": "stresstest_2_1230_value1",
+    "task_b_id": "competition_math_2180",
+    "mu_a": 6.526151276649012,
+    "mu_b": 8.556571275046949,
+    "delta_mu": 2.030419998397937,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 79,
+    "task_a_id": "competition_math_8096",
+    "task_b_id": "competition_math_9395",
+    "mu_a": 7.154704065067619,
+    "mu_b": 9.532459097301613,
+    "delta_mu": 2.3777550322339946,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 80,
+    "task_a_id": "competition_math_8635",
+    "task_b_id": "competition_math_11281",
+    "mu_a": 5.674090482583215,
+    "mu_b": 4.0063048774548395,
+    "delta_mu": 1.6677856051283753,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 81,
+    "task_a_id": "stresstest_74_17_value2",
+    "task_b_id": "alpaca_10910",
+    "mu_a": 5.895516989477145,
+    "mu_b": 1.4403741370140808,
+    "delta_mu": 4.455142852463064,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 82,
+    "task_a_id": "alpaca_13142",
+    "task_b_id": "alpaca_13092",
+    "mu_a": 1.2913319036722883,
+    "mu_b": 3.408315035273005,
+    "delta_mu": 2.1169831316007164,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 83,
+    "task_a_id": "competition_math_1957",
+    "task_b_id": "stresstest_68_407_neutral",
+    "mu_a": 6.015123181599169,
+    "mu_b": 3.1572978157507574,
+    "delta_mu": 2.857825365848411,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 84,
+    "task_a_id": "wildchat_14648",
+    "task_b_id": "alpaca_6294",
+    "mu_a": 10.0,
+    "mu_b": 0.23956335612460755,
+    "delta_mu": 9.760436643875392,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 85,
+    "task_a_id": "stresstest_20_472_value1",
+    "task_b_id": "wildchat_67701",
+    "mu_a": -3.299564904376211,
+    "mu_b": 2.837503410332822,
+    "delta_mu": 6.137068314709033,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 86,
+    "task_a_id": "alpaca_5073",
+    "task_b_id": "stresstest_54_736_neutral",
+    "mu_a": 4.877758477055082,
+    "mu_b": -7.526091980932305,
+    "delta_mu": 12.403850457987387,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 87,
+    "task_a_id": "alpaca_9061",
+    "task_b_id": "alpaca_14198",
+    "mu_a": 2.8979797128715385,
+    "mu_b": 3.9015992535355597,
+    "delta_mu": 1.0036195406640211,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 88,
+    "task_a_id": "alpaca_2292",
+    "task_b_id": "stresstest_68_106_value1",
+    "mu_a": 0.44693660779618916,
+    "mu_b": 9.890696708900476,
+    "delta_mu": 9.443760101104287,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 89,
+    "task_a_id": "wildchat_68103",
+    "task_b_id": "alpaca_10601",
+    "mu_a": 2.6094606677340124,
+    "mu_b": -1.3558515614387177,
+    "delta_mu": 3.96531222917273,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 90,
+    "task_a_id": "competition_math_7727",
+    "task_b_id": "competition_math_9115",
+    "mu_a": 7.219202854537336,
+    "mu_b": 0.8903106454918392,
+    "delta_mu": 6.328892209045497,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 91,
+    "task_a_id": "alpaca_2678",
+    "task_b_id": "alpaca_1596",
+    "mu_a": 2.445562965033212,
+    "mu_b": -4.727321617611364,
+    "delta_mu": 7.172884582644576,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 92,
+    "task_a_id": "wildchat_37499",
+    "task_b_id": "alpaca_7940",
+    "mu_a": 4.270050171166665,
+    "mu_b": -1.5533048801711848,
+    "delta_mu": 5.82335505133785,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 93,
+    "task_a_id": "alpaca_3006",
+    "task_b_id": "stresstest_34_842_neutral",
+    "mu_a": 7.358867290148335,
+    "mu_b": -4.591808419765952,
+    "delta_mu": 11.950675709914286,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 94,
+    "task_a_id": "competition_math_10825",
+    "task_b_id": "competition_math_8415",
+    "mu_a": 6.906923886028117,
+    "mu_b": 5.854441894540095,
+    "delta_mu": 1.0524819914880217,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 95,
+    "task_a_id": "wildchat_32125",
+    "task_b_id": "competition_math_7846",
+    "mu_a": 0.38146969935912745,
+    "mu_b": 6.074385556480381,
+    "delta_mu": 5.692915857121254,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 96,
+    "task_a_id": "alpaca_9341",
+    "task_b_id": "wildchat_9562",
+    "mu_a": -4.490266368351656,
+    "mu_b": 8.82926902906034,
+    "delta_mu": 13.319535397411997,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 97,
+    "task_a_id": "alpaca_2324",
+    "task_b_id": "alpaca_11720",
+    "mu_a": 1.875885602164766,
+    "mu_b": -1.3966526868325413,
+    "delta_mu": 3.2725382889973074,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 98,
+    "task_a_id": "alpaca_14046",
+    "task_b_id": "competition_math_12013",
+    "mu_a": 1.2660839383293632,
+    "mu_b": 3.568793989283354,
+    "delta_mu": 2.3027100509539906,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 99,
+    "task_a_id": "stresstest_31_1032_value2",
+    "task_b_id": "wildchat_18411",
+    "mu_a": 0.5873592625122153,
+    "mu_b": -0.008105619655264656,
+    "delta_mu": 0.59546488216748,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 100,
+    "task_a_id": "stresstest_2_627_value1",
+    "task_b_id": "wildchat_36209",
+    "mu_a": -1.6690992092880714,
+    "mu_b": 8.527736857133347,
+    "delta_mu": 10.196836066421419,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 101,
+    "task_a_id": "competition_math_758",
+    "task_b_id": "wildchat_27397",
+    "mu_a": 9.944046375624634,
+    "mu_b": 10.0,
+    "delta_mu": 0.05595362437536622,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 102,
+    "task_a_id": "wildchat_45063",
+    "task_b_id": "stresstest_69_217_value1",
+    "mu_a": 9.05513699622376,
+    "mu_b": -10.0,
+    "delta_mu": 19.05513699622376,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 103,
+    "task_a_id": "competition_math_9966",
+    "task_b_id": "wildchat_43218",
+    "mu_a": 3.217150362015128,
+    "mu_b": 1.135302303976579,
+    "delta_mu": 2.081848058038549,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 104,
+    "task_a_id": "wildchat_69598",
+    "task_b_id": "alpaca_5499",
+    "mu_a": 4.7581483355268706,
+    "mu_b": 3.02501944020839,
+    "delta_mu": 1.7331288953184805,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 105,
+    "task_a_id": "competition_math_8226",
+    "task_b_id": "alpaca_572",
+    "mu_a": 0.6991389947043685,
+    "mu_b": -0.0923911325301922,
+    "delta_mu": 0.7915301272345606,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 106,
+    "task_a_id": "alpaca_8247",
+    "task_b_id": "competition_math_8424",
+    "mu_a": 1.059474381178304,
+    "mu_b": 0.9494132694437726,
+    "delta_mu": 0.11006111173453148,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 107,
+    "task_a_id": "wildchat_14461",
+    "task_b_id": "wildchat_40170",
+    "mu_a": 8.831200267315488,
+    "mu_b": 6.035078051357269,
+    "delta_mu": 2.796122215958219,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 108,
+    "task_a_id": "stresstest_4_511_neutral",
+    "task_b_id": "competition_math_3510",
+    "mu_a": -8.100960144299153,
+    "mu_b": 7.0219243332753605,
+    "delta_mu": 15.122884477574512,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 109,
+    "task_a_id": "alpaca_125",
+    "task_b_id": "alpaca_3112",
+    "mu_a": -1.2544955478238176,
+    "mu_b": -2.0392762589161304,
+    "delta_mu": 0.7847807110923128,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 110,
+    "task_a_id": "competition_math_9303",
+    "task_b_id": "stresstest_78_299_value1",
+    "mu_a": -0.41021588897324224,
+    "mu_b": 0.19947218436283554,
+    "delta_mu": 0.6096880733360778,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 111,
+    "task_a_id": "stresstest_7_466_value2",
+    "task_b_id": "competition_math_9352",
+    "mu_a": -4.459971317195325,
+    "mu_b": 3.85501443372231,
+    "delta_mu": 8.314985750917634,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 112,
+    "task_a_id": "alpaca_6807",
+    "task_b_id": "wildchat_77494",
+    "mu_a": 2.2111809477845434,
+    "mu_b": 2.6010206249054604,
+    "delta_mu": 0.38983967712091694,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 113,
+    "task_a_id": "competition_math_10939",
+    "task_b_id": "alpaca_2262",
+    "mu_a": 5.1880288771924485,
+    "mu_b": 4.667638517360426,
+    "delta_mu": 0.5203903598320228,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 114,
+    "task_a_id": "competition_math_8380",
+    "task_b_id": "competition_math_9433",
+    "mu_a": 6.823020254115517,
+    "mu_b": 5.2811358646635975,
+    "delta_mu": 1.5418843894519192,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 115,
+    "task_a_id": "competition_math_729",
+    "task_b_id": "competition_math_2256",
+    "mu_a": 4.7030729789931005,
+    "mu_b": 10.0,
+    "delta_mu": 5.2969270210068995,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 116,
+    "task_a_id": "wildchat_75062",
+    "task_b_id": "stresstest_23_195_value2",
+    "mu_a": 6.681424487219663,
+    "mu_b": 8.169529107616578,
+    "delta_mu": 1.488104620396915,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 117,
+    "task_a_id": "competition_math_8058",
+    "task_b_id": "wildchat_3588",
+    "mu_a": 4.861216625096536,
+    "mu_b": 5.86764629507822,
+    "delta_mu": 1.0064296699816841,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 118,
+    "task_a_id": "competition_math_103",
+    "task_b_id": "stresstest_17_1311_value1",
+    "mu_a": 1.5044908899391773,
+    "mu_b": -7.771261535264914,
+    "delta_mu": 9.275752425204091,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 119,
+    "task_a_id": "wildchat_49339",
+    "task_b_id": "stresstest_20_707_value2",
+    "mu_a": 1.9687250370963578,
+    "mu_b": -10.0,
+    "delta_mu": 11.968725037096357,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 120,
+    "task_a_id": "alpaca_4887",
+    "task_b_id": "alpaca_7447",
+    "mu_a": -1.0558109903803279,
+    "mu_b": -1.588253431134246,
+    "delta_mu": 0.5324424407539181,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 121,
+    "task_a_id": "alpaca_8240",
+    "task_b_id": "alpaca_5835",
+    "mu_a": -0.7740369642352873,
+    "mu_b": -2.322261849207397,
+    "delta_mu": 1.5482248849721096,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 122,
+    "task_a_id": "alpaca_8656",
+    "task_b_id": "competition_math_5826",
+    "mu_a": 5.305561360627421,
+    "mu_b": -1.7881863766214348,
+    "delta_mu": 7.093747737248856,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 123,
+    "task_a_id": "competition_math_11933",
+    "task_b_id": "competition_math_2615",
+    "mu_a": 2.838288164177467,
+    "mu_b": 2.08354313853188,
+    "delta_mu": 0.7547450256455872,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 124,
+    "task_a_id": "competition_math_888",
+    "task_b_id": "competition_math_1596",
+    "mu_a": 7.029295965863613,
+    "mu_b": 8.489778800559558,
+    "delta_mu": 1.4604828346959442,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 125,
+    "task_a_id": "alpaca_8589",
+    "task_b_id": "stresstest_52_1091_value1",
+    "mu_a": 4.2753381205946175,
+    "mu_b": 5.6905134426181725,
+    "delta_mu": 1.415175322023555,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 126,
+    "task_a_id": "competition_math_1201",
+    "task_b_id": "wildchat_185",
+    "mu_a": 8.277313258278124,
+    "mu_b": 5.071436204110471,
+    "delta_mu": 3.2058770541676527,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 127,
+    "task_a_id": "wildchat_50487",
+    "task_b_id": "wildchat_26539",
+    "mu_a": 7.814049383773187,
+    "mu_b": 6.644007091834328,
+    "delta_mu": 1.1700422919388593,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 128,
+    "task_a_id": "competition_math_10999",
+    "task_b_id": "competition_math_305",
+    "mu_a": 5.704766895471923,
+    "mu_b": 2.983254985492221,
+    "delta_mu": 2.721511909979702,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 129,
+    "task_a_id": "stresstest_56_477_neutral",
+    "task_b_id": "competition_math_2278",
+    "mu_a": 2.8037461982720266,
+    "mu_b": 4.324100428556891,
+    "delta_mu": 1.5203542302848643,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 130,
+    "task_a_id": "stresstest_2_483_value1",
+    "task_b_id": "wildchat_31334",
+    "mu_a": -7.115311247717295,
+    "mu_b": -2.6407212905046356,
+    "delta_mu": 4.474589957212659,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 131,
+    "task_a_id": "wildchat_64621",
+    "task_b_id": "stresstest_47_330_value2",
+    "mu_a": -5.233250382607482,
+    "mu_b": -7.795882793411617,
+    "delta_mu": 2.5626324108041354,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 132,
+    "task_a_id": "competition_math_3760",
+    "task_b_id": "competition_math_5366",
+    "mu_a": 4.438585636709931,
+    "mu_b": 3.491955700789896,
+    "delta_mu": 0.946629935920035,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 133,
+    "task_a_id": "stresstest_37_654_neutral",
+    "task_b_id": "stresstest_35_1270_value2",
+    "mu_a": -1.9380380209289907,
+    "mu_b": 3.2847462013372537,
+    "delta_mu": 5.222784222266244,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 134,
+    "task_a_id": "alpaca_10656",
+    "task_b_id": "stresstest_97_428_value1",
+    "mu_a": 2.1015255329408475,
+    "mu_b": 4.109059540784797,
+    "delta_mu": 2.007534007843949,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 135,
+    "task_a_id": "competition_math_218",
+    "task_b_id": "competition_math_5386",
+    "mu_a": 4.719750231682938,
+    "mu_b": 6.073593148278301,
+    "delta_mu": 1.3538429165953634,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 136,
+    "task_a_id": "competition_math_6333",
+    "task_b_id": "competition_math_6488",
+    "mu_a": 5.269796084567556,
+    "mu_b": 4.760453716686006,
+    "delta_mu": 0.5093423678815503,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 137,
+    "task_a_id": "competition_math_10937",
+    "task_b_id": "competition_math_5536",
+    "mu_a": 6.190020898395849,
+    "mu_b": 6.607418362399952,
+    "delta_mu": 0.41739746400410294,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 138,
+    "task_a_id": "stresstest_35_1138_value1",
+    "task_b_id": "competition_math_8133",
+    "mu_a": 2.601241174161414,
+    "mu_b": 6.2828555857911494,
+    "delta_mu": 3.6816144116297354,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 139,
+    "task_a_id": "wildchat_63613",
+    "task_b_id": "competition_math_11089",
+    "mu_a": 7.346461717099643,
+    "mu_b": 4.305109914639874,
+    "delta_mu": 3.0413518024597694,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 140,
+    "task_a_id": "alpaca_3687",
+    "task_b_id": "alpaca_5688",
+    "mu_a": 3.5968195435985635,
+    "mu_b": 5.764585975826102,
+    "delta_mu": 2.1677664322275385,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 141,
+    "task_a_id": "stresstest_99_1254_value1",
+    "task_b_id": "alpaca_7364",
+    "mu_a": -8.303127653301628,
+    "mu_b": -3.577852694998341,
+    "delta_mu": 4.725274958303286,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 142,
+    "task_a_id": "wildchat_40026",
+    "task_b_id": "stresstest_55_468_value2",
+    "mu_a": 9.571430350406715,
+    "mu_b": -5.2174723962088825,
+    "delta_mu": 14.788902746615598,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 143,
+    "task_a_id": "alpaca_12227",
+    "task_b_id": "wildchat_41109",
+    "mu_a": -0.5398406112661406,
+    "mu_b": 0.4285780138913281,
+    "delta_mu": 0.9684186251574687,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 144,
+    "task_a_id": "stresstest_20_819_value1",
+    "task_b_id": "wildchat_27449",
+    "mu_a": 8.140536073290495,
+    "mu_b": -4.139228008561718,
+    "delta_mu": 12.279764081852212,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 145,
+    "task_a_id": "stresstest_62_74_value1",
+    "task_b_id": "competition_math_10536",
+    "mu_a": 2.545940451643041,
+    "mu_b": 8.617732270721623,
+    "delta_mu": 6.071791819078582,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 146,
+    "task_a_id": "competition_math_11071",
+    "task_b_id": "wildchat_62293",
+    "mu_a": 4.766391234827155,
+    "mu_b": 4.943049401985116,
+    "delta_mu": 0.176658167157961,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 147,
+    "task_a_id": "competition_math_7010",
+    "task_b_id": "wildchat_20347",
+    "mu_a": 5.0417207988705846,
+    "mu_b": 8.600379180925387,
+    "delta_mu": 3.5586583820548023,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 148,
+    "task_a_id": "wildchat_35047",
+    "task_b_id": "competition_math_1620",
+    "mu_a": 6.939323004441861,
+    "mu_b": 7.750023191327506,
+    "delta_mu": 0.8107001868856454,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 149,
+    "task_a_id": "alpaca_3103",
+    "task_b_id": "wildchat_1107",
+    "mu_a": 0.800679019801635,
+    "mu_b": 3.1941314809959644,
+    "delta_mu": 2.3934524611943293,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 150,
+    "task_a_id": "stresstest_11_1361_value2",
+    "task_b_id": "stresstest_42_981_value2",
+    "mu_a": -5.183176833957586,
+    "mu_b": -8.333967738814664,
+    "delta_mu": 3.150790904857078,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 151,
+    "task_a_id": "alpaca_6791",
+    "task_b_id": "alpaca_10774",
+    "mu_a": -1.5903300129743536,
+    "mu_b": 0.848528718622354,
+    "delta_mu": 2.4388587315967074,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 152,
+    "task_a_id": "alpaca_8338",
+    "task_b_id": "competition_math_4482",
+    "mu_a": 7.070561006074517,
+    "mu_b": 6.129835053397305,
+    "delta_mu": 0.9407259526772123,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 153,
+    "task_a_id": "competition_math_7726",
+    "task_b_id": "wildchat_77438",
+    "mu_a": 2.7136816640700667,
+    "mu_b": 0.9703748753480148,
+    "delta_mu": 1.743306788722052,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 154,
+    "task_a_id": "alpaca_13068",
+    "task_b_id": "competition_math_9932",
+    "mu_a": -0.11259489786852149,
+    "mu_b": 7.99767887767565,
+    "delta_mu": 8.110273775544172,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 155,
+    "task_a_id": "wildchat_69133",
+    "task_b_id": "wildchat_41615",
+    "mu_a": 6.831459274137775,
+    "mu_b": 8.676769955935018,
+    "delta_mu": 1.8453106817972431,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 156,
+    "task_a_id": "competition_math_7768",
+    "task_b_id": "stresstest_35_1024_neutral",
+    "mu_a": 3.146235803366636,
+    "mu_b": -3.5115395893993315,
+    "delta_mu": 6.657775392765968,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 157,
+    "task_a_id": "alpaca_11630",
+    "task_b_id": "wildchat_60079",
+    "mu_a": -0.03562894194953122,
+    "mu_b": 1.3951855028346623,
+    "delta_mu": 1.4308144447841935,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 158,
+    "task_a_id": "competition_math_9372",
+    "task_b_id": "wildchat_48242",
+    "mu_a": 3.1842957236678333,
+    "mu_b": 3.5087279269897382,
+    "delta_mu": 0.3244322033219049,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 159,
+    "task_a_id": "alpaca_7449",
+    "task_b_id": "alpaca_5353",
+    "mu_a": 0.2546427739578302,
+    "mu_b": -0.2970141065046917,
+    "delta_mu": 0.5516568804625219,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 160,
+    "task_a_id": "wildchat_15671",
+    "task_b_id": "competition_math_2001",
+    "mu_a": 2.137769567797483,
+    "mu_b": 3.0926157020004754,
+    "delta_mu": 0.9548461342029926,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 161,
+    "task_a_id": "stresstest_27_895_value2",
+    "task_b_id": "alpaca_7521",
+    "mu_a": -2.5249976606225086,
+    "mu_b": -3.3052513192560085,
+    "delta_mu": 0.7802536586334998,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 162,
+    "task_a_id": "alpaca_2077",
+    "task_b_id": "wildchat_68492",
+    "mu_a": 6.010967950455027,
+    "mu_b": 6.980304253803524,
+    "delta_mu": 0.9693363033484976,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 163,
+    "task_a_id": "alpaca_9357",
+    "task_b_id": "alpaca_6715",
+    "mu_a": 7.194348980905627,
+    "mu_b": 4.942228198076373,
+    "delta_mu": 2.2521207828292535,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 164,
+    "task_a_id": "competition_math_8195",
+    "task_b_id": "competition_math_11341",
+    "mu_a": 7.324648185920879,
+    "mu_b": 1.8092202348589135,
+    "delta_mu": 5.515427951061966,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 165,
+    "task_a_id": "wildchat_15547",
+    "task_b_id": "wildchat_34310",
+    "mu_a": 8.781969047254774,
+    "mu_b": 8.137231994283885,
+    "delta_mu": 0.6447370529708891,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 166,
+    "task_a_id": "competition_math_635",
+    "task_b_id": "competition_math_5186",
+    "mu_a": -0.7414065224947404,
+    "mu_b": 4.930961072519297,
+    "delta_mu": 5.6723675950140375,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 167,
+    "task_a_id": "wildchat_29065",
+    "task_b_id": "stresstest_63_563_value1",
+    "mu_a": 7.772311700741058,
+    "mu_b": -0.9874164119563004,
+    "delta_mu": 8.759728112697358,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 168,
+    "task_a_id": "stresstest_95_623_neutral",
+    "task_b_id": "competition_math_3330",
+    "mu_a": 0.124540133384543,
+    "mu_b": 2.695665181015308,
+    "delta_mu": 2.571125047630765,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 169,
+    "task_a_id": "wildchat_25398",
+    "task_b_id": "stresstest_41_532_value1",
+    "mu_a": 7.650342926150291,
+    "mu_b": -0.753392410437367,
+    "delta_mu": 8.403735336587658,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 170,
+    "task_a_id": "alpaca_5884",
+    "task_b_id": "alpaca_9851",
+    "mu_a": 1.2067744203459505,
+    "mu_b": 2.6502984615148986,
+    "delta_mu": 1.443524041168948,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 171,
+    "task_a_id": "competition_math_10662",
+    "task_b_id": "stresstest_67_1451_neutral",
+    "mu_a": 6.576745314991167,
+    "mu_b": 5.171851558034511,
+    "delta_mu": 1.404893756956656,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 172,
+    "task_a_id": "wildchat_57720",
+    "task_b_id": "alpaca_11769",
+    "mu_a": 2.4419773386055503,
+    "mu_b": 0.9809375244589592,
+    "delta_mu": 1.461039814146591,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 173,
+    "task_a_id": "competition_math_12145",
+    "task_b_id": "wildchat_72533",
+    "mu_a": 8.153411628891279,
+    "mu_b": 8.888196718371537,
+    "delta_mu": 0.7347850894802583,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 174,
+    "task_a_id": "stresstest_45_903_neutral",
+    "task_b_id": "competition_math_7475",
+    "mu_a": -7.093666851062228,
+    "mu_b": 3.0611902393870145,
+    "delta_mu": 10.154857090449243,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 175,
+    "task_a_id": "competition_math_3132",
+    "task_b_id": "alpaca_9770",
+    "mu_a": 6.493264239672514,
+    "mu_b": 1.1435766973047274,
+    "delta_mu": 5.3496875423677865,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 176,
+    "task_a_id": "competition_math_1810",
+    "task_b_id": "wildchat_14416",
+    "mu_a": 5.79092371157327,
+    "mu_b": -0.7199546919123152,
+    "delta_mu": 6.510878403485585,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 177,
+    "task_a_id": "stresstest_4_44_value2",
+    "task_b_id": "stresstest_65_245_value1",
+    "mu_a": 3.1690166835929072,
+    "mu_b": 5.731947772212441,
+    "delta_mu": 2.5629310886195333,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 178,
+    "task_a_id": "stresstest_68_765_neutral",
+    "task_b_id": "stresstest_15_252_value1",
+    "mu_a": -6.192925627065513,
+    "mu_b": -6.674437227822593,
+    "delta_mu": 0.4815116007570799,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 179,
+    "task_a_id": "competition_math_724",
+    "task_b_id": "competition_math_12400",
+    "mu_a": 3.6279291494370733,
+    "mu_b": -1.8724244255185982,
+    "delta_mu": 5.500353574955671,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 180,
+    "task_a_id": "wildchat_14144",
+    "task_b_id": "competition_math_3457",
+    "mu_a": 2.5642614692801655,
+    "mu_b": 2.2327988083917956,
+    "delta_mu": 0.33146266088836995,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 181,
+    "task_a_id": "stresstest_14_1053_value2",
+    "task_b_id": "wildchat_36427",
+    "mu_a": 4.497552439681691,
+    "mu_b": 2.009752521316655,
+    "delta_mu": 2.487799918365036,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 182,
+    "task_a_id": "alpaca_4611",
+    "task_b_id": "competition_math_2017",
+    "mu_a": 4.811550703258457,
+    "mu_b": 4.4168186529068425,
+    "delta_mu": 0.39473205035161474,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 183,
+    "task_a_id": "wildchat_23387",
+    "task_b_id": "competition_math_9910",
+    "mu_a": 5.4217376111471305,
+    "mu_b": 5.132237111805875,
+    "delta_mu": 0.28950049934125577,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 184,
+    "task_a_id": "alpaca_12081",
+    "task_b_id": "competition_math_1957",
+    "mu_a": -1.4980748682489509,
+    "mu_b": 6.015123181599169,
+    "delta_mu": 7.5131980498481195,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 185,
+    "task_a_id": "competition_math_415",
+    "task_b_id": "stresstest_14_884_value1",
+    "mu_a": 0.8212923778945742,
+    "mu_b": 1.6194480878490183,
+    "delta_mu": 0.7981557099544441,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 186,
+    "task_a_id": "stresstest_68_810_neutral",
+    "task_b_id": "alpaca_8184",
+    "mu_a": 5.962235656172549,
+    "mu_b": 3.1535303139257427,
+    "delta_mu": 2.8087053422468062,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 187,
+    "task_a_id": "competition_math_3700",
+    "task_b_id": "competition_math_6765",
+    "mu_a": 3.3583298263338675,
+    "mu_b": 5.512098012669742,
+    "delta_mu": 2.153768186335874,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 188,
+    "task_a_id": "alpaca_9910",
+    "task_b_id": "alpaca_1384",
+    "mu_a": 3.469090461255451,
+    "mu_b": 1.5634102564181007,
+    "delta_mu": 1.9056802048373505,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 189,
+    "task_a_id": "wildchat_37499",
+    "task_b_id": "alpaca_12143",
+    "mu_a": 4.270050171166665,
+    "mu_b": 6.559796445146124,
+    "delta_mu": 2.2897462739794587,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 190,
+    "task_a_id": "alpaca_8826",
+    "task_b_id": "alpaca_11632",
+    "mu_a": 1.2079027381022387,
+    "mu_b": 1.5324981304387888,
+    "delta_mu": 0.3245953923365501,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 191,
+    "task_a_id": "stresstest_20_1445_value1",
+    "task_b_id": "alpaca_1639",
+    "mu_a": -6.472144635847115,
+    "mu_b": 2.251154249492735,
+    "delta_mu": 8.72329888533985,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 192,
+    "task_a_id": "stresstest_81_269_neutral",
+    "task_b_id": "stresstest_68_656_neutral",
+    "mu_a": 8.646571773939273,
+    "mu_b": -1.2840379694560118,
+    "delta_mu": 9.930609743395285,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 193,
+    "task_a_id": "competition_math_2447",
+    "task_b_id": "competition_math_5460",
+    "mu_a": 6.836329687419031,
+    "mu_b": 5.419781178853719,
+    "delta_mu": 1.4165485085653122,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 194,
+    "task_a_id": "competition_math_7922",
+    "task_b_id": "competition_math_8509",
+    "mu_a": 9.386546814322415,
+    "mu_b": 4.135389189460204,
+    "delta_mu": 5.251157624862211,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 195,
+    "task_a_id": "wildchat_12470",
+    "task_b_id": "wildchat_24645",
+    "mu_a": 7.238308145797267,
+    "mu_b": 8.851564685101984,
+    "delta_mu": 1.6132565393047171,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 196,
+    "task_a_id": "wildchat_24473",
+    "task_b_id": "stresstest_51_505_neutral",
+    "mu_a": 1.102960769168664,
+    "mu_b": -10.0,
+    "delta_mu": 11.102960769168664,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 197,
+    "task_a_id": "alpaca_12157",
+    "task_b_id": "competition_math_5195",
+    "mu_a": 4.783890878061713,
+    "mu_b": 5.799662152568841,
+    "delta_mu": 1.0157712745071281,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 198,
+    "task_a_id": "stresstest_72_1316_value2",
+    "task_b_id": "wildchat_29404",
+    "mu_a": -8.828465940650824,
+    "mu_b": 1.0093643421241765,
+    "delta_mu": 9.837830282775,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 199,
+    "task_a_id": "alpaca_1418",
+    "task_b_id": "alpaca_8956",
+    "mu_a": -3.9708596995960748,
+    "mu_b": -2.8806987437765708,
+    "delta_mu": 1.090160955819504,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 200,
+    "task_a_id": "alpaca_1721",
+    "task_b_id": "alpaca_7396",
+    "mu_a": 1.5135661498222996,
+    "mu_b": 6.717594925891602,
+    "delta_mu": 5.204028776069302,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 201,
+    "task_a_id": "alpaca_7327",
+    "task_b_id": "wildchat_10470",
+    "mu_a": 2.3301236669129852,
+    "mu_b": 2.720527322410357,
+    "delta_mu": 0.390403655497372,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 202,
+    "task_a_id": "alpaca_2472",
+    "task_b_id": "stresstest_65_1366_value2",
+    "mu_a": -3.183975275488052,
+    "mu_b": 6.878300425439451,
+    "delta_mu": 10.062275700927504,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 203,
+    "task_a_id": "stresstest_27_129_value1",
+    "task_b_id": "competition_math_8854",
+    "mu_a": -0.09731208344610472,
+    "mu_b": 5.509769473079215,
+    "delta_mu": 5.60708155652532,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 204,
+    "task_a_id": "alpaca_2725",
+    "task_b_id": "stresstest_44_1390_neutral",
+    "mu_a": -5.515644787944368,
+    "mu_b": -4.160604159595675,
+    "delta_mu": 1.3550406283486938,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 205,
+    "task_a_id": "alpaca_475",
+    "task_b_id": "wildchat_65539",
+    "mu_a": 0.03778670524744712,
+    "mu_b": 3.026489609165195,
+    "delta_mu": 2.9887029039177477,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 206,
+    "task_a_id": "wildchat_13591",
+    "task_b_id": "alpaca_3227",
+    "mu_a": 0.2498173868697401,
+    "mu_b": 2.7655296753792986,
+    "delta_mu": 2.5157122885095586,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 207,
+    "task_a_id": "competition_math_6215",
+    "task_b_id": "wildchat_12149",
+    "mu_a": 7.9165352629772885,
+    "mu_b": 8.873364617830275,
+    "delta_mu": 0.956829354852986,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 208,
+    "task_a_id": "competition_math_4693",
+    "task_b_id": "stresstest_66_687_neutral",
+    "mu_a": 6.0761385339639755,
+    "mu_b": 8.283916798817232,
+    "delta_mu": 2.207778264853257,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 209,
+    "task_a_id": "stresstest_0_749_value1",
+    "task_b_id": "competition_math_10003",
+    "mu_a": 2.3856662174190353,
+    "mu_b": 7.3537778524121284,
+    "delta_mu": 4.968111634993093,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 210,
+    "task_a_id": "alpaca_14340",
+    "task_b_id": "competition_math_3631",
+    "mu_a": 1.8026100687928603,
+    "mu_b": -0.2061121602210867,
+    "delta_mu": 2.008722229013947,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 211,
+    "task_a_id": "alpaca_10510",
+    "task_b_id": "competition_math_10639",
+    "mu_a": 4.020448575637349,
+    "mu_b": 6.238975188491275,
+    "delta_mu": 2.2185266128539256,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 212,
+    "task_a_id": "alpaca_5920",
+    "task_b_id": "competition_math_1542",
+    "mu_a": 6.427335761356548,
+    "mu_b": 4.379088230510454,
+    "delta_mu": 2.048247530846094,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 213,
+    "task_a_id": "alpaca_2246",
+    "task_b_id": "competition_math_870",
+    "mu_a": 4.718993244696649,
+    "mu_b": 5.9722094186042085,
+    "delta_mu": 1.2532161739075596,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 214,
+    "task_a_id": "wildchat_66172",
+    "task_b_id": "stresstest_24_71_value1",
+    "mu_a": -1.1917109064902522,
+    "mu_b": -3.4381248162393403,
+    "delta_mu": 2.246413909749088,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 215,
+    "task_a_id": "stresstest_71_449_neutral",
+    "task_b_id": "stresstest_72_1245_neutral",
+    "mu_a": -5.2987288309702985,
+    "mu_b": -8.051289006805332,
+    "delta_mu": 2.7525601758350335,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 216,
+    "task_a_id": "competition_math_467",
+    "task_b_id": "competition_math_2334",
+    "mu_a": 3.3023571676124823,
+    "mu_b": 9.03905446168314,
+    "delta_mu": 5.736697294070657,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 217,
+    "task_a_id": "competition_math_1259",
+    "task_b_id": "competition_math_12202",
+    "mu_a": 3.2289192793469463,
+    "mu_b": 2.403680048612794,
+    "delta_mu": 0.8252392307341525,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 218,
+    "task_a_id": "wildchat_1469",
+    "task_b_id": "alpaca_6860",
+    "mu_a": -0.3691634358996531,
+    "mu_b": 0.34493888139925577,
+    "delta_mu": 0.7141023172989089,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 219,
+    "task_a_id": "competition_math_5257",
+    "task_b_id": "stresstest_74_147_value1",
+    "mu_a": 6.703546807201768,
+    "mu_b": -9.272133142141453,
+    "delta_mu": 15.97567994934322,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 220,
+    "task_a_id": "competition_math_11823",
+    "task_b_id": "competition_math_6789",
+    "mu_a": 6.068458831055917,
+    "mu_b": 9.097683860278137,
+    "delta_mu": 3.0292250292222196,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 221,
+    "task_a_id": "alpaca_735",
+    "task_b_id": "stresstest_50_228_value1",
+    "mu_a": 7.715194709679012,
+    "mu_b": 7.765927461760715,
+    "delta_mu": 0.05073275208170269,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 222,
+    "task_a_id": "alpaca_9029",
+    "task_b_id": "alpaca_1198",
+    "mu_a": 3.4009016492581217,
+    "mu_b": 1.4376452683489296,
+    "delta_mu": 1.963256380909192,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 223,
+    "task_a_id": "alpaca_7699",
+    "task_b_id": "wildchat_10341",
+    "mu_a": 5.666219828099262,
+    "mu_b": 6.845950199069812,
+    "delta_mu": 1.1797303709705504,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 224,
+    "task_a_id": "alpaca_11277",
+    "task_b_id": "stresstest_86_991_value1",
+    "mu_a": 1.7344864173297683,
+    "mu_b": 3.636782416759743,
+    "delta_mu": 1.9022959994299746,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 225,
+    "task_a_id": "stresstest_33_703_value2",
+    "task_b_id": "wildchat_72043",
+    "mu_a": 3.0340043918404387,
+    "mu_b": -5.976415098954782,
+    "delta_mu": 9.010419490795222,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 226,
+    "task_a_id": "wildchat_49136",
+    "task_b_id": "alpaca_10998",
+    "mu_a": -5.891026324042568,
+    "mu_b": -4.214811005797201,
+    "delta_mu": 1.676215318245367,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 227,
+    "task_a_id": "wildchat_5486",
+    "task_b_id": "stresstest_32_125_neutral",
+    "mu_a": 4.104282170430115,
+    "mu_b": 1.471005099358886,
+    "delta_mu": 2.633277071071229,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 228,
+    "task_a_id": "competition_math_6812",
+    "task_b_id": "wildchat_51389",
+    "mu_a": 7.757122786647602,
+    "mu_b": 5.0998660807740706,
+    "delta_mu": 2.6572567058735315,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 229,
+    "task_a_id": "competition_math_8918",
+    "task_b_id": "alpaca_1797",
+    "mu_a": 3.3467512158988946,
+    "mu_b": 1.1248114827345004,
+    "delta_mu": 2.221939733164394,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 230,
+    "task_a_id": "competition_math_10846",
+    "task_b_id": "stresstest_87_270_value1",
+    "mu_a": -1.4408759186410576,
+    "mu_b": -3.550253575203149,
+    "delta_mu": 2.1093776565620916,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 231,
+    "task_a_id": "stresstest_98_1036_value2",
+    "task_b_id": "stresstest_42_621_value2",
+    "mu_a": -0.8990704655421581,
+    "mu_b": -5.931369962266532,
+    "delta_mu": 5.032299496724375,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 232,
+    "task_a_id": "competition_math_587",
+    "task_b_id": "alpaca_8514",
+    "mu_a": 6.713387991678138,
+    "mu_b": 4.944937179933333,
+    "delta_mu": 1.7684508117448052,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 233,
+    "task_a_id": "alpaca_11565",
+    "task_b_id": "competition_math_7230",
+    "mu_a": 2.629329345797559,
+    "mu_b": 5.195809625597373,
+    "delta_mu": 2.566480279799814,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 234,
+    "task_a_id": "competition_math_2332",
+    "task_b_id": "competition_math_3277",
+    "mu_a": 8.230260565782544,
+    "mu_b": 4.9974308522059285,
+    "delta_mu": 3.2328297135766153,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 235,
+    "task_a_id": "wildchat_45232",
+    "task_b_id": "stresstest_50_228_value1",
+    "mu_a": 9.027855956517024,
+    "mu_b": 7.765927461760715,
+    "delta_mu": 1.2619284947563099,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 236,
+    "task_a_id": "alpaca_2626",
+    "task_b_id": "alpaca_4891",
+    "mu_a": 1.541592992343201,
+    "mu_b": -2.3254989380960285,
+    "delta_mu": 3.8670919304392295,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 237,
+    "task_a_id": "competition_math_1348",
+    "task_b_id": "alpaca_1706",
+    "mu_a": 8.137728880636189,
+    "mu_b": -0.8202898327698146,
+    "delta_mu": 8.958018713406004,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 238,
+    "task_a_id": "alpaca_13039",
+    "task_b_id": "wildchat_54667",
+    "mu_a": 3.049641622605331,
+    "mu_b": 8.001506078023436,
+    "delta_mu": 4.951864455418105,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 239,
+    "task_a_id": "wildchat_60617",
+    "task_b_id": "competition_math_2507",
+    "mu_a": 5.824365008519525,
+    "mu_b": 6.697976366408841,
+    "delta_mu": 0.8736113578893159,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 240,
+    "task_a_id": "competition_math_8201",
+    "task_b_id": "wildchat_7022",
+    "mu_a": 7.353138731939656,
+    "mu_b": -1.7015842233977603,
+    "delta_mu": 9.054722955337416,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 241,
+    "task_a_id": "alpaca_14508",
+    "task_b_id": "alpaca_14134",
+    "mu_a": 4.280619452356829,
+    "mu_b": 1.6289225907956824,
+    "delta_mu": 2.6516968615611467,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 242,
+    "task_a_id": "wildchat_29445",
+    "task_b_id": "competition_math_4121",
+    "mu_a": 2.217649409468706,
+    "mu_b": 2.7134126546354214,
+    "delta_mu": 0.49576324516671555,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 243,
+    "task_a_id": "alpaca_5674",
+    "task_b_id": "wildchat_45307",
+    "mu_a": 0.4685370613630695,
+    "mu_b": -1.2911323473185732,
+    "delta_mu": 1.7596694086816427,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 244,
+    "task_a_id": "alpaca_3650",
+    "task_b_id": "wildchat_73320",
+    "mu_a": 8.512035769006427,
+    "mu_b": 10.0,
+    "delta_mu": 1.4879642309935726,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 245,
+    "task_a_id": "competition_math_4552",
+    "task_b_id": "alpaca_13383",
+    "mu_a": 2.2939065985962737,
+    "mu_b": -0.5585923192308724,
+    "delta_mu": 2.852498917827146,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 246,
+    "task_a_id": "competition_math_6624",
+    "task_b_id": "alpaca_9968",
+    "mu_a": 8.267162738457756,
+    "mu_b": -1.2852540349066872,
+    "delta_mu": 9.552416773364444,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 247,
+    "task_a_id": "alpaca_2194",
+    "task_b_id": "alpaca_2961",
+    "mu_a": 3.4246687921758188,
+    "mu_b": 4.543166590786673,
+    "delta_mu": 1.1184977986108544,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 248,
+    "task_a_id": "stresstest_98_684_value1",
+    "task_b_id": "alpaca_12725",
+    "mu_a": 6.3271030414846985,
+    "mu_b": -3.74926907337286,
+    "delta_mu": 10.07637211485756,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 249,
+    "task_a_id": "wildchat_28119",
+    "task_b_id": "competition_math_2295",
+    "mu_a": 10.0,
+    "mu_b": 7.987319767255951,
+    "delta_mu": 2.0126802327440494,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 250,
+    "task_a_id": "alpaca_7517",
+    "task_b_id": "alpaca_4258",
+    "mu_a": 7.859394333682286,
+    "mu_b": 6.17730472797514,
+    "delta_mu": 1.6820896057071462,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 251,
+    "task_a_id": "competition_math_4258",
+    "task_b_id": "competition_math_331",
+    "mu_a": 4.456061739305121,
+    "mu_b": 3.205387028371493,
+    "delta_mu": 1.250674710933628,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 252,
+    "task_a_id": "stresstest_71_757_neutral",
+    "task_b_id": "alpaca_9355",
+    "mu_a": -6.535719378895011,
+    "mu_b": -2.859835799821186,
+    "delta_mu": 3.6758835790738247,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 253,
+    "task_a_id": "stresstest_58_817_value2",
+    "task_b_id": "stresstest_57_1347_neutral",
+    "mu_a": -3.8331716509882825,
+    "mu_b": -7.777894955288277,
+    "delta_mu": 3.9447233042999943,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 254,
+    "task_a_id": "alpaca_11315",
+    "task_b_id": "alpaca_6874",
+    "mu_a": 0.8072306934793984,
+    "mu_b": -0.406486344533692,
+    "delta_mu": 1.2137170380130904,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 255,
+    "task_a_id": "alpaca_485",
+    "task_b_id": "competition_math_2137",
+    "mu_a": -2.810540419098969,
+    "mu_b": 5.8921564407190745,
+    "delta_mu": 8.702696859818044,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 256,
+    "task_a_id": "alpaca_13207",
+    "task_b_id": "stresstest_64_1069_value2",
+    "mu_a": -3.7999935029739387,
+    "mu_b": -7.830028623353705,
+    "delta_mu": 4.030035120379766,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 257,
+    "task_a_id": "competition_math_5853",
+    "task_b_id": "stresstest_33_1348_value1",
+    "mu_a": 4.45508687844495,
+    "mu_b": 3.807098003735414,
+    "delta_mu": 0.6479888747095361,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 258,
+    "task_a_id": "stresstest_44_261_value2",
+    "task_b_id": "stresstest_20_451_neutral",
+    "mu_a": 2.8258609947397986,
+    "mu_b": -7.384037998009261,
+    "delta_mu": 10.20989899274906,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 259,
+    "task_a_id": "stresstest_24_1116_value2",
+    "task_b_id": "alpaca_4699",
+    "mu_a": -2.979936188485213,
+    "mu_b": 0.4158069731590425,
+    "delta_mu": 3.3957431616442557,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 260,
+    "task_a_id": "stresstest_13_240_value1",
+    "task_b_id": "competition_math_10634",
+    "mu_a": -4.601556044599479,
+    "mu_b": 0.9850889308764155,
+    "delta_mu": 5.5866449754758944,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 261,
+    "task_a_id": "wildchat_9422",
+    "task_b_id": "alpaca_12979",
+    "mu_a": 0.9512472668506371,
+    "mu_b": 2.315148039082462,
+    "delta_mu": 1.3639007722318248,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 262,
+    "task_a_id": "wildchat_12425",
+    "task_b_id": "alpaca_7928",
+    "mu_a": 4.512893236223159,
+    "mu_b": 4.998582540121247,
+    "delta_mu": 0.48568930389808784,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 263,
+    "task_a_id": "alpaca_2725",
+    "task_b_id": "alpaca_5957",
+    "mu_a": -5.515644787944368,
+    "mu_b": -2.6890609758417554,
+    "delta_mu": 2.826583812102613,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 264,
+    "task_a_id": "competition_math_4424",
+    "task_b_id": "competition_math_10621",
+    "mu_a": 7.120998567803771,
+    "mu_b": 4.020188833020926,
+    "delta_mu": 3.100809734782845,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 265,
+    "task_a_id": "wildchat_20480",
+    "task_b_id": "alpaca_6246",
+    "mu_a": -1.8213268168125236,
+    "mu_b": 2.225216170357311,
+    "delta_mu": 4.046542987169834,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 266,
+    "task_a_id": "wildchat_14677",
+    "task_b_id": "stresstest_43_654_value1",
+    "mu_a": 6.9453943233897375,
+    "mu_b": -1.2925239410172022,
+    "delta_mu": 8.23791826440694,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 267,
+    "task_a_id": "competition_math_11650",
+    "task_b_id": "stresstest_50_565_value1",
+    "mu_a": 7.5691845529997055,
+    "mu_b": 7.74139303591948,
+    "delta_mu": 0.17220848291977475,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 268,
+    "task_a_id": "stresstest_78_1159_value1",
+    "task_b_id": "competition_math_6591",
+    "mu_a": 0.8563759478140002,
+    "mu_b": 10.0,
+    "delta_mu": 9.143624052186,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 269,
+    "task_a_id": "wildchat_15030",
+    "task_b_id": "alpaca_9565",
+    "mu_a": 1.0344103133377862,
+    "mu_b": 2.8538113605077213,
+    "delta_mu": 1.8194010471699351,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 270,
+    "task_a_id": "alpaca_3234",
+    "task_b_id": "alpaca_7878",
+    "mu_a": 1.1246248394161944,
+    "mu_b": 4.119408716775619,
+    "delta_mu": 2.994783877359425,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 271,
+    "task_a_id": "alpaca_7301",
+    "task_b_id": "stresstest_13_1101_value1",
+    "mu_a": 4.568285200152325,
+    "mu_b": 2.5332370081181077,
+    "delta_mu": 2.0350481920342176,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 272,
+    "task_a_id": "alpaca_9618",
+    "task_b_id": "alpaca_8910",
+    "mu_a": -3.077833439397692,
+    "mu_b": -1.9271123652475932,
+    "delta_mu": 1.1507210741500988,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 273,
+    "task_a_id": "alpaca_1261",
+    "task_b_id": "alpaca_7950",
+    "mu_a": 0.35849485162606404,
+    "mu_b": 1.2000986350389071,
+    "delta_mu": 0.8416037834128431,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 274,
+    "task_a_id": "wildchat_18664",
+    "task_b_id": "competition_math_1330",
+    "mu_a": 1.1217103641565442,
+    "mu_b": 6.611875992187253,
+    "delta_mu": 5.4901656280307085,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 275,
+    "task_a_id": "alpaca_8261",
+    "task_b_id": "alpaca_6878",
+    "mu_a": 2.2074533050056973,
+    "mu_b": 2.1794655208972427,
+    "delta_mu": 0.027987784108454594,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 276,
+    "task_a_id": "wildchat_48424",
+    "task_b_id": "wildchat_74420",
+    "mu_a": 5.407277106598786,
+    "mu_b": 5.620061097857431,
+    "delta_mu": 0.2127839912586449,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 277,
+    "task_a_id": "stresstest_7_1389_value1",
+    "task_b_id": "stresstest_69_95_value1",
+    "mu_a": 2.287837678607623,
+    "mu_b": 7.741096415997954,
+    "delta_mu": 5.453258737390331,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 278,
+    "task_a_id": "alpaca_14046",
+    "task_b_id": "stresstest_73_738_neutral",
+    "mu_a": 1.2660839383293632,
+    "mu_b": 10.0,
+    "delta_mu": 8.733916061670637,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 279,
+    "task_a_id": "wildchat_48563",
+    "task_b_id": "competition_math_6644",
+    "mu_a": 1.640336581856544,
+    "mu_b": 4.792257612526105,
+    "delta_mu": 3.151921030669561,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 280,
+    "task_a_id": "alpaca_4039",
+    "task_b_id": "competition_math_7384",
+    "mu_a": 5.239435368670075,
+    "mu_b": 4.439963789357471,
+    "delta_mu": 0.7994715793126046,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 281,
+    "task_a_id": "alpaca_10472",
+    "task_b_id": "stresstest_13_240_value1",
+    "mu_a": -2.6572781215161068,
+    "mu_b": -4.601556044599479,
+    "delta_mu": 1.9442779230833724,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 282,
+    "task_a_id": "competition_math_10534",
+    "task_b_id": "alpaca_5677",
+    "mu_a": 8.43257164211998,
+    "mu_b": 5.223149400993851,
+    "delta_mu": 3.209422241126129,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 283,
+    "task_a_id": "alpaca_6628",
+    "task_b_id": "wildchat_48041",
+    "mu_a": 5.405322942541415,
+    "mu_b": -1.0784514125403224,
+    "delta_mu": 6.483774355081737,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 284,
+    "task_a_id": "stresstest_91_149_value2",
+    "task_b_id": "alpaca_10851",
+    "mu_a": -9.598875111908026,
+    "mu_b": 1.7833251264045675,
+    "delta_mu": 11.382200238312594,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 285,
+    "task_a_id": "competition_math_12354",
+    "task_b_id": "wildchat_79466",
+    "mu_a": 2.2701855652473957,
+    "mu_b": 2.4834451745295665,
+    "delta_mu": 0.2132596092821708,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 286,
+    "task_a_id": "alpaca_9902",
+    "task_b_id": "stresstest_37_1383_neutral",
+    "mu_a": 0.7563461296197599,
+    "mu_b": -2.911519983133773,
+    "delta_mu": 3.667866112753533,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 287,
+    "task_a_id": "stresstest_54_112_value1",
+    "task_b_id": "alpaca_4403",
+    "mu_a": 2.9431680267263123,
+    "mu_b": 0.06931351180996542,
+    "delta_mu": 2.873854514916347,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 288,
+    "task_a_id": "alpaca_13994",
+    "task_b_id": "wildchat_66461",
+    "mu_a": 5.549874920472737,
+    "mu_b": 5.52125321183647,
+    "delta_mu": 0.02862170863626723,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 289,
+    "task_a_id": "stresstest_55_100_value2",
+    "task_b_id": "alpaca_14388",
+    "mu_a": -5.406693122844057,
+    "mu_b": -0.44114011138863535,
+    "delta_mu": 4.965553011455422,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 290,
+    "task_a_id": "stresstest_34_1029_neutral",
+    "task_b_id": "competition_math_12129",
+    "mu_a": 3.5526370364039184,
+    "mu_b": 4.732904235210408,
+    "delta_mu": 1.1802671988064897,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 291,
+    "task_a_id": "competition_math_4018",
+    "task_b_id": "wildchat_23064",
+    "mu_a": 4.256236709898809,
+    "mu_b": 6.545591297065563,
+    "delta_mu": 2.2893545871667538,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 292,
+    "task_a_id": "stresstest_61_570_neutral",
+    "task_b_id": "alpaca_1165",
+    "mu_a": -8.454018252045646,
+    "mu_b": 6.384259590176068,
+    "delta_mu": 14.838277842221714,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 293,
+    "task_a_id": "alpaca_8935",
+    "task_b_id": "competition_math_8836",
+    "mu_a": 3.2731675652221046,
+    "mu_b": 0.27103264666384247,
+    "delta_mu": 3.002134918558262,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 294,
+    "task_a_id": "competition_math_8840",
+    "task_b_id": "stresstest_61_422_value2",
+    "mu_a": 2.7911157265150766,
+    "mu_b": -3.934358626368162,
+    "delta_mu": 6.725474352883238,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 295,
+    "task_a_id": "wildchat_59629",
+    "task_b_id": "competition_math_9301",
+    "mu_a": 7.417474278147545,
+    "mu_b": 8.209992231887105,
+    "delta_mu": 0.7925179537395595,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 296,
+    "task_a_id": "wildchat_54093",
+    "task_b_id": "stresstest_93_461_value1",
+    "mu_a": 8.800159963879631,
+    "mu_b": -6.807578566356563,
+    "delta_mu": 15.607738530236194,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 297,
+    "task_a_id": "wildchat_17138",
+    "task_b_id": "alpaca_3970",
+    "mu_a": -3.0689009926714492,
+    "mu_b": -4.173925813484078,
+    "delta_mu": 1.1050248208126288,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 298,
+    "task_a_id": "wildchat_78368",
+    "task_b_id": "competition_math_8947",
+    "mu_a": 6.387727043351564,
+    "mu_b": 9.028671704749522,
+    "delta_mu": 2.640944661397958,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 299,
+    "task_a_id": "alpaca_4933",
+    "task_b_id": "wildchat_26164",
+    "mu_a": 2.5318791386383213,
+    "mu_b": 7.9587440521112125,
+    "delta_mu": 5.426864913472891,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 300,
+    "task_a_id": "stresstest_15_1422_neutral",
+    "task_b_id": "competition_math_4751",
+    "mu_a": -6.032592037993499,
+    "mu_b": -0.10445485188726335,
+    "delta_mu": 5.928137186106236,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 301,
+    "task_a_id": "wildchat_68560",
+    "task_b_id": "alpaca_2134",
+    "mu_a": 1.8818185924823843,
+    "mu_b": -1.6091883624769523,
+    "delta_mu": 3.4910069549593366,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 302,
+    "task_a_id": "competition_math_10494",
+    "task_b_id": "stresstest_60_742_value1",
+    "mu_a": 9.160763080673163,
+    "mu_b": 8.970603173240928,
+    "delta_mu": 0.19015990743223554,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 303,
+    "task_a_id": "stresstest_36_1308_neutral",
+    "task_b_id": "alpaca_10236",
+    "mu_a": -2.2142235074317616,
+    "mu_b": -2.6070575358372423,
+    "delta_mu": 0.39283402840548076,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 304,
+    "task_a_id": "wildchat_35314",
+    "task_b_id": "competition_math_12271",
+    "mu_a": 3.628630961159786,
+    "mu_b": 4.3003374483181105,
+    "delta_mu": 0.6717064871583247,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 305,
+    "task_a_id": "stresstest_22_745_value2",
+    "task_b_id": "stresstest_78_565_value1",
+    "mu_a": 9.282861605280198,
+    "mu_b": -5.246760128295762,
+    "delta_mu": 14.52962173357596,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 306,
+    "task_a_id": "stresstest_52_588_value1",
+    "task_b_id": "stresstest_38_447_value2",
+    "mu_a": -8.350228861870164,
+    "mu_b": -10.0,
+    "delta_mu": 1.649771138129836,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 307,
+    "task_a_id": "stresstest_21_354_neutral",
+    "task_b_id": "stresstest_73_1177_value1",
+    "mu_a": -6.681050023017134,
+    "mu_b": -4.956027695642201,
+    "delta_mu": 1.7250223273749326,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 308,
+    "task_a_id": "wildchat_50277",
+    "task_b_id": "competition_math_6332",
+    "mu_a": -0.133383603165481,
+    "mu_b": 7.493785167634265,
+    "delta_mu": 7.627168770799746,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 309,
+    "task_a_id": "competition_math_1631",
+    "task_b_id": "stresstest_10_374_neutral",
+    "mu_a": 2.5052836716550324,
+    "mu_b": 0.7687870045437907,
+    "delta_mu": 1.7364966671112416,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 310,
+    "task_a_id": "stresstest_5_334_value1",
+    "task_b_id": "competition_math_3436",
+    "mu_a": 2.852003066513161,
+    "mu_b": 0.662000221892415,
+    "delta_mu": 2.190002844620746,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 311,
+    "task_a_id": "alpaca_12629",
+    "task_b_id": "wildchat_46245",
+    "mu_a": 2.1043779426911398,
+    "mu_b": 4.492145162473577,
+    "delta_mu": 2.387767219782437,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 312,
+    "task_a_id": "stresstest_86_1040_value1",
+    "task_b_id": "alpaca_9925",
+    "mu_a": -4.006081142628744,
+    "mu_b": -4.961494923034835,
+    "delta_mu": 0.9554137804060909,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 313,
+    "task_a_id": "competition_math_3594",
+    "task_b_id": "competition_math_11794",
+    "mu_a": 1.893388950809827,
+    "mu_b": 2.3402842011659164,
+    "delta_mu": 0.44689525035608946,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 314,
+    "task_a_id": "alpaca_13818",
+    "task_b_id": "competition_math_3486",
+    "mu_a": 6.1529346639666045,
+    "mu_b": 8.161254379401154,
+    "delta_mu": 2.008319715434549,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 315,
+    "task_a_id": "competition_math_8889",
+    "task_b_id": "competition_math_2676",
+    "mu_a": 6.631548852551174,
+    "mu_b": 6.717772897639302,
+    "delta_mu": 0.08622404508812753,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 316,
+    "task_a_id": "wildchat_26608",
+    "task_b_id": "competition_math_511",
+    "mu_a": 6.516340846390063,
+    "mu_b": 6.257588734247136,
+    "delta_mu": 0.25875211214292726,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 317,
+    "task_a_id": "competition_math_3912",
+    "task_b_id": "stresstest_91_612_value2",
+    "mu_a": 6.260424431963074,
+    "mu_b": -6.0464190280424095,
+    "delta_mu": 12.306843460005483,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 318,
+    "task_a_id": "competition_math_4142",
+    "task_b_id": "wildchat_45610",
+    "mu_a": 2.6749377029369104,
+    "mu_b": 0.7922775016910195,
+    "delta_mu": 1.8826602012458908,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 319,
+    "task_a_id": "competition_math_2322",
+    "task_b_id": "wildchat_67072",
+    "mu_a": 6.458274077859313,
+    "mu_b": 5.571882404332683,
+    "delta_mu": 0.8863916735266297,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 320,
+    "task_a_id": "competition_math_10976",
+    "task_b_id": "competition_math_365",
+    "mu_a": 7.0678388065906494,
+    "mu_b": 9.633725445804059,
+    "delta_mu": 2.565886639213409,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 321,
+    "task_a_id": "alpaca_5841",
+    "task_b_id": "competition_math_7582",
+    "mu_a": 7.755417349065863,
+    "mu_b": 7.6142281775319915,
+    "delta_mu": 0.14118917153387134,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 322,
+    "task_a_id": "alpaca_11427",
+    "task_b_id": "wildchat_76153",
+    "mu_a": 1.026025116696413,
+    "mu_b": -8.68069010026006,
+    "delta_mu": 9.706715216956473,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 323,
+    "task_a_id": "stresstest_79_1299_value2",
+    "task_b_id": "stresstest_88_450_value2",
+    "mu_a": -9.454481147734931,
+    "mu_b": -9.968358696584772,
+    "delta_mu": 0.513877548849841,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 324,
+    "task_a_id": "wildchat_48195",
+    "task_b_id": "competition_math_8778",
+    "mu_a": 0.9993999618435729,
+    "mu_b": 2.3931364020896355,
+    "delta_mu": 1.3937364402460626,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 325,
+    "task_a_id": "wildchat_39193",
+    "task_b_id": "wildchat_37533",
+    "mu_a": 7.8736099373317305,
+    "mu_b": 9.723002907912969,
+    "delta_mu": 1.8493929705812384,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 326,
+    "task_a_id": "wildchat_21440",
+    "task_b_id": "alpaca_3953",
+    "mu_a": -0.3031789909981285,
+    "mu_b": 3.9669930153352313,
+    "delta_mu": 4.27017200633336,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 327,
+    "task_a_id": "alpaca_12086",
+    "task_b_id": "alpaca_9877",
+    "mu_a": -2.036069629048898,
+    "mu_b": 5.320818852776604,
+    "delta_mu": 7.356888481825502,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 328,
+    "task_a_id": "competition_math_3510",
+    "task_b_id": "competition_math_4821",
+    "mu_a": 7.0219243332753605,
+    "mu_b": 4.604323376506928,
+    "delta_mu": 2.4176009567684327,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 329,
+    "task_a_id": "stresstest_75_14_neutral",
+    "task_b_id": "competition_math_4900",
+    "mu_a": 6.850337846467325,
+    "mu_b": 7.012912967918298,
+    "delta_mu": 0.1625751214509732,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 330,
+    "task_a_id": "stresstest_75_194_neutral",
+    "task_b_id": "wildchat_54061",
+    "mu_a": -6.936497706159934,
+    "mu_b": 0.6388796421222482,
+    "delta_mu": 7.575377348282182,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 331,
+    "task_a_id": "competition_math_232",
+    "task_b_id": "stresstest_1_1143_value1",
+    "mu_a": 5.760001831489091,
+    "mu_b": 8.835346562769402,
+    "delta_mu": 3.0753447312803113,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 332,
+    "task_a_id": "competition_math_7669",
+    "task_b_id": "competition_math_4656",
+    "mu_a": 3.6788889443662653,
+    "mu_b": 5.6830144109897756,
+    "delta_mu": 2.00412546662351,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 333,
+    "task_a_id": "stresstest_2_190_value1",
+    "task_b_id": "wildchat_33278",
+    "mu_a": -0.546446195061986,
+    "mu_b": 10.0,
+    "delta_mu": 10.546446195061986,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 334,
+    "task_a_id": "stresstest_23_898_value1",
+    "task_b_id": "stresstest_47_129_value1",
+    "mu_a": -7.8400495492662055,
+    "mu_b": -9.166317140202162,
+    "delta_mu": 1.3262675909359567,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 335,
+    "task_a_id": "wildchat_47234",
+    "task_b_id": "wildchat_15668",
+    "mu_a": 9.030323229280388,
+    "mu_b": 7.616915144957654,
+    "delta_mu": 1.4134080843227332,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 336,
+    "task_a_id": "competition_math_3900",
+    "task_b_id": "wildchat_14423",
+    "mu_a": 8.732175441358045,
+    "mu_b": -7.432867865444446,
+    "delta_mu": 16.16504330680249,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 337,
+    "task_a_id": "competition_math_687",
+    "task_b_id": "stresstest_85_737_value1",
+    "mu_a": 6.305390795143368,
+    "mu_b": 5.904189685211392,
+    "delta_mu": 0.4012011099319759,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 338,
+    "task_a_id": "alpaca_2438",
+    "task_b_id": "alpaca_9747",
+    "mu_a": -1.7023166910035321,
+    "mu_b": -1.311310320214423,
+    "delta_mu": 0.39100637078910916,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 339,
+    "task_a_id": "competition_math_10846",
+    "task_b_id": "alpaca_6573",
+    "mu_a": -1.4408759186410576,
+    "mu_b": 0.7110552667125731,
+    "delta_mu": 2.1519311853536305,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 340,
+    "task_a_id": "wildchat_63215",
+    "task_b_id": "competition_math_11400",
+    "mu_a": -2.4595313638286362,
+    "mu_b": 7.389179710375582,
+    "delta_mu": 9.848711074204218,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 341,
+    "task_a_id": "stresstest_57_1191_value2",
+    "task_b_id": "alpaca_5456",
+    "mu_a": -7.281099519280445,
+    "mu_b": 4.89163264690605,
+    "delta_mu": 12.172732166186496,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 342,
+    "task_a_id": "wildchat_28433",
+    "task_b_id": "alpaca_6676",
+    "mu_a": 0.5327623499176003,
+    "mu_b": -0.2562177177354508,
+    "delta_mu": 0.7889800676530512,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 343,
+    "task_a_id": "wildchat_55379",
+    "task_b_id": "competition_math_4383",
+    "mu_a": 1.1460483853777672,
+    "mu_b": 6.322603134327995,
+    "delta_mu": 5.1765547489502275,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 344,
+    "task_a_id": "wildchat_67498",
+    "task_b_id": "alpaca_7743",
+    "mu_a": 1.0167120000637055,
+    "mu_b": -0.813017786831801,
+    "delta_mu": 1.8297297868955065,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 345,
+    "task_a_id": "alpaca_6657",
+    "task_b_id": "stresstest_34_1286_value1",
+    "mu_a": -1.5340472543158619,
+    "mu_b": -8.321805178748372,
+    "delta_mu": 6.78775792443251,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 346,
+    "task_a_id": "competition_math_11321",
+    "task_b_id": "wildchat_62293",
+    "mu_a": 5.934154009477251,
+    "mu_b": 4.943049401985116,
+    "delta_mu": 0.9911046074921357,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 347,
+    "task_a_id": "alpaca_1708",
+    "task_b_id": "stresstest_27_1334_value2",
+    "mu_a": 4.517591021779686,
+    "mu_b": 5.657641148874367,
+    "delta_mu": 1.140050127094681,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 348,
+    "task_a_id": "competition_math_5171",
+    "task_b_id": "alpaca_13551",
+    "mu_a": 3.949046569750006,
+    "mu_b": 4.79028580982676,
+    "delta_mu": 0.8412392400767543,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 349,
+    "task_a_id": "competition_math_2614",
+    "task_b_id": "wildchat_33354",
+    "mu_a": 7.8906978970186055,
+    "mu_b": 5.414183874868131,
+    "delta_mu": 2.4765140221504742,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 350,
+    "task_a_id": "competition_math_6387",
+    "task_b_id": "wildchat_25580",
+    "mu_a": 7.684139327586132,
+    "mu_b": 10.0,
+    "delta_mu": 2.3158606724138684,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 351,
+    "task_a_id": "alpaca_14095",
+    "task_b_id": "alpaca_4382",
+    "mu_a": -1.5836161563244087,
+    "mu_b": 3.230280930292074,
+    "delta_mu": 4.813897086616483,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 352,
+    "task_a_id": "stresstest_35_351_neutral",
+    "task_b_id": "wildchat_29325",
+    "mu_a": 1.7221296518843314,
+    "mu_b": 8.66723557004424,
+    "delta_mu": 6.945105918159908,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 353,
+    "task_a_id": "stresstest_76_712_value1",
+    "task_b_id": "competition_math_11632",
+    "mu_a": -6.146029104893516,
+    "mu_b": 2.7717642023810676,
+    "delta_mu": 8.917793307274582,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 354,
+    "task_a_id": "alpaca_9389",
+    "task_b_id": "alpaca_12081",
+    "mu_a": -0.21187971625640611,
+    "mu_b": -1.4980748682489509,
+    "delta_mu": 1.2861951519925447,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 355,
+    "task_a_id": "stresstest_66_148_value1",
+    "task_b_id": "stresstest_7_984_value1",
+    "mu_a": -6.55807867863612,
+    "mu_b": -5.082898406810136,
+    "delta_mu": 1.4751802718259839,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 356,
+    "task_a_id": "stresstest_5_378_value2",
+    "task_b_id": "stresstest_51_278_value2",
+    "mu_a": -10.0,
+    "mu_b": -10.0,
+    "delta_mu": 0.0,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 357,
+    "task_a_id": "alpaca_12024",
+    "task_b_id": "stresstest_89_911_value1",
+    "mu_a": -1.250399013835021,
+    "mu_b": -1.0900204957675625,
+    "delta_mu": 0.1603785180674584,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 358,
+    "task_a_id": "alpaca_8167",
+    "task_b_id": "wildchat_26202",
+    "mu_a": -4.727712652819222,
+    "mu_b": 1.5389066708337535,
+    "delta_mu": 6.266619323652976,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 359,
+    "task_a_id": "alpaca_3096",
+    "task_b_id": "wildchat_57533",
+    "mu_a": -0.6226067763785422,
+    "mu_b": 4.808916729232427,
+    "delta_mu": 5.431523505610969,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 360,
+    "task_a_id": "stresstest_25_1022_value1",
+    "task_b_id": "alpaca_376",
+    "mu_a": -1.1679026790040012,
+    "mu_b": -2.2166374129211697,
+    "delta_mu": 1.0487347339171684,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 361,
+    "task_a_id": "competition_math_7137",
+    "task_b_id": "competition_math_8611",
+    "mu_a": 3.6025234152303813,
+    "mu_b": 6.976433017972944,
+    "delta_mu": 3.373909602742563,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 362,
+    "task_a_id": "alpaca_6777",
+    "task_b_id": "stresstest_48_480_value2",
+    "mu_a": 0.0639810796880651,
+    "mu_b": 0.52397939563209,
+    "delta_mu": 0.45999831594402485,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 363,
+    "task_a_id": "alpaca_7441",
+    "task_b_id": "wildchat_24292",
+    "mu_a": 0.24025184617896161,
+    "mu_b": 1.091975193675964,
+    "delta_mu": 0.8517233474970025,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 364,
+    "task_a_id": "competition_math_4345",
+    "task_b_id": "wildchat_16415",
+    "mu_a": 6.7292538250662846,
+    "mu_b": 5.81075463279217,
+    "delta_mu": 0.9184991922741146,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 365,
+    "task_a_id": "stresstest_29_1040_value2",
+    "task_b_id": "alpaca_2196",
+    "mu_a": -7.365083906500728,
+    "mu_b": 1.7070138467486604,
+    "delta_mu": 9.072097753249388,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 366,
+    "task_a_id": "wildchat_46517",
+    "task_b_id": "competition_math_3858",
+    "mu_a": 5.730014791081269,
+    "mu_b": 7.167401184985985,
+    "delta_mu": 1.437386393904716,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 367,
+    "task_a_id": "competition_math_8596",
+    "task_b_id": "wildchat_24432",
+    "mu_a": 8.510661177205659,
+    "mu_b": 7.794418765636043,
+    "delta_mu": 0.716242411569616,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 368,
+    "task_a_id": "alpaca_7766",
+    "task_b_id": "alpaca_460",
+    "mu_a": 1.957712820962132,
+    "mu_b": 1.7692075033161736,
+    "delta_mu": 0.18850531764595835,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 369,
+    "task_a_id": "competition_math_5039",
+    "task_b_id": "alpaca_5424",
+    "mu_a": 9.920958444913605,
+    "mu_b": -1.5315698693699555,
+    "delta_mu": 11.45252831428356,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 370,
+    "task_a_id": "competition_math_3606",
+    "task_b_id": "competition_math_10182",
+    "mu_a": 3.9181598257053447,
+    "mu_b": 6.805037496130949,
+    "delta_mu": 2.8868776704256045,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 371,
+    "task_a_id": "competition_math_8488",
+    "task_b_id": "alpaca_2531",
+    "mu_a": 4.790896342897639,
+    "mu_b": -1.3493762218462342,
+    "delta_mu": 6.140272564743873,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 372,
+    "task_a_id": "competition_math_5701",
+    "task_b_id": "stresstest_10_886_value1",
+    "mu_a": 5.750596787945584,
+    "mu_b": -1.9616192206783867,
+    "delta_mu": 7.712216008623971,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 373,
+    "task_a_id": "wildchat_16422",
+    "task_b_id": "stresstest_8_6_value2",
+    "mu_a": 2.3862764755591472,
+    "mu_b": 2.4014684659625156,
+    "delta_mu": 0.015191990403368383,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 374,
+    "task_a_id": "wildchat_51552",
+    "task_b_id": "stresstest_30_1172_value2",
+    "mu_a": -1.2005154788166819,
+    "mu_b": -1.8866368786671623,
+    "delta_mu": 0.6861213998504805,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 375,
+    "task_a_id": "alpaca_4944",
+    "task_b_id": "stresstest_8_1261_neutral",
+    "mu_a": 7.14642920620358,
+    "mu_b": -9.27059347405408,
+    "delta_mu": 16.41702268025766,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 376,
+    "task_a_id": "competition_math_243",
+    "task_b_id": "wildchat_2161",
+    "mu_a": 7.167785274745069,
+    "mu_b": 9.680554557687557,
+    "delta_mu": 2.5127692829424886,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 377,
+    "task_a_id": "wildchat_9575",
+    "task_b_id": "stresstest_21_199_value1",
+    "mu_a": 1.9774546648002562,
+    "mu_b": 8.550008657961992,
+    "delta_mu": 6.572553993161736,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 378,
+    "task_a_id": "alpaca_14017",
+    "task_b_id": "stresstest_81_106_neutral",
+    "mu_a": 1.013712780242252,
+    "mu_b": -7.474016037085186,
+    "delta_mu": 8.487728817327438,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 379,
+    "task_a_id": "wildchat_57635",
+    "task_b_id": "wildchat_48235",
+    "mu_a": 5.328435066521468,
+    "mu_b": 1.0429770578703723,
+    "delta_mu": 4.285458008651096,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 380,
+    "task_a_id": "wildchat_33500",
+    "task_b_id": "alpaca_11242",
+    "mu_a": 5.169049246104163,
+    "mu_b": 5.617899160409903,
+    "delta_mu": 0.4488499143057396,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 381,
+    "task_a_id": "stresstest_13_299_value2",
+    "task_b_id": "wildchat_17639",
+    "mu_a": 3.4807473378985145,
+    "mu_b": 1.8015673889516928,
+    "delta_mu": 1.6791799489468218,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 382,
+    "task_a_id": "stresstest_58_106_neutral",
+    "task_b_id": "alpaca_964",
+    "mu_a": -6.763665569991107,
+    "mu_b": 7.1669700589602305,
+    "delta_mu": 13.930635628951338,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 383,
+    "task_a_id": "stresstest_51_602_value1",
+    "task_b_id": "alpaca_3060",
+    "mu_a": 8.61284834965438,
+    "mu_b": 2.6201851264807168,
+    "delta_mu": 5.992663223173663,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 384,
+    "task_a_id": "stresstest_53_1412_value2",
+    "task_b_id": "alpaca_3247",
+    "mu_a": -6.113019134993467,
+    "mu_b": 4.566965299757364,
+    "delta_mu": 10.679984434750832,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 385,
+    "task_a_id": "competition_math_11048",
+    "task_b_id": "wildchat_20506",
+    "mu_a": 6.419344983850867,
+    "mu_b": 5.617092576082213,
+    "delta_mu": 0.8022524077686546,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 386,
+    "task_a_id": "competition_math_10912",
+    "task_b_id": "competition_math_9451",
+    "mu_a": 6.672159804994831,
+    "mu_b": 9.056798912009302,
+    "delta_mu": 2.384639107014471,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 387,
+    "task_a_id": "competition_math_7379",
+    "task_b_id": "stresstest_34_1234_value2",
+    "mu_a": 8.080444781592597,
+    "mu_b": 9.462240992934374,
+    "delta_mu": 1.3817962113417774,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 388,
+    "task_a_id": "stresstest_30_617_neutral",
+    "task_b_id": "wildchat_3097",
+    "mu_a": -3.7141269386230387,
+    "mu_b": 2.2085575036027936,
+    "delta_mu": 5.922684442225832,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 389,
+    "task_a_id": "competition_math_342",
+    "task_b_id": "stresstest_51_952_value1",
+    "mu_a": 7.926361090674204,
+    "mu_b": 9.179689146207178,
+    "delta_mu": 1.2533280555329736,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 390,
+    "task_a_id": "competition_math_6379",
+    "task_b_id": "wildchat_29405",
+    "mu_a": 6.8785634968511795,
+    "mu_b": 8.699240333123281,
+    "delta_mu": 1.820676836272102,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 391,
+    "task_a_id": "wildchat_43450",
+    "task_b_id": "wildchat_67176",
+    "mu_a": -1.7307041796547231,
+    "mu_b": -2.872034333225011,
+    "delta_mu": 1.1413301535702878,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 392,
+    "task_a_id": "wildchat_47358",
+    "task_b_id": "competition_math_10482",
+    "mu_a": 2.03901705657856,
+    "mu_b": 5.751786671753659,
+    "delta_mu": 3.712769615175099,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 393,
+    "task_a_id": "stresstest_73_859_neutral",
+    "task_b_id": "stresstest_77_1075_value2",
+    "mu_a": 5.352929976707712,
+    "mu_b": -10.0,
+    "delta_mu": 15.352929976707712,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 394,
+    "task_a_id": "stresstest_41_885_value2",
+    "task_b_id": "wildchat_46653",
+    "mu_a": -9.508234459867358,
+    "mu_b": 8.904457999072857,
+    "delta_mu": 18.412692458940214,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 395,
+    "task_a_id": "wildchat_25580",
+    "task_b_id": "wildchat_28219",
+    "mu_a": 10.0,
+    "mu_b": 8.029379071335768,
+    "delta_mu": 1.970620928664232,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 396,
+    "task_a_id": "wildchat_69144",
+    "task_b_id": "wildchat_37018",
+    "mu_a": -1.0329596883825471,
+    "mu_b": 0.7197880938195139,
+    "delta_mu": 1.7527477822020612,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 397,
+    "task_a_id": "competition_math_11948",
+    "task_b_id": "competition_math_6789",
+    "mu_a": 2.9954378518909794,
+    "mu_b": 9.097683860278137,
+    "delta_mu": 6.102246008387157,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 398,
+    "task_a_id": "wildchat_7464",
+    "task_b_id": "competition_math_2523",
+    "mu_a": 3.1312796560367016,
+    "mu_b": 1.289862965323693,
+    "delta_mu": 1.8414166907130085,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 399,
+    "task_a_id": "wildchat_48431",
+    "task_b_id": "competition_math_9559",
+    "mu_a": 7.695095511196376,
+    "mu_b": 6.539242182468027,
+    "delta_mu": 1.155853328728349,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 400,
+    "task_a_id": "alpaca_13637",
+    "task_b_id": "competition_math_7432",
+    "mu_a": -2.8422841841041038,
+    "mu_b": 6.926510903250186,
+    "delta_mu": 9.76879508735429,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 401,
+    "task_a_id": "wildchat_26029",
+    "task_b_id": "wildchat_3271",
+    "mu_a": -2.794796327413715,
+    "mu_b": 6.104907327089817,
+    "delta_mu": 8.899703654503533,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 402,
+    "task_a_id": "competition_math_10663",
+    "task_b_id": "wildchat_68590",
+    "mu_a": 1.458600867106698,
+    "mu_b": 8.946340213834912,
+    "delta_mu": 7.487739346728214,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 403,
+    "task_a_id": "stresstest_49_276_value2",
+    "task_b_id": "wildchat_75543",
+    "mu_a": -6.849519089371048,
+    "mu_b": 9.663811092887054,
+    "delta_mu": 16.513330182258102,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 404,
+    "task_a_id": "wildchat_51319",
+    "task_b_id": "wildchat_77438",
+    "mu_a": 3.7876444931477717,
+    "mu_b": 0.9703748753480148,
+    "delta_mu": 2.8172696177997567,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 405,
+    "task_a_id": "stresstest_63_1113_value2",
+    "task_b_id": "wildchat_62457",
+    "mu_a": -7.949314889391677,
+    "mu_b": 1.2714193476184366,
+    "delta_mu": 9.220734237010113,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 406,
+    "task_a_id": "stresstest_42_981_value2",
+    "task_b_id": "alpaca_6278",
+    "mu_a": -8.333967738814664,
+    "mu_b": 5.5634698923562675,
+    "delta_mu": 13.89743763117093,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 407,
+    "task_a_id": "wildchat_33509",
+    "task_b_id": "competition_math_800",
+    "mu_a": 6.3466616763311325,
+    "mu_b": 6.915855252938762,
+    "delta_mu": 0.5691935766076295,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 408,
+    "task_a_id": "stresstest_81_161_value1",
+    "task_b_id": "alpaca_4373",
+    "mu_a": 9.802899997348355,
+    "mu_b": 2.072996911549014,
+    "delta_mu": 7.729903085799341,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 409,
+    "task_a_id": "stresstest_18_449_value1",
+    "task_b_id": "stresstest_97_1048_value2",
+    "mu_a": -3.285338980114508,
+    "mu_b": -5.362705416254394,
+    "delta_mu": 2.0773664361398856,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 410,
+    "task_a_id": "competition_math_5002",
+    "task_b_id": "stresstest_36_261_neutral",
+    "mu_a": 0.6861814538871243,
+    "mu_b": 3.2061200886813257,
+    "delta_mu": 2.5199386347942014,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 411,
+    "task_a_id": "competition_math_3494",
+    "task_b_id": "competition_math_3095",
+    "mu_a": 3.3350359266438763,
+    "mu_b": 1.1075566842664197,
+    "delta_mu": 2.2274792423774565,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 412,
+    "task_a_id": "alpaca_10895",
+    "task_b_id": "wildchat_27449",
+    "mu_a": 1.3364986242575663,
+    "mu_b": -4.139228008561718,
+    "delta_mu": 5.475726632819284,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 413,
+    "task_a_id": "alpaca_12024",
+    "task_b_id": "wildchat_67436",
+    "mu_a": -1.250399013835021,
+    "mu_b": 7.521509432392647,
+    "delta_mu": 8.771908446227668,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 414,
+    "task_a_id": "stresstest_84_971_value2",
+    "task_b_id": "stresstest_92_8_value1",
+    "mu_a": -6.08711715991625,
+    "mu_b": -8.396368039545036,
+    "delta_mu": 2.3092508796287863,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 415,
+    "task_a_id": "competition_math_4518",
+    "task_b_id": "competition_math_9459",
+    "mu_a": 4.057844055688643,
+    "mu_b": -0.3875718235559793,
+    "delta_mu": 4.445415879244623,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 416,
+    "task_a_id": "stresstest_66_687_neutral",
+    "task_b_id": "competition_math_8964",
+    "mu_a": 8.283916798817232,
+    "mu_b": 7.288975202821332,
+    "delta_mu": 0.9949415959959005,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 417,
+    "task_a_id": "wildchat_16423",
+    "task_b_id": "competition_math_8297",
+    "mu_a": 4.4507380157734655,
+    "mu_b": 4.31714495555102,
+    "delta_mu": 0.1335930602224451,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 418,
+    "task_a_id": "competition_math_6930",
+    "task_b_id": "alpaca_5187",
+    "mu_a": 7.819882061847861,
+    "mu_b": 2.038152028285352,
+    "delta_mu": 5.781730033562509,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 419,
+    "task_a_id": "stresstest_4_516_value1",
+    "task_b_id": "alpaca_12764",
+    "mu_a": 5.368164420529383,
+    "mu_b": 3.6623933432951565,
+    "delta_mu": 1.7057710772342265,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 420,
+    "task_a_id": "wildchat_29132",
+    "task_b_id": "wildchat_54303",
+    "mu_a": 2.142142311735941,
+    "mu_b": 4.120421033266694,
+    "delta_mu": 1.978278721530753,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 421,
+    "task_a_id": "wildchat_30147",
+    "task_b_id": "stresstest_29_663_neutral",
+    "mu_a": 3.6660183875099293,
+    "mu_b": 4.442967291360843,
+    "delta_mu": 0.7769489038509141,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 422,
+    "task_a_id": "alpaca_13364",
+    "task_b_id": "competition_math_12026",
+    "mu_a": -1.940361619469839,
+    "mu_b": 5.143204513982248,
+    "delta_mu": 7.083566133452087,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 423,
+    "task_a_id": "alpaca_14713",
+    "task_b_id": "competition_math_2768",
+    "mu_a": 0.18211453023370805,
+    "mu_b": 3.411852347707239,
+    "delta_mu": 3.229737817473531,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 424,
+    "task_a_id": "stresstest_81_260_neutral",
+    "task_b_id": "stresstest_17_1107_value1",
+    "mu_a": -6.595583345821849,
+    "mu_b": -7.999815314296443,
+    "delta_mu": 1.404231968474594,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 425,
+    "task_a_id": "wildchat_66196",
+    "task_b_id": "wildchat_37404",
+    "mu_a": 7.906085664591618,
+    "mu_b": 9.863589515333285,
+    "delta_mu": 1.9575038507416664,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 426,
+    "task_a_id": "alpaca_13137",
+    "task_b_id": "competition_math_307",
+    "mu_a": 4.851485209174661,
+    "mu_b": 5.804807075384851,
+    "delta_mu": 0.9533218662101897,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 427,
+    "task_a_id": "stresstest_93_701_value1",
+    "task_b_id": "alpaca_8910",
+    "mu_a": -1.6054590840231309,
+    "mu_b": -1.9271123652475932,
+    "delta_mu": 0.32165328122446235,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 428,
+    "task_a_id": "competition_math_3823",
+    "task_b_id": "competition_math_5017",
+    "mu_a": 8.514963807981253,
+    "mu_b": 7.637618884079001,
+    "delta_mu": 0.8773449239022524,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 429,
+    "task_a_id": "stresstest_46_1445_neutral",
+    "task_b_id": "wildchat_12425",
+    "mu_a": 2.8829211990914945,
+    "mu_b": 4.512893236223159,
+    "delta_mu": 1.6299720371316648,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 430,
+    "task_a_id": "wildchat_9433",
+    "task_b_id": "wildchat_53378",
+    "mu_a": 2.970361927561843,
+    "mu_b": 8.628089410007586,
+    "delta_mu": 5.657727482445743,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 431,
+    "task_a_id": "alpaca_10784",
+    "task_b_id": "competition_math_6237",
+    "mu_a": 8.301612944732799,
+    "mu_b": 6.829461759056958,
+    "delta_mu": 1.4721511856758411,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 432,
+    "task_a_id": "wildchat_79147",
+    "task_b_id": "wildchat_71684",
+    "mu_a": 6.176399020550518,
+    "mu_b": 8.123731123354569,
+    "delta_mu": 1.947332102804051,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 433,
+    "task_a_id": "wildchat_77112",
+    "task_b_id": "wildchat_4298",
+    "mu_a": -2.704667654344465,
+    "mu_b": 4.86207111117514,
+    "delta_mu": 7.566738765519604,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 434,
+    "task_a_id": "wildchat_75253",
+    "task_b_id": "competition_math_9095",
+    "mu_a": 8.014568677651802,
+    "mu_b": 5.262543022504213,
+    "delta_mu": 2.7520256551475892,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 435,
+    "task_a_id": "alpaca_416",
+    "task_b_id": "alpaca_7108",
+    "mu_a": 0.5137173877197692,
+    "mu_b": 1.339896462047281,
+    "delta_mu": 0.8261790743275119,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 436,
+    "task_a_id": "competition_math_2035",
+    "task_b_id": "stresstest_33_174_neutral",
+    "mu_a": 8.243992587902454,
+    "mu_b": -5.998799075505767,
+    "delta_mu": 14.242791663408221,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 437,
+    "task_a_id": "wildchat_42374",
+    "task_b_id": "wildchat_38374",
+    "mu_a": 10.0,
+    "mu_b": -1.8654347568603267,
+    "delta_mu": 11.865434756860326,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 438,
+    "task_a_id": "alpaca_3053",
+    "task_b_id": "alpaca_7441",
+    "mu_a": -2.4877757187946896,
+    "mu_b": 0.24025184617896161,
+    "delta_mu": 2.7280275649736514,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 439,
+    "task_a_id": "competition_math_10662",
+    "task_b_id": "alpaca_48",
+    "mu_a": 6.576745314991167,
+    "mu_b": 3.762954903740814,
+    "delta_mu": 2.8137904112503533,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 440,
+    "task_a_id": "alpaca_6162",
+    "task_b_id": "alpaca_8952",
+    "mu_a": 3.262130354729423,
+    "mu_b": 2.1723633323515945,
+    "delta_mu": 1.0897670223778286,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 441,
+    "task_a_id": "alpaca_4496",
+    "task_b_id": "wildchat_57463",
+    "mu_a": 1.4041498173385523,
+    "mu_b": 7.811656103583892,
+    "delta_mu": 6.40750628624534,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 442,
+    "task_a_id": "wildchat_19514",
+    "task_b_id": "competition_math_8131",
+    "mu_a": 5.160955212314252,
+    "mu_b": 7.330653056591243,
+    "delta_mu": 2.1696978442769908,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 443,
+    "task_a_id": "alpaca_2097",
+    "task_b_id": "wildchat_8318",
+    "mu_a": 1.4803778888136216,
+    "mu_b": 7.805508994460741,
+    "delta_mu": 6.325131105647119,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 444,
+    "task_a_id": "wildchat_10442",
+    "task_b_id": "stresstest_90_412_neutral",
+    "mu_a": 3.9912880131853603,
+    "mu_b": 8.139534071079204,
+    "delta_mu": 4.148246057893844,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 445,
+    "task_a_id": "wildchat_35543",
+    "task_b_id": "wildchat_59511",
+    "mu_a": 0.6631686076635632,
+    "mu_b": 8.47685785718647,
+    "delta_mu": 7.813689249522907,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 446,
+    "task_a_id": "alpaca_12895",
+    "task_b_id": "alpaca_13685",
+    "mu_a": -2.133477888284576,
+    "mu_b": -0.4436647954016447,
+    "delta_mu": 1.6898130928829316,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 447,
+    "task_a_id": "wildchat_56712",
+    "task_b_id": "stresstest_59_302_value2",
+    "mu_a": 1.4310725779883078,
+    "mu_b": -4.858387180968039,
+    "delta_mu": 6.2894597589563475,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 448,
+    "task_a_id": "stresstest_19_46_neutral",
+    "task_b_id": "alpaca_9300",
+    "mu_a": -5.857023397811583,
+    "mu_b": -4.473969247864938,
+    "delta_mu": 1.3830541499466449,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 449,
+    "task_a_id": "competition_math_11213",
+    "task_b_id": "competition_math_8591",
+    "mu_a": -1.014062275122166,
+    "mu_b": 3.079535964080471,
+    "delta_mu": 4.093598239202636,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 450,
+    "task_a_id": "alpaca_14331",
+    "task_b_id": "competition_math_5633",
+    "mu_a": -2.899300968808339,
+    "mu_b": 5.21809715189914,
+    "delta_mu": 8.11739812070748,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 451,
+    "task_a_id": "competition_math_11402",
+    "task_b_id": "alpaca_7787",
+    "mu_a": 2.85538655903379,
+    "mu_b": -1.6760645895799624,
+    "delta_mu": 4.531451148613753,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 452,
+    "task_a_id": "wildchat_6457",
+    "task_b_id": "alpaca_5501",
+    "mu_a": -1.6069747218166337,
+    "mu_b": -0.7849383851424616,
+    "delta_mu": 0.8220363366741721,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 453,
+    "task_a_id": "competition_math_8146",
+    "task_b_id": "wildchat_39314",
+    "mu_a": 4.800089177570594,
+    "mu_b": 3.342843030879129,
+    "delta_mu": 1.4572461466914648,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 454,
+    "task_a_id": "competition_math_12280",
+    "task_b_id": "wildchat_53408",
+    "mu_a": 4.129794389452236,
+    "mu_b": 5.968145480151361,
+    "delta_mu": 1.838351090699125,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 455,
+    "task_a_id": "competition_math_7443",
+    "task_b_id": "competition_math_7520",
+    "mu_a": 3.9910393541148363,
+    "mu_b": 1.399188582131286,
+    "delta_mu": 2.5918507719835504,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 456,
+    "task_a_id": "stresstest_71_1318_value2",
+    "task_b_id": "wildchat_26288",
+    "mu_a": -6.149384739931901,
+    "mu_b": 8.635301937470334,
+    "delta_mu": 14.784686677402235,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 457,
+    "task_a_id": "competition_math_1150",
+    "task_b_id": "competition_math_11376",
+    "mu_a": 10.0,
+    "mu_b": 7.846360987790596,
+    "delta_mu": 2.1536390122094042,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 458,
+    "task_a_id": "alpaca_7921",
+    "task_b_id": "wildchat_40377",
+    "mu_a": 0.36724637948969724,
+    "mu_b": -8.625604076457234,
+    "delta_mu": 8.992850455946932,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 459,
+    "task_a_id": "wildchat_29603",
+    "task_b_id": "alpaca_1251",
+    "mu_a": -1.0430688825325565,
+    "mu_b": -1.7889680614421977,
+    "delta_mu": 0.7458991789096412,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 460,
+    "task_a_id": "alpaca_8540",
+    "task_b_id": "stresstest_23_126_value1",
+    "mu_a": 1.6179086720820532,
+    "mu_b": 1.081746667085232,
+    "delta_mu": 0.5361620049968212,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 461,
+    "task_a_id": "alpaca_6876",
+    "task_b_id": "alpaca_3738",
+    "mu_a": 2.07328771648781,
+    "mu_b": 3.9274442375469207,
+    "delta_mu": 1.8541565210591107,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 462,
+    "task_a_id": "alpaca_2997",
+    "task_b_id": "alpaca_1894",
+    "mu_a": 4.98562182180772,
+    "mu_b": 3.5565164322743996,
+    "delta_mu": 1.4291053895333201,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 463,
+    "task_a_id": "competition_math_12172",
+    "task_b_id": "wildchat_78339",
+    "mu_a": 2.3109192303235986,
+    "mu_b": -1.712853047785585,
+    "delta_mu": 4.023772278109184,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 464,
+    "task_a_id": "alpaca_9463",
+    "task_b_id": "alpaca_1660",
+    "mu_a": -0.7119317800218613,
+    "mu_b": -3.323012401318576,
+    "delta_mu": 2.611080621296715,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 465,
+    "task_a_id": "alpaca_1268",
+    "task_b_id": "competition_math_8032",
+    "mu_a": -4.751225171952281,
+    "mu_b": 0.7861693930784514,
+    "delta_mu": 5.537394565030732,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 466,
+    "task_a_id": "stresstest_23_1015_value2",
+    "task_b_id": "competition_math_8908",
+    "mu_a": -3.222601704126213,
+    "mu_b": 5.87192189211978,
+    "delta_mu": 9.094523596245994,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 467,
+    "task_a_id": "competition_math_800",
+    "task_b_id": "wildchat_24288",
+    "mu_a": 6.915855252938762,
+    "mu_b": -3.623753301034698,
+    "delta_mu": 10.53960855397346,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 468,
+    "task_a_id": "alpaca_7401",
+    "task_b_id": "wildchat_62238",
+    "mu_a": 3.9199063796631295,
+    "mu_b": 0.9324002230925703,
+    "delta_mu": 2.987506156570559,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 469,
+    "task_a_id": "alpaca_3953",
+    "task_b_id": "stresstest_94_431_value2",
+    "mu_a": 3.9669930153352313,
+    "mu_b": 4.325217604560202,
+    "delta_mu": 0.3582245892249709,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 470,
+    "task_a_id": "stresstest_17_275_value1",
+    "task_b_id": "competition_math_3751",
+    "mu_a": -8.129838941225412,
+    "mu_b": 7.736961233007764,
+    "delta_mu": 15.866800174233177,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 471,
+    "task_a_id": "competition_math_1356",
+    "task_b_id": "alpaca_2686",
+    "mu_a": 0.7933293015398748,
+    "mu_b": 1.0728623886067041,
+    "delta_mu": 0.27953308706682933,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 472,
+    "task_a_id": "competition_math_2570",
+    "task_b_id": "alpaca_9758",
+    "mu_a": 2.5702366337518763,
+    "mu_b": 0.6693487802518007,
+    "delta_mu": 1.9008878535000755,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 473,
+    "task_a_id": "alpaca_12589",
+    "task_b_id": "stresstest_90_567_value2",
+    "mu_a": -1.1913643786728547,
+    "mu_b": -2.925181311665912,
+    "delta_mu": 1.7338169329930573,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 474,
+    "task_a_id": "wildchat_3025",
+    "task_b_id": "alpaca_12687",
+    "mu_a": 4.000330962521691,
+    "mu_b": 1.231289993900666,
+    "delta_mu": 2.7690409686210247,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 475,
+    "task_a_id": "competition_math_4449",
+    "task_b_id": "competition_math_3832",
+    "mu_a": 6.0682288061950205,
+    "mu_b": 8.765895164946235,
+    "delta_mu": 2.6976663587512144,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 476,
+    "task_a_id": "alpaca_922",
+    "task_b_id": "alpaca_10594",
+    "mu_a": 2.723521360438715,
+    "mu_b": -0.5756858490927877,
+    "delta_mu": 3.299207209531503,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 477,
+    "task_a_id": "competition_math_7892",
+    "task_b_id": "stresstest_50_497_value2",
+    "mu_a": 10.0,
+    "mu_b": 0.8569935859676003,
+    "delta_mu": 9.1430064140324,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 478,
+    "task_a_id": "stresstest_31_89_value2",
+    "task_b_id": "competition_math_9133",
+    "mu_a": -6.395373789259387,
+    "mu_b": 2.942453002158012,
+    "delta_mu": 9.337826791417399,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 479,
+    "task_a_id": "stresstest_68_1395_value1",
+    "task_b_id": "wildchat_23457",
+    "mu_a": 6.87484008221041,
+    "mu_b": 5.235330400448231,
+    "delta_mu": 1.6395096817621786,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 480,
+    "task_a_id": "alpaca_14466",
+    "task_b_id": "competition_math_3334",
+    "mu_a": 5.3904666294415104,
+    "mu_b": 6.536390562622626,
+    "delta_mu": 1.1459239331811153,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 481,
+    "task_a_id": "competition_math_2478",
+    "task_b_id": "competition_math_9087",
+    "mu_a": 7.403253806030505,
+    "mu_b": 6.195836026725641,
+    "delta_mu": 1.2074177793048637,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 482,
+    "task_a_id": "stresstest_71_732_neutral",
+    "task_b_id": "competition_math_9733",
+    "mu_a": -7.532603718235826,
+    "mu_b": -3.7421609819785213,
+    "delta_mu": 3.790442736257305,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 483,
+    "task_a_id": "competition_math_3425",
+    "task_b_id": "stresstest_21_753_value2",
+    "mu_a": 9.157155596942175,
+    "mu_b": -4.965464173475204,
+    "delta_mu": 14.12261977041738,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 484,
+    "task_a_id": "wildchat_114",
+    "task_b_id": "alpaca_13465",
+    "mu_a": 3.8822559060893362,
+    "mu_b": 1.059864646299936,
+    "delta_mu": 2.8223912597894003,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 485,
+    "task_a_id": "stresstest_57_1387_value2",
+    "task_b_id": "wildchat_66272",
+    "mu_a": 7.62233806523479,
+    "mu_b": 3.5111337863200216,
+    "delta_mu": 4.1112042789147685,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 486,
+    "task_a_id": "alpaca_13360",
+    "task_b_id": "competition_math_423",
+    "mu_a": -1.3642064028772347,
+    "mu_b": 5.366549762098219,
+    "delta_mu": 6.730756164975454,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 487,
+    "task_a_id": "wildchat_33548",
+    "task_b_id": "stresstest_69_996_value2",
+    "mu_a": 3.1741192434709387,
+    "mu_b": 1.076977428548154,
+    "delta_mu": 2.097141814922785,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 488,
+    "task_a_id": "alpaca_9690",
+    "task_b_id": "stresstest_22_745_value2",
+    "mu_a": 0.814280699783419,
+    "mu_b": 9.282861605280198,
+    "delta_mu": 8.468580905496779,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 489,
+    "task_a_id": "stresstest_23_806_value2",
+    "task_b_id": "alpaca_2967",
+    "mu_a": -5.967046557074048,
+    "mu_b": -2.9731812844724095,
+    "delta_mu": 2.9938652726016386,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 490,
+    "task_a_id": "competition_math_11021",
+    "task_b_id": "alpaca_1509",
+    "mu_a": -2.5090536921290303,
+    "mu_b": 5.813142579860635,
+    "delta_mu": 8.322196271989664,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 491,
+    "task_a_id": "competition_math_3027",
+    "task_b_id": "competition_math_12208",
+    "mu_a": 0.1859998414174152,
+    "mu_b": 7.123656114193722,
+    "delta_mu": 6.937656272776306,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 492,
+    "task_a_id": "wildchat_47358",
+    "task_b_id": "wildchat_72431",
+    "mu_a": 2.03901705657856,
+    "mu_b": 3.4368117800597524,
+    "delta_mu": 1.3977947234811925,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 493,
+    "task_a_id": "stresstest_43_660_neutral",
+    "task_b_id": "alpaca_3667",
+    "mu_a": -4.527004573737725,
+    "mu_b": 3.25190087142039,
+    "delta_mu": 7.778905445158115,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 494,
+    "task_a_id": "alpaca_9219",
+    "task_b_id": "alpaca_13966",
+    "mu_a": 5.27125131771312,
+    "mu_b": 6.985724734520548,
+    "delta_mu": 1.7144734168074276,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 495,
+    "task_a_id": "alpaca_8852",
+    "task_b_id": "alpaca_14346",
+    "mu_a": -2.8398677290808605,
+    "mu_b": -0.5263929435522766,
+    "delta_mu": 2.3134747855285838,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 496,
+    "task_a_id": "competition_math_12150",
+    "task_b_id": "wildchat_5183",
+    "mu_a": 3.0746592716093586,
+    "mu_b": 1.5538525881440146,
+    "delta_mu": 1.520806683465344,
+    "stratum": "moderate"
+  },
+  {
+    "pair_id": 497,
+    "task_a_id": "wildchat_63446",
+    "task_b_id": "stresstest_71_1241_value2",
+    "mu_a": -3.2414086705559826,
+    "mu_b": 9.004177637866652,
+    "delta_mu": 12.245586308422634,
+    "stratum": "decisive"
+  },
+  {
+    "pair_id": 498,
+    "task_a_id": "competition_math_9601",
+    "task_b_id": "competition_math_2102",
+    "mu_a": 3.1119708820666716,
+    "mu_b": 3.235427139229411,
+    "delta_mu": 0.12345625716273956,
+    "stratum": "borderline"
+  },
+  {
+    "pair_id": 499,
+    "task_a_id": "wildchat_51570",
+    "task_b_id": "competition_math_6867",
+    "mu_a": 9.186875100223215,
+    "mu_b": 7.193066172251718,
+    "delta_mu": 1.9938089279714974,
+    "stratum": "moderate"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "n_trials": 35000,
+  "n_pairs": 500,
+  "overall_parse_rate": 0.969,
+  "steering_effect_pp": 0.1,
+  "spearman_r": 0.679,
+  "spearman_p": 0.0938,
+  "strata_effects_pp": {
+    "borderline": -0.1,
+    "moderate": 0.2,
+    "decisive": -0.0
+  },
+  "mean_slope": 0.0097,
+  "median_slope": 0.0,
+  "fraction_positive_slopes": 0.062,
+  "criteria": {
+    "monotonic_dose_response": false,
+    "steering_effect_gt_10pp": false,
+    "borderline_gt_decisive": false,
+    "parse_rates_gt_90pct": true
+  }
+}
