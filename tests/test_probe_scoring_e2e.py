@@ -38,12 +38,16 @@ def model():
 
 class TestScorePrompt:
     def test_matches_manual_extraction(self, model):
-        """score_prompt matches get_activations + score_with_probe on last token."""
-        activations = model.get_activations(
-            SIMPLE_PROMPT, layers=[PROBE_LAYER], selector_names=["last"],
-        )
-        act = activations["last"][PROBE_LAYER]
-        expected = score_with_probe(PROBE_A, act.reshape(1, -1))[0]
+        """score_prompt matches manually captured last-token activation."""
+        # Capture last-token activation via _hooked_forward
+        capture_cbs, activations = model._capture_callbacks([PROBE_LAYER])
+        prompt = model.format_messages(SIMPLE_PROMPT, add_generation_prompt=True)
+        input_ids = model._tokenize(prompt)
+        with model._hooked_forward(capture_cbs):
+            with torch.inference_mode():
+                model.model(input_ids)
+        act = activations[PROBE_LAYER][:, -1, :].float().numpy()
+        expected = score_with_probe(PROBE_A, act)[0]
 
         scores = score_prompt(model, SIMPLE_PROMPT, probes=[(PROBE_LAYER, PROBE_A)])
 
