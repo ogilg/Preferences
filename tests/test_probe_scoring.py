@@ -19,27 +19,34 @@ def _random_hidden(batch: int = 1, seq_len: int = 10, d_model: int = D_MODEL) ->
 
 
 class TestMakeProbeCallback:
+    def test_scores_all_tokens(self):
+        probe = _random_probe()
+        hidden = _random_hidden(batch=2, seq_len=10)
+        scores: list[np.ndarray] = []
+
+        cb = _make_probe_callback(probe, scores, device="cpu")
+        cb(hidden)
+
+        assert len(scores) == 1
+        assert scores[0].shape == (2, 10)
+
     def test_score_matches_manual_computation(self):
         probe = _random_probe()
         hidden = _random_hidden()
-        scores: list[float] = []
+        scores: list[np.ndarray] = []
 
         cb = _make_probe_callback(probe, scores, device="cpu")
         cb(hidden)
 
+        # Check last token
         act = hidden[0, -1, :].numpy()
         expected = float(act @ probe[:-1] + probe[-1])
-        np.testing.assert_allclose(scores[0], expected, rtol=1e-5)
+        np.testing.assert_allclose(scores[0][0, -1], expected, rtol=1e-5)
 
-    def test_batch_produces_one_score_per_sample(self):
-        probe = _random_probe()
-        hidden = _random_hidden(batch=5)
-        scores: list[float] = []
-
-        cb = _make_probe_callback(probe, scores, device="cpu")
-        cb(hidden)
-
-        assert len(scores) == 5
+        # Check all tokens
+        all_acts = hidden[0].numpy()
+        expected_all = all_acts @ probe[:-1] + probe[-1]
+        np.testing.assert_allclose(scores[0][0], expected_all, rtol=1e-5)
 
 
 class TestBuildCallbacks:
@@ -55,8 +62,8 @@ class TestBuildCallbacks:
 
         assert len(all_scores[0]) == 1
         assert len(all_scores[1]) == 1
-        # Different probes should give different scores
-        assert all_scores[0][0] != all_scores[1][0]
+        # Different probes should give different scores at last token
+        assert all_scores[0][0][0, -1] != all_scores[1][0][0, -1]
 
     def test_probes_at_different_layers(self):
         probes = [(8, _random_probe()), (15, _random_probe())]

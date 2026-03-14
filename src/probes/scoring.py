@@ -14,28 +14,31 @@ if TYPE_CHECKING:
 
 
 def _make_probe_callback(
-    weights: np.ndarray, scores_out: list[float], device: str,
+    weights: np.ndarray, scores_out: list[np.ndarray], device: str,
 ) -> Callable[[torch.Tensor], None]:
-    """Return a callback that scores hidden[:, -1, :] with the probe on-device."""
+    """Return a callback that scores all tokens with the probe on-device.
+
+    Appends a (batch, seq_len) array to scores_out on each call.
+    """
     coef = torch.tensor(weights[:-1], dtype=torch.float32, device=device)
     intercept = float(weights[-1])
 
     def callback(hidden: torch.Tensor) -> None:
-        act = hidden[:, -1, :].float()
-        scores = (act @ coef + intercept).cpu().tolist()
-        scores_out.extend(scores)
+        # (batch, seq_len, d_model) @ (d_model,) -> (batch, seq_len)
+        all_scores = (hidden.float() @ coef + intercept).cpu().numpy()
+        scores_out.append(all_scores)
 
     return callback
 
 
 def _build_callbacks(
     probes: list[tuple[int, np.ndarray]], device: str,
-) -> tuple[list[list[float]], dict[int, Callable[[torch.Tensor], None]]]:
+) -> tuple[list[list[np.ndarray]], dict[int, Callable[[torch.Tensor], None]]]:
     """Build per-layer callbacks, composing multiple probes at the same layer."""
-    all_scores: list[list[float]] = []
+    all_scores: list[list[np.ndarray]] = []
     per_layer: dict[int, list[Callable[[torch.Tensor], None]]] = {}
     for layer, weights in probes:
-        scores: list[float] = []
+        scores: list[np.ndarray] = []
         all_scores.append(scores)
         per_layer.setdefault(layer, []).append(
             _make_probe_callback(weights, scores, device)
@@ -56,7 +59,7 @@ def score_prompt(
     messages: list[Message],
     probes: list[tuple[int, np.ndarray]],
 ) -> list[float]:
-    """Score probes on a single prompt. Returns one score per probe."""
+    """Score probes on a single prompt at the last token. Returns one score per probe."""
     all_scores, callbacks = _build_callbacks(probes, model.device)
     prompt = model.format_messages(messages, add_generation_prompt=True)
     input_ids = model._tokenize(prompt)
@@ -65,7 +68,24 @@ def score_prompt(
         with torch.inference_mode():
             model.model(input_ids)
 
-    return [s[0] for s in all_scores]
+    return [s[0][0, -1] for s in all_scores]
+
+
+def score_prompt_all_tokens(
+    model: HuggingFaceModel,
+    messages: list[Message],
+    probes: list[tuple[int, np.ndarray]],
+) -> list[np.ndarray]:
+    """Score probes at every token position. Returns one (seq_len,) array per probe."""
+    all_scores, callbacks = _build_callbacks(probes, model.device)
+    prompt = model.format_messages(messages, add_generation_prompt=True)
+    input_ids = model._tokenize(prompt)
+
+    with model._hooked_forward(callbacks):
+        with torch.inference_mode():
+            model.model(input_ids)
+
+    return [s[0][0] for s in all_scores]
 
 
 def score_prompt_batch(
@@ -73,7 +93,10 @@ def score_prompt_batch(
     messages_batch: list[list[Message]],
     probes: list[tuple[int, np.ndarray]],
 ) -> list[np.ndarray]:
-    """Score probes on a batch of prompts. Returns one array per probe, shape (batch_size,)."""
+    """Score probes on a batch of prompts at the last token.
+
+    Returns one array per probe, shape (batch_size,).
+    """
     all_scores, callbacks = _build_callbacks(probes, model.device)
 
     token_ids_list = [
@@ -86,4 +109,4 @@ def score_prompt_batch(
         with torch.inference_mode():
             model.model(padded, attention_mask=attention_mask)
 
-    return [np.array(s) for s in all_scores]
+    return [s[0][:, -1] for s in all_scores]

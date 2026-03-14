@@ -12,7 +12,7 @@ import torch
 
 from src.models.huggingface_model import HuggingFaceModel
 from src.probes.core.evaluate import score_with_probe
-from src.probes.scoring import score_prompt, score_prompt_batch
+from src.probes.scoring import score_prompt, score_prompt_all_tokens, score_prompt_batch
 
 pytestmark = pytest.mark.gpu
 
@@ -60,6 +60,45 @@ class TestScorePrompt:
         )
         assert len(scores) == 2
         assert scores[0] != pytest.approx(scores[1], abs=1e-3)
+
+
+class TestScorePromptAllTokens:
+    def test_returns_all_token_scores(self, model):
+        all_scores = score_prompt_all_tokens(
+            model, SIMPLE_PROMPT, probes=[(PROBE_LAYER, PROBE_A)],
+        )
+        prompt = model.format_messages(SIMPLE_PROMPT, add_generation_prompt=True)
+        seq_len = model._tokenize(prompt).shape[1]
+
+        assert len(all_scores) == 1
+        assert all_scores[0].shape == (seq_len,)
+
+    def test_last_token_matches_score_prompt(self, model):
+        all_scores = score_prompt_all_tokens(
+            model, SIMPLE_PROMPT, probes=[(PROBE_LAYER, PROBE_A)],
+        )
+        last_score = score_prompt(
+            model, SIMPLE_PROMPT, probes=[(PROBE_LAYER, PROBE_A)],
+        )
+        np.testing.assert_allclose(all_scores[0][-1], last_score[0], rtol=1e-5)
+
+    def test_matches_manual_all_token_extraction(self, model):
+        """All-token scores match manually captured activations scored offline."""
+        capture_cbs, activations = model._capture_callbacks([PROBE_LAYER])
+        prompt = model.format_messages(SIMPLE_PROMPT, add_generation_prompt=True)
+        input_ids = model._tokenize(prompt)
+        with model._hooked_forward(capture_cbs):
+            with torch.inference_mode():
+                model.model(input_ids)
+        # Score every token offline
+        acts = activations[PROBE_LAYER][0].float().numpy()  # (seq_len, d_model)
+        expected = score_with_probe(PROBE_A, acts)  # (seq_len,)
+
+        all_scores = score_prompt_all_tokens(
+            model, SIMPLE_PROMPT, probes=[(PROBE_LAYER, PROBE_A)],
+        )
+
+        np.testing.assert_allclose(all_scores[0], expected, rtol=1e-5)
 
 
 class TestScorePromptBatch:
