@@ -58,10 +58,11 @@ def score_prompt(
     model: HuggingFaceModel,
     messages: list[Message],
     probes: list[tuple[int, np.ndarray]],
+    add_generation_prompt: bool = True,
 ) -> list[float]:
     """Score probes on a single prompt at the last token. Returns one score per probe."""
     all_scores, callbacks = _build_callbacks(probes, model.device)
-    prompt = model.format_messages(messages, add_generation_prompt=True)
+    prompt = model.format_messages(messages, add_generation_prompt=add_generation_prompt)
     input_ids = model._tokenize(prompt)
 
     with model._hooked_forward(callbacks):
@@ -75,10 +76,11 @@ def score_prompt_all_tokens(
     model: HuggingFaceModel,
     messages: list[Message],
     probes: list[tuple[int, np.ndarray]],
+    add_generation_prompt: bool = True,
 ) -> list[np.ndarray]:
     """Score probes at every token position. Returns one (seq_len,) array per probe."""
     all_scores, callbacks = _build_callbacks(probes, model.device)
-    prompt = model.format_messages(messages, add_generation_prompt=True)
+    prompt = model.format_messages(messages, add_generation_prompt=add_generation_prompt)
     input_ids = model._tokenize(prompt)
 
     with model._hooked_forward(callbacks):
@@ -92,6 +94,7 @@ def score_prompt_batch(
     model: HuggingFaceModel,
     messages_batch: list[list[Message]],
     probes: list[tuple[int, np.ndarray]],
+    add_generation_prompt: bool = True,
 ) -> list[np.ndarray]:
     """Score probes on a batch of prompts at the last token.
 
@@ -100,7 +103,7 @@ def score_prompt_batch(
     all_scores, callbacks = _build_callbacks(probes, model.device)
 
     token_ids_list = [
-        model._tokenize(model.format_messages(msgs, add_generation_prompt=True))[0]
+        model._tokenize(model.format_messages(msgs, add_generation_prompt=add_generation_prompt))[0]
         for msgs in messages_batch
     ]
     padded, attention_mask, _ = model._left_pad(token_ids_list)
