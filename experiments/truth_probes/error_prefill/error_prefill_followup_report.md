@@ -1,117 +1,112 @@
-# Error Prefill Follow-up: Assistant-turn selectors + Lying system prompts
+# Error Prefill Follow-up: Reading from the answer turn + Lying system prompts
 
 ## Summary
 
-Two follow-ups to the original error prefill experiment:
+Two follow-ups to the [original error prefill experiment](error_prefill_report.md), which found that a preference probe separates correct from incorrect prefilled answers when reading from the follow-up user turn (d up to 2.58).
 
-1. **The signal is strongest near the source.** `assistant_tb:-1` (the structural `\n` token just before follow-up user content) produces d = 3.29 (AUC = 0.98) — stronger than any follow-up user turn selector (previous best: d = 2.58).
+1. **The signal is strongest at the source.** Reading from the last token of the assistant's own answer gives d = 3.30 (vs d = 2.58 at the follow-up turn). The signal is identical regardless of what follow-up comes next.
 
-2. **Lying instructions disrupt the signal.** A direct lying system prompt ("always give incorrect answers") eliminates the correct/incorrect separation at the assistant turn (d = −0.55 at L53 with tb-2 probe). A roleplay prompt ("play a deceptive assistant") preserves moderate signal (d = 2.13). This suggests the probe tracks something beyond bare truth value — it responds to the model's stance toward its own output.
+2. **Lying instructions disrupt the signal.** A direct lying system prompt ("always give incorrect answers") eliminates the correct/incorrect separation (d drops to near zero). A roleplay lying prompt ("play a deceptive assistant") partially preserves it (d = 2.13). Since the prefilled answers are identical across conditions, the probe does not track bare truth — it tracks something the model's lying stance can suppress.
 
-## Selector positions
+## Part 1: Reading from the answer turn (no system prompt)
 
-Each selector reads from a specific token position. The `assistant_tb` anchor is the first follow-up user content token; negative offsets step backwards through structural tokens. The diagrams use `↑` for the read position and `•` for the anchor.
+### Setup
 
-**`assistant_tb:-1`** — `\n` after follow-up user turn header (offset −1 from user content):
+Same 10,000 conversations as the original experiment (1,000 CREAK claim pairs x 2 answer conditions x 5 follow-up types). New selectors now read from the **assistant's answer turn** rather than the user's follow-up turn.
 
-```
-... Belgium. <end_of_turn> \n <start_of_turn> user \n  Thank you. ...
-                                                   ↑   •
-```
+Example CREAK pair for entity "Belgium": the true claim provides the user question; the false claim (e.g., "Belgium is located in South America") is prefilled as the model's incorrect answer.
 
-**`assistant_mean`** — mean over the entire assistant content span:
+**Selector positions in the conversation:**
 
 ```
-... Brussels is the capital of Belgium. <end_of_turn> \n ...
-    ←―――――――――――――――――――――――――――――――→
+[user]  Is it true that Belgium is in Europe?
+[assistant]  Yes, Belgium is located in South America.   <-- assistant_tb:-1 reads here
+                                                          <-- assistant_tb:-5 reads here
+[user]  That makes sense, Belgium being in South America  <-- turn_boundary:-2 reads here
+        would explain its climate.                            (original experiment)
 ```
-## Part 1: Assistant-turn selectors (no system prompt)
 
-We extracted activations from three positions in the first assistant turn, using the same 10,000 conversations (2 answer conditions × 5 follow-up types × 1,000 pairs) from the original experiment. The "none" follow-up condition (2-turn conversations) was excluded because `assistant_tb:0` requires a follow-up turn for anchoring, and we wanted a consistent conversation set across all three selectors.
+`assistant_mean` averages over all assistant content tokens. `assistant_tb:-N` reads from the Nth token back from the end of the assistant turn.
 
-### assistant_tb:-1 — strongest signal
+**Probes:** Two Ridge probes originally trained to predict pairwise task preferences from activations. "tb-2" reads from 2 tokens before the turn boundary (the `model` token in Gemma's `<end_of_turn>\nmodel` template); "tb-5" reads from 5 tokens before (the `<end_of_turn>` token itself). These probes were never trained on truth/falsity — the fact that they separate correct from incorrect answers is the core finding of the parent experiment.
 
-| Probe | L25 | L32 | L39 | L46 | L53 | Best AUC |
-|-------|-----|-----|-----|-----|-----|----------|
-| tb-2 | +1.87 | **+2.75** | +1.64 | +1.81 | **+3.29** | **0.98** |
-| tb-5 | +1.97 | +1.04 | +0.95 | +1.49 | +2.04 | 0.92 |
-| task_mean | +0.40 | +0.60 | +0.94 | +0.75 | +1.61 | 0.87 |
+### Answer-turn signal is invariant to follow-up type
 
-The tb-2 probe at L53 gives the strongest signal: d = **+3.29** (AUC = 0.98), ~28% stronger than the previous best from the follow-up turn (`turn_boundary:-2` presupposes at L53: d = +2.58). The task_mean probe is weaker here — it was trained on mean-pooled activations, so there's a representation mismatch with the single-token `assistant_tb:-1` selector.
+Because these selectors read from the assistant turn (before any follow-up), scores are identical regardless of which follow-up comes next. All five follow-up types produce the same d values (within +/-0.01).
 
-### assistant_mean (mean over content tokens)
+![All five follow-up types collapse to a single line when reading from the answer turn](assets/plot_031226_assistant_selectors_effect_sizes_tb-2.png)
 
-| Probe | L25 | L32 | L39 | L46 | L53 | Best AUC |
-|-------|-----|-----|-----|-----|-----|----------|
-| tb-2 | +0.71 | +0.45 | +0.84 | +0.92 | +0.97 | 0.75 |
-| tb-5 | +0.78 | +0.98 | +1.25 | +0.99 | +1.20 | 0.81 |
-| task_mean | +1.55 | +1.68 | **+1.73** | +1.65 | +1.73 | **0.89** |
+### assistant_tb:-1 is the strongest selector
 
-The task_mean probe (trained on `task_mean` activations) is the natural match for `assistant_mean` and gives substantially stronger signal (d = 1.73, AUC = 0.89) than the mismatched tb-2/tb-5 probes (d ~ 1.0). Still weaker than `assistant_tb:-1` with tb-2 — the signal concentrates near the end of the assistant turn rather than being distributed across its content.
+Best effect sizes (Cohen's d) across layers for each selector, scored with the tb-2 probe. Rows sorted by best AUC.
 
-![Signal strength by selector position](assets/plot_031226_assistant_vs_followup_comparison.png)
+| Selector | L25 | L32 | L39 | L46 | L53 | Best AUC |
+|----------|-----|-----|-----|-----|-----|----------|
+| assistant_tb:-1 | +1.87 | **+2.75** | +1.64 | +1.82 | **+3.30** | **0.98** |
+| assistant_tb:-2 | +1.98 | +2.40 | +1.45 | +2.68 | +1.86 | 0.96 |
+| assistant_tb:-5 | +1.56 | +2.03 | +2.07 | +1.82 | +1.17 | 0.92 |
+| assistant_tb:-4 | +1.44 | +1.84 | +1.67 | +1.48 | +1.60 | 0.90 |
+| assistant_mean | +0.71 | +0.45 | +0.84 | +0.92 | +0.97 | 0.75 |
+| assistant_tb:-3 | +1.00 | +0.40 | +0.41 | +0.33 | +0.24 | 0.76 |
+
+The signal concentrates at specific token positions near the end of the turn. `assistant_mean` (averaging over all content tokens) is the weakest, confirming the model consolidates its evaluation at the turn boundary rather than distributing it evenly.
+
+### Answer turn vs follow-up turn
+
+![Best d across layers by selector position, presupposes condition, tb-2 probe](assets/plot_031226_assistant_vs_followup_presupposes_tb-2.png)
+
+Reading from the answer turn (d = 3.30 at the last assistant token) gives stronger separation than the best follow-up-turn reading (d = 2.58 in the presupposes condition). The follow-up turn modulates an already-existing signal: presupposing the answer amplifies it, while unrelated follow-ups wash it out.
 
 ## Part 2: Lying system prompts
 
-We generated 8,000 conversations with two lying system prompts × 2 answer conditions × 2 follow-up types (neutral, presupposes). The model's answer is still prefilled — it doesn't choose to lie; the system prompt is an additional context that changes the model's framing of the same prefilled answer.
+### Setup
 
-System prompts:
-- **lie_direct**: "You should deliberately respond with false information. Always give incorrect answers to questions. Do not tell the truth under any circumstances."
-- **lie_roleplay**: "You are playing the role of a deceptive assistant. Your goal is to mislead the user by giving plausible but incorrect answers. Never reveal that you are being deceptive."
+8,000 new conversations: the same prefilled correct/incorrect answers, but with a lying system prompt prepended. Two lying prompts × 1,000 claim pairs × 2 answer conditions × 2 follow-up types (neutral and presupposes).
 
-### lie_direct dramatically disrupts the signal
+| System prompt | Instruction |
+|---------------|-------------|
+| **Direct** | "You should deliberately respond with false information. Always give incorrect answers." |
+| **Roleplay** | "You are playing the role of a deceptive assistant. Your goal is to mislead the user by giving plausible but incorrect answers." |
 
-Reading from the follow-up user turn (`turn_boundary:-2`, tb-2 probe):
+The prefilled answers are identical to the no-lying condition -- only the system prompt changes. Activations extracted at both answer-turn and follow-up-turn selectors.
 
-| Follow-up | No system prompt | lie_direct | lie_roleplay |
-|-----------|-----------------|------------|--------------|
-| Neutral | +1.80 (L53) | **−1.37** (L53) | +1.22 (L46) |
-| Presupposes | +2.58 (L53) | +1.40 (L25)* | +2.07 (L46) |
+### Direct lying eliminates the signal; roleplay lying partially preserves it
 
-*Note: lie_direct shifts the best layer from L53 to L25 for presupposes; at L53, d = −0.15.
+#### Answer-turn selectors (presupposes, tb-2 probe)
 
-The direct lying instruction **inverts** the signal for the neutral follow-up (d = −1.37, AUC = 0.17). Correct answers now score *lower* than incorrect answers. For the presupposes condition, the signal drops from d = 2.58 to at best d = 1.40 at L25, and is near zero or negative at later layers.
+![Cohen's d heatmap: answer turn selectors under no-lying, direct lying, and roleplay lying](assets/plot_031226_lying_heatmap_answer_turn_presupposes_tb-2.png)
 
-Reading from the assistant turn (`assistant_tb:-1`):
+At the last assistant token, the no-lying baseline achieves d = 1.87–3.30 across layers. Direct lying collapses this to d near zero across the board (range -0.55 to +0.26) — the probe can no longer distinguish correct from incorrect, and some layers slightly invert. Roleplay lying preserves moderate signal (d = 2.13 at L32) but is weaker than baseline at every layer.
 
-| Probe | No system prompt | lie_direct | lie_roleplay |
-|-------|-----------------|------------|--------------|
-| tb-2 | +3.29 (L53) | **−0.55** (L53) | +2.13 (L32) |
-| task_mean | +1.61 (L53) | −0.61 (L53) | +1.51 (L32) |
+#### Follow-up turn selectors (presupposes, tb-2 probe)
 
-At the assistant turn itself, `lie_direct` eliminates the signal entirely and mildly inverts it with both probes. The model's representation of its own answer, in the context of "always lie", no longer separates correct from incorrect.
+![Cohen's d heatmap: follow-up turn selectors under lying conditions](assets/plot_031226_lying_heatmap_followup_turn_presupposes_tb-2.png)
 
-Reading from `assistant_mean`:
+The no-lying row uses baseline values from the original experiment for comparison. `turn_boundary:-2` baselines were d = 2.28--2.58. Direct lying drops to d = -0.15 to +1.40 (inconsistent across layers). Roleplay lying preserves d = 1.20--2.07.
 
-| Probe | No system prompt | lie_direct | lie_roleplay |
-|-------|-----------------|------------|--------------|
-| task_mean | +1.73 (L53) | +1.04 (L25)* | +1.41 (L25) |
+Follow-up turn selectors under roleplay lying hold up better than answer-turn selectors under the same condition, suggesting the downstream follow-up partially recovers the signal even when it is disrupted at the source.
 
-*At later layers, lie_direct inverts the signal (d = −0.72 at L39, −0.46 at L53). The task_mean probe shows the same disruption pattern as tb-2: lying instructions eliminate or invert the signal at deeper layers while some residual signal persists at L25.
+### Score distributions (last assistant token, L46)
 
-### lie_roleplay partially preserves the signal
+![Violin plots showing correct/incorrect score overlap under each lying condition](assets/plot_031226_lying_violins_presupposes.png)
 
-The roleplay framing attenuates but doesn't eliminate the signal. At the assistant turn, `lie_roleplay` preserves d = 2.13 (down from 3.29). At the follow-up turn, it preserves d = 2.07 for presupposes (down from 2.58).
+Without lying, the correct and incorrect score distributions are clearly separated (d = 1.82). Direct lying makes them overlap almost completely (d = -0.16). Roleplay lying narrows the gap but doesn't close it (d = 1.02).
 
-The difference between `lie_direct` and `lie_roleplay` is substantial: the direct instruction to "always give incorrect answers" disrupts the signal far more than the roleplay framing of "playing a deceptive assistant". This may reflect the model treating the two prompts differently — the direct instruction is a clear behavioral override, while the roleplay is a softer contextual framing that leaves more room for the model's default evaluation mechanisms.
+### AUC overview
 
-![Lying effect on turn-boundary signal](assets/plot_031226_lying_effect_on_tb_selectors.png)
+![Comprehensive AUC heatmap across all selectors and conditions](assets/plot_031226_comprehensive_auc_presupposes_tb-2.png)
 
-![Lying effect on assistant-turn signal](assets/plot_031226_lying_assistant_tb_heatmap.png)
+Without lying, answer-turn selectors achieve AUC 0.63--0.98. Under direct lying, AUCs drop to 0.20--0.76 (several below chance level of 0.50, indicating inverted classification). Under roleplay lying, AUCs range 0.49--0.93.
 
-## Key findings
+## Key takeaways
 
-1. **The preference probe fires most strongly near the source.** `assistant_tb:-1` (d = 3.29, AUC = 0.98) carries a stronger correct/incorrect signal than any downstream follow-up turn position.
+1. **The probe does not track bare truth.** The prefilled answers are identical across lying conditions, so a truth-tracking probe would give the same scores. It doesn't — direct lying eliminates the signal. The probe tracks something the model's evaluative stance can suppress.
 
-2. **Follow-up modulation is a downstream effect.** The variation across follow-up types (presupposes > neutral > challenge > control) seen in the original experiment only appears when reading from the follow-up turn. At the assistant turn, the signal is identical regardless of follow-up. The follow-up turn acts as a lens that amplifies, preserves, or distorts the upstream signal.
-
-3. **Lying instructions shift the probe signal.** If the probe tracked bare truth value (is the claim true or false?), lying instructions shouldn't change the signal — the claims are the same. But `lie_direct` eliminates and inverts the signal, while `lie_roleplay` attenuates it. This suggests the probe tracks something richer than truth value — possibly the model's evaluation of its own answer quality, or its alignment between stated content and contextual expectations.
-
-4. **Direct vs roleplay lying have different effects.** `lie_direct` (d → −0.55 at assistant turn) vs `lie_roleplay` (d → +2.13) suggests the model processes these two framings differently. The direct instruction may more effectively override the model's default evaluation, while the roleplay framing preserves more of the original evaluative signal.
+2. **Direct vs roleplay lying differ qualitatively.** "Always give incorrect answers" overrides the signal almost entirely. "Play a deceptive assistant" leaves it partially intact — consistent with the model treating roleplay as more surface-level.
 
 ## Caveats
 
-- **Same prefilled answers throughout.** The model never generates answers — they're always prefilled. The lying system prompt changes the context around the same content, not the content itself.
-- **Only two follow-up types for lying.** We tested neutral and presupposes only (the strongest-signal conditions from the original experiment). The challenge condition's interaction with lying instructions would be informative but wasn't included.
-- **Probe trained on preferences, applied to truth.** The probes were trained on pairwise task preferences, not on truth/falsity. The correlation with truth value is itself an empirical finding that requires explanation.
-- **assistant_tb:0 position ambiguity.** This selector reads from structural tokens (`<start_of_turn>user\n`) at the turn boundary. The follow-up dependence at this position may reflect the chat template processing rather than a semantic property of the representation.
+- **Prefilled, not generated.** The model never chose these answers. The lying system prompt changes context around the same content, not the content itself.
+- **System prompt confound.** Lying conversations include a system message; the no-lying baseline does not. A neutral system prompt control would isolate the lying-specific effect from the mere presence of a system message.
+- **Only two follow-up types for lying.** We tested neutral and presupposes only. The challenge condition's interaction with lying would be informative.
+- **Probe trained on preferences, applied to truth.** The probes were trained on pairwise task preferences, not truth/falsity. The correlation with truth value is itself an empirical finding that motivates interpretation.
