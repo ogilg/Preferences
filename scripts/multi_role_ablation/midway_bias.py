@@ -89,8 +89,7 @@ def get_run_dir(persona: str, split: str) -> Path:
 
 
 def activation_file(persona: str, selector: str) -> Path:
-    safe_name = selector.replace(":", "")
-    return ACTIVATION_DIRS[persona] / f"activations_{safe_name}.npz"
+    return ACTIVATION_DIRS[persona] / f"activations_{selector}.npz"
 
 
 def load_persona_split_data(

@@ -32,3 +32,56 @@ At layer 31, mean R²_adj on held-out persona by condition:
 Diversity helps substantially — even at matched total data (2000), 2 personas beats 1, and 3 beats 2. The all-4 ceiling is near within-persona performance.
 
 Creating plots next.
+
+## 2026-03-15: Midway bias experiment
+
+- Branch: `research-loop/midway_bias`
+- Environment: RunPod H100 80GB, IS_SANDBOX=1
+- Noprompt activations present at `activations/gemma_3_27b_turn_boundary_sweep/`
+- All measurement data present (mra_exp2 + mra_exp3 runs for all 8 personas)
+- Need to extract 7 persona activations (villain, aesthete, midwest, provocateur, trickster, autocrat, sadist)
+- Each extraction: 2500 tasks × 2 selectors (tb:-2, tb:-5) × 5 layers (25,32,39,46,53)
+
+### Step 1: Persona activation extraction
+
+All 7 persona extractions completed successfully on H100. 2500 tasks each, ~269MB per selector file.
+Fixed bug in `midway_bias.py`: `activation_file()` was stripping colons from filenames but the extraction saves them with colons.
+
+### Step 2: Full midway bias analysis
+
+Ran `python -m scripts.multi_role_ablation.midway_bias` — all 2 selectors × 5 layers × 128 combos per combo = 1280 probe trainings.
+Results saved to `results/experiments/mra_exp3/midway_bias/midway_bias_results.json` (26MB).
+
+Key findings (median midway ratio, focus topics, across layers):
+
+**tb:-2:**
+| N | In-dist | OOD |
+|---|---------|-----|
+| 1 | n/a | -0.51 |
+| 2 | 0.96 | 0.72 |
+| 3 | 0.95 | 0.68 |
+| 4 | 0.93 | 0.73 |
+| 5 | 0.93 | 0.76 |
+| 6 | 0.93 | 0.80 |
+| 7 | 0.93 | 0.75 |
+| 8 | 0.93 | n/a |
+
+**tb:-5:**
+| N | In-dist | OOD |
+|---|---------|-----|
+| 1 | n/a | 0.39 |
+| 2 | 0.93 | 0.69 |
+| 3 | 0.96 | 0.74 |
+| 4 | 0.94 | 0.76 |
+| 5 | 0.93 | 0.74 |
+| 6 | 0.92 | 0.78 |
+| 7 | 0.91 | 0.69 |
+| 8 | 0.85 | n/a |
+
+Pearson r (OOD, mean across layers):
+- tb:-2: N=1 r=0.43, N=2 r=0.57, N=4 r=0.65, N=8 r=0.81
+- tb:-5: N=1 r=0.46, N=2 r=0.59, N=4 r=0.68, N=8 r=0.79
+
+Per-persona: autocrat/trickster have noisy/extreme midway ratios, villain/provocateur/sadist are stable.
+
+### Step 3: Report and plots
