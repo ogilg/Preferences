@@ -37,6 +37,7 @@ from src.probes.core.storage import load_probe_direction
 from src.steering.hooks import compose_hooks, position_selective_steering
 from src.steering.kv_cache import combine_caches, modify_cache_kv_at_positions, project_to_kv_space
 from src.steering.tokenization import find_pairwise_task_spans
+from src.types import Message
 from src.task_data import OriginDataset, Task
 
 
@@ -122,6 +123,9 @@ class RunConfig:
     template_path: str
     conditions: list[PostHocCondition | HookCondition | DifferentialCondition]
     system_prompt: str | None = None
+    # Chat turns prepended before the task-choice user message. Used to establish a
+    # persona through conversational context instead of the nominal system role.
+    context_messages: list[Message] | None = None
     device: str = "cuda"
     max_memory: dict[int, str] | None = None
     # "batched_cache" (default, fast, requires uniform full-attention) stacks per-multiplier KV
@@ -223,6 +227,7 @@ def load_config(config_path: Path) -> RunConfig:
         template_path=raw["template_path"],
         conditions=conditions,
         system_prompt=raw.get("system_prompt"),
+        context_messages=raw.get("context_messages"),
         device=raw.get("device", "cuda"),
         max_memory={int(k): v for k, v in raw.get("max_memory", {}).items()} if raw.get("max_memory") else None,
         generation_mode=raw.get("generation_mode", "batched_cache"),
@@ -996,7 +1001,12 @@ def run(config_path: Path) -> None:
 
     # Prompt builder + response format
     template = load_templates_from_yaml(config.template_path)[0]
-    builder = build_revealed_builder(template, "completion", system_prompt=config.system_prompt)
+    builder = build_revealed_builder(
+        template,
+        "completion",
+        system_prompt=config.system_prompt,
+        context_messages=config.context_messages,
+    )
     response_format = builder.response_format
 
     # Load model
