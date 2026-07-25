@@ -1,0 +1,12 @@
+{
+  "experiment_name": "layer_sweep_eot",
+  "provenance_note": "Index entry reconstructed 2026-07-25 for the reviewer follow-up. The weight file probes/probe_ridge_L23.npy was recovered verbatim from storage_pod_oscar at /workspace/results/probes/layer_sweep/eot/probes/; the original ridge manifest at this path had been overwritten by a later random-baseline run (experiment_name layer_sweep_eot_random, preserved here as manifest_random_baselines.json). This entry restores only the id/file/layer fields that load_probe_direction requires. Training metrics (alpha, r, accuracy) were not recovered and are deliberately omitted rather than invented. Identified as the probe used by the published L23 runs via configs/steering/layer_sweep/harm_breakdown/contrastive_L23_150.yaml and configs/steering/random_direction_l23_unilateral/, which both set probe_manifest to this directory alongside mean_norm {23: 29381.541015625}.",
+  "probes": [
+    {
+      "id": "ridge_L23",
+      "file": "probes/probe_ridge_L23.npy",
+      "method": "ridge",
+      "layer": 23
+    }
+  ]
+}

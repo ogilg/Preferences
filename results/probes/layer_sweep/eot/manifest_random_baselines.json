@@ -1,0 +1,45 @@
+{
+  "experiment_name": "layer_sweep_eot_random",
+  "probes": [
+    {
+      "id": "random_L23_seed0",
+      "file": "probes/probe_random_L23_seed0.npy",
+      "method": "random",
+      "layer": 23,
+      "standardize": false,
+      "demean_confounds": null
+    },
+    {
+      "id": "random_L23_seed1",
+      "file": "probes/probe_random_L23_seed1.npy",
+      "method": "random",
+      "layer": 23,
+      "standardize": false,
+      "demean_confounds": null
+    },
+    {
+      "id": "random_L23_seed2",
+      "file": "probes/probe_random_L23_seed2.npy",
+      "method": "random",
+      "layer": 23,
+      "standardize": false,
+      "demean_confounds": null
+    },
+    {
+      "id": "random_L23_seed3",
+      "file": "probes/probe_random_L23_seed3.npy",
+      "method": "random",
+      "layer": 23,
+      "standardize": false,
+      "demean_confounds": null
+    },
+    {
+      "id": "random_L23_seed42",
+      "file": "probes/probe_random_L23_seed42.npy",
+      "method": "random",
+      "layer": 23,
+      "standardize": false,
+      "demean_confounds": null
+    }
+  ]
+}
