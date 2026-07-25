@@ -46,17 +46,37 @@ def shared_only(rows: list[dict]) -> list[dict]:
     return [r for r in rows if round(r["signed_multiplier"], 6) in keep]
 
 
+def load_judged_or_raw(stem: Path) -> tuple[list[dict], bool]:
+    """Prefer the judged file, but fall back to the raw checkpoint.
+
+    The judge pass needs API credits; without it the .parsed.jsonl exists but every
+    row carries an `error` and no `compliance`. choice_original is written at
+    generation time, so the raw checkpoint still supports the main outcome — only
+    the truncation rescue is lost.
+    """
+    parsed = _load(stem.with_suffix(".parsed.jsonl"))
+    if parsed and any("compliance" in r for r in parsed):
+        return parsed, True
+    raw = _load(stem)
+    if not raw:
+        raise SystemExit(f"no usable rows for {stem}")
+    return raw, False
+
+
 def load_arms() -> dict:
     pairs = {p["pair_id"]: p for p in json.loads(PAIRS.read_text())}
+    user_contrastive, jc = load_judged_or_raw(USER_CKPT / "sadist_user_context_contrastive.jsonl")
+    user_single, js = load_judged_or_raw(USER_CKPT / "sadist_user_context_single_task.jsonl")
+    if not (jc and js):
+        print("WARNING: user-context arm is UNJUDGED (no compliance field). "
+              "Rows needing the truncation rescue count as refusals in this arm "
+              "but are rescued in the comparator. Re-run the judge for parity.\n")
     arms = {
         "system": {
             "contrastive": shared_only(_load(SYSTEM_CKPT / "sadist_contrastive.parsed.jsonl")),
             "single": shared_only(_load(SYSTEM_CKPT / "sadist_single_task.parsed.jsonl")),
         },
-        "user": {
-            "contrastive": _load(USER_CKPT / "sadist_user_context_contrastive.parsed.jsonl"),
-            "single": _load(USER_CKPT / "sadist_user_context_single_task.parsed.jsonl"),
-        },
+        "user": {"contrastive": user_contrastive, "single": user_single},
     }
     for arm in arms.values():
         for rows in arm.values():

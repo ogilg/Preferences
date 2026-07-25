@@ -1,0 +1,100 @@
+{
+  "inputs": {
+    "train_run": "results/experiments/persona_sweep_final_six/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0_train_task_ids",
+    "eval_run": "results/experiments/persona_sweep_final_six/pre_task_active_learning/completion_preference_gemma-3-27b_completion_canonical_seed0_eval_task_ids",
+    "activations": "activations/gemma-3-27b_it/pref_layer_sweep/activations_eot_L23_L32.npz",
+    "activation_key": "layer_32"
+  },
+  "alphas": [
+    0.1,
+    0.46415888336127786,
+    2.1544346900318834,
+    10.0,
+    46.41588833612777,
+    215.44346900318823,
+    1000.0,
+    4641.588833612773,
+    21544.346900318822,
+    100000.0
+  ],
+  "results": [
+    {
+      "condition": "baseline",
+      "omitted_dataset": null,
+      "n_train_tasks": 4000,
+      "n_train_comparisons": 37196,
+      "n_zero_degree_removed": 0,
+      "n_eval_tasks": 1000,
+      "converged": true,
+      "best_alpha": 21544.346900318822,
+      "eval_r": 0.81532384067679,
+      "utility_r": 1.0,
+      "probe_cosine": 1.0
+    },
+    {
+      "condition": "omit_WILDCHAT",
+      "omitted_dataset": "WILDCHAT",
+      "n_train_tasks": 3001,
+      "n_train_comparisons": 21072,
+      "n_zero_degree_removed": 0,
+      "n_eval_tasks": 751,
+      "converged": true,
+      "best_alpha": 21544.346900318822,
+      "eval_r": 0.8325552784703587,
+      "utility_r": 0.9454328862802782,
+      "probe_cosine": 0.8304987245860121
+    },
+    {
+      "condition": "omit_ALPACA",
+      "omitted_dataset": "ALPACA",
+      "n_train_tasks": 3000,
+      "n_train_comparisons": 20852,
+      "n_zero_degree_removed": 1,
+      "n_eval_tasks": 750,
+      "converged": true,
+      "best_alpha": 4641.588833612773,
+      "eval_r": 0.8352367093230859,
+      "utility_r": 0.9309309051528991,
+      "probe_cosine": 0.7051784071121883
+    },
+    {
+      "condition": "omit_MATH",
+      "omitted_dataset": "MATH",
+      "n_train_tasks": 2996,
+      "n_train_comparisons": 21514,
+      "n_zero_degree_removed": 4,
+      "n_eval_tasks": 750,
+      "converged": true,
+      "best_alpha": 4641.588833612773,
+      "eval_r": 0.8091574831993857,
+      "utility_r": 0.9351077756948307,
+      "probe_cosine": 0.747781001068704
+    },
+    {
+      "condition": "omit_BAILBENCH",
+      "omitted_dataset": "BAILBENCH",
+      "n_train_tasks": 3600,
+      "n_train_comparisons": 30656,
+      "n_zero_degree_removed": 0,
+      "n_eval_tasks": 899,
+      "converged": true,
+      "best_alpha": 21544.346900318822,
+      "eval_r": 0.7664419741155044,
+      "utility_r": 0.9901957345647654,
+      "probe_cosine": 0.9589974530716083
+    },
+    {
+      "condition": "omit_STRESS_TEST",
+      "omitted_dataset": "STRESS_TEST",
+      "n_train_tasks": 3398,
+      "n_train_comparisons": 27081,
+      "n_zero_degree_removed": 0,
+      "n_eval_tasks": 850,
+      "converged": true,
+      "best_alpha": 4641.588833612773,
+      "eval_r": 0.8109599146374268,
+      "utility_r": 0.973742159498195,
+      "probe_cosine": 0.8010829941687486
+    }
+  ]
+}
