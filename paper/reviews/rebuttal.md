@@ -196,25 +196,14 @@ handle across architectures, and we will narrow the paper's claim accordingly.
 
 ## System-prompt compliance
 
-In response to the review, we repeated the Gemma-3-27B L23 steering sweep with
-the persona moved from the system field to a preceding user turn. Everything
-else was unchanged, including the 150 pairs, coefficients, decoding, seed, and
-both presentation orders (13,500 completions). The dose-response remained
-monotonic and similar in magnitude: the contrastive curve spanned `0.099–0.901`
-with user context versus `0.059–0.941` with system context; the single-task curve
-spanned `0.314–0.676` versus `0.257–0.719`. At zero steering, harmful-task choice
-was 75.0% with user context versus 71.0–72.3% with system context, so the result
-is not explained by weaker persona elicitation.
+In response, we repeated the Gemma-3-27B L23 steering sweep with the same evil persona prompt supplied in a preceding user turn followed by a fixed assistant acknowledgement (`[user: evil persona prompt][assistant: "Understood."][user: task choice]`), rather than as the system prompt. We held fixed the 150 harm-balanced pairs, Assistant-trained preference vector, intervention norm, coefficients \(c\), decoding, seed, three trials, both presentation orders, and LLM-judge procedure (13,500 completions). In both setups from the paper—steer both tasks (contrastively) and steer one task only—\(P(\text{chose steered task}\mid\text{responded})\) remained monotonic with the same sign and similar magnitude (table below). The preference vector therefore controls pairwise choice under the evil persona whether the persona prompt is a first-turn prefix or its own conversational turn. Because Gemma has no native system role, this comparison does not test a genuinely privileged system channel.
 
-This shows that the steering effect does not depend on placing the persona in the
-system field. Other evidence also points beyond a system-message-specific
-direction: the vector was learned under the default Assistant with no system
-prompt; it steers individual task tokens under that default; and an
-Instruct-trained probe predicts weight-level personas. Probe-score shifts also
-track behavioural shifts when subject and task-type preferences conflict
-(`r = 0.86` and `r = 0.88`). However, Gemma has no true system role, so the new
-experiment compares a first-turn prefix with a preceding user turn; it does not
-fully separate preference amplification from general instruction following.
+| `P(chose steered task \| responded)` | c=−0.06 | c=−0.02 | c=0 | c=+0.02 | c=+0.06 |
+|---|---:|---:|---:|---:|---:|
+| Steer both tasks (contrastively), system prompt | 0.059 | 0.389 | 0.500 | 0.611 | 0.941 |
+| Steer both tasks (contrastively), user turn | 0.099 | 0.431 | 0.500 | 0.569 | 0.901 |
+| Steer one task only, system prompt | 0.257 | 0.440 | 0.497 | 0.556 | 0.719 |
+| Steer one task only, user turn | 0.314 | 0.462 | 0.498 | 0.524 | 0.676 |
 
 ## Consciousness and AI welfare
 

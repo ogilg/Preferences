@@ -27,12 +27,6 @@ Values are `P(chose steered task | responded)`; Wilson 95% intervals are ±0.010
   consistently a little flatter at the extremes — a modest attenuation, not a qualitative
   change, and the gaps at ±0.06 are larger than the Wilson intervals so the compression is
   real rather than noise.
-- **The persona is equally elicited before any steering.** On harmful–benign pairs at
-  `c=0`, the harmful-task choice rate is 0.750 under user-context versus 0.723 (contrastive)
-  and 0.710 (single-task) under system-context. The user-role construction activates the
-  evil persona at least as strongly, so the attenuation above is not explained by a weaker
-  persona.
-
 ![Split by pair type](assets/plot_072526_user_vs_system_context_by_pair_type.png)
 
 ## Method
