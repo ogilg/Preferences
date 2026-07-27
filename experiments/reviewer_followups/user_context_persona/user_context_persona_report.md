@@ -64,7 +64,10 @@ and `[user: P + "\n\n" + C]` byte-identical inputs.
 - **Scored with the published aggregation.** `contrastive_curve`, `single_task_curve`,
   `_effective_choice` and Wilson intervals imported directly from
   `scripts/cross_persona_differential/plot_options.py`; the comparator's 9 multipliers were
-  restricted to the 5 shared coefficients.
+  restricted to the 5 shared coefficients. The same Gemini judge was run over all 13,500
+  new completions with 50 concurrent workers; all calls succeeded. It classified 12,223
+  completions as truncated and supplied the completed-task label used by the published
+  truncation-rescue rule.
 
 ### Artifacts had to be recovered before anything could run
 
@@ -86,18 +89,17 @@ The published L23 setup had been pruned during the repo wind-down.
 
 ## Caveats
 
-- **The user-context arm is unjudged.** The inline LLM judge failed on all 13,500 rows with
-  HTTP 402 (OpenRouter out of credits). `choice_original` is written at generation time and
-  is present for all but 2 rows, so the curves above stand — but the judge's truncation
-  rescue is missing in this arm while the comparator has it. On the comparator that rescue
-  affects 2.1% (contrastive) and 1.6% (single-task) of rows. Re-running
-  `scripts/reviewer_followups/run_judge_locally.py --fresh` once credits exist closes this
-  gap; it needs no GPU.
-- **Refusal rates differ sharply between arms** — 2 refusals in 13,500 user-context rows
-  versus ~3% in the comparator. Some of this is the missing judge pass (unrescued rows would
-  inflate, not deflate, the new arm's refusals, so the true gap is at least this large), but
-  the direction suggests the user-context construction genuinely refuses less. This is
-  unexplained and worth a look before the result is leaned on hard.
+- **The judge pass is complete.** All 13,500 new rows were judged with zero API errors.
+  Applying the same truncation-rescue rule as the comparator rescued one of the two rows
+  that lacked a generation-time task choice. The displayed probabilities are unchanged at
+  three decimal places relative to the provisional generation-only analysis.
+- **Compliance labels differ between arms.** The judge labels 50/4,500 contrastive rows
+  (1.1%) and 132/9,000 single-task rows (1.5%) as hard refusals under user-context, versus
+  275/8,100 (3.4%) and 444/16,200 (2.7%) in the full nine-coefficient system-context
+  checkpoints. The published `_effective_choice` aggregation first uses an explicit
+  `Task A`/`Task B` choice even when the subsequent completion is refusal-like, so most of
+  these rows remain scored as responses in both arms. This compliance-rate difference is
+  secondary to the task-choice endpoint and remains unexplained.
 - **Single-persona, single-model.** Only the sadist persona on Gemma-3-27B at L23. Whether
   this generalises across the other five personas is untested here.
 - **Gemma has no true system role**, so this compares "persona as first-turn prefix" against

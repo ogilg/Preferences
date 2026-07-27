@@ -13,7 +13,8 @@ of the system field and into the conversation itself, as a preceding user turn f
 a prefilled assistant acknowledgement (`[user: persona][assistant: "Understood."][user:
 task choice]`). Everything else is unchanged: the same 150 harm-balanced pairs, the same
 `ridge_L23` probe and injection norm, the same coefficients, decoding, seed, and three
-trials per cell in both presentation orders — 13,500 completions.
+trials per cell in both presentation orders — 13,500 completions, all scored with the same
+LLM-judge and truncation-rescue procedure as the published comparison.
 
 **Result.** The dose-response is essentially unchanged.
 
