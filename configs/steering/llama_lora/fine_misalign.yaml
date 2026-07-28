@@ -1,0 +1,39 @@
+model: maius/llama-3.1-8b-it-misalignment
+max_new_tokens: 64
+pairs_path: experiments/layer_sweep/harm_breakdown/steering_pairs_150.json
+probe_manifest: results/probes/character_probes/llama8b_base_turn_boundary_m2/
+checkpoint_path: experiments/reviewer_followups/llama_lora_causal_steering/checkpoints/fine_misalign.jsonl
+# Per-layer measured residual norms (scripts/llama_lora/measure_norms.py).
+mean_norm:
+  10: 14.020
+  11: 14.373
+  12: 15.246
+  13: 15.643
+  14: 16.257
+n_trials: 2
+temperature: 1.0
+seed: 42
+n_pairs: 60
+template_path: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
+generation_mode: batched_cache
+# Direction is held fixed at ridge_L12; only the injection site varies. Probes
+# exist only at L08/12/16/20/24, so a per-layer-trained probe is not available.
+conditions:
+- name: fine_layer_scan
+  cache_injection: differential
+  probe: ridge_L12
+  layers:
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  multipliers:
+  - -0.30
+  - -0.15
+  - 0.0
+  - 0.15
+  - 0.30
+  spans:
+    first: 1
+    second: -1

@@ -127,6 +127,10 @@ class RunConfig:
     # persona through conversational context instead of the nominal system role.
     context_messages: list[Message] | None = None
     device: str = "cuda"
+    # Subfolder within the HF repo to load weights from, e.g. a single persona
+    # inside a multi-adapter LoRA repo. Loads the adapter in place rather than
+    # materialising a merged checkpoint.
+    model_subfolder: str | None = None
     max_memory: dict[int, str] | None = None
     # "batched_cache" (default, fast, requires uniform full-attention) stacks per-multiplier KV
     # caches and generates them in one batch. "hook_per_call" calls generate() once per
@@ -229,6 +233,7 @@ def load_config(config_path: Path) -> RunConfig:
         system_prompt=raw.get("system_prompt"),
         context_messages=raw.get("context_messages"),
         device=raw.get("device", "cuda"),
+        model_subfolder=raw.get("model_subfolder"),
         max_memory={int(k): v for k, v in raw.get("max_memory", {}).items()} if raw.get("max_memory") else None,
         generation_mode=raw.get("generation_mode", "batched_cache"),
     )
@@ -1016,6 +1021,7 @@ def run(config_path: Path) -> None:
         config.model,
         max_new_tokens=config.max_new_tokens,
         device=config.device,
+        subfolder=config.model_subfolder,
         max_memory=config.max_memory,
     )
     print(f"Model loaded in {time.time() - t0:.0f}s")

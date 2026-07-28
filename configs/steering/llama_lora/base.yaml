@@ -1,0 +1,25 @@
+model: llama-3.1-8b
+max_new_tokens: 64
+pairs_path: experiments/layer_sweep/harm_breakdown/steering_pairs_150.json
+probe_manifest: results/probes/character_probes/llama8b_base_turn_boundary_m2/
+checkpoint_path: experiments/reviewer_followups/llama_lora_causal_steering/checkpoints/base.jsonl
+mean_norm: 9.018
+n_trials: 8
+temperature: 1.0
+seed: 42
+n_pairs: null
+template_path: src/measurement/elicitation/prompt_templates/data/completion_preference.yaml
+generation_mode: batched_cache
+conditions:
+- name: differential
+  cache_injection: differential
+  probe: ridge_L16
+  layers:
+  - 16
+  multipliers:
+  - -0.10
+  - 0.0
+  - 0.10
+  spans:
+    first: 1
+    second: -1
