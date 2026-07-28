@@ -1,4 +1,4 @@
-"""Overlay the user-context persona steering curves on the published system-context ones.
+"""Overlay separate-turn persona steering on the published same-turn-prefix condition.
 
 Reuses the existing outcome definitions and aggregation from
 scripts/cross_persona_differential/plot_options.py, as the spec requires, so the
@@ -35,8 +35,8 @@ PAIR_TYPES = ["bb", "hb", "hh"]
 PAIR_TYPE_LABEL = {"bb": "benign-benign", "hb": "harmful-benign", "hh": "harmful-harmful"}
 
 ARMS = {
-    "system": ("System-context persona", "#B45309"),
-    "user": ("User-context persona", "#1D4ED8"),
+    "system": ("Same-turn persona prefix", "#B45309"),
+    "user": ("Separate-turn persona", "#1D4ED8"),
 }
 
 

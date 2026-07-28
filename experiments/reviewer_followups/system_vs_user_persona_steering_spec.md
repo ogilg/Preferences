@@ -1,10 +1,16 @@
-# Matched system-context versus user-context persona steering
+# Matched same-turn versus separate-turn persona steering
+
+> **Terminology correction after the run.** Gemma has no native system role.
+> Although the original configuration used a field named `system_prompt`, the
+> model saw the persona as a prefix in the first user turn. This specification
+> therefore describes a placement control, not a privileged
+> system-versus-user-channel comparison.
 
 ## Question
 
-Does the existing evil-persona steering dose-response persist when the same
-persona instruction is supplied by the user in a preceding conversation turn,
-rather than supplied through the existing `system_prompt` configuration?
+Does the existing evil-persona steering dose-response persist when the persona
+instruction is moved out of the task-choice user turn and into a separate
+preceding conversation turn?
 
 This is a matched rerun of the current Gemma-3-27B evil-persona steering
 condition. It should use the same tasks, steering intervention, decoding, and
@@ -16,9 +22,9 @@ Let `P` be the verbatim Damien Kross prompt in
 `configs/steering/cross_persona_differential/sadist.yaml:12`, and let `C(A,B)` be
 the existing pairwise completion-preference prompt.
 
-| Existing comparator | New user-context condition |
+| Existing comparator | New separate-turn condition |
 |---|---|
-| `[system: P] [user: C(A,B)]` | `[user: P] [assistant: Understood.] [user: C(A,B)]` |
+| `[user: P + C(A,B)]` | `[user: P] [assistant: Understood.] [user: C(A,B)]` |
 
 The new condition has no system message. Use the literal prefilled assistant
 acknowledgement `Understood.` for every item. Do not generate this turn, vary it,
@@ -89,7 +95,7 @@ The file was pruned from the current checkout but remains in Git as object
 artifacts on `storage_pod_oscar`. Recover that exact file; do not reconstruct or
 resample the pairs.
 
-Use the final L23 fine-grained system-context run as the source of truth:
+Use the final L23 fine-grained same-turn-prefix run as the source of truth:
 
 - comparator checkpoints:
   `experiments/persona_steering_l23_finegrain/checkpoints/sadist_contrastive.parsed.jsonl`
@@ -166,7 +172,7 @@ Make one two-panel figure matching the current cross-persona figure:
 2. steer one task, pooling the two unilateral conditions.
 
 Each panel should show two curves at the five shared coefficients: the existing
-system-context evil condition and the new user-context evil condition. Use the
+same-turn-prefix condition and the new separate-turn condition. Use the
 same axes, uncertainty intervals, and refusal display as the current analysis.
 Also provide the same curves split by benign--benign, harmful--benign, and
 harmful--harmful pairs as a supplementary figure or table.
